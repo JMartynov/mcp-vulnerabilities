@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import re
+from pathlib import Path
 from typing import Any
 
 from mcp_vulnerabilities.models import OsvVulnerability
@@ -141,6 +143,39 @@ class OsvValidator:
                     )
 
         return errors
+
+    @classmethod
+    def validate_directory(
+        cls, directory: str | Path
+    ) -> tuple[int, int, list[str]]:
+        """Validate all OSV JSON files in a directory.
+
+        Returns (valid_count, invalid_count, error_messages).
+        """
+        dir_path = Path(directory)
+        valid_count = 0
+        invalid_count = 0
+        all_errors: list[str] = []
+
+        if not dir_path.is_dir():
+            return 0, 0, [f"Directory not found: {dir_path}"]
+
+        for j_file in sorted(dir_path.rglob("*.json")):
+            if j_file.name in ("index.json", "sync_state.json", ".vuln_index.pickle"):
+                continue
+            try:
+                data = json.loads(j_file.read_text(encoding="utf-8"))
+                errors = cls.validate(data)
+                if errors:
+                    invalid_count += 1
+                    all_errors.extend(f"{j_file.name}: {e}" for e in errors)
+                else:
+                    valid_count += 1
+            except Exception as exc:
+                invalid_count += 1
+                all_errors.append(f"{j_file.name}: failed to read JSON: {exc}")
+
+        return valid_count, invalid_count, all_errors
 
     @classmethod
     def assert_valid(cls, vuln: OsvVulnerability | dict[str, Any]) -> None:
