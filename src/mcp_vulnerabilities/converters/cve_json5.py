@@ -144,9 +144,12 @@ class CveJson5Converter:
                     intro = v.get("version")
                     fix = v.get("lessThan")
                     last_aff = v.get("lessThanOrEqual")
-                    range_events.append(
-                        EventSpec(introduced=intro, fixed=fix, last_affected=last_aff)
-                    )
+                    if intro:
+                        range_events.append(EventSpec(introduced=intro))
+                    if fix:
+                        range_events.append(EventSpec(fixed=fix))
+                    elif last_aff:
+                        range_events.append(EventSpec(last_affected=last_aff))
 
             if not range_events:
                 range_events.append(EventSpec(introduced="0"))

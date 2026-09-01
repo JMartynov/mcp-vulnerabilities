@@ -37,9 +37,9 @@ def test_convert_cve_json5_neo4j() -> None:
     assert len(aff.ranges) == 1
     assert aff.ranges[0].type == RangeType.SEMVER
     events = aff.ranges[0].events
-    assert len(events) == 1
+    assert len(events) == 2
     assert events[0].introduced == "0.2.2"
-    assert events[0].last_affected == "0.3.1"
+    assert events[1].last_affected == "0.3.1"
 
     # Database specific MCP extensions
     db = aff.database_specific
