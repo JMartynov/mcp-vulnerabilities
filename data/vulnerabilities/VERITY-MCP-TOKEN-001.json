@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-284"
+        ],
+        "owasp_mcp_category": "Access Control Bypass",
+        "remediation_guidance": "Enforces strict audience validation and scope attenuation.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-TOKEN-001",
+        "vulnerable_tools": [
+          "exchange_token"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-token-scope",
+        "purl": "pkg:mcp/mcp-token-scope@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-TOKEN-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Cloud API Gateway & Token Broker",
+    "server_id": "mcp-token-scope",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Over-Broad Synthetic Token Scope & Replay\n\n**Category**: Access Control Bypass\n**CWE**: CWE-284\n**Target Tool**: `exchange_token`\n\n#### Vulnerable Behavior\nReplays tokens across foreign tenant domains with wildcard scopes.\n\n#### Secure Mitigation\nEnforces strict audience validation and scope attenuation.\n\n#### Description\nOver-broad synthetic token scope and cross-tenant token replay.",
+  "id": "VERITY-MCP-TOKEN-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-token-scope"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Over-Broad Synthetic Token Scope & Replay in Token Scope & Attenuation Target (mcp-token-scope)"
+}

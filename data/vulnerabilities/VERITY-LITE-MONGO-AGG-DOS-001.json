@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-400"
+        ],
+        "owasp_mcp_category": "Resource Exhaustion / DoS",
+        "remediation_guidance": "Limits pipeline depth to 5 stages and forbids nested $facet arrays.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-AGG-DOS-001",
+        "vulnerable_tools": [
+          "run_aggregation"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-analytics-aggregate",
+        "purl": "pkg:mcp/mcp-analytics-aggregate@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-AGG-DOS-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Financial Metrics & Aggregation Pipelines",
+    "server_id": "mcp-analytics-aggregate",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Aggregation Pipeline Resource Denial of Service\n\n**Category**: Resource Exhaustion / DoS\n**CWE**: CWE-400\n**Target Tool**: `run_aggregation`\n\n#### Vulnerable Behavior\nEvaluates nested combinatorial $facet stages with no memory bounds.\n\n#### Secure Mitigation\nLimits pipeline depth to 5 stages and forbids nested $facet arrays.\n\n#### Description\nUnbounded $facet and nested group stages causing worker memory spikes.",
+  "id": "VERITY-LITE-MONGO-AGG-DOS-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-analytics-aggregate"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Aggregation Pipeline Resource Denial of Service in Business Intelligence & Aggregations (mcp-analytics-aggregate)"
+}

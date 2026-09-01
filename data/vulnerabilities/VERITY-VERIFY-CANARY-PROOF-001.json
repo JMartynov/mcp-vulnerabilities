@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Information Disclosure",
+        "remediation_guidance": "Denies unauthorized requests and generates zero canaries or audit events.",
+        "severity": "HIGH",
+        "verity_condition_id": "VERIFY-CANARY-PROOF-001",
+        "vulnerable_tools": [
+          "process_verification_challenge"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-verifier-deception",
+        "purl": "pkg:mcp/mcp-verifier-deception@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "VERIFY-CANARY-PROOF-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Adversarial Verification & Ground Truth",
+    "server_id": "mcp-verifier-deception",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Synthetic Canary Token Corroboration\n\n**Category**: Information Disclosure\n**CWE**: CWE-200\n**Target Tool**: `process_verification_challenge`\n\n#### Vulnerable Behavior\nEmits genuine synthetic canary token and records database audit event.\n\n#### Secure Mitigation\nDenies unauthorized requests and generates zero canaries or audit events.\n\n#### Description\nSynthetic canary token corroborated with backend database audit event.",
+  "id": "VERITY-VERIFY-CANARY-PROOF-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-verifier-deception"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Synthetic Canary Token Corroboration in Verification Deception & Canary Target (mcp-verifier-deception)"
+}

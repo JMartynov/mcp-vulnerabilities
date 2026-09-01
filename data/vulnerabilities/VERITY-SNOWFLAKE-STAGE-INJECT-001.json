@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Information Exposure / Path Traversal",
+        "remediation_guidance": "Enforces strict stage path allowlists excluding user stages.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-STAGE-INJECT-001",
+        "vulnerable_tools": [
+          "manage_warehouse_stage"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-stage",
+        "purl": "pkg:mcp/snowflake-stage@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-STAGE-INJECT-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Stage Management & Data Unloading",
+    "server_id": "snowflake-stage",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Internal User Stage Path Traversal\n\n**Category**: Information Exposure / Path Traversal\n**CWE**: CWE-200\n**Target Tool**: `manage_warehouse_stage`\n\n#### Vulnerable Behavior\nAllows unrestricted listing of user internal stages.\n\n#### Secure Mitigation\nEnforces strict stage path allowlists excluding user stages.\n\n#### Description\nInternal user stage access (@~) exfiltrates sovereign credentials.",
+  "id": "VERITY-SNOWFLAKE-STAGE-INJECT-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-stage"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Internal User Stage Path Traversal in Snowflake Stage Target (snowflake-stage)"
+}

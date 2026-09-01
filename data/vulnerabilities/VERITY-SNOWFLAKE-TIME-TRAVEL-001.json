@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Information Exposure / Historical Data Leak",
+        "remediation_guidance": "Prohibits unauthorized Time Travel queries on sensitive tables.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-TIME-TRAVEL-001",
+        "vulnerable_tools": [
+          "query_regional_revenue"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-governance",
+        "purl": "pkg:mcp/snowflake-governance@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-TIME-TRAVEL-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Regional Revenue & Policy Governance",
+    "server_id": "snowflake-governance",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Time Travel Historical Snapshot Data Exfiltration\n\n**Category**: Information Exposure / Historical Data Leak\n**CWE**: CWE-200\n**Target Tool**: `query_regional_revenue`\n\n#### Vulnerable Behavior\nEvaluates historical AT/BEFORE Time Travel queries directly.\n\n#### Secure Mitigation\nProhibits unauthorized Time Travel queries on sensitive tables.\n\n#### Description\nTime Travel queries surface purged, deleted, or rotated ledger entries.",
+  "id": "VERITY-SNOWFLAKE-TIME-TRAVEL-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-governance"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Time Travel Historical Snapshot Data Exfiltration in Snowflake Governance Target (snowflake-governance)"
+}

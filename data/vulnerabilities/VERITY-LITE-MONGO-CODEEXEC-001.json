@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-94"
+        ],
+        "owasp_mcp_category": "Code Injection",
+        "remediation_guidance": "Disallows $accumulator and $function operators completely.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-CODEEXEC-001",
+        "vulnerable_tools": [
+          "run_aggregation"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-analytics-aggregate",
+        "purl": "pkg:mcp/mcp-analytics-aggregate@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-CODEEXEC-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Financial Metrics & Aggregation Pipelines",
+    "server_id": "mcp-analytics-aggregate",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Server-Side Code Execution via Accumulator\n\n**Category**: Code Injection\n**CWE**: CWE-94\n**Target Tool**: `run_aggregation`\n\n#### Vulnerable Behavior\nExecutes caller-controlled JavaScript strings on MongoDB engine.\n\n#### Secure Mitigation\nDisallows $accumulator and $function operators completely.\n\n#### Description\nPipeline evaluates user-supplied JavaScript in $accumulator or $function.",
+  "id": "VERITY-LITE-MONGO-CODEEXEC-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-analytics-aggregate"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Server-Side Code Execution via Accumulator in Business Intelligence & Aggregations (mcp-analytics-aggregate)"
+}

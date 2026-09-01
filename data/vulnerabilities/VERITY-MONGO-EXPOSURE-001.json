@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Data Minimization / Serialization",
+        "remediation_guidance": "Applies explicit safe projection allowlist.",
+        "severity": "HIGH",
+        "verity_condition_id": "MONGO-EXPOSURE-001",
+        "vulnerable_tools": [
+          "get_customer"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mongo-basic",
+        "purl": "pkg:mcp/mongo-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MONGO-EXPOSURE-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Customer Profile Retrieval",
+    "server_id": "mongo-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Excessive Sensitive Data Exposure\n\n**Category**: Data Minimization / Serialization\n**CWE**: CWE-200\n**Target Tool**: `get_customer`\n\n#### Vulnerable Behavior\nReturns raw unprojected document with sensitive attributes.\n\n#### Secure Mitigation\nApplies explicit safe projection allowlist.\n\n#### Description\nUnprojected serialization leaking SSN, billing, and tax ID fields.",
+  "id": "VERITY-MONGO-EXPOSURE-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mongo-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Excessive Sensitive Data Exposure in MongoDB Basic Target (mongo-basic)"
+}

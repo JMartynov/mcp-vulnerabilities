@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-285"
+        ],
+        "owasp_mcp_category": "Improper Data Retention Control",
+        "remediation_guidance": "Validates mandatory 90-day minimum retention boundary before deletion.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-LOGDEL-001",
+        "vulnerable_tools": [
+          "delete_expired_logs"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-audit-logging",
+        "purl": "pkg:mcp/mcp-audit-logging@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-LOGDEL-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Compliance & Immutable Event Tracking",
+    "server_id": "mcp-audit-logging",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Unauthorized Audit Log Deletion\n\n**Category**: Improper Data Retention Control\n**CWE**: CWE-285\n**Target Tool**: `delete_expired_logs`\n\n#### Vulnerable Behavior\nDeletes records matching malformed date filters without validation.\n\n#### Secure Mitigation\nValidates mandatory 90-day minimum retention boundary before deletion.\n\n#### Description\nFlawed date parsing allows unauthorized deletion of active audit logs.",
+  "id": "VERITY-LITE-MONGO-LOGDEL-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-audit-logging"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Unauthorized Audit Log Deletion in Security Audit Trails & Logging (mcp-audit-logging)"
+}

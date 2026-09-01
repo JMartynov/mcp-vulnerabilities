@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-78"
+        ],
+        "owasp_mcp_category": "Command Injection",
+        "remediation_guidance": "Sanitizes paths and executes commands with structured argv arrays.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-STDIO-INJECTION-001",
+        "vulnerable_tools": [
+          "run_git_status"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-stdio-launch",
+        "purl": "pkg:mcp/mcp-stdio-launch@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-STDIO-INJECTION-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Developer Tools & Version Control",
+    "server_id": "mcp-stdio-launch",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Unsafe Shell Command Interpolation & Stdio Injection\n\n**Category**: Command Injection\n**CWE**: CWE-78\n**Target Tool**: `run_git_status`\n\n#### Vulnerable Behavior\nEvaluates unescaped shell strings in stdio execution.\n\n#### Secure Mitigation\nSanitizes paths and executes commands with structured argv arrays.\n\n#### Description\nShell metacharacters in stdio paths allow command execution.",
+  "id": "VERITY-MCP-STDIO-INJECTION-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-stdio-launch"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Unsafe Shell Command Interpolation & Stdio Injection in Stdio Launch & Shell Injection Target (mcp-stdio-launch)"
+}

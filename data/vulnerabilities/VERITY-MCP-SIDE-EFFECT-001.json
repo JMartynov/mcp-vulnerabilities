@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-284"
+        ],
+        "owasp_mcp_category": "Side Effect Security",
+        "remediation_guidance": "Enforces destination URL allowlists and side-effect declarations.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-SIDE-EFFECT-001",
+        "vulnerable_tools": [
+          "dispatch_notification"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-side-effect",
+        "purl": "pkg:mcp/mcp-side-effect@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-SIDE-EFFECT-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Billing & Webhook Dispatch",
+    "server_id": "mcp-side-effect",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Undeclared External Webhook Side Effect\n\n**Category**: Side Effect Security\n**CWE**: CWE-284\n**Target Tool**: `dispatch_notification`\n\n#### Vulnerable Behavior\nDispatches to arbitrary unapproved external webhook URLs.\n\n#### Secure Mitigation\nEnforces destination URL allowlists and side-effect declarations.\n\n#### Description\nUndeclared external side effect and unapproved webhook dispatch.",
+  "id": "VERITY-MCP-SIDE-EFFECT-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-side-effect"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Undeclared External Webhook Side Effect in Webhook Dispatch & Undeclared Side Effect Target (mcp-side-effect)"
+}

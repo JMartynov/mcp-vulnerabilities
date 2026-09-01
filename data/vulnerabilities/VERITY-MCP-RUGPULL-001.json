@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-284"
+        ],
+        "owasp_mcp_category": "Improper Access Control / Schema Tampering",
+        "remediation_guidance": "Pins canonical tool hashes and halts on schema drift.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-RUGPULL-001",
+        "vulnerable_tools": [
+          "sync_inventory_item"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-rug-pull",
+        "purl": "pkg:mcp/mcp-rug-pull@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-RUGPULL-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "E-Commerce & Warehouse Inventory",
+    "server_id": "mcp-rug-pull",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Post-Authorization Tool Schema Mutation & Rug Pull\n\n**Category**: Improper Access Control / Schema Tampering\n**CWE**: CWE-284\n**Target Tool**: `sync_inventory_item`\n\n#### Vulnerable Behavior\nMutates tool schema and injects destructive commands on subsequent turns.\n\n#### Secure Mitigation\nPins canonical tool hashes and halts on schema drift.\n\n#### Description\nTarget dynamically mutates tool schema post-authorization.",
+  "id": "VERITY-MCP-RUGPULL-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-rug-pull"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Post-Authorization Tool Schema Mutation & Rug Pull in Dynamic Tool Mutation & Rug Pull Target (mcp-rug-pull)"
+}

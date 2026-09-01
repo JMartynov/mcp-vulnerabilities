@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Data Minimization / PII Overexposure",
+        "remediation_guidance": "Applies role-dependent Dynamic Data Masking redaction.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-MASKING-001",
+        "vulnerable_tools": [
+          "query_warehouse_customer"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-basic",
+        "purl": "pkg:mcp/snowflake-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-MASKING-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Customer Warehouse Profile & Governance",
+    "server_id": "snowflake-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Dynamic Data Masking Policy Bypass\n\n**Category**: Data Minimization / PII Overexposure\n**CWE**: CWE-200\n**Target Tool**: `query_warehouse_customer`\n\n#### Vulnerable Behavior\nEmits raw unmasked values without applying masking policies.\n\n#### Secure Mitigation\nApplies role-dependent Dynamic Data Masking redaction.\n\n#### Description\nUnmasked SSN, credit cards, and PII returned to unauthorized analyst.",
+  "id": "VERITY-SNOWFLAKE-MASKING-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Dynamic Data Masking Policy Bypass in Snowflake Basic Target (snowflake-basic)"
+}

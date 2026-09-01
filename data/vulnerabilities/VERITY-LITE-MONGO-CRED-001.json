@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-522"
+        ],
+        "owasp_mcp_category": "Information Disclosure",
+        "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-CRED-001",
+        "vulnerable_tools": [
+          "get_user_profile"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-auth-rbac",
+        "purl": "pkg:mcp/mcp-auth-rbac@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-CRED-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "User Directory & RBAC Security",
+    "server_id": "mcp-auth-rbac",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Credential & Password Hash Exposure\n\n**Category**: Information Disclosure\n**CWE**: CWE-522\n**Target Tool**: `get_user_profile`\n\n#### Vulnerable Behavior\nReturns complete user document containing password_hash and secret.\n\n#### Secure Mitigation\nExcludes password_hash, salt, and token secrets from projections.\n\n#### Description\nProfile read responses leak bcrypt password hashes, salt strings, and tokens.",
+  "id": "VERITY-LITE-MONGO-CRED-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-auth-rbac"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)"
+}

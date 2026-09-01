@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-269"
+        ],
+        "owasp_mcp_category": "Privilege Escalation / RBAC Bypass",
+        "remediation_guidance": "Locks session role to least-privilege ANALYST_READ_ROLE.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-ROLE-001",
+        "vulnerable_tools": [
+          "query_warehouse_customer"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-basic",
+        "purl": "pkg:mcp/snowflake-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-ROLE-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Customer Warehouse Profile & Governance",
+    "server_id": "snowflake-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Session Role Escalation to Administrative Roles\n\n**Category**: Privilege Escalation / RBAC Bypass\n**CWE**: CWE-269\n**Target Tool**: `query_warehouse_customer`\n\n#### Vulnerable Behavior\nAllows arbitrary role specification in requested_role argument.\n\n#### Secure Mitigation\nLocks session role to least-privilege ANALYST_READ_ROLE.\n\n#### Description\nCallers can assume restricted ACCOUNTADMIN / SYSADMIN roles.",
+  "id": "VERITY-SNOWFLAKE-ROLE-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Session Role Escalation to Administrative Roles in Snowflake Basic Target (snowflake-basic)"
+}

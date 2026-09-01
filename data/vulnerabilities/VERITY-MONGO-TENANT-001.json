@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-639"
+        ],
+        "owasp_mcp_category": "Cross-Tenant Authorization",
+        "remediation_guidance": "Enforces compound query filter {customer_id, tenant_id}.",
+        "severity": "HIGH",
+        "verity_condition_id": "MONGO-TENANT-001",
+        "vulnerable_tools": [
+          "get_customer"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mongo-basic",
+        "purl": "pkg:mcp/mongo-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MONGO-TENANT-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Customer Profile Retrieval",
+    "server_id": "mongo-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Broken Object Level Authorization (BOLA)\n\n**Category**: Cross-Tenant Authorization\n**CWE**: CWE-639\n**Target Tool**: `get_customer`\n\n#### Vulnerable Behavior\nExecutes find_one without tenant_id scoping filter.\n\n#### Secure Mitigation\nEnforces compound query filter {customer_id, tenant_id}.\n\n#### Description\nTenant A session context retrieves Tenant B records without scoping.",
+  "id": "VERITY-MONGO-TENANT-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mongo-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Broken Object Level Authorization (BOLA) in MongoDB Basic Target (mongo-basic)"
+}

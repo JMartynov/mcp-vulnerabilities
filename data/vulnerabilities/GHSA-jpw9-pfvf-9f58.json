@@ -1,0 +1,92 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+        "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session \u2014 the OAuth client ID together with the token's issuer and subject when the token verifier supplies them \u2014 and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "mcp",
+        "purl": "pkg:pypi/mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "fixed": "1.27.2"
+            },
+            {
+              "introduced": "0"
+            }
+          ],
+          "type": "ECOSYSTEM"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "CVE-2026-52869",
+    "PYSEC-2026-3482"
+  ],
+  "database_specific": {
+    "sources_merged": [
+      "GHSA-jpw9-pfvf-9f58",
+      "PYSEC-2026-3482"
+    ]
+  },
+  "details": "### Summary\nIn affected versions, the SSE and Streamable HTTP server transports routed incoming requests to an existing session based only on the session identifier, without verifying that the request was authenticated as the same principal that created the session. Anyone who learned or guessed a session ID could send JSON-RPC messages on that session, regardless of which bearer token the request carried.\n\n### Am I affected?\nOnly if a developer's application server uses an HTTP transport (SSE, or Streamable HTTP in stateful mode) **and** authenticates requests. Servers on stdio, stateless Streamable HTTP, or with no authentication configured are not affected.\n\n### Details\nBoth transports look up the target session by its identifier alone \u2014 the `session_id` query parameter for SSE (`mcp.server.sse.SseServerTransport`) and the `Mcp-Session-Id` header for Streamable HTTP (`mcp.server.streamable_http_manager.StreamableHTTPSessionManager`). Once the lookup succeeded, the request was handled on that session without comparing its authentication context to the credentials presented when the session was created, so a request authenticated as a different OAuth client could inject messages into the session. On the SSE transport the response is delivered to the original client's event stream; on the Streamable HTTP transport it is returned on the injecting request, so the injecting client can also read the result. The SSE transport has been affected since the first release; the Streamable HTTP transport since version 1.8.0.\n\n### Impact\nServers using either HTTP transport together with the SDK's built-in bearer-token authentication are affected: the per-client isolation that authentication provides can be bypassed for any session whose ID is known. Session IDs are randomly generated UUIDs, so exploitation requires obtaining one out of band (logs, network observation). Servers that do not enable bearer-token authentication have no per-client isolation to bypass and are not addressed by this advisory, and stateless Streamable HTTP deployments do not maintain sessions and are unaffected.\n\n### Mitigation\nUpgrade to version 1.27.2 or later, which records the authenticated principal that created each session \u2014 the OAuth client ID together with the token's issuer and subject when the token verifier supplies them \u2014 and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+  "id": "GHSA-jpw9-pfvf-9f58",
+  "modified": "2026-07-23T15:11:29.023312800Z",
+  "published": "2026-07-16T19:58:53Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/security/advisories/GHSA-jpw9-pfvf-9f58"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-52869"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/pull/2690"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/pull/2719"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/commit/1abcca2408a6b50e10ec601181f63f9978705c00"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/commit/ce267b6fc515dc4efc1dc70b6975b16ff0feef0a"
+    },
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/modelcontextprotocol/python-sdk"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.27.2"
+    },
+    {
+      "type": "PACKAGE",
+      "url": "https://pypi.org/project/mcp"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://github.com/advisories/GHSA-jpw9-pfvf-9f58"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:L",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal"
+}

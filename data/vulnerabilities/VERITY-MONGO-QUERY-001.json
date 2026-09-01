@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-943"
+        ],
+        "owasp_mcp_category": "Injection / Filter Bypassing",
+        "remediation_guidance": "Enforces AST filter allowlist and rejects all $ operators.",
+        "severity": "HIGH",
+        "verity_condition_id": "MONGO-QUERY-001",
+        "vulnerable_tools": [
+          "search_customers"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mongo-search",
+        "purl": "pkg:mcp/mongo-search@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MONGO-QUERY-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Customer Search & Pagination",
+    "server_id": "mongo-search",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: NoSQL Query Operator Injection\n\n**Category**: Injection / Filter Bypassing\n**CWE**: CWE-943\n**Target Tool**: `search_customers`\n\n#### Vulnerable Behavior\nPasses arbitrary $ne, $gt, and operator objects to MongoDB engine.\n\n#### Secure Mitigation\nEnforces AST filter allowlist and rejects all $ operators.\n\n#### Description\nUnsanitized query evaluation allowing arbitrary NoSQL operators.",
+  "id": "VERITY-MONGO-QUERY-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mongo-search"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "NoSQL Query Operator Injection in MongoDB Search Target (mongo-search)"
+}

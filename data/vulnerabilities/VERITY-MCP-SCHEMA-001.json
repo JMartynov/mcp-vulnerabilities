@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-400"
+        ],
+        "owasp_mcp_category": "Resource Exhaustion / DoS",
+        "remediation_guidance": "Enforces schema depth bounds and size limits.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-SCHEMA-001",
+        "vulnerable_tools": [
+          "probe_network_latency"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-transport-chaos",
+        "purl": "pkg:mcp/mcp-transport-chaos@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-SCHEMA-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Cloud Diagnostics & Network Telemetry",
+    "server_id": "mcp-transport-chaos",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Oversized & Deeply Nested Tool Schema DoS\n\n**Category**: Resource Exhaustion / DoS\n**CWE**: CWE-400\n**Target Tool**: `probe_network_latency`\n\n#### Vulnerable Behavior\nEmits deeply nested recursive schema definitions.\n\n#### Secure Mitigation\nEnforces schema depth bounds and size limits.\n\n#### Description\nTarget emits oversized payload or excessive schema recursion.",
+  "id": "VERITY-MCP-SCHEMA-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-transport-chaos"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Oversized & Deeply Nested Tool Schema DoS in Transport Chaos & Schema Resilience Target (mcp-transport-chaos)"
+}

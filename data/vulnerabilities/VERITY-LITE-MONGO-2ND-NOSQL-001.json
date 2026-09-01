@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-943"
+        ],
+        "owasp_mcp_category": "Second-Order NoSQL Injection",
+        "remediation_guidance": "Recursively sanitizes and stringifies stored metadata properties.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-2ND-NOSQL-001",
+        "vulnerable_tools": [
+          "get_product_details"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-catalog-inventory",
+        "purl": "pkg:mcp/mcp-catalog-inventory@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-2ND-NOSQL-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Product Catalog & Inventory Management",
+    "server_id": "mcp-catalog-inventory",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Second-Order NoSQL Injection in Metadata\n\n**Category**: Second-Order NoSQL Injection\n**CWE**: CWE-943\n**Target Tool**: `get_product_details`\n\n#### Vulnerable Behavior\nStores raw nested metadata objects and executes them in pipelines.\n\n#### Secure Mitigation\nRecursively sanitizes and stringifies stored metadata properties.\n\n#### Description\nMalformed product metadata with nested operators executes dynamically.",
+  "id": "VERITY-LITE-MONGO-2ND-NOSQL-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-catalog-inventory"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Second-Order NoSQL Injection in Metadata in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)"
+}

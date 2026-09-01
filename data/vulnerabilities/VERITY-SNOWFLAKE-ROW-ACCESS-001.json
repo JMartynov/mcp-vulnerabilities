@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-639"
+        ],
+        "owasp_mcp_category": "Broken Object-Level Authorization",
+        "remediation_guidance": "Enforces parameterized Row Access Policy matching session tenant.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-ROW-ACCESS-001",
+        "vulnerable_tools": [
+          "query_regional_revenue"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-governance",
+        "purl": "pkg:mcp/snowflake-governance@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-ROW-ACCESS-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Regional Revenue & Policy Governance",
+    "server_id": "snowflake-governance",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Row Access Policy (RAP) Tenant Boundary Bypass\n\n**Category**: Broken Object-Level Authorization\n**CWE**: CWE-639\n**Target Tool**: `query_regional_revenue`\n\n#### Vulnerable Behavior\nOmits Row Access Policy filtering across tenant boundaries.\n\n#### Secure Mitigation\nEnforces parameterized Row Access Policy matching session tenant.\n\n#### Description\nRow Access Policy bypass allows retrieving cross-tenant revenue rows.",
+  "id": "VERITY-SNOWFLAKE-ROW-ACCESS-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-governance"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Row Access Policy (RAP) Tenant Boundary Bypass in Snowflake Governance Target (snowflake-governance)"
+}

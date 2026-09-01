@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-1284"
+        ],
+        "owasp_mcp_category": "Numeric Validation Flaw",
+        "remediation_guidance": "Enforces bounded ranges: discount_percentage between 0 and 100.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-PRICING-001",
+        "vulnerable_tools": [
+          "apply_discount"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-catalog-inventory",
+        "purl": "pkg:mcp/mcp-catalog-inventory@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-PRICING-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Product Catalog & Inventory Management",
+    "server_id": "mcp-catalog-inventory",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Negative Price & Stock Manipulation\n\n**Category**: Numeric Validation Flaw\n**CWE**: CWE-1284\n**Target Tool**: `apply_discount`\n\n#### Vulnerable Behavior\nApplies negative discount percentages, yielding negative prices.\n\n#### Secure Mitigation\nEnforces bounded ranges: discount_percentage between 0 and 100.\n\n#### Description\nPermits negative discounts or negative stock quantities.",
+  "id": "VERITY-LITE-MONGO-PRICING-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-catalog-inventory"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Negative Price & Stock Manipulation in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)"
+}

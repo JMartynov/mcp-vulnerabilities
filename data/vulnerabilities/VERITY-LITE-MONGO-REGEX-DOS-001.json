@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-1333"
+        ],
+        "owasp_mcp_category": "ReDoS / Query CPU Exhaustion",
+        "remediation_guidance": "Escapes regex characters and requires literal string equality matching.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-REGEX-DOS-001",
+        "vulnerable_tools": [
+          "query_audit_logs"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-audit-logging",
+        "purl": "pkg:mcp/mcp-audit-logging@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-REGEX-DOS-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Compliance & Immutable Event Tracking",
+    "server_id": "mcp-audit-logging",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Unanchored Regex Query Denial of Service\n\n**Category**: ReDoS / Query CPU Exhaustion\n**CWE**: CWE-1333\n**Target Tool**: `query_audit_logs`\n\n#### Vulnerable Behavior\nCompiles unescaped caller patterns into unanchored MongoDB $regex.\n\n#### Secure Mitigation\nEscapes regex characters and requires literal string equality matching.\n\n#### Description\nUnanchored regex queries on audit collections cause catastrophic CPU locks.",
+  "id": "VERITY-LITE-MONGO-REGEX-DOS-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-audit-logging"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Unanchored Regex Query Denial of Service in Security Audit Trails & Logging (mcp-audit-logging)"
+}

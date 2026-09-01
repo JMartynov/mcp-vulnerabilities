@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-639"
+        ],
+        "owasp_mcp_category": "Broken Object-Level Authorization",
+        "remediation_guidance": "Restricts queries strictly to authorized shared databases.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-SHARE-LEAK-001",
+        "vulnerable_tools": [
+          "get_trial_telemetry"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-clinical",
+        "purl": "pkg:mcp/snowflake-clinical@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-SHARE-LEAK-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Healthcare & Clinical Trial Telemetry",
+    "server_id": "snowflake-clinical",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Secure Share Boundary Smuggling\n\n**Category**: Broken Object-Level Authorization\n**CWE**: CWE-639\n**Target Tool**: `get_trial_telemetry`\n\n#### Vulnerable Behavior\nAllows joins against unshared private pharma databases.\n\n#### Secure Mitigation\nRestricts queries strictly to authorized shared databases.\n\n#### Description\nCross-database joins against unshared private databases.",
+  "id": "VERITY-SNOWFLAKE-SHARE-LEAK-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-clinical"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Secure Share Boundary Smuggling in Snowflake Clinical Trial Target (snowflake-clinical)"
+}

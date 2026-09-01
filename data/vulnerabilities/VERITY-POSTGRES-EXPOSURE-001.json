@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Data Minimization / Column Projection",
+        "remediation_guidance": "Enforces safe column projection allowlist or v_tenant_invoices view.",
+        "severity": "HIGH",
+        "verity_condition_id": "POSTGRES-EXPOSURE-001",
+        "vulnerable_tools": [
+          "get_invoice"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "postgres-basic",
+        "purl": "pkg:mcp/postgres-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "POSTGRES-EXPOSURE-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Invoice & Financial Management",
+    "server_id": "postgres-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Excessive Sensitive Financial Data Exposure\n\n**Category**: Data Minimization / Column Projection\n**CWE**: CWE-200\n**Target Tool**: `get_invoice`\n\n#### Vulnerable Behavior\nReturns raw unprojected invoice row with sensitive attributes.\n\n#### Secure Mitigation\nEnforces safe column projection allowlist or v_tenant_invoices view.\n\n#### Description\nUnprojected SELECT * serialization leaking SSN, bank account, and card numbers.",
+  "id": "VERITY-POSTGRES-EXPOSURE-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/postgres-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Excessive Sensitive Financial Data Exposure in PostgreSQL Basic Target (postgres-basic)"
+}

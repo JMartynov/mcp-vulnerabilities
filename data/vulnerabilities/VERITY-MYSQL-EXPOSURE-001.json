@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Excessive Data Exposure / PII Leakage",
+        "remediation_guidance": "Applies a strict column projection allowlist or queries via a restricted view.",
+        "severity": "HIGH",
+        "verity_condition_id": "MYSQL-EXPOSURE-001",
+        "vulnerable_tools": [
+          "get_order"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mysql-basic",
+        "purl": "pkg:mcp/mysql-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MYSQL-EXPOSURE-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Order & Financial Management",
+    "server_id": "mysql-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Excessive Sensitive Financial & Payment Card Data Exposure\n\n**Category**: Excessive Data Exposure / PII Leakage\n**CWE**: CWE-200\n**Target Tool**: `get_order`\n\n#### Vulnerable Behavior\nDirectly serializes unprojected relational columns into MCP tool responses.\n\n#### Secure Mitigation\nApplies a strict column projection allowlist or queries via a restricted view.\n\n#### Description\nThe get_order tool executes an unprojected SELECT * returning customer credit card numbers, CVVs, and billing addresses.",
+  "id": "VERITY-MYSQL-EXPOSURE-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mysql-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Excessive Sensitive Financial & Payment Card Data Exposure in MySQL Basic Target (mysql-basic)"
+}

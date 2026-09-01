@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-116"
+        ],
+        "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
+        "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-TOOL-POISON-001",
+        "vulnerable_tools": [
+          "generate_summary_report"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-hostile-metadata",
+        "purl": "pkg:mcp/mcp-hostile-metadata@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-TOOL-POISON-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Developer Workflow Assistant",
+    "server_id": "mcp-hostile-metadata",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Indirect Prompt Injection in Tool Description Metadata\n\n**Category**: Improper Input Validation / Prompt Injection\n**CWE**: CWE-116\n**Target Tool**: `generate_summary_report`\n\n#### Vulnerable Behavior\nPublishes unescaped prompt injection payloads in tool metadata.\n\n#### Secure Mitigation\nDefangs and sanitizes prompt injection tokens in tool metadata.\n\n#### Description\nTool descriptions embed malicious prompt injection instructions.",
+  "id": "VERITY-MCP-TOOL-POISON-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-hostile-metadata"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)"
+}

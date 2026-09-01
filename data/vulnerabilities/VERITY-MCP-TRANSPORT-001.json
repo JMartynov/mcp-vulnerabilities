@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-400"
+        ],
+        "owasp_mcp_category": "Resource Exhaustion / DoS",
+        "remediation_guidance": "Enforces bounded execution timeouts and connection limits.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-TRANSPORT-001",
+        "vulnerable_tools": [
+          "probe_network_latency"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-transport-chaos",
+        "purl": "pkg:mcp/mcp-transport-chaos@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-TRANSPORT-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Cloud Diagnostics & Network Telemetry",
+    "server_id": "mcp-transport-chaos",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Slow Transport Response & Hanging Endpoint\n\n**Category**: Resource Exhaustion / DoS\n**CWE**: CWE-400\n**Target Tool**: `probe_network_latency`\n\n#### Vulnerable Behavior\nSimulates hanging endpoint and unhandled timeouts.\n\n#### Secure Mitigation\nEnforces bounded execution timeouts and connection limits.\n\n#### Description\nTarget fails to respond within bounded time limits.",
+  "id": "VERITY-MCP-TRANSPORT-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-transport-chaos"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Slow Transport Response & Hanging Endpoint in Transport Chaos & Schema Resilience Target (mcp-transport-chaos)"
+}

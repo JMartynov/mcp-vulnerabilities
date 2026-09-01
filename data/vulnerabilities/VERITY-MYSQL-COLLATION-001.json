@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-20"
+        ],
+        "owasp_mcp_category": "Improper Input Validation / Collation Bypass",
+        "remediation_guidance": "Enforces binary collation matching and canonical whitespace validation.",
+        "severity": "HIGH",
+        "verity_condition_id": "MYSQL-COLLATION-001",
+        "vulnerable_tools": [
+          "search_orders"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mysql-search",
+        "purl": "pkg:mcp/mysql-search@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MYSQL-COLLATION-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Order Search & Status Filtering",
+    "server_id": "mysql-search",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: MySQL Loose Collation and Trailing Whitespace Authorization Bypass\n\n**Category**: Improper Input Validation / Collation Bypass\n**CWE**: CWE-20\n**Target Tool**: `search_orders`\n\n#### Vulnerable Behavior\nPermits non-binary collation equality matching on tenant ID.\n\n#### Secure Mitigation\nEnforces binary collation matching and canonical whitespace validation.\n\n#### Description\nLoose MySQL string collation matches trailing whitespace inputs across tenant security boundaries.",
+  "id": "VERITY-MYSQL-COLLATION-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mysql-search"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "MySQL Loose Collation and Trailing Whitespace Authorization Bypass in MySQL Search Target (mysql-search)"
+}

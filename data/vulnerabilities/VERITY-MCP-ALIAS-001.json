@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-639"
+        ],
+        "owasp_mcp_category": "Broken Object Level Authorization",
+        "remediation_guidance": "Enforces session tenant isolation.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-ALIAS-001",
+        "vulnerable_tools": [
+          "lookup_personnel_record"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-tool-alias",
+        "purl": "pkg:mcp/mcp-tool-alias@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-ALIAS-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Human Resources & Personnel Directory",
+    "server_id": "mcp-tool-alias",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Cross-Tenant Lookup in Renamed Personnel Alias Tool\n\n**Category**: Broken Object Level Authorization\n**CWE**: CWE-639\n**Target Tool**: `lookup_personnel_record`\n\n#### Vulnerable Behavior\nOmits tenant isolation checks in personnel lookups.\n\n#### Secure Mitigation\nEnforces session tenant isolation.\n\n#### Description\nCross-tenant identifier substitution in renamed personnel lookup tool.",
+  "id": "VERITY-MCP-ALIAS-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-tool-alias"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Cross-Tenant Lookup in Renamed Personnel Alias Tool in Structural Alias & Tool Name Independence Target (mcp-tool-alias)"
+}

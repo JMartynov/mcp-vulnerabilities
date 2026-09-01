@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-269"
+        ],
+        "owasp_mcp_category": "Improper Access Control",
+        "remediation_guidance": "Restricts role modifications to authorized admin callers only.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-RBAC-001",
+        "vulnerable_tools": [
+          "update_user_roles"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-auth-rbac",
+        "purl": "pkg:mcp/mcp-auth-rbac@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-RBAC-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "User Directory & RBAC Security",
+    "server_id": "mcp-auth-rbac",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Privilege Escalation via Mass Assignment\n\n**Category**: Improper Access Control\n**CWE**: CWE-269\n**Target Tool**: `update_user_roles`\n\n#### Vulnerable Behavior\nApplies raw attributes dict including 'is_admin' or 'role' fields.\n\n#### Secure Mitigation\nRestricts role modifications to authorized admin callers only.\n\n#### Description\nUnvalidated role fields allow standard users to elevate to admin/superuser.",
+  "id": "VERITY-LITE-MONGO-RBAC-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-auth-rbac"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)"
+}

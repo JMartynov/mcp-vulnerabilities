@@ -1,0 +1,110 @@
+{
+  "affected": [
+    {
+      "database_specific": {},
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-server-figma",
+        "purl": "pkg:npm/mcp-server-figma"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ],
+      "versions": [
+        "0.0.1",
+        "0.0.2"
+      ]
+    }
+  ],
+  "aliases": [
+    "GHSA-8j33-qh42-vjc6"
+  ],
+  "database_specific": {
+    "malicious-packages-origins": [
+      {
+        "id": "IN-MAL-2026-005226",
+        "import_time": "2026-06-09T20:45:56.74541785Z",
+        "modified_time": "2026-06-09T20:34:25Z",
+        "sha256": "29060c34630f9510a380d9a36111d525f2b33db41ee4d079e7d63b3e7c697c76",
+        "source": "amazon-inspector",
+        "versions": [
+          "0.0.1"
+        ]
+      },
+      {
+        "id": "IN-MAL-2026-005225",
+        "import_time": "2026-06-09T20:45:56.617560075Z",
+        "modified_time": "2026-06-09T20:34:25Z",
+        "sha256": "474223e0d5456564c1ae112031e3b8f276850a79f59cc93ed3a04805de291f20",
+        "source": "amazon-inspector",
+        "versions": [
+          "0.0.1"
+        ]
+      },
+      {
+        "id": "IN-MAL-2026-005792",
+        "import_time": "2026-06-12T19:43:33.996271781Z",
+        "modified_time": "2026-06-12T19:02:00Z",
+        "sha256": "907890012c3e47c5c0a67ab7f1d2c9a5f0c913aeb6fabf95c8f53c5954f33a91",
+        "source": "amazon-inspector",
+        "versions": [
+          "0.0.2"
+        ]
+      },
+      {
+        "id": "IN-MAL-2026-005793",
+        "import_time": "2026-06-12T19:43:34.104692673Z",
+        "modified_time": "2026-06-12T19:02:01Z",
+        "sha256": "ae79ea626ab6479ab2b5bec20a357cf44dac76f2603e0cf0c0afc34fe9550395",
+        "source": "amazon-inspector",
+        "versions": [
+          "0.0.2"
+        ]
+      },
+      {
+        "id": "GHSA-8j33-qh42-vjc6",
+        "import_time": "2026-08-20T15:26:15.525793102Z",
+        "modified_time": "2026-08-20T14:26:03Z",
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ],
+        "sha256": "cd1c640ad7c3eb7e2850f240d9920938e882d57fd57ac25419f7a0eb5d73f76d",
+        "source": "ghsa-malware"
+      }
+    ]
+  },
+  "details": "\n---\n_-= Per source details. Do not edit below this line.=-_\n\n## Source: amazon-inspector (474223e0d5456564c1ae112031e3b8f276850a79f59cc93ed3a04805de291f20)\nPackage squats the unscoped name `mcp-server-figma`, which AI coding agents and developers commonly invoke via `npx mcp-server-figma` expecting the legitimate Figma MCP server (which uses a scoped name). The package.json declares `scripts.postinstall: node index.js`, which fires automatically on `npm install`. index.js (line 18) hardcodes `ENDPOINT = 'https://npx-canary-log.vulnerable-live.workers.dev/log'` and POSTs a JSON payload containing `os.hostname()`, `process.cwd()`, `process.env.npm_config_user_agent`, Node version, `os.platform()`, and a timestamp to that Cloudflare Workers endpoint. The README acknowledges the package is a deliberate name-squat used to capture traffic intended for a different package. Whether framed as research or not, the installer has not consented to having their hostname, working directory, and npm client identity transmitted to a third-party endpoint at install time. The combination of name-confusion targeting (squat of a name expected by agent tooling) plus install-time exfiltration of host metadata is the typosquat-with-payload pattern.\n\n## Source: ghsa-malware (cd1c640ad7c3eb7e2850f240d9920938e882d57fd57ac25419f7a0eb5d73f76d)\nAny computer that has this package installed or running should be considered fully compromised. All secrets and keys stored on that computer should be rotated immediately from a different computer. The package should be removed, but as full control of the computer may have been given to an outside entity, there is no guarantee that removing the package will remove all malicious software resulting from installing it.\n",
+  "id": "MAL-2026-5477",
+  "modified": "2026-08-20T15:30:12.070409464Z",
+  "published": "2026-06-09T20:34:25Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/mcp-server-figma/v/0.0.1"
+    },
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/mcp-server-figma/v/0.0.2"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://github.com/advisories/GHSA-8j33-qh42-vjc6"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Malicious code in mcp-server-figma (npm)"
+}

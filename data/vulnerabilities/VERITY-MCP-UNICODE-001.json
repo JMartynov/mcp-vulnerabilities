@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-451"
+        ],
+        "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
+        "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
+        "severity": "HIGH",
+        "verity_condition_id": "MCP-UNICODE-001",
+        "vulnerable_tools": [
+          "generate_summary_report"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-hostile-metadata",
+        "purl": "pkg:mcp/mcp-hostile-metadata@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MCP-UNICODE-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Developer Workflow Assistant",
+    "server_id": "mcp-hostile-metadata",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Invisible & Confusable Unicode Control Characters in Tool Schema\n\n**Category**: Improper Output Handling / Homoglyph Spoofing\n**CWE**: CWE-451\n**Target Tool**: `generate_summary_report`\n\n#### Vulnerable Behavior\nPublishes zero-width and RTL override control characters.\n\n#### Secure Mitigation\nStrips invisible and control characters using NFKC normalization.\n\n#### Description\nTool metadata embeds zero-width spaces, joiners, and RTL overrides.",
+  "id": "VERITY-MCP-UNICODE-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-hostile-metadata"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)"
+}

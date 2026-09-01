@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-89"
+        ],
+        "owasp_mcp_category": "SQL Injection / Data Smuggling",
+        "remediation_guidance": "Blocks external stage export queries and restricts mutations.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-EXT-UNLOAD-001",
+        "vulnerable_tools": [
+          "manage_warehouse_stage"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-stage",
+        "purl": "pkg:mcp/snowflake-stage@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-EXT-UNLOAD-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Stage Management & Data Unloading",
+    "server_id": "snowflake-stage",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Unauthorized External Stage Data Export\n\n**Category**: SQL Injection / Data Smuggling\n**CWE**: CWE-89\n**Target Tool**: `manage_warehouse_stage`\n\n#### Vulnerable Behavior\nEvaluates arbitrary COPY INTO export queries.\n\n#### Secure Mitigation\nBlocks external stage export queries and restricts mutations.\n\n#### Description\nCOPY INTO @external_s3_stage permits data exfiltration outside warehouse.",
+  "id": "VERITY-SNOWFLAKE-EXT-UNLOAD-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-stage"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Unauthorized External Stage Data Export in Snowflake Stage Target (snowflake-stage)"
+}

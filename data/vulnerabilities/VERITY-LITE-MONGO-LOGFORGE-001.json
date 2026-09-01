@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-117"
+        ],
+        "owasp_mcp_category": "Log Tampering",
+        "remediation_guidance": "Enforces server-generated ISO timestamps and authenticated actor IDs.",
+        "severity": "HIGH",
+        "verity_condition_id": "LITE-MONGO-LOGFORGE-001",
+        "vulnerable_tools": [
+          "record_audit_event"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-audit-logging",
+        "purl": "pkg:mcp/mcp-audit-logging@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "LITE-MONGO-LOGFORGE-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Compliance & Immutable Event Tracking",
+    "server_id": "mcp-audit-logging",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Audit Log Forgery & Timestamp Manipulation\n\n**Category**: Log Tampering\n**CWE**: CWE-117\n**Target Tool**: `record_audit_event`\n\n#### Vulnerable Behavior\nTrusts caller-provided timestamp and actor fields in event_data.\n\n#### Secure Mitigation\nEnforces server-generated ISO timestamps and authenticated actor IDs.\n\n#### Description\nCallers can inject forged timestamps and alter actor identities.",
+  "id": "VERITY-LITE-MONGO-LOGFORGE-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-audit-logging"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Audit Log Forgery & Timestamp Manipulation in Security Audit Trails & Logging (mcp-audit-logging)"
+}

@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-400"
+        ],
+        "owasp_mcp_category": "Resource Exhaustion / Volume Control",
+        "remediation_guidance": "Enforces server-side limit clamping to min(max(1, limit), 50).",
+        "severity": "HIGH",
+        "verity_condition_id": "MONGO-VOLUME-001",
+        "vulnerable_tools": [
+          "search_customers"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mongo-search",
+        "purl": "pkg:mcp/mongo-search@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MONGO-VOLUME-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Customer Search & Pagination",
+    "server_id": "mongo-search",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Unbounded Result Exposure / Volume Circumvention\n\n**Category**: Resource Exhaustion / Volume Control\n**CWE**: CWE-400\n**Target Tool**: `search_customers`\n\n#### Vulnerable Behavior\nIgnores limit parameter and returns entire dataset.\n\n#### Secure Mitigation\nEnforces server-side limit clamping to min(max(1, limit), 50).\n\n#### Description\nServer ignores requested limit, returning unbounded matched records.",
+  "id": "VERITY-MONGO-VOLUME-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mongo-search"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)"
+}

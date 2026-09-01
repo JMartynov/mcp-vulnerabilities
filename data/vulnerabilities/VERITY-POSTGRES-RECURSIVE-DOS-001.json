@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-400"
+        ],
+        "owasp_mcp_category": "Resource Exhaustion / Query DoS",
+        "remediation_guidance": "Enforces statement timeout limits and rejects recursive constructs.",
+        "severity": "HIGH",
+        "verity_condition_id": "POSTGRES-RECURSIVE-DOS-001",
+        "vulnerable_tools": [
+          "run_metric_report"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "postgres-analytics",
+        "purl": "pkg:mcp/postgres-analytics@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "POSTGRES-RECURSIVE-DOS-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Financial Aggregations & Reporting",
+    "server_id": "postgres-analytics",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Unbounded Recursive Query CPU Exhaustion\n\n**Category**: Resource Exhaustion / Query DoS\n**CWE**: CWE-400\n**Target Tool**: `run_metric_report`\n\n#### Vulnerable Behavior\nExecutes recursive CTE queries without statement timeout bounds.\n\n#### Secure Mitigation\nEnforces statement timeout limits and rejects recursive constructs.\n\n#### Description\nPermits recursive CTE queries and unbounded statement execution causing CPU DoS.",
+  "id": "VERITY-POSTGRES-RECURSIVE-DOS-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/postgres-analytics"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Unbounded Recursive Query CPU Exhaustion in PostgreSQL Analytics & Reporting Target (postgres-analytics)"
+}

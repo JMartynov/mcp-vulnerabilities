@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-639"
+        ],
+        "owasp_mcp_category": "Broken Object Level Authorization (BOLA)",
+        "remediation_guidance": "Enforces compound parameterized query: WHERE order_id = ? AND tenant_id = ?",
+        "severity": "HIGH",
+        "verity_condition_id": "MYSQL-TENANT-001",
+        "vulnerable_tools": [
+          "get_order"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mysql-basic",
+        "purl": "pkg:mcp/mysql-basic@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MYSQL-TENANT-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Order & Financial Management",
+    "server_id": "mysql-basic",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Cross-Tenant Relational Order Broken Object Level Authorization\n\n**Category**: Broken Object Level Authorization (BOLA)\n**CWE**: CWE-639\n**Target Tool**: `get_order`\n\n#### Vulnerable Behavior\nReturns foreign-tenant order records without session tenant scoping.\n\n#### Secure Mitigation\nEnforces compound parameterized query: WHERE order_id = ? AND tenant_id = ?\n\n#### Description\nThe get_order tool queries the shared orders table by order_id without filtering on session_tenant, allowing Tenant A to access Tenant B orders.",
+  "id": "VERITY-MYSQL-TENANT-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mysql-basic"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Cross-Tenant Relational Order Broken Object Level Authorization in MySQL Basic Target (mysql-basic)"
+}

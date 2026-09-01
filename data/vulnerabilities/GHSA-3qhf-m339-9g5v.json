@@ -1,0 +1,87 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v4_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N"
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "mcp",
+        "purl": "pkg:pypi/mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "fixed": "1.9.4"
+            },
+            {
+              "introduced": "0"
+            }
+          ],
+          "type": "ECOSYSTEM"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "CVE-2025-53366",
+    "PYSEC-2026-1616"
+  ],
+  "database_specific": {
+    "sources_merged": [
+      "GHSA-3qhf-m339-9g5v",
+      "PYSEC-2026-1616"
+    ]
+  },
+  "details": "A validation error in the MCP SDK can cause an unhandled exception when processing malformed requests, resulting in service unavailability (500 errors) until manually restarted. Impact may vary depending on the deployment conditions, and presence of infrastructure-level resilience measures.\n\nThank you to Rich Harang for reporting this issue.",
+  "id": "GHSA-3qhf-m339-9g5v",
+  "modified": "2026-07-16T18:45:48.199122861Z",
+  "published": "2025-07-04T22:06:49Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/security/advisories/GHSA-3qhf-m339-9g5v"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53366"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/pull/822"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/commit/29c69e6a47d0104d0afcea6ac35e7ab02fde809a"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://github.com/advisories/GHSA-3qhf-m339-9g5v"
+    },
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/modelcontextprotocol/python-sdk"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.9.4"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/pypa/advisory-database/tree/main/vulns/mcp/PYSEC-2026-1616.yaml"
+    },
+    {
+      "type": "WEB",
+      "url": "https://pypi.org/project/mcp"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+      "type": "CVSS_V4"
+    }
+  ],
+  "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS"
+}

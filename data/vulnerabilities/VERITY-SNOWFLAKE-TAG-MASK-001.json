@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-284"
+        ],
+        "owasp_mcp_category": "Improper Access Control / Masking Bypass",
+        "remediation_guidance": "Enforces object tag masking and rejects client tag overrides.",
+        "severity": "HIGH",
+        "verity_condition_id": "SNOWFLAKE-TAG-MASK-001",
+        "vulnerable_tools": [
+          "settle_trade_order"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "snowflake-trading",
+        "purl": "pkg:mcp/snowflake-trading@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "SNOWFLAKE-TAG-MASK-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Capital Markets & Trade Settlement",
+    "server_id": "snowflake-trading",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Snowflake Tag-Based Masking & Object Tagging Bypass\n\n**Category**: Improper Access Control / Masking Bypass\n**CWE**: CWE-284\n**Target Tool**: `settle_trade_order`\n\n#### Vulnerable Behavior\nPermits tag overrides and omits object tag masking policies.\n\n#### Secure Mitigation\nEnforces object tag masking and rejects client tag overrides.\n\n#### Description\nTag overrides or untagged views leak confidential counterparty data.",
+  "id": "VERITY-SNOWFLAKE-TAG-MASK-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/snowflake-trading"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Snowflake Tag-Based Masking & Object Tagging Bypass in Snowflake Trading & Risk Target (snowflake-trading)"
+}

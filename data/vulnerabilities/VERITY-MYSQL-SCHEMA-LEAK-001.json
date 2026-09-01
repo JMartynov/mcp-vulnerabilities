@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Authorization Bypass / Information Exposure",
+        "remediation_guidance": "Revokes system schema privileges and rejects internal catalogs.",
+        "severity": "HIGH",
+        "verity_condition_id": "MYSQL-SCHEMA-LEAK-001",
+        "vulnerable_tools": [
+          "execute_admin_query"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mysql-admin",
+        "purl": "pkg:mcp/mysql-admin@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "MYSQL-SCHEMA-LEAK-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Administrative Querying & Security",
+    "server_id": "mysql-admin",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: MySQL System Catalog and User Table Metadata Exfiltration\n\n**Category**: Authorization Bypass / Information Exposure\n**CWE**: CWE-200\n**Target Tool**: `execute_admin_query`\n\n#### Vulnerable Behavior\nAllows querying mysql.user and information_schema tables.\n\n#### Secure Mitigation\nRevokes system schema privileges and rejects internal catalogs.\n\n#### Description\nAccess to internal user and schema tables in mysql.user / information_schema.",
+  "id": "VERITY-MYSQL-SCHEMA-LEAK-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mysql-admin"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "MySQL System Catalog and User Table Metadata Exfiltration in MySQL Admin Target (mysql-admin)"
+}

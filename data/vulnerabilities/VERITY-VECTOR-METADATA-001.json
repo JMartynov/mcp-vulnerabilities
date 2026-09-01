@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-200"
+        ],
+        "owasp_mcp_category": "Sensitive Data Exposure",
+        "remediation_guidance": "Projects only safe metadata fields.",
+        "severity": "HIGH",
+        "verity_condition_id": "VECTOR-METADATA-001",
+        "vulnerable_tools": [
+          "semantic_search"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-vector-search",
+        "purl": "pkg:mcp/mcp-vector-search@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "VECTOR-METADATA-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Semantic Retrieval & Knowledge Base",
+    "server_id": "mcp-vector-search",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Excessive Sensitive Vector Metadata Exposure\n\n**Category**: Sensitive Data Exposure\n**CWE**: CWE-200\n**Target Tool**: `semantic_search`\n\n#### Vulnerable Behavior\nReturns raw API secrets and internal URLs in document metadata.\n\n#### Secure Mitigation\nProjects only safe metadata fields.\n\n#### Description\nExcessive sensitive metadata exposure in vector search responses.",
+  "id": "VERITY-VECTOR-METADATA-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-vector-search"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Excessive Sensitive Vector Metadata Exposure in Semantic Vector Search & Metadata Target (mcp-vector-search)"
+}

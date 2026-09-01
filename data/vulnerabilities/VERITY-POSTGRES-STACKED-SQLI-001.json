@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-89"
+        ],
+        "owasp_mcp_category": "SQL Injection / Arbitrary Execution",
+        "remediation_guidance": "Rejects semicolons and enforces single-statement SELECT validation.",
+        "severity": "HIGH",
+        "verity_condition_id": "POSTGRES-STACKED-SQLI-001",
+        "vulnerable_tools": [
+          "execute_query"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "postgres-query",
+        "purl": "pkg:mcp/postgres-query@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "POSTGRES-STACKED-SQLI-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Enterprise Ledger & Query Execution",
+    "server_id": "postgres-query",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Multi-Statement Stacked Query SQL Injection\n\n**Category**: SQL Injection / Arbitrary Execution\n**CWE**: CWE-89\n**Target Tool**: `execute_query`\n\n#### Vulnerable Behavior\nPermits semicolon-separated multi-statement execution.\n\n#### Secure Mitigation\nRejects semicolons and enforces single-statement SELECT validation.\n\n#### Description\nMulti-statement execution allows executing destructive DDL/DML alongside reads.",
+  "id": "VERITY-POSTGRES-STACKED-SQLI-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/postgres-query"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Multi-Statement Stacked Query SQL Injection in PostgreSQL Raw Query Target (postgres-query)"
+}

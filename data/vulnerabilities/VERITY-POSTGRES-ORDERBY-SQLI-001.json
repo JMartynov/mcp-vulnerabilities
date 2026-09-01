@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-89"
+        ],
+        "owasp_mcp_category": "SQL Injection / Dynamic Clause Evaluation",
+        "remediation_guidance": "Enforces strict column identifier allowlisting.",
+        "severity": "HIGH",
+        "verity_condition_id": "POSTGRES-ORDERBY-SQLI-001",
+        "vulnerable_tools": [
+          "run_metric_report"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "postgres-analytics",
+        "purl": "pkg:mcp/postgres-analytics@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "POSTGRES-ORDERBY-SQLI-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Financial Aggregations & Reporting",
+    "server_id": "postgres-analytics",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Dynamic Identifier & ORDER BY Clause SQL Injection\n\n**Category**: SQL Injection / Dynamic Clause Evaluation\n**CWE**: CWE-89\n**Target Tool**: `run_metric_report`\n\n#### Vulnerable Behavior\nDirectly concatenates user input into ORDER BY clause.\n\n#### Secure Mitigation\nEnforces strict column identifier allowlisting.\n\n#### Description\nDynamic identifier interpolation in ORDER BY allows arbitrary subqueries.",
+  "id": "VERITY-POSTGRES-ORDERBY-SQLI-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/postgres-analytics"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Dynamic Identifier & ORDER BY Clause SQL Injection in PostgreSQL Analytics & Reporting Target (postgres-analytics)"
+}

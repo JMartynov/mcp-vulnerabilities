@@ -1,0 +1,57 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 8.5,
+        "cwe_ids": [
+          "CWE-639"
+        ],
+        "owasp_mcp_category": "Broken Object Level Authorization",
+        "remediation_guidance": "Enforces strict tenant pre-filtering on vector queries.",
+        "severity": "HIGH",
+        "verity_condition_id": "VECTOR-TENANT-001",
+        "vulnerable_tools": [
+          "semantic_search"
+        ]
+      },
+      "package": {
+        "ecosystem": "MCP",
+        "name": "mcp-vector-search",
+        "purl": "pkg:mcp/mcp-vector-search@1.0.0"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.1.0"
+            },
+            {
+              "fixed": "1.0.0-secure"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "VECTOR-TENANT-001"
+  ],
+  "database_specific": {
+    "benchmark_domain": "Semantic Retrieval & Knowledge Base",
+    "server_id": "mcp-vector-search",
+    "source": "Verity Benchmark Catalog"
+  },
+  "details": "### Vulnerability Condition: Cross-Tenant Vector Search Retrieval\n\n**Category**: Broken Object Level Authorization\n**CWE**: CWE-639\n**Target Tool**: `semantic_search`\n\n#### Vulnerable Behavior\nOmits tenant filtering across document embeddings.\n\n#### Secure Mitigation\nEnforces strict tenant pre-filtering on vector queries.\n\n#### Description\nCross-tenant vector search retrieval via missing tenant filter.",
+  "id": "VERITY-VECTOR-TENANT-001",
+  "modified": "2026-08-21T00:00:00Z",
+  "published": "2026-01-01T00:00:00Z",
+  "references": [
+    {
+      "type": "PACKAGE",
+      "url": "https://github.com/JMartynov/verityredteam/blob/main/demo/mcp_library/mcp-vector-search"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Cross-Tenant Vector Search Retrieval in Semantic Vector Search & Metadata Target (mcp-vector-search)"
+}
