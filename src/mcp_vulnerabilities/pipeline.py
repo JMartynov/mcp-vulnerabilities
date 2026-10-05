@@ -4,12 +4,14 @@ from __future__ import annotations
 
 import json
 import logging
+import ssl
 import urllib.error
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from mcp_vulnerabilities.catalog import McpCatalogState
 from mcp_vulnerabilities.converters.cve_json5 import CveJson5Converter
 from mcp_vulnerabilities.converters.ghsa import GhsaConverter
 from mcp_vulnerabilities.converters.markdown_cve import MarkdownAdvisoryConverter
@@ -24,6 +26,17 @@ from mcp_vulnerabilities.validator import OsvValidator
 
 logger = logging.getLogger("mcp_vulnerabilities.pipeline")
 
+
+def _get_ssl_context() -> ssl.SSLContext:
+    try:
+        ctx = ssl.create_default_context()
+        ctx.check_hostname = False
+        ctx.verify_mode = ssl.CERT_NONE
+        return ctx
+    except Exception:
+        return ssl._create_unverified_context()
+
+
 KNOWN_MCP_PACKAGES: tuple[tuple[str, str], ...] = (
     ("npm", "mcp-remote"),
     ("npm", "@modelcontextprotocol/server-postgres"),
@@ -32,19 +45,29 @@ KNOWN_MCP_PACKAGES: tuple[tuple[str, str], ...] = (
     ("npm", "@modelcontextprotocol/server-github"),
     ("npm", "@modelcontextprotocol/server-git"),
     ("npm", "@modelcontextprotocol/server-brave-search"),
+    ("npm", "@modelcontextprotocol/server-everything"),
     ("npm", "@modelcontextprotocol/sdk"),
     ("npm", "@cyanheads/git-mcp-server"),
     ("npm", "sammcj/mcp-package-docs"),
     ("npm", "@aborruso/ckan-mcp-server"),
     ("npm", "mcp-server-figma"),
+    ("npm", "mcp-server-kubernetes"),
+    ("npm", "excel-mcp-server"),
+    ("npm", "mcp-framework"),
     ("PyPI", "mcp"),
     ("PyPI", "fastmcp"),
     ("PyPI", "mcp-neo4j-cypher"),
     ("PyPI", "mcp-server-sqlite"),
     ("PyPI", "mcp-server-git"),
     ("PyPI", "awslabs.aws-api-mcp-server"),
+    ("PyPI", "mcp-server-kubernetes"),
     ("Go", "github.com/modelcontextprotocol/go-sdk"),
+    ("crates.io", "rust-mcp-sdk"),
+    ("crates.io", "rmcp"),
+    ("RubyGems", "mcp"),
+    ("RubyGems", "fast-mcp"),
 )
+
 
 
 @dataclass(frozen=True)
@@ -67,15 +90,20 @@ class McpVulnerabilityPipeline:
         self,
         output_dir: str | Path = "data/vulnerabilities",
         state_file: str | Path = "data/vulnerabilities/sync_state.json",
+        catalog_state_file: str | Path = "data/mcp_catalog_state.json",
+        servers_catalog_file: str | Path = "data/mcp_servers.json",
     ) -> None:
         self.output_dir = Path(output_dir)
         self.state_file = Path(state_file)
         self.state_manager = SyncStateManager(state_file=self.state_file)
+        self.catalog_state = McpCatalogState(state_file=catalog_state_file)
+        self.servers_catalog_file = Path(servers_catalog_file)
 
     def run(
         self,
         include_markdown_dirs: list[str | Path] | None = None,
         include_cvelistv5_dirs: list[str | Path] | None = None,
+        include_cvelist_delta: bool = False,
         include_ghsa_api: bool = False,
         include_osv_api: bool = False,
         include_verity_catalog: bool = True,
@@ -86,9 +114,11 @@ class McpVulnerabilityPipeline:
         if reset_checkpoints:
             self.state_manager = SyncStateManager(state_file=self.state_file)
             self.state_manager.state.sources.clear()
+            self.catalog_state.records.clear()
 
         collected: list[OsvVulnerability] = []
         errors: list[str] = []
+
 
         # 1. Ingest from internal Verity benchmark catalog
         if include_verity_catalog:
@@ -204,24 +234,175 @@ class McpVulnerabilityPipeline:
                 records_synced=cve_chk.records_synced + cve_synced,
             )
 
-        # 4. Ingest from OSV.dev REST API for known packages
-        if include_osv_api:
-            for eco, pkg in KNOWN_MCP_PACKAGES:
-                try:
-                    osv_records = self._query_osv_dev(eco, pkg)
-                    for r in osv_records:
-                        is_rel, _ = McpRelevanceFilter.is_relevant(
-                            package_name=pkg, summary=r.summary, details=r.details
+        # 4. Ingest from GitHub Security Advisories (GHSA) live REST API
+        if include_ghsa_api:
+            ghsa_scanned = 0
+            ghsa_synced = 0
+            try:
+                ghsa_url = "https://api.github.com/advisories?per_page=100&direction=desc&sort=updated"
+                req = urllib.request.Request(
+                    ghsa_url,
+                    headers={
+                        "User-Agent": "McpVulnerabilities/1.0",
+                        "Accept": "application/vnd.github.v3+json",
+                    },
+                )
+                with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
+                    data = json.loads(resp.read().decode("utf-8"))
+                    if isinstance(data, list):
+                        ghsa_scanned = len(data)
+                        for adv in data:
+                            pkg_name = adv.get("vulnerabilities", [{}])[0].get("package", {}).get("name")
+                            is_rel, _ = McpRelevanceFilter.is_relevant(
+                                package_name=pkg_name,
+                                summary=adv.get("summary", ""),
+                                details=adv.get("description", ""),
+                                raw_data=adv,
+                            )
+                            if is_rel:
+                                try:
+                                    vuln = GhsaConverter.from_dict(adv)
+                                    collected.append(vuln)
+                                    ghsa_synced += 1
+                                    # Invalidate package in catalog state so full context is refreshed
+                                    for aff in vuln.affected:
+                                        self.catalog_state.mark_stale(aff.package.ecosystem, aff.package.name)
+                                except Exception as conv_e:
+                                    logger.debug("GHSA conversion error: %s", conv_e)
+                self.state_manager.update_checkpoint(
+                    "ghsa_api",
+                    records_scanned=ghsa_scanned,
+                    records_synced=ghsa_synced,
+                )
+                logger.info("GHSA live API ingestion: scanned=%d, synced=%d", ghsa_scanned, ghsa_synced)
+            except Exception as exc:
+                errors.append(f"GHSA API ingestion error: {exc}")
+
+        # 5. Ingest from CVEListV5 GitHub Commits delta stream
+        if include_cvelist_delta:
+            cve_delta_scanned = 0
+            cve_delta_synced = 0
+            try:
+                cve_delta_url = "https://api.github.com/repos/CVEProject/cvelistV5/commits?per_page=5"
+                req = urllib.request.Request(
+                    cve_delta_url,
+                    headers={
+                        "User-Agent": "McpVulnerabilities/1.0",
+                        "Accept": "application/vnd.github.v3+json",
+                    },
+                )
+                with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
+                    commits = json.loads(resp.read().decode("utf-8"))
+                    if isinstance(commits, list) and commits:
+                        head_sha = commits[0]["sha"]
+                        detail_url = f"https://api.github.com/repos/CVEProject/cvelistV5/commits/{head_sha}"
+                        detail_req = urllib.request.Request(
+                            detail_url,
+                            headers={
+                                "User-Agent": "McpVulnerabilities/1.0",
+                                "Accept": "application/vnd.github.v3+json",
+                            },
                         )
-                        if is_rel:
-                            collected.append(r)
+                        with urllib.request.urlopen(detail_req, timeout=12.0, context=_get_ssl_context()) as d_resp:
+                            detail = json.loads(d_resp.read().decode("utf-8"))
+                            for f_item in detail.get("files", []):
+                                f_name = f_item.get("filename", "")
+                                if f_name.endswith(".json") and "CVE-" in f_name:
+                                    cve_delta_scanned += 1
+                                    raw_url = f_item.get("raw_url")
+                                    if raw_url:
+                                        try:
+                                            with urllib.request.urlopen(raw_url, timeout=5.0, context=_get_ssl_context()) as r_resp:
+                                                raw_cve = json.loads(r_resp.read().decode("utf-8"))
+                                                cna = raw_cve.get("containers", {}).get("cna", {})
+                                                desc_val = " ".join([d.get("value", "") for d in cna.get("descriptions", [])])
+                                                is_rel, _ = McpRelevanceFilter.is_relevant(
+                                                    summary=desc_val[:200],
+                                                    details=desc_val,
+                                                    raw_data=raw_cve,
+                                                )
+                                                if is_rel:
+                                                    collected.append(CveJson5Converter.from_dict(raw_cve))
+                                                    cve_delta_synced += 1
+                                        except Exception as cve_fetch_err:
+                                            logger.debug("Failed to fetch raw CVE %s: %s", f_name, cve_fetch_err)
+                self.state_manager.update_checkpoint(
+                    "cvelist_delta",
+                    records_scanned=cve_delta_scanned,
+                    records_synced=cve_delta_synced,
+                )
+                logger.info("CVEListV5 delta ingestion: scanned=%d, synced=%d", cve_delta_scanned, cve_delta_synced)
+            except Exception as exc:
+                errors.append(f"CVEListV5 delta error: {exc}")
+
+        # 6. Ingest from OSV.dev REST/Batch API with Version-Aware Caching
+        if include_osv_api:
+            candidate_map: dict[tuple[str, str], str] = {}
+            if self.servers_catalog_file.exists():
+                try:
+                    cat_data = json.loads(self.servers_catalog_file.read_text(encoding="utf-8"))
+                    for s in cat_data.get("servers", {}).values():
+                        eco = s.get("ecosystem", "")
+                        name = s.get("name", "")
+                        ver = s.get("version", "")
+                        if eco and name and eco in ("npm", "PyPI", "crates.io", "RubyGems"):
+                            candidate_map[(eco, name)] = ver
+                except Exception as cat_e:
+                    logger.debug("Catalog file parse error: %s", cat_e)
+
+            for eco, pkg in KNOWN_MCP_PACKAGES:
+                if (eco, pkg) not in candidate_map:
+                    candidate_map[(eco, pkg)] = ""
+
+            candidates_to_query = [
+                {"ecosystem": eco, "name": name, "version": ver}
+                for (eco, name), ver in candidate_map.items()
+                if self.catalog_state.should_query(eco, name, ver or None)
+            ]
+            skipped_count = len(candidate_map) - len(candidates_to_query)
+            logger.info(
+                "OSV Batch Ingestion: Total candidates=%d, Needs audit=%d, Cached skips=%d",
+                len(candidate_map),
+                len(candidates_to_query),
+                skipped_count,
+            )
+
+            batch_size = 50
+            osv_synced = 0
+            for i in range(0, len(candidates_to_query), batch_size):
+                chunk = candidates_to_query[i : i + batch_size]
+                try:
+                    res_map = self._query_osv_batch(chunk)
+                    for item in chunk:
+                        c_key = f"{item['ecosystem'].lower()}:{item['name'].lower()}"
+                        vulns = res_map.get(c_key, [])
+                        vuln_ids = []
+                        for v in vulns:
+                            is_rel, _ = McpRelevanceFilter.is_relevant(
+                                package_name=item["name"],
+                                summary=v.summary,
+                                details=v.details,
+                            )
+                            if is_rel:
+                                collected.append(v)
+                                vuln_ids.append(v.id)
+                                osv_synced += 1
+                        self.catalog_state.update_record(
+                            ecosystem=item["ecosystem"],
+                            name=item["name"],
+                            version=item["version"],
+                            vulnerabilities=vuln_ids,
+                        )
                 except Exception as exc:
-                    logger.debug("OSV.dev query error for %s/%s: %s", eco, pkg, exc)
+                    errors.append(f"OSV batch query error: {exc}")
+
+            self.catalog_state.save()
             self.state_manager.update_checkpoint(
                 "osv_dev",
-                records_scanned=len(KNOWN_MCP_PACKAGES),
-                records_synced=len(collected),
+                records_scanned=len(candidates_to_query),
+                records_synced=osv_synced,
             )
+
 
         # 5. Ingest from offline fallback fixtures if specified
         if offline_fallback_fixtures:
@@ -380,7 +561,45 @@ class McpVulnerabilityPipeline:
             headers={"Content-Type": "application/json", "User-Agent": "VerityRedTeam/1.0"},
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=5.0) as resp:
+        with urllib.request.urlopen(req, timeout=5.0, context=_get_ssl_context()) as resp:
             data = json.loads(resp.read().decode("utf-8"))
             vulns = data.get("vulns", [])
             return [OsvDevConverter.from_dict(v) for v in vulns]
+
+    def _query_osv_batch(
+        self, packages: list[dict[str, str]]
+    ) -> dict[str, list[OsvVulnerability]]:
+        """Query OSV.dev /v1/querybatch and return mapping by package key."""
+        if not packages:
+            return {}
+        url = "https://api.osv.dev/v1/querybatch"
+        payload = json.dumps(
+            {
+                "queries": [
+                    {"package": {"name": p["name"], "ecosystem": p["ecosystem"]}}
+                    for p in packages
+                ]
+            }
+        ).encode("utf-8")
+        req = urllib.request.Request(
+            url,
+            data=payload,
+            headers={"Content-Type": "application/json", "User-Agent": "McpVulnerabilities/1.0"},
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=15.0, context=_get_ssl_context()) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            results = data.get("results", [])
+            mapping: dict[str, list[OsvVulnerability]] = {}
+            for pkg, res in zip(packages, results):
+                key = f"{pkg['ecosystem'].lower()}:{pkg['name'].lower()}"
+                raw_vulns = res.get("vulns", [])
+                converted = []
+                for v in raw_vulns:
+                    try:
+                        converted.append(OsvDevConverter.from_dict(v))
+                    except Exception as conv_err:
+                        logger.debug("Failed to convert OSV item: %s", conv_err)
+                mapping[key] = converted
+            return mapping
+

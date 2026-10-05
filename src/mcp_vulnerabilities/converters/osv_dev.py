@@ -30,8 +30,23 @@ class OsvDevConverter:
         primary_id = str(data.get("id") or "OSV-UNKNOWN")
         summary = str(data.get("summary") or f"Security advisory for {primary_id}")
         details = str(data.get("details") or summary)
-        published = str(data.get("published") or "2026-01-01T00:00:00Z")
-        modified = str(data.get("modified") or published)
+        published_raw = data.get("published")
+        modified_raw = data.get("modified")
+        if published_raw and not modified_raw:
+            published = str(published_raw)
+            modified = published
+        elif modified_raw and not published_raw:
+            modified = str(modified_raw)
+            published = modified
+        elif published_raw and modified_raw:
+            published = str(published_raw)
+            modified = str(modified_raw)
+            if published > modified:
+                modified = published
+        else:
+            published = "2026-01-01T00:00:00Z"
+            modified = "2026-01-01T00:00:00Z"
+
         aliases = tuple(data.get("aliases", ()))
         related = tuple(data.get("related", ()))
 
@@ -130,7 +145,19 @@ class OsvDevConverter:
                 )
             )
 
+        if not affected_list:
+            affected_list.append(
+                AffectedPackage(
+                    package=PackageSpec(name=primary_id, ecosystem="MCP", purl=f"pkg:mcp/{primary_id}"),
+                    database_specific=DatabaseSpecificMcp(
+                        vulnerable_tools=tuple(vulnerable_tools),
+                        remediation_guidance=cls._extract_remediation(details),
+                    ),
+                )
+            )
+
         return OsvVulnerability(
+
             id=primary_id,
             summary=summary,
             details=details,
