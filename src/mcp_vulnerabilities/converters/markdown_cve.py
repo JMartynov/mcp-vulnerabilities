@@ -271,7 +271,7 @@ class MarkdownAdvisoryConverter:
         seen_urls: set[str] = set()
 
         def _add_ref(url: str, ref_type: ReferenceType) -> None:
-            clean = url.strip().rstrip(")")
+            clean = url.strip().rstrip(")]>\"'")
             if clean and clean.startswith("http") and clean not in seen_urls:
                 seen_urls.add(clean)
                 refs.append(ReferenceSpec(url=clean, type=ref_type))
@@ -289,9 +289,10 @@ class MarkdownAdvisoryConverter:
         # Links in reference section
         ref_section = cls._extract_section(text, r"##\s*Reference\s*links", r"(?:##|\Z)")
         for line in ref_section.splitlines():
-            url_match = re.search(r"(https?://[^\s)]+)", line)
+            url_match = re.search(r"(https?://[^\s\]\)\<\>\"\'`]+)", line)
             if url_match:
                 _add_ref(url_match.group(1), ReferenceType.WEB)
+
 
         return refs
 
