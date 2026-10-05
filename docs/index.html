@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Security Advisory Database | Vulnerability Explorer</title>
+  <meta name="description" content="Open-Source OSV-Compliant Model Context Protocol (MCP) Vulnerability Advisory Database and Real-time Search Explorer.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="alternate" type="application/atom+xml" title="MCP Security Advisories Atom Feed" href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.atom">
+  <link rel="alternate" type="application/json" title="MCP Security Advisories JSON Feed" href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.json">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="shield-icon">🛡️</span>
+        <div>
+          <h1>MCP Vulnerability Database</h1>
+          <p class="subtitle">Canonical OSV-Compliant Security Intelligence for the Model Context Protocol</p>
+        </div>
+      </div>
+      <div class="header-links">
+        <a href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.atom" class="badge-link" target="_blank" rel="noopener">📡 Atom Feed</a>
+        <a href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.json" class="badge-link" target="_blank" rel="noopener">📄 JSON Feed</a>
+        <a href="https://github.com/JMartynov/mcp-vulnerabilities" class="btn btn-github" target="_blank" rel="noopener">⭐ GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Metrics Banner -->
+    <section class="metrics-grid">
+      <div class="metric-card">
+        <span class="metric-value" id="stat-total">...</span>
+        <span class="metric-label">Total Advisories</span>
+      </div>
+      <div class="metric-card metric-critical">
+        <span class="metric-value" id="stat-critical">...</span>
+        <span class="metric-label">Critical Severity</span>
+      </div>
+      <div class="metric-card metric-high">
+        <span class="metric-value" id="stat-high">...</span>
+        <span class="metric-label">High Severity</span>
+      </div>
+      <div class="metric-card">
+        <span class="metric-value" id="stat-packages">...</span>
+        <span class="metric-label">Unique Packages</span>
+      </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section class="search-section">
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <input type="search" id="search-input" placeholder="Search by CVE, GHSA, package name (e.g. neo4j, n8n, sqlite), or keyword..." autocomplete="off">
+      </div>
+
+      <div class="filters-row">
+        <div class="filter-group">
+          <label>Severity:</label>
+          <div class="chips" id="severity-chips">
+            <button class="chip active" data-severity="ALL">All</button>
+            <button class="chip" data-severity="CRITICAL">Critical</button>
+            <button class="chip" data-severity="HIGH">High</button>
+            <button class="chip" data-severity="MEDIUM">Medium</button>
+            <button class="chip" data-severity="LOW">Low</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label>Ecosystem:</label>
+          <div class="chips" id="ecosystem-chips">
+            <button class="chip active" data-ecosystem="ALL">All</button>
+            <button class="chip" data-ecosystem="npm">npm</button>
+            <button class="chip" data-ecosystem="PyPI">PyPI</button>
+            <button class="chip" data-ecosystem="GitHub">GitHub</button>
+            <button class="chip" data-ecosystem="smithery">Smithery</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Table/List -->
+    <section class="results-section">
+      <div class="results-header">
+        <span id="results-count">Showing advisories...</span>
+      </div>
+      <div class="advisories-list" id="advisories-container">
+        <div class="loading-state">Loading canonical advisories database...</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Advisory Details Modal (Native Dialog with Backdrop) -->
+  <dialog id="advisory-modal" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <span class="badge" id="modal-severity">SEVERITY</span>
+          <h2 id="modal-id">CVE-XXXX-XXXX</h2>
+        </div>
+        <button type="button" class="btn-close" id="modal-close" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Injected via JavaScript -->
+      </div>
+      <div class="modal-footer">
+        <a id="modal-external-link" href="#" target="_blank" rel="noopener" class="btn btn-primary">View Upstream Advisory ↗</a>
+      </div>
+    </div>
+  </dialog>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Maintained by the MCP Security Community · OSV Schema 1.6.0 Compliant · Apache-2.0 License</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

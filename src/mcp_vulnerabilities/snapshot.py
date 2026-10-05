@@ -8,6 +8,8 @@ import logging
 from pathlib import Path
 from typing import Any
 
+from mcp_vulnerabilities.feed import AdvisoryFeedBuilder
+
 logger = logging.getLogger("mcp_vulnerabilities.snapshot")
 
 
@@ -15,6 +17,7 @@ def build_snapshot(
     data_dir: str | Path = "data/vulnerabilities",
     output_gz: str | Path = "vulnerabilities.json.gz",
     output_json: str | Path | None = None,
+    generate_feeds: bool = True,
 ) -> dict[str, Any]:
     """Compile all OSV vulnerability JSON files in data_dir into a single consolidated JSON/GZ snapshot."""
     dir_path = Path(data_dir)
@@ -52,6 +55,16 @@ def build_snapshot(
         gz_path,
         gz_size_kb,
     )
+    if generate_feeds and vulnerabilities:
+        feed_dir = dir_path.parent if dir_path.name == "vulnerabilities" else dir_path
+        atom_path = feed_dir / "feed.atom"
+        json_feed_path = feed_dir / "feed.json"
+        try:
+            AdvisoryFeedBuilder.generate_atom_feed(list(vulnerabilities.values()), atom_path)
+            AdvisoryFeedBuilder.generate_json_feed(list(vulnerabilities.values()), json_feed_path)
+        except Exception as exc:
+            logger.warning("Error generating threat feeds: %s", exc)
+
     return {
         "total_vulnerabilities": len(vulnerabilities),
         "snapshot_path": str(gz_path),

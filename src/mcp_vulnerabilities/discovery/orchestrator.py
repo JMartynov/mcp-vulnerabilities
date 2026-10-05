@@ -8,9 +8,11 @@ from pathlib import Path
 from typing import Any
 
 from mcp_vulnerabilities.discovery.github_curated import GitHubCuratedDiscoveryProvider
+from mcp_vulnerabilities.discovery.glama import GlamaDiscoveryProvider
 from mcp_vulnerabilities.discovery.npm import NpmDiscoveryProvider
 from mcp_vulnerabilities.discovery.pypi import PypiDiscoveryProvider
 from mcp_vulnerabilities.discovery.registries import MultiRegistryDiscoveryProvider
+from mcp_vulnerabilities.discovery.smithery import SmitheryDiscoveryProvider
 
 logger = logging.getLogger("mcp_vulnerabilities.discovery.orchestrator")
 
@@ -27,6 +29,8 @@ class McpDiscoveryOrchestrator:
         include_pypi: bool = True,
         include_github: bool = True,
         include_other_registries: bool = True,
+        include_smithery: bool = True,
+        include_glama: bool = True,
     ) -> list[dict[str, Any]]:
         """Run multi-registry discovery and merge results into the persistent catalog."""
         logger.info("Starting multi-registry MCP server discovery...")
@@ -55,7 +59,23 @@ class McpDiscoveryOrchestrator:
                 if key not in aggregated:
                     aggregated[key] = repo
 
-        # 4. crates.io, RubyGems, Docker Hub
+        # 4. Smithery.ai Directory
+        if include_smithery:
+            logger.info("Discovering from Smithery.ai Registry...")
+            for srv in SmitheryDiscoveryProvider.discover():
+                key = f"smithery:{srv['name'].lower()}"
+                if key not in aggregated:
+                    aggregated[key] = srv
+
+        # 5. Glama.ai Directory
+        if include_glama:
+            logger.info("Discovering from Glama.ai Registry...")
+            for srv in GlamaDiscoveryProvider.discover():
+                key = f"glama:{srv['name'].lower()}"
+                if key not in aggregated:
+                    aggregated[key] = srv
+
+        # 6. crates.io, RubyGems, Docker Hub
         if include_other_registries:
             logger.info("Discovering from crates.io, RubyGems, and Docker Hub...")
             for c in MultiRegistryDiscoveryProvider.discover_crates_io():
