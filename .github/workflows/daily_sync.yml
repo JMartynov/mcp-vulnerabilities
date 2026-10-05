@@ -30,6 +30,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
+      - name: Run Multi-Registry MCP Server Discovery
+        run: |
+          python -m mcp_vulnerabilities.cli discover --catalog-file data/mcp_servers.json
+
       - name: Run MCP Ingestion & Normalization Pipeline
         run: |
           python -m mcp_vulnerabilities.cli sync --live-api
@@ -44,9 +48,11 @@ jobs:
           python -m mcp_vulnerabilities.snapshot data/vulnerabilities vulnerabilities.json.gz
 
       - name: Commit & Push Canonical Vulnerability Updates Directly to Main
+        if: github.ref == 'refs/heads/main'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/vulnerabilities/ vulnerabilities.json.gz
+          git add data/ vulnerabilities.json.gz
           git diff --staged --quiet || git commit -m "chore(osv): automated daily sync of MCP security advisories and snapshot [skip ci]"
           git push origin main
+
