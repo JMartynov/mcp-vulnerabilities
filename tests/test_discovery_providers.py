@@ -10,9 +10,11 @@ from unittest.mock import MagicMock, patch
 
 from mcp_vulnerabilities.discovery import McpDiscoveryOrchestrator
 from mcp_vulnerabilities.discovery.github_curated import GitHubCuratedDiscoveryProvider
+from mcp_vulnerabilities.discovery.glama import GlamaDiscoveryProvider
 from mcp_vulnerabilities.discovery.npm import NpmDiscoveryProvider
 from mcp_vulnerabilities.discovery.pypi import PypiDiscoveryProvider
 from mcp_vulnerabilities.discovery.registries import MultiRegistryDiscoveryProvider
+from mcp_vulnerabilities.discovery.smithery import SmitheryDiscoveryProvider
 
 
 class TestDiscoveryProviders(unittest.TestCase):
@@ -84,6 +86,8 @@ class TestDiscoveryProviders(unittest.TestCase):
             with patch.object(NpmDiscoveryProvider, "discover", return_value=[{"name": "mcp-npm", "ecosystem": "npm"}]), \
                  patch.object(PypiDiscoveryProvider, "discover", return_value=[{"name": "mcp-pypi", "ecosystem": "PyPI"}]), \
                  patch.object(GitHubCuratedDiscoveryProvider, "discover", return_value=[{"name": "org/mcp-gh", "ecosystem": "GitHub"}]), \
+                 patch.object(SmitheryDiscoveryProvider, "discover", return_value=[]), \
+                 patch.object(GlamaDiscoveryProvider, "discover", return_value=[]), \
                  patch.object(MultiRegistryDiscoveryProvider, "discover_crates_io", return_value=[]), \
                  patch.object(MultiRegistryDiscoveryProvider, "discover_rubygems", return_value=[]), \
                  patch.object(MultiRegistryDiscoveryProvider, "discover_docker_hub", return_value=[]):
