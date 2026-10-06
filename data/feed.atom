@@ -5,10 +5,132 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-10-02T23:17:29Z</updated>
+  <updated>2026-10-06T00:02:03Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
+  <entry>
+    <id>urn:mcp:vulnerability:GHSA-935w-9g4m-p28p</id>
+    <title>[UNKNOWN] GHSA-935w-9g4m-p28p: vLLM: Harmony tool continuations drop `cache_salt` — restoring a cross-tenant prefix-cache membership oracle</title>
+    <link rel="alternate" href="https://github.com/vllm-project/vllm/security/advisories/GHSA-935w-9g4m-p28p" />
+    <updated>2026-10-06T00:02:03Z</updated>
+    <published>2026-10-06T00:02:02Z</published>
+    <summary>vLLM: Harmony tool continuations drop `cache_salt` — restoring a cross-tenant prefix-cache membership oracle</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; GHSA-935w-9g4m-p28p&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; vllm&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;## Affected
+
+- **Ecosystem / package:** pip / `vllm`
+- **Affected versions:** vLLM ≤ 0.25.1 (confirmed on 0.25.1, commit [`752a3a504485`](https://github.com/vllm-project/vllm/tree/752a3a504485790a2e8491cacbb35c137339ad34)). The lower bound predates 0.25.1; maintainers can confirm how far back the tool-continuation re-submission has omitted the salt.
+
+## Summary
+
+On the GPT-OSS "Harmony" path (`POST /v1/responses`), a request that uses a built-in or MCP tool runs as a multi-turn loop: after each tool call vLLM re-renders the full next-turn Harmony prompt and re-submits it to the engine. Turn 1 correctly carries `request.cache_salt`, but the tool-continuation re-submission rebuilds the engine input via `tokens_input(token_ids)` with **no** `cache_salt`. The continuation prefix is therefore cached in the global *unsalted* namespace even though the caller opted into salting. A second tenant who can guess the low-entropy post-tool history submits the reconstructed continuation (unsalted) and reads exact per-turn cached-token counts from the Responses usage — restoring the prompt-membership oracle that `cache_salt` is documented to prevent.
+
+Silently dropping a preserved salt *after* the supported tool workflow is enabled is a broken isolation control: the caller enabled salting and every turn should stay isolated, but continuation turns leak into the shared cache.
+
+This is distinct from [GHSA-4qjh-9fv9-r85r](https://github.com/vllm-project/vllm/security/advisories/GHSA-4qjh-9fv9-r85r) ([CVE-2025-46570](https://nvd.nist.gov/vuln/detail/CVE-2025-46570)): that advisory is the prefix-cache membership oracle for which `cache_salt` is the documented mitigation, and its PR-17045 fix does not close this site — the Harmony tool continuation silently drops the preserved salt, caching in the unsalted namespace and leaking exact `cached_tokens_per_turn` counts from a different sink (the Responses serving continuation, not general TTFT timing).
+
+## Affected code
+
+Links pinned to the confirmed commit [`752a3a504485`](https://github.com/vllm-project/vllm/tree/752a3a504485790a2e8491cacbb35c137339ad34) (v0.25.1):
+
+- **The drop (sink):** [`vllm/entrypoints/openai/responses/serving.py#L712-L713`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/entrypoints/openai/responses/serving.py#L712-L713) — `token_ids = context.render_for_completion()` then `engine_input = tokens_input(token_ids)`, with no `cache_salt`.
+- **Correct turn-1 call for contrast:** [`vllm/entrypoints/openai/responses/serving.py#L755`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/entrypoints/openai/responses/serving.py#L755) — `tokens_input(prompt_token_ids, cache_salt=request.cache_salt)`.
+- **`tokens_input` stores the salt only if passed:** [`vllm/inputs/engine.py#L51-L66`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/inputs/engine.py#L51-L66) (`if cache_salt is not None: inputs["cache_salt"] = cache_salt`).
+- **The engine request copies only the current input's salt:** [`vllm/v1/engine/input_processor.py#L380`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/v1/engine/input_processor.py#L380) (`cache_salt=decoder_inputs.get("cache_salt")` → `None` for the continuation).
+- **Prefix-cache hashing keys on the salt only when present:** [`vllm/v1/core/kv_cache_utils.py#L560-L561`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/v1/core/kv_cache_utils.py#L560-L561) (`[request.cache_salt] if (start_token_idx == 0 and request.cache_salt) else []`).
+- **The oracle the attacker reads:** [`vllm/entrypoints/openai/responses/serving.py#L909`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/entrypoints/openai/responses/serving.py#L909) (`cached_tokens_per_turn`).
+- **The documented control being defeated:** [`vllm/entrypoints/openai/responses/protocol.py#L235`](https://github.com/vllm-project/vllm/blob/752a3a504485790a2e8491cacbb35c137339ad34/vllm/entrypoints/openai/responses/protocol.py#L235) (`cache_salt` field).
+
+The tool-continuation re-submission rebuilds the engine input with no `cache_salt`:
+
+```python
+# vllm/entrypoints/openai/responses/serving.py Lines 711-715
+            if isinstance(context, HarmonyContext):
+                token_ids = context.render_for_completion()
+                engine_input = tokens_input(token_ids)
+
+                sampling_params.max_tokens = max_model_len - len(token_ids)
+```
+
+Contrast with the correct turn-1 call, which does preserve the caller's salt:
+
+```python
+# vllm/entrypoints/openai/responses/serving.py Lines 754-755
+        prompt_token_ids = render_for_completion(messages)
+        engine_input = tokens_input(prompt_token_ids, cache_salt=request.cache_salt)
+```
+
+`tokens_input` stores the salt on the engine input only when it is passed, so the continuation input carries none and lands in the unsalted namespace:
+
+```python
+# vllm/inputs/engine.py Lines 51-66
+def tokens_input(
+    prompt_token_ids: list[int],
+    *,
+    prompt: str | None = None,
+    cache_salt: str | None = None,
+) -&gt; TokensInput:
+    """
+    Construct [`TokensInput`][vllm.inputs.engine.TokensInput]
+    from optional values.
+    """
+    inputs = TokensInput(type="token", prompt_token_ids=prompt_token_ids)
+
+    if prompt is not None:
+        inputs["prompt"] = prompt
+    if cache_salt is not None:
+        inputs["cache_salt"] = cache_salt
+```
+
+## Impact
+
+An authenticated tenant of a shared deployment can recover whether a guessed post-tool prompt or history was processed by another tenant, with exact cached-token counts rather than noisy latency — the exact prompt-membership oracle `cache_salt` is documented to prevent. It defeats the multi-user prefix-cache isolation guarantee for salted Harmony tool sessions.
+
+Preconditions: a GPT-OSS Harmony model on `/v1/responses`; prefix caching enabled (default); an operator-enabled built-in or MCP tool server; the victim sets `cache_salt` and triggers at least one tool continuation; and the attacker can reconstruct the post-tool history closely enough to match the token prefix. The `AC:H` metric reflects that guessable-history precondition.
+
+
+## Suggested Fix
+
+Propagate `request.cache_salt` into every Harmony (and Parsable) tool-continuation re-submission — at the continuation call site call `tokens_input(token_ids, cache_salt=request.cache_salt)`, mirroring the correct turn-1 call. Carry the salt on the `HarmonyContext` (thread the originating `request` into the context) so no continuation path can omit it:
+
+```diff
+# vllm/entrypoints/openai/responses/serving.py
+             if isinstance(context, HarmonyContext):
+                 token_ids = context.render_for_completion()
+-                engine_input = tokens_input(token_ids)
++                engine_input = tokens_input(
++                    token_ids,
++                    cache_salt=(
++                        context.request.cache_salt
++                        if context.request is not None
++                        else None
++                    ),
++                )
+```
+
+with `HarmonyContext.__init__` gaining a `request: ResponsesRequest | None = None` parameter (stored as `self.request`) that `_create_responses` passes when constructing the context. The continuation prefix is then cached in the victim's salted namespace, mirroring turn 1.
+
+Suggested regression test: assert `cached_tokens_per_turn == 0` for a different-salt probe against a salted victim continuation (the four-way control from the proof of concept).
+
+## Credit
+
+**Reported by:** Patch the Planet (Trail of Bits + OpenAI collaboration)
+
+This vulnerability was discovered using GPT-5.5-Cyber as part of the Patch the Planet security initiative.
+
+---
+
+**Proposed fix:** a fix for this issue is proposed in a public pull request: https://github.com/vllm-project/vllm/pull/51818&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/vllm-project/vllm/security/advisories/GHSA-935w-9g4m-p28p"&gt;https://github.com/vllm-project/vllm/security/advisories/GHSA-935w-9g4m-p28p&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/vllm-project/vllm/pull/50195"&gt;https://github.com/vllm-project/vllm/pull/50195&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/vllm-project/vllm/pull/51818"&gt;https://github.com/vllm-project/vllm/pull/51818&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/vllm-project/vllm/commit/6a2a2bb02b563b83f946012959fd3927984d072a"&gt;https://github.com/vllm-project/vllm/commit/6a2a2bb02b563b83f946012959fd3927984d072a&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <id>urn:mcp:vulnerability:GHSA-x8gv-g2g3-65fj</id>
     <title>[UNKNOWN] GHSA-x8gv-g2g3-65fj: SiYuan Agent Tools SSRF via DNS-Rebinding TOCTOU (Bypass of CheckHostSSRF)</title>
@@ -2360,24 +2482,6 @@ We would like to thank Lav Kumar Vishwakarma (independent security researcher) f
 &lt;li&gt;&lt;a href="https://github.com/janhq/jan/pull/8506"&gt;https://github.com/janhq/jan/pull/8506&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/janhq/jan/commit/3e1c1e724f696620d89bb4a9cc18a380e0753757"&gt;https://github.com/janhq/jan/commit/3e1c1e724f696620d89bb4a9cc18a380e0753757&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://www.vulncheck.com/advisories/jan-local-api-server-cors-origin-reflection-via-binding"&gt;https://www.vulncheck.com/advisories/jan-local-api-server-cors-origin-reflection-via-binding&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-66004</id>
-    <title>[UNKNOWN] CVE-2026-66004: BlenderMCP before commit 30a3308 contains a path traversal vulnerability in the download_polyhaven_asset method that all</title>
-    <link rel="alternate" href="https://github.com/ahujasid/blender-mcp/issues/257" />
-    <updated>2026-07-27T16:19:16.197Z</updated>
-    <published>2026-07-24T14:44:48.686Z</published>
-    <summary>BlenderMCP before commit 30a3308 contains a path traversal vulnerability in the download_polyhaven_asset method that all</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-66004&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; blender-mcp&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;BlenderMCP before commit 30a3308 contains a path traversal vulnerability in the download_polyhaven_asset method that allows attackers to write arbitrary files by injecting traversal sequences in API response include keys. Attackers performing MITM attacks or prompt injection can supply malicious paths like '../../.bashrc' to overwrite sensitive files and achieve persistent code execution.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ahujasid/blender-mcp/issues/257"&gt;https://github.com/ahujasid/blender-mcp/issues/257&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ahujasid/blender-mcp/pull/258"&gt;https://github.com/ahujasid/blender-mcp/pull/258&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ahujasid/blender-mcp/commit/30a3308446cd8f81a9446e5a2ed657c0d8d86072"&gt;https://github.com/ahujasid/blender-mcp/commit/30a3308446cd8f81a9446e5a2ed657c0d8d86072&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.vulncheck.com/advisories/blendermcp-path-traversal-via-download-polyhaven-asset-api"&gt;https://www.vulncheck.com/advisories/blendermcp-path-traversal-via-download-polyhaven-asset-api&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
