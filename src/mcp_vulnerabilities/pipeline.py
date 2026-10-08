@@ -11,6 +11,7 @@ import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+from packaging.version import parse as parse_version
 
 from mcp_vulnerabilities.catalog import McpCatalogState
 from mcp_vulnerabilities.converters.cve_json5 import CveJson5Converter
@@ -21,7 +22,7 @@ from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.converters.verity import VerityCatalogConverter
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
 from mcp_vulnerabilities.filter import McpRelevanceFilter
-from mcp_vulnerabilities.models import OsvVulnerability
+from mcp_vulnerabilities.models import OsvVulnerability, RangeSpec, RangeType
 from mcp_vulnerabilities.state import SyncStateManager
 from mcp_vulnerabilities.validator import OsvValidator
 
@@ -37,6 +38,68 @@ def _get_github_headers() -> dict[str, str]:
     if token:
         headers["Authorization"] = f"Bearer {token.strip()}"
     return headers
+
+
+def is_version_affected(version_str: str | None, ranges: tuple[RangeSpec, ...]) -> bool:
+    """Evaluates if a given version is affected based on OSV RangeSpecs."""
+    if not version_str:
+        return True  # Conservatively mark vulnerable if version unknown
+
+    try:
+        v = parse_version(version_str)
+    except Exception:
+        return True
+
+    affected = False
+
+    if not ranges:
+        return True
+
+    semver_ranges = [r for r in ranges if r.type == RangeType.SEMVER]
+    if not semver_ranges:
+        return True
+
+    for r in semver_ranges:
+        range_affected = False
+        for ev in r.events:
+            if ev.introduced:
+                if ev.introduced == "0":
+                    range_affected = True
+                else:
+                    try:
+                        intro_v = parse_version(ev.introduced)
+                        if v >= intro_v:
+                            range_affected = True
+                    except Exception:
+                        pass
+            elif ev.fixed:
+                try:
+                    fixed_v = parse_version(ev.fixed)
+                    if v >= fixed_v:
+                        range_affected = False
+                except Exception:
+                    pass
+            elif ev.last_affected:
+                try:
+                    last_v = parse_version(ev.last_affected)
+                    if v > last_v:
+                        range_affected = False
+                except Exception:
+                    pass
+            elif ev.limit:
+                try:
+                    limit_v = parse_version(ev.limit)
+                    if v >= limit_v:
+                        range_affected = False
+                except Exception:
+                    pass
+
+        if range_affected:
+            affected = True
+            break
+
+    return affected
+
 
 
 def _get_ssl_context() -> ssl.SSLContext:
@@ -605,16 +668,23 @@ class McpVulnerabilityPipeline:
             emitted_ids.append(record.id)
 
             # Build search index entry
-            pkgs = [
-                {
-                    "name": aff.package.name,
-                    "ecosystem": aff.package.ecosystem,
-                    "purl": aff.package.purl,
-                    "severity": aff.database_specific.severity,
-                    "cvss_score": aff.database_specific.cvss_score,
-                }
-                for aff in record.affected
-            ]
+            pkgs = []
+            for aff in record.affected:
+                cat_key = self.catalog_state.package_key(aff.package.ecosystem, aff.package.name)
+                cat_record = self.catalog_state.records.get(cat_key)
+                candidate_version = cat_record.last_version_seen if cat_record else None
+
+                pkgs.append(
+                    {
+                        "name": aff.package.name,
+                        "ecosystem": aff.package.ecosystem,
+                        "purl": aff.package.purl,
+                        "severity": aff.database_specific.severity,
+                        "cvss_score": aff.database_specific.cvss_score,
+                        "currently_vulnerable": is_version_affected(candidate_version, aff.ranges),
+                    }
+                )
+
             index_entries.append(
                 {
                     "id": record.id,
@@ -673,14 +743,14 @@ class McpVulnerabilityPipeline:
         if not packages:
             return {}
         url = "https://api.osv.dev/v1/querybatch"
-        payload = json.dumps(
-            {
-                "queries": [
-                    {"package": {"name": p["name"], "ecosystem": p["ecosystem"]}}
-                    for p in packages
-                ]
-            }
-        ).encode("utf-8")
+        queries = []
+        for p in packages:
+            q = {"package": {"name": p["name"], "ecosystem": p["ecosystem"]}}
+            if p.get("version"):
+                q["version"] = p["version"]
+            queries.append(q)
+
+        payload = json.dumps({"queries": queries}).encode("utf-8")
         req = urllib.request.Request(
             url,
             data=payload,
