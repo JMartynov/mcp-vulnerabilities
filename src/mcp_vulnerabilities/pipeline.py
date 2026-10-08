@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 import ssl
 import urllib.error
 import urllib.request
@@ -25,6 +26,17 @@ from mcp_vulnerabilities.state import SyncStateManager
 from mcp_vulnerabilities.validator import OsvValidator
 
 logger = logging.getLogger("mcp_vulnerabilities.pipeline")
+
+
+def _get_github_headers() -> dict[str, str]:
+    headers = {
+        "User-Agent": "McpVulnerabilities/1.0 (Security Research; +https://github.com/JMartynov/mcp-vulnerabilities)",
+        "Accept": "application/vnd.github.v3+json",
+    }
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token:
+        headers["Authorization"] = f"Bearer {token.strip()}"
+    return headers
 
 
 def _get_ssl_context() -> ssl.SSLContext:
@@ -285,51 +297,54 @@ class McpVulnerabilityPipeline:
                 while next_url and pages_fetched < max_pages:
                     req = urllib.request.Request(
                         next_url,
-                        headers={
-                            "User-Agent": "McpVulnerabilities/1.0",
-                            "Accept": "application/vnd.github.v3+json",
-                        },
+                        headers=_get_github_headers(),
                     )
-                    with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
-                        data = json.loads(resp.read().decode("utf-8"))
-                        
-                        if isinstance(data, list):
-                            ghsa_scanned += len(data)
-                            for adv in data:
-                                adv_updated_at = adv.get("updated_at")
-                                if adv_updated_at:
-                                    if not newest_advisory_updated_at or adv_updated_at > newest_advisory_updated_at:
-                                        newest_advisory_updated_at = adv_updated_at
-                                    
-                                pkg_name = adv.get("vulnerabilities", [{}])[0].get("package", {}).get("name")
-                                is_rel, _ = McpRelevanceFilter.is_relevant(
-                                    package_name=pkg_name,
-                                    summary=adv.get("summary", ""),
-                                    details=adv.get("description", ""),
-                                    raw_data=adv,
-                                )
-                                if is_rel:
-                                    try:
-                                        vuln = GhsaConverter.from_dict(adv)
-                                        collected.append(vuln)
-                                        ghsa_synced += 1
-                                        # Invalidate package in catalog state so full context is refreshed
-                                        for aff in vuln.affected:
-                                            self.catalog_state.mark_stale(aff.package.ecosystem, aff.package.name)
-                                    except Exception as conv_e:
-                                        logger.debug("GHSA conversion error: %s", conv_e)
-                        
-                        next_url = None
-                        link_header = resp.headers.get("Link")
-                        if link_header:
-                            links = link_header.split(",")
-                            for link in links:
-                                if 'rel="next"' in link:
-                                    start_idx = link.find("<") + 1
-                                    end_idx = link.find(">")
-                                    if start_idx > 0 and end_idx > start_idx:
-                                        next_url = link[start_idx:end_idx]
-                                    break
+                    try:
+                        with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
+                            data = json.loads(resp.read().decode("utf-8"))
+                            
+                            if isinstance(data, list):
+                                ghsa_scanned += len(data)
+                                for adv in data:
+                                    adv_updated_at = adv.get("updated_at")
+                                    if adv_updated_at:
+                                        if not newest_advisory_updated_at or adv_updated_at > newest_advisory_updated_at:
+                                            newest_advisory_updated_at = adv_updated_at
+                                        
+                                    pkg_name = adv.get("vulnerabilities", [{}])[0].get("package", {}).get("name")
+                                    is_rel, _ = McpRelevanceFilter.is_relevant(
+                                        package_name=pkg_name,
+                                        summary=adv.get("summary", ""),
+                                        details=adv.get("description", ""),
+                                        raw_data=adv,
+                                    )
+                                    if is_rel:
+                                        try:
+                                            vuln = GhsaConverter.from_dict(adv)
+                                            collected.append(vuln)
+                                            ghsa_synced += 1
+                                            # Invalidate package in catalog state so full context is refreshed
+                                            for aff in vuln.affected:
+                                                self.catalog_state.mark_stale(aff.package.ecosystem, aff.package.name)
+                                        except Exception as conv_e:
+                                            logger.debug("GHSA conversion error: %s", conv_e)
+                            
+                            next_url = None
+                            link_header = resp.headers.get("Link")
+                            if link_header:
+                                links = link_header.split(",")
+                                for link in links:
+                                    if 'rel="next"' in link:
+                                        start_idx = link.find("<") + 1
+                                        end_idx = link.find(">")
+                                        if start_idx > 0 and end_idx > start_idx:
+                                            next_url = link[start_idx:end_idx]
+                                        break
+                    except urllib.error.HTTPError as e:
+                        if e.code in (403, 429):
+                            logger.error(f"GitHub API rate limit exceeded ({e.code}). Please configure GITHUB_TOKEN to elevate quotas.")
+                            break
+                        raise
                     
                     pages_fetched += 1
 
@@ -356,52 +371,58 @@ class McpVulnerabilityPipeline:
                 cve_delta_url = "https://api.github.com/repos/CVEProject/cvelistV5/commits?per_page=5"
                 req = urllib.request.Request(
                     cve_delta_url,
-                    headers={
-                        "User-Agent": "McpVulnerabilities/1.0",
-                        "Accept": "application/vnd.github.v3+json",
-                    },
+                    headers=_get_github_headers(),
                 )
-                with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
-                    commits = json.loads(resp.read().decode("utf-8"))
-                    if isinstance(commits, list) and commits:
-                        newest_head_sha = commits[0]["sha"]
-                        
-                        for commit in commits:
-                            commit_sha = commit["sha"]
-                            if last_marker and commit_sha == last_marker:
-                                break
-                                
-                            detail_url = f"https://api.github.com/repos/CVEProject/cvelistV5/commits/{commit_sha}"
-                            detail_req = urllib.request.Request(
-                                detail_url,
-                                headers={
-                                    "User-Agent": "McpVulnerabilities/1.0",
-                                    "Accept": "application/vnd.github.v3+json",
-                                },
-                            )
-                            with urllib.request.urlopen(detail_req, timeout=12.0, context=_get_ssl_context()) as d_resp:
-                                detail = json.loads(d_resp.read().decode("utf-8"))
-                                for f_item in detail.get("files", []):
-                                    f_name = f_item.get("filename", "")
-                                    if f_name.endswith(".json") and "CVE-" in f_name:
-                                        cve_delta_scanned += 1
-                                        raw_url = f_item.get("raw_url")
-                                        if raw_url:
-                                            try:
-                                                with urllib.request.urlopen(raw_url, timeout=5.0, context=_get_ssl_context()) as r_resp:
-                                                    raw_cve = json.loads(r_resp.read().decode("utf-8"))
-                                                    cna = raw_cve.get("containers", {}).get("cna", {})
-                                                    desc_val = " ".join([d.get("value", "") for d in cna.get("descriptions", [])])
-                                                    is_rel, _ = McpRelevanceFilter.is_relevant(
-                                                        summary=desc_val[:200],
-                                                        details=desc_val,
-                                                        raw_data=raw_cve,
-                                                    )
-                                                    if is_rel:
-                                                        collected.append(CveJson5Converter.from_dict(raw_cve))
-                                                        cve_delta_synced += 1
-                                            except Exception as cve_fetch_err:
-                                                logger.debug("Failed to fetch raw CVE %s: %s", f_name, cve_fetch_err)
+                try:
+                    with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
+                        commits = json.loads(resp.read().decode("utf-8"))
+                        if isinstance(commits, list) and commits:
+                            newest_head_sha = commits[0]["sha"]
+                            
+                            for commit in commits:
+                                commit_sha = commit["sha"]
+                                if last_marker and commit_sha == last_marker:
+                                    break
+                                    
+                                detail_url = f"https://api.github.com/repos/CVEProject/cvelistV5/commits/{commit_sha}"
+                                detail_req = urllib.request.Request(
+                                    detail_url,
+                                    headers=_get_github_headers(),
+                                )
+                                try:
+                                    with urllib.request.urlopen(detail_req, timeout=12.0, context=_get_ssl_context()) as d_resp:
+                                        detail = json.loads(d_resp.read().decode("utf-8"))
+                                        for f_item in detail.get("files", []):
+                                            f_name = f_item.get("filename", "")
+                                            if f_name.endswith(".json") and "CVE-" in f_name:
+                                                cve_delta_scanned += 1
+                                                raw_url = f_item.get("raw_url")
+                                                if raw_url:
+                                                    try:
+                                                        with urllib.request.urlopen(raw_url, timeout=5.0, context=_get_ssl_context()) as r_resp:
+                                                            raw_cve = json.loads(r_resp.read().decode("utf-8"))
+                                                            cna = raw_cve.get("containers", {}).get("cna", {})
+                                                            desc_val = " ".join([d.get("value", "") for d in cna.get("descriptions", [])])
+                                                            is_rel, _ = McpRelevanceFilter.is_relevant(
+                                                                summary=desc_val[:200],
+                                                                details=desc_val,
+                                                                raw_data=raw_cve,
+                                                            )
+                                                            if is_rel:
+                                                                collected.append(CveJson5Converter.from_dict(raw_cve))
+                                                                cve_delta_synced += 1
+                                                    except Exception as cve_fetch_err:
+                                                        logger.debug("Failed to fetch raw CVE %s: %s", f_name, cve_fetch_err)
+                                except urllib.error.HTTPError as e:
+                                    if e.code in (403, 429):
+                                        logger.error(f"GitHub API rate limit exceeded ({e.code}) while fetching commit {commit_sha}. Please configure GITHUB_TOKEN.")
+                                        break
+                                    raise
+                except urllib.error.HTTPError as e:
+                    if e.code in (403, 429):
+                        logger.error(f"GitHub API rate limit exceeded ({e.code}). Please configure GITHUB_TOKEN to elevate quotas.")
+                    else:
+                        raise
                 self.state_manager.update_checkpoint(
                     "cvelist_delta",
                     last_marker=newest_head_sha,
