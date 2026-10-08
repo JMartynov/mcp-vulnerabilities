@@ -1,0 +1,225 @@
+diff --git a/data/vulnerabilities/sync_state.json b/data/vulnerabilities/sync_state.json
+index 417c274..c53cfd3 100644
+--- a/data/vulnerabilities/sync_state.json
++++ b/data/vulnerabilities/sync_state.json
+@@ -1,5 +1,5 @@
+ {
+-  "last_global_sync_utc": "2026-10-08T13:42:05.388839+00:00",
++  "last_global_sync_utc": "2026-10-08T14:21:34.591355+00:00",
+   "sources": {
+     "cvelist_delta": {
+       "extra": {},
+@@ -28,7 +28,7 @@
+     "markdown_curated": {
+       "extra": {},
+       "last_marker": null,
+-      "last_scan_utc": "2026-10-08T13:42:05.388839+00:00",
++      "last_scan_utc": "2026-10-08T14:21:34.591355+00:00",
+       "last_updated_at": null,
+       "records_scanned": 4,
+       "records_synced": 4
+@@ -44,7 +44,7 @@
+     "verity_catalog": {
+       "extra": {},
+       "last_marker": null,
+-      "last_scan_utc": "2026-10-08T13:42:05.388023+00:00",
++      "last_scan_utc": "2026-10-08T14:21:34.589168+00:00",
+       "last_updated_at": null,
+       "records_scanned": 0,
+       "records_synced": 0
+diff --git a/tests/test_acceptance_range_integrity.py b/tests/test_acceptance_range_integrity.py
+new file mode 100644
+index 0000000..6537e9e
+--- /dev/null
++++ b/tests/test_acceptance_range_integrity.py
+@@ -0,0 +1,189 @@
++from datetime import UTC, datetime
++
++from mcp_vulnerabilities.deduplicator import OsvDeduplicator
++from mcp_vulnerabilities.models import (
++    AffectedPackage,
++    DatabaseSpecificMcp,
++    EventSpec,
++    OsvVulnerability,
++    PackageSpec,
++    RangeSpec,
++    RangeType,
++)
++from mcp_vulnerabilities.validator import OsvValidator
++
++
++def test_overlapping_cve_ghsa_conflicting_fixes_produce_valid_ranges():
++    now_str = datetime.now(UTC).isoformat().replace("+00:00", "Z")
++    
++    cve_vuln = OsvVulnerability(
++        id="CVE-2023-1000",
++        summary="Test vulnerability",
++        details="Test details",
++        aliases=("GHSA-1234-5678-9012",),
++        affected=(
++            AffectedPackage(
++                package=PackageSpec(name="test-pkg", ecosystem="PyPI"),
++                ranges=(
++                    RangeSpec(
++                        type=RangeType.ECOSYSTEM,
++                        events=(
++                            EventSpec(introduced="0"),
++                            EventSpec(fixed="0.4.0"),
++                        ),
++                    ),
++                ),
++            ),
++        ),
++        modified=now_str,
++        published=now_str,
++    )
++    
++    ghsa_vuln = OsvVulnerability(
++        id="GHSA-1234-5678-9012",
++        summary="Test vulnerability from GHSA",
++        details="Test details from GHSA",
++        aliases=("CVE-2023-1000",),
++        affected=(
++            AffectedPackage(
++                package=PackageSpec(name="test-pkg", ecosystem="PyPI"),
++                ranges=(
++                    RangeSpec(
++                        type=RangeType.ECOSYSTEM,
++                        events=(
++                            EventSpec(introduced="0"),
++                            EventSpec(fixed="0.4.1"),
++                        ),
++                    ),
++                ),
++            ),
++        ),
++        modified=now_str,
++        published=now_str,
++    )
++    
++    merged = OsvDeduplicator.deduplicate_and_merge([cve_vuln, ghsa_vuln])
++    assert len(merged) == 1
++    
++    merged_vuln = merged[0]
++    errors = OsvValidator.validate(merged_vuln)
++    assert not errors, f"Validation errors found: {errors}"
++
++def test_no_adjacent_duplicate_fixed_events():
++    now_str = datetime.now(UTC).isoformat().replace("+00:00", "Z")
++    
++    vuln1 = OsvVulnerability(
++        id="CVE-2023-2000",
++        summary="Test vul 1",
++        details="Test det",
++        aliases=("GHSA-0000-0000-0000",),
++        affected=(
++            AffectedPackage(
++                package=PackageSpec(name="test-pkg2", ecosystem="PyPI"),
++                ranges=(
++                    RangeSpec(
++                        type=RangeType.ECOSYSTEM,
++                        events=(
++                            EventSpec(introduced="0"),
++                            EventSpec(fixed="1.0.0"),
++                        ),
++                    ),
++                ),
++            ),
++        ),
++        modified=now_str,
++        published=now_str,
++    )
++    
++    vuln2 = OsvVulnerability(
++        id="GHSA-0000-0000-0000",
++        summary="Test vul 2",
++        details="Test det",
++        aliases=("CVE-2023-2000",),
++        affected=(
++            AffectedPackage(
++                package=PackageSpec(name="test-pkg2", ecosystem="PyPI"),
++                ranges=(
++                    RangeSpec(
++                        type=RangeType.ECOSYSTEM,
++                        events=(
++                            EventSpec(introduced="0"),
++                            EventSpec(fixed="1.0.1"), # Conflict
++                        ),
++                    ),
++                ),
++            ),
++        ),
++        modified=now_str,
++        published=now_str,
++    )
++    
++    merged = OsvDeduplicator.deduplicate_and_merge([vuln1, vuln2])
++    assert len(merged) == 1
++    
++    affected_packages = merged[0].affected
++    assert affected_packages
++    
++    for affected in affected_packages:
++        for rng in affected.ranges:
++            events = rng.events
++            last_was_fixed = False
++            for event in events:
++                if event.fixed:
++                    assert not last_was_fixed, "Adjacent fixed events found!"
++                    last_was_fixed = True
++                elif event.introduced:
++                    last_was_fixed = False
++
++def test_highest_cvss_and_epss_preservation():
++    now_str = datetime.now(UTC).isoformat().replace("+00:00", "Z")
++    
++    vuln1 = OsvVulnerability(
++        id="CVE-2023-3000",
++        summary="Test vul",
++        details="Det",
++        aliases=("GHSA-1111-1111-1111",),
++        affected=(
++            AffectedPackage(
++                package=PackageSpec(name="test-pkg", ecosystem="PyPI"),
++                database_specific=DatabaseSpecificMcp(
++                    cvss_score=7.5,
++                    epss_score=0.05,
++                    cvss_v3_vector="CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N"
++                )
++            ),
++        ),
++        modified=now_str,
++        published=now_str,
++    )
++    
++    vuln2 = OsvVulnerability(
++        id="GHSA-1111-1111-1111",
++        summary="Test vul 2",
++        details="Det 2",
++        aliases=("CVE-2023-3000",),
++        affected=(
++            AffectedPackage(
++                package=PackageSpec(name="test-pkg", ecosystem="PyPI"),
++                database_specific=DatabaseSpecificMcp(
++                    cvss_score=8.8,
++                    epss_score=0.02,
++                    cvss_v3_vector="CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
++                )
++            ),
++        ),
++        modified=now_str,
++        published=now_str,
++    )
++    
++    merged = OsvDeduplicator.deduplicate_and_merge([vuln1, vuln2])
++    assert len(merged) == 1
++    
++    merged_vuln = merged[0]
++    
++    assert len(merged_vuln.affected) == 1
++    db_spec = merged_vuln.affected[0].database_specific
++    
++    assert db_spec.cvss_score == 8.8
++    assert db_spec.epss_score == 0.05
++    assert db_spec.cvss_v3_vector == "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N" or db_spec.cvss_v3_vector == "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H"
+
