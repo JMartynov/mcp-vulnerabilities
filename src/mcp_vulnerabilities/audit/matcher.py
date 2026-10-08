@@ -6,7 +6,7 @@ import json
 import logging
 from pathlib import Path
 import re
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional
 from packaging.version import InvalidVersion, Version
 
 from .parsers import DiscoveredClientServer

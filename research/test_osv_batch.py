@@ -116,7 +116,7 @@ def test_osv_batch(packages: list[dict[str, Any]] | None = None, existing_ids: s
 
 if __name__ == "__main__":
     metric, vulns = test_osv_batch()
-    print(f"--- OSV Batch Query Results ---")
+    print("--- OSV Batch Query Results ---")
     print(f"Packages queried: {metric.items_scanned}")
     print(f"Advisories returned: {metric.mcp_items_identified}")
     print(f"New advisories: {metric.vulnerabilities_found}")

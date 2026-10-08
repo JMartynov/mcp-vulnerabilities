@@ -3,7 +3,6 @@
 import json
 from pathlib import Path
 import xml.etree.ElementTree as ET
-import pytest
 
 from mcp_vulnerabilities.feed import AdvisoryFeedBuilder
 

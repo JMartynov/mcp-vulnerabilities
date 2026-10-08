@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import time
-from typing import Any
 
 from mcp_vulnerabilities.filter import McpRelevanceFilter
 from research.common import ResearchMetric, fetch_json, logger

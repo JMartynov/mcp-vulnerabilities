@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import time
-import urllib.parse
 from pathlib import Path
 from typing import Any
 
@@ -30,7 +29,7 @@ def test_ghsa_api(existing_ids: set[str] | None = None) -> tuple[ResearchMetric,
     for term in search_terms:
         # GHSA REST API allows per_page=100
         # Note: GitHub advisories API supports search by keyword or type
-        url = f"https://api.github.com/advisories?per_page=100&direction=desc&sort=updated"
+        url = "https://api.github.com/advisories?per_page=100&direction=desc&sort=updated"
         try:
             logger.info("Fetching recent GHSA advisories from GitHub Advisory Database...")
             data = fetch_json(url, timeout=12.0)
@@ -100,7 +99,7 @@ def test_ghsa_api(existing_ids: set[str] | None = None) -> tuple[ResearchMetric,
 
 if __name__ == "__main__":
     metric, advisories = test_ghsa_api()
-    print(f"--- GHSA API Results ---")
+    print("--- GHSA API Results ---")
     print(f"Total advisories scanned: {metric.items_scanned}")
     print(f"MCP advisories identified: {metric.mcp_items_identified}")
     print(f"New to database: {metric.vulnerabilities_found}")

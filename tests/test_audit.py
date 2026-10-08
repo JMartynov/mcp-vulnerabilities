@@ -2,10 +2,9 @@
 
 import json
 from pathlib import Path
-import pytest
 
 from mcp_vulnerabilities.audit.parsers import ClientConfigParser, DiscoveredClientServer
-from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher, AuditFinding, AuditReport
+from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
 
 
 def test_client_config_parser_claude_desktop(tmp_path: Path):

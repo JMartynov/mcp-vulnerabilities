@@ -83,6 +83,6 @@ if __name__ == "__main__":
     print(f"Total PyPI Projects Indexed: {metric.items_scanned:,}")
     print(f"MCP Packages Identified:     {metric.mcp_items_identified:,}")
     print(f"Index Query Duration:        {metric.duration_seconds:.2f}s")
-    print(f"Sample packages (first 10):")
+    print("Sample packages (first 10):")
     for p in pkgs[:10]:
         print(f"  - {p['name']} ({p['ecosystem']})")

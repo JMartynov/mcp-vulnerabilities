@@ -9,7 +9,6 @@ import ssl
 import urllib.request
 from typing import Any
 
-from mcp_vulnerabilities.filter import McpRelevanceFilter
 
 logger = logging.getLogger("mcp_vulnerabilities.discovery.glama")
 

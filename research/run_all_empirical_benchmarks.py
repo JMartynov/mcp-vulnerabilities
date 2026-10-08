@@ -8,7 +8,7 @@ from dataclasses import asdict
 from pathlib import Path
 from typing import Any
 
-from research.common import ResearchMetric, logger
+from research.common import ResearchMetric
 from research.test_github_curated import test_github_curated
 from research.test_ghsa_api import test_ghsa_api
 from research.test_npm_discovery import test_npm_discovery

@@ -14,7 +14,6 @@ from typing import Any
 
 from mcp_vulnerabilities.catalog import McpCatalogState
 from mcp_vulnerabilities.converters.ghsa import GhsaConverter
-from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.discovery.npm import NpmDiscoveryProvider
 from mcp_vulnerabilities.discovery.pypi import PypiDiscoveryProvider
 from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline

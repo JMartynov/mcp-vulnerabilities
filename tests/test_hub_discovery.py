@@ -2,7 +2,6 @@
 
 import json
 from unittest.mock import MagicMock, patch
-import pytest
 
 from mcp_vulnerabilities.discovery.smithery import SmitheryDiscoveryProvider
 from mcp_vulnerabilities.discovery.glama import GlamaDiscoveryProvider
