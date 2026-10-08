@@ -41,8 +41,7 @@ class OsvDevConverter:
         elif published_raw and modified_raw:
             published = str(published_raw)
             modified = str(modified_raw)
-            if published > modified:
-                modified = published
+            modified = max(modified, published)
         else:
             published = "2026-01-01T00:00:00Z"
             modified = "2026-01-01T00:00:00Z"

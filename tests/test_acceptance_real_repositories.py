@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 import json
+import ssl
 import tempfile
 import unittest
-from pathlib import Path
-
-import ssl
 import urllib.error
 import urllib.request
+from pathlib import Path
 from typing import Any
 
 from mcp_vulnerabilities.catalog import McpCatalogState

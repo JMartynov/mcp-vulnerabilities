@@ -3,8 +3,8 @@
 import json
 from pathlib import Path
 
-from mcp_vulnerabilities.audit.parsers import ClientConfigParser, DiscoveredClientServer
 from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
+from mcp_vulnerabilities.audit.parsers import ClientConfigParser, DiscoveredClientServer
 
 
 def test_client_config_parser_claude_desktop(tmp_path: Path):

@@ -1,8 +1,8 @@
 """Unit tests for Atom and JSON Feed generators."""
 
 import json
-from pathlib import Path
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
 from mcp_vulnerabilities.feed import AdvisoryFeedBuilder
 

@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import json
 import logging
-from pathlib import Path
-from typing import Any, Dict, List, Optional
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -20,9 +20,9 @@ class AdvisoryFeedBuilder:
     """Builds Atom 1.0 XML and JSON Feed 1.1 artifacts from OSV advisories."""
 
     @classmethod
-    def sort_advisories(cls, advisories: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    def sort_advisories(cls, advisories: list[dict[str, Any]]) -> list[dict[str, Any]]:
         """Sorts advisories by published or modified timestamp descending."""
-        def get_timestamp(adv: Dict[str, Any]) -> str:
+        def get_timestamp(adv: dict[str, Any]) -> str:
             return adv.get("published") or adv.get("modified") or "1970-01-01T00:00:00Z"
 
         return sorted(advisories, key=get_timestamp, reverse=True)
@@ -30,7 +30,7 @@ class AdvisoryFeedBuilder:
     @classmethod
     def generate_atom_feed(
         cls,
-        advisories: List[Dict[str, Any]],
+        advisories: list[dict[str, Any]],
         output_path: str | Path,
         max_items: int = 100,
     ) -> Path:
@@ -115,7 +115,7 @@ class AdvisoryFeedBuilder:
     @classmethod
     def generate_json_feed(
         cls,
-        advisories: List[Dict[str, Any]],
+        advisories: list[dict[str, Any]],
         output_path: str | Path,
         max_items: int = 100,
     ) -> Path:
@@ -158,7 +158,7 @@ class AdvisoryFeedBuilder:
         return out_p
 
     @staticmethod
-    def _extract_canonical_url(adv: Dict[str, Any]) -> str:
+    def _extract_canonical_url(adv: dict[str, Any]) -> str:
         for ref in adv.get("references", []):
             url = ref.get("url", "")
             if "github.com" in url or "nvd.nist.gov" in url:
@@ -166,7 +166,7 @@ class AdvisoryFeedBuilder:
         return f"{FEED_HOMEPAGE}/blob/main/data/vulnerabilities/{adv.get('id', 'index')}.json"
 
     @staticmethod
-    def _extract_packages(adv: Dict[str, Any]) -> List[str]:
+    def _extract_packages(adv: dict[str, Any]) -> list[str]:
         names = []
         for aff in adv.get("affected", []):
             pkg = aff.get("package", {})
@@ -175,7 +175,7 @@ class AdvisoryFeedBuilder:
         return names
 
     @staticmethod
-    def _extract_severity_info(adv: Dict[str, Any]) -> tuple[str, Optional[float]]:
+    def _extract_severity_info(adv: dict[str, Any]) -> tuple[str, float | None]:
         cvss_score = None
         for s in adv.get("severity", []):
             try:
@@ -201,7 +201,7 @@ class AdvisoryFeedBuilder:
         return (sev or "UNKNOWN").upper(), cvss_score
 
     @classmethod
-    def _build_html_content(cls, adv: Dict[str, Any], severity: str, cvss: Optional[float]) -> str:
+    def _build_html_content(cls, adv: dict[str, Any], severity: str, cvss: float | None) -> str:
         adv_id = adv.get("id", "UNKNOWN")
         details = adv.get("details", "")
         pkg_names = ", ".join(cls._extract_packages(adv)) or "Unknown MCP Server"

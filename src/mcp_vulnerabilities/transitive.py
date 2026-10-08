@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
 import json
 import logging
-from pathlib import Path
 import re
 import ssl
-from typing import Any, Dict, List, Optional
 import urllib.request
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
 
 logger = logging.getLogger(__name__)
 
@@ -27,20 +27,20 @@ def _get_ssl_context() -> ssl.SSLContext:
 @dataclass
 class TransitiveFinding:
     dependency_name: str
-    installed_version: Optional[str]
+    installed_version: str | None
     ecosystem: str
     vulnerability_id: str
     summary: str
     severity: str
-    cvss_score: Optional[float]
-    fixed_version: Optional[str]
+    cvss_score: float | None
+    fixed_version: str | None
 
 
 @dataclass
 class TransitiveAuditResult:
     target_manifest: str
     total_dependencies: int
-    findings: List[TransitiveFinding] = field(default_factory=list)
+    findings: list[TransitiveFinding] = field(default_factory=list)
 
     @property
     def has_critical_or_high(self) -> bool:
@@ -51,7 +51,7 @@ class TransitiveAuditResult:
         scores = [f.cvss_score for f in self.findings if f.cvss_score is not None]
         return max(scores) if scores else 0.0
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "manifest": self.target_manifest,
             "total_dependencies": self.total_dependencies,
@@ -86,7 +86,7 @@ class TransitiveDependencyAuditor:
         if not path.exists():
             raise FileNotFoundError(f"Manifest not found: {path}")
 
-        deps: List[tuple[str, Optional[str], str]] = []  # (name, version, ecosystem)
+        deps: list[tuple[str, str | None, str]] = []  # (name, version, ecosystem)
 
         if path.name == "package.json":
             deps = cls.parse_package_json(path)
@@ -108,11 +108,11 @@ class TransitiveDependencyAuditor:
         )
 
     @classmethod
-    def parse_package_json(cls, path: Path) -> List[tuple[str, Optional[str], str]]:
+    def parse_package_json(cls, path: Path) -> list[tuple[str, str | None, str]]:
         """Extracts direct dependencies from a package.json file."""
         data = json.loads(path.read_text(encoding="utf-8"))
         deps_dict = {**data.get("dependencies", {}), **data.get("devDependencies", {})}
-        extracted: List[tuple[str, Optional[str], str]] = []
+        extracted: list[tuple[str, str | None, str]] = []
 
         for name, ver_spec in deps_dict.items():
             # Clean semantic prefixes like ^, ~, >=
@@ -121,9 +121,9 @@ class TransitiveDependencyAuditor:
         return extracted
 
     @classmethod
-    def parse_requirements_txt(cls, path: Path) -> List[tuple[str, Optional[str], str]]:
+    def parse_requirements_txt(cls, path: Path) -> list[tuple[str, str | None, str]]:
         """Extracts pinned dependencies from a Python requirements.txt file."""
-        extracted: List[tuple[str, Optional[str], str]] = []
+        extracted: list[tuple[str, str | None, str]] = []
         for line in path.read_text(encoding="utf-8").splitlines():
             line = line.strip()
             if not line or line.startswith("#") or line.startswith("-"):
@@ -137,8 +137,8 @@ class TransitiveDependencyAuditor:
     @classmethod
     def audit_dependencies(
         cls,
-        dependencies: List[tuple[str, Optional[str], str]],
-    ) -> List[TransitiveFinding]:
+        dependencies: list[tuple[str, str | None, str]],
+    ) -> list[TransitiveFinding]:
         """Queries OSV Batch API for a list of dependencies (name, version, ecosystem)."""
         if not dependencies:
             return []
@@ -150,7 +150,7 @@ class TransitiveDependencyAuditor:
                 q["version"] = ver
             queries.append(q)
 
-        findings: List[TransitiveFinding] = []
+        findings: list[TransitiveFinding] = []
         try:
             payload = json.dumps({"queries": queries}).encode("utf-8")
             req = urllib.request.Request(
@@ -195,7 +195,7 @@ class TransitiveDependencyAuditor:
         return findings
 
     @staticmethod
-    def _extract_severity_info(adv: Dict[str, Any]) -> tuple[str, Optional[float]]:
+    def _extract_severity_info(adv: dict[str, Any]) -> tuple[str, float | None]:
         cvss = None
         for s in adv.get("severity", []):
             try:
@@ -218,7 +218,7 @@ class TransitiveDependencyAuditor:
         return (sev or "UNKNOWN").upper(), cvss
 
     @staticmethod
-    def _find_fixed_version(adv: Dict[str, Any]) -> Optional[str]:
+    def _find_fixed_version(adv: dict[str, Any]) -> str | None:
         for aff in adv.get("affected", []):
             for r in aff.get("ranges", []):
                 for ev in r.get("events", []):

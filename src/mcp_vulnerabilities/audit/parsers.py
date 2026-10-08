@@ -1,29 +1,29 @@
 """Parsers for extracting MCP server definitions and versions from AI client configurations."""
 
-from dataclasses import dataclass
 import json
 import os
-from pathlib import Path
 import re
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any
 
 
 @dataclass
 class DiscoveredClientServer:
     server_name: str
     package_name: str
-    version: Optional[str]
-    ecosystem: Optional[str]
+    version: str | None
+    ecosystem: str | None
     command: str
-    args: List[str]
-    source_file: Optional[Path] = None
+    args: list[str]
+    source_file: Path | None = None
 
 
 class ClientConfigParser:
     """Parses various AI client configuration formats to extract MCP server definitions."""
 
     @staticmethod
-    def get_standard_config_paths() -> List[Path]:
+    def get_standard_config_paths() -> list[Path]:
         """Returns standard locations for Claude Desktop and other AI client MCP configs."""
         home = Path.home()
         paths = [
@@ -41,7 +41,7 @@ class ClientConfigParser:
         return [p for p in paths if p and p.exists() and p.is_file()]
 
     @classmethod
-    def parse_file(cls, path: Path) -> List[DiscoveredClientServer]:
+    def parse_file(cls, path: Path) -> list[DiscoveredClientServer]:
         """Parses a specific client config JSON file."""
         if not path.exists():
             raise FileNotFoundError(f"Configuration file not found: {path}")
@@ -52,9 +52,9 @@ class ClientConfigParser:
         return cls.parse_dict(data, source_file=path)
 
     @classmethod
-    def parse_dict(cls, data: Dict[str, Any], source_file: Optional[Path] = None) -> List[DiscoveredClientServer]:
+    def parse_dict(cls, data: dict[str, Any], source_file: Path | None = None) -> list[DiscoveredClientServer]:
         """Parses a loaded config dictionary containing server configurations."""
-        servers: List[DiscoveredClientServer] = []
+        servers: list[DiscoveredClientServer] = []
         raw_servers = data.get("mcpServers") or data.get("mcp_servers") or data.get("servers")
 
         if not isinstance(raw_servers, dict):
@@ -77,9 +77,9 @@ class ClientConfigParser:
     def _parse_server_entry(
         cls,
         name: str,
-        conf: Dict[str, Any],
-        source_file: Optional[Path] = None,
-    ) -> Optional[DiscoveredClientServer]:
+        conf: dict[str, Any],
+        source_file: Path | None = None,
+    ) -> DiscoveredClientServer | None:
         command = str(conf.get("command", "")).strip()
         args = [str(a) for a in conf.get("args", [])]
 
@@ -88,8 +88,8 @@ class ClientConfigParser:
 
         cmd_lower = Path(command).name.lower()
         package_name = name
-        version: Optional[str] = None
-        ecosystem: Optional[str] = None
+        version: str | None = None
+        ecosystem: str | None = None
 
         if cmd_lower in ("npx", "pnpx", "bunx"):
             ecosystem = "npm"
@@ -154,7 +154,7 @@ class ClientConfigParser:
         )
 
     @staticmethod
-    def _extract_npm_package_and_version(spec: str) -> tuple[str, Optional[str]]:
+    def _extract_npm_package_and_version(spec: str) -> tuple[str, str | None]:
         """Parses npm package specifiers like `@scope/name@1.0.0` or `name@^2.0`."""
         spec = spec.strip()
         if spec.startswith("@"):
@@ -170,7 +170,7 @@ class ClientConfigParser:
             return pkg, ver
 
     @staticmethod
-    def _extract_python_package_and_version(spec: str) -> tuple[str, Optional[str]]:
+    def _extract_python_package_and_version(spec: str) -> tuple[str, str | None]:
         """Parses Python package specifiers like `mcp-server-git==0.1.0` or `mcp-server-git>=0.2.0`."""
         spec = spec.strip()
         match = re.split(r"(==|>=|<=|>|<|~=|@)", spec, maxsplit=1)

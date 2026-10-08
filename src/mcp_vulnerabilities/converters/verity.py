@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from typing import Any
 import logging
+from typing import Any
 
 from mcp_vulnerabilities.models import (
     AffectedPackage,
@@ -21,7 +21,11 @@ from mcp_vulnerabilities.models import (
 logger = logging.getLogger("mcp_vulnerabilities.converters.verity")
 
 try:
-    from verity_lite.mcp_catalog import McpServerSpec, VulnerabilityCondition, list_server_specs
+    from verity_lite.mcp_catalog import (
+        McpServerSpec,
+        VulnerabilityCondition,
+        list_server_specs,
+    )
     HAVE_VERITY_CATALOG = True
 except ImportError:
     HAVE_VERITY_CATALOG = False
