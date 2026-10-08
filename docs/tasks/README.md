@@ -6,6 +6,8 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ## Task Catalog & Implementation Status
 
+### Completed Tracks (100% Tested & Merged)
+
 | # | Task | Subsystem | Status | Key Deliverable & Verification | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
 | **01** | **GitHub API Token & Rate-Limit Protection** | Ingestion Stream | `Done` | `_get_github_headers()` with `GITHUB_TOKEN`/`GH_TOKEN` support for 5,000 req/hr quota; unit tests passed. | [task01_github_token_rate_limit.md](../../.jules/task01_github_token_rate_limit.md) |
@@ -18,6 +20,18 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
+### Upcoming Roadmap Tasks on the Board
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **08** | **Automated Catalog Enrichment Cron in CI** | Daily Sync Automation | `Todo` | Automatically runs `cli enrich --limit 500` in `.github/workflows/daily_sync.yml` nightly. | [task08_daily_sync_enrich_cron.md](../../.jules/task08_daily_sync_enrich_cron.md) |
+| **09** | **AI Client Config Auto-Fixer (cli fix-config)** | Client Security CLI | `Todo` | Automated remediation command rewriting vulnerable MCP servers in `claude_desktop_config.json`. | [task09_client_config_autofixer.md](../../.jules/task09_client_config_autofixer.md) |
+| **10** | **Real-Time Threat Feed Webhook Dispatcher** | Threat Intelligence | `Todo` | Pushes real-time alerts to Discord, Slack, and GitHub Discussions on newly detected CRITICAL/HIGH advisories. | [task10_threat_feed_webhook_notifier.md](../../.jules/task10_threat_feed_webhook_notifier.md) |
+| **11** | **Offline Air-Gapped Enterprise Export Bundle** | Enterprise Distribution | `Todo` | Packages standalone tarball (`mcp-offline.tar.gz`) with embedded zero-dependency query script. | [task11_airgap_export_bundle.md](../../.jules/task11_airgap_export_bundle.md) |
+| **12** | **OWASP MCP Top 10 & CWE Analytics Dashboard** | Static Web Explorer | `Todo` | Generates visual distribution charts for top vulnerable tools and OWASP categories in `docs/analytics.html`. | [task12_owasp_analytics_dashboard.md](../../.jules/task12_owasp_analytics_dashboard.md) |
+| **13** | **Official Lightweight Docker Image & GHCR Publish** | Containerization & DevSecOps | `Todo` | Multi-arch `Dockerfile` and automated publishing workflow to `ghcr.io/jmartynov/mcp-vulnerabilities`. | [task13_docker_ghcr_container.md](../../.jules/task13_docker_ghcr_container.md) |
+
+---
 
 ## Verification Test Results
 ```
