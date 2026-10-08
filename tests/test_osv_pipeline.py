@@ -8,6 +8,7 @@ from pathlib import Path
 
 import pytest
 
+from unittest.mock import patch, MagicMock
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
 from mcp_vulnerabilities.models import (
     AffectedPackage,
@@ -423,3 +424,56 @@ def test_pipeline_github_auth_headers_without_token(mock_urlopen: MagicMock) -> 
         req_args = mock_urlopen.call_args[0]
         req_obj = req_args[0]
         assert "Authorization" not in req_obj.headers
+
+
+def test_is_version_affected_evaluator() -> None:
+    from mcp_vulnerabilities.pipeline import is_version_affected
+    from mcp_vulnerabilities.models import RangeSpec, EventSpec, RangeType
+
+    range_spec = RangeSpec(
+        type=RangeType.SEMVER,
+        events=(
+            EventSpec(introduced="0"),
+            EventSpec(fixed="0.4.0"),
+        ),
+    )
+
+    # 0.3.9 is vulnerable
+    assert is_version_affected("0.3.9", (range_spec,)) is True
+    # 0.4.0 is fixed
+    assert is_version_affected("0.4.0", (range_spec,)) is False
+    # 1.0.0 is fixed
+    assert is_version_affected("1.0.0", (range_spec,)) is False
+    # Unknown version is conservatively vulnerable
+    assert is_version_affected(None, (range_spec,)) is True
+    # Empty string version is conservatively vulnerable
+    assert is_version_affected("", (range_spec,)) is True
+    # Invalid semver is conservatively vulnerable
+    assert is_version_affected("invalid-version", (range_spec,)) is True
+
+
+@patch("urllib.request.urlopen")
+def test_query_osv_batch_includes_version(mock_urlopen: MagicMock) -> None:
+    from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline as OsvPipeline
+    import tempfile
+    
+    with tempfile.TemporaryDirectory() as tmpdir:
+        pipeline = OsvPipeline(output_dir=Path(tmpdir) / "vulns")
+        packages = [
+            {"ecosystem": "PyPI", "name": "fastmcp", "version": "0.1.0"},
+            {"ecosystem": "npm", "name": "mcp-neo4j-cypher"} # no version
+        ]
+        
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = json.dumps({"results": [{}, {}]}).encode("utf-8")
+        mock_urlopen.return_value.__enter__.return_value = mock_resp
+        
+        pipeline._query_osv_batch(packages)
+        
+        mock_urlopen.assert_called_once()
+        req = mock_urlopen.call_args[0][0]
+        payload = json.loads(req.data.decode("utf-8"))
+        
+        assert payload["queries"][0] == {"package": {"name": "fastmcp", "ecosystem": "PyPI"}, "version": "0.1.0"}
+        assert payload["queries"][1] == {"package": {"name": "mcp-neo4j-cypher", "ecosystem": "npm"}}
+

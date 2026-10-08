@@ -313,6 +313,8 @@ Accurate vulnerability matching mandates a robust version resolution system:
 
 The `data/vulnerabilities/index.json` acts as the definitive source of truth for the compiled database.
 
+**Index Schema Additions**: Each `package` entry in the search index (`data/vulnerabilities/index.json`) includes a `currently_vulnerable` boolean flag. This is dynamically calculated during compilation by evaluating the package's known semantic version (from `data/mcp_catalog_state.json`) against the OSV `ranges` array. If the known version falls within an affected range, or if the version is missing/unknown, it conservatively evaluates to `true`.
+
 **Pre-Loading Contract**: During incremental pipeline executions, the engine *must* preserve all existing records in the index. Newly fetched or updated vulnerabilities overwrite existing IDs or append new entries, but absent advisories in the delta *must not* trigger deletion of historical records.
 
 ---
