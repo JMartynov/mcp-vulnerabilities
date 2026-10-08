@@ -57,5 +57,21 @@ Execute the acceptance test suite to validate the end-to-end functionality:
 uv run pytest -v tests/test_acceptance_*.py
 ```
 
+## Publishing to PyPI
+
+### Final Optional Step: Tagging v1.0.0 for PyPI
+When you're ready to publish the inaugural release to PyPI:
+1. Ensure your [PyPI account](https://pypi.org/manage/account/publishing/) has a Pending Publisher configured:
+   - **Owner**: `JMartynov`
+   - **Repository**: `mcp-vulnerabilities`
+   - **Workflow name**: `release.yml`
+   - **Environment**: `pypi`
+2. Create and push the release tag:
+   ```bash
+   git tag -a v1.0.0 -m "Release v1.0.0: Inaugural open-source MCP vulnerability database & CLI"
+   git push origin v1.0.0
+   ```
+
 ## License
 MIT
+

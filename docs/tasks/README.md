@@ -14,8 +14,10 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 | **04** | **OSV Batch Version Stamping (currently_vulnerable)** | Search Index | `Done` | Version payload in OSV queries + `is_version_affected()` evaluator stamping `currently_vulnerable` in `index.json`. | [task04_osv_version_stamping.md](../../.jules/task04_osv_version_stamping.md) |
 | **05** | **Modern Lockfile Auditing (uv.lock, pyproject.toml)** | Transitive Scanner | `Done` | Built-in `tomllib` parsers for `uv.lock`, PEP 621 `pyproject.toml`, and Poetry lockfiles in `transitive.py`. | [task05_modern_lockfile_auditing.md](../../.jules/task05_modern_lockfile_auditing.md) |
 | **06** | **Web Explorer UI Enhancements (OSV 1.6 Extensions)** | Static Web Dashboard | `Done` | DOM chips for vulnerable tools, OWASP MCP Top 10 badges, and remediation callouts in `docs/app.js` and `docs/style.css`. | [task06_web_explorer_ui_enhancements.md](../../.jules/task06_web_explorer_ui_enhancements.md) |
+| **07** | **PyPI Trusted Publishing (release.yml & v1.0.0 Tagging)** | Release Automation | `Done` | `.github/workflows/release.yml` with OIDC Trusted Publishing, `pypi` environment, and README documentation for v1.0.0 tagging. | [task07_pypi_trusted_publishing.md](../../.jules/task07_pypi_trusted_publishing.md) |
 
 ---
+
 
 ## Verification Test Results
 ```
