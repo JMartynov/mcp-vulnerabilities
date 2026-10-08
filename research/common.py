@@ -5,10 +5,9 @@ from __future__ import annotations
 import json
 import logging
 import ssl
-import time
 import urllib.error
 import urllib.request
-from dataclasses import asdict, dataclass
+from dataclasses import dataclass
 from typing import Any
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")

@@ -27,7 +27,30 @@ class PypiDiscoveryProvider:
     """Discovers Model Context Protocol packages on PyPI via PEP 691 JSON Simple API."""
 
     @classmethod
-    def discover(cls, timeout: float = 15.0) -> list[dict[str, Any]]:
+    def resolve_package_version(cls, name: str, timeout: float = 5.0) -> str:
+        """Resolve the latest version of a PyPI package using the JSON API."""
+        url = f"https://pypi.org/pypi/{name}/json"
+        req = urllib.request.Request(
+            url,
+            headers={"User-Agent": "McpVulnerabilities/1.0"},
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=timeout, context=_get_ssl_context()) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                return data.get("info", {}).get("version", "")
+        except Exception as exc:
+            logger.warning("Failed to resolve version for %s: %s", name, exc)
+            return ""
+
+    @classmethod
+    def enrich_package_version(cls, package: dict[str, Any], timeout: float = 5.0) -> dict[str, Any]:
+        """Populate package version using resolve_package_version if not already present."""
+        if not package.get("version"):
+            package["version"] = cls.resolve_package_version(package["name"], timeout=timeout)
+        return package
+
+    @classmethod
+    def discover(cls, timeout: float = 15.0, resolve_versions: bool = False) -> list[dict[str, Any]]:
         """Fetch and filter PyPI index for canonical MCP servers."""
         url = "https://pypi.org/simple/"
         req = urllib.request.Request(
@@ -58,7 +81,7 @@ class PypiDiscoveryProvider:
                             discovered.append({
                                 "name": name,
                                 "ecosystem": "PyPI",
-                                "version": "",  # PyPI simple doesn't supply version without extra call; version resolved on audit
+                                "version": cls.resolve_package_version(name, timeout=timeout) if resolve_versions else "",
                                 "reasons": list(reasons),
                             })
         except Exception as exc:

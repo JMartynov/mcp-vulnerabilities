@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import logging
 import os
-import time
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -95,7 +94,7 @@ class McpCatalogState:
         if current_version:
             norm_curr = normalize_version(current_version)
             norm_last = normalize_version(record.last_version_seen)
-            if norm_curr != norm_last:
+            if norm_curr != norm_last or not record.last_version_seen:
                 return True
 
         # Check TTL staleness (if last checked > ttl_days ago)
@@ -134,7 +133,10 @@ class McpCatalogState:
         if metadata:
             existing_meta.update(metadata)
 
-        norm_ver = normalize_version(version) or (self.records[key].last_version_seen if key in self.records else "")
+        if version:
+            norm_ver = normalize_version(version)
+        else:
+            norm_ver = normalize_version(self.records[key].last_version_seen) if key in self.records else ""
 
         self.records[key] = ServerRecord(
             name=name,

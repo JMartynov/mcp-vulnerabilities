@@ -3,9 +3,8 @@
 import json
 from pathlib import Path
 from unittest.mock import MagicMock, patch
-import pytest
 
-from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor, TransitiveAuditResult
+from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor
 
 
 def test_parse_package_json(tmp_path: Path):

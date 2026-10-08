@@ -88,7 +88,7 @@ def test_nvd_api(existing_ids: set[str] | None = None) -> tuple[ResearchMetric, 
 
 if __name__ == "__main__":
     metric, cves = test_nvd_api()
-    print(f"--- NVD API Results ---")
+    print("--- NVD API Results ---")
     print(f"Total CVEs scanned: {metric.items_scanned}")
     print(f"MCP CVEs verified: {metric.mcp_items_identified}")
     print(f"New to database: {metric.vulnerabilities_found}")

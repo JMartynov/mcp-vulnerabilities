@@ -109,10 +109,10 @@ def test_github_curated() -> tuple[ResearchMetric, list[dict[str, Any]]]:
 
 if __name__ == "__main__":
     metric, repos = test_github_curated()
-    print(f"--- GitHub Curated Discovery Results ---")
+    print("--- GitHub Curated Discovery Results ---")
     print(f"Total entries scanned: {metric.items_scanned}")
     print(f"MCP server repos verified: {metric.mcp_items_identified}")
     print(f"Duration: {metric.duration_seconds:.2f}s")
-    print(f"Sample repos (first 10):")
+    print("Sample repos (first 10):")
     for r in repos[:10]:
         print(f"  - {r['name']} (Stars: {r.get('stars', 'N/A')}): {r.get('repository')}")

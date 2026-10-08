@@ -80,10 +80,10 @@ def test_npm_discovery() -> tuple[ResearchMetric, list[dict[str, Any]]]:
 
 if __name__ == "__main__":
     metric, pkgs = test_npm_discovery()
-    print(f"--- npm Discovery Results ---")
+    print("--- npm Discovery Results ---")
     print(f"Total results scanned: {metric.items_scanned}")
     print(f"MCP packages verified: {metric.mcp_items_identified}")
     print(f"Duration: {metric.duration_seconds:.2f}s")
-    print(f"Sample packages (first 10):")
+    print("Sample packages (first 10):")
     for p in pkgs[:10]:
         print(f"  - {p['name']} ({p['ecosystem']}): {p['description'][:60]}")

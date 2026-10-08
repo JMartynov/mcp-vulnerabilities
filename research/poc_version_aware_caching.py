@@ -14,9 +14,6 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any
 
-from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
-from mcp_vulnerabilities.models import OsvVulnerability
-from mcp_vulnerabilities.validator import OsvValidator
 from research.common import fetch_json, logger
 
 

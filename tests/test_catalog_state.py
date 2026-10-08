@@ -53,6 +53,53 @@ class TestMcpCatalogState(unittest.TestCase):
             reloaded.mark_stale("npm", "@modelcontextprotocol/server-postgres")
             self.assertTrue(reloaded.should_query("npm", "@modelcontextprotocol/server-postgres", "0.6.2"))
 
+    def test_catalog_state_version_change_detection(self) -> None:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            state_file = Path(tmpdir) / "catalog_state.json"
+            state = McpCatalogState(state_file=state_file)
+
+            # PyPI package version detection
+            state.update_record(
+                ecosystem="PyPI",
+                name="mcp-server-test",
+                version="1.0.0",
+                vulnerabilities=[],
+            )
+            state.save()
+
+            # 1. No version supplied, should NOT query because last_version_seen is present
+            self.assertFalse(state.should_query("PyPI", "mcp-server-test"))
+
+            # 2. Update record to have empty version
+            state.update_record(
+                ecosystem="PyPI",
+                name="mcp-server-test",
+                version="",
+                vulnerabilities=[],
+            )
+            
+            # The original implementation would fallback to 1.0.0 since version is empty, 
+            # now we correctly normalized the existing empty version / previous string version.
+            # actually if we pass `version=""` it now uses `normalize_version(self.records[key].last_version_seen)` which is still `"1.0.0"`
+            # Let's adjust our logic test for empty string explicitly if they wanted it.
+            
+            # Manually wipe out version to simulate old state or bad update
+            state.records[McpCatalogState.package_key("PyPI", "mcp-server-test")].last_version_seen = ""
+            state.save()
+            
+            # 3. New version supplied when last_version_seen is empty -> should query
+            self.assertTrue(state.should_query("PyPI", "mcp-server-test", "1.0.0"))
+
+            # NPM package version detection
+            state.update_record(
+                ecosystem="npm",
+                name="mcp-npm-test",
+                version="2.1.0",
+                vulnerabilities=[],
+            )
+            self.assertFalse(state.should_query("npm", "mcp-npm-test", "2.1.0"))
+            self.assertTrue(state.should_query("npm", "mcp-npm-test", "2.1.1"))
+
 
 if __name__ == "__main__":
     unittest.main()
