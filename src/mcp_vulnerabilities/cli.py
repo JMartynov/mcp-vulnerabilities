@@ -7,8 +7,15 @@ import logging
 import sys
 from pathlib import Path
 
-from mcp_vulnerabilities.audit import ClientConfigParser, DiscoveredClientServer, VulnerabilityMatcher
-from mcp_vulnerabilities.discovery import McpDiscoveryOrchestrator
+from mcp_vulnerabilities.audit import (
+    ClientConfigParser,
+    DiscoveredClientServer,
+    VulnerabilityMatcher,
+)
+from mcp_vulnerabilities.discovery import (
+    CatalogVersionEnricher,
+    McpDiscoveryOrchestrator,
+)
 from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline
 from mcp_vulnerabilities.snapshot import build_snapshot
 from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor
@@ -25,6 +32,13 @@ def main() -> None:
     # Discover
     disc_p = subparsers.add_parser("discover", help="Run multi-registry MCP server discovery")
     disc_p.add_argument("--catalog-file", default="data/mcp_servers.json", help="Output catalog path")
+    
+    # Enrich
+    enrich_p = subparsers.add_parser("enrich", help="Enrich missing versions in the MCP servers catalog")
+    enrich_p.add_argument("--catalog-file", default="data/mcp_servers.json", help="Catalog file path")
+    enrich_p.add_argument("--limit", type=int, default=None, help="Maximum number of packages to enrich")
+    enrich_p.add_argument("--workers", type=int, default=10, help="Number of concurrent workers")
+    enrich_p.add_argument("--force", action="store_true", help="Force enrichment even if version exists")
     disc_p.add_argument("--no-npm", action="store_true", help="Skip npm discovery")
     disc_p.add_argument("--no-pypi", action="store_true", help="Skip PyPI discovery")
     disc_p.add_argument("--no-github", action="store_true", help="Skip GitHub discovery")
@@ -83,6 +97,11 @@ def main() -> None:
             include_glama=not args.no_glama,
         )
         print(f"Discovery complete. Discovered {len(servers)} MCP servers -> {args.catalog_file}")
+
+    elif args.command == "enrich":
+        enricher = CatalogVersionEnricher(catalog_file=args.catalog_file, max_workers=args.workers)
+        stats = enricher.run_enrichment(limit=args.limit, force=args.force)
+        print(f"Enriched {stats['attempted']} packages ({stats['updated']} updated, {stats['failed']} failed/skipped)")
 
     elif args.command == "sync":
         state_file = args.state_file or f"{args.output}/sync_state.json"

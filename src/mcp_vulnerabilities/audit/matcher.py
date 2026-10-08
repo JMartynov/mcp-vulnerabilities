@@ -1,12 +1,13 @@
 """Vulnerability matching engine comparing discovered MCP client servers against OSV advisories."""
 
-from dataclasses import dataclass, field
 import gzip
 import json
 import logging
-from pathlib import Path
 import re
-from typing import Any, Dict, List, Optional
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
 from packaging.version import InvalidVersion, Version
 
 from .parsers import DiscoveredClientServer
@@ -18,21 +19,21 @@ logger = logging.getLogger(__name__)
 class AuditFinding:
     server_name: str
     package_name: str
-    installed_version: Optional[str]
+    installed_version: str | None
     vulnerability_id: str
     summary: str
     severity_level: str
-    cvss_score: Optional[float]
-    fixed_version: Optional[str]
+    cvss_score: float | None
+    fixed_version: str | None
     affected_range: str
-    references: List[str]
+    references: list[str]
     is_confirmed: bool  # True if version specifically in range, False if warning on unpinned package
 
 
 @dataclass
 class AuditReport:
-    scanned_servers: List[DiscoveredClientServer]
-    findings: List[AuditFinding] = field(default_factory=list)
+    scanned_servers: list[DiscoveredClientServer]
+    findings: list[AuditFinding] = field(default_factory=list)
 
     @property
     def has_critical_or_high(self) -> bool:
@@ -42,7 +43,7 @@ class AuditReport:
     def total_findings(self) -> int:
         return len(self.findings)
 
-    def to_dict(self) -> Dict[str, Any]:
+    def to_dict(self) -> dict[str, Any]:
         return {
             "total_servers_scanned": len(self.scanned_servers),
             "total_vulnerabilities_found": len(self.findings),
@@ -79,10 +80,10 @@ class AuditReport:
 class VulnerabilityMatcher:
     """Evaluates client server dependencies against canonical OSV vulnerability records."""
 
-    def __init__(self, advisories: List[Dict[str, Any]]):
+    def __init__(self, advisories: list[dict[str, Any]]):
         self.advisories = advisories
         # Index advisories by normalized package name
-        self._package_index: Dict[str, List[Dict[str, Any]]] = {}
+        self._package_index: dict[str, list[dict[str, Any]]] = {}
         for adv in advisories:
             for affected in adv.get("affected", []):
                 pkg = affected.get("package", {})
@@ -94,7 +95,7 @@ class VulnerabilityMatcher:
     @classmethod
     def from_directory(cls, dir_path: Path) -> "VulnerabilityMatcher":
         """Loads all OSV JSON files from a directory."""
-        advisories: List[Dict[str, Any]] = []
+        advisories: list[dict[str, Any]] = []
         if not dir_path.exists():
             return cls(advisories)
 
@@ -135,11 +136,11 @@ class VulnerabilityMatcher:
 
     def audit_servers(
         self,
-        servers: List[DiscoveredClientServer],
-        severity_threshold: Optional[str] = None,
+        servers: list[DiscoveredClientServer],
+        severity_threshold: str | None = None,
     ) -> AuditReport:
         """Audits a list of discovered client servers and produces an AuditReport."""
-        findings: List[AuditFinding] = []
+        findings: list[AuditFinding] = []
         severity_order = {"LOW": 1, "MEDIUM": 2, "MODERATE": 2, "HIGH": 3, "CRITICAL": 4}
         min_rank = severity_order.get(str(severity_threshold).upper(), 0)
 
@@ -157,7 +158,7 @@ class VulnerabilityMatcher:
     def _find_advisories_for_server(
         self,
         server: DiscoveredClientServer,
-    ) -> List[tuple[Dict[str, Any], Dict[str, Any]]]:
+    ) -> list[tuple[dict[str, Any], dict[str, Any]]]:
         """Finds advisories that match the server's package name and ecosystem."""
         results = []
         norm_server = self._normalize_package_name(server.package_name)
@@ -187,24 +188,24 @@ class VulnerabilityMatcher:
     def _evaluate_vulnerability(
         self,
         server: DiscoveredClientServer,
-        adv: Dict[str, Any],
-        affected: Dict[str, Any],
-    ) -> Optional[AuditFinding]:
+        adv: dict[str, Any],
+        affected: dict[str, Any],
+    ) -> AuditFinding | None:
         """Evaluates whether the server's version falls within the affected range."""
         installed_ver = server.version
         ranges = affected.get("ranges", [])
         versions = affected.get("versions", [])
 
         is_vulnerable = False
-        fixed_version: Optional[str] = None
-        range_descriptions: List[str] = []
+        fixed_version: str | None = None
+        range_descriptions: list[str] = []
 
         # Find fixed version from ranges
         for r in ranges:
             events = r.get("events", [])
-            intro: Optional[str] = None
-            fix: Optional[str] = None
-            last_aff: Optional[str] = None
+            intro: str | None = None
+            fix: str | None = None
+            last_aff: str | None = None
 
             for ev in events:
                 if "introduced" in ev:
@@ -265,8 +266,8 @@ class VulnerabilityMatcher:
     def _is_version_in_ranges(
         self,
         version_str: str,
-        ranges: List[Dict[str, Any]],
-        versions: List[str],
+        ranges: list[dict[str, Any]],
+        versions: list[str],
     ) -> bool:
         """Checks if a version is within the specified OSV ranges or version list."""
         if versions and version_str in versions:
@@ -279,9 +280,9 @@ class VulnerabilityMatcher:
 
         for r in ranges:
             events = r.get("events", [])
-            intro_v: Optional[Version] = None
-            fix_v: Optional[Version] = None
-            last_aff_v: Optional[Version] = None
+            intro_v: Version | None = None
+            fix_v: Version | None = None
+            last_aff_v: Version | None = None
 
             for ev in events:
                 if "introduced" in ev:
@@ -322,11 +323,11 @@ class VulnerabilityMatcher:
 
     @staticmethod
     def _extract_severity_info(
-        adv: Dict[str, Any],
-        affected: Optional[Dict[str, Any]] = None,
-    ) -> tuple[str, Optional[float]]:
+        adv: dict[str, Any],
+        affected: dict[str, Any] | None = None,
+    ) -> tuple[str, float | None]:
         """Extracts normalized severity string and numeric CVSS score."""
-        cvss_score: Optional[float] = None
+        cvss_score: float | None = None
         for s in adv.get("severity", []):
             score_str = s.get("score", "")
             if isinstance(score_str, (int, float)):

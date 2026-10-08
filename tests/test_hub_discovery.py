@@ -3,8 +3,8 @@
 import json
 from unittest.mock import MagicMock, patch
 
-from mcp_vulnerabilities.discovery.smithery import SmitheryDiscoveryProvider
 from mcp_vulnerabilities.discovery.glama import GlamaDiscoveryProvider
+from mcp_vulnerabilities.discovery.smithery import SmitheryDiscoveryProvider
 
 
 def test_smithery_discovery_mock():

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from mcp_vulnerabilities.discovery.enricher import CatalogVersionEnricher
 from mcp_vulnerabilities.discovery.orchestrator import McpDiscoveryOrchestrator
 
-__all__ = ["McpDiscoveryOrchestrator"]
+__all__ = ["CatalogVersionEnricher", "McpDiscoveryOrchestrator"]

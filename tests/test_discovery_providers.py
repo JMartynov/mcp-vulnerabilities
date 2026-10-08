@@ -8,7 +8,10 @@ import unittest
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from mcp_vulnerabilities.discovery import McpDiscoveryOrchestrator
+from mcp_vulnerabilities.discovery import (
+    CatalogVersionEnricher,
+    McpDiscoveryOrchestrator,
+)
 from mcp_vulnerabilities.discovery.github_curated import GitHubCuratedDiscoveryProvider
 from mcp_vulnerabilities.discovery.glama import GlamaDiscoveryProvider
 from mcp_vulnerabilities.discovery.npm import NpmDiscoveryProvider
@@ -98,6 +101,50 @@ class TestDiscoveryProviders(unittest.TestCase):
 
                 loaded = orchestrator.load_catalog()
                 self.assertEqual(len(loaded), 3)
+
+
+    def test_catalog_version_enricher(self) -> None:
+        initial_data = {
+            "servers": {
+                "pypi:mcp-server-one": {"name": "mcp-server-one", "ecosystem": "PyPI", "version": ""},
+                "pypi:mcp-server-two": {"name": "mcp-server-two", "ecosystem": "PyPI", "version": "1.0.0"},
+                "npm:mcp-server-three": {"name": "mcp-server-three", "ecosystem": "npm", "version": ""},
+            }
+        }
+        with tempfile.TemporaryDirectory() as tmpdir:
+            catalog_file = Path(tmpdir) / "mcp_servers.json"
+            catalog_file.write_text(json.dumps(initial_data), encoding="utf-8")
+
+            # Mock resolution
+            def mock_resolve(name, timeout):
+                if name == "mcp-server-one":
+                    return "2.5.0"
+                return ""
+
+            with patch.object(PypiDiscoveryProvider, "resolve_package_version", side_effect=mock_resolve):
+                enricher = CatalogVersionEnricher(catalog_file=catalog_file, max_workers=2)
+                stats = enricher.run_enrichment()
+
+                self.assertEqual(stats["attempted"], 1)  # only pypi with no version
+                self.assertEqual(stats["updated"], 1)
+                self.assertEqual(stats["failed"], 0)
+
+            # verify file was updated atomically
+            updated_data = json.loads(catalog_file.read_text(encoding="utf-8"))
+            self.assertEqual(updated_data["servers"]["pypi:mcp-server-one"]["version"], "2.5.0")
+            self.assertEqual(updated_data["servers"]["pypi:mcp-server-two"]["version"], "1.0.0")
+            self.assertEqual(updated_data["servers"]["npm:mcp-server-three"]["version"], "")
+
+            # Test force enrichment
+            with patch.object(PypiDiscoveryProvider, "resolve_package_version", return_value="2.0.0"):
+                enricher = CatalogVersionEnricher(catalog_file=catalog_file, max_workers=2)
+                stats = enricher.run_enrichment(force=True)
+
+                self.assertEqual(stats["attempted"], 2)  # both pypi packages
+                self.assertEqual(stats["updated"], 2)
+
+            updated_data2 = json.loads(catalog_file.read_text(encoding="utf-8"))
+            self.assertEqual(updated_data2["servers"]["pypi:mcp-server-two"]["version"], "2.0.0")
 
 
 if __name__ == "__main__":

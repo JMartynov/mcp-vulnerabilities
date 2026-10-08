@@ -1,6 +1,7 @@
 import gzip
 import json
 from pathlib import Path
+
 from mcp_vulnerabilities.snapshot import build_snapshot
 
 
