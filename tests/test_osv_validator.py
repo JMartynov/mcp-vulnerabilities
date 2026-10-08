@@ -128,3 +128,72 @@ def test_validator_invalid_cvss_and_cwe_and_purl() -> None:
     assert any("invalid CVSS v3 vector format" in e for e in errors)
     assert any("invalid format (expected CWE-\\d+)" in e for e in errors)
     assert any("invalid protocol" in e for e in errors)
+
+def test_deduplicator_merge_range_integrity() -> None:
+    from mcp_vulnerabilities.deduplicator import OsvDeduplicator
+    
+    v1 = OsvVulnerability(
+        id="CVE-2026-0001",
+        summary="Test 1",
+        details="Details 1",
+        published="2026-01-01T00:00:00Z",
+        modified="2026-01-01T00:00:00Z",
+        affected=(
+            AffectedPackage(
+                package=PackageSpec(name="pkg", ecosystem="npm"),
+                ranges=(
+                    RangeSpec(
+                        type=RangeType.SEMVER,
+                        events=(
+                            EventSpec(introduced="1.0.0", fixed="2.0.0"),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    )
+    
+    v2 = OsvVulnerability(
+        id="CVE-2026-0002",
+        summary="Test 2",
+        aliases=("CVE-2026-0001",),
+        details="Details 2",
+        published="2026-01-01T00:00:00Z",
+        modified="2026-01-01T00:00:00Z",
+        affected=(
+            AffectedPackage(
+                package=PackageSpec(name="pkg", ecosystem="npm"),
+                ranges=(
+                    RangeSpec(
+                        type=RangeType.SEMVER,
+                        events=(
+                            EventSpec(introduced="1.0.0", fixed="2.1.0"),
+                        ),
+                    ),
+                ),
+            ),
+        ),
+    )
+    
+    merged = OsvDeduplicator.deduplicate_and_merge([v1, v2])
+    assert len(merged) == 1
+    m = merged[0]
+    
+    # Validation should pass
+    errors = OsvValidator.validate(m)
+    assert not errors
+    
+    # We should have two distinct RangeSpecs or a valid OSV sequence
+    aff = m.affected[0]
+    assert len(aff.ranges) == 2
+    
+    events_list = []
+    for r in aff.ranges:
+        evs = [ (e.introduced, e.fixed, e.last_affected) for e in r.events ]
+        events_list.append(evs)
+    
+    # One range will have [(1.0.0, None, None), (None, 2.0.0, None)]
+    # The other will have [(1.0.0, None, None), (None, 2.1.0, None)]
+    assert [('1.0.0', None, None), (None, '2.0.0', None)] in events_list
+    assert [('1.0.0', None, None), (None, '2.1.0', None)] in events_list
+

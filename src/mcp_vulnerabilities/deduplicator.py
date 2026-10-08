@@ -145,16 +145,76 @@ class OsvDeduplicator:
             pkg_spec = base_aff.package
 
             # Merge ranges
-            events_set: set[tuple[str | None, str | None, str | None]] = set()
+            # Group events into valid OSV 1.6 pairs or distinct RangeSpec entries
+            range_groups: dict[tuple[RangeType, str | None], set[tuple[str | None, str | None, str | None, str | None]]] = {}
+
             for a in aff_list:
                 for r in a.ranges:
-                    for e in r.events:
-                        events_set.add((e.introduced, e.fixed, e.last_affected))
+                    group_key = (r.type, r.repo)
+                    if group_key not in range_groups:
+                        range_groups[group_key] = set()
 
-            merged_events = [
-                EventSpec(introduced=i, fixed=f, last_affected=la) for (i, f, la) in events_set
-            ]
-            merged_events.sort(key=lambda ev: (ev.introduced or "", ev.fixed or ""))
+                    current_intro: str | None = None
+                    for e in r.events:
+                        if e.introduced is not None:
+                            if current_intro is not None:
+                                # Unclosed range before another intro? Emit as open.
+                                range_groups[group_key].add((current_intro, None, None, None))
+                            current_intro = e.introduced
+                            
+                            # Handle case where introduced and fixed are in the same EventSpec
+                            if e.fixed is not None:
+                                range_groups[group_key].add((current_intro, e.fixed, None, None))
+                                current_intro = None
+                            elif e.last_affected is not None:
+                                range_groups[group_key].add((current_intro, None, e.last_affected, None))
+                                current_intro = None
+                            elif e.limit is not None:
+                                range_groups[group_key].add((current_intro, None, None, e.limit))
+                                current_intro = None
+                        elif e.fixed is not None:
+                            range_groups[group_key].add((current_intro or "0", e.fixed, None, None))
+                            current_intro = None
+                        elif e.last_affected is not None:
+                            range_groups[group_key].add((current_intro or "0", None, e.last_affected, None))
+                            current_intro = None
+                        elif e.limit is not None:
+                            range_groups[group_key].add((current_intro or "0", None, None, e.limit))
+                            current_intro = None
+
+                    # Open range ending
+                    if current_intro is not None:
+                        range_groups[group_key].add((current_intro, None, None, None))
+
+            merged_ranges: list[RangeSpec] = []
+            
+            for (r_type, r_repo), pairs in range_groups.items():
+                # For each valid pair, create a distinct RangeSpec to ensure OSV 1.6 sequence validity
+                # sorting by string values for deterministic output
+                for intro, fixed, last_aff, limit in sorted(pairs, key=lambda x: (x[0] or "", x[1] or "", x[2] or "", x[3] or "")):
+                    evs = []
+                    if intro is not None and intro != "0":
+                        evs.append(EventSpec(introduced=intro))
+                    elif intro == "0":
+                        evs.append(EventSpec(introduced="0"))
+                    
+                    if fixed is not None:
+                        evs.append(EventSpec(fixed=fixed))
+                    elif last_aff is not None:
+                        evs.append(EventSpec(last_affected=last_aff))
+                    elif limit is not None:
+                        evs.append(EventSpec(limit=limit))
+                        
+                    merged_ranges.append(
+                        RangeSpec(
+                            type=r_type,
+                            repo=r_repo,
+                            events=tuple(evs)
+                        )
+                    )
+
+            # Sort merged ranges to be deterministic
+            merged_ranges.sort(key=lambda r: (r.type.value, r.repo or "", r.events[0].introduced if r.events and r.events[0].introduced else ""))
 
             # Merge database_specific
             all_tools: set[str] = set()
@@ -207,12 +267,7 @@ class OsvDeduplicator:
             merged_pkgs.append(
                 AffectedPackage(
                     package=pkg_spec,
-                    ranges=(
-                        RangeSpec(
-                            type=base_aff.ranges[0].type if base_aff.ranges else RangeType.SEMVER,
-                            events=tuple(merged_events),
-                        ),
-                    ),
+                    ranges=tuple(merged_ranges),
                     database_specific=merged_db,
                 )
             )
