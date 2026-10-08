@@ -201,8 +201,9 @@ def test_pipeline_cvelistv5_checkpoint_resumption() -> None:
         )
         assert res3.collected_count == 2
 
-import urllib.request
-from unittest.mock import patch, MagicMock
+import os
+from unittest.mock import MagicMock, patch
+
 
 @patch("urllib.request.urlopen")
 def test_pipeline_ghsa_api_pagination(mock_urlopen: MagicMock) -> None:
@@ -272,7 +273,7 @@ def test_pipeline_cvelist_delta_traversal(mock_urlopen: MagicMock) -> None:
             MagicMock(__enter__=lambda self: mock_detail_mid, __exit__=lambda *args: None),
         ]
 
-        res = pipeline.run(include_cvelist_delta=True, include_verity_catalog=False)
+        pipeline.run(include_cvelist_delta=True, include_verity_catalog=False)
         
         chk = pipeline.state_manager.get_checkpoint("cvelist_delta")
         assert chk.last_marker == "sha-new"
@@ -376,3 +377,49 @@ def test_pipeline_incremental_sync_retains_history() -> None:
         assert "MCP-TEST-OLD" in vuln_ids
         assert "CVE-2025-9999" in vuln_ids
 
+
+@patch("urllib.request.urlopen")
+@patch.dict(os.environ, {"GITHUB_TOKEN": "test-token-123"}, clear=True)
+def test_pipeline_github_auth_headers_with_token(mock_urlopen: MagicMock) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "vulns"
+        state_file = Path(tmpdir) / "sync_state.json"
+        pipeline = McpVulnerabilityPipeline(output_dir=out_path, state_file=state_file)
+
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = json.dumps([]).encode("utf-8")
+        mock_resp.headers = {}
+        mock_urlopen.side_effect = [
+            MagicMock(__enter__=lambda self: mock_resp, __exit__=lambda *args: None)
+        ]
+
+        # Trigger GHSA which uses _get_github_headers
+        pipeline.run(include_ghsa_api=True, include_verity_catalog=False)
+        
+        # Verify header presence
+        req_args = mock_urlopen.call_args[0]
+        req_obj = req_args[0]
+        assert req_obj.headers.get("Authorization") == "Bearer test-token-123"
+
+@patch("urllib.request.urlopen")
+@patch.dict(os.environ, {}, clear=True)
+def test_pipeline_github_auth_headers_without_token(mock_urlopen: MagicMock) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "vulns"
+        state_file = Path(tmpdir) / "sync_state.json"
+        pipeline = McpVulnerabilityPipeline(output_dir=out_path, state_file=state_file)
+
+        mock_resp = MagicMock()
+        mock_resp.read.return_value = json.dumps([]).encode("utf-8")
+        mock_resp.headers = {}
+        mock_urlopen.side_effect = [
+            MagicMock(__enter__=lambda self: mock_resp, __exit__=lambda *args: None)
+        ]
+
+        # Trigger GHSA which uses _get_github_headers
+        pipeline.run(include_ghsa_api=True, include_verity_catalog=False)
+        
+        # Verify header absence
+        req_args = mock_urlopen.call_args[0]
+        req_obj = req_args[0]
+        assert "Authorization" not in req_obj.headers

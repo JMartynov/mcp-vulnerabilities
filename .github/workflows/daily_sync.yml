@@ -35,6 +35,8 @@ jobs:
           python -m mcp_vulnerabilities.cli discover --catalog-file data/mcp_servers.json
 
       - name: Run MCP Ingestion & Normalization Pipeline
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python -m mcp_vulnerabilities.cli sync --live-api
 
