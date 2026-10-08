@@ -190,8 +190,8 @@ def test_pipeline_cvelistv5_checkpoint_resumption() -> None:
             include_cvelistv5_dirs=[cve5_dir],
             include_verity_catalog=False,
         )
-        # Checkpoint skipped all previously processed files
-        assert res2.collected_count == 0
+        # Checkpoint skipped all previously processed files, but historical records are pre-loaded
+        assert res2.collected_count == 2
 
         # Run 3: Reset state
         res3 = pipeline.run(
@@ -279,3 +279,100 @@ def test_pipeline_cvelist_delta_traversal(mock_urlopen: MagicMock) -> None:
         
         # 1 call for commits + 2 calls for details before hitting "sha-old"
         assert mock_urlopen.call_count == 3
+
+
+def test_pipeline_incremental_sync_retains_history() -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        out_path = Path(tmpdir) / "vulns"
+        state_file = Path(tmpdir) / "sync_state.json"
+
+        pipeline = McpVulnerabilityPipeline(output_dir=out_path, state_file=state_file)
+
+        # 1. Create a dummy initial vulnerability
+        initial_vuln = OsvVulnerability(
+            id="MCP-TEST-OLD",
+            summary="Old Vuln",
+            details="Details",
+            published="2025-01-01T00:00:00Z",
+            modified="2025-01-02T00:00:00Z",
+            affected=(
+                AffectedPackage(
+                    package=PackageSpec(name="mcp-test", ecosystem="PyPI", purl="pkg:pypi/mcp-test"),
+                    ranges=(
+                        RangeSpec(
+                            type=RangeType.SEMVER,
+                            events=(EventSpec(introduced="0.1.0"), EventSpec(fixed="0.2.0")),
+                        ),
+                    ),
+                    database_specific=DatabaseSpecificMcp(),
+                ),
+            ),
+        )
+        out_path.mkdir(parents=True, exist_ok=True)
+        (out_path / "MCP-TEST-OLD.json").write_text(initial_vuln.to_json(), encoding="utf-8")
+        
+        index_data = {
+            "version": "1.0.0",
+            "count": 1,
+            "vulnerabilities": [{"id": "MCP-TEST-OLD"}]
+        }
+        (out_path / "index.json").write_text(json.dumps(index_data), encoding="utf-8")
+
+        # Create a new dummy cve json5 directory with 1 new item
+        new_cve5_dir = Path(tmpdir) / "new_cves"
+        new_cve5_dir.mkdir()
+        
+        new_cve_data = {
+            "dataType": "CVE_RECORD",
+            "dataVersion": "5.0",
+            "cveMetadata": {
+                "cveId": "CVE-2025-9999",
+                "assignerOrgId": "abc",
+                "state": "PUBLISHED"
+            },
+            "containers": {
+                "cna": {
+                    "affected": [
+                        {
+                            "packageName": "mcp-test",
+                            "product": "mcp-test",
+                            "vendor": "Test",
+                            "versions": [
+                                {
+                                    "status": "affected",
+                                    "version": "1.0.0",
+                                    "lessThan": "2.0.0",
+                                    "versionType": "semver"
+                                }
+                            ]
+                        }
+                    ],
+                    "descriptions": [{"lang": "en", "value": "A new test vulnerability"}],
+                    "metrics": [
+                        {
+                            "cvssV3_1": {"baseScore": 9.8, "baseSeverity": "CRITICAL", "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H"}
+                        }
+                    ]
+                }
+            }
+        }
+        (new_cve5_dir / "CVE-2025-9999.json").write_text(json.dumps(new_cve_data), encoding="utf-8")
+
+        # 2. Run pipeline which should pick up the new item and retain the old one
+        res = pipeline.run(
+            include_cvelistv5_dirs=[new_cve5_dir],
+            include_verity_catalog=False,
+        )
+
+        assert res.collected_count == 2
+        assert "MCP-TEST-OLD" in res.emitted_ids
+        assert "CVE-2025-9999" in res.emitted_ids
+        
+        index_file = out_path / "index.json"
+        final_index = json.loads(index_file.read_text(encoding="utf-8"))
+        assert final_index["count"] == 2
+        
+        vuln_ids = [v["id"] for v in final_index["vulnerabilities"]]
+        assert "MCP-TEST-OLD" in vuln_ids
+        assert "CVE-2025-9999" in vuln_ids
+

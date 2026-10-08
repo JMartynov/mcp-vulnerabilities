@@ -119,6 +119,16 @@ class McpVulnerabilityPipeline:
         collected: list[OsvVulnerability] = []
         errors: list[str] = []
 
+        # 0. Pre-load historical advisories
+        if not reset_checkpoints and self.output_dir.is_dir():
+            for j_file in self.output_dir.glob("*.json"):
+                if j_file.name in ("index.json", "sync_state.json"):
+                    continue
+                try:
+                    data = json.loads(j_file.read_text(encoding="utf-8"))
+                    collected.append(OsvVulnerability.from_dict(data))
+                except Exception as exc:
+                    errors.append(f"Failed to load historical advisory {j_file.name}: {exc}")
 
         # 1. Ingest from internal Verity benchmark catalog
         if include_verity_catalog:
@@ -172,6 +182,13 @@ class McpVulnerabilityPipeline:
             cve_scanned = 0
             cve_synced = 0
             last_seen_marker = last_marker
+            last_scan_dt = None
+            if cve_chk.last_scan_utc:
+                try:
+                    import datetime
+                    last_scan_dt = datetime.datetime.fromisoformat(cve_chk.last_scan_utc).replace(tzinfo=datetime.timezone.utc)
+                except Exception:
+                    pass
 
             for c_dir in include_cvelistv5_dirs:
                 path = Path(c_dir)
@@ -182,7 +199,20 @@ class McpVulnerabilityPipeline:
                             continue
                         file_rel_str = str(j_file.relative_to(path))
                         # Checkpoint filter: skip if already processed in prior run
+                        # Unless the file has been modified since the last scan
+                        skip_file = False
                         if last_marker and file_rel_str <= last_marker:
+                            skip_file = True
+                            if last_scan_dt:
+                                try:
+                                    import datetime
+                                    mtime = j_file.stat().st_mtime
+                                    mtime_dt = datetime.datetime.fromtimestamp(mtime, datetime.timezone.utc)
+                                    if mtime_dt > last_scan_dt:
+                                        skip_file = False
+                                except Exception:
+                                    pass
+                        if skip_file:
                             continue
 
                         cve_scanned += 1
