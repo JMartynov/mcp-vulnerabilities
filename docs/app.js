@@ -191,9 +191,20 @@
     const score = getCvssScore(adv);
     const pkgs = getPackages(adv);
     const externalUrl = adv.references?.[0]?.url || `https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/${adv.id}.json`;
+    
+    // Extract MCP specific fields
+    let vulnerableTools = adv.database_specific?.vulnerable_tools || adv.affected?.[0]?.database_specific?.vulnerable_tools;
+    let owaspCategory = adv.database_specific?.owasp_mcp_category || adv.affected?.[0]?.database_specific?.owasp_mcp_category;
+    let remediationGuidance = adv.database_specific?.remediation_guidance || adv.affected?.[0]?.database_specific?.remediation_guidance;
 
     elements.modalId.textContent = adv.id;
-    elements.modalSeverity.textContent = sev + (score ? ` (CVSS ${score})` : "");
+    
+    // Set title section
+    let severityText = sev + (score ? ` (CVSS ${score})` : "");
+    if (owaspCategory) {
+      severityText += ` <span class="badge owasp-badge">${escapeHtml(owaspCategory)}</span>`;
+    }
+    elements.modalSeverity.innerHTML = severityText;
     elements.modalSeverity.className = `badge badge-${sev.toLowerCase()}`;
     elements.modalExternalLink.href = externalUrl;
 
@@ -227,11 +238,29 @@
       </div>
     `);
 
+    if (vulnerableTools && vulnerableTools.length > 0) {
+      sections.push(`
+        <div class="modal-section mcp-tools-section">
+          <span class="section-label">Vulnerable Tools:</span>
+          ${vulnerableTools.map((tool) => `<span class="tool-tag">${escapeHtml(tool)}</span>`).join(" ")}
+        </div>
+      `);
+    }
+
     if (adv.details) {
       sections.push(`
         <div class="modal-section">
           <h4>Vulnerability Details</h4>
           <div class="code-box">${escapeHtml(adv.details)}</div>
+        </div>
+      `);
+    }
+
+    if (remediationGuidance) {
+      sections.push(`
+        <div class="modal-section remediation-callout">
+          <strong>🛡️ Actionable Remediation:</strong>
+          <p>${escapeHtml(remediationGuidance)}</p>
         </div>
       `);
     }
