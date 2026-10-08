@@ -611,7 +611,9 @@ class McpVulnerabilityPipeline:
             "count": len(emitted_ids),
             "vulnerabilities": index_entries,
         }
-        index_file.write_text(json.dumps(index_data, indent=2, sort_keys=True), encoding="utf-8")
+        tmp_index_file = self.output_dir / "index.json.tmp"
+        tmp_index_file.write_text(json.dumps(index_data, indent=2, sort_keys=True), encoding="utf-8")
+        tmp_index_file.replace(index_file)
 
         # Save sync checkpoints to disk
         self.state_manager.save()
