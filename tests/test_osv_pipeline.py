@@ -206,6 +206,7 @@ import os
 from unittest.mock import MagicMock, patch
 
 
+
 @patch("urllib.request.urlopen")
 def test_pipeline_ghsa_api_pagination(mock_urlopen: MagicMock) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:

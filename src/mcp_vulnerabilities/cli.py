@@ -16,6 +16,7 @@ from mcp_vulnerabilities.discovery import (
     CatalogVersionEnricher,
     McpDiscoveryOrchestrator,
 )
+
 from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline
 from mcp_vulnerabilities.snapshot import build_snapshot
 from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor

@@ -6,10 +6,20 @@ import json
 import logging
 import re
 import ssl
+import sys
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+if sys.version_info >= (3, 11):
+    import tomllib
+else:
+    try:
+        import tomllib
+    except ImportError:
+        pass
+
 
 logger = logging.getLogger(__name__)
 
@@ -90,8 +100,22 @@ class TransitiveDependencyAuditor:
 
         if path.name == "package.json":
             deps = cls.parse_package_json(path)
+        elif path.name == "uv.lock":
+            deps = cls.parse_uv_lock(path)
+        elif path.name == "poetry.lock":
+            deps = cls.parse_poetry_lock(path)
+        elif path.name == "pyproject.toml":
+            deps = cls.parse_pyproject_toml(path)
         elif "requirements" in path.name or path.name.endswith(".txt"):
             deps = cls.parse_requirements_txt(path)
+        elif path.name.endswith(".toml"):
+            content = path.read_text(encoding="utf-8")
+            if "project" in content and "dependencies" in content:
+                deps = cls.parse_pyproject_toml(path)
+            elif "[[package]]" in content:
+                deps = cls.parse_uv_lock(path)
+            else:
+                deps = []
         else:
             # Try guessing by content
             content = path.read_text(encoding="utf-8")
@@ -132,6 +156,51 @@ class TransitiveDependencyAuditor:
             pkg = parts[0].strip()
             ver = parts[2].strip() if len(parts) > 2 else None
             extracted.append((pkg, ver, "PyPI"))
+        return extracted
+
+    @classmethod
+    def parse_pyproject_toml(cls, path: Path) -> list[tuple[str, str | None, str]]:
+        """Extracts dependencies from a PEP 621 pyproject.toml file."""
+        data = tomllib.loads(path.read_text(encoding="utf-8"))
+        project = data.get("project", {})
+        deps_list = project.get("dependencies", [])
+        
+        opt_deps = project.get("optional-dependencies", {})
+        for _, opt_list in opt_deps.items():
+            deps_list.extend(opt_list)
+
+        extracted: list[tuple[str, str | None, str]] = []
+        for dep in deps_list:
+            # Similar logic as parse_requirements_txt
+            # e.g., "httpx>=0.23.0", "fastapi[all]>=0.95.0", "pydantic", "fastapi^0.95.0"
+            parts = re.split(r"(==|>=|<=|>|<|~=|\^|~)", dep, maxsplit=1)
+            pkg = parts[0].strip()
+            # Remove extras e.g. [all]
+            pkg = re.sub(r"\[.*\]", "", pkg).strip()
+            ver = parts[2].strip() if len(parts) > 2 else None
+            extracted.append((pkg, ver, "PyPI"))
+        return extracted
+
+    @classmethod
+    def parse_uv_lock(cls, path: Path) -> list[tuple[str, str | None, str]]:
+        """Extracts pinned dependencies from a uv.lock file."""
+        return cls._parse_toml_package_array(path)
+
+    @classmethod
+    def parse_poetry_lock(cls, path: Path) -> list[tuple[str, str | None, str]]:
+        """Extracts pinned dependencies from a poetry.lock file."""
+        return cls._parse_toml_package_array(path)
+
+    @classmethod
+    def _parse_toml_package_array(cls, path: Path) -> list[tuple[str, str | None, str]]:
+        """Common logic to extract dependencies from [[package]] tables."""
+        data = tomllib.loads(path.read_text(encoding="utf-8"))
+        extracted: list[tuple[str, str | None, str]] = []
+        for pkg in data.get("package", []):
+            name = pkg.get("name")
+            version = pkg.get("version")
+            if name:
+                extracted.append((name, version, "PyPI"))
         return extracted
 
     @classmethod
