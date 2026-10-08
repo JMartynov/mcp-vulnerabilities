@@ -1,0 +1,72 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_score": 5.4,
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "cwe_ids": [
+          "CWE-346"
+        ],
+        "severity": "LOW"
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "next",
+        "purl": "pkg:npm/next"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "16.0.0"
+            },
+            {
+              "fixed": "16.3.8"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "aliases": [
+    "CVE-2026-94486"
+  ],
+  "database_specific": {
+    "source": "GHSA"
+  },
+  "details": "The Next.js development server (`next dev`) exposes a Model Context Protocol endpoint that does not verify which website a request originates from, allowing a malicious website visited by the developer to read sensitive development data \u2014 including the project's location on disk, source code snippets from error reports, the route inventory, and development logs. Only applications run with `next dev` are affected. Production deployments do not serve this endpoint.",
+  "id": "GHSA-39w2-rjm5-chcv",
+  "modified": "2026-10-07T20:31:52Z",
+  "published": "2026-10-07T20:31:51Z",
+  "references": [
+    {
+      "type": "ADVISORY",
+      "url": "https://github.com/vercel/next.js/security/advisories/GHSA-39w2-rjm5-chcv"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94486"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/vercel/next.js/commit/2d9f50a409312696145b82b3157aadb6b1fef476"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/vercel/next.js/releases/tag/v16.3.8"
+    },
+    {
+      "type": "ADVISORY",
+      "url": "https://github.com/advisories/GHSA-39w2-rjm5-chcv"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "Next.js has information disclosure in development server's Model Context Protocol endpoint"
+}
