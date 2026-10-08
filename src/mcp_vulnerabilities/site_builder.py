@@ -21,7 +21,12 @@ def build_site_data(
 
     advisories: list[dict[str, Any]] = []
     for f in sorted(in_dir.glob("*.json")):
-        if f.name in ("sync_state.json", "index.json", "mcp_catalog_state.json", "mcp_servers.json"):
+        if f.name in (
+            "sync_state.json",
+            "index.json",
+            "mcp_catalog_state.json",
+            "mcp_servers.json",
+        ):
             continue
         try:
             adv = json.loads(f.read_text(encoding="utf-8"))
@@ -31,8 +36,12 @@ def build_site_data(
             logger.debug("Skipping %s: %s", f, exc)
 
     out_file = out_dir / "vulnerabilities.json"
-    out_file.write_text(json.dumps(advisories, ensure_ascii=False, indent=2), encoding="utf-8")
-    logger.info("Exported %d advisories for web explorer -> %s", len(advisories), out_file)
+    out_file.write_text(
+        json.dumps(advisories, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    logger.info(
+        "Exported %d advisories for web explorer -> %s", len(advisories), out_file
+    )
     return out_file
 
 

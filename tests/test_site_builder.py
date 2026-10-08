@@ -14,9 +14,20 @@ def test_build_site_data(tmp_path: Path):
     test_adv = {
         "id": "GHSA-test-site-001",
         "summary": "Test web explorer advisory",
-        "affected": [{"package": {"name": "test-pkg"}}]
+        "affected": [
+            {
+                "package": {"name": "test-pkg"},
+                "database_specific": {
+                    "vulnerable_tools": ["cypher_query"],
+                    "owasp_mcp_category": "MCP01 - Tool Poisoning",
+                    "remediation_guidance": "Fix it",
+                },
+            }
+        ],
     }
-    (vuln_dir / "GHSA-test-site-001.json").write_text(json.dumps(test_adv), encoding="utf-8")
+    (vuln_dir / "GHSA-test-site-001.json").write_text(
+        json.dumps(test_adv), encoding="utf-8"
+    )
 
     out_dir = tmp_path / "docs_data"
     result_file = build_site_data(data_dir=vuln_dir, output_dir=out_dir)
@@ -25,3 +36,9 @@ def test_build_site_data(tmp_path: Path):
     loaded = json.loads(result_file.read_text(encoding="utf-8"))
     assert len(loaded) == 1
     assert loaded[0]["id"] == "GHSA-test-site-001"
+
+    # Assert database_specific MCP extensions are preserved
+    db_specific = loaded[0]["affected"][0]["database_specific"]
+    assert db_specific["vulnerable_tools"] == ["cypher_query"]
+    assert db_specific["owasp_mcp_category"] == "MCP01 - Tool Poisoning"
+    assert db_specific["remediation_guidance"] == "Fix it"
