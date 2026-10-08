@@ -1,0 +1,158 @@
+diff --git a/tests/test_acceptance_ghsa_delta.py b/tests/test_acceptance_ghsa_delta.py
+new file mode 100644
+index 0000000..4ea05c9
+--- /dev/null
++++ b/tests/test_acceptance_ghsa_delta.py
+@@ -0,0 +1,151 @@
++"""Acceptance tests for GHSA pagination and CVEListV5 delta traversal."""
++
++from __future__ import annotations
++
++import json
++import tempfile
++import unittest
++from pathlib import Path
++from unittest.mock import MagicMock, patch
++
++from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline
++
++
++class TestAcceptanceGhsaDelta(unittest.TestCase):
++    """End-to-end tests for live GHSA pagination & CVEListV5 delta traversal."""
++
++    @patch("urllib.request.urlopen")
++    def test_ghsa_pagination_follows_link_headers(self, mock_urlopen: MagicMock) -> None:
++        with tempfile.TemporaryDirectory() as tmpdir:
++            out_path = Path(tmpdir) / "vulns"
++            state_file = Path(tmpdir) / "sync_state.json"
++
++            pipeline = McpVulnerabilityPipeline(output_dir=out_path, state_file=state_file)
++
++            # Mock 3 pages of GHSA API
++            page1_data = [{"id": "GHSA-1", "updated_at": "2024-01-02T00:00:00Z", "summary": "Test 1", "vulnerabilities": [{"package": {"name": "mcp-remote"}}]}]
++            page2_data = [{"id": "GHSA-2", "updated_at": "2024-01-03T00:00:00Z", "summary": "Test 2", "vulnerabilities": [{"package": {"name": "mcp-remote"}}]}]
++            page3_data = [{"id": "GHSA-3", "updated_at": "2024-01-04T00:00:00Z", "summary": "Test 3", "vulnerabilities": [{"package": {"name": "mcp-remote"}}]}]
++
++            mock_resp1 = MagicMock()
++            mock_resp1.read.return_value = json.dumps(page1_data).encode("utf-8")
++            mock_resp1.headers = {"Link": '<https://api.github.com/advisories?since=2024-01-01T00:00:00Z&page=2>; rel="next"'}
++            
++            mock_resp2 = MagicMock()
++            mock_resp2.read.return_value = json.dumps(page2_data).encode("utf-8")
++            mock_resp2.headers = {"Link": '<https://api.github.com/advisories?since=2024-01-01T00:00:00Z&page=3>; rel="next"'}
++            
++            mock_resp3 = MagicMock()
++            mock_resp3.read.return_value = json.dumps(page3_data).encode("utf-8")
++            mock_resp3.headers = {}
++
++            mock_urlopen.side_effect = [
++                MagicMock(__enter__=lambda self: mock_resp1, __exit__=lambda *args: None),
++                MagicMock(__enter__=lambda self: mock_resp2, __exit__=lambda *args: None),
++                MagicMock(__enter__=lambda self: mock_resp3, __exit__=lambda *args: None),
++            ]
++
++            res = pipeline.run(include_ghsa_api=True, include_verity_catalog=False)
++            
++            # Since we only test the pagination and ingestion we only look at the count
++            self.assertEqual(res.collected_count, 3)
++            self.assertEqual(mock_urlopen.call_count, 3)
++
++
++    @patch("urllib.request.urlopen")
++    def test_ghsa_since_cursor_checkpointing(self, mock_urlopen: MagicMock) -> None:
++        with tempfile.TemporaryDirectory() as tmpdir:
++            out_path = Path(tmpdir) / "vulns"
++            state_file = Path(tmpdir) / "sync_state.json"
++
++            pipeline = McpVulnerabilityPipeline(output_dir=out_path, state_file=state_file)
++
++            # First run: getting GHSA up to "2024-01-02T00:00:00Z"
++            page1_data = [{"id": "GHSA-1", "updated_at": "2024-01-02T00:00:00Z", "summary": "Test 1", "vulnerabilities": [{"package": {"name": "mcp-remote"}}]}]
++            mock_resp1 = MagicMock()
++            mock_resp1.read.return_value = json.dumps(page1_data).encode("utf-8")
++            mock_resp1.headers = {}
++            
++            mock_urlopen.side_effect = [
++                MagicMock(__enter__=lambda self: mock_resp1, __exit__=lambda *args: None),
++            ]
++
++            pipeline.run(include_ghsa_api=True, include_verity_catalog=False)
++
++            # Assert checkpoint last_updated_at is updated
++            chk = pipeline.state_manager.get_checkpoint("ghsa_api")
++            self.assertEqual(chk.last_updated_at, "2024-01-02T00:00:00Z")
++
++            # Second run: should query with since=2024-01-02T00:00:00Z
++            page2_data = [{"id": "GHSA-2", "updated_at": "2024-01-03T00:00:00Z", "summary": "Test 2", "vulnerabilities": [{"package": {"name": "mcp-remote"}}]}]
++            mock_resp2 = MagicMock()
++            mock_resp2.read.return_value = json.dumps(page2_data).encode("utf-8")
++            mock_resp2.headers = {}
++
++            mock_urlopen.side_effect = [
++                MagicMock(__enter__=lambda self: mock_resp2, __exit__=lambda *args: None),
++            ]
++
++            pipeline.run(include_ghsa_api=True, include_verity_catalog=False)
++
++            # Check that the second request included the since parameter
++            request_args = mock_urlopen.call_args[0]
++            req = request_args[0]
++            self.assertIn("since=2024-01-02T00:00:00Z", req.full_url)
++            
++            # Assert checkpoint updated again
++            chk = pipeline.state_manager.get_checkpoint("ghsa_api")
++            self.assertEqual(chk.last_updated_at, "2024-01-03T00:00:00Z")
++
++
++    @patch("urllib.request.urlopen")
++    def test_cvelist_delta_multi_commit_traversal(self, mock_urlopen: MagicMock) -> None:
++        with tempfile.TemporaryDirectory() as tmpdir:
++            out_path = Path(tmpdir) / "vulns"
++            state_file = Path(tmpdir) / "sync_state.json"
++
++            pipeline = McpVulnerabilityPipeline(output_dir=out_path, state_file=state_file)
++            pipeline.state_manager.update_checkpoint("cvelist_delta", last_marker="sha-previous-run")
++
++            # Commits fetched: 3 new commits, and the old one
++            commits_data = [
++                {"sha": "sha-3"}, # newest
++                {"sha": "sha-2"},
++                {"sha": "sha-1"},
++                {"sha": "sha-previous-run"}, # stop here
++                {"sha": "sha-older"},
++            ]
++
++            mock_commits = MagicMock()
++            mock_commits.read.return_value = json.dumps(commits_data).encode("utf-8")
++            mock_commits.headers = {}
++            
++            # detail responses (empty files to save mocking real cves, we just test traversal)
++            mock_detail_3 = MagicMock()
++            mock_detail_3.read.return_value = json.dumps({"files": []}).encode("utf-8")
++            mock_detail_3.headers = {}
++            
++            mock_detail_2 = MagicMock()
++            mock_detail_2.read.return_value = json.dumps({"files": []}).encode("utf-8")
++            mock_detail_2.headers = {}
++            
++            mock_detail_1 = MagicMock()
++            mock_detail_1.read.return_value = json.dumps({"files": []}).encode("utf-8")
++            mock_detail_1.headers = {}
++
++            mock_urlopen.side_effect = [
++                MagicMock(__enter__=lambda self: mock_commits, __exit__=lambda *args: None),
++                MagicMock(__enter__=lambda self: mock_detail_3, __exit__=lambda *args: None),
++                MagicMock(__enter__=lambda self: mock_detail_2, __exit__=lambda *args: None),
++                MagicMock(__enter__=lambda self: mock_detail_1, __exit__=lambda *args: None),
++            ]
++
++            pipeline.run(include_cvelist_delta=True, include_verity_catalog=False)
++            
++            chk = pipeline.state_manager.get_checkpoint("cvelist_delta")
++            # Should have been updated to newest sha
++            self.assertEqual(chk.last_marker, "sha-3")
++            
++            # 1 call for listing commits + 3 calls for details
++            self.assertEqual(mock_urlopen.call_count, 4)
++
+
