@@ -34,6 +34,118 @@ def test_parse_package_json(tmp_path: Path):
     assert by_name["axios"][0] == "0.21.1"
 
 
+def test_parse_pyproject_toml(tmp_path: Path):
+    toml_path = tmp_path / "pyproject.toml"
+    toml_path.write_text(
+        """
+        [project]
+        name = "my-mcp"
+        dependencies = [
+            "fastapi[all]>=0.95.0",
+            "pydantic",
+            "httpx>=0.23.0",
+            "django^4.2"
+        ]
+        
+        [project.optional-dependencies]
+        dev = ["pytest>=7.0.0"]
+        """,
+        encoding="utf-8"
+    )
+
+    deps = TransitiveDependencyAuditor.parse_pyproject_toml(toml_path)
+    by_name = {d[0]: (d[1], d[2]) for d in deps}
+
+    assert "fastapi" in by_name
+    assert by_name["fastapi"][0] == "0.95.0"
+    assert by_name["fastapi"][1] == "PyPI"
+
+    assert "pydantic" in by_name
+    assert by_name["pydantic"][0] is None
+
+    assert "httpx" in by_name
+    assert by_name["httpx"][0] == "0.23.0"
+
+    assert "pytest" in by_name
+    assert by_name["pytest"][0] == "7.0.0"
+
+    assert "django" in by_name
+    assert by_name["django"][0] == "4.2"
+
+
+def test_parse_uv_lock(tmp_path: Path):
+    lock_path = tmp_path / "uv.lock"
+    lock_path.write_text(
+        """
+        version = 1
+
+        [[package]]
+        name = "fastapi"
+        version = "0.95.1"
+
+        [[package]]
+        name = "pydantic"
+        version = "1.10.7"
+        """,
+        encoding="utf-8"
+    )
+
+    deps = TransitiveDependencyAuditor.parse_uv_lock(lock_path)
+    by_name = {d[0]: (d[1], d[2]) for d in deps}
+
+    assert "fastapi" in by_name
+    assert by_name["fastapi"][0] == "0.95.1"
+    assert by_name["fastapi"][1] == "PyPI"
+
+    assert "pydantic" in by_name
+    assert by_name["pydantic"][0] == "1.10.7"
+
+
+def test_parse_poetry_lock(tmp_path: Path):
+    lock_path = tmp_path / "poetry.lock"
+    lock_path.write_text(
+        """
+        [[package]]
+        name = "httpx"
+        version = "0.24.1"
+        description = "The next generation HTTP client."
+
+        [[package]]
+        name = "certifi"
+        version = "2023.5.7"
+        """,
+        encoding="utf-8"
+    )
+
+    deps = TransitiveDependencyAuditor.parse_poetry_lock(lock_path)
+    by_name = {d[0]: (d[1], d[2]) for d in deps}
+
+    assert "httpx" in by_name
+    assert by_name["httpx"][0] == "0.24.1"
+    assert by_name["httpx"][1] == "PyPI"
+
+    assert "certifi" in by_name
+    assert by_name["certifi"][0] == "2023.5.7"
+
+
+def test_audit_manifest_file_dispatch(tmp_path: Path):
+    # Test dispatching mechanism
+    lock_path = tmp_path / "uv.lock"
+    lock_path.write_text(
+        """
+        [[package]]
+        name = "some-pkg"
+        version = "1.0.0"
+        """,
+        encoding="utf-8"
+    )
+    
+    with patch.object(TransitiveDependencyAuditor, "audit_dependencies", return_value=[]) as mock_audit:
+        res = TransitiveDependencyAuditor.audit_manifest_file(lock_path)
+        assert res.total_dependencies == 1
+        mock_audit.assert_called_once()
+
+
 def test_parse_requirements_txt(tmp_path: Path):
     req_txt = tmp_path / "requirements.txt"
     req_txt.write_text(
