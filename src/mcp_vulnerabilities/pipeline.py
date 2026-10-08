@@ -236,43 +236,78 @@ class McpVulnerabilityPipeline:
 
         # 4. Ingest from GitHub Security Advisories (GHSA) live REST API
         if include_ghsa_api:
+            ghsa_chk = self.state_manager.get_checkpoint("ghsa_api")
+            last_updated_at = ghsa_chk.last_updated_at
+            
             ghsa_scanned = 0
             ghsa_synced = 0
+            newest_advisory_updated_at = last_updated_at
+
             try:
-                ghsa_url = "https://api.github.com/advisories?per_page=100&direction=desc&sort=updated"
-                req = urllib.request.Request(
-                    ghsa_url,
-                    headers={
-                        "User-Agent": "McpVulnerabilities/1.0",
-                        "Accept": "application/vnd.github.v3+json",
-                    },
-                )
-                with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
-                    data = json.loads(resp.read().decode("utf-8"))
-                    if isinstance(data, list):
-                        ghsa_scanned = len(data)
-                        for adv in data:
-                            pkg_name = adv.get("vulnerabilities", [{}])[0].get("package", {}).get("name")
-                            is_rel, _ = McpRelevanceFilter.is_relevant(
-                                package_name=pkg_name,
-                                summary=adv.get("summary", ""),
-                                details=adv.get("description", ""),
-                                raw_data=adv,
-                            )
-                            if is_rel:
-                                try:
-                                    vuln = GhsaConverter.from_dict(adv)
-                                    collected.append(vuln)
-                                    ghsa_synced += 1
-                                    # Invalidate package in catalog state so full context is refreshed
-                                    for aff in vuln.affected:
-                                        self.catalog_state.mark_stale(aff.package.ecosystem, aff.package.name)
-                                except Exception as conv_e:
-                                    logger.debug("GHSA conversion error: %s", conv_e)
+                base_ghsa_url = "https://api.github.com/advisories?per_page=100&direction=desc&sort=updated"
+                if last_updated_at:
+                    base_ghsa_url += f"&since={last_updated_at}"
+                
+                next_url = base_ghsa_url
+                pages_fetched = 0
+                max_pages = 5
+
+                while next_url and pages_fetched < max_pages:
+                    req = urllib.request.Request(
+                        next_url,
+                        headers={
+                            "User-Agent": "McpVulnerabilities/1.0",
+                            "Accept": "application/vnd.github.v3+json",
+                        },
+                    )
+                    with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
+                        data = json.loads(resp.read().decode("utf-8"))
+                        
+                        if isinstance(data, list):
+                            ghsa_scanned += len(data)
+                            for adv in data:
+                                adv_updated_at = adv.get("updated_at")
+                                if adv_updated_at:
+                                    if not newest_advisory_updated_at or adv_updated_at > newest_advisory_updated_at:
+                                        newest_advisory_updated_at = adv_updated_at
+                                    
+                                pkg_name = adv.get("vulnerabilities", [{}])[0].get("package", {}).get("name")
+                                is_rel, _ = McpRelevanceFilter.is_relevant(
+                                    package_name=pkg_name,
+                                    summary=adv.get("summary", ""),
+                                    details=adv.get("description", ""),
+                                    raw_data=adv,
+                                )
+                                if is_rel:
+                                    try:
+                                        vuln = GhsaConverter.from_dict(adv)
+                                        collected.append(vuln)
+                                        ghsa_synced += 1
+                                        # Invalidate package in catalog state so full context is refreshed
+                                        for aff in vuln.affected:
+                                            self.catalog_state.mark_stale(aff.package.ecosystem, aff.package.name)
+                                    except Exception as conv_e:
+                                        logger.debug("GHSA conversion error: %s", conv_e)
+                        
+                        next_url = None
+                        link_header = resp.headers.get("Link")
+                        if link_header:
+                            links = link_header.split(",")
+                            for link in links:
+                                if 'rel="next"' in link:
+                                    start_idx = link.find("<") + 1
+                                    end_idx = link.find(">")
+                                    if start_idx > 0 and end_idx > start_idx:
+                                        next_url = link[start_idx:end_idx]
+                                    break
+                    
+                    pages_fetched += 1
+
                 self.state_manager.update_checkpoint(
                     "ghsa_api",
-                    records_scanned=ghsa_scanned,
-                    records_synced=ghsa_synced,
+                    last_updated_at=newest_advisory_updated_at,
+                    records_scanned=ghsa_chk.records_scanned + ghsa_scanned,
+                    records_synced=ghsa_chk.records_synced + ghsa_synced,
                 )
                 logger.info("GHSA live API ingestion: scanned=%d, synced=%d", ghsa_scanned, ghsa_synced)
             except Exception as exc:
@@ -280,8 +315,13 @@ class McpVulnerabilityPipeline:
 
         # 5. Ingest from CVEListV5 GitHub Commits delta stream
         if include_cvelist_delta:
+            cve_delta_chk = self.state_manager.get_checkpoint("cvelist_delta")
+            last_marker = cve_delta_chk.last_marker
+            
             cve_delta_scanned = 0
             cve_delta_synced = 0
+            newest_head_sha = last_marker
+
             try:
                 cve_delta_url = "https://api.github.com/repos/CVEProject/cvelistV5/commits?per_page=5"
                 req = urllib.request.Request(
@@ -294,42 +334,49 @@ class McpVulnerabilityPipeline:
                 with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
                     commits = json.loads(resp.read().decode("utf-8"))
                     if isinstance(commits, list) and commits:
-                        head_sha = commits[0]["sha"]
-                        detail_url = f"https://api.github.com/repos/CVEProject/cvelistV5/commits/{head_sha}"
-                        detail_req = urllib.request.Request(
-                            detail_url,
-                            headers={
-                                "User-Agent": "McpVulnerabilities/1.0",
-                                "Accept": "application/vnd.github.v3+json",
-                            },
-                        )
-                        with urllib.request.urlopen(detail_req, timeout=12.0, context=_get_ssl_context()) as d_resp:
-                            detail = json.loads(d_resp.read().decode("utf-8"))
-                            for f_item in detail.get("files", []):
-                                f_name = f_item.get("filename", "")
-                                if f_name.endswith(".json") and "CVE-" in f_name:
-                                    cve_delta_scanned += 1
-                                    raw_url = f_item.get("raw_url")
-                                    if raw_url:
-                                        try:
-                                            with urllib.request.urlopen(raw_url, timeout=5.0, context=_get_ssl_context()) as r_resp:
-                                                raw_cve = json.loads(r_resp.read().decode("utf-8"))
-                                                cna = raw_cve.get("containers", {}).get("cna", {})
-                                                desc_val = " ".join([d.get("value", "") for d in cna.get("descriptions", [])])
-                                                is_rel, _ = McpRelevanceFilter.is_relevant(
-                                                    summary=desc_val[:200],
-                                                    details=desc_val,
-                                                    raw_data=raw_cve,
-                                                )
-                                                if is_rel:
-                                                    collected.append(CveJson5Converter.from_dict(raw_cve))
-                                                    cve_delta_synced += 1
-                                        except Exception as cve_fetch_err:
-                                            logger.debug("Failed to fetch raw CVE %s: %s", f_name, cve_fetch_err)
+                        newest_head_sha = commits[0]["sha"]
+                        
+                        for commit in commits:
+                            commit_sha = commit["sha"]
+                            if last_marker and commit_sha == last_marker:
+                                break
+                                
+                            detail_url = f"https://api.github.com/repos/CVEProject/cvelistV5/commits/{commit_sha}"
+                            detail_req = urllib.request.Request(
+                                detail_url,
+                                headers={
+                                    "User-Agent": "McpVulnerabilities/1.0",
+                                    "Accept": "application/vnd.github.v3+json",
+                                },
+                            )
+                            with urllib.request.urlopen(detail_req, timeout=12.0, context=_get_ssl_context()) as d_resp:
+                                detail = json.loads(d_resp.read().decode("utf-8"))
+                                for f_item in detail.get("files", []):
+                                    f_name = f_item.get("filename", "")
+                                    if f_name.endswith(".json") and "CVE-" in f_name:
+                                        cve_delta_scanned += 1
+                                        raw_url = f_item.get("raw_url")
+                                        if raw_url:
+                                            try:
+                                                with urllib.request.urlopen(raw_url, timeout=5.0, context=_get_ssl_context()) as r_resp:
+                                                    raw_cve = json.loads(r_resp.read().decode("utf-8"))
+                                                    cna = raw_cve.get("containers", {}).get("cna", {})
+                                                    desc_val = " ".join([d.get("value", "") for d in cna.get("descriptions", [])])
+                                                    is_rel, _ = McpRelevanceFilter.is_relevant(
+                                                        summary=desc_val[:200],
+                                                        details=desc_val,
+                                                        raw_data=raw_cve,
+                                                    )
+                                                    if is_rel:
+                                                        collected.append(CveJson5Converter.from_dict(raw_cve))
+                                                        cve_delta_synced += 1
+                                            except Exception as cve_fetch_err:
+                                                logger.debug("Failed to fetch raw CVE %s: %s", f_name, cve_fetch_err)
                 self.state_manager.update_checkpoint(
                     "cvelist_delta",
-                    records_scanned=cve_delta_scanned,
-                    records_synced=cve_delta_synced,
+                    last_marker=newest_head_sha,
+                    records_scanned=cve_delta_chk.records_scanned + cve_delta_scanned,
+                    records_synced=cve_delta_chk.records_synced + cve_delta_synced,
                 )
                 logger.info("CVEListV5 delta ingestion: scanned=%d, synced=%d", cve_delta_scanned, cve_delta_synced)
             except Exception as exc:
