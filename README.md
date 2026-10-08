@@ -44,5 +44,18 @@ python -m mcp_vulnerabilities.cli validate --dir data/vulnerabilities
 python -m mcp_vulnerabilities.cli snapshot
 ```
 
+## Documentation
+
+- [Specification](docs/SPECIFICATION.md): Details the OSV 1.6 schema extensions, semantics, and vulnerability invariants.
+- [Implementation](docs/IMPLEMENTATION.md): Architecture blueprint covering ingestion pipelines, state machines, and acceptance tests.
+
+## Testing
+
+Execute the acceptance test suite to validate the end-to-end functionality:
+
+```bash
+uv run pytest -v tests/test_acceptance_*.py
+```
+
 ## License
 MIT

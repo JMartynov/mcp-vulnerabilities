@@ -285,7 +285,48 @@ This advisory represents **CVE-2025-6514 / GHSA-6xpm-ggf7-wc3p**, an OS command 
 
 ---
 
-## 4. SemVer Resolution & Matching Rules
+## 4. Live Advisory Ingestion & Checkpoint Protocol
+
+The synchronization pipeline fetches advisories directly from remote sources, managing state via checkpoint protocols:
+
+- **GitHub Security Advisories (GHSA)**: Iterates over the REST API using `Link` header pagination for robust traversal. To ensure incremental updates, queries use the `since=<ISO_TIMESTAMP>` parameter dynamically loaded from `data/mcp_catalog_state.json`.
+- **CVE List V5 (CVEListV5)**: Maintains synchronization by traversing Git commit SHAs, identifying modified files (JSON records) delta compared to the previously recorded commit hash.
+
+> [!NOTE]
+> All incremental fetches persist the latest checkpoint (`last_sync_timestamp`, `last_commit_sha`) in `data/mcp_catalog_state.json` upon successful execution.
+
+---
+
+## 5. Version Resolution & Semver Invalidation
+
+Accurate vulnerability matching mandates a robust version resolution system:
+
+- **PyPI Package Verification**: `resolve_package_version(package_name)` queries PyPI to validate and fetch the latest semantic version available.
+- **Delta Tracking**: The system calculates the semver delta (e.g., `0.1.2` -> `0.2.0`) to trigger cache invalidation and ensure components in `data/mcp_catalog_state.json` accurately reflect the most recent vulnerable state.
+
+> [!IMPORTANT]
+> If a package is unpublished or unreachable, its resolution defaults to its previously cached state, generating a structured warning but preventing pipeline failure.
+
+---
+
+## 6. Historical Search Index Invariants
+
+The `data/vulnerabilities/index.json` acts as the definitive source of truth for the compiled database.
+
+**Pre-Loading Contract**: During incremental pipeline executions, the engine *must* preserve all existing records in the index. Newly fetched or updated vulnerabilities overwrite existing IDs or append new entries, but absent advisories in the delta *must not* trigger deletion of historical records.
+
+---
+
+## 7. OSV 1.6 Range Integrity & Grouped Deduplication Rules
+
+To maintain OSV schema validity and prevent illogical overlapping `affected` range boundaries:
+
+- Overlapping ranges are explicitly partitioned based on the tuple `(type, repo)`.
+- If an update introduces multiple events for the same ecosystem and repository, the engine merges the ranges to prevent duplicate adjacent `fixed` events (e.g., `[{"introduced": "1.0.0", "fixed": "1.2.0"}, {"introduced": "1.0.0", "fixed": "1.4.0"}]` becomes `[{"introduced": "1.0.0", "fixed": "1.4.0"}]`).
+
+---
+
+## 8. SemVer Resolution & Matching Rules
 
 When querying the advisory database for package $P$ at version $V$:
 
@@ -301,7 +342,7 @@ When querying the advisory database for package $P$ at version $V$:
 
 ---
 
-## 5. Applications & Serving Workflows
+## 9. Applications & Serving Workflows
 
 1. **Client Configuration Auditing**:
    - Scans `claude_desktop_config.json`, `cursor_settings.json`, and `goose_config.yaml` to detect vulnerable MCP server versions.

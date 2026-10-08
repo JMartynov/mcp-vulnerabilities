@@ -1,0 +1,141 @@
+diff --git a/README.md b/README.md
+index fe7daf8..ccc54ea 100644
+--- a/README.md
++++ b/README.md
+@@ -44,5 +44,18 @@ python -m mcp_vulnerabilities.cli validate --dir data/vulnerabilities
+ python -m mcp_vulnerabilities.cli snapshot
+ ```
+ 
++## Documentation
++
++- [Specification](docs/SPECIFICATION.md): Details the OSV 1.6 schema extensions, semantics, and vulnerability invariants.
++- [Implementation](docs/IMPLEMENTATION.md): Architecture blueprint covering ingestion pipelines, state machines, and acceptance tests.
++
++## Testing
++
++Execute the acceptance test suite to validate the end-to-end functionality:
++
++```bash
++uv run pytest -v tests/test_acceptance_*.py
++```
++
+ ## License
+ MIT
+diff --git a/docs/IMPLEMENTATION.md b/docs/IMPLEMENTATION.md
+new file mode 100644
+index 0000000..1b4a718
+--- /dev/null
++++ b/docs/IMPLEMENTATION.md
+@@ -0,0 +1,48 @@
++# Implementation Architecture
++
++This document describes the end-to-end architecture and implementation details for the MCP Vulnerability Advisory Database.
++
++## 1. Multi-Registry Discovery (`mcp_vulnerabilities.discovery`)
++
++The discovery module is responsible for identifying components and packages to monitor across various ecosystems (npm, PyPI, Go, etc.). It resolves metadata from these registries to build a comprehensive list of targets for vulnerability ingestion. The module provides the functionality to resolve package versions and track potential state changes needed by the ingestion pipeline.
++
++## 2. Multi-Source Ingestion & Normalization Pipeline (`mcp_vulnerabilities.pipeline`)
++
++The ingestion pipeline (`mcp_vulnerabilities.pipeline`) handles the automated extraction and parsing of security advisories from various external sources:
++
++- **CVE List V5 (CVEListV5)**: Consumes official CVE JSON 5.0 records.
++- **GitHub Security Advisories (GHSA)**: Integrates with GitHub's GraphQL/REST APIs to retrieve the latest advisories.
++- **OSV.dev**: Unified database fetcher for open-source vulnerability records.
++- **NVD**: Enriches base vulnerability records with metrics and CVSS scores.
++
++Advisories from these divergent sources are standardized and normalized into the unified OSV 1.6 compliant schema defined in the [Specification](SPECIFICATION.md). The pipeline is responsible for merging overlapping ranges and partitioning records logically by ecosystem and repository.
++
++## 3. State Machines (`SyncStateManager` and `McpCatalogState`)
++
++To orchestrate the ingestion workflow efficiently, the system utilizes state management abstractions:
++
++- **`SyncStateManager`**: Manages the life cycle of synchronization jobs, ensuring that the pipeline performs incremental fetches using appropriate checkpoints (e.g., `since` timestamps or Git commit SHAs).
++- **`McpCatalogState`**: Persists the ongoing synchronization metadata within `data/mcp_catalog_state.json`. It tracks previously observed semvers and records the checkpoint data (like `last_sync_timestamp` and `last_commit_sha`) required to perform incremental synchronization in subsequent runs.
++
++These components ensure idempotency, prevent redundant network calls, and maintain a historical search index.
++
++## 4. Acceptance Test Suite Guide (`tests/test_acceptance_*.py`)
++
++The acceptance tests are designed to validate the end-to-end functionality of the vulnerability ingestion pipeline against realistic scenarios.
++
++### Execution
++
++To run the full acceptance test suite, invoke pytest on the targeted pattern:
++
++```bash
++uv run pytest -v tests/test_acceptance_*.py
++```
++
++### Scope
++
++The acceptance test suite includes:
++- **Repository Processing**: Tests the ability of the pipeline to discover and pull correctly from defined real repositories (`test_acceptance_real_repositories.py`).
++- **Data Integrity Validation**: Ensures that OSV 1.6 formatting is applied uniformly.
++- **State Preservation**: Verifies that state parameters (checkpoint timestamps and commit SHAs) are consistently updated following a successful run.
++
++Developers are encouraged to execute this suite prior to opening PRs to guarantee the integrity of the data processing pipelines.
+diff --git a/docs/SPECIFICATION.md b/docs/SPECIFICATION.md
+index 9912aa5..0c2fc18 100644
+--- a/docs/SPECIFICATION.md
++++ b/docs/SPECIFICATION.md
+@@ -285,7 +285,48 @@ This advisory represents **CVE-2025-6514 / GHSA-6xpm-ggf7-wc3p**, an OS command
+ 
+ ---
+ 
+-## 4. SemVer Resolution & Matching Rules
++## 4. Live Advisory Ingestion & Checkpoint Protocol
++
++The synchronization pipeline fetches advisories directly from remote sources, managing state via checkpoint protocols:
++
++- **GitHub Security Advisories (GHSA)**: Iterates over the REST API using `Link` header pagination for robust traversal. To ensure incremental updates, queries use the `since=<ISO_TIMESTAMP>` parameter dynamically loaded from `data/mcp_catalog_state.json`.
++- **CVE List V5 (CVEListV5)**: Maintains synchronization by traversing Git commit SHAs, identifying modified files (JSON records) delta compared to the previously recorded commit hash.
++
++> [!NOTE]
++> All incremental fetches persist the latest checkpoint (`last_sync_timestamp`, `last_commit_sha`) in `data/mcp_catalog_state.json` upon successful execution.
++
++---
++
++## 5. Version Resolution & Semver Invalidation
++
++Accurate vulnerability matching mandates a robust version resolution system:
++
++- **PyPI Package Verification**: `resolve_package_version(package_name)` queries PyPI to validate and fetch the latest semantic version available.
++- **Delta Tracking**: The system calculates the semver delta (e.g., `0.1.2` -> `0.2.0`) to trigger cache invalidation and ensure components in `data/mcp_catalog_state.json` accurately reflect the most recent vulnerable state.
++
++> [!IMPORTANT]
++> If a package is unpublished or unreachable, its resolution defaults to its previously cached state, generating a structured warning but preventing pipeline failure.
++
++---
++
++## 6. Historical Search Index Invariants
++
++The `data/vulnerabilities/index.json` acts as the definitive source of truth for the compiled database.
++
++**Pre-Loading Contract**: During incremental pipeline executions, the engine *must* preserve all existing records in the index. Newly fetched or updated vulnerabilities overwrite existing IDs or append new entries, but absent advisories in the delta *must not* trigger deletion of historical records.
++
++---
++
++## 7. OSV 1.6 Range Integrity & Grouped Deduplication Rules
++
++To maintain OSV schema validity and prevent illogical overlapping `affected` range boundaries:
++
++- Overlapping ranges are explicitly partitioned based on the tuple `(type, repo)`.
++- If an update introduces multiple events for the same ecosystem and repository, the engine merges the ranges to prevent duplicate adjacent `fixed` events (e.g., `[{"introduced": "1.0.0", "fixed": "1.2.0"}, {"introduced": "1.0.0", "fixed": "1.4.0"}]` becomes `[{"introduced": "1.0.0", "fixed": "1.4.0"}]`).
++
++---
++
++## 8. SemVer Resolution & Matching Rules
+ 
+ When querying the advisory database for package $P$ at version $V$:
+ 
+@@ -301,7 +342,7 @@ When querying the advisory database for package $P$ at version $V$:
+ 
+ ---
+ 
+-## 5. Applications & Serving Workflows
++## 9. Applications & Serving Workflows
+ 
+ 1. **Client Configuration Auditing**:
+    - Scans `claude_desktop_config.json`, `cursor_settings.json`, and `goose_config.yaml` to detect vulnerable MCP server versions.
+
