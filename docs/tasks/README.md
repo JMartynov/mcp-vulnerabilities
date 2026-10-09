@@ -32,27 +32,27 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
-### 3. Active Roadmap Implementation Tasks on the Board
+### 3. Advanced Integrations & Ecosystem Pipelines (100% Tested & Merged)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **08** | **Automated Catalog Enrichment Cron in CI** | Daily Sync Automation | `Todo` | Automatically runs `cli enrich --limit 500` in `.github/workflows/daily_sync.yml` nightly. | [task08_daily_sync_enrich_cron.md](../../.jules/task08_daily_sync_enrich_cron.md) |
-| **09** | **AI Client Config Auto-Fixer (cli fix-config)** | Client Security CLI | `Todo` | Automated remediation command rewriting vulnerable MCP servers in `claude_desktop_config.json`. | [task09_client_config_autofixer.md](../../.jules/task09_client_config_autofixer.md) |
-| **10** | **Real-Time Threat Feed Webhook Dispatcher** | Threat Intelligence | `Todo` | Pushes real-time alerts to Discord, Slack, and GitHub Discussions on newly detected CRITICAL/HIGH advisories. | [task10_threat_feed_webhook_notifier.md](../../.jules/task10_threat_feed_webhook_notifier.md) |
-| **11** | **Offline Air-Gapped Enterprise Export Bundle** | Enterprise Distribution | `Todo` | Packages standalone tarball (`mcp-offline.tar.gz`) with embedded zero-dependency query script. | [task11_airgap_export_bundle.md](../../.jules/task11_airgap_export_bundle.md) |
-| **12** | **OWASP MCP Top 10 & CWE Analytics Dashboard** | Static Web Explorer | `Todo` | Generates visual distribution charts for top vulnerable tools and OWASP categories in `docs/analytics.html`. | [task12_owasp_analytics_dashboard.md](../../.jules/task12_owasp_analytics_dashboard.md) |
-| **13** | **Official Lightweight Docker Image & GHCR Publish** | Containerization & DevSecOps | `Todo` | Multi-arch `Dockerfile` and automated publishing workflow to `ghcr.io/jmartynov/mcp-vulnerabilities`. | [task13_docker_ghcr_container.md](../../.jules/task13_docker_ghcr_container.md) |
-| **14** | **Direct Vulnerability Search & Inspection CLI** | Terminal Developer Experience | `Todo` | Subcommands `mcp-vuln search` and `lookup` for querying by CVE/GHSA ID, tool name, or ecosystem. | [task14_cli_search_lookup.md](../../.jules/task14_cli_search_lookup.md) |
-| **15** | **Reusable GitHub Action for CI/CD Scanning** | DevSecOps Integration | `Todo` | Root `action.yml` enabling 4-line turn-key MCP vulnerability scanning across pull requests. | [task15_github_action_ci.md](../../.jules/task15_github_action_ci.md) |
-| **16** | **Upstream OSV.dev Exporter & Ecosystem Pipeline** | Global Security Data Lake | `Todo` | Automated export pipeline (`all.zip` and manifest) for upstream inclusion in Google OSV.dev. | [task16_osv_export_pipeline.md](../../.jules/task16_osv_export_pipeline.md) |
+| **08** | **Automated Catalog Enrichment Cron in CI** | Daily Sync Automation | `Done` | Automatically runs `cli enrich --limit 500` in `.github/workflows/daily_sync.yml` nightly. | [task08_daily_sync_enrich_cron.md](../../.jules/task08_daily_sync_enrich_cron.md) |
+| **09** | **AI Client Config Auto-Fixer (cli fix-config)** | Client Security CLI | `Done` | Automated remediation command rewriting vulnerable MCP servers in `claude_desktop_config.json`. | [task09_client_config_autofixer.md](../../.jules/task09_client_config_autofixer.md) |
+| **10** | **Real-Time Threat Feed Webhook Dispatcher** | Threat Intelligence | `Done` | Pushes real-time alerts to Discord, Slack, and GitHub Discussions on newly detected CRITICAL/HIGH advisories. | [task10_threat_feed_webhook_notifier.md](../../.jules/task10_threat_feed_webhook_notifier.md) |
+| **11** | **Offline Air-Gapped Enterprise Export Bundle** | Enterprise Distribution | `Done` | Packages standalone tarball (`mcp-offline.tar.gz`) with embedded zero-dependency query script. | [task11_airgap_export_bundle.md](../../.jules/task11_airgap_export_bundle.md) |
+| **12** | **OWASP MCP Top 10 & CWE Analytics Dashboard** | Static Web Explorer | `Done` | Generates visual distribution charts for top vulnerable tools and OWASP categories in `docs/analytics.html`. | [task12_owasp_analytics_dashboard.md](../../.jules/task12_owasp_analytics_dashboard.md) |
+| **13** | **Official Lightweight Docker Image & GHCR Publish** | Containerization & DevSecOps | `Done` | Multi-arch `Dockerfile` and automated publishing workflow to `ghcr.io/jmartynov/mcp-vulnerabilities`. | [task13_docker_ghcr_container.md](../../.jules/task13_docker_ghcr_container.md) |
+| **14** | **Direct Vulnerability Search & Inspection CLI** | Terminal Developer Experience | `Done` | Subcommands `mcp-vuln search` and `lookup` for querying by CVE/GHSA ID, tool name, or ecosystem. | [task14_cli_search_lookup.md](../../.jules/task14_cli_search_lookup.md) |
+| **15** | **Reusable GitHub Action for CI/CD Scanning** | DevSecOps Integration | `Done` | Root `action.yml` enabling 4-line turn-key MCP vulnerability scanning across pull requests. | [task15_github_action_ci.md](../../.jules/task15_github_action_ci.md) |
+| **16** | **Upstream OSV.dev Exporter & Ecosystem Pipeline** | Global Security Data Lake | `Done` | Automated export pipeline (`all.zip` and manifest) for upstream inclusion in Google OSV.dev. | [task16_osv_export_pipeline.md](../../.jules/task16_osv_export_pipeline.md) |
 
 ---
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 84 passed in 10.66s ==============================
+============================= 100 passed in 11.86s =============================
 ```
-- Total test count: **84**
-- Passing: **84 (100%)**
+- Total test count: **100**
+- Passing: **100 (100%)**
 - Skipped / Failed: **0**
