@@ -6,7 +6,19 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ## Task Catalog & Implementation Status
 
-### Completed Tracks (100% Tested & Merged)
+### 1. Foundational Ingestion & Empirical Audit Tracks (100% Tested & Merged)
+
+| # | Task | Subsystem | Status | Key Deliverable & Verification | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **00-A** | **GHSA Cursor Pagination & Commit Delta Traversal** | Live Stream Ingestion | `Done` | RFC 5988 `Link` pagination & commit delta markers in `pipeline.py`; 100% acceptance tests passed. | [task00a_ghsa_cursor_pagination.md](../../.jules/task00a_ghsa_cursor_pagination.md) |
+| **00-B** | **PyPI Lazy Version Resolution & Cache Invalidation** | Package Discovery | `Done` | PEP 691 JSON resolution & TTL invalidation in `pypi.py` & `catalog_state.py`; unit tests passed. | [task00b_pypi_lazy_version_resolution.md](../../.jules/task00b_pypi_lazy_version_resolution.md) |
+| **00-C** | **Historical Advisory Pre-Loading & Index Preservation** | Search Index Engine | `Done` | `_load_existing_records()` enforcing monotonic non-destructive indexing; incremental tests passed. | [task00c_index_preservation.md](../../.jules/task00c_index_preservation.md) |
+| **00-D** | **OSV 1.6 Range Integrity & Deduplicator Event Grouping** | Data Normalization | `Done` | Deduplicator grouping by `(type, repo)` with valid `introduced`/`fixed` pairs; schema tests passed. | [task00d_range_integrity_event_grouping.md](../../.jules/task00d_range_integrity_event_grouping.md) |
+| **00-E** | **400-URL Empirical Data Integrity Master Audit** | Empirical Verification | `Done` | Complete audit across 400 real upstream endpoints documented in `docs/reports/PARALLEL_AUDIT_REPORT.md`. | [task00e_400_url_empirical_audit.md](../../.jules/task00e_400_url_empirical_audit.md) |
+
+---
+
+### 2. Core Enhancements & Release Engineering (100% Tested & Merged)
 
 | # | Task | Subsystem | Status | Key Deliverable & Verification | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
@@ -20,7 +32,7 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
-### Upcoming Roadmap Tasks on the Board
+### 3. Active Roadmap Implementation Tasks on the Board
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
@@ -30,13 +42,16 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 | **11** | **Offline Air-Gapped Enterprise Export Bundle** | Enterprise Distribution | `Todo` | Packages standalone tarball (`mcp-offline.tar.gz`) with embedded zero-dependency query script. | [task11_airgap_export_bundle.md](../../.jules/task11_airgap_export_bundle.md) |
 | **12** | **OWASP MCP Top 10 & CWE Analytics Dashboard** | Static Web Explorer | `Todo` | Generates visual distribution charts for top vulnerable tools and OWASP categories in `docs/analytics.html`. | [task12_owasp_analytics_dashboard.md](../../.jules/task12_owasp_analytics_dashboard.md) |
 | **13** | **Official Lightweight Docker Image & GHCR Publish** | Containerization & DevSecOps | `Todo` | Multi-arch `Dockerfile` and automated publishing workflow to `ghcr.io/jmartynov/mcp-vulnerabilities`. | [task13_docker_ghcr_container.md](../../.jules/task13_docker_ghcr_container.md) |
+| **14** | **Direct Vulnerability Search & Inspection CLI** | Terminal Developer Experience | `Todo` | Subcommands `mcp-vuln search` and `lookup` for querying by CVE/GHSA ID, tool name, or ecosystem. | [task14_cli_search_lookup.md](../../.jules/task14_cli_search_lookup.md) |
+| **15** | **Reusable GitHub Action for CI/CD Scanning** | DevSecOps Integration | `Todo` | Root `action.yml` enabling 4-line turn-key MCP vulnerability scanning across pull requests. | [task15_github_action_ci.md](../../.jules/task15_github_action_ci.md) |
+| **16** | **Upstream OSV.dev Exporter & Ecosystem Pipeline** | Global Security Data Lake | `Todo` | Automated export pipeline (`all.zip` and manifest) for upstream inclusion in Google OSV.dev. | [task16_osv_export_pipeline.md](../../.jules/task16_osv_export_pipeline.md) |
 
 ---
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 84 passed in 10.99s ==============================
+============================= 84 passed in 10.66s ==============================
 ```
 - Total test count: **84**
 - Passing: **84 (100%)**
