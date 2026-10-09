@@ -60,6 +60,7 @@ def main() -> None:
     sync_p.add_argument("--cvelist-delta", action="store_true", help="Ingest recent CVE commits from GitHub")
     sync_p.add_argument("--reset-state", action="store_true", help="Reset sync state checkpoints")
     sync_p.add_argument("--snapshot", action="store_true", default=True, help="Compile snapshot after sync")
+    sync_p.add_argument("--notify-webhooks", action="store_true", help="Dispatch webhooks for new critical/high advisories")
 
 
     # Validate
@@ -145,6 +146,21 @@ def main() -> None:
             logger.info("Compiling consolidated snapshot...")
             build_snapshot(data_dir=args.output, output_gz=f"{Path(args.output).parent}/vulnerabilities.json.gz" if args.output != "data/vulnerabilities" else "vulnerabilities.json.gz")
 
+        if args.notify_webhooks and res.emitted_ids:
+            logger.info("Checking newly emitted advisories for webhooks...")
+            from mcp_vulnerabilities.notifier import ThreatFeedNotifier
+            import json
+            new_advs = []
+            out_dir = Path(args.output)
+            for adv_id in res.emitted_ids:
+                try:
+                    fpath = out_dir / f"{adv_id}.json"
+                    if fpath.exists():
+                        new_advs.append(json.loads(fpath.read_text(encoding="utf-8")))
+                except Exception as exc:
+                    logger.warning("Failed to load emitted advisory %s: %s", adv_id, exc)
+            if new_advs:
+                ThreatFeedNotifier().process_and_notify(new_advs)
 
     elif args.command == "validate":
         validator = OsvValidator()
