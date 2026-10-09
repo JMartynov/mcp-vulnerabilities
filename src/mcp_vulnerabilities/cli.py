@@ -73,6 +73,11 @@ def main() -> None:
     snap_p.add_argument("--output-gz", default="vulnerabilities.json.gz", help="Output gzip file path")
     snap_p.add_argument("--output-json", default=None, help="Optional uncompressed JSON output path")
 
+    # Export Airgap
+    exp_p = subparsers.add_parser("export-airgap", help="Export offline air-gapped bundle")
+    exp_p.add_argument("--output", default="dist/mcp-vulnerabilities-offline.tar.gz", help="Output tarball path")
+    exp_p.add_argument("--data-dir", default="data/vulnerabilities", help="Advisories data directory")
+
     # Audit
     aud_p = subparsers.add_parser("audit", help="Audit AI client MCP servers or packages against OSV database")
     aud_p.add_argument("--config", default=None, help="Path to AI client config file (e.g. claude_desktop_config.json)")
@@ -175,6 +180,11 @@ def main() -> None:
     elif args.command == "snapshot":
         res = build_snapshot(data_dir=args.data_dir, output_gz=args.output_gz, output_json=args.output_json)
         print(f"Compiled {res['total_vulnerabilities']} advisories ({res['size_kb']:.2f} KB) -> {res['snapshot_path']}")
+
+    elif args.command == "export-airgap":
+        from mcp_vulnerabilities.snapshot import export_airgap_bundle
+        res = export_airgap_bundle(data_dir=args.data_dir, output_tar=args.output)
+        print(f"Exported airgap bundle: {res['bundle_path']} (checksum: {res['checksum']})")
 
     elif args.command == "audit":
         snap_p = Path(args.snapshot)

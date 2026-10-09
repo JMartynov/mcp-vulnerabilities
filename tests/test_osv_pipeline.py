@@ -203,7 +203,6 @@ def test_pipeline_cvelistv5_checkpoint_resumption() -> None:
         assert res3.collected_count == 2
 
 import os
-from unittest.mock import MagicMock, patch
 
 
 
