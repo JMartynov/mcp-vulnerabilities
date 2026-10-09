@@ -34,6 +34,10 @@ jobs:
         run: |
           python -m mcp_vulnerabilities.cli discover --catalog-file data/mcp_servers.json
 
+      - name: Run Asynchronous Catalog Version Enrichment
+        run: |
+          python -m mcp_vulnerabilities.cli enrich --catalog-file data/mcp_servers.json --limit 500 --workers 10
+
       - name: Run MCP Ingestion & Normalization Pipeline
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -58,7 +62,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ docs/data/ vulnerabilities.json.gz
+          git add data/mcp_servers.json data/ docs/data/ vulnerabilities.json.gz
           git diff --staged --quiet || git commit -m "chore(osv): automated daily sync of MCP security advisories, feeds and web explorer data [skip ci]"
           git push origin main
 
