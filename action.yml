@@ -1,0 +1,114 @@
+name: "Audit MCP Vulnerabilities"
+description: "Scan AI client configurations (Claude Desktop, Cursor) or lockfiles (package.json, uv.lock, requirements.txt) against the curated MCP vulnerability database."
+inputs:
+  config-path:
+    description: "Path to AI client config file (e.g., .claude/claude_desktop_config.json)"
+    required: false
+  manifest-path:
+    description: "Path to dependency manifest or lockfile (e.g., package.json, uv.lock)"
+    required: false
+  fail-on-severity:
+    description: "Minimum severity to fail the build (LOW, MEDIUM, HIGH, CRITICAL)"
+    required: false
+    default: "HIGH"
+  format:
+    description: "Output format (table or json)"
+    required: false
+    default: "table"
+  python-version:
+    description: "Python version to execute with"
+    required: false
+    default: "3.12"
+outputs:
+  findings-count:
+    description: "Total number of vulnerabilities detected"
+    value: ${{ steps.audit.outputs.findings-count }}
+  has-critical-or-high:
+    description: "Boolean string indicating if high/critical issues exist"
+    value: ${{ steps.audit.outputs.has-critical-or-high }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+        
+    - name: Install mcp-vulnerabilities
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        pip install "${{ github.action_path }}"
+
+    - name: Run MCP Vulnerability Audit
+      id: audit
+      shell: bash
+      env:
+        INPUT_CONFIG_PATH: ${{ inputs.config-path }}
+        INPUT_MANIFEST_PATH: ${{ inputs.manifest-path }}
+        INPUT_FAIL_ON_SEVERITY: ${{ inputs.fail-on-severity }}
+        INPUT_FORMAT: ${{ inputs.format }}
+      run: |
+        set +e
+        
+        # Prepare arguments
+        ARGS="--format json"
+        
+        if [ -n "$INPUT_FAIL_ON_SEVERITY" ]; then
+          ARGS="$ARGS --severity-threshold $INPUT_FAIL_ON_SEVERITY"
+        fi
+
+        # Run command based on inputs
+        if [ -n "$INPUT_CONFIG_PATH" ]; then
+          echo "Running config audit on $INPUT_CONFIG_PATH..."
+          OUTPUT=$(mcp-vuln audit --config "$INPUT_CONFIG_PATH" $ARGS)
+          EXIT_CODE=$?
+        elif [ -n "$INPUT_MANIFEST_PATH" ]; then
+          echo "Running transitive dependency audit on $INPUT_MANIFEST_PATH..."
+          OUTPUT=$(mcp-vuln audit-transitive --manifest "$INPUT_MANIFEST_PATH" $ARGS)
+          EXIT_CODE=$?
+        else
+          echo "No config-path or manifest-path provided. Searching for standard configs..."
+          OUTPUT=$(mcp-vuln audit $ARGS)
+          EXIT_CODE=$?
+        fi
+        
+        # Parse output JSON to get counts and write summary
+        echo "$OUTPUT" > mcp_audit_results.json
+        
+        # Extract fields using Python
+        FINDINGS_COUNT=$(python -c "import json, sys; data=json.load(open('mcp_audit_results.json')); print(len(data.get('findings', [])))" 2>/dev/null || echo "0")
+        HAS_CRITICAL=$(python -c "import json, sys; data=json.load(open('mcp_audit_results.json')); print('true' if data.get('has_critical_or_high', False) else 'false')" 2>/dev/null || echo "false")
+        
+        FINDINGS_COUNT=${FINDINGS_COUNT:-0}
+
+        echo "findings-count=$FINDINGS_COUNT" >> $GITHUB_OUTPUT
+        echo "has-critical-or-high=$HAS_CRITICAL" >> $GITHUB_OUTPUT
+        
+        # Format the summary
+        echo "## MCP Security Audit Results" >> $GITHUB_STEP_SUMMARY
+        if [ "$FINDINGS_COUNT" -eq 0 ]; then
+          echo "✅ No vulnerabilities found." >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ Found **$FINDINGS_COUNT** vulnerabilities." >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # If user requested table format, generate it and append to summary
+        if [ "$INPUT_FORMAT" == "table" ]; then
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          if [ -n "$INPUT_CONFIG_PATH" ]; then
+            mcp-vuln audit --config "$INPUT_CONFIG_PATH" --format table >> $GITHUB_STEP_SUMMARY
+          elif [ -n "$INPUT_MANIFEST_PATH" ]; then
+            mcp-vuln audit-transitive --manifest "$INPUT_MANIFEST_PATH" --format table >> $GITHUB_STEP_SUMMARY
+          else
+            mcp-vuln audit --format table >> $GITHUB_STEP_SUMMARY
+          fi
+          echo '```' >> $GITHUB_STEP_SUMMARY
+        fi
+        
+        # We need to manually exit if there is an error to fail the build step
+        if [ $EXIT_CODE -ne 0 ]; then
+          exit 1
+        fi
