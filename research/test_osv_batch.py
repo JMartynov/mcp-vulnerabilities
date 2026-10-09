@@ -75,7 +75,7 @@ def test_osv_batch(packages: list[dict[str, Any]] | None = None, existing_ids: s
                     except Exception as conv_e:
                         logger.debug("OsvDevConverter error on %s: %s", vid, conv_e)
 
-                    is_rel, reasons = McpRelevanceFilter.is_relevant(
+                    _is_rel, reasons = McpRelevanceFilter.is_relevant(
                         package_name=pkg_meta["name"],
                         summary=v.get("summary", ""),
                         details=v.get("details", ""),

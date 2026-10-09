@@ -59,7 +59,7 @@ class SmitheryDiscoveryProvider:
                         repo = homepage if "github.com" in homepage else None
                         pkg_name = f"@smithery/{qname}" if "/" not in qname else qname
 
-                        is_rel, reasons = McpRelevanceFilter.is_relevant(
+                        is_rel, _reasons = McpRelevanceFilter.is_relevant(
                             package_name=qname,
                             summary=display_name,
                             details=desc,

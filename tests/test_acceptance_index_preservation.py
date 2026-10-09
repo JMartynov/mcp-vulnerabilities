@@ -81,7 +81,7 @@ New details here.
             md_file = md_dir / f"{new_id}.md"
             md_file.write_text(md_content, encoding="utf-8")
             
-            result = pipeline.run(
+            pipeline.run(
                 include_markdown_dirs=[md_dir],
                 include_cvelistv5_dirs=[],
                 include_cvelist_delta=False,

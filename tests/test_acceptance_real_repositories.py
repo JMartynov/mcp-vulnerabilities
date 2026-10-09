@@ -140,7 +140,7 @@ class TestAcceptanceRealRepositories(unittest.TestCase):
             )
 
             # --- RUN 1 (Cold Cache) ---
-            res1 = pipeline.run(
+            pipeline.run(
                 include_osv_api=True,
                 include_ghsa_api=False,
                 include_verity_catalog=False,
@@ -158,7 +158,7 @@ class TestAcceptanceRealRepositories(unittest.TestCase):
                 catalog_state_file=catalog_state_file,
                 servers_catalog_file=servers_file,
             )
-            res2 = pipeline_run2.run(
+            pipeline_run2.run(
                 include_osv_api=True,
                 include_ghsa_api=False,
                 include_verity_catalog=False,

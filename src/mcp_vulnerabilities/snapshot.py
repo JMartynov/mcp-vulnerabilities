@@ -242,6 +242,83 @@ def export_airgap_bundle(
     }
 
 
+import datetime
+import zipfile
+
+from mcp_vulnerabilities.validator import OsvValidator
+
+
+def export_osv_bucket(data_dir: Path, output_dir: Path) -> dict[str, Any]:
+    """Export OSV vulnerabilities to a compliant ecosystem bucket format."""
+    data_path = Path(data_dir)
+    out_path = Path(output_dir)
+    out_path.mkdir(parents=True, exist_ok=True)
+    
+    zip_path = out_path / "all.zip"
+    manifest_path = out_path / "manifest.json"
+    
+    vulnerabilities = []
+    
+    # OSV format requires deterministic zip, meaning stable timestamps and order
+    # Using 1980-01-01 00:00:00 as epoch for zip files
+    zip_time = (1980, 1, 1, 0, 0, 0)
+    
+    with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
+        for j_file in sorted(data_path.rglob("*.json")):
+            if j_file.name in ("sync_state.json", "index.json", ".vuln_index.pickle"):
+                continue
+            try:
+                # Read content and rewrite to ensure formatting
+                content_dict = json.loads(j_file.read_text(encoding="utf-8"))
+                
+                # Check for required fields based on OSV 1.6 using OsvValidator
+                errors = OsvValidator.validate(content_dict)
+                if errors:
+                    logger.warning("Validation errors for %s: %s", j_file.name, errors)
+                    continue
+                # The prompt explicitly asked to ensure modified and published are there as well
+                if "modified" not in content_dict or "published" not in content_dict:
+                    logger.warning("Missing modified or published for %s", j_file.name)
+                    continue
+                    
+                json_str = json.dumps(content_dict, ensure_ascii=False, indent=2)
+                
+                # Write to zip deterministically
+                zinfo = zipfile.ZipInfo(j_file.name, zip_time)
+                # zipfile.ZIP_DEFLATED is already used at the file level but set permissions
+                zinfo.external_attr = 0o644 << 16  # standard rw-r--r--
+                zinfo.compress_type = zipfile.ZIP_DEFLATED
+                zf.writestr(zinfo, json_str.encode("utf-8"))
+                
+                vulnerabilities.append(content_dict)
+            except Exception as exc:
+                logger.warning("Error reading %s during export: %s", j_file, exc)
+                
+    # Calculate SHA256 of the zip file
+    hasher = hashlib.sha256()
+    with open(zip_path, "rb") as f:
+        for chunk in iter(lambda: f.read(4096), b""):
+            hasher.update(chunk)
+    zip_sha256 = hasher.hexdigest()
+    
+    # Create manifest.json
+    manifest = {
+        "count": len(vulnerabilities),
+        "updated": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "sha256": zip_sha256
+    }
+    manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    
+    logger.info(
+        "Successfully exported OSV bucket with %d vulnerabilities to %s (SHA256: %s)",
+        len(vulnerabilities),
+        output_dir,
+        zip_sha256,
+    )
+    
+    return manifest
+
+
 if __name__ == "__main__":
     import sys
     logging.basicConfig(level=logging.INFO)

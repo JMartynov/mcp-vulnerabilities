@@ -132,7 +132,7 @@ def validate_osv_against_template(data: dict[str, Any], path_desc: str) -> list[
             ref_desc = f"{path_desc} -> references[{r_idx}]"
             if isinstance(ref, dict):
                 url = ref.get("url", "")
-                if not url or not (url.startswith("http://") or url.startswith("https://")):
+                if not url or not (url.startswith(("http://", "https://"))):
                     errors.append(f"{ref_desc}: Reference URL must be a valid HTTP(S) URL, got '{url}'")
 
     return errors
