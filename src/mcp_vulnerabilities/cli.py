@@ -63,6 +63,23 @@ def main() -> None:
     sync_p.add_argument("--notify-webhooks", action="store_true", help="Dispatch webhooks for new critical/high advisories")
 
 
+
+    # Search
+    search_p = subparsers.add_parser("search", help="Search for vulnerabilities by keyword, ID, or package")
+    search_p.add_argument("query", help="Keyword, CVE ID, or package name to search for")
+    search_p.add_argument("--min-severity", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
+    search_p.add_argument("--ecosystem", default=None, help="Filter by ecosystem (e.g., npm, pypi)")
+    search_p.add_argument("--format", choices=["table", "json"], default="table", help="Output format")
+    search_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
+    search_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
+
+    # Lookup
+    lookup_p = subparsers.add_parser("lookup", help="Lookup a specific vulnerability by exact ID or alias")
+    lookup_p.add_argument("id_or_alias", help="Vulnerability ID (e.g., GHSA-... or CVE-...)")
+    lookup_p.add_argument("--format", choices=["table", "json"], default="table", help="Output format")
+    lookup_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
+    lookup_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
+
     # Validate
     val_p = subparsers.add_parser("validate", help="Validate OSV vulnerability files in directory")
     val_p.add_argument("--dir", default="data/vulnerabilities", help="Directory of OSV JSON files")
@@ -185,6 +202,113 @@ def main() -> None:
         from mcp_vulnerabilities.snapshot import export_airgap_bundle
         res = export_airgap_bundle(data_dir=args.data_dir, output_tar=args.output)
         print(f"Exported airgap bundle: {res['bundle_path']} (checksum: {res['checksum']})")
+
+    elif args.command == "search":
+        snap_p = Path(args.snapshot)
+        data_p = Path(args.data_dir)
+        if snap_p.exists():
+            matcher = VulnerabilityMatcher.from_snapshot(snap_p)
+        elif data_p.exists():
+            matcher = VulnerabilityMatcher.from_directory(data_p)
+        else:
+            logger.error("No vulnerability database found at %s or %s", snap_p, data_p)
+            sys.exit(2)
+            
+        results = matcher.search(query=args.query, min_severity=args.min_severity, ecosystem=args.ecosystem)
+        
+        if args.format == "json":
+            import json
+            print(json.dumps([r.advisory.to_dict() for r in results], indent=2))
+        else:
+            print(f"\nSearch Results for '{args.query}'")
+            print("=" * 70)
+            if not results:
+                print("No matching vulnerabilities found.")
+            else:
+                for r in results:
+                    adv = r.advisory
+                    sev = "UNKNOWN"
+                    for s in adv.severity:
+                        sev = s.score # Simplified, actual is handled in matcher via extract
+                    
+                    # More robust severity extraction:
+                    sev_str, _ = matcher._extract_severity_info(adv.to_dict())
+                    
+                    print(f"\nID:         {adv.id}")
+                    if adv.aliases:
+                        print(f"Aliases:    {', '.join(adv.aliases)}")
+                    print(f"Severity:   {sev_str}")
+                    print(f"Matched On: {r.matched_on}")
+                    
+                    affected_pkgs = []
+                    vuln_tools = []
+                    for aff in adv.affected:
+                        affected_pkgs.append(f"{aff.package.name} ({aff.package.ecosystem})")
+                        if aff.database_specific and aff.database_specific.vulnerable_tools:
+                            vuln_tools.extend(aff.database_specific.vulnerable_tools)
+                    
+                    if affected_pkgs:
+                        print(f"Affected:   {', '.join(set(affected_pkgs))}")
+                    if vuln_tools:
+                        print(f"Tools:      {', '.join(set(vuln_tools))}")
+                        
+                    print(f"Summary:    {adv.summary}")
+            print("\n" + "=" * 70)
+        sys.exit(0)
+
+    elif args.command == "lookup":
+        snap_p = Path(args.snapshot)
+        data_p = Path(args.data_dir)
+        if snap_p.exists():
+            matcher = VulnerabilityMatcher.from_snapshot(snap_p)
+        elif data_p.exists():
+            matcher = VulnerabilityMatcher.from_directory(data_p)
+        else:
+            logger.error("No vulnerability database found at %s or %s", snap_p, data_p)
+            sys.exit(2)
+            
+        adv = matcher.get_advisory(args.id_or_alias)
+        
+        if not adv:
+            print(f"Vulnerability '{args.id_or_alias}' not found.")
+            sys.exit(1)
+            
+        if args.format == "json":
+            import json
+            print(json.dumps(adv.to_dict(), indent=2))
+        else:
+            print(f"\nVulnerability Details: {adv.id}")
+            print("=" * 70)
+            if adv.aliases:
+                print(f"Aliases:    {', '.join(adv.aliases)}")
+                
+            sev_str, _ = matcher._extract_severity_info(adv.to_dict())
+            print(f"Severity:   {sev_str}")
+            print(f"Published:  {adv.published}")
+            print(f"Modified:   {adv.modified}")
+            
+            print(f"\nSummary:\n  {adv.summary}")
+            print(f"\nDetails:\n  {adv.details[:500]}{'...' if len(adv.details) > 500 else ''}")
+            
+            print("\nAffected Packages & Ranges:")
+            for aff in adv.affected:
+                print(f"  - {aff.package.name} ({aff.package.ecosystem})")
+                for r in aff.ranges:
+                    events = []
+                    for ev in r.events:
+                        if ev.introduced: events.append(f">={ev.introduced}")
+                        if ev.fixed: events.append(f"<{ev.fixed}")
+                        if ev.last_affected: events.append(f"<={ev.last_affected}")
+                    print(f"    Range: {', '.join(events)}")
+                if aff.database_specific and aff.database_specific.vulnerable_tools:
+                    print(f"    Vulnerable Tools: {', '.join(aff.database_specific.vulnerable_tools)}")
+                    
+            if adv.references:
+                print("\nReferences:")
+                for ref in adv.references:
+                    print(f"  - {ref.url}")
+            print("=" * 70)
+        sys.exit(0)
 
     elif args.command == "audit":
         snap_p = Path(args.snapshot)

@@ -9,10 +9,17 @@ from pathlib import Path
 from typing import Any
 
 from packaging.version import InvalidVersion, Version
+from mcp_vulnerabilities.models import OsvVulnerability
 
 from .parsers import DiscoveredClientServer
 
 logger = logging.getLogger(__name__)
+
+
+@dataclass
+class SearchResult:
+    advisory: OsvVulnerability
+    matched_on: str
 
 
 @dataclass
@@ -100,7 +107,11 @@ class VulnerabilityMatcher:
             return cls(advisories)
 
         for json_file in dir_path.glob("*.json"):
-            if json_file.name in ("sync_state.json", "mcp_catalog_state.json", "mcp_servers.json"):
+            if json_file.name in (
+                "sync_state.json",
+                "mcp_catalog_state.json",
+                "mcp_servers.json",
+            ):
                 continue
             try:
                 with open(json_file, "r", encoding="utf-8") as f:
@@ -134,6 +145,99 @@ class VulnerabilityMatcher:
                 return cls(vulns)
         return cls([])
 
+    def get_advisory(self, advisory_id: str) -> OsvVulnerability | None:
+        """Retrieve a specific advisory by exact ID or alias."""
+        target = advisory_id.lower()
+        for adv_dict in self.advisories:
+            adv_id = adv_dict.get("id", "").lower()
+            if adv_id == target:
+                return OsvVulnerability.from_dict(adv_dict)
+
+            aliases = [a.lower() for a in adv_dict.get("aliases", [])]
+            if target in aliases:
+                return OsvVulnerability.from_dict(adv_dict)
+        return None
+
+    def search(
+        self, query: str, min_severity: str | None = None, ecosystem: str | None = None
+    ) -> list[SearchResult]:
+        """Search for advisories by keyword, severity, and ecosystem."""
+        results = []
+        query_lower = query.lower()
+
+        severity_order = {
+            "LOW": 1,
+            "MEDIUM": 2,
+            "MODERATE": 2,
+            "HIGH": 3,
+            "CRITICAL": 4,
+        }
+        min_rank = (
+            severity_order.get(str(min_severity).upper(), 0) if min_severity else 0
+        )
+
+        for adv_dict in self.advisories:
+            adv = OsvVulnerability.from_dict(adv_dict)
+
+            # Severity check
+            if min_rank > 0:
+                # Extract severity using existing method
+                sev_str, _ = self._extract_severity_info(adv_dict)
+                rank = severity_order.get(sev_str.upper(), 0)
+                if rank < min_rank:
+                    continue
+
+            # Ecosystem check (any affected package matches)
+            if ecosystem:
+                eco_lower = ecosystem.lower()
+                matches_eco = False
+                for aff in adv.affected:
+                    aff_eco = (aff.package.ecosystem or "").lower()
+                    if eco_lower == aff_eco:
+                        matches_eco = True
+                        break
+                    # fuzzy mapping
+                    if eco_lower == "npm" and aff_eco in ("npm", "javascript"):
+                        matches_eco = True
+                        break
+                    if eco_lower == "pypi" and aff_eco in ("pypi", "python"):
+                        matches_eco = True
+                        break
+                if not matches_eco:
+                    continue
+
+            # Text search (ID, Aliases, Package Name, Vulnerable Tools, Summary)
+            matched_on = None
+            if query_lower in (adv.id or "").lower():
+                matched_on = f"ID match ({adv.id})"
+            elif adv.aliases and any(
+                query_lower in (a or "").lower() for a in adv.aliases
+            ):
+                matched_on = "Alias match"
+            elif adv.summary and query_lower in adv.summary.lower():
+                matched_on = "Summary match"
+            else:
+                for aff in adv.affected:
+                    if (
+                        aff.package
+                        and aff.package.name
+                        and query_lower in aff.package.name.lower()
+                    ):
+                        matched_on = f"Package match ({aff.package.name})"
+                        break
+                    if aff.database_specific and aff.database_specific.vulnerable_tools:
+                        if any(
+                            query_lower in (t or "").lower()
+                            for t in aff.database_specific.vulnerable_tools
+                        ):
+                            matched_on = "Vulnerable tool match"
+                            break
+
+            if matched_on:
+                results.append(SearchResult(advisory=adv, matched_on=matched_on))
+
+        return results
+
     def audit_servers(
         self,
         servers: list[DiscoveredClientServer],
@@ -141,7 +245,13 @@ class VulnerabilityMatcher:
     ) -> AuditReport:
         """Audits a list of discovered client servers and produces an AuditReport."""
         findings: list[AuditFinding] = []
-        severity_order = {"LOW": 1, "MEDIUM": 2, "MODERATE": 2, "HIGH": 3, "CRITICAL": 4}
+        severity_order = {
+            "LOW": 1,
+            "MEDIUM": 2,
+            "MODERATE": 2,
+            "HIGH": 3,
+            "CRITICAL": 4,
+        }
         min_rank = severity_order.get(str(severity_threshold).upper(), 0)
 
         for server in servers:
@@ -228,7 +338,11 @@ class VulnerabilityMatcher:
             if desc_parts:
                 range_descriptions.append(", ".join(desc_parts))
 
-        range_str = " | ".join(range_descriptions) if range_descriptions else ("known versions" if versions else "all versions")
+        range_str = (
+            " | ".join(range_descriptions)
+            if range_descriptions
+            else ("known versions" if versions else "all versions")
+        )
 
         if not installed_ver:
             # Unpinned package warning
@@ -304,7 +418,9 @@ class VulnerabilityMatcher:
             if last_aff_v is not None and target_v > last_aff_v:
                 in_range = False
 
-            if in_range and (intro_v is not None or fix_v is not None or last_aff_v is not None):
+            if in_range and (
+                intro_v is not None or fix_v is not None or last_aff_v is not None
+            ):
                 return True
 
         return False
