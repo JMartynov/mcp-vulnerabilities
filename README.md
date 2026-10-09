@@ -32,6 +32,28 @@ with urllib.request.urlopen(url) as resp:
 print(f"Loaded {data['total_vulnerabilities']} MCP security advisories.")
 ```
 
+## CI/CD Integration
+
+You can easily prevent vulnerable MCP server dependencies from entering your production environment or being configured into AI client settings by adding this official, reusable GitHub Action to your CI workflows.
+
+### Audit AI Client Configurations
+```yaml
+- name: Audit MCP Servers
+  uses: JMartynov/mcp-vulnerabilities@v1
+  with:
+    config-path: ".claude/claude_desktop_config.json"
+    fail-on-severity: "HIGH"
+```
+
+### Audit Dependency Manifests
+```yaml
+- name: Audit Transitive Dependencies
+  uses: JMartynov/mcp-vulnerabilities@v1
+  with:
+    manifest-path: "package.json"
+    fail-on-severity: "HIGH"
+```
+
 ## CLI Usage
 ```bash
 # Ingest latest advisories from live APIs

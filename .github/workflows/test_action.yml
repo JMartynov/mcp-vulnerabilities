@@ -1,0 +1,105 @@
+name: Test Action
+
+on:
+  pull_request:
+    paths:
+      - 'action.yml'
+      - 'src/mcp_vulnerabilities/**'
+      - '.github/workflows/test_action.yml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'action.yml'
+      - 'src/mcp_vulnerabilities/**'
+      - '.github/workflows/test_action.yml'
+
+jobs:
+  test-action:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create mock config for passing test
+        run: |
+          cat << 'EOF' > mock_clean_config.json
+          {
+            "mcpServers": {
+              "clean-server": {
+                "command": "npx",
+                "args": ["-y", "@modelcontextprotocol/server-postgres"]
+              }
+            }
+          }
+          EOF
+
+      - name: Test Action (Clean Config)
+        id: test-clean
+        uses: ./
+        with:
+          config-path: "mock_clean_config.json"
+          fail-on-severity: "HIGH"
+
+      - name: Verify Clean Run
+        run: |
+          if [ "${{ steps.test-clean.outputs.findings-count }}" != "0" ]; then
+            echo "Expected 0 findings, got ${{ steps.test-clean.outputs.findings-count }}"
+            exit 1
+          fi
+
+      - name: Create mock config for failing test
+        run: |
+          cat << 'EOF' > mock_vulnerable_config.json
+          {
+            "mcpServers": {
+              "vulnerable-server": {
+                "command": "npx",
+                "args": ["-y", "@modelcontextprotocol/server-neo4j@0.6.1"]
+              }
+            }
+          }
+          EOF
+
+      - name: Test Action (Vulnerable Config)
+        id: test-vulnerable
+        uses: ./
+        continue-on-error: true
+        with:
+          config-path: "mock_vulnerable_config.json"
+          fail-on-severity: "HIGH"
+
+      - name: Verify Vulnerable Run Output
+        run: |
+          # Since it's vulnerable, step should fail, but continue-on-error makes it succeed.
+          # We just want to check findings-count is somewhat populated. We actually can't check
+          # findings-count accurately because continue-on-error discards output if it fails,
+          # so let's just make sure it failed.
+          if [ "${{ steps.test-vulnerable.outcome }}" != "failure" ]; then
+            echo "Expected step to fail because of vulnerability, but it didn't."
+            exit 1
+          fi
+
+      - name: Create mock manifest for transitive
+        run: |
+          cat << 'EOF' > mock_manifest.json
+          {
+            "dependencies": {
+              "requests": "2.31.0"
+            }
+          }
+          EOF
+          
+      - name: Test Action (Transitive Manifest)
+        id: test-transitive
+        uses: ./
+        with:
+          manifest-path: "mock_manifest.json"
+          fail-on-severity: "HIGH"
+
+      - name: Verify Transitive Run
+        run: |
+          if [ "${{ steps.test-transitive.outputs.findings-count }}" != "0" ]; then
+            echo "Expected 0 findings, got ${{ steps.test-transitive.outputs.findings-count }}"
+            exit 1
+          fi
