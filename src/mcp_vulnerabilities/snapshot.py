@@ -5,12 +5,121 @@ from __future__ import annotations
 import gzip
 import json
 import logging
+import hashlib
+import tarfile
 from pathlib import Path
 from typing import Any
 
 from mcp_vulnerabilities.feed import AdvisoryFeedBuilder
 
 logger = logging.getLogger("mcp_vulnerabilities.snapshot")
+
+QUERY_SCRIPT_CONTENT = r"""import argparse
+import gzip
+import json
+import re
+import sys
+from pathlib import Path
+
+def parse_version(v_str):
+    clean = v_str.lstrip("v=").strip()
+    m = re.match(r"^(\d+(\.\d+)*)", clean)
+    if not m:
+        return (0, 0, 0)
+    parts = [int(p) for p in m.group(1).split(".")]
+    while len(parts) < 3:
+        parts.append(0)
+    return tuple(parts)
+
+def is_vulnerable(ver, ranges, versions):
+    if versions and ver in versions:
+        return True
+
+    target = parse_version(ver)
+    for r in ranges:
+        events = r.get("events", [])
+        intro = None
+        fix = None
+        last = None
+        
+        for ev in events:
+            if "introduced" in ev:
+                intro = parse_version(ev["introduced"])
+            if "fixed" in ev:
+                fix = parse_version(ev["fixed"])
+            if "last_affected" in ev:
+                last = parse_version(ev["last_affected"])
+                
+        in_range = True
+        if intro is not None and target < intro:
+            in_range = False
+        if fix is not None and target >= fix:
+            in_range = False
+        if last is not None and target > last:
+            in_range = False
+            
+        if in_range and (intro is not None or fix is not None or last is not None):
+            return True
+    return False
+
+def check_package(pkg, ver, advisories):
+    findings = []
+    norm_pkg = pkg.lower()
+    for adv in advisories:
+        for aff in adv.get("affected", []):
+            if aff.get("package", {}).get("name", "").lower() == norm_pkg:
+                if ver:
+                    if is_vulnerable(ver, aff.get("ranges", []), aff.get("versions", [])):
+                        findings.append(adv)
+                else:
+                    findings.append(adv)
+    return findings
+
+def main():
+    parser = argparse.ArgumentParser(description="Query airgapped vulnerability database.")
+    parser.add_argument("--package", required=True, help="Package specifier, e.g. pkgname@1.2.3")
+    args = parser.parse_args()
+    
+    if "@" in args.package:
+        parts = args.package.rsplit("@", 1)
+        if len(parts) == 2 and parts[0]:
+            pkg = parts[0]
+            ver = parts[1]
+        else:
+            parts = args.package.lstrip("@").rsplit("@", 1)
+            pkg = "@" + parts[0]
+            ver = parts[1]
+    else:
+        pkg = args.package
+        ver = None
+
+    gz_path = Path("vulnerabilities.json.gz")
+    if not gz_path.exists():
+        print("Error: vulnerabilities.json.gz not found in current directory.", file=sys.stderr)
+        sys.exit(1)
+        
+    with gzip.open(gz_path, "rt", encoding="utf-8") as f:
+        data = json.load(f)
+        
+    vulns = data.get("vulnerabilities", {})
+    if isinstance(vulns, dict):
+        advisories = list(vulns.values())
+    else:
+        advisories = vulns
+        
+    findings = check_package(pkg, ver, advisories)
+    if findings:
+        print(f"VULNERABILITIES FOUND FOR {args.package}:")
+        for f in findings:
+            print(f" - {f.get('id')}: {f.get('summary', 'No summary')}")
+        sys.exit(1)
+    else:
+        print(f"No vulnerabilities found for {args.package}.")
+        sys.exit(0)
+
+if __name__ == "__main__":
+    main()
+"""
 
 
 def build_snapshot(
@@ -69,6 +178,67 @@ def build_snapshot(
         "total_vulnerabilities": len(vulnerabilities),
         "snapshot_path": str(gz_path),
         "size_kb": gz_size_kb,
+    }
+
+
+def export_airgap_bundle(
+    data_dir: str | Path = "data/vulnerabilities",
+    output_tar: str | Path = "dist/mcp-vulnerabilities-offline.tar.gz",
+) -> dict[str, Any]:
+    """Package the OSV advisory database and an embedded search script into an offline air-gapped bundle."""
+    out_path = Path(output_tar)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    dir_path = Path(data_dir)
+    gz_path = out_path.parent / "vulnerabilities.json.gz"
+    
+    # Generate snapshot first
+    snapshot_res = build_snapshot(data_dir=dir_path, output_gz=gz_path, generate_feeds=False)
+    
+    query_py_path = out_path.parent / "query.py"
+    query_py_path.write_text(QUERY_SCRIPT_CONTENT, encoding="utf-8")
+    
+    # Create tarball
+    with tarfile.open(out_path, "w:gz") as tar:
+        # Add generated vulnerabilities.json.gz
+        tar.add(gz_path, arcname="vulnerabilities.json.gz")
+        # Add query.py
+        tar.add(query_py_path, arcname="query.py")
+        
+        # Add all json files in data_dir (including index.json, excluding sync_state.json)
+        for j_file in sorted(dir_path.rglob("*.json")):
+            if j_file.name == "sync_state.json":
+                continue
+            arc_name = Path("data/vulnerabilities") / j_file.relative_to(dir_path)
+            tar.add(j_file, arcname=str(arc_name))
+            
+    # Compute sha256 checksum
+    sha256_hash = hashlib.sha256()
+    with open(out_path, "rb") as f:
+        for byte_block in iter(lambda: f.read(4096), b""):
+            sha256_hash.update(byte_block)
+            
+    checksum = sha256_hash.hexdigest()
+    checksum_path = out_path.with_suffix(".tar.gz.sha256")
+    if out_path.suffix == ".gz" and out_path.stem.endswith(".tar"):
+        checksum_path = out_path.parent / (out_path.name + ".sha256")
+    elif out_path.suffix == ".gz":
+        checksum_path = out_path.with_suffix(".gz.sha256")
+        
+    checksum_path.write_text(f"{checksum}  {out_path.name}\n", encoding="utf-8")
+    
+    # Cleanup intermediate files
+    if gz_path.exists():
+        gz_path.unlink()
+    if query_py_path.exists():
+        query_py_path.unlink()
+        
+    logger.info("Created airgap bundle %s (checksum: %s)", out_path, checksum)
+    return {
+        "bundle_path": str(out_path),
+        "checksum": checksum,
+        "checksum_path": str(checksum_path),
+        "snapshot_info": snapshot_res,
     }
 
 
