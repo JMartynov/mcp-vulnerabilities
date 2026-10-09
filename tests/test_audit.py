@@ -3,6 +3,7 @@
 import json
 from pathlib import Path
 
+from mcp_vulnerabilities.audit.fixer import ClientConfigFixer
 from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
 from mcp_vulnerabilities.audit.parsers import ClientConfigParser, DiscoveredClientServer
 
@@ -209,3 +210,99 @@ def test_vulnerability_matcher_from_canonical_database():
     assert report.total_findings >= 1
     cve_ids = [f.vulnerability_id for f in report.findings]
     assert "CVE-2025-10193" in cve_ids
+
+def test_client_config_fixer(tmp_path: Path):
+    mock_advisories = [
+        {
+            "id": "TEST-VULN-001",
+            "summary": "NPM Vulnerability",
+            "affected": [
+                {
+                    "package": {
+                        "name": "@modelcontextprotocol/server-postgres",
+                        "ecosystem": "npm",
+                    },
+                    "ranges": [
+                        {
+                            "type": "SEMVER",
+                            "events": [
+                                {"introduced": "0"},
+                                {"fixed": "0.6.2"}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "TEST-VULN-002",
+            "summary": "PyPI Vulnerability",
+            "affected": [
+                {
+                    "package": {
+                        "name": "mcp-server-sqlite",
+                        "ecosystem": "PyPI",
+                    },
+                    "ranges": [
+                        {
+                            "type": "SEMVER",
+                            "events": [
+                                {"introduced": "0"},
+                                {"fixed": "0.2.0"}
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+
+    matcher = VulnerabilityMatcher(mock_advisories)
+    fixer = ClientConfigFixer(matcher)
+
+    config_file = tmp_path / "claude_desktop_config.json"
+    config_data = {
+        "mcpServers": {
+            "postgres": {
+                "command": "npx",
+                "args": ["-y", "@modelcontextprotocol/server-postgres@0.6.1"]
+            },
+            "sqlite": {
+                "command": "uvx",
+                "args": ["mcp-server-sqlite==0.1.0"]
+            },
+            "safe_server": {
+                "command": "npx",
+                "args": ["-y", "@modelcontextprotocol/server-postgres@0.6.2"]
+            }
+        }
+    }
+    config_file.write_text(json.dumps(config_data), encoding="utf-8")
+
+    # Dry run
+    result_dry = fixer.fix_config(config_file, dry_run=True)
+    assert result_dry["status"] == "dry_run"
+    assert len(result_dry["changes"]) == 2
+    
+    # Check that file is unchanged
+    with open(config_file, "r") as f:
+        data = json.load(f)
+    assert data["mcpServers"]["postgres"]["args"][1] == "@modelcontextprotocol/server-postgres@0.6.1"
+
+    # Actual fix
+    result_fix = fixer.fix_config(config_file, dry_run=False)
+    assert result_fix["status"] == "success"
+    assert len(result_fix["changes"]) == 2
+    assert "backup_path" in result_fix
+    
+    # Verify backup was created
+    assert Path(result_fix["backup_path"]).exists()
+    
+    # Verify file was updated
+    with open(config_file, "r") as f:
+        updated_data = json.load(f)
+        
+    assert updated_data["mcpServers"]["postgres"]["args"][1] == "@modelcontextprotocol/server-postgres@0.6.2"
+    assert updated_data["mcpServers"]["sqlite"]["args"][0] == "mcp-server-sqlite==0.2.0"
+    assert updated_data["mcpServers"]["safe_server"]["args"][1] == "@modelcontextprotocol/server-postgres@0.6.2"
+

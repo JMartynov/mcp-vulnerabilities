@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 
 from mcp_vulnerabilities.audit import (
+    ClientConfigFixer,
     ClientConfigParser,
     DiscoveredClientServer,
     VulnerabilityMatcher,
@@ -84,6 +85,13 @@ def main() -> None:
     trans_p = subparsers.add_parser("audit-transitive", help="Audit third-party dependencies of MCP servers")
     trans_p.add_argument("--manifest", required=True, help="Path to package.json or requirements.txt")
     trans_p.add_argument("--format", choices=["table", "json"], default="table", help="Output format")
+
+    # Fix Config
+    fix_p = subparsers.add_parser("fix-config", help="Automatically remediate vulnerable servers in a client config")
+    fix_p.add_argument("--config", required=True, help="Path to AI client config file (e.g. claude_desktop_config.json)")
+    fix_p.add_argument("--dry-run", action="store_true", help="Display proposed version upgrades without modifying the file")
+    fix_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
+    fix_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
 
     args = parser.parse_args()
 
@@ -163,7 +171,7 @@ def main() -> None:
             logger.error("No vulnerability database found at %s or %s", snap_p, data_p)
             sys.exit(2)
 
-        servers: List[DiscoveredClientServer] = []
+        servers: list[DiscoveredClientServer] = []
         if args.package:
             spec = args.package.strip()
             eco = "npm" if spec.startswith("@") or not spec.startswith("mcp_") else "PyPI"
@@ -253,6 +261,50 @@ def main() -> None:
                 print("-" * 70)
 
         sys.exit(1 if res.has_critical_or_high else 0)
+
+    elif args.command == "fix-config":
+        snap_p = Path(args.snapshot)
+        data_p = Path(args.data_dir)
+        if snap_p.exists():
+            matcher = VulnerabilityMatcher.from_snapshot(snap_p)
+        elif data_p.exists():
+            matcher = VulnerabilityMatcher.from_directory(data_p)
+        else:
+            logger.error("No vulnerability database found at %s or %s", snap_p, data_p)
+            sys.exit(2)
+
+        fixer = ClientConfigFixer(matcher)
+        cfg_p = Path(args.config)
+        
+        try:
+            result = fixer.fix_config(cfg_p, dry_run=args.dry_run)
+            
+            print("\n" + "=" * 70)
+            print(" MCP CLIENT CONFIG REMEDIATION")
+            print("=" * 70)
+            
+            if result["status"] == "no_servers_found":
+                print("No MCP servers found in the configuration.")
+            elif result["status"] == "no_changes_needed":
+                print("✓ All scanned MCP servers are safe. No changes needed.")
+            else:
+                for change in result["changes"]:
+                    print(f"Server: {change['server_name']} ({change['package_name']})")
+                    print(f"  Old version: {change['old_version']}")
+                    print(f"  New version: {change['new_version']}")
+                    print()
+                
+                if args.dry_run:
+                    print("-" * 70)
+                    print("DRY RUN: No files were modified.")
+                else:
+                    print("-" * 70)
+                    print("Configuration successfully updated.")
+                    print(f"Backup saved to: {result['backup_path']}")
+                    
+        except Exception as e:
+            logger.error("Failed to fix config: %s", e)
+            sys.exit(1)
 
 
 if __name__ == "__main__":
