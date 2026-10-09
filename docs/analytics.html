@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Security Advisory Database | Analytics Dashboard</title>
+  <meta name="description" content="Analytics and metrics for the Model Context Protocol Vulnerability Advisory Database.">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .analytics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .chart-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    .chart-card h2 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-size: 1.25rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+    }
+    .bar-chart-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+    .bar-label {
+      flex: 0 0 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .bar-track {
+      flex: 1;
+      height: 1.25rem;
+      background: var(--bg-hover);
+      border-radius: 4px;
+      margin: 0 1rem;
+      overflow: hidden;
+      position: relative;
+    }
+    .bar-fill {
+      height: 100%;
+      background: var(--primary-color, #007bff);
+      border-radius: 4px;
+      transition: width 0.5s ease-out;
+    }
+    .bar-fill.severity-critical { background: var(--severity-critical, #dc3545); }
+    .bar-fill.severity-high { background: var(--severity-high, #fd7e14); }
+    .bar-fill.severity-medium { background: var(--severity-medium, #ffc107); }
+    
+    .bar-value {
+      flex: 0 0 40px;
+      text-align: right;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .sub-value {
+      font-size: 0.75rem;
+      color: #666;
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="shield-icon">🛡️</span>
+        <div>
+          <h1>MCP Vulnerability Database</h1>
+          <p class="subtitle">Analytics Dashboard</p>
+        </div>
+      </div>
+      <div class="header-links">
+        <a href="index.html" class="btn btn-primary">Explorer</a>
+        <a href="https://github.com/JMartynov/mcp-vulnerabilities" class="btn btn-github" target="_blank" rel="noopener">⭐ GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="analytics-grid">
+      <!-- Top 10 Tools -->
+      <div class="chart-card">
+        <h2>Top 10 Vulnerable Tools</h2>
+        <div id="chart-top-tools">
+          <div class="loading-state">Loading metrics...</div>
+        </div>
+      </div>
+
+      <!-- OWASP Categories -->
+      <div class="chart-card">
+        <h2>OWASP MCP Category Breakdown</h2>
+        <div id="chart-owasp">
+          <div class="loading-state">Loading metrics...</div>
+        </div>
+      </div>
+
+      <!-- Ecosystems -->
+      <div class="chart-card">
+        <h2>Ecosystem Distribution</h2>
+        <div id="chart-ecosystems">
+          <div class="loading-state">Loading metrics...</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p>Maintained by the MCP Security Community · OSV Schema 1.6.0 Compliant · Apache-2.0 License</p>
+    </div>
+  </footer>
+
+  <script>
+    // Escape HTML entities to prevent XSS (from memory rule)
+    function escapeHtml(unsafe) {
+      if (!unsafe) return "";
+      return String(unsafe)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    async function loadAnalytics() {
+      try {
+        const response = await fetch('data/analytics.json');
+        if (!response.ok) throw new Error('Failed to load analytics data');
+        const data = await response.json();
+        renderTopTools(data.top_tools);
+        renderOwaspBreakdown(data.owasp_breakdown);
+        renderEcosystems(data.ecosystems);
+      } catch (err) {
+        console.error(err);
+        document.querySelectorAll('.loading-state').forEach(el => {
+          el.textContent = 'Error loading analytics.';
+        });
+      }
+    }
+
+    function renderTopTools(tools) {
+      const container = document.getElementById('chart-top-tools');
+      container.innerHTML = '';
+      
+      if (!tools || tools.length === 0) {
+        container.textContent = 'No data available.';
+        return;
+      }
+
+      const maxCount = Math.max(...tools.map(t => t.count));
+
+      tools.forEach(tool => {
+        const pct = (tool.count / maxCount) * 100;
+        const html = `
+          <div class="bar-chart-row">
+            <div class="bar-label" title="${escapeHtml(tool.tool)}">${escapeHtml(tool.tool)}</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: ${pct}%"></div>
+            </div>
+            <div class="bar-value">${tool.count}</div>
+          </div>
+          <div style="font-size: 0.75rem; text-align: right; margin-top: -10px; margin-bottom: 10px; color: #666;">
+            Avg CVSS: ${tool.avg_cvss.toFixed(1)}
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+      });
+    }
+
+    function renderOwaspBreakdown(categories) {
+      const container = document.getElementById('chart-owasp');
+      container.innerHTML = '';
+      
+      if (!categories || categories.length === 0) {
+        container.textContent = 'No data available.';
+        return;
+      }
+
+      const maxCount = Math.max(...categories.map(c => c.count));
+
+      categories.forEach(cat => {
+        const pct = (cat.count / maxCount) * 100;
+        
+        // Find highest severity to color the bar
+        let sevClass = '';
+        if (cat.severities['CRITICAL']) sevClass = 'severity-critical';
+        else if (cat.severities['HIGH']) sevClass = 'severity-high';
+        else if (cat.severities['MEDIUM']) sevClass = 'severity-medium';
+
+        const nameParts = cat.category.split(' - ');
+        const displayName = nameParts.length > 1 ? nameParts[1] : cat.category;
+        const tooltip = cat.category;
+
+        const html = `
+          <div class="bar-chart-row">
+            <div class="bar-label" title="${escapeHtml(tooltip)}">${escapeHtml(displayName)}</div>
+            <div class="bar-track">
+              <div class="bar-fill ${sevClass}" style="width: ${pct}%"></div>
+            </div>
+            <div class="bar-value">${cat.count} <span class="sub-value">(${cat.percentage.toFixed(1)}%)</span></div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+      });
+    }
+
+    function renderEcosystems(ecosystems) {
+      const container = document.getElementById('chart-ecosystems');
+      container.innerHTML = '';
+      
+      const entries = Object.entries(ecosystems || {}).map(([name, count]) => ({ name, count }));
+      entries.sort((a, b) => b.count - a.count);
+
+      if (entries.length === 0) {
+        container.textContent = 'No data available.';
+        return;
+      }
+
+      const maxCount = Math.max(...entries.map(e => e.count));
+
+      entries.forEach(eco => {
+        const pct = (eco.count / maxCount) * 100;
+        const html = `
+          <div class="bar-chart-row">
+            <div class="bar-label">${escapeHtml(eco.name)}</div>
+            <div class="bar-track">
+              <div class="bar-fill" style="width: ${pct}%; background: var(--badge-bg, #666);"></div>
+            </div>
+            <div class="bar-value">${eco.count}</div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', html);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAnalytics);
+  </script>
+</body>
+</html>
