@@ -111,7 +111,7 @@ for idx, f in enumerate(v_files, 1):
 print("Harvesting Scenario 4 URLs...")
 s4_entries = []
 for f in sorted(glob.glob("data/vulnerabilities/*.json")):
-    if f.endswith("index.json") or f.endswith("sync_state.json"):
+    if f.endswith(("index.json", "sync_state.json")):
         continue
     v = json.load(open(f, encoding="utf-8"))
     vid = v["id"]

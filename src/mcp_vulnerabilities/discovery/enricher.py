@@ -72,7 +72,7 @@ class CatalogVersionEnricher:
             for future in concurrent.futures.as_completed(future_to_key):
                 key, name = future_to_key[future]
                 try:
-                    res_key, res_name, version = future.result()
+                    res_key, _res_name, version = future.result()
                     if version:
                         servers[res_key]["version"] = version
                         stats["updated"] += 1

@@ -53,6 +53,10 @@ jobs:
         run: |
           python -m mcp_vulnerabilities.snapshot data/vulnerabilities vulnerabilities.json.gz
 
+      - name: Export OSV Dataset Bucket
+        run: |
+          python -m mcp_vulnerabilities.cli export-osv --data-dir data/vulnerabilities --output-dir dist/osv
+
       - name: Build Web Explorer Static Data
         run: |
           python -m mcp_vulnerabilities.site_builder
@@ -62,7 +66,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/mcp_servers.json data/ docs/data/ vulnerabilities.json.gz
+          git add data/mcp_servers.json data/ docs/data/ dist/osv/ vulnerabilities.json.gz
           git diff --staged --quiet || git commit -m "chore(osv): automated daily sync of MCP security advisories, feeds and web explorer data [skip ci]"
           git push origin main
 

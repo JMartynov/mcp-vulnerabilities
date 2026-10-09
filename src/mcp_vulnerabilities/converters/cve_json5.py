@@ -226,9 +226,7 @@ class CveJson5Converter:
         for w in words:
             cleaned = w.strip("`.,:;'\"()[]{}")
             if (
-                cleaned.startswith("mcp-")
-                or cleaned.startswith("@modelcontextprotocol/")
-                or cleaned == "fastmcp"
+                cleaned.startswith(("mcp-", "@modelcontextprotocol/")) or cleaned == "fastmcp"
             ):
                 return cleaned
         return words[0].strip("`.,:;'\"") if words else "unknown-mcp"

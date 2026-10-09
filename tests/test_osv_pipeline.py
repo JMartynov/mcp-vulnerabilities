@@ -5,10 +5,10 @@ from __future__ import annotations
 import json
 import tempfile
 from pathlib import Path
+from unittest.mock import MagicMock, patch
 
 import pytest
 
-from unittest.mock import patch, MagicMock
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
 from mcp_vulnerabilities.models import (
     AffectedPackage,
@@ -203,7 +203,6 @@ def test_pipeline_cvelistv5_checkpoint_resumption() -> None:
         assert res3.collected_count == 2
 
 import os
-
 
 
 @patch("urllib.request.urlopen")
@@ -427,8 +426,8 @@ def test_pipeline_github_auth_headers_without_token(mock_urlopen: MagicMock) -> 
 
 
 def test_is_version_affected_evaluator() -> None:
+    from mcp_vulnerabilities.models import EventSpec, RangeSpec, RangeType
     from mcp_vulnerabilities.pipeline import is_version_affected
-    from mcp_vulnerabilities.models import RangeSpec, EventSpec, RangeType
 
     range_spec = RangeSpec(
         type=RangeType.SEMVER,
@@ -454,8 +453,9 @@ def test_is_version_affected_evaluator() -> None:
 
 @patch("urllib.request.urlopen")
 def test_query_osv_batch_includes_version(mock_urlopen: MagicMock) -> None:
-    from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline as OsvPipeline
     import tempfile
+
+    from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline as OsvPipeline
     
     with tempfile.TemporaryDirectory() as tmpdir:
         pipeline = OsvPipeline(output_dir=Path(tmpdir) / "vulns")

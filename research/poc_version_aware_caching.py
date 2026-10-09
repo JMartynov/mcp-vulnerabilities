@@ -185,7 +185,7 @@ def run_poc() -> None:
     ]
     cache_hits = len(packages_with_versions) - len(to_query_run2)
     print(f"  Evaluated {len(packages_with_versions)} packages -> {len(to_query_run2)} need query ({cache_hits} cache hits)")
-    vuln_map_run2 = query_osv_batch_for_packages(to_query_run2)
+    query_osv_batch_for_packages(to_query_run2)
     t2 = time.perf_counter() - t0
     print(f"  Run 2 finished in {t2:.4f}s: Queries sent={len(to_query_run2)}, Redundant API calls prevented={cache_hits}")
     assert len(to_query_run2) == 0, "Expected 0 queries on warm cache!"

@@ -150,7 +150,7 @@ class TransitiveDependencyAuditor:
         extracted: list[tuple[str, str | None, str]] = []
         for line in path.read_text(encoding="utf-8").splitlines():
             line = line.strip()
-            if not line or line.startswith("#") or line.startswith("-"):
+            if not line or line.startswith(("#", "-")):
                 continue
             parts = re.split(r"(==|>=|<=|>|<|~=)", line, maxsplit=1)
             pkg = parts[0].strip()
@@ -166,7 +166,7 @@ class TransitiveDependencyAuditor:
         deps_list = project.get("dependencies", [])
         
         opt_deps = project.get("optional-dependencies", {})
-        for _, opt_list in opt_deps.items():
+        for opt_list in opt_deps.values():
             deps_list.extend(opt_list)
 
         extracted: list[tuple[str, str | None, str]] = []

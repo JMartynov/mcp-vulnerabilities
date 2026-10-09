@@ -140,7 +140,7 @@ class OsvDeduplicator:
 
         merged_pkgs: list[AffectedPackage] = []
 
-        for _key, aff_list in pkg_map.items():
+        for aff_list in pkg_map.values():
             base_aff = aff_list[0]
             pkg_spec = base_aff.package
 

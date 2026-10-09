@@ -69,12 +69,7 @@ class PypiDiscoveryProvider:
                     name = p.get("name", "")
                     norm = name.lower()
                     if (
-                        norm.startswith("mcp-server-")
-                        or norm.startswith("mcp-")
-                        or norm.endswith("-mcp-server")
-                        or norm.endswith("-mcp")
-                        or "mcp_server" in norm
-                        or norm in ("mcp", "fastmcp")
+                        norm.startswith(("mcp-server-", "mcp-")) or norm.endswith(("-mcp-server", "-mcp")) or "mcp_server" in norm or norm in ("mcp", "fastmcp")
                     ):
                         is_rel, reasons = McpRelevanceFilter.is_relevant(package_name=name)
                         if is_rel:

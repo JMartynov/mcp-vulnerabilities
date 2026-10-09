@@ -17,9 +17,8 @@ from mcp_vulnerabilities.discovery import (
     CatalogVersionEnricher,
     McpDiscoveryOrchestrator,
 )
-
 from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline
-from mcp_vulnerabilities.snapshot import build_snapshot
+from mcp_vulnerabilities.snapshot import build_snapshot, export_osv_bucket
 from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor
 from mcp_vulnerabilities.validator import OsvValidator
 
@@ -83,6 +82,12 @@ def main() -> None:
     # Validate
     val_p = subparsers.add_parser("validate", help="Validate OSV vulnerability files in directory")
     val_p.add_argument("--dir", default="data/vulnerabilities", help="Directory of OSV JSON files")
+
+
+    # Export OSV Bucket
+    export_p = subparsers.add_parser("export-osv", help="Export OSV vulnerability records into a bucket format (all.zip and manifest.json)")
+    export_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV JSON files")
+    export_p.add_argument("--output-dir", default="dist/osv", help="Directory to output all.zip and manifest.json")
 
     # Snapshot
     snap_p = subparsers.add_parser("snapshot", help="Compile all advisories into consolidated .json.gz")
@@ -193,6 +198,11 @@ def main() -> None:
                 print(f"ERROR: {err}")
             sys.exit(1)
         sys.exit(0)
+
+
+    elif args.command == "export-osv":
+        res = export_osv_bucket(data_dir=args.data_dir, output_dir=args.output_dir)
+        print(f"Exported OSV bucket to {args.output_dir}: {res['count']} vulnerabilities, SHA256: {res['sha256']}")
 
     elif args.command == "snapshot":
         res = build_snapshot(data_dir=args.data_dir, output_gz=args.output_gz, output_json=args.output_json)

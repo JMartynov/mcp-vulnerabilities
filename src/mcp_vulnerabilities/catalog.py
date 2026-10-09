@@ -127,7 +127,7 @@ class McpCatalogState:
         """Update or insert a server record after successful audit."""
         key = self.package_key(ecosystem, name)
         existing_vulns = self.records[key].known_vulnerabilities if key in self.records else []
-        new_vulns = sorted(list(set(existing_vulns + (vulnerabilities or []))))
+        new_vulns = sorted(set(existing_vulns + (vulnerabilities or [])))
 
         existing_meta = self.records[key].metadata if key in self.records else {}
         if metadata:
