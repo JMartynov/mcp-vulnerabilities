@@ -12,7 +12,7 @@ inputs:
     required: false
     default: "HIGH"
   format:
-    description: "Output format (table or json)"
+    description: "Output format (table, json, or sarif)"
     required: false
     default: "table"
   python-version:
@@ -60,6 +60,9 @@ runs:
         fi
 
         # Run command based on inputs
+        # For audit logic, we run it twice if SARIF is requested: once for the GitHub step summary (table) 
+        # and once for the output file (SARIF). But actually we can just pass the requested format, except
+        # we need JSON for counts. Let's just always generate JSON for counts first.
         if [ -n "$INPUT_CONFIG_PATH" ]; then
           echo "Running config audit on $INPUT_CONFIG_PATH..."
           OUTPUT=$(mcp-vuln audit --config "$INPUT_CONFIG_PATH" $ARGS)
@@ -108,6 +111,19 @@ runs:
           echo '```' >> $GITHUB_STEP_SUMMARY
         fi
         
+        # If user requested sarif format, generate it to a file
+        if [ "$INPUT_FORMAT" == "sarif" ]; then
+          echo "Generating SARIF report..."
+          if [ -n "$INPUT_CONFIG_PATH" ]; then
+            mcp-vuln audit --config "$INPUT_CONFIG_PATH" --format sarif > mcp_audit_results.sarif
+          elif [ -n "$INPUT_MANIFEST_PATH" ]; then
+            mcp-vuln audit-transitive --manifest "$INPUT_MANIFEST_PATH" --format sarif > mcp_audit_results.sarif
+          else
+            mcp-vuln audit --format sarif > mcp_audit_results.sarif
+          fi
+          echo "SARIF report written to mcp_audit_results.sarif. You can upload this using github/codeql-action/upload-sarif@v3"
+        fi
+
         # We need to manually exit if there is an error to fail the build step
         if [ $EXIT_CODE -ne 0 ]; then
           exit 1

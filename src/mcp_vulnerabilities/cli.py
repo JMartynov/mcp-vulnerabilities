@@ -107,12 +107,12 @@ def main() -> None:
     aud_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
     aud_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
     aud_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
-    aud_p.add_argument("--format", choices=["table", "json"], default="table", help="Output format")
+    aud_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
 
     # Audit Transitive
     trans_p = subparsers.add_parser("audit-transitive", help="Audit third-party dependencies of MCP servers")
     trans_p.add_argument("--manifest", required=True, help="Path to package.json or requirements.txt")
-    trans_p.add_argument("--format", choices=["table", "json"], default="table", help="Output format")
+    trans_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
 
     # Fix Config
     fix_p = subparsers.add_parser("fix-config", help="Automatically remediate vulnerable servers in a client config")
@@ -372,6 +372,11 @@ def main() -> None:
         if args.format == "json":
             import json
             print(json.dumps(report.to_dict(), indent=2))
+        elif args.format == "sarif":
+            import json
+            from mcp_vulnerabilities.audit.reporters import SarifReporter
+            sarif_report = SarifReporter.generate_audit_sarif(report, target_path=args.config)
+            print(json.dumps(sarif_report, indent=2))
         else:
             print("\n" + "=" * 70)
             print(f" MCP SECURITY AUDIT REPORT: {len(report.scanned_servers)} servers scanned")
@@ -403,6 +408,11 @@ def main() -> None:
         if args.format == "json":
             import json
             print(json.dumps(res.to_dict(), indent=2))
+        elif args.format == "sarif":
+            import json
+            from mcp_vulnerabilities.audit.reporters import SarifReporter
+            sarif_report = SarifReporter.generate_transitive_sarif(res)
+            print(json.dumps(sarif_report, indent=2))
         else:
             print("\n" + "=" * 70)
             print(f" TRANSITIVE DEPENDENCY AUDIT: {res.target_manifest} ({res.total_dependencies} dependencies)")
