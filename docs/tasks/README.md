@@ -48,6 +48,15 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
+### 4. Enterprise Standards & Runtime Security Wave (On Board / Todo)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **17** | **SARIF Export for GitHub Code Scanning (--format sarif)** | Enterprise DevSecOps | `Todo` | Emits OASIS SARIF v2.1.0 for native PR annotations in GitHub Code Scanning. | [task17_sarif_export.md](../../.jules/task17_sarif_export.md) |
+| **18** | **Live MCP Protocol Probe & Tool Auditor (cli probe)** | Runtime Protocol Security | `Todo` | Connects via stdio/SSE, performs JSON-RPC handshake, and fingerprints live tools against CVEs. | [task18_live_mcp_probe.md](../../.jules/task18_live_mcp_probe.md) |
+
+---
+
 ## Verification Test Results
 ```
 .venv/bin/pytest
