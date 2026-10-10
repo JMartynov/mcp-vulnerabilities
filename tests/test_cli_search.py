@@ -1,6 +1,5 @@
 import pytest
-from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher, SearchResult
-from mcp_vulnerabilities.models import OsvVulnerability
+from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
 
 @pytest.fixture
 def sample_advisories():
