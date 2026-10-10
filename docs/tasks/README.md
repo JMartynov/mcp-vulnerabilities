@@ -48,20 +48,20 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
-### 4. Enterprise Standards & Runtime Security Wave (On Board / Todo)
+### 4. Enterprise Standards & Runtime Security Wave (100% Tested & Merged)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **17** | **SARIF Export for GitHub Code Scanning (--format sarif)** | Enterprise DevSecOps | `Todo` | Emits OASIS SARIF v2.1.0 for native PR annotations in GitHub Code Scanning. | [task17_sarif_export.md](../../.jules/task17_sarif_export.md) |
-| **18** | **Live MCP Protocol Probe & Tool Auditor (cli probe)** | Runtime Protocol Security | `Todo` | Connects via stdio/SSE, performs JSON-RPC handshake, and fingerprints live tools against CVEs. | [task18_live_mcp_probe.md](../../.jules/task18_live_mcp_probe.md) |
+| **17** | **SARIF Export for GitHub Code Scanning (--format sarif)** | Enterprise DevSecOps | `Done` | Emits OASIS SARIF v2.1.0 for native PR annotations in GitHub Code Scanning. | [task17_sarif_export.md](../../.jules/task17_sarif_export.md) |
+| **18** | **Live MCP Protocol Probe & Tool Auditor (cli probe)** | Runtime Protocol Security | `Done` | Connects via stdio/SSE, performs JSON-RPC handshake, and fingerprints live tools against CVEs. | [task18_live_mcp_probe.md](../../.jules/task18_live_mcp_probe.md) |
 
 ---
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 100 passed in 11.86s =============================
+============================= 108 passed in 11.80s =============================
 ```
-- Total test count: **100**
-- Passing: **100 (100%)**
+- Total test count: **108**
+- Passing: **108 (100%)**
 - Skipped / Failed: **0**
