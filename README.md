@@ -86,8 +86,8 @@ When you're ready to publish the inaugural release to PyPI:
 1. Ensure your [PyPI account](https://pypi.org/manage/account/publishing/) has a Pending Publisher configured:
    - **Owner**: `JMartynov`
    - **Repository**: `mcp-vulnerabilities`
-   - **Workflow name**: `release.yml`
-   - **Environment**: `pypi`
+   - **Workflow name**: `release.yaml`
+   - **Environment**: `pypi` (or Any)
 2. Create and push the release tag:
    ```bash
    git tag -a v1.0.0 -m "Release v1.0.0: Inaugural open-source MCP vulnerability database & CLI"
