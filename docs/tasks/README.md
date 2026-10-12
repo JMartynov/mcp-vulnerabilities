@@ -57,20 +57,20 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
-### 5. Threat Intelligence & Distribution Automation Wave (On Board / Todo)
+### 5. Threat Intelligence & Distribution Automation Wave (100% Tested & Merged)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **20** | **NVD 2.0 API Ingestion Stream & Converter Pipeline** | Threat Intelligence | `Todo` | Connects NIST NVD 2.0 REST API with rate-limiting and MCP relevance filtering. | [task20_nvd_api_stream.md](../../.jules/task20_nvd_api_stream.md) |
-| **21** | **Automated Periodic Snapshot Distribution (snapshot_release.yml)** | Automated Releases | `Todo` | Bi-weekly GitHub Action compiling and releasing snapshot archives with SHA-256 sums. | [task21_snapshot_release_automation.md](../../.jules/task21_snapshot_release_automation.md) |
+| **20** | **NVD 2.0 API Ingestion Stream & Converter Pipeline** | Threat Intelligence | `Done` | Connects NIST NVD 2.0 REST API with rate-limiting and MCP relevance filtering. | [task20_nvd_api_stream.md](../../.jules/task20_nvd_api_stream.md) |
+| **21** | **Automated Periodic Snapshot Distribution (snapshot_release.yml)** | Automated Releases | `Done` | Bi-weekly GitHub Action compiling and releasing snapshot archives with SHA-256 sums. | [task21_snapshot_release_automation.md](../../.jules/task21_snapshot_release_automation.md) |
 
 ---
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 108 passed in 11.80s =============================
+============================= 113 passed in 13.05s =============================
 ```
-- Total test count: **108**
-- Passing: **108 (100%)**
+- Total test count: **113**
+- Passing: **113 (100%)**
 - Skipped / Failed: **0**
