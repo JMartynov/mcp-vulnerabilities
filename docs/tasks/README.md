@@ -70,7 +70,7 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **22** | **MCP Fingerprints Integration & Server Identification** | AST & Signature Engine | `Todo` | Integrates 5,033+ server passports (`passports.json.gz`), canonical tool hashing, unlabelled server identification, and multi-server tool collision/shadowing detection. | [task22_fingerprint_server_identification.md](../../.jules/task22_fingerprint_server_identification.md) |
+| **22** | **MCP Fingerprints Integration & Server Identification** | AST & Signature Engine | `Done` | Integrates 5,033+ server passports (`passports.json.gz`), canonical tool hashing, unlabelled server identification, and multi-server tool collision/shadowing detection. | [task22_fingerprint_server_identification.md](../../.jules/task22_fingerprint_server_identification.md) |
 | **23** | **Cisco Parity Threat, YARA & Readiness Analyzers** | Threat Detection Engines | `Todo` | Built-in YARA rule engine for tool descriptions, prompt defense heuristics, and production readiness linter. | [task23_cisco_parity_threat_analyzers.md](../../.jules/task23_cisco_parity_threat_analyzers.md) |
 | **24** | **REST API Server Daemon (mcp-vuln serve)** | Enterprise Microservice | `Todo` | Lightweight HTTP REST server exposing `/api/v1/scan/probe`, `/api/v1/identify`, `/api/v1/scan/config`, and `/api/v1/vulnerabilities`. | [task24_rest_api_server_daemon.md](../../.jules/task24_rest_api_server_daemon.md) |
 
@@ -79,9 +79,9 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 113 passed in 13.05s =============================
+============================= 119 passed in 13.81s =============================
 ```
-- Total test count: **113**
-- Passing: **113 (100%)**
+- Total test count: **119**
+- Passing: **119 (100%)**
 - Skipped / Failed: **0**
 
