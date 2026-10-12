@@ -7,6 +7,7 @@ import logging
 import os
 import ssl
 import urllib.error
+import urllib.parse
 import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -29,6 +30,17 @@ from mcp_vulnerabilities.validator import OsvValidator
 
 logger = logging.getLogger("mcp_vulnerabilities.pipeline")
 
+
+
+def _get_nvd_headers() -> dict[str, str]:
+    headers = {
+        "User-Agent": "mcp-vulnerabilities-ingest/1.0",
+        "Accept": "application/json",
+    }
+    token = os.environ.get("NVD_API_KEY")
+    if token:
+        headers["apiKey"] = token.strip()
+    return headers
 
 def _get_github_headers() -> dict[str, str]:
     headers = {
@@ -160,6 +172,93 @@ class PipelineResult:
 
 
 class McpVulnerabilityPipeline:
+
+    def _sync_nvd_api(
+        self,
+        keywords: tuple[str, ...] = ("modelcontextprotocol", "mcp server"),
+        results_per_page: int = 100,
+    ) -> list[OsvVulnerability]:
+        """Fetches and processes CVEs from the live NVD 2.0 REST API."""
+        import time
+
+        nvd_chk = self.state_manager.get_checkpoint("nvd_api")
+        nvd_scanned = 0
+        nvd_synced = 0
+        collected: list[OsvVulnerability] = []
+
+        headers = _get_nvd_headers()
+        has_api_key = "apiKey" in headers
+        # Wait 6s without key, 0.65s with key
+        delay = 0.65 if has_api_key else 6.0
+
+        for keyword in keywords:
+            start_index = 0
+            total_results = 1  # Dummy value to enter loop
+            
+            while start_index < total_results:
+                url = f"https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={urllib.parse.quote(keyword)}&resultsPerPage={results_per_page}&startIndex={start_index}"
+                req = urllib.request.Request(url, headers=headers)
+                
+                retries = 3
+                data = None
+                
+                while retries > 0:
+                    try:
+                        time.sleep(delay)
+                        with urllib.request.urlopen(req, timeout=15.0, context=_get_ssl_context()) as resp:
+                            data = json.loads(resp.read().decode("utf-8"))
+                        break
+                    except urllib.error.HTTPError as e:
+                        if e.code in (403, 429):
+                            logger.warning(f"NVD API rate limit exceeded ({e.code}). Retrying...")
+                            backoff = delay * (2 ** (3 - retries))
+                            time.sleep(backoff)
+                            retries -= 1
+                        else:
+                            raise
+                
+                if not data:
+                    logger.error(f"Failed to fetch NVD data for {keyword} at {start_index}")
+                    break
+                
+                total_results = data.get("totalResults", 0)
+                vulnerabilities = data.get("vulnerabilities", [])
+                nvd_scanned += len(vulnerabilities)
+                
+                for vuln_wrap in vulnerabilities:
+                    cve_item = vuln_wrap.get("cve", {})
+                    if not cve_item:
+                        continue
+                    
+                    try:
+                        vuln = NvdConverter.from_dict(vuln_wrap)
+                        
+                        desc = ""
+                        for d in cve_item.get("descriptions", []):
+                            if d.get("lang") == "en":
+                                desc = d.get("value", "")
+                                break
+                                
+                        is_rel, _ = McpRelevanceFilter.is_relevant(
+                            summary=desc[:200],
+                            details=desc,
+                            raw_data=cve_item,
+                        )
+                        if is_rel:
+                            collected.append(vuln)
+                            nvd_synced += 1
+                    except Exception as e:
+                        logger.debug("NVD conversion error: %s", e)
+                        
+                start_index += results_per_page
+                
+        self.state_manager.update_checkpoint(
+            "nvd_api",
+            records_scanned=nvd_chk.records_scanned + nvd_scanned,
+            records_synced=nvd_chk.records_synced + nvd_synced,
+        )
+        return collected
+
     """Orchestrates multi-source vulnerability collection, normalization, and persistence."""
 
     def __init__(
@@ -182,6 +281,7 @@ class McpVulnerabilityPipeline:
         include_cvelist_delta: bool = False,
         include_ghsa_api: bool = False,
         include_osv_api: bool = False,
+        include_nvd_api: bool = False,
         include_verity_catalog: bool = True,
         offline_fallback_fixtures: str | Path | None = None,
         reset_checkpoints: bool = False,
@@ -565,6 +665,15 @@ class McpVulnerabilityPipeline:
                 records_synced=osv_synced,
             )
 
+
+
+        # 7. Ingest from NVD 2.0 API
+        if include_nvd_api:
+            try:
+                nvd_records = self._sync_nvd_api()
+                collected.extend(nvd_records)
+            except Exception as exc:
+                errors.append(f"NVD API error: {exc}")
 
         # 5. Ingest from offline fallback fixtures if specified
         if offline_fallback_fixtures:

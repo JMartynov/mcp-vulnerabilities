@@ -18,12 +18,11 @@ from mcp_vulnerabilities.discovery import (
     McpDiscoveryOrchestrator,
 )
 from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline
+from mcp_vulnerabilities.probe.client import McpProbeClient
+from mcp_vulnerabilities.probe.fingerprinter import McpFingerprinter
+from mcp_vulnerabilities.probe.transport import HttpSseTransport, StdioTransport
 from mcp_vulnerabilities.snapshot import build_snapshot, export_osv_bucket
 from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor
-from mcp_vulnerabilities.probe.client import McpProbeClient
-from mcp_vulnerabilities.probe.transport import StdioTransport, HttpSseTransport
-from mcp_vulnerabilities.probe.fingerprinter import McpFingerprinter
-
 from mcp_vulnerabilities.validator import OsvValidator
 
 logging.basicConfig(
@@ -107,6 +106,10 @@ def main() -> None:
     sync_p.add_argument(
         "--live-api", action="store_true", help="Query live GHSA and OSV.dev APIs"
     )
+    sync_p.add_argument(
+        "--nvd-api", action="store_true", help="Query live NIST NVD 2.0 API"
+    )
+
     sync_p.add_argument(
         "--cvelist-delta",
         action="store_true",
@@ -336,7 +339,9 @@ def main() -> None:
             include_cvelistv5_dirs=cve5_dirs,
             include_cvelist_delta=args.live_api or args.cvelist_delta,
             include_ghsa_api=args.live_api,
+
             include_osv_api=args.live_api,
+            include_nvd_api=args.live_api or args.nvd_api,
             include_verity_catalog=True,
             offline_fallback_fixtures="tests/fixtures/osv"
             if not args.live_api
@@ -361,8 +366,9 @@ def main() -> None:
 
         if args.notify_webhooks and res.emitted_ids:
             logger.info("Checking newly emitted advisories for webhooks...")
-            from mcp_vulnerabilities.notifier import ThreatFeedNotifier
             import json
+
+            from mcp_vulnerabilities.notifier import ThreatFeedNotifier
 
             new_advs = []
             out_dir = Path(args.output)
@@ -598,6 +604,7 @@ def main() -> None:
             print(json.dumps(report.to_dict(), indent=2))
         elif args.format == "sarif":
             import json
+
             from mcp_vulnerabilities.audit.reporters import SarifReporter
             sarif_report = SarifReporter.generate_audit_sarif(report, target_path=args.config)
             print(json.dumps(sarif_report, indent=2))
@@ -656,6 +663,7 @@ def main() -> None:
             print(json.dumps(res.to_dict(), indent=2))
         elif args.format == "sarif":
             import json
+
             from mcp_vulnerabilities.audit.reporters import SarifReporter
             sarif_report = SarifReporter.generate_transitive_sarif(res)
             print(json.dumps(sarif_report, indent=2))
