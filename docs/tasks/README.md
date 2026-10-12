@@ -66,6 +66,16 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
+### 6. Next-Gen Capabilities & Cisco Parity Wave (Active Wave)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **22** | **MCP Fingerprints Integration & Server Identification** | AST & Signature Engine | `Todo` | Integrates 5,033+ server passports (`passports.json.gz`), canonical tool hashing, unlabelled server identification, and multi-server tool collision/shadowing detection. | [task22_fingerprint_server_identification.md](../../.jules/task22_fingerprint_server_identification.md) |
+| **23** | **Cisco Parity Threat, YARA & Readiness Analyzers** | Threat Detection Engines | `Todo` | Built-in YARA rule engine for tool descriptions, prompt defense heuristics, and production readiness linter. | [task23_cisco_parity_threat_analyzers.md](../../.jules/task23_cisco_parity_threat_analyzers.md) |
+| **24** | **REST API Server Daemon (mcp-vuln serve)** | Enterprise Microservice | `Todo` | Lightweight HTTP REST server exposing `/api/v1/scan/probe`, `/api/v1/identify`, `/api/v1/scan/config`, and `/api/v1/vulnerabilities`. | [task24_rest_api_server_daemon.md](../../.jules/task24_rest_api_server_daemon.md) |
+
+---
+
 ## Verification Test Results
 ```
 .venv/bin/pytest
@@ -74,3 +84,4 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 - Total test count: **113**
 - Passing: **113 (100%)**
 - Skipped / Failed: **0**
+
