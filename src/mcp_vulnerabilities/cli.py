@@ -235,6 +235,7 @@ def main() -> None:
     # Audit Transitive
     trans_p = subparsers.add_parser("audit-transitive", help="Audit third-party dependencies of MCP servers")
     trans_p.add_argument("--manifest", required=True, help="Path to package.json or requirements.txt")
+    trans_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
     trans_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
 
     # Fix Config
@@ -642,6 +643,13 @@ def main() -> None:
 
     elif args.command == "audit-transitive":
         res = TransitiveDependencyAuditor.audit_manifest_file(args.manifest)
+        if args.severity_threshold:
+            severity_order = {"LOW": 1, "MEDIUM": 2, "MODERATE": 2, "HIGH": 3, "CRITICAL": 4}
+            min_rank = severity_order.get(str(args.severity_threshold).upper(), 0)
+            res.findings = [
+                f for f in res.findings
+                if severity_order.get(str(f.severity).upper(), 1) >= min_rank
+            ]
         if args.format == "json":
             import json
 
