@@ -13,6 +13,21 @@ An open-source, automated **Open Source Vulnerability (OSV 1.6)** compliant secu
 - **OSV.dev**: Unified open-source vulnerability database.
 - **National Vulnerability Database (NVD)**: CVE 2.0 vulnerability metrics and CVSS scores.
 
+## Snapshot Downloads & Mirrors
+
+You can download pre-compiled vulnerability database snapshots, OSV buckets, and air-gapped enterprise bundles directly from our latest GitHub Release.
+
+Download the latest consolidated JSON snapshot:
+```bash
+curl -sL https://github.com/JMartynov/mcp-vulnerabilities/releases/latest/download/vulnerabilities.json.gz -o vulnerabilities.json.gz
+```
+
+Verify integrity using the provided SHA-256 checksums:
+```bash
+curl -sL https://github.com/JMartynov/mcp-vulnerabilities/releases/latest/download/SHA256SUMS.txt -o SHA256SUMS.txt
+sha256sum -c SHA256SUMS.txt --ignore-missing
+```
+
 ## Fast Consumption
 
 You can fetch the complete vulnerability database snapshot in a single GET request:

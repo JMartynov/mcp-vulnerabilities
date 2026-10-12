@@ -50,7 +50,7 @@ for title, path_str in TASKS:
     ]
     edit_res = subprocess.run(edit_cmd, capture_output=True, text=True)
     if edit_res.returncode == 0:
-        print(f"  -> Set status to 'Todo'")
+        print("  -> Set status to 'Todo'")
     else:
         print(f"  [ERROR] Failed to set status: {edit_res.stderr}")
 
