@@ -1,0 +1,82 @@
+name: Snapshot Distribution Release
+
+on:
+  schedule:
+    - cron: '0 2 1,15 * *'  # 02:00 UTC on the 1st and 15th
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish-snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -e .
+
+      - name: Compile snapshot
+        run: python -m mcp_vulnerabilities.snapshot data/vulnerabilities vulnerabilities.json.gz
+
+      - name: Export airgap bundle
+        run: python -m mcp_vulnerabilities.cli export-airgap --output dist/mcp-offline.tar.gz
+
+      - name: Export OSV dataset
+        run: python -m mcp_vulnerabilities.cli export-osv --output-dir dist/osv
+
+      - name: Generate SHA-256 checksums
+        run: |
+          mkdir -p dist
+          # Make sure we're hashing the right files
+          sha256sum vulnerabilities.json.gz dist/mcp-offline.tar.gz dist/osv/all.zip dist/osv/manifest.json > dist/SHA256SUMS.txt
+
+      - name: Extract advisory metrics and construct release notes
+        run: |
+          # Use python to extract total vulnerabilities from the snapshot json payload (which is gzipped)
+          TOTAL=$(python -c "import gzip, json; print(json.load(gzip.open('vulnerabilities.json.gz', 'rt')).get('total_vulnerabilities', 'Unknown'))")
+          cat <<EOF > dist/RELEASE_NOTES.md
+          ## Database Snapshot: $(date +'%B %d, %Y')
+          
+          This automated release contains pre-compiled vulnerability database snapshots and air-gapped enterprise bundles for the Model Context Protocol (MCP) ecosystem.
+          
+          **Metrics:**
+          - **Total Advisories:** $TOTAL
+          - **Schema Version:** OSV 1.6.0
+          
+          ### Included Artifacts
+          1. \`vulnerabilities.json.gz\` - The complete vulnerability database snapshot.
+          2. \`mcp-offline.tar.gz\` - An air-gapped enterprise bundle containing the vulnerability database and a standalone search script (\`query.py\`).
+          3. \`dist/osv/all.zip\` & \`dist/osv/manifest.json\` - The OSV dataset exported in ecosystem bucket format.
+          4. \`SHA256SUMS.txt\` - The SHA-256 checksums of all attached artifacts for cryptographic verification.
+          EOF
+          sed -i 's/^          //' dist/RELEASE_NOTES.md
+
+      - name: Tag and Create Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG_NAME="snapshot-$(date +'%Y.%m.%d')"
+          
+          # Delete tag if it already exists (useful for testing workflow_dispatch on the same day)
+          if gh release view "$TAG_NAME" > /dev/null 2>&1; then
+            gh release delete "$TAG_NAME" -y --cleanup-tag
+          fi
+
+          gh release create "$TAG_NAME" \
+            --title "Database Snapshot: $(date +'%B %d, %Y')" \
+            --notes-file dist/RELEASE_NOTES.md \
+            vulnerabilities.json.gz \
+            dist/mcp-offline.tar.gz \
+            dist/mcp-offline.tar.gz.sha256 \
+            dist/osv/all.zip \
+            dist/osv/manifest.json \
+            dist/SHA256SUMS.txt
