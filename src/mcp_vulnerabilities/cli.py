@@ -21,6 +21,8 @@ from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline
 from mcp_vulnerabilities.probe.client import McpProbeClient
 from mcp_vulnerabilities.probe.fingerprinter import McpFingerprinter
 from mcp_vulnerabilities.probe.transport import HttpSseTransport, StdioTransport
+from mcp_vulnerabilities.fingerprints.matcher import FingerprintMatcher
+from mcp_vulnerabilities.fingerprints.conflict_detector import ConflictDetector
 from mcp_vulnerabilities.snapshot import build_snapshot, export_osv_bucket
 from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor
 from mcp_vulnerabilities.validator import OsvValidator
@@ -266,6 +268,39 @@ def main() -> None:
     )
 
     # Probe
+    identify_p = subparsers.add_parser(
+        "identify", help="Probe and identify an MCP server using fingerprints"
+    )
+    identify_p.add_argument(
+        "--command",
+        dest="server_command",
+        type=str,
+        help="Command to start the MCP server (e.g. 'uvx mcp-server-fetch')",
+    )
+    identify_p.add_argument(
+        "--url",
+        type=str,
+        help="URL for HTTP/SSE MCP server",
+    )
+    identify_p.add_argument(
+        "--timeout",
+        type=float,
+        default=30.0,
+        help="Timeout in seconds for discovery handshake",
+    )
+    identify_p.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format",
+    )
+    identify_p.add_argument(
+        "--data-dir",
+        type=str,
+        default="data",
+        help="Directory containing passports.json.gz",
+    )
+
     probe_p = subparsers.add_parser(
         "probe", help="Live protocol probe and tool auditor"
     )
@@ -445,11 +480,9 @@ def main() -> None:
             else:
                 for r in results:
                     adv = r.advisory
-                    sev = "UNKNOWN"
+                    
                     for s in adv.severity:
-                        sev = (
-                            s.score
-                        )  # Simplified, actual is handled in matcher via extract
+                        pass  # Simplified, actual is handled in matcher via extract
 
                     # More robust severity extraction:
                     sev_str, _ = matcher._extract_severity_info(adv.to_dict())
@@ -594,6 +627,21 @@ def main() -> None:
                 logger.info("Found client config: %s", path)
                 servers.extend(ClientConfigParser.parse_file(path))
 
+        if getattr(args, "detect_collisions", False):
+            detector = ConflictDetector()
+            cfg_data = {}
+            if args.config:
+                with open(args.config, 'r') as f:
+                    import json
+                    cfg_data = json.load(f)
+            conflicts = detector.detect_conflicts(cfg_data)
+            if conflicts:
+                print("\n" + "!" * 70)
+                print(" TOOL COLLISIONS DETECTED")
+                print("!" * 70)
+                for c in conflicts:
+                    print(f"✗ {c['warning']}")
+                print("!" * 70 + "\n")
         report = matcher.audit_servers(
             servers, severity_threshold=args.severity_threshold
         )
@@ -741,6 +789,49 @@ def main() -> None:
             logger.error("Failed to fix config: %s", e)
             sys.exit(1)
 
+    elif args.command == "identify":
+        if args.server_command:
+            transport = StdioTransport(args.server_command)
+            target = args.server_command
+        elif args.url:
+            transport = HttpSseTransport(args.url)
+            target = args.url
+        else:
+            logger.error("Either --command or --url must be provided for identify.")
+            sys.exit(2)
+
+        client = McpProbeClient(transport)
+        try:
+            logger.info(f"Connecting to target: {target}")
+            client.connect_and_discover(timeout=args.timeout)
+        except Exception as e:
+            logger.error(f"Probe failed: {e}")
+            sys.exit(1)
+
+        fm = FingerprintMatcher(Path(args.data_dir) / "passports.json.gz")
+        matches = fm.match_tools(client.tools)
+        
+        if args.format == "json":
+            import json
+            print(json.dumps([m.__dict__ for m in matches], indent=2))
+        else:
+            print("\n" + "=" * 70)
+            print(f" IDENTIFICATION RESULTS for: {target}")
+            print("=" * 70)
+            if not matches:
+                print("No matches found.")
+            else:
+                for idx, m in enumerate(matches):
+                    print(f"\nMatch {idx+1}:")
+                    print(f"  Package Name:    {m.package_name}")
+                    print(f"  Ecosystem:       {m.ecosystem}")
+                    print(f"  Version:         {m.version}")
+                    print(f"  Repository URL:  {m.repository_url}")
+                    print(f"  Confidence %:    {m.confidence_score * 100:.2f}%")
+                    print(f"  Match Type:      {m.match_type}")
+                    print(f"  Tool Count:      {m.matched_tools_count} / {m.total_tools_count}")
+            print("=" * 70)
+
     elif args.command == "probe":
         snap_p = Path(args.snapshot)
         data_p = Path(args.data_dir)
@@ -770,6 +861,14 @@ def main() -> None:
         except Exception as e:
             logger.error(f"Probe failed: {e}")
             sys.exit(1)
+
+
+        print("Running fingerprint identification...")
+        fm = FingerprintMatcher(Path(args.data_dir) / "passports.json.gz")
+        matches = fm.match_tools(client.tools)
+        if matches:
+            best = matches[0]
+            print(f"[+] Detected MCP Server: {best.package_name} ({best.ecosystem}) | Confidence: {best.confidence_score*100:.0f}% | Repo: {best.repository_url}")
 
         fingerprinter = McpFingerprinter(matcher)
         report = fingerprinter.scan(client, target)
