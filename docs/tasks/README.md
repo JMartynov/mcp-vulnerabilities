@@ -57,6 +57,15 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
+### 5. Threat Intelligence & Distribution Automation Wave (On Board / Todo)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **20** | **NVD 2.0 API Ingestion Stream & Converter Pipeline** | Threat Intelligence | `Todo` | Connects NIST NVD 2.0 REST API with rate-limiting and MCP relevance filtering. | [task20_nvd_api_stream.md](../../.jules/task20_nvd_api_stream.md) |
+| **21** | **Automated Periodic Snapshot Distribution (snapshot_release.yml)** | Automated Releases | `Todo` | Bi-weekly GitHub Action compiling and releasing snapshot archives with SHA-256 sums. | [task21_snapshot_release_automation.md](../../.jules/task21_snapshot_release_automation.md) |
+
+---
+
 ## Verification Test Results
 ```
 .venv/bin/pytest
