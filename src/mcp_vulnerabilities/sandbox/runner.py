@@ -24,8 +24,8 @@ class EphemeralSandbox:
         self.timeout = timeout
         self.network = network
 
-    def _build_run_command(self, base_image: str) -> list[str]:
-        return [
+    def _build_run_command(self, base_image: str, volumes: Optional[list[str]] = None) -> list[str]:
+        cmd = [
             self.engine_cmd, "run", "-d", "--rm",
             "--network", "none",
             "--read-only",
@@ -37,9 +37,15 @@ class EphemeralSandbox:
             "--cpus", "1.0",
             "--pids-limit", "100",
             "-e", "HOME=/tmp",
+        ]
+        if volumes:
+            for v in volumes:
+                cmd.extend(["-v", v])
+        cmd.extend([
             base_image,
             "sleep", str(self.timeout + 10)
-        ]
+        ])
+        return cmd
 
     def _stage1_fetch(self, package_spec: str, ecosystem: str, target_dir: Path) -> Path:
         base_image = "python:3.12-slim" if ecosystem == "pypi" else "node:20-alpine"
@@ -98,10 +104,7 @@ class EphemeralSandbox:
         container_id = None
         
         try:
-            run_cmd = self._build_run_command(base_image)
-            # Add volume mount
-            run_cmd.insert(-2, "-v")
-            run_cmd.insert(-2, f"{package_file.parent}:/pkg:ro")
+            run_cmd = self._build_run_command(base_image, volumes=[f"{package_file.parent}:/pkg:ro"])
             
             logger.debug(f"Starting isolated sandbox container: {shlex.join(run_cmd)}")
             result = subprocess.run(run_cmd, capture_output=True, text=True, check=True)
@@ -111,7 +114,7 @@ class EphemeralSandbox:
             
             if ecosystem == "pypi":
                 install_cmd = [
-                    "pip", "install", "--no-cache-dir", "--no-index",
+                    "pip", "install", "--no-cache-dir", "--no-deps", "--no-index",
                     "--find-links", "/pkg", "--user", target_file
                 ]
             else:

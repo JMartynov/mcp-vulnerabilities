@@ -57,7 +57,7 @@ def test_live_sandbox_timeout_enforcement():
     if not runtime:
         pytest.skip("No working container runtime available for live timeout tests")
         
-    sandbox = EphemeralSandbox(engine_cmd=runtime, timeout=3)
+    sandbox = EphemeralSandbox(engine_cmd=runtime, timeout=1)
     
     with pytest.raises(TimeoutExpired):
         sandbox.execute(ecosystem="pypi", package="mcp-server-fetch")
