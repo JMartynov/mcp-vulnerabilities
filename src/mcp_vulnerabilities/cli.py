@@ -25,6 +25,15 @@ from mcp_vulnerabilities.fingerprints.matcher import FingerprintMatcher
 from mcp_vulnerabilities.fingerprints.conflict_detector import ConflictDetector
 from mcp_vulnerabilities.snapshot import build_snapshot, export_osv_bucket
 from mcp_vulnerabilities.transitive import TransitiveDependencyAuditor
+from mcp_vulnerabilities.analyzers import (
+    AnalysisTarget,
+    ReadinessLinter,
+    ThreatEngine,
+    ThreatSeverity,
+)
+from mcp_vulnerabilities.api.server import McpSecurityApiServer
+from mcp_vulnerabilities.sandbox.engine import ContainerEngine
+from mcp_vulnerabilities.sandbox.runner import EphemeralSandbox, TimeoutExpired
 from mcp_vulnerabilities.validator import OsvValidator
 
 logging.basicConfig(
@@ -347,6 +356,24 @@ def main() -> None:
         default="vulnerabilities.json.gz",
         help="Path to consolidated snapshot file",
     )
+    probe_p.add_argument(
+        "--analyzers",
+        type=str,
+        default="all",
+        help="Comma-separated list of analyzers to run (threat,osv,all)",
+    )
+    probe_p.add_argument(
+        "--fail-on",
+        type=str,
+        default=None,
+        choices=["CRITICAL", "HIGH", "MEDIUM", "LOW", "INFO"],
+        help="Gate pipelines based on threat findings",
+    )
+    probe_p.add_argument(
+        "--readiness",
+        action="store_true",
+        help="Injects readiness scorecard into probe results",
+    )
 
     # Scan Source
     scan_p = subparsers.add_parser(
@@ -396,6 +423,56 @@ def main() -> None:
         "--fail-on-malware",
         action="store_true",
         help="Fail with exit code 1 if malware is detected",
+    )
+
+    # Serve API
+    serve_p = subparsers.add_parser(
+        "serve", help="Run Headless REST API Gateway & Microservice Daemon"
+    )
+    serve_p.add_argument(
+        "--host", default="127.0.0.1", help="Host IP to bind to (overrides MCP_VULN_HOST)"
+    )
+    serve_p.add_argument(
+        "--port", type=int, default=8080, help="Port to bind to (overrides MCP_VULN_PORT)"
+    )
+    serve_p.add_argument(
+        "--cors-origins", default=None, help="CORS allowed origins"
+    )
+
+    # Lint
+    lint_p = subparsers.add_parser(
+        "lint", help="Audit MCP tool schemas and contracts for production readiness"
+    )
+    lint_p.add_argument(
+        "--command",
+        dest="server_command",
+        help="Command to start stdio MCP server to lint",
+    )
+    lint_p.add_argument("--url", help="URL of SSE MCP server to lint")
+    lint_p.add_argument("--file", help="Path to JSON schema file to lint")
+    lint_p.add_argument(
+        "--format", choices=["table", "json", "sarif"], default="table", help="Output format"
+    )
+    lint_p.add_argument(
+        "--fail-under", type=int, default=0, help="Minimum acceptable readiness score (0-100)"
+    )
+
+    # Sandbox
+    sandbox_p = subparsers.add_parser(
+        "sandbox", help="Safely execute and probe untrusted MCP packages in an isolated container"
+    )
+    sandbox_p.add_argument("ecosystem", choices=["pypi", "npm"], help="Ecosystem of the package")
+    sandbox_p.add_argument("package", help="Name of the package to install and probe")
+    sandbox_p.add_argument("--version", help="Specific version to install")
+    sandbox_p.add_argument("--timeout", type=int, default=60, help="Container timeout in seconds")
+    sandbox_p.add_argument(
+        "--network", choices=["bridge", "none"], default="bridge", help="Network policy during execution"
+    )
+    sandbox_p.add_argument(
+        "--passports", action="store_true", help="Automatically matches discovered tools against passport knowledge base"
+    )
+    sandbox_p.add_argument(
+        "--threat-check", action="store_true", help="Automatically runs the YARA/RegEx threat engine against discovered tool descriptions"
     )
 
     args = parser.parse_args()
@@ -1049,7 +1126,83 @@ def main() -> None:
                         print(f"    Desc: {w.description[:100]}...")
 
             print("=" * 70)
-        sys.exit(1 if report.findings or report.tool_warnings else 0)
+
+        # Threat Analyzer
+        threat_failed = False
+        analyzers_list = [a.strip().lower() for a in args.analyzers.split(",")]
+        run_threat = "all" in analyzers_list or "threat" in analyzers_list
+        run_osv = "all" in analyzers_list or "osv" in analyzers_list
+
+        if run_threat:
+            engine = ThreatEngine()
+            target = AnalysisTarget(
+                tools=client.tools,
+                prompts=client.prompts if hasattr(client, "prompts") else [],
+                resources=client.resources if hasattr(client, "resources") else [],
+                instructions="",
+            )
+            findings = engine.analyze(target)
+
+            if args.format != "json":
+                print("\n" + "=" * 70)
+                print(" HEURISTIC THREAT ANALYSIS")
+                print("=" * 70)
+                if not findings:
+                    print("✓ No threats detected via heuristics.")
+                else:
+                    print(f"✗ FOUND {len(findings)} THREAT FINDINGS:")
+                    for f in findings:
+                        color = ""
+                        reset = ""
+                        if f.severity == ThreatSeverity.CRITICAL:
+                            color = "\033[91m"
+                            reset = "\033[0m"
+                        elif f.severity == ThreatSeverity.HIGH:
+                            color = "\033[93m"
+                            reset = "\033[0m"
+
+                        print(f"\n{color}[{f.severity.value}] {f.title} ({f.rule_id}){reset}")
+                        print(f"  Category:    {f.category.value}")
+                        print(f"  Target:      {f.matched_target}")
+                        print(f"  Description: {f.description}")
+                        print(f"  Remediation: {f.remediation_guidance}")
+                        print(f"  CWE:         {f.cwe_id}")
+                print("=" * 70)
+
+            if args.fail_on and findings:
+                severity_order = {"INFO": 0, "LOW": 1, "MEDIUM": 2, "HIGH": 3, "CRITICAL": 4}
+                min_rank = severity_order.get(args.fail_on.upper(), 4)
+                for f in findings:
+                    rank = severity_order.get(f.severity.value, 0)
+                    if rank >= min_rank:
+                        threat_failed = True
+                        break
+
+        # Readiness injection if requested
+        if getattr(args, "readiness", False):
+            linter = ReadinessLinter()
+            readiness_report = linter.lint_schema(client.tools, target_name=report.server_name)
+            if args.format != "json":
+                colors = {"A": "\033[92m", "B": "\033[94m", "C": "\033[93m", "D": "\033[33m", "F": "\033[91m"}
+                reset = "\033[0m"
+                color = colors.get(readiness_report.grade, "")
+                print("\n" + "=" * 70)
+                print(" PRODUCTION READINESS SCORECARD")
+                print("=" * 70)
+                print(f"Score: {readiness_report.score}/100 | Grade: {color}{readiness_report.grade}{reset}")
+                print(f"Issues detected: {len(readiness_report.issues)}")
+                for issue in readiness_report.issues:
+                    print(f" - [{issue.severity}] {issue.rule_id} ({issue.target}): {issue.message}")
+                print("=" * 70)
+
+        # Final Exit
+        exit_code = 0
+        if run_osv and (report.findings or report.tool_warnings):
+            exit_code = 1
+        if run_threat and threat_failed:
+            exit_code = 1
+
+        sys.exit(exit_code)
 
     elif args.command == "scan-source":
         from mcp_vulnerabilities.analyzers.ast_taint.scanner import McpSourceScanner
@@ -1097,6 +1250,192 @@ def main() -> None:
             targets = fail_levels.get(args.fail_on, [])
             if any(f.severity in targets for f in findings):
                 sys.exit(1)
+        sys.exit(0)
+
+    elif args.command == "serve":
+        import os
+        import signal
+        import threading
+        import time
+
+        host = os.environ.get("MCP_VULN_HOST", args.host)
+        port_str = os.environ.get("MCP_VULN_PORT")
+        port = int(port_str) if port_str else args.port
+
+        server = McpSecurityApiServer(
+            host=host,
+            port=port,
+            cors_origins=args.cors_origins,
+        )
+
+        shutdown_event = threading.Event()
+
+        def sig_handler(signum, frame):
+            logger.info(f"Received signal {signum}, stopping server...")
+            shutdown_event.set()
+
+        signal.signal(signal.SIGINT, sig_handler)
+        signal.signal(signal.SIGTERM, sig_handler)
+
+        server.start()
+        try:
+            while not shutdown_event.is_set():
+                time.sleep(0.5)
+        except KeyboardInterrupt:
+            pass
+        finally:
+            server.stop()
+        sys.exit(0)
+
+    elif args.command == "lint":
+        import json
+
+        linter = ReadinessLinter()
+        schema = []
+        target_name = "unknown"
+
+        if args.file:
+            target_name = args.file
+            try:
+                with open(args.file, "r", encoding="utf-8") as f:
+                    schema = json.load(f)
+            except Exception as e:
+                logger.error(f"Error reading schema file '{args.file}': {e}")
+                sys.exit(1)
+        elif args.server_command:
+            target_name = args.server_command
+            try:
+                transport = StdioTransport(args.server_command)
+                client = McpProbeClient(transport)
+                client.connect_and_discover(timeout=5.0)
+                schema = client.tools
+            except Exception as e:
+                logger.error(f"Error querying command '{args.server_command}': {e}")
+                sys.exit(1)
+        elif args.url:
+            target_name = args.url
+            try:
+                transport = HttpSseTransport(args.url)
+                client = McpProbeClient(transport)
+                client.connect_and_discover(timeout=5.0)
+                schema = client.tools
+            except Exception as e:
+                logger.error(f"Error querying URL '{args.url}': {e}")
+                sys.exit(1)
+        else:
+            logger.error("Must provide either --file, --command, or --url to lint.")
+            sys.exit(2)
+
+        report = linter.lint_schema(schema, target_name=target_name)
+
+        if args.format == "json":
+            out = {
+                "target_name": report.target_name,
+                "score": report.score,
+                "grade": report.grade,
+                "summary_counts": report.summary_counts,
+                "issues": [
+                    {
+                        "rule_id": i.rule_id,
+                        "severity": i.severity,
+                        "target": i.target,
+                        "message": i.message,
+                        "recommendation": i.recommendation,
+                    }
+                    for i in report.issues
+                ],
+            }
+            print(json.dumps(out, indent=2))
+        elif args.format == "sarif":
+            sarif_out = {
+                "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+                "version": "2.1.0",
+                "runs": [
+                    {
+                        "tool": {
+                            "driver": {
+                                "name": "mcp-vuln-lint",
+                                "version": "1.0.0",
+                                "informationUri": "https://github.com/JMartynov/mcp-vulnerabilities",
+                            }
+                        },
+                        "results": [
+                            {
+                                "ruleId": issue.rule_id,
+                                "message": {"text": issue.message},
+                                "level": "error" if issue.severity == "CRITICAL" else "warning" if issue.severity == "WARNING" else "note",
+                                "locations": [
+                                    {
+                                        "physicalLocation": {
+                                            "artifactLocation": {"uri": target_name}
+                                        }
+                                    }
+                                ],
+                            }
+                            for issue in report.issues
+                        ],
+                    }
+                ],
+            }
+            print(json.dumps(sarif_out, indent=2))
+        else:
+            colors = {"A": "\033[92m", "B": "\033[94m", "C": "\033[93m", "D": "\033[33m", "F": "\033[91m"}
+            reset = "\033[0m"
+            color = colors.get(report.grade, "")
+
+            print("\n" + "=" * 70)
+            print(f" MCP PRODUCTION READINESS SCORECARD: {target_name}")
+            print("=" * 70)
+            print(f"Score: {report.score}/100 | Grade: {color}{report.grade}{reset}")
+            print(f"Issues: {len(report.issues)} (Critical: {report.summary_counts.get('CRITICAL', 0)}, Warning: {report.summary_counts.get('WARNING', 0)}, Info: {report.summary_counts.get('INFO', 0)})")
+            if report.issues:
+                print("\nViolations:")
+                for issue in report.issues:
+                    print(f"  - [{issue.severity}] {issue.rule_id} ({issue.target}): {issue.message}")
+                    print(f"    Recommendation: {issue.recommendation}")
+            print("=" * 70)
+
+        if report.score < args.fail_under:
+            print(f"\nReadiness score {report.score} is below failure threshold {args.fail_under}.", file=sys.stderr)
+            sys.exit(1)
+        sys.exit(0)
+
+    elif args.command == "sandbox":
+        import json
+
+        engine = ContainerEngine()
+        if not engine.is_available():
+            logger.error("No container runtime (Docker or Podman) found. Please install and start the daemon.")
+            sys.exit(1)
+
+        logger.info(f"Using container runtime: {engine.get_runtime()} (version: {engine.get_version()})")
+        sandbox = EphemeralSandbox(engine_cmd=engine.get_runtime(), timeout=args.timeout, network=args.network)
+
+        logger.info(f"Starting ephemeral sandbox for {args.package}...")
+        try:
+            result = sandbox.execute(args.ecosystem, args.package, args.version)
+
+            output = {
+                "package_name": result.package_name,
+                "ecosystem": result.ecosystem,
+                "installed_version": result.installed_version,
+                "execution_time_seconds": round(result.execution_time_seconds, 2),
+                "exit_code": result.exit_code,
+                "discovered_tools": result.discovered_tools,
+                "discovered_prompts": result.discovered_prompts,
+            }
+            print(json.dumps(output, indent=2))
+
+            if result.exit_code != 0:
+                logger.error("Sandbox execution failed to probe tools successfully.")
+                if result.raw_stderr:
+                    logger.error(f"Error details: {result.raw_stderr}")
+        except TimeoutExpired as e:
+            logger.error(f"Sandbox timeout: {e}")
+            sys.exit(1)
+        except Exception as e:
+            logger.error(f"Sandbox execution error: {e}")
+            sys.exit(1)
         sys.exit(0)
 
 
