@@ -1,26 +1,26 @@
-# Comparative Capability Analysis: Cisco MCP Scanner vs. MCP-Vulnerabilities & MCP-Fingerprints
+# MCP Security Architecture & Comparative Capability Analysis
 
 **Date:** October 2026  
-**Document Version:** 1.0.0  
-**Target Systems:**
-- [`cisco-ai-defense/mcp-scanner`](https://github.com/cisco-ai-defense/mcp-scanner) (v0.3.x)
-- [`JMartynov/mcp-vulnerabilities`](https://github.com/JMartynov/mcp-vulnerabilities) (v1.0.0)
-- [`JMartynov/mcp-fingerprints`](https://github.com/JMartynov/mcp-fingerprints) (v1.0.0, 3,903+ Passports)
-- **Unified Next-Gen Platform** (`mcp-vulnerabilities` with Integrated Fingerprinting & Cisco Parity Engines)
+**Document Version:** 1.1.0  
+**Scope:**
+- State-of-the-Art Scanner Paradigms & Benchmark References (e.g. Cisco AI Defense MCP Scanner v0.3.x)
+- Current `mcp-vulnerabilities` Platform (v1.0.0)
+- `mcp-fingerprints` Structural Knowledge Base (5,033+ Verified Passports)
+- Unified Next-Gen Open Security Architecture
 
 ---
 
 ## 1. Executive Summary
 
-As the Model Context Protocol (MCP) rapidly becomes the universal standard connecting AI agents to enterprise APIs, local tooling, and data sources, securing the MCP supply chain requires a defense-in-depth approach spanning:
+As the Model Context Protocol (MCP) rapidly becomes the universal standard connecting AI agents to enterprise APIs, local tooling, and data sources, securing the MCP supply chain requires a comprehensive, multi-layer defense-in-depth architecture spanning:
 1. **Authoritative Vulnerability Databases & Lockfile Auditing** (known CVEs, GHSAs, OSV advisories).
-2. **Runtime Fingerprinting & Shadowing Detection** (unlabelled server identification, AST schema hashing, tool collisions).
+2. **Runtime Fingerprinting & Shadowing Detection** (unlabelled server identification, AST schema hashing, tool collision detection).
 3. **Behavioral & Static Threat Analysis** (YARA heuristics, prompt injection defense, AST taint tracking).
 4. **Automated Enterprise Remediation & DevSecOps CI/CD** (SARIF v2.1.0, configuration auto-patchers, REST API daemon).
 
-While **Cisco AI Defense MCP Scanner** provides useful runtime YARA scanning and proprietary cloud API inspection, it **completely lacks** an authoritative, dedicated MCP vulnerability database, cannot identify unlabelled servers, offers no tool collision or shadowing detection across multi-server configurations, and cannot automatically remediate vulnerable client configurations.
+While contemporary heuristic scanners introduce useful approaches such as runtime YARA rules and basic readiness checks, they typically rely on closed commercial cloud inspection APIs, lack dedicated MCP vulnerability intelligence, cannot identify unlabelled running servers, offer no tool collision or shadowing detection across multi-server configurations, and cannot automatically remediate vulnerable client configurations.
 
-By unifying **`mcp-vulnerabilities`** with **`mcp-fingerprints`** and implementing zero-dependency/local equivalents of Cisco's static, YARA, readiness, and REST API capabilities, this project establishes a **100% capability superset**: matching every capability of Cisco's scanner while providing unrivaled database depth, multi-registry cataloging, and automated remediation.
+This repository takes state-of-the-art open scanner paradigms and reworks them into an independent, clean-room, zero-dependency architecture. By unifying `mcp-vulnerabilities` with `mcp-fingerprints` and engineering pure-Python, local implementations of multi-surface probing, YARA/regex heuristics, schema readiness linting, and a headless REST gateway, this platform delivers an unrivaled, fully open-source security foundation for the MCP ecosystem.
 
 ---
 
@@ -124,29 +124,16 @@ To guarantee our project is **strictly superior** to Cisco's in every measurable
 
 ---
 
-## 4. Implementation Tracks for Jules (EULIS)
+## 4. Implementation Roadmap (Tasks 22 – 29)
 
-We split the implementation into three tightly scoped, incremental waves delegated to Google Jules:
+We organize the architectural expansion into modular, decoupled tracks:
 
-### Wave 1: Task 22 — `mcp-fingerprints` Integration & Server Identification Engine
-- **Module**: `src/mcp_vulnerabilities/fingerprints/`
-- **Data**: Bundle `passports.json.gz` (3,903+ server passports) into `data/passports.json.gz` with lazy decompression and TTL caching.
-- **CLI Commands**:
-  - `mcp-vuln identify --command <cmd>` / `--url <url>`: Probes a live server and matches its tool list against the 3,903 passports.
-  - `mcp-vuln audit-config --collisions`: Parses client configurations (Claude Desktop, Cursor) and flags tool shadowing / name collisions across active servers.
-- **Acceptance Tests**: Unit tests with mocked tool schemas confirming identification and collision warnings.
+- **Task 22 (Completed)**: `mcp-fingerprints` Integration & Server Identification (5,033+ Passports, order-independent toolset canonical hashing, `mcp-vuln identify`, tool collision detector).
+- **Task 23**: Multi-Engine Heuristic Threat Analyzer (YARA & RegEx Pattern Engine for Injection, Code Execution & Exfiltration).
+- **Task 24**: Headless REST API Gateway & Microservice Daemon (`mcp-vuln serve` with OpenAPI 3.0 specs).
+- **Task 25**: Full-Surface Protocol Probe & Live SSE / Streamable HTTP Transport Engine (Tools, Prompts, Resources, Instructions, Auth Headers).
+- **Task 26**: MCP Production Readiness & Schema Contract Linter (`mcp-vuln lint`).
+- **Task 27**: Isolated Ephemeral Container Sandbox for Dynamic Package Auditing (Docker/Podman PyPI & npm).
+- **Task 28**: Static AST Source Code Taint & Dangerous Sink Analyzer (`mcp-vuln scan-source`).
+- **Task 29**: Binary Asset & File Hash Malware Screening (Streaming SHA-256 Hasher & Offline Blocklist).
 
-### Wave 2: Task 23 — Cisco Parity Threat & Readiness Analyzers
-- **Module**: `src/mcp_vulnerabilities/analyzers/`
-- **Capabilities**:
-  - `YaraAnalyzer`: Compiles built-in YARA rules detecting prompt injection, credential exfiltration, and dangerous command execution in tool descriptions.
-  - `ReadinessLinter`: Zero-dependency static linter validating input schemas, missing parameter descriptions, timeouts, and error response conventions.
-  - `MalwareLookup`: SHA-256 hash lookup against VirusTotal API (optional key) and local malware signature list for bundled binaries.
-- **CLI Flags**: `--analyzers yara,readiness,virustotal` integrated into `mcp-vuln probe` and `mcp-vuln audit`.
-
-### Wave 3: Task 24 — REST API Server Daemon (`mcp-vuln serve`)
-- **Module**: `src/mcp_vulnerabilities/api/`
-- **Capabilities**:
-  - Lightweight FastAPI / Starlette server exposing `/api/v1/scan/probe`, `/api/v1/scan/config`, `/api/v1/passports`, and `/api/v1/vulnerabilities`.
-  - Full OpenAPI documentation (`/docs`) matching and superseding `mcp-scanner-api`.
-- **CLI Command**: `mcp-vuln serve --host 0.0.0.0 --port 8080`.
