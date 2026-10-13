@@ -3,6 +3,9 @@
 ## Objective
 Implement a high-precision static source code analysis engine (`mcp-vuln scan-source`) using Python's native Abstract Syntax Tree (`ast`) module. The engine audits local MCP server repositories by tracing dataflow from tool input parameters (taint sources) into dangerous operating system, execution, and filesystem operations (taint sinks), discovering vulnerabilities prior to runtime deployment.
 
+> [!IMPORTANT]
+> **STRICT LIVE EXECUTION REQUIREMENT (NO MOCKS)**: Acceptance scenarios MUST be 100% live — parsing and scanning real Python files on disk containing authentic `@mcp.tool` code, asserting exact AST taint detection, and verifying real SARIF JSON output via live subprocess execution. Do NOT use `unittest.mock` or `@patch` for acceptance tests.
+
 ---
 
 ## Detailed Technical Architecture & Implementation

@@ -3,6 +3,9 @@
 ## Objective
 Implement a comprehensive, zero-dependency static linter (`mcp-vuln lint`) that audits MCP tool schemas, prompt templates, and protocol interfaces for production readiness, contract hygiene, and resilience. The linter prevents AI agent hallucinations, runtime execution timeouts, and protocol failures by enforcing schema completeness, parameter typing, and robust documentation standards.
 
+> [!IMPORTANT]
+> **STRICT LIVE EXECUTION REQUIREMENT (NO MOCKS)**: Acceptance scenarios MUST be 100% live — executing against 50+ authentic server passports loaded from `data/passports.json.gz`, real temporary schema files written to disk, and real CLI subprocess invocations. Do NOT use `unittest.mock` or `@patch` for acceptance tests.
+
 ---
 
 ## Detailed Technical Architecture & Implementation

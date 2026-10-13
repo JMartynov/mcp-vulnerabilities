@@ -3,6 +3,9 @@
 ## Objective
 Implement an extensible, high-performance rule-based threat analyzer for MCP servers that inspects tool descriptions, parameter schemas, prompt templates, resource annotations, and server instructions for security threats. The engine operates independently of external commercial APIs, combining compiled YARA rules with a zero-dependency compiled RegEx fallback engine to detect Prompt Injection, Arbitrary Code/Command Execution, and Credential Exfiltration.
 
+> [!IMPORTANT]
+> **STRICT LIVE EXECUTION REQUIREMENT (NO MOCKS)**: Acceptance scenarios MUST be 100% live — running against authentic schema payloads, real files on disk, real CLI invocations, and live passport data from `data/passports.json.gz`. Do NOT use `unittest.mock` or `@patch` for acceptance tests. All acceptance scenarios must inspect real objects.
+
 ---
 
 ## Detailed Technical Architecture & Implementation

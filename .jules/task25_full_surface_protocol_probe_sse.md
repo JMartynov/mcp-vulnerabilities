@@ -3,6 +3,9 @@
 ## Objective
 Upgrade the runtime MCP probing infrastructure from a local stdio-only tool into a comprehensive, multi-transport, full-surface protocol inspector. Implement production-grade Server-Sent Events (SSE) and Streamable HTTP transports, custom authentication header support, and expand the discovery surface to capture `tools/list`, `prompts/list`, `resources/list`, and server `instructions`.
 
+> [!IMPORTANT]
+> **STRICT LIVE EXECUTION REQUIREMENT (NO MOCKS)**: Acceptance scenarios MUST be 100% live — running against live localhost TCP sockets with real HTTP/SSE event streams, authentic Bearer token auth challenges, and real Python subprocess stdio pipes. Do NOT use `unittest.mock` or `@patch` for acceptance tests.
+
 ---
 
 ## Detailed Technical Architecture & Implementation
