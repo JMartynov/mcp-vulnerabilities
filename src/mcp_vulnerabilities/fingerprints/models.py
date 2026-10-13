@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field, asdict
-from typing import Any, Tuple, Dict, List
+from typing import Any, Tuple, Dict
 
 @dataclass(frozen=True)
 class ToolContractSignature:

@@ -148,3 +148,60 @@ class SarifReporter:
         run["tool"]["driver"]["rules"] = sorted(list(rules_dict.values()), key=lambda r: r["id"])
         run["results"] = results
         return sarif
+
+    @classmethod
+    def generate_ast_taint_sarif(cls, findings: list) -> Dict[str, Any]:
+        sarif = cls._create_base_sarif()
+        run = sarif["runs"][0]
+        rules_dict = {}
+        results = []
+
+        # Deterministic sorting
+        sorted_findings = sorted(findings, key=lambda f: (f.file_path or "", f.sink_line, f.sink_category))
+
+        for finding in sorted_findings:
+            rule_id = finding.sink_category
+            level = cls._map_severity_to_level(finding.severity)
+
+            if rule_id not in rules_dict:
+                rules_dict[rule_id] = {
+                    "id": rule_id,
+                    "name": rule_id.title().replace("_", ""),
+                    "shortDescription": {"text": f"Dangerous static AST taint detected: {rule_id}"},
+                    "fullDescription": {
+                        "text": f"Unsanitized input may reach a dangerous sink.\nRemediation: {finding.remediation}"
+                    },
+                    "defaultConfiguration": {"level": level},
+                    "help": {
+                        "text": f"Remediation: {finding.remediation}",
+                        "markdown": f"**Remediation:** {finding.remediation}"
+                    },
+                    "properties": {
+                        "tags": ["security", "ast", "taint", "sast"]
+                    }
+                }
+
+            result = {
+                "ruleId": rule_id,
+                "level": level,
+                "message": {
+                    "text": f"Tainted parameter '{finding.parameter_name}' from tool '{finding.tool_name}' reaches {finding.sink_call}."
+                },
+                "locations": [
+                    {
+                        "physicalLocation": {
+                            "artifactLocation": {
+                                "uri": finding.file_path or "unknown_file.py"
+                            },
+                            "region": {
+                                "startLine": finding.sink_line
+                            }
+                        }
+                    }
+                ]
+            }
+            results.append(result)
+
+        run["tool"]["driver"]["rules"] = sorted(list(rules_dict.values()), key=lambda r: r["id"])
+        run["results"] = results
+        return sarif

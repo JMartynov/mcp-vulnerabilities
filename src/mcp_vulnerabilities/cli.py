@@ -321,7 +321,23 @@ def main() -> None:
         help="Connection and read timeout in seconds",
     )
     probe_p.add_argument(
-        "--format", choices=["table", "json"], default="table", help="Output format"
+        "--auth-header",
+        help="Inject custom authorization header (e.g. 'Authorization: Bearer <token>')",
+    )
+    probe_p.add_argument(
+        "--header",
+        action="append",
+        default=[],
+        help="Inject custom HTTP header, can be used multiple times (e.g. 'Key: Value')",
+    )
+    probe_p.add_argument(
+        "--surfaces",
+        choices=["tools", "prompts", "resources", "all"],
+        default="all",
+        help="Controls which surfaces to query (default: all)",
+    )
+    probe_p.add_argument(
+        "--format", choices=["table", "json", "sarif"], default="table", help="Output format"
     )
     probe_p.add_argument(
         "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
@@ -330,6 +346,56 @@ def main() -> None:
         "--snapshot",
         default="vulnerabilities.json.gz",
         help="Path to consolidated snapshot file",
+    )
+
+    # Scan Source
+    scan_p = subparsers.add_parser(
+        "scan-source", help="Run static AST source code taint analyzer"
+    )
+    scan_p.add_argument("path", help="Path to directory or file to scan")
+    scan_p.add_argument(
+        "--format", choices=["text", "json", "sarif"], default="text", help="Output format"
+    )
+    scan_p.add_argument(
+        "--output", default=None, help="Output file path (required for SARIF)"
+    )
+    scan_p.add_argument(
+        "--fail-on", choices=["CRITICAL", "HIGH"], default=None, help="CI/CD gating flag"
+    )
+
+    # Subcommand: scan-binaries
+    scan_bin_p = subparsers.add_parser(
+        "scan-binaries",
+        help="Scan binary assets and check for malware hashes",
+    )
+    scan_bin_p.add_argument(
+        "target_dir",
+        help="Directory containing binary assets to scan",
+    )
+    scan_bin_p.add_argument(
+        "--blocklist",
+        help="Custom hash blocklist file path",
+    )
+    scan_bin_p.add_argument(
+        "--enable-vt",
+        action="store_true",
+        help="Enables VirusTotal queries (requires VIRUSTOTAL_API_KEY)",
+    )
+    scan_bin_p.add_argument(
+        "--max-files",
+        type=int,
+        help="Caps number of binaries scanned",
+    )
+    scan_bin_p.add_argument(
+        "--format",
+        choices=["text", "json", "sarif"],
+        default="text",
+        help="Output format",
+    )
+    scan_bin_p.add_argument(
+        "--fail-on-malware",
+        action="store_true",
+        help="Fail with exit code 1 if malware is detected",
     )
 
     args = parser.parse_args()
@@ -832,6 +898,70 @@ def main() -> None:
                     print(f"  Tool Count:      {m.matched_tools_count} / {m.total_tools_count}")
             print("=" * 70)
 
+    elif args.command == "scan-binaries":
+        from mcp_vulnerabilities.analyzers.binary_malware import BinaryMalwareScanner
+        
+        scanner = BinaryMalwareScanner(blocklist_file=args.blocklist, enable_vt=args.enable_vt)
+        report = scanner.scan_directory(args.target_dir, max_files=args.max_files)
+        
+        if args.format == "json":
+            import json
+            import dataclasses
+            
+            def asdict_factory(data):
+                return {k: v for k, v in data if v is not None}
+                
+            print(json.dumps(dataclasses.asdict(report, dict_factory=asdict_factory), indent=2))
+        elif args.format == "sarif":
+            import json
+            sarif = {
+                "version": "2.1.0",
+                "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+                "runs": [{
+                    "tool": {
+                        "driver": {
+                            "name": "MCP Binary Malware Scanner",
+                            "version": "1.0"
+                        }
+                    },
+                    "results": []
+                }]
+            }
+            for res in report.results:
+                if res.is_malicious:
+                    sarif["runs"][0]["results"].append({
+                        "ruleId": "MALWARE_DETECTED",
+                        "message": {"text": f"Malicious binary detected: {res.signature}"},
+                        "locations": [{"physicalLocation": {"artifactLocation": {"uri": res.path}}}]
+                    })
+            print(json.dumps(sarif, indent=2))
+        else:
+            print("\n" + "=" * 70)
+            print(" BINARY MALWARE SCAN REPORT")
+            print("=" * 70)
+            print(f"Files scanned: {report.scanned_count}")
+            print(f"Malware found: {report.malicious_count}")
+            
+            if report.errors:
+                print("\nErrors:")
+                for e in report.errors:
+                    print(f"  - {e}")
+            
+            if report.results:
+                print("\nResults:")
+                for res in report.results:
+                    status = "[MALICIOUS]" if res.is_malicious else "[CLEAN]"
+                    print(f"{status} {res.path}")
+                    if res.is_malicious:
+                        print(f"    Hash: {res.file_hash}")
+                        print(f"    Signature: {res.signature}")
+                        if res.vt_stats:
+                            print(f"    VirusTotal Stats: {res.vt_stats}")
+                    
+        if args.fail_on_malware and report.malicious_count > 0:
+            sys.exit(1)
+        sys.exit(0)
+
     elif args.command == "probe":
         snap_p = Path(args.snapshot)
         data_p = Path(args.data_dir)
@@ -847,16 +977,27 @@ def main() -> None:
             transport = StdioTransport(args.server_command)
             target = args.server_command
         elif args.server_url:
-            transport = HttpSseTransport(args.server_url)
+            headers_dict = {}
+            if args.auth_header:
+                parts = args.auth_header.split(":", 1)
+                if len(parts) == 2:
+                    headers_dict[parts[0].strip()] = parts[1].strip()
+            for h in args.header:
+                parts = h.split(":", 1)
+                if len(parts) == 2:
+                    headers_dict[parts[0].strip()] = parts[1].strip()
+            transport = HttpSseTransport(args.server_url, headers=headers_dict, timeout=args.timeout)
             target = args.server_url
         else:
             logger.error("Either --command or --url must be provided for probe.")
             sys.exit(2)
 
+        surfaces_set = {args.surfaces} if args.surfaces != "all" else {"tools", "prompts", "resources"}
+
         client = McpProbeClient(transport)
         try:
             logger.info(f"Connecting to target: {target}")
-            client.connect_and_discover(timeout=args.timeout)
+            client.connect_and_discover(timeout=args.timeout, surfaces=surfaces_set)
             logger.info("Successfully discovered server capabilities.")
         except Exception as e:
             logger.error(f"Probe failed: {e}")
@@ -909,6 +1050,54 @@ def main() -> None:
 
             print("=" * 70)
         sys.exit(1 if report.findings or report.tool_warnings else 0)
+
+    elif args.command == "scan-source":
+        from mcp_vulnerabilities.analyzers.ast_taint.scanner import McpSourceScanner
+
+        scanner = McpSourceScanner(args.path)
+        findings = scanner.scan()
+
+        if args.format == "json":
+            import json
+            from dataclasses import asdict
+            print(json.dumps([asdict(f) for f in findings], indent=2))
+        elif args.format == "sarif":
+            import json
+            from mcp_vulnerabilities.audit.reporters import SarifReporter
+            sarif_report = SarifReporter.generate_ast_taint_sarif(findings)
+            
+            output_json = json.dumps(sarif_report, indent=2)
+            if args.output:
+                Path(args.output).write_text(output_json, encoding="utf-8")
+                print(f"SARIF report written to {args.output}")
+            else:
+                print(output_json)
+        else:
+            print("\n" + "=" * 70)
+            print(f" STATIC AST TAINT ANALYSIS: {args.path}")
+            print(f" Scanned {scanner.scanned_files} files (Errors: {scanner.errors})")
+            print("=" * 70)
+            
+            if not findings:
+                print("✓ No dangerous static taints detected.")
+            else:
+                for f in findings:
+                    print(f"\n[{f.severity}] {f.sink_category} in {f.file_path}:{f.sink_line}")
+                    print(f"  Tool:         {f.tool_name}")
+                    print(f"  Parameter:    {f.parameter_name} (from line {f.source_line})")
+                    print(f"  Sink Call:    {f.sink_call}")
+                    print(f"  Snippet:      {f.code_snippet.strip()}")
+                    print(f"  Remediation:  {f.remediation}")
+                    
+            print("\n" + "=" * 70)
+            print(f"SUMMARY: {len(findings)} findings.")
+            
+        if args.fail_on:
+            fail_levels = {"CRITICAL": ["CRITICAL"], "HIGH": ["CRITICAL", "HIGH"]}
+            targets = fail_levels.get(args.fail_on, [])
+            if any(f.severity in targets for f in findings):
+                sys.exit(1)
+        sys.exit(0)
 
 
 if __name__ == "__main__":

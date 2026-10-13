@@ -35,6 +35,7 @@ class ProbeAuditReport:
         default_factory=list
     )  # List[AuditFinding] from VulnerabilityMatcher
     tool_warnings: List[ToolWarning] = field(default_factory=list)
+    surface: Dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -57,6 +58,7 @@ class ProbeAuditReport:
                 }
                 for w in self.tool_warnings
             ],
+            "surface": self.surface,
         }
 
 
@@ -101,4 +103,14 @@ class McpFingerprinter:
             server_version=server_version,
             findings=audit_report.findings,
             tool_warnings=tool_warnings,
+            surface={
+                "instructions": client.surface.instructions,
+                "capabilities": client.surface.capabilities,
+                "tools_count": len(client.surface.tools),
+                "prompts_count": len(client.surface.prompts),
+                "resources_count": len(client.surface.resources),
+                "tools": client.surface.tools,
+                "prompts": client.surface.prompts,
+                "resources": client.surface.resources,
+            },
         )

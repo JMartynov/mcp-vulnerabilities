@@ -1,11 +1,7 @@
 import json
 import pytest
-from pathlib import Path
-from mcp_vulnerabilities.fingerprints.models import (
-    ToolContractSignature, VersionFingerprint, ServerPackageSpec
-)
 from mcp_vulnerabilities.fingerprints.canonicalizer import (
-    canonicalize_json, compute_sha256, extract_tool_signature, compute_toolset_canonical_hash
+    extract_tool_signature, compute_toolset_canonical_hash
 )
 from mcp_vulnerabilities.fingerprints.matcher import FingerprintMatcher
 from mcp_vulnerabilities.fingerprints.conflict_detector import ConflictDetector
@@ -165,7 +161,6 @@ def test_conflict_detector():
 
 
 import sys
-import tempfile
 from unittest.mock import patch
 
 def test_cli_identify_stdio(mock_passports_file):
