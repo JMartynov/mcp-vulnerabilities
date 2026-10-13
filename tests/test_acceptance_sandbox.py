@@ -61,3 +61,28 @@ def test_live_sandbox_timeout_enforcement():
     
     with pytest.raises(TimeoutExpired):
         sandbox.execute(ecosystem="pypi", package="mcp-server-fetch")
+
+
+@pytest.mark.timeout(30)
+def test_live_network_isolation_enforcement():
+    engine = ContainerEngine()
+    runtime = engine.get_runtime()
+    
+    if runtime:
+        try:
+            subprocess.run([runtime, "run", "--rm", "python:3.12-slim", "echo", "1"], capture_output=True, check=True)
+        except subprocess.CalledProcessError:
+            runtime = None
+            
+    if not runtime:
+        pytest.skip("No working container runtime available for live network isolation tests")
+
+    cmd = [
+        runtime, "run", "--rm", "--network", "none",
+        "python:3.12-slim",
+        "python", "-c", "import socket; s=socket.socket(); s.settimeout(2); s.connect(('8.8.8.8', 53))"
+    ]
+    result = subprocess.run(cmd, check=False, capture_output=True, text=True)
+    
+    assert result.returncode != 0
+    assert "Network is unreachable" in result.stderr or "OSError" in result.stderr or "Timeout" in result.stderr
