@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
-from typing import Optional
+from typing import Optional, Set
 
 
 class TaintSinkCategory(str, Enum):
@@ -9,6 +9,28 @@ class TaintSinkCategory(str, Enum):
     PATH_TRAVERSAL = "PATH_TRAVERSAL"
     SQL_INJECTION = "SQL_INJECTION"
     SSRF_EGRESS = "SSRF_EGRESS"
+
+KNOWN_SANITIZERS = {
+    # Shell injection sanitizers
+    "shlex.quote": {TaintSinkCategory.COMMAND_INJECTION},
+    # Path traversal sanitizers
+    "os.path.basename": {TaintSinkCategory.PATH_TRAVERSAL},
+    "basename": {TaintSinkCategory.PATH_TRAVERSAL},
+    "pathlib.Path.resolve": {TaintSinkCategory.PATH_TRAVERSAL},
+    # Numeric casts sanitize command, eval, sql, ssrf, traversal
+    "int": {TaintSinkCategory.COMMAND_INJECTION, TaintSinkCategory.SQL_INJECTION, TaintSinkCategory.PATH_TRAVERSAL, TaintSinkCategory.CODE_EVALUATION},
+    "float": {TaintSinkCategory.COMMAND_INJECTION, TaintSinkCategory.SQL_INJECTION, TaintSinkCategory.PATH_TRAVERSAL, TaintSinkCategory.CODE_EVALUATION},
+    # RegEx / URL sanitizers
+    "re.escape": {TaintSinkCategory.COMMAND_INJECTION},
+    "urllib.parse.quote": {TaintSinkCategory.SSRF_EGRESS},
+    "quote": {TaintSinkCategory.COMMAND_INJECTION, TaintSinkCategory.SSRF_EGRESS},
+}
+
+
+@dataclass
+class TaintState:
+    parameter_name: str
+    sanitized_categories: Set[TaintSinkCategory]
 
 
 @dataclass

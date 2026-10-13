@@ -1,6 +1,6 @@
 import ast
 from typing import List, Dict, Optional
-from .models import TaintFinding, TaintSinkCategory
+from .models import TaintFinding, TaintSinkCategory, TaintState, KNOWN_SANITIZERS
 
 
 class McpToolAstVisitor(ast.NodeVisitor):
@@ -9,12 +9,20 @@ class McpToolAstVisitor(ast.NodeVisitor):
         self.source_lines = source_code.splitlines()
         self.file_path = file_path
         self.findings: List[TaintFinding] = []
+        self.functions: Dict[str, ast.FunctionDef] = {}
 
         # Current state
         self.in_tool_function = False
         self.current_tool_name = ""
-        self.tainted_vars: Dict[str, str] = {}  # var_name -> source_parameter_name
+        self.tainted_vars: Dict[str, TaintState] = {}  # var_name -> TaintState
         self.param_lines: Dict[str, int] = {}
+        self.call_stack = set()
+
+    def visit_Module(self, node: ast.Module):
+        for stmt in node.body:
+            if isinstance(stmt, ast.FunctionDef):
+                self.functions[stmt.name] = stmt
+        self.generic_visit(node)
 
     def _get_snippet(self, node: ast.AST) -> str:
         if hasattr(node, 'lineno') and hasattr(node, 'end_lineno') and node.lineno and node.end_lineno:
@@ -46,15 +54,15 @@ class McpToolAstVisitor(ast.NodeVisitor):
 
         # Mark parameters as tainted
         for arg in node.args.args + node.args.posonlyargs + node.args.kwonlyargs:
-            self.tainted_vars[arg.arg] = arg.arg
+            self.tainted_vars[arg.arg] = TaintState(parameter_name=arg.arg, sanitized_categories=set())
             self.param_lines[arg.arg] = node.lineno
 
         if node.args.vararg:
-            self.tainted_vars[node.args.vararg.arg] = node.args.vararg.arg
+            self.tainted_vars[node.args.vararg.arg] = TaintState(parameter_name=node.args.vararg.arg, sanitized_categories=set())
             self.param_lines[node.args.vararg.arg] = node.lineno
 
         if node.args.kwarg:
-            self.tainted_vars[node.args.kwarg.arg] = node.args.kwarg.arg
+            self.tainted_vars[node.args.kwarg.arg] = TaintState(parameter_name=node.args.kwarg.arg, sanitized_categories=set())
             self.param_lines[node.args.kwarg.arg] = node.lineno
 
         self.generic_visit(node)
@@ -66,45 +74,96 @@ class McpToolAstVisitor(ast.NodeVisitor):
 
     visit_AsyncFunctionDef = visit_FunctionDef
 
-    def _is_tainted(self, node: ast.AST) -> Optional[str]:
-        """Returns the name of the source parameter if the node is tainted, else None."""
+    def _combine_taints(self, taints: List[TaintState]) -> Optional[TaintState]:
+        if not taints:
+            return None
+        if len(taints) == 1:
+            return taints[0]
+        
+        # Merge taints: keep the intersection of sanitized categories
+        # because if ANY part is unsanitized, the whole is unsanitized for that category.
+        intersection = set(TaintSinkCategory)
+        names = []
+        for t in taints:
+            intersection.intersection_update(t.sanitized_categories)
+            if t.parameter_name not in names:
+                names.append(t.parameter_name)
+        
+        return TaintState(parameter_name=", ".join(names), sanitized_categories=intersection)
+
+    def _is_tainted(self, node: ast.AST) -> Optional[TaintState]:
+        """Returns the TaintState if the node is tainted, else None."""
         if isinstance(node, ast.Name):
             if node.id in self.tainted_vars:
-                return self.tainted_vars[node.id]
+                return TaintState(parameter_name=self.tainted_vars[node.id].parameter_name, sanitized_categories=set(self.tainted_vars[node.id].sanitized_categories))
         elif isinstance(node, ast.Subscript):
             # For res["url"], check if res is tainted.
             return self._is_tainted(node.value)
         elif isinstance(node, ast.BinOp):
             left_taint = self._is_tainted(node.left)
-            if left_taint:
-                return left_taint
-            return self._is_tainted(node.right)
+            right_taint = self._is_tainted(node.right)
+            return self._combine_taints([t for t in (left_taint, right_taint) if t])
         elif isinstance(node, ast.JoinedStr):
+            taints = []
             for value in node.values:
                 if isinstance(value, ast.FormattedValue):
                     taint = self._is_tainted(value.value)
                     if taint:
-                        return taint
+                        taints.append(taint)
+            return self._combine_taints(taints)
         elif isinstance(node, ast.Call):
+            call_name = self._get_call_name(node.func)
+            
+            # Check if this call is a known sanitizer
+            is_sanitizer = call_name in KNOWN_SANITIZERS
+            sanitized_cats = KNOWN_SANITIZERS.get(call_name, set())
+
+            # Check arguments for taint
+            arg_taints = []
             if isinstance(node.func, ast.Attribute) and node.func.attr == 'format':
-                taint = self._is_tainted(node.func.value)
-                if taint: return taint
+                t = self._is_tainted(node.func.value)
+                if t:
+                    arg_taints.append(t)
                 for arg in node.args:
-                    taint = self._is_tainted(arg)
-                    if taint: return taint
+                    t = self._is_tainted(arg)
+                    if t:
+                        arg_taints.append(t)
                 for kw in node.keywords:
-                    taint = self._is_tainted(kw.value)
-                    if taint: return taint
+                    t = self._is_tainted(kw.value)
+                    if t:
+                        arg_taints.append(t)
+            else:
+                for arg in node.args:
+                    t = self._is_tainted(arg)
+                    if t:
+                        arg_taints.append(t)
+                for kw in node.keywords:
+                    t = self._is_tainted(kw.value)
+                    if t:
+                        arg_taints.append(t)
+
+            call_taint = self._combine_taints(arg_taints)
+
+            if call_taint:
+                if is_sanitizer:
+                    call_taint.sanitized_categories.update(sanitized_cats)
+                return call_taint
+
         elif isinstance(node, ast.Tuple) or isinstance(node, ast.List):
+            taints = []
             for elt in node.elts:
-                taint = self._is_tainted(elt)
-                if taint:
-                    return taint
+                t = self._is_tainted(elt)
+                if t:
+                    taints.append(t)
+            return self._combine_taints(taints)
         elif isinstance(node, ast.Dict):
+            taints = []
             for val in node.values:
                 if val:
-                    taint = self._is_tainted(val)
-                    if taint: return taint
+                    t = self._is_tainted(val)
+                    if t:
+                        taints.append(t)
+            return self._combine_taints(taints)
 
         return None
 
@@ -117,11 +176,11 @@ class McpToolAstVisitor(ast.NodeVisitor):
         if tainted_param:
             for target in node.targets:
                 if isinstance(target, ast.Name):
-                    self.tainted_vars[target.id] = tainted_param
+                    self.tainted_vars[target.id] = TaintState(parameter_name=tainted_param.parameter_name, sanitized_categories=set(tainted_param.sanitized_categories))
                 elif isinstance(target, ast.Tuple) or isinstance(target, ast.List):
                     for elt in target.elts:
                         if isinstance(elt, ast.Name):
-                            self.tainted_vars[elt.id] = tainted_param
+                            self.tainted_vars[elt.id] = TaintState(parameter_name=tainted_param.parameter_name, sanitized_categories=set(tainted_param.sanitized_categories))
         self.generic_visit(node)
         
     def visit_AnnAssign(self, node: ast.AnnAssign):
@@ -132,7 +191,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
         if node.value:
             tainted_param = self._is_tainted(node.value)
             if tainted_param and isinstance(node.target, ast.Name):
-                self.tainted_vars[node.target.id] = tainted_param
+                self.tainted_vars[node.target.id] = TaintState(parameter_name=tainted_param.parameter_name, sanitized_categories=set(tainted_param.sanitized_categories))
                 
         self.generic_visit(node)
 
@@ -151,6 +210,42 @@ class McpToolAstVisitor(ast.NodeVisitor):
 
         call_name = self._get_call_name(node.func)
         
+        # Helper function delegation
+        if call_name in self.functions and call_name not in self.call_stack:
+            self.call_stack.add(call_name)
+            func_def = self.functions[call_name]
+            # Save state
+            old_tainted_vars = self.tainted_vars.copy()
+            old_param_lines = self.param_lines.copy()
+            
+            # Map args to params
+            new_tainted_vars = {}
+            all_pos_args = func_def.args.posonlyargs + func_def.args.args
+            for i, arg in enumerate(node.args):
+                if i < len(all_pos_args):
+                    param_name = all_pos_args[i].arg
+                    arg_taint = self._is_tainted(arg)
+                    if arg_taint:
+                        new_tainted_vars[param_name] = TaintState(parameter_name=arg_taint.parameter_name, sanitized_categories=set(arg_taint.sanitized_categories))
+                        self.param_lines[param_name] = node.lineno
+                        
+            for kw in node.keywords:
+                arg_taint = self._is_tainted(kw.value)
+                if arg_taint:
+                    new_tainted_vars[kw.arg] = TaintState(parameter_name=arg_taint.parameter_name, sanitized_categories=set(arg_taint.sanitized_categories))
+                    self.param_lines[kw.arg] = node.lineno
+            
+            self.tainted_vars = new_tainted_vars
+            
+            # Visit target function body
+            for stmt in func_def.body:
+                self.visit(stmt)
+                
+            # Restore state
+            self.tainted_vars = old_tainted_vars
+            self.param_lines = old_param_lines
+            self.call_stack.remove(call_name)
+            
         # Check sinks
         sink_category = None
         severity = "HIGH"
@@ -226,15 +321,15 @@ class McpToolAstVisitor(ast.NodeVisitor):
             tainted_param = None
             for arg in node.args:
                 taint = self._is_tainted(arg)
-                if taint:
-                    tainted_param = taint
+                if taint and sink_category not in taint.sanitized_categories:
+                    tainted_param = taint.parameter_name
                     break
             
             if not tainted_param:
                 for kw in node.keywords:
                     taint = self._is_tainted(kw.value)
-                    if taint:
-                        tainted_param = taint
+                    if taint and sink_category not in taint.sanitized_categories:
+                        tainted_param = taint.parameter_name
                         break
 
             if tainted_param:
