@@ -81,13 +81,25 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
+### 7. Core Hardening, Sandboxing & Enterprise Compliance Wave (Wave 7 - 100% Tested & Merged)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **30** | **Subprocess Stderr Deadlock Elimination & API Daemon Transport Signature Hardening** | Runtime Stdio & API Hardening | `Done` | Eliminates OS pipe buffer deadlocks with background stderr drain threads, ring buffers, and hardens API daemon command signature arguments against RCE. | [task30_transport_deadlock_and_api_signature_hardening.md](../../.jules/task30_transport_deadlock_and_api_signature_hardening.md) |
+| **31** | **Two-Stage Airgapped Container Sandbox Isolation** | Dynamic Sandboxed Auditing | `Done` | Two-phase isolated sandboxing separating network fetch from an airgapped execution container (`--network none`, `--read-only`, `--cap-drop ALL`, CPU/memory quotas). | [task31_airgapped_sandbox_two_stage_isolation.md](../../.jules/task31_airgapped_sandbox_two_stage_isolation.md) |
+| **32** | **OWASP MCP Top 10:2025 Automated Compliance Scorer & SARIF Tagger** | Compliance & Auditing | `Done` | Maps threat findings, readiness issues, and AST taint sinks to OWASP Top 10:2025 and OWASP MCP frameworks with CLI scoring and SARIF tagging. | [task32_owasp_mcp_top10_compliance_scorer.md](../../.jules/task32_owasp_mcp_top10_compliance_scorer.md) |
+| **33** | **CycloneDX 1.6 & SPDX 3.0 AI-BOM Exporter** | Software Supply Chain (SBOM) | `Done` | Generates standard CycloneDX 1.6 SBOMs capturing MCP servers, canonical tools hashes, endpoints, and VEX vulnerability representations. | [task33_cyclonedx_aibom_exporter.md](../../.jules/task33_cyclonedx_aibom_exporter.md) |
+| **34** | **AST Taint Sanitizer Registry & Inter-Procedural Propagation** | Static Application Security (SAST) | `Done` | Extends AST taint analyzer with customizable sanitizer registry, inter-procedural helper propagation, and sink category-specific neutralization. | [task34_ast_taint_sanitizer_registry.md](../../.jules/task34_ast_taint_sanitizer_registry.md) |
+
+---
+
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 168 passed in 47.23s =============================
+============================= 188 passed in 39.30s =============================
 ```
-- Total test count: **168**
-- Passing: **168 (100%)**
+- Total test count: **188**
+- Passing: **188 (100%)**
 - Skipped / Failed: **0**
 
 
