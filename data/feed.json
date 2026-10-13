@@ -137,6 +137,19 @@
       ]
     },
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-108604",
+      "url": "https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/ai_activity.rs#L357-L416",
+      "title": "[UNKNOWN] CVE-2026-108604: Tabularis through 0.27.0 contains an incorrect authorization vulnerability in the MCP run_query safety gate that allows ",
+      "summary": "Tabularis through 0.27.0 contains an incorrect authorization vulnerability in the MCP run_query safety gate that allows ",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-108604</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> tabularis</p>\n<p><strong>Details:</strong><br>Tabularis through 0.27.0 contains an incorrect authorization vulnerability in the MCP run_query safety gate that allows prompt-injected agents or untrusted MCP clients to bypass read-only mode by submitting side-effecting SELECT statements. Attackers can run statements like SELECT setval, nextval, or PostgreSQL query_to_xml with embedded DELETE to modify data without approval prompts.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://hackmd.io/@haind/S1BofaIsMx\">https://hackmd.io/@haind/S1BofaIsMx</a></li>\n<li><a href=\"https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/ai_activity.rs#L357-L416\">https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/ai_activity.rs#L357-L416</a></li>\n<li><a href=\"https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/mcp/mod.rs#L1136-L1171\">https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/mcp/mod.rs#L1136-L1171</a></li>\n<li><a href=\"https://github.com/TabularisDB/tabularis\">https://github.com/TabularisDB/tabularis</a></li>\n</ul></p>",
+      "date_published": "2026-10-10T19:54:37.564Z",
+      "date_modified": "2026-10-13T11:49:10.959Z",
+      "tags": [
+        "UNKNOWN",
+        "tabularis"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-108586",
       "url": "https://github.com/1mcp-app/agent",
       "title": "[UNKNOWN] CVE-2026-108586: 1MCP Agent (@1mcp/agent) 0.20.0 through 0.39.0 contains an incorrect authorization vulnerability that allows authenticat",
@@ -1304,19 +1317,6 @@
       "summary": "mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through ",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54689</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through SearXNG. Prior to 1.2.0, the web_url_read URL policy in src/url-reader.ts can be bypassed while MCP_HTTP_HARDEN is enabled and MCP_HTTP_ALLOW_PRIVATE_URLS is not enabled because redirect targets are not revalidated, 0.0.0.0 is not classified as an internal address, and IPv4-mapped IPv6 literals canonicalized to hexadecimal form are not recognized. These inputs allow an attacker-influenced tool call to make the MCP server fetch loopback or internal HTTP resources and return content from local services, private APIs, service-mesh endpoints, or cloud metadata endpoints. The separate hostname-to-private-address case addressed by the earlier partial fix is not part of these residual bypasses. This issue is fixed in version 1.2.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4\">https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/pull/79\">https://github.com/ihor-sokoliuk/mcp-searxng/pull/79</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0\">https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-wppf-h75h-6pm6\">https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-wppf-h75h-6pm6</a></li>\n</ul></p>",
       "date_published": "2026-09-15T18:17:23.477Z",
-      "date_modified": "2026-09-30T17:51:56.193Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-54688",
-      "url": "https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4",
-      "title": "[UNKNOWN] CVE-2026-54688: mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through ",
-      "summary": "mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through ",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54688</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through SearXNG. Prior to 1.2.0, web_url_read passes a caller-supplied URL to the server-side fetch path while assertUrlAllowed() in src/url-reader.ts runs only when MCP_HTTP_HARDEN is enabled, even though MCP_HTTP_HARDEN is disabled by default in src/http-security.ts. In the default configuration, an attacker who influences the URL selected by a user or AI agent can make the server fetch loopback, private-network, or cloud metadata endpoint resources and return their contents into the model context. file:// URLs remain rejected, and the separate DNS-resolution and redirect-validation bypasses are outside this record. This issue is fixed in version 1.2.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4\">https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/issues/87#issuecomment-4645453694\">https://github.com/ihor-sokoliuk/mcp-searxng/issues/87#issuecomment-4645453694</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0\">https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-q87f-qc2r-2gw4\">https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-q87f-qc2r-2gw4</a></li>\n</ul></p>",
-      "date_published": "2026-09-15T18:17:23.333Z",
       "date_modified": "2026-09-30T17:51:56.193Z",
       "tags": [
         "UNKNOWN",
