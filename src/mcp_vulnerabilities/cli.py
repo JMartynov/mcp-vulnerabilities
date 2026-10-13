@@ -374,6 +374,12 @@ def main() -> None:
         action="store_true",
         help="Injects readiness scorecard into probe results",
     )
+    probe_p.add_argument(
+        "--compliance", choices=["owasp-mcp-top-10", "owasp-llm-2025"], default=None, help="Evaluate against compliance frameworks"
+    )
+    probe_p.add_argument(
+        "--fail-on-non-compliant", action="store_true", help="Fail with exit code 1 if compliance tier is NON_COMPLIANT"
+    )
 
     # Scan Source
     scan_p = subparsers.add_parser(
@@ -455,6 +461,12 @@ def main() -> None:
     )
     lint_p.add_argument(
         "--fail-under", type=int, default=0, help="Minimum acceptable readiness score (0-100)"
+    )
+    lint_p.add_argument(
+        "--compliance", choices=["owasp-mcp-top-10", "owasp-llm-2025"], default=None, help="Evaluate against compliance frameworks"
+    )
+    lint_p.add_argument(
+        "--fail-on-non-compliant", action="store_true", help="Fail with exit code 1 if compliance tier is NON_COMPLIANT"
     )
 
     # Sandbox
@@ -1091,11 +1103,7 @@ def main() -> None:
         fingerprinter = McpFingerprinter(matcher)
         report = fingerprinter.scan(client, target)
 
-        if args.format == "json":
-            import json
-
-            print(json.dumps(report.to_dict(), indent=2))
-        else:
+        if args.format != "json" and args.format != "sarif":
             print("\n" + "=" * 70)
             print(
                 f" LIVE MCP PROBE AUDIT REPORT: {report.server_name} (v{report.server_version})"
@@ -1202,6 +1210,61 @@ def main() -> None:
         if run_threat and threat_failed:
             exit_code = 1
 
+
+        compliance_report = None
+        if getattr(args, "compliance", None):
+            from mcp_vulnerabilities.compliance.owasp import OwaspComplianceScorer
+            readiness_issues = readiness_report.issues if getattr(args, "readiness", False) else []
+            compliance_report = OwaspComplianceScorer.evaluate(readiness_issues=readiness_issues, threat_findings=findings)
+            
+            if args.format != "json" and args.format != "sarif":
+                colors_comp = {"COMPLIANT": "\033[92m", "PARTIALLY_COMPLIANT": "\033[93m", "NON_COMPLIANT": "\033[91m"}
+                reset = "\033[0m"
+                color = colors_comp.get(compliance_report.tier.value, "")
+                print("\n" + "=" * 70)
+                print(" COMPLIANCE SCORECARD (OWASP)")
+                print("=" * 70)
+                print(f"Score: {compliance_report.score}/100 | Tier: {color}{compliance_report.tier.value}{reset}")
+                if compliance_report.violations:
+                    for v in compliance_report.violations:
+                        print(f"  - [{v.owasp_mcp_id}] {v.category_name} ({v.severity}): {v.target}")
+                        print(f"    {v.description}")
+                else:
+                    print("  No compliance violations detected.")
+            elif args.format == "json":
+                import json
+                out = report.to_dict()
+                if run_threat:
+                    out["threat_findings"] = [f.to_dict() for f in findings]
+                if getattr(args, "readiness", False):
+                    out["readiness_score"] = readiness_report.score
+                    out["readiness_grade"] = readiness_report.grade
+                    out["readiness_issues"] = [
+                        {
+                            "rule_id": i.rule_id,
+                            "severity": i.severity,
+                            "target": i.target,
+                            "message": i.message,
+                            "recommendation": i.recommendation,
+                        }
+                        for i in readiness_report.issues
+                    ]
+                if compliance_report:
+                    out["compliance"] = compliance_report.to_dict()
+                print(json.dumps(out, indent=2))
+            elif args.format == "sarif":
+                import json
+                if compliance_report:
+                    from mcp_vulnerabilities.sarif import ComplianceSarifReporter
+                    sarif_out = ComplianceSarifReporter.generate_compliance_sarif(compliance_report, target_path="probe")
+                    print(json.dumps(sarif_out, indent=2))
+                else:
+                    print(json.dumps({"error": "Sarif format requires compliance flag for probe command"}, indent=2))
+
+        if getattr(args, "compliance", None) and getattr(args, "fail_on_non_compliant", False):
+            if compliance_report and compliance_report.tier.value == "NON_COMPLIANT":
+                logger.error("Compliance evaluation failed (NON_COMPLIANT).")
+                sys.exit(1)
         sys.exit(exit_code)
 
     elif args.command == "scan-source":
@@ -1328,6 +1391,11 @@ def main() -> None:
 
         report = linter.lint_schema(schema, target_name=target_name)
 
+        compliance_report = None
+        if getattr(args, "compliance", None):
+            from mcp_vulnerabilities.compliance.owasp import OwaspComplianceScorer
+            compliance_report = OwaspComplianceScorer.evaluate(readiness_issues=report.issues)
+
         if args.format == "json":
             out = {
                 "target_name": report.target_name,
@@ -1345,39 +1413,48 @@ def main() -> None:
                     for i in report.issues
                 ],
             }
+
+            if compliance_report:
+                out["compliance"] = compliance_report.to_dict()
             print(json.dumps(out, indent=2))
         elif args.format == "sarif":
-            sarif_out = {
-                "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
-                "version": "2.1.0",
-                "runs": [
-                    {
-                        "tool": {
-                            "driver": {
-                                "name": "mcp-vuln-lint",
-                                "version": "1.0.0",
-                                "informationUri": "https://github.com/JMartynov/mcp-vulnerabilities",
-                            }
-                        },
-                        "results": [
-                            {
-                                "ruleId": issue.rule_id,
-                                "message": {"text": issue.message},
-                                "level": "error" if issue.severity == "CRITICAL" else "warning" if issue.severity == "WARNING" else "note",
-                                "locations": [
-                                    {
-                                        "physicalLocation": {
-                                            "artifactLocation": {"uri": target_name}
+            if compliance_report:
+                from mcp_vulnerabilities.sarif import ComplianceSarifReporter
+                import json
+                sarif_out = ComplianceSarifReporter.generate_compliance_sarif(compliance_report, target_path=target_name)
+                print(json.dumps(sarif_out, indent=2))
+            else:
+                sarif_out = {
+                    "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+                    "version": "2.1.0",
+                    "runs": [
+                        {
+                            "tool": {
+                                "driver": {
+                                    "name": "mcp-vuln-lint",
+                                    "version": "1.0.0",
+                                    "informationUri": "https://github.com/JMartynov/mcp-vulnerabilities",
+                                }
+                            },
+                            "results": [
+                                {
+                                    "ruleId": issue.rule_id,
+                                    "message": {"text": issue.message},
+                                    "level": "error" if issue.severity == "CRITICAL" else "warning" if issue.severity == "WARNING" else "note",
+                                    "locations": [
+                                        {
+                                            "physicalLocation": {
+                                                "artifactLocation": {"uri": target_name}
+                                            }
                                         }
-                                    }
-                                ],
-                            }
-                            for issue in report.issues
-                        ],
-                    }
-                ],
-            }
-            print(json.dumps(sarif_out, indent=2))
+                                    ],
+                                }
+                                for issue in report.issues
+                            ],
+                        }
+                    ],
+                }
+                print(json.dumps(sarif_out, indent=2))
         else:
             colors = {"A": "\033[92m", "B": "\033[94m", "C": "\033[93m", "D": "\033[33m", "F": "\033[91m"}
             reset = "\033[0m"
@@ -1395,9 +1472,29 @@ def main() -> None:
                     print(f"    Recommendation: {issue.recommendation}")
             print("=" * 70)
 
+            if compliance_report:
+                colors_comp = {"COMPLIANT": "\033[92m", "PARTIALLY_COMPLIANT": "\033[93m", "NON_COMPLIANT": "\033[91m"}
+                reset = "\033[0m"
+                color = colors_comp.get(compliance_report.tier.value, "")
+                print("\n" + "=" * 70)
+                print(" COMPLIANCE SCORECARD (OWASP)")
+                print("=" * 70)
+                print(f"Score: {compliance_report.score}/100 | Tier: {color}{compliance_report.tier.value}{reset}")
+                if compliance_report.violations:
+                    for v in compliance_report.violations:
+                        print(f"  - [{v.owasp_mcp_id}] {v.category_name} ({v.severity}): {v.target}")
+                        print(f"    {v.description}")
+                else:
+                    print("  No compliance violations detected.")
+
         if report.score < args.fail_under:
             print(f"\nReadiness score {report.score} is below failure threshold {args.fail_under}.", file=sys.stderr)
             sys.exit(1)
+
+        if getattr(args, "compliance", None) and getattr(args, "fail_on_non_compliant", False):
+            if compliance_report and compliance_report.tier.value == "NON_COMPLIANT":
+                logger.error("Compliance evaluation failed (NON_COMPLIANT).")
+                sys.exit(1)
         sys.exit(0)
 
     elif args.command == "sandbox":
