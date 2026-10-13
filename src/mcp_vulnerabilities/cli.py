@@ -238,13 +238,13 @@ def main() -> None:
     )
 
     # Audit
-    aud_p = subparsers.add_parser("audit", help="Audit AI client MCP servers or packages against OSV database")
+    aud_p = subparsers.add_parser("audit", aliases=["audit-config"], help="Audit AI client MCP servers or packages against OSV database")
     aud_p.add_argument("--config", default=None, help="Path to AI client config file (e.g. claude_desktop_config.json)")
     aud_p.add_argument("--package", default=None, help="Specific package to audit, e.g. @modelcontextprotocol/server-neo4j@0.6.1")
     aud_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
     aud_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
     aud_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
-    aud_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
+    aud_p.add_argument("--format", choices=["table", "json", "sarif", "cyclonedx", "sbom"], default="table", help="Output format")
 
     # Audit Transitive
     trans_p = subparsers.add_parser("audit-transitive", help="Audit third-party dependencies of MCP servers")
@@ -299,7 +299,7 @@ def main() -> None:
     )
     identify_p.add_argument(
         "--format",
-        choices=["text", "json"],
+        choices=["text", "json", "cyclonedx", "sbom"],
         default="text",
         help="Output format",
     )
@@ -346,7 +346,7 @@ def main() -> None:
         help="Controls which surfaces to query (default: all)",
     )
     probe_p.add_argument(
-        "--format", choices=["table", "json", "sarif"], default="table", help="Output format"
+        "--format", choices=["table", "json", "sarif", "cyclonedx", "sbom"], default="table", help="Output format"
     )
     probe_p.add_argument(
         "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
@@ -811,6 +811,13 @@ def main() -> None:
             from mcp_vulnerabilities.audit.reporters import SarifReporter
             sarif_report = SarifReporter.generate_audit_sarif(report, target_path=args.config)
             print(json.dumps(sarif_report, indent=2))
+        elif args.format in ("cyclonedx", "sbom"):
+            import json
+            from mcp_vulnerabilities.sbom.cyclonedx import CycloneDxBomBuilder
+            
+            builder = CycloneDxBomBuilder()
+            builder.add_audit_report(report)
+            print(json.dumps(builder.build(), indent=2))
         else:
             print("\n" + "=" * 70)
             print(
@@ -969,6 +976,23 @@ def main() -> None:
         if args.format == "json":
             import json
             print(json.dumps([m.__dict__ for m in matches], indent=2))
+        elif args.format in ("cyclonedx", "sbom"):
+            import json
+            from mcp_vulnerabilities.sbom.cyclonedx import CycloneDxBomBuilder
+            
+            builder = CycloneDxBomBuilder()
+            # For identify, we can model the identified packages as components
+            for m in matches:
+                from mcp_vulnerabilities.audit.matcher import DiscoveredClientServer
+                builder._add_server_component(DiscoveredClientServer(
+                    server_name=m.package_name,
+                    package_name=m.package_name,
+                    version=m.version,
+                    ecosystem=m.ecosystem,
+                    command="",
+                    args=[]
+                ))
+            print(json.dumps(builder.build(), indent=2))
         else:
             print("\n" + "=" * 70)
             print(f" IDENTIFICATION RESULTS for: {target}")
@@ -1093,17 +1117,18 @@ def main() -> None:
             sys.exit(1)
 
 
-        print("Running fingerprint identification...")
-        fm = FingerprintMatcher(Path(args.data_dir) / "passports.json.gz")
-        matches = fm.match_tools(client.tools)
-        if matches:
-            best = matches[0]
-            print(f"[+] Detected MCP Server: {best.package_name} ({best.ecosystem}) | Confidence: {best.confidence_score*100:.0f}% | Repo: {best.repository_url}")
+        if args.format not in ("json", "cyclonedx", "sbom", "sarif"):
+            print("Running fingerprint identification...")
+            fm = FingerprintMatcher(Path(args.data_dir) / "passports.json.gz")
+            matches = fm.match_tools(client.tools)
+            if matches:
+                best = matches[0]
+                print(f"[+] Detected MCP Server: {best.package_name} ({best.ecosystem}) | Confidence: {best.confidence_score*100:.0f}% | Repo: {best.repository_url}")
 
         fingerprinter = McpFingerprinter(matcher)
         report = fingerprinter.scan(client, target)
 
-        if args.format != "json" and args.format != "sarif":
+        if args.format not in ("json", "cyclonedx", "sbom", "sarif"):
             print("\n" + "=" * 70)
             print(
                 f" LIVE MCP PROBE AUDIT REPORT: {report.server_name} (v{report.server_version})"
@@ -1151,7 +1176,7 @@ def main() -> None:
             )
             findings = engine.analyze(target)
 
-            if args.format != "json":
+            if args.format not in ("json", "cyclonedx", "sbom"):
                 print("\n" + "=" * 70)
                 print(" HEURISTIC THREAT ANALYSIS")
                 print("=" * 70)
@@ -1190,7 +1215,7 @@ def main() -> None:
         if getattr(args, "readiness", False):
             linter = ReadinessLinter()
             readiness_report = linter.lint_schema(client.tools, target_name=report.server_name)
-            if args.format != "json":
+            if args.format not in ("json", "cyclonedx", "sbom"):
                 colors = {"A": "\033[92m", "B": "\033[94m", "C": "\033[93m", "D": "\033[33m", "F": "\033[91m"}
                 reset = "\033[0m"
                 color = colors.get(readiness_report.grade, "")
@@ -1217,7 +1242,7 @@ def main() -> None:
             readiness_issues = readiness_report.issues if getattr(args, "readiness", False) else []
             compliance_report = OwaspComplianceScorer.evaluate(readiness_issues=readiness_issues, threat_findings=findings)
             
-            if args.format != "json" and args.format != "sarif":
+            if args.format not in ("json", "sarif", "cyclonedx", "sbom"):
                 colors_comp = {"COMPLIANT": "\033[92m", "PARTIALLY_COMPLIANT": "\033[93m", "NON_COMPLIANT": "\033[91m"}
                 reset = "\033[0m"
                 color = colors_comp.get(compliance_report.tier.value, "")
@@ -1231,35 +1256,43 @@ def main() -> None:
                         print(f"    {v.description}")
                 else:
                     print("  No compliance violations detected.")
-            elif args.format == "json":
-                import json
-                out = report.to_dict()
-                if run_threat:
-                    out["threat_findings"] = [f.to_dict() for f in findings]
-                if getattr(args, "readiness", False):
-                    out["readiness_score"] = readiness_report.score
-                    out["readiness_grade"] = readiness_report.grade
-                    out["readiness_issues"] = [
-                        {
-                            "rule_id": i.rule_id,
-                            "severity": i.severity,
-                            "target": i.target,
-                            "message": i.message,
-                            "recommendation": i.recommendation,
-                        }
-                        for i in readiness_report.issues
-                    ]
-                if compliance_report:
-                    out["compliance"] = compliance_report.to_dict()
-                print(json.dumps(out, indent=2))
-            elif args.format == "sarif":
-                import json
-                if compliance_report:
-                    from mcp_vulnerabilities.sarif import ComplianceSarifReporter
-                    sarif_out = ComplianceSarifReporter.generate_compliance_sarif(compliance_report, target_path="probe")
-                    print(json.dumps(sarif_out, indent=2))
-                else:
-                    print(json.dumps({"error": "Sarif format requires compliance flag for probe command"}, indent=2))
+
+        if args.format == "json":
+            import json
+            out = report.to_dict()
+            if run_threat:
+                out["threat_findings"] = [f.to_dict() for f in findings]
+            if getattr(args, "readiness", False):
+                out["readiness_score"] = readiness_report.score
+                out["readiness_grade"] = readiness_report.grade
+                out["readiness_issues"] = [
+                    {
+                        "rule_id": i.rule_id,
+                        "severity": i.severity,
+                        "target": i.target,
+                        "message": i.message,
+                        "recommendation": i.recommendation,
+                    }
+                    for i in readiness_report.issues
+                ]
+            if compliance_report:
+                out["compliance"] = compliance_report.to_dict()
+            print(json.dumps(out, indent=2))
+        elif args.format in ("cyclonedx", "sbom"):
+            import json
+            from mcp_vulnerabilities.sbom.cyclonedx import CycloneDxBomBuilder
+            
+            builder = CycloneDxBomBuilder()
+            builder.add_probe_report(report)
+            print(json.dumps(builder.build(), indent=2))
+        elif args.format == "sarif":
+            import json
+            if compliance_report:
+                from mcp_vulnerabilities.sarif import ComplianceSarifReporter
+                sarif_out = ComplianceSarifReporter.generate_compliance_sarif(compliance_report, target_path="probe")
+                print(json.dumps(sarif_out, indent=2))
+            else:
+                print(json.dumps({"error": "Sarif format requires compliance flag for probe command"}, indent=2))
 
         if getattr(args, "compliance", None) and getattr(args, "fail_on_non_compliant", False):
             if compliance_report and compliance_report.tier.value == "NON_COMPLIANT":
