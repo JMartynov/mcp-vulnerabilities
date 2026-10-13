@@ -31,10 +31,46 @@ class McpProbeClient:
     def tools(self) -> List[Dict[str, Any]]:
         return self.surface.tools
 
+    @property
+    def prompts(self) -> List[Dict[str, Any]]:
+        return self.surface.prompts
+
+    @property
+    def resources(self) -> List[Dict[str, Any]]:
+        return self.surface.resources
+
+    def get_server_info(self) -> Dict[str, Any]:
+        return self.surface.server_info
+
+    def list_tools(self) -> List[Dict[str, Any]]:
+        return self.surface.tools
+
+    def list_prompts(self) -> List[Dict[str, Any]]:
+        return self.surface.prompts
+
+    def list_resources(self) -> List[Dict[str, Any]]:
+        return self.surface.resources
+
+    def __enter__(self) -> "McpProbeClient":
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        self.close()
+
+    def close(self) -> None:
+        try:
+            self.transport.stop()
+        except Exception:
+            pass
+
     def _next_id(self) -> int:
         current = self.message_id
         self.message_id += 1
         return current
+
+    def connect(self, timeout: float = 5.0) -> None:
+        """Alias for connect_and_discover."""
+        self.connect_and_discover(timeout=timeout)
 
     def connect_and_discover(
         self, timeout: float = 5.0, surfaces: Optional[Set[str]] = None

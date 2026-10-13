@@ -306,3 +306,54 @@ def test_client_config_fixer(tmp_path: Path):
     assert updated_data["mcpServers"]["sqlite"]["args"][0] == "mcp-server-sqlite==0.2.0"
     assert updated_data["mcpServers"]["safe_server"]["args"][1] == "@modelcontextprotocol/server-postgres@0.6.2"
 
+
+def test_vulnerability_matcher_multi_interval_ranges():
+    # Advisory with two disjoint intervals: [1.0.0, 1.2.0) and [2.0.0, 2.2.0)
+    mock_advisory = {
+        "id": "MULTI-INTERVAL-001",
+        "summary": "Disjoint range vulnerability",
+        "affected": [
+            {
+                "package": {
+                    "name": "multi-range-pkg",
+                    "ecosystem": "PyPI",
+                },
+                "database_specific": {"severity": "HIGH"},
+                "ranges": [
+                    {
+                        "type": "SEMVER",
+                        "events": [
+                            {"introduced": "1.0.0"},
+                            {"fixed": "1.2.0"},
+                            {"introduced": "2.0.0"},
+                            {"fixed": "2.2.0"}
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+
+    matcher = VulnerabilityMatcher([mock_advisory])
+
+    # 1.1.0 should be vulnerable (in first interval)
+    srv_110 = DiscoveredClientServer(server_name="s1", package_name="multi-range-pkg", version="1.1.0", ecosystem="PyPI", command="python", args=[])
+    report_110 = matcher.audit_servers([srv_110])
+    assert report_110.total_findings == 1
+
+    # 1.5.0 should be safe (between intervals)
+    srv_150 = DiscoveredClientServer(server_name="s2", package_name="multi-range-pkg", version="1.5.0", ecosystem="PyPI", command="python", args=[])
+    report_150 = matcher.audit_servers([srv_150])
+    assert report_150.total_findings == 0
+
+    # 2.1.0 should be vulnerable (in second interval)
+    srv_210 = DiscoveredClientServer(server_name="s3", package_name="multi-range-pkg", version="2.1.0", ecosystem="PyPI", command="python", args=[])
+    report_210 = matcher.audit_servers([srv_210])
+    assert report_210.total_findings == 1
+
+    # 2.5.0 should be safe (after second interval)
+    srv_250 = DiscoveredClientServer(server_name="s4", package_name="multi-range-pkg", version="2.5.0", ecosystem="PyPI", command="python", args=[])
+    report_250 = matcher.audit_servers([srv_250])
+    assert report_250.total_findings == 0
+
+

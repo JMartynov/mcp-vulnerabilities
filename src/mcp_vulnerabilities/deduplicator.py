@@ -23,28 +23,43 @@ class OsvDeduplicator:
     def deduplicate_and_merge(
         cls, vulnerabilities: Iterable[OsvVulnerability]
     ) -> list[OsvVulnerability]:
-        """Group and merge overlapping vulnerability records."""
-        groups: list[list[OsvVulnerability]] = []
+        """Group and merge overlapping vulnerability records using Disjoint-Set Union."""
+        vuln_list = list(vulnerabilities)
+        if not vuln_list:
+            return []
 
-        for vuln in vulnerabilities:
-            matched_group = None
-            vuln_keys = cls._get_lookup_keys(vuln)
+        parent = list(range(len(vuln_list)))
 
-            for group in groups:
-                group_keys = set()
-                for member in group:
-                    group_keys.update(cls._get_lookup_keys(member))
-                if vuln_keys.intersection(group_keys):
-                    matched_group = group
-                    break
+        def find(i: int) -> int:
+            path = []
+            while parent[i] != i:
+                path.append(i)
+                i = parent[i]
+            for node in path:
+                parent[node] = i
+            return i
 
-            if matched_group is not None:
-                matched_group.append(vuln)
-            else:
-                groups.append([vuln])
+        def union(i: int, j: int) -> None:
+            root_i = find(i)
+            root_j = find(j)
+            if root_i != root_j:
+                parent[root_j] = root_i
+
+        key_to_indices: dict[str, int] = {}
+        for idx, vuln in enumerate(vuln_list):
+            for key in cls._get_lookup_keys(vuln):
+                if key in key_to_indices:
+                    union(idx, key_to_indices[key])
+                else:
+                    key_to_indices[key] = idx
+
+        clusters: dict[int, list[OsvVulnerability]] = {}
+        for idx, vuln in enumerate(vuln_list):
+            root = find(idx)
+            clusters.setdefault(root, []).append(vuln)
 
         merged_results: list[OsvVulnerability] = []
-        for group in groups:
+        for group in clusters.values():
             merged_results.append(cls._merge_group(group))
 
         return sorted(merged_results, key=lambda v: v.id)

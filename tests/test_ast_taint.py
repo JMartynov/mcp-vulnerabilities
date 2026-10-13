@@ -115,5 +115,31 @@ def good_func(arg: str):
         visitor.visit(ast.parse(code))
         self.assertEqual(len(visitor.findings), 0)
 
+    def test_async_tool_detection(self):
+        code = """
+import os
+
+@mcp.tool()
+async def async_bad_tool(cmd: str):
+    os.system(cmd)
+"""
+        visitor = McpToolAstVisitor(code)
+        visitor.visit(ast.parse(code))
+        self.assertEqual(len(visitor.findings), 1)
+        self.assertEqual(visitor.findings[0].tool_name, "async_bad_tool")
+        self.assertEqual(visitor.findings[0].sink_category, TaintSinkCategory.COMMAND_INJECTION)
+
+    def test_dict_get_not_ssrf(self):
+        code = """
+@mcp.tool()
+def read_config(key: str):
+    data = {"a": 1}
+    val = data.get(key)
+    return val
+"""
+        visitor = McpToolAstVisitor(code)
+        visitor.visit(ast.parse(code))
+        self.assertEqual(len(visitor.findings), 0)
+
 if __name__ == '__main__':
     unittest.main()

@@ -5,9 +5,9 @@ import urllib.parse
 from mcp_vulnerabilities.api.middleware import format_error
 from mcp_vulnerabilities.api.openapi import generate_openapi_schema
 from mcp_vulnerabilities.audit.parsers import ClientConfigParser
+from mcp_vulnerabilities.fingerprints.canonicalizer import compute_toolset_canonical_hash
 from mcp_vulnerabilities.fingerprints.conflict_detector import ConflictDetector
 from mcp_vulnerabilities.probe.client import McpProbeClient
-from mcp_vulnerabilities.probe.fingerprinter import McpFingerprinter
 from mcp_vulnerabilities.probe.transport import HttpSseTransport, StdioTransport
 
 
@@ -55,6 +55,11 @@ def handle_scan_probe(handler, server):
     timeout = body.get("timeout", 30.0)
     
     if command:
+        if not getattr(server, "allow_remote_commands", False):
+            return 403, {"Content-Type": "application/json"}, format_error(
+                "FORBIDDEN",
+                "Raw command execution over HTTP API is disabled for security. Use 'url' for remote SSE probe or run 'mcp-vuln probe <command>' via local CLI."
+            )
         cmd_parts = command.split()
         transport = StdioTransport(command=cmd_parts[0], args=cmd_parts[1:])
     elif url:
@@ -65,20 +70,16 @@ def handle_scan_probe(handler, server):
     # Connect to MCP server
     with McpProbeClient(transport) as client:
         try:
-            client.connect(timeout=timeout)
+            client.connect_and_discover(timeout=timeout)
         except Exception as e:
             return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to connect to MCP server", str(e))
         
-        try:
-            info = client.get_server_info()
-            tools = client.list_tools()
-            prompts = client.list_prompts()
-            resources = client.list_resources()
-        except Exception as e:
-            return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to get MCP server capabilities", str(e))
+        info = client.get_server_info()
+        tools = client.list_tools()
+        prompts = client.list_prompts()
+        resources = client.list_resources()
         
-    fingerprinter = McpFingerprinter()
-    fingerprint = fingerprinter.generate(info, tools, prompts, resources)
+    fingerprint = compute_toolset_canonical_hash(tools)
 
     identity = None
     if server.fingerprint_matcher:
@@ -121,11 +122,16 @@ def handle_identify(handler, server):
     if "tools" in body:
         tools = body["tools"]
     elif "command" in body:
+        if not getattr(server, "allow_remote_commands", False):
+            return 403, {"Content-Type": "application/json"}, format_error(
+                "FORBIDDEN",
+                "Raw command execution over HTTP API is disabled for security. Use 'tools' list or 'url'."
+            )
         cmd_parts = body["command"].split()
         transport = StdioTransport(command=cmd_parts[0], args=cmd_parts[1:])
         with McpProbeClient(transport) as client:
             try:
-                client.connect(timeout=30.0)
+                client.connect_and_discover(timeout=30.0)
                 tools = client.list_tools()
             except Exception as e:
                 return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to probe server", str(e))
@@ -133,7 +139,7 @@ def handle_identify(handler, server):
         transport = HttpSseTransport(url=body["url"])
         with McpProbeClient(transport) as client:
             try:
-                client.connect(timeout=30.0)
+                client.connect_and_discover(timeout=30.0)
                 tools = client.list_tools()
             except Exception as e:
                 return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to probe server", str(e))

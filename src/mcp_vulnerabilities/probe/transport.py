@@ -146,18 +146,8 @@ class HttpSseTransport(BaseTransport):
         self._endpoint_event = threading.Event()
 
     def _get_ssl_context(self):
-        import ssl
-        
-        if not self.insecure:
-            return ssl.create_default_context()
-
-        try:
-            ctx = ssl.create_default_context()
-            ctx.check_hostname = False
-            ctx.verify_mode = ssl.CERT_NONE
-            return ctx
-        except Exception:
-            return ssl._create_unverified_context()
+        from mcp_vulnerabilities.ssl_utils import get_ssl_context
+        return get_ssl_context(insecure=self.insecure)
 
     def start(self) -> None:
         import urllib.request

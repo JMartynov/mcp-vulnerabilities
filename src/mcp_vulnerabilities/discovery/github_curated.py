@@ -14,14 +14,11 @@ from mcp_vulnerabilities.filter import McpRelevanceFilter
 logger = logging.getLogger("mcp_vulnerabilities.discovery.github_curated")
 
 
+from mcp_vulnerabilities.ssl_utils import get_ssl_context
+
+
 def _get_ssl_context() -> ssl.SSLContext:
-    try:
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        return ctx
-    except Exception:
-        return ssl._create_unverified_context()
+    return get_ssl_context()
 
 
 class GitHubCuratedDiscoveryProvider:

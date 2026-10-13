@@ -394,34 +394,41 @@ class VulnerabilityMatcher:
 
         for r in ranges:
             events = r.get("events", [])
-            intro_v: Version | None = None
-            fix_v: Version | None = None
-            last_aff_v: Version | None = None
+            intervals = []
+            curr_intro = None
+            curr_last_aff = None
 
             for ev in events:
                 if "introduced" in ev:
+                    if curr_intro is not None:
+                        intervals.append((curr_intro, None, curr_last_aff))
+                        curr_last_aff = None
                     intro_raw = ev["introduced"]
-                    if intro_raw == "0":
-                        intro_v = self._parse_version("0.0.0")
-                    else:
-                        intro_v = self._parse_version(intro_raw)
-                if "fixed" in ev:
+                    curr_intro = self._parse_version("0.0.0") if intro_raw == "0" else self._parse_version(intro_raw)
+                elif "fixed" in ev:
                     fix_v = self._parse_version(ev["fixed"])
-                if "last_affected" in ev:
-                    last_aff_v = self._parse_version(ev["last_affected"])
+                    intervals.append((curr_intro, fix_v, curr_last_aff))
+                    curr_intro = None
+                    curr_last_aff = None
+                elif "last_affected" in ev:
+                    curr_last_aff = self._parse_version(ev["last_affected"])
 
-            in_range = True
-            if intro_v is not None and target_v < intro_v:
-                in_range = False
-            if fix_v is not None and target_v >= fix_v:
-                in_range = False
-            if last_aff_v is not None and target_v > last_aff_v:
-                in_range = False
+            if curr_intro is not None or curr_last_aff is not None:
+                intervals.append((curr_intro, None, curr_last_aff))
 
-            if in_range and (
-                intro_v is not None or fix_v is not None or last_aff_v is not None
-            ):
-                return True
+            for intro_v, fix_v, last_aff_v in intervals:
+                in_interval = True
+                if intro_v is not None and target_v < intro_v:
+                    in_interval = False
+                if fix_v is not None and target_v >= fix_v:
+                    in_interval = False
+                if last_aff_v is not None and target_v > last_aff_v:
+                    in_interval = False
+
+                if in_interval and (
+                    intro_v is not None or fix_v is not None or last_aff_v is not None
+                ):
+                    return True
 
         return False
 

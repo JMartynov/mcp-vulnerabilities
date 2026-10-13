@@ -64,6 +64,8 @@ class McpToolAstVisitor(ast.NodeVisitor):
         self.tainted_vars.clear()
         self.param_lines.clear()
 
+    visit_AsyncFunctionDef = visit_FunctionDef
+
     def _is_tainted(self, node: ast.AST) -> Optional[str]:
         """Returns the name of the source parameter if the node is tainted, else None."""
         if isinstance(node, ast.Name):
@@ -205,10 +207,17 @@ class McpToolAstVisitor(ast.NodeVisitor):
             remediation = "Use parameterized queries (e.g., execute('SELECT...', (input,))) instead of string formatting."
 
         # SSRF_EGRESS
-        elif call_name in {
-            "urllib.request.urlopen", "requests.get", "requests.post",
-            "httpx.get", "httpx.post", "requests.put", "httpx.put"
-        } or call_name.endswith(".get") or call_name.endswith(".post"):
+        elif (
+            call_name in {
+                "urllib.request.urlopen", "urlopen",
+                "requests.get", "requests.post", "requests.put",
+                "httpx.get", "httpx.post", "httpx.put",
+            }
+            or any(
+                call_name.startswith(p) and (call_name.endswith(".get") or call_name.endswith(".post") or call_name.endswith(".request"))
+                for p in ("requests.", "httpx.", "session.", "client.", "http.", "aiohttp.")
+            )
+        ):
             sink_category = TaintSinkCategory.SSRF_EGRESS
             remediation = "Validate URLs against an allowlist of permitted hosts/domains."
 

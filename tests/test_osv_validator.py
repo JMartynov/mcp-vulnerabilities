@@ -195,5 +195,53 @@ def test_deduplicator_merge_range_integrity() -> None:
     # One range will have [(1.0.0, None, None), (None, 2.0.0, None)]
     # The other will have [(1.0.0, None, None), (None, 2.1.0, None)]
     assert [('1.0.0', None, None), (None, '2.0.0', None)] in events_list
+    assert [('1.0.0', None, None), (None, '2.0.0', None)] in events_list
     assert [('1.0.0', None, None), (None, '2.1.0', None)] in events_list
+
+
+def test_deduplicator_transitive_union_find():
+    # Record A has CVE-1 and alias GHSA-1
+    v1 = OsvVulnerability(
+        id="CVE-2024-0001",
+        summary="A",
+        details="Details A",
+        published="2024-01-01T00:00:00Z",
+        schema_version="1.6.0",
+        modified="2024-01-01T00:00:00Z",
+        aliases=("GHSA-aaaa-1111",),
+        affected=(),
+    )
+    # Record B has GHSA-2 and alias CVE-2 (shares NO direct alias with Record A)
+    v2 = OsvVulnerability(
+        id="GHSA-bbbb-2222",
+        summary="B",
+        details="Details B",
+        published="2024-01-01T00:00:00Z",
+        schema_version="1.6.0",
+        modified="2024-01-01T00:00:00Z",
+        aliases=("CVE-2024-0002",),
+        affected=(),
+    )
+    # Record C bridges both: id MCP-9999, aliases GHSA-1 and CVE-2
+    v3 = OsvVulnerability(
+        id="MCP-2024-9999",
+        summary="C",
+        details="Details C",
+        published="2024-01-01T00:00:00Z",
+        schema_version="1.6.0",
+        modified="2024-01-01T00:00:00Z",
+        aliases=("GHSA-aaaa-1111", "CVE-2024-0002"),
+        affected=(),
+    )
+
+    # Ingesting A, B, C must merge all three into a single record with primary ID MCP-2024-9999
+    from mcp_vulnerabilities.deduplicator import OsvDeduplicator
+    merged = OsvDeduplicator.deduplicate_and_merge([v1, v2, v3])
+    assert len(merged) == 1
+    m = merged[0]
+    assert m.id == "MCP-2024-9999"
+    all_aliases = set(m.aliases)
+    assert "CVE-2024-0001" in all_aliases
+    assert "GHSA-bbbb-2222" in all_aliases
+
 

@@ -115,14 +115,11 @@ def is_version_affected(version_str: str | None, ranges: tuple[RangeSpec, ...]) 
 
 
 
+from mcp_vulnerabilities.ssl_utils import get_ssl_context
+
+
 def _get_ssl_context() -> ssl.SSLContext:
-    try:
-        ctx = ssl.create_default_context()
-        ctx.check_hostname = False
-        ctx.verify_mode = ssl.CERT_NONE
-        return ctx
-    except Exception:
-        return ssl._create_unverified_context()
+    return get_ssl_context()
 
 
 KNOWN_MCP_PACKAGES: tuple[tuple[str, str], ...] = (

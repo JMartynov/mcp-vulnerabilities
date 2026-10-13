@@ -144,5 +144,29 @@ class TestLiveApiServer(unittest.TestCase):
         except URLError as e:
             self.fail(f"Failed to connect: {e}")
 
+    def test_live_api_command_execution_forbidden(self):
+        # Verify that unauthenticated command execution over HTTP is forbidden (403)
+        payload = json.dumps({"command": "echo vulnerable"}).encode("utf-8")
+        req = urllib.request.Request(f"{self.base_url}/api/v1/scan/probe", data=payload, method="POST")
+        req.add_header("Content-Type", "application/json")
+        try:
+            with urllib.request.urlopen(req) as res:
+                self.fail("Expected HTTP 403 Forbidden")
+        except urllib.error.HTTPError as e:
+            self.assertEqual(e.code, 403)
+            data = json.loads(e.read().decode())
+            self.assertEqual(data["error"]["code"], "FORBIDDEN")
+
+        # Also verify identify with command is forbidden (403)
+        req_id = urllib.request.Request(f"{self.base_url}/api/v1/identify", data=payload, method="POST")
+        req_id.add_header("Content-Type", "application/json")
+        try:
+            with urllib.request.urlopen(req_id) as res:
+                self.fail("Expected HTTP 403 Forbidden")
+        except urllib.error.HTTPError as e:
+            self.assertEqual(e.code, 403)
+            data = json.loads(e.read().decode())
+            self.assertEqual(data["error"]["code"], "FORBIDDEN")
+
 if __name__ == "__main__":
     unittest.main()
