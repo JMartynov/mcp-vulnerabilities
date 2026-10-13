@@ -5,10 +5,61 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-10-12T17:54:31.642Z</updated>
+  <updated>2026-10-12T21:17:22.517Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-84319</id>
+    <title>[UNKNOWN] CVE-2026-84319: Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re</title>
+    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
+    <updated>2026-10-12T21:17:22.517Z</updated>
+    <published>2026-10-12T21:17:22.517Z</published>
+    <summary>Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84319&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects restricted Nginx directives such as load_module, js_import, and js_content. However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. This allows the user to load ngx_http_js_module.so, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context. This issue is fixed in version 2.4.1.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-84318</id>
+    <title>[UNKNOWN] CVE-2026-84318: Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr</title>
+    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
+    <updated>2026-10-12T21:17:22.360Z</updated>
+    <published>2026-10-12T21:17:22.360Z</published>
+    <summary>Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84318&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add writes nginx configuration files to disk and triggers an nginx reload without calling config.ValidateConfigFile. The identical flow in the REST API (POST /api/configs) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (perl, js_import, load_module, user root, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution. This issue is fixed in version 2.4.1.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-84317</id>
+    <title>[UNKNOWN] CVE-2026-84317: Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig</title>
+    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
+    <updated>2026-10-12T21:17:22.213Z</updated>
+    <published>2026-10-12T21:17:22.213Z</published>
+    <summary>Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84317&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfigFile) is a security control that blocks dangerous nginx directives — js_*, perl_*, load_module of the njs/perl modules, and user root. It is enforced on three of the four config-write paths: api/config/add.go, api/config/modify.go, and mcp/config/config_modify.go. The fourth path — the MCP tool nginx_config_add (mcp/config/config_add.go) — does NOT call it: it writes the caller-supplied content straight to disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection) can therefore inject exactly the directives the control is meant to block, leading to nginx code execution on deployments where the njs/perl module is available (e.g. the official Docker image). This issue is fixed in version 2.4.1.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <id>urn:mcp:vulnerability:CVE-2026-77366</id>
     <title>[UNKNOWN] CVE-2026-77366: obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, tool dispatch </title>
@@ -2992,60 +3043,6 @@ Resolve the hostname and validate **every resolved IP** against the private/spec
 &lt;li&gt;&lt;a href="https://github.com/ihor-sokoliuk/mcp-searxng/issues/87#issuecomment-4645453694"&gt;https://github.com/ihor-sokoliuk/mcp-searxng/issues/87#issuecomment-4645453694&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0"&gt;https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-q87f-qc2r-2gw4"&gt;https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-q87f-qc2r-2gw4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-54549</id>
-    <title>[UNKNOWN] CVE-2026-54549: Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, th</title>
-    <link rel="alternate" href="https://github.com/pipeboard-co/meta-ads-mcp/commit/7d9926336bbdac6285a988d043c4ccfe126c94c5" />
-    <updated>2026-09-30T17:51:56.193Z</updated>
-    <published>2026-09-15T18:17:23.073Z</published>
-    <summary>Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, th</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-54549&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, the upload_ad_image tool in meta_ads_mcp/core/ads.py passes an attacker-controlled image_url to try_multiple_download_methods() in meta_ads_mcp/core/utils.py, where httpx.AsyncClient uses follow_redirects=True and performs HTTP requests without validating the scheme, host, or resolved IP address. In a streamable-http deployment, a network caller can use any non-empty authorization value because Meta credential validation occurs after the image download, then direct the server to loopback services, private-network addresses, cloud metadata endpoints, or redirect-chained internal targets. The resulting server-side request forgery can expose internal data, invoke state-changing internal services, or disrupt reachable services. This issue is fixed in version 1.0.115.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/commit/7d9926336bbdac6285a988d043c4ccfe126c94c5"&gt;https://github.com/pipeboard-co/meta-ads-mcp/commit/7d9926336bbdac6285a988d043c4ccfe126c94c5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/pull/138"&gt;https://github.com/pipeboard-co/meta-ads-mcp/pull/138&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115"&gt;https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-45gf-fjxp-cjpq"&gt;https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-45gf-fjxp-cjpq&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-54547</id>
-    <title>[UNKNOWN] CVE-2026-54547: Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, Au</title>
-    <link rel="alternate" href="https://github.com/pipeboard-co/meta-ads-mcp/commit/95e852793b7ff8604a8132e85d5facd08c91a36e" />
-    <updated>2026-09-30T17:51:56.193Z</updated>
-    <published>2026-09-15T18:17:22.927Z</published>
-    <summary>Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, Au</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-54547&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, AuthInjectionMiddleware in meta_ads_mcp/core/http_auth_integration.py rejects HTTP MCP requests only when both auth_token and pipeboard_token are absent, while extract_token_from_headers() does not recognize X-Pipeboard-Token as a primary credential. A network caller using the streamable-http transport can therefore send any X-Pipeboard-Token value, pass the guard without establishing authentication context, and cause get_auth_token() to fall back to the server operator's META_ACCESS_TOKEN. Subsequent MCP tools execute with the operator's Meta credentials and can read or modify the operator's Meta Ads data. Deployments using the default stdio transport or without META_ACCESS_TOKEN are not affected. This issue is fixed in version 1.0.115.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/commit/95e852793b7ff8604a8132e85d5facd08c91a36e"&gt;https://github.com/pipeboard-co/meta-ads-mcp/commit/95e852793b7ff8604a8132e85d5facd08c91a36e&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/pull/137"&gt;https://github.com/pipeboard-co/meta-ads-mcp/pull/137&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115"&gt;https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-2v2f-mvfg-ph56"&gt;https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-2v2f-mvfg-ph56&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-54561</id>
-    <title>[UNKNOWN] CVE-2026-54561: MCP Memory Keeper is an MCP server for persistent context management in AI coding assistants. Prior to 0.13.0, context_i</title>
-    <link rel="alternate" href="https://github.com/mkreyman/mcp-memory-keeper/commit/58640c22e037572e0b03bc0aa25d015ea98dcc6d" />
-    <updated>2026-09-30T17:51:56.193Z</updated>
-    <published>2026-09-15T17:17:21.220Z</published>
-    <summary>MCP Memory Keeper is an MCP server for persistent context management in AI coding assistants. Prior to 0.13.0, context_i</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-54561&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;MCP Memory Keeper is an MCP server for persistent context management in AI coding assistants. Prior to 0.13.0, context_import in src/index.ts passes the caller-controlled filePath directly to fs.readFileSync without restricting the path to an export directory. An MCP client, including an LLM agent induced to call the tool, can use ../ traversal or an absolute path to target any file readable by the server process. A valid JSON file is parsed and imported into the caller's session, allowing its full contents to be retrieved through context_get or context_export, while JSON.parse errors for non-JSON files can return leading file bytes in a SyntaxError message. The two disclosure modes can expose other exported sessions, JSON credentials or service-account files, environment files, and portions of SSH keys or other local files. This issue is fixed in version 0.13.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/mkreyman/mcp-memory-keeper/commit/58640c22e037572e0b03bc0aa25d015ea98dcc6d"&gt;https://github.com/mkreyman/mcp-memory-keeper/commit/58640c22e037572e0b03bc0aa25d015ea98dcc6d&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/mkreyman/mcp-memory-keeper/commit/b9369568468007c85f8aec3ae09ca6f611285bc5"&gt;https://github.com/mkreyman/mcp-memory-keeper/commit/b9369568468007c85f8aec3ae09ca6f611285bc5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/mkreyman/mcp-memory-keeper/commit/e0ab521a9e8343bcab1ca60ccc3601e4d86eaa97"&gt;https://github.com/mkreyman/mcp-memory-keeper/commit/e0ab521a9e8343bcab1ca60ccc3601e4d86eaa97&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/mkreyman/mcp-memory-keeper/issues/35"&gt;https://github.com/mkreyman/mcp-memory-keeper/issues/35&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

@@ -6,6 +6,45 @@
   "description": "Real-time feed of OSV-compliant security advisories, CVEs, and vulnerabilities across MCP servers.",
   "items": [
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-84319",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[UNKNOWN] CVE-2026-84319: Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re",
+      "summary": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84319</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects restricted Nginx directives such as load_module, js_import, and js_content. However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. This allows the user to load ngx_http_js_module.so, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context. This issue is fixed in version 2.4.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x</a></li>\n</ul></p>",
+      "date_published": "2026-10-12T21:17:22.517Z",
+      "date_modified": "2026-10-12T21:17:22.517Z",
+      "tags": [
+        "UNKNOWN",
+        "unknown"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-84318",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[UNKNOWN] CVE-2026-84318: Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr",
+      "summary": "Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84318</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add writes nginx configuration files to disk and triggers an nginx reload without calling config.ValidateConfigFile. The identical flow in the REST API (POST /api/configs) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (perl, js_import, load_module, user root, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution. This issue is fixed in version 2.4.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m</a></li>\n</ul></p>",
+      "date_published": "2026-10-12T21:17:22.360Z",
+      "date_modified": "2026-10-12T21:17:22.360Z",
+      "tags": [
+        "UNKNOWN",
+        "unknown"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-84317",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[UNKNOWN] CVE-2026-84317: Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig",
+      "summary": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84317</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfigFile) is a security control that blocks dangerous nginx directives — js_*, perl_*, load_module of the njs/perl modules, and user root. It is enforced on three of the four config-write paths: api/config/add.go, api/config/modify.go, and mcp/config/config_modify.go. The fourth path — the MCP tool nginx_config_add (mcp/config/config_add.go) — does NOT call it: it writes the caller-supplied content straight to disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection) can therefore inject exactly the directives the control is meant to block, leading to nginx code execution on deployments where the njs/perl module is available (e.g. the official Docker image). This issue is fixed in version 2.4.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr</a></li>\n</ul></p>",
+      "date_published": "2026-10-12T21:17:22.213Z",
+      "date_modified": "2026-10-12T21:17:22.213Z",
+      "tags": [
+        "UNKNOWN",
+        "unknown"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-77366",
       "url": "https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-84c9-qqpq-2pq5",
       "title": "[UNKNOWN] CVE-2026-77366: obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, tool dispatch ",
@@ -1278,45 +1317,6 @@
       "summary": "mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through ",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54688</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>mcp-searxng is a Model Context Protocol server that gives AI assistants web search and URL-reading capabilities through SearXNG. Prior to 1.2.0, web_url_read passes a caller-supplied URL to the server-side fetch path while assertUrlAllowed() in src/url-reader.ts runs only when MCP_HTTP_HARDEN is enabled, even though MCP_HTTP_HARDEN is disabled by default in src/http-security.ts. In the default configuration, an attacker who influences the URL selected by a user or AI agent can make the server fetch loopback, private-network, or cloud metadata endpoint resources and return their contents into the model context. file:// URLs remain rejected, and the separate DNS-resolution and redirect-validation bypasses are outside this record. This issue is fixed in version 1.2.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4\">https://github.com/ihor-sokoliuk/mcp-searxng/commit/48e5ecdcb4166a60b94c252dbe74b0a318110ac4</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/issues/87#issuecomment-4645453694\">https://github.com/ihor-sokoliuk/mcp-searxng/issues/87#issuecomment-4645453694</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0\">https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.2.0</a></li>\n<li><a href=\"https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-q87f-qc2r-2gw4\">https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-q87f-qc2r-2gw4</a></li>\n</ul></p>",
       "date_published": "2026-09-15T18:17:23.333Z",
-      "date_modified": "2026-09-30T17:51:56.193Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-54549",
-      "url": "https://github.com/pipeboard-co/meta-ads-mcp/commit/7d9926336bbdac6285a988d043c4ccfe126c94c5",
-      "title": "[UNKNOWN] CVE-2026-54549: Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, th",
-      "summary": "Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, th",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54549</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, the upload_ad_image tool in meta_ads_mcp/core/ads.py passes an attacker-controlled image_url to try_multiple_download_methods() in meta_ads_mcp/core/utils.py, where httpx.AsyncClient uses follow_redirects=True and performs HTTP requests without validating the scheme, host, or resolved IP address. In a streamable-http deployment, a network caller can use any non-empty authorization value because Meta credential validation occurs after the image download, then direct the server to loopback services, private-network addresses, cloud metadata endpoints, or redirect-chained internal targets. The resulting server-side request forgery can expose internal data, invoke state-changing internal services, or disrupt reachable services. This issue is fixed in version 1.0.115.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/commit/7d9926336bbdac6285a988d043c4ccfe126c94c5\">https://github.com/pipeboard-co/meta-ads-mcp/commit/7d9926336bbdac6285a988d043c4ccfe126c94c5</a></li>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/pull/138\">https://github.com/pipeboard-co/meta-ads-mcp/pull/138</a></li>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115\">https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115</a></li>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-45gf-fjxp-cjpq\">https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-45gf-fjxp-cjpq</a></li>\n</ul></p>",
-      "date_published": "2026-09-15T18:17:23.073Z",
-      "date_modified": "2026-09-30T17:51:56.193Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-54547",
-      "url": "https://github.com/pipeboard-co/meta-ads-mcp/commit/95e852793b7ff8604a8132e85d5facd08c91a36e",
-      "title": "[UNKNOWN] CVE-2026-54547: Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, Au",
-      "summary": "Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, Au",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54547</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.115, AuthInjectionMiddleware in meta_ads_mcp/core/http_auth_integration.py rejects HTTP MCP requests only when both auth_token and pipeboard_token are absent, while extract_token_from_headers() does not recognize X-Pipeboard-Token as a primary credential. A network caller using the streamable-http transport can therefore send any X-Pipeboard-Token value, pass the guard without establishing authentication context, and cause get_auth_token() to fall back to the server operator's META_ACCESS_TOKEN. Subsequent MCP tools execute with the operator's Meta credentials and can read or modify the operator's Meta Ads data. Deployments using the default stdio transport or without META_ACCESS_TOKEN are not affected. This issue is fixed in version 1.0.115.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/commit/95e852793b7ff8604a8132e85d5facd08c91a36e\">https://github.com/pipeboard-co/meta-ads-mcp/commit/95e852793b7ff8604a8132e85d5facd08c91a36e</a></li>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/pull/137\">https://github.com/pipeboard-co/meta-ads-mcp/pull/137</a></li>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115\">https://github.com/pipeboard-co/meta-ads-mcp/releases/tag/1.0.115</a></li>\n<li><a href=\"https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-2v2f-mvfg-ph56\">https://github.com/pipeboard-co/meta-ads-mcp/security/advisories/GHSA-2v2f-mvfg-ph56</a></li>\n</ul></p>",
-      "date_published": "2026-09-15T18:17:22.927Z",
-      "date_modified": "2026-09-30T17:51:56.193Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-54561",
-      "url": "https://github.com/mkreyman/mcp-memory-keeper/commit/58640c22e037572e0b03bc0aa25d015ea98dcc6d",
-      "title": "[UNKNOWN] CVE-2026-54561: MCP Memory Keeper is an MCP server for persistent context management in AI coding assistants. Prior to 0.13.0, context_i",
-      "summary": "MCP Memory Keeper is an MCP server for persistent context management in AI coding assistants. Prior to 0.13.0, context_i",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54561</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>MCP Memory Keeper is an MCP server for persistent context management in AI coding assistants. Prior to 0.13.0, context_import in src/index.ts passes the caller-controlled filePath directly to fs.readFileSync without restricting the path to an export directory. An MCP client, including an LLM agent induced to call the tool, can use ../ traversal or an absolute path to target any file readable by the server process. A valid JSON file is parsed and imported into the caller's session, allowing its full contents to be retrieved through context_get or context_export, while JSON.parse errors for non-JSON files can return leading file bytes in a SyntaxError message. The two disclosure modes can expose other exported sessions, JSON credentials or service-account files, environment files, and portions of SSH keys or other local files. This issue is fixed in version 0.13.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/mkreyman/mcp-memory-keeper/commit/58640c22e037572e0b03bc0aa25d015ea98dcc6d\">https://github.com/mkreyman/mcp-memory-keeper/commit/58640c22e037572e0b03bc0aa25d015ea98dcc6d</a></li>\n<li><a href=\"https://github.com/mkreyman/mcp-memory-keeper/commit/b9369568468007c85f8aec3ae09ca6f611285bc5\">https://github.com/mkreyman/mcp-memory-keeper/commit/b9369568468007c85f8aec3ae09ca6f611285bc5</a></li>\n<li><a href=\"https://github.com/mkreyman/mcp-memory-keeper/commit/e0ab521a9e8343bcab1ca60ccc3601e4d86eaa97\">https://github.com/mkreyman/mcp-memory-keeper/commit/e0ab521a9e8343bcab1ca60ccc3601e4d86eaa97</a></li>\n<li><a href=\"https://github.com/mkreyman/mcp-memory-keeper/issues/35\">https://github.com/mkreyman/mcp-memory-keeper/issues/35</a></li>\n</ul></p>",
-      "date_published": "2026-09-15T17:17:21.220Z",
       "date_modified": "2026-09-30T17:51:56.193Z",
       "tags": [
         "UNKNOWN",

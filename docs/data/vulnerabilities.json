@@ -9985,7 +9985,7 @@
     },
     "details": "Flowise before 3.0.6 (affected versions 2.2.7-patch.1 and earlier) contains an unsandboxed remote code execution vulnerability in the Custom MCP feature, which is designed to execute OS commands such as launching local MCP servers. Because Flowise's authentication and authorization model is minimal and lacks role-based access control, and the default installation runs without authentication unless FLOWISE_USERNAME and FLOWISE_PASSWORD are set, an attacker can send a crafted JSON payload with the header 'x-request-from: internal' to the /api/v1/node-load-method/customMCP endpoint to execute arbitrary OS commands, resulting in complete compromise of the platform container or server.\n\nFlowise anterior a la versión 3.0.6 (versiones afectadas 2.2.7-patch.1 y anteriores) contiene una vulnerabilidad de ejecución remota de código sin sandboxing en la característica Custom MCP, que está diseñada para ejecutar comandos del sistema operativo como el lanzamiento de servidores MCP locales. Debido a que el modelo de autenticación y autorización de Flowise es mínimo y carece de control de acceso basado en roles, y la instalación predeterminada se ejecuta sin autenticación a menos que se configuren FLOWISE_USERNAME y FLOWISE_PASSWORD, un atacante puede enviar una carga útil JSON manipulada con el encabezado 'x-request-from: internal' al endpoint /api/v1/node-load-method/customMCP para ejecutar comandos arbitrarios del sistema operativo, lo que resulta en el compromiso completo del contenedor o servidor de la plataforma.",
     "id": "CVE-2025-71336",
-    "modified": "2026-09-30T16:10:00.223Z",
+    "modified": "2026-10-12T21:10:00.227Z",
     "published": "2026-06-25T21:41:06.841Z",
     "references": [
       {
@@ -71602,6 +71602,527 @@
       }
     ],
     "summary": "IBM Langflow OSS 1.0.0 through 1.11.5 allows an authenticated non-administrative user could execute arbitrary operating "
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 8.8,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "cwe_ids": [
+            "CWE-20",
+            "CWE-693"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "< 2.4.1"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "HIGH",
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "LOW",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 2.8,
+          "impactScore": 5.9,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "nginx-ui",
+                "vendor": "0xJacky",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "< 2.4.1"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfigFile) is a security control that blocks dangerous nginx directives — js_*, perl_*, load_module of the njs/perl modules, and user root. It is enforced on three of the four config-write paths: api/config/add.go, api/config/modify.go, and mcp/config/config_modify.go. The fourth path — the MCP tool nginx_config_add (mcp/config/config_add.go) — does NOT call it: it writes the caller-supplied content straight to disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection) can therefore inject exactly the directives the control is meant to block, leading to nginx code execution on deployments where the njs/perl module is available (e.g. the official Docker image). This issue is fixed in version 2.4.1."
+          }
+        ],
+        "id": "CVE-2026-84317",
+        "lastModified": "2026-10-12T21:17:22.213",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "HIGH",
+                "baseScore": 8.8,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "LOW",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 5.9,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-12T21:17:22.213",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Received",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-20"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-693"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Received",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-20"
+        },
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-693"
+        }
+      ]
+    },
+    "details": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfigFile) is a security control that blocks dangerous nginx directives — js_*, perl_*, load_module of the njs/perl modules, and user root. It is enforced on three of the four config-write paths: api/config/add.go, api/config/modify.go, and mcp/config/config_modify.go. The fourth path — the MCP tool nginx_config_add (mcp/config/config_add.go) — does NOT call it: it writes the caller-supplied content straight to disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection) can therefore inject exactly the directives the control is meant to block, leading to nginx code execution on deployments where the njs/perl module is available (e.g. the official Docker image). This issue is fixed in version 2.4.1.",
+    "id": "CVE-2026-84317",
+    "modified": "2026-10-12T21:17:22.213Z",
+    "published": "2026-10-12T21:17:22.213Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 8.8,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+          "cwe_ids": [
+            "CWE-693"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": ">= 2.0.0-rc.6, < 2.4.1"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "HIGH",
+            "baseScore": 8.8,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "LOW",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 2.8,
+          "impactScore": 5.9,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "nginx-ui",
+                "vendor": "0xJacky",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": ">= 2.0.0-rc.6, < 2.4.1"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add writes nginx configuration files to disk and triggers an nginx reload without calling config.ValidateConfigFile. The identical flow in the REST API (POST /api/configs) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (perl, js_import, load_module, user root, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution. This issue is fixed in version 2.4.1."
+          }
+        ],
+        "id": "CVE-2026-84318",
+        "lastModified": "2026-10-12T21:17:22.360",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "HIGH",
+                "baseScore": 8.8,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "LOW",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 5.9,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-12T21:17:22.360",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Received",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-693"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Received",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-693"
+        }
+      ]
+    },
+    "details": "Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add writes nginx configuration files to disk and triggers an nginx reload without calling config.ValidateConfigFile. The identical flow in the REST API (POST /api/configs) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (perl, js_import, load_module, user root, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution. This issue is fixed in version 2.4.1.",
+    "id": "CVE-2026-84318",
+    "modified": "2026-10-12T21:17:22.360Z",
+    "published": "2026-10-12T21:17:22.360Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 8.3,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:H",
+          "cwe_ids": [
+            "CWE-693"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "< 2.4.1"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "HIGH",
+            "baseScore": 8.3,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "LOW",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "LOW",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 2.8,
+          "impactScore": 5.5,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "nginx-ui",
+                "vendor": "0xJacky",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "< 2.4.1"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects restricted Nginx directives such as load_module, js_import, and js_content. However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. This allows the user to load ngx_http_js_module.so, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context. This issue is fixed in version 2.4.1."
+          }
+        ],
+        "id": "CVE-2026-84319",
+        "lastModified": "2026-10-12T21:17:22.517",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "HIGH",
+                "baseScore": 8.3,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "LOW",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "LOW",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 2.8,
+              "impactScore": 5.5,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-12T21:17:22.517",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Received",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-693"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Received",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-693"
+        }
+      ]
+    },
+    "details": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects restricted Nginx directives such as load_module, js_import, and js_content. However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. This allows the user to load ngx_http_js_module.so, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context. This issue is fixed in version 2.4.1.",
+    "id": "CVE-2026-84319",
+    "modified": "2026-10-12T21:17:22.517Z",
+    "published": "2026-10-12T21:17:22.517Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re"
   },
   {
     "affected": [
