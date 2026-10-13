@@ -66,13 +66,18 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
-### 6. Next-Gen Capabilities & Cisco Parity Wave (Active Wave)
+### 6. Advanced Threat Engines & Enterprise Architecture Wave (Active Wave)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
 | **22** | **MCP Fingerprints Integration & Server Identification** | AST & Signature Engine | `Done` | Integrates 5,033+ server passports (`passports.json.gz`), canonical tool hashing, unlabelled server identification, and multi-server tool collision/shadowing detection. | [task22_fingerprint_server_identification.md](../../.jules/task22_fingerprint_server_identification.md) |
-| **23** | **Cisco Parity Threat, YARA & Readiness Analyzers** | Threat Detection Engines | `Todo` | Built-in YARA rule engine for tool descriptions, prompt defense heuristics, and production readiness linter. | [task23_cisco_parity_threat_analyzers.md](../../.jules/task23_cisco_parity_threat_analyzers.md) |
-| **24** | **REST API Server Daemon (mcp-vuln serve)** | Enterprise Microservice | `Todo` | Lightweight HTTP REST server exposing `/api/v1/scan/probe`, `/api/v1/identify`, `/api/v1/scan/config`, and `/api/v1/vulnerabilities`. | [task24_rest_api_server_daemon.md](../../.jules/task24_rest_api_server_daemon.md) |
+| **23** | **Multi-Engine Heuristic Threat Analyzer (YARA & RegEx)** | Threat Detection Engines | `Todo` | High-performance rule-based threat engine detecting Prompt Injection, Arbitrary Code Execution, and Credential Exfiltration with zero cloud dependencies. | [task23_heuristic_threat_analyzers.md](../../.jules/task23_heuristic_threat_analyzers.md) |
+| **24** | **Headless REST API Gateway & Microservice Daemon (`mcp-vuln serve`)** | Enterprise Microservice | `Todo` | Lightweight HTTP REST daemon exposing endpoints for live probing, server identification, configuration auditing, and OSV querying with OpenAPI 3.0 specs. | [task24_rest_api_server_daemon.md](../../.jules/task24_rest_api_server_daemon.md) |
+| **25** | **Full-Surface Protocol Probe & Live SSE / Streamable HTTP** | Runtime Protocol Security | `Todo` | Implements bidirectional SSE and Streamable HTTP transports with authentication headers, probing tools, prompts, resources, and server instructions. | [task25_full_surface_protocol_probe_sse.md](../../.jules/task25_full_surface_protocol_probe_sse.md) |
+| **26** | **MCP Production Readiness & Schema Contract Linter** | Contract Hygiene & Linting | `Todo` | Zero-dependency static schema analyzer enforcing parameter typing, description hygiene, required field definitions, and error handling contracts. | [task26_production_readiness_schema_linter.md](../../.jules/task26_production_readiness_schema_linter.md) |
+| **27** | **Isolated Ephemeral Container Sandbox (PyPI & npm)** | Dynamic Sandboxed Auditing | `Todo` | Safe, unprivileged Docker/Podman container execution to download, install, and capture live runtime tools from untrusted packages without host risk. | [task27_container_sandbox_package_auditor.md](../../.jules/task27_container_sandbox_package_auditor.md) |
+| **28** | **Static AST Source Code Taint & Dangerous Sink Analyzer** | Static Application Security (SAST) | `Todo` | Native AST dataflow engine tracing MCP tool parameters into dangerous execution sinks (`subprocess`, `eval`, path traversal, SQL injection) in local repos. | [task28_static_ast_taint_sink_analyzer.md](../../.jules/task28_static_ast_taint_sink_analyzer.md) |
+| **29** | **Binary Asset & File Hash Malware Screening** | Threat Intelligence & Malware | `Todo` | Streaming 64 KB SHA-256 cryptographic hasher screening bundled binaries and archives against an offline blocklist with optional passive VirusTotal queries. | [task29_binary_asset_malware_screening.md](../../.jules/task29_binary_asset_malware_screening.md) |
 
 ---
 
@@ -84,4 +89,5 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 - Total test count: **119**
 - Passing: **119 (100%)**
 - Skipped / Failed: **0**
+
 
