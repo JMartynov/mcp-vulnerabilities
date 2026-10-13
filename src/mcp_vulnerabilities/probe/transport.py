@@ -35,22 +35,59 @@ class BaseTransport(ABC):
 
 
 class StdioTransport(BaseTransport):
-    def __init__(self, command: str):
+    def __init__(
+        self,
+        command: str,
+        args: Optional[list[str]] = None,
+        env: Optional[Dict[str, str]] = None,
+        cwd: Optional[str] = None,
+    ):
         self.command = command
+        self.args = args
+        self.env = env
+        self.cwd = cwd
         self.process: Optional[subprocess.Popen] = None
+        import collections
+        self.stderr_buffer = collections.deque(maxlen=100)
+        self._stderr_thread: Optional[threading.Thread] = None
+
+    @property
+    def last_stderr_lines(self) -> list[str]:
+        return list(self.stderr_buffer)
+
+    def _drain_stderr(self) -> None:
+        if not self.process or not self.process.stderr:
+            return
+        try:
+            for line in iter(self.process.stderr.readline, ""):
+                if not line:
+                    break
+                self.stderr_buffer.append(line.rstrip())
+        except Exception:
+            pass
 
     def start(self) -> None:
         import shlex
 
         try:
+            if self.args is not None:
+                cmd_list = [self.command] + list(self.args)
+            else:
+                cmd_list = shlex.split(self.command)
+
             self.process = subprocess.Popen(
-                shlex.split(self.command),
+                cmd_list,
                 stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
                 bufsize=1,  # Line buffered
+                env=self.env,
+                cwd=self.cwd,
             )
+            
+            self._stderr_thread = threading.Thread(target=self._drain_stderr, daemon=True)
+            self._stderr_thread.start()
         except Exception as e:
             raise TransportError(f"Failed to start subprocess: {e}")
 
@@ -61,6 +98,23 @@ class StdioTransport(BaseTransport):
                 self.process.wait(timeout=2.0)
             except subprocess.TimeoutExpired:
                 self.process.kill()
+                
+            if self.process.stderr:
+                try:
+                    self.process.stderr.close()
+                except Exception:
+                    pass
+            if self.process.stdin:
+                try:
+                    self.process.stdin.close()
+                except Exception:
+                    pass
+            if self.process.stdout:
+                try:
+                    self.process.stdout.close()
+                except Exception:
+                    pass
+                    
             self.process = None
 
     def send(self, message: Dict[str, Any]) -> None:

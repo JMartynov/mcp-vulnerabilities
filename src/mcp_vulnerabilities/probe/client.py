@@ -23,6 +23,16 @@ class McpProbeClient:
         self.message_id = 1
         self.surface = DiscoveredMcpSurface()
 
+    def close(self):
+        if self.transport:
+            self.transport.stop()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
+
     @property
     def server_info(self) -> Dict[str, Any]:
         return self.surface.server_info

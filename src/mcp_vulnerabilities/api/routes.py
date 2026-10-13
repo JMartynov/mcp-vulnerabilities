@@ -60,7 +60,11 @@ def handle_scan_probe(handler, server):
                 "FORBIDDEN",
                 "Raw command execution over HTTP API is disabled for security. Use 'url' for remote SSE probe or run 'mcp-vuln probe <command>' via local CLI."
             )
-        cmd_parts = command.split()
+        if isinstance(command, list):
+            cmd_parts = [str(x) for x in command]
+        else:
+            import shlex
+            cmd_parts = shlex.split(command)
         transport = StdioTransport(command=cmd_parts[0], args=cmd_parts[1:])
     elif url:
         transport = HttpSseTransport(url=url)
@@ -72,12 +76,21 @@ def handle_scan_probe(handler, server):
         try:
             client.connect_and_discover(timeout=timeout)
         except Exception as e:
-            return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to connect to MCP server", str(e))
+            details = str(e)
+            if hasattr(transport, "last_stderr_lines") and transport.last_stderr_lines:
+                details += f"\nStderr:\n" + "\n".join(transport.last_stderr_lines)
+            return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to connect to MCP server", details)
         
-        info = client.get_server_info()
-        tools = client.list_tools()
-        prompts = client.list_prompts()
-        resources = client.list_resources()
+        try:
+            info = client.get_server_info()
+            tools = client.list_tools()
+            prompts = client.list_prompts()
+            resources = client.list_resources()
+        except Exception as e:
+            details = str(e)
+            if hasattr(transport, "last_stderr_lines") and transport.last_stderr_lines:
+                details += f"\nStderr:\n" + "\n".join(transport.last_stderr_lines)
+            return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to get MCP server capabilities", details)
         
     fingerprint = compute_toolset_canonical_hash(tools)
 
@@ -127,14 +140,22 @@ def handle_identify(handler, server):
                 "FORBIDDEN",
                 "Raw command execution over HTTP API is disabled for security. Use 'tools' list or 'url'."
             )
-        cmd_parts = body["command"].split()
+        cmd_val = body["command"]
+        if isinstance(cmd_val, list):
+            cmd_parts = [str(x) for x in cmd_val]
+        else:
+            import shlex
+            cmd_parts = shlex.split(cmd_val)
         transport = StdioTransport(command=cmd_parts[0], args=cmd_parts[1:])
         with McpProbeClient(transport) as client:
             try:
                 client.connect_and_discover(timeout=30.0)
                 tools = client.list_tools()
             except Exception as e:
-                return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to probe server", str(e))
+                details = str(e)
+                if hasattr(transport, "last_stderr_lines") and transport.last_stderr_lines:
+                    details += f"\nStderr:\n" + "\n".join(transport.last_stderr_lines)
+                return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to probe server", details)
     elif "url" in body:
         transport = HttpSseTransport(url=body["url"])
         with McpProbeClient(transport) as client:

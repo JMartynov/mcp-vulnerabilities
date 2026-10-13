@@ -168,5 +168,56 @@ class TestLiveApiServer(unittest.TestCase):
             data = json.loads(e.read().decode())
             self.assertEqual(data["error"]["code"], "FORBIDDEN")
 
+    def test_live_api_command_probe_test(self):
+        import sys
+        import tempfile
+        import os
+
+        # Temporarily allow remote commands on the test server
+        self.server.allow_remote_commands = True
+        try:
+            script = """import sys, json
+for line in sys.stdin:
+    try:
+        msg = json.loads(line)
+        if msg.get('method') == 'initialize':
+            sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg['id'], 'result': {'serverInfo': {'name': 'test', 'version': '1.0'}, 'capabilities': {}}}) + '\\n')
+            sys.stdout.flush()
+        elif msg.get('method') == 'tools/list':
+            sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg['id'], 'result': {'tools': []}}) + '\\n')
+            sys.stdout.flush()
+        elif msg.get('method') == 'prompts/list':
+            sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg['id'], 'result': {'prompts': []}}) + '\\n')
+            sys.stdout.flush()
+        elif msg.get('method') == 'resources/list':
+            sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg['id'], 'result': {'resources': []}}) + '\\n')
+            sys.stdout.flush()
+    except Exception:
+        pass"""
+            
+            fd, path = tempfile.mkstemp(suffix=".py")
+            with os.fdopen(fd, 'w') as f:
+                f.write(script)
+                
+            payload = json.dumps({"command": [sys.executable, path]}).encode("utf-8")
+            req = urllib.request.Request(f"{self.base_url}/api/v1/scan/probe", data=payload, method="POST")
+            req.add_header("Content-Type", "application/json")
+            try:
+                with urllib.request.urlopen(req) as res:
+                    self.assertEqual(res.status, 200)
+                    data = json.loads(res.read().decode())
+                    self.assertIn("fingerprint", data)
+                    self.assertIn("identity", data)
+                    self.assertIn("vulnerabilities", data)
+            except URLError as e:
+                self.fail(f"Failed to connect: {e}")
+            finally:
+                try:
+                    os.unlink(path)
+                except Exception:
+                    pass
+        finally:
+            self.server.allow_remote_commands = False
+
 if __name__ == "__main__":
     unittest.main()
