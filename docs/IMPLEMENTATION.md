@@ -103,3 +103,22 @@ Emits OASIS SARIF v2.1.0 reports for GitHub Code Scanning with specialized struc
 - `mcp-vuln correlate [--output <file>]`: Batch correlation export of all passports against advisories.
 - `mcp-vuln resolve-config <file> [--strategy prefix|priority|report]`: Automated client configuration collision resolver.
 - `mcp-vuln export-config <package> [--client claude|cursor|cline|zed|windsurf|docker]`: Client config exporter pinned to safe versions.
+
+## 7. Automated Sync Delta Detection, Semantic Version Bumper & PyPI Release Pipeline
+
+### 7.1 Automated Delta Detection (`mcp_vulnerabilities.delta_detector.DeltaDetector`)
+`DeltaDetector` inspects differences between existing and incoming security advisory collections to trigger releases only when substantive changes occur:
+- Detects new CVE/GHSA advisory IDs.
+- Tracks modifications in affected SemVer ranges (`type`, `introduced`, `fixed`, `limit`).
+- Identifies risk assessment updates (CVSS v3/v4 score adjustments).
+
+### 7.2 Semantic Version Bumper (`scripts/bump_version.py`)
+Provides standalone CLI and importable functions to bump versions cleanly:
+- Supports `--dry-run`, `--apply`, and `--part patch|minor|major`.
+- Synchronizes `pyproject.toml` (`version = "X.Y.Z"`) and `src/mcp_vulnerabilities/__init__.py` (`__version__ = "X.Y.Z"`).
+- Default `--dry-run` calculates and outputs the next semantic version.
+
+### 7.3 Reusable PyPI Release Workflow (`.github/workflows/release.yaml`)
+Configured with `workflow_call:` trigger and `skip-existing: true` allowing invocation directly from `daily_sync.yml` upon delta confirmation:
+- Standard OIDC trusted publishing to PyPI (`id-token: write`).
+- Skips re-upload errors if a package version already exists.
