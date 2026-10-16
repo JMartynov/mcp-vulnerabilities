@@ -122,3 +122,17 @@ Provides standalone CLI and importable functions to bump versions cleanly:
 Configured with `workflow_call:` trigger and `skip-existing: true` allowing invocation directly from `daily_sync.yml` upon delta confirmation:
 - Standard OIDC trusted publishing to PyPI (`id-token: write`).
 - Skips re-upload errors if a package version already exists.
+
+## 8. Version-Aware Unified Static Site Builder & Sharded Datasets (`mcp_vulnerabilities.site_builder`)
+
+### 8.1 Unified Static Data Architecture
+The static site builder compiles high-performance assets for browser client consumption without requiring backend runtime servers:
+- **`docs/data/mcp_catalog_index.json`**: Compact, fast-loading search index covering all 5,050+ known MCP servers. Contains server identity, ecosystem, repository links, static capability risk tier, version vulnerability counts, recommended safe version, security summary comments, tool preview samples, and shard references (`shard_id`, `shard_file`).
+- **`docs/data/shards/shard_<00..1f>.json`**: 32 deterministic hex-partitioned JSON files (hashed by `sha256(ecosystem:package_name) % 32`). Each shard contains full deep-dive records (`UnifiedMcpSecurityRecord`) including discrete version histories (`versions[]`), isolated vulnerability advisories per version, toolset canonical hashes, tool capability risk scores and security comments, protocol annotations, and full parameter metadata schemas (`ParameterMetadata`).
+- **`docs/data/vulnerabilities.json`**: Complete OSV-compliant database of security advisories with database-specific MCP extensions (`vulnerable_tools`, `owasp_mcp_category`, `remediation_guidance`).
+- **`docs/data/analytics.json`**: Pre-aggregated metrics covering ecosystem distributions, OWASP MCP Top 10 category frequencies, risk tier totals, safe vs. vulnerable package counts, and top vulnerable tool names.
+
+### 8.2 Execution and Testing
+- Run module: `.venv/bin/python -m mcp_vulnerabilities.site_builder`
+- Unit and acceptance tests: `tests/test_site_builder_unified.py`
+
