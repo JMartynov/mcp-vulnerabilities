@@ -205,3 +205,76 @@ class SarifReporter:
         run["tool"]["driver"]["rules"] = sorted(list(rules_dict.values()), key=lambda r: r["id"])
         run["results"] = results
         return sarif
+
+    @classmethod
+    def generate_collision_sarif(
+        cls, report: Any, config_path: str = "mcp_client_config.json"
+    ) -> Dict[str, Any]:
+        sarif = cls._create_base_sarif()
+        run = sarif["runs"][0]
+        rules_dict = {}
+        results = []
+
+        collisions = getattr(report, "collisions", [])
+
+        for collision in collisions:
+            risk_tier = getattr(collision, "risk_tier", "medium").upper()
+            rule_id = f"MCP-STRUCTURAL-COLLISION-{risk_tier}"
+            level = "error" if risk_tier in ("CRITICAL", "HIGH") else "warning"
+
+            if rule_id not in rules_dict:
+                rules_dict[rule_id] = {
+                    "id": rule_id,
+                    "name": "McpToolCollisionShadowing",
+                    "shortDescription": {
+                        "text": f"MCP Tool Collision with {risk_tier} risk"
+                    },
+                    "fullDescription": {
+                        "text": f"Multiple MCP servers expose the same tool name, leading to potential tool shadowing or prompt injection hijacking. Risk tier: {risk_tier}."
+                    },
+                    "defaultConfiguration": {"level": level},
+                    "help": {
+                        "text": "Review duplicate tool names to ensure your LLM client routes calls to the intended backend. Prefix or rename tools to prevent conflicts."
+                    },
+                }
+
+            servers_str = ", ".join(getattr(collision, "servers", []))
+            packages_str = ", ".join(getattr(collision, "packages", []))
+            is_identical = getattr(collision, "schema_identical", False)
+            match_status = "IDENTICAL" if is_identical else "DIVERGENT"
+            tool_name = getattr(collision, "tool_name", "")
+
+            msg = (
+                f"Tool name collision detected for '{tool_name}'. "
+                f"Exposed by servers: {servers_str} ({packages_str}). "
+                f"Schema Match: {match_status}."
+            )
+            indicators = getattr(collision, "risk_indicators", [])
+            if indicators:
+                msg += f" Risk Factors: {', '.join(indicators)}."
+            divergence = getattr(collision, "divergence_details", None)
+            if divergence:
+                msg += f" Divergence: {divergence}."
+
+            results.append(
+                {
+                    "ruleId": rule_id,
+                    "level": level,
+                    "message": {"text": msg},
+                    "locations": [
+                        {
+                            "physicalLocation": {
+                                "artifactLocation": {"uri": str(config_path)},
+                                "region": {"startLine": 1, "startColumn": 1},
+                            }
+                        }
+                    ],
+                }
+            )
+
+        run["tool"]["driver"]["rules"] = sorted(
+            list(rules_dict.values()), key=lambda r: r["id"]
+        )
+        run["results"] = results
+        return sarif
+
