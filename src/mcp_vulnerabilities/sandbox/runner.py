@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import logging
 import shlex
 import subprocess
@@ -5,6 +7,7 @@ import time
 import tempfile
 import shutil
 from pathlib import Path
+from typing import Optional
 
 from mcp_vulnerabilities.probe.client import McpProbeClient
 from mcp_vulnerabilities.probe.transport import StdioTransport
