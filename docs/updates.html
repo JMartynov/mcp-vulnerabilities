@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What's New & Sync Updates | MCP Security Intelligence</title>
+  <meta name="description" content="Per-release sync update delta feed, newly tracked MCP servers, patched versions, and fresh OSV advisories.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="alternate" type="application/atom+xml" title="MCP Security Advisories Atom Feed" href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.atom">
+  <link rel="alternate" type="application/json" title="MCP Security Advisories JSON Feed" href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.json">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="shield-icon">🔔</span>
+        <div>
+          <h1>MCP Release Updates & Sync Feed</h1>
+          <p class="subtitle">Per-Release Delta Feed of Patched Versions, New Advisories & Tool Updates</p>
+        </div>
+      </div>
+      <div class="header-links">
+        <a href="index.html" class="badge-link">🏠 Directory Explorer</a>
+        <a href="analytics.html" class="badge-link">📊 Analytics</a>
+        <a href="https://github.com/JMartynov/mcp-vulnerabilities" class="btn btn-github" target="_blank" rel="noopener">⭐ GitHub</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Release Selection & Metrics Banner -->
+    <section class="release-selector-section">
+      <div class="release-selector-bar">
+        <div class="release-selector-left">
+          <label for="release-select"><strong>Select Release:</strong></label>
+          <select id="release-select" class="release-dropdown">
+            <option value="latest">Loading releases...</option>
+          </select>
+        </div>
+        <div class="release-timestamp" id="release-timestamp">
+          Synced: ...
+        </div>
+      </div>
+
+      <!-- Release Summary Metrics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-value" id="stat-update-servers">...</span>
+          <span class="metric-label">Updated / Patched Servers</span>
+        </div>
+        <div class="metric-card metric-critical">
+          <span class="metric-value" id="stat-update-advisories">...</span>
+          <span class="metric-label">Incoming Advisories</span>
+        </div>
+        <div class="metric-card metric-safe">
+          <span class="metric-value" id="stat-update-versions">...</span>
+          <span class="metric-label">Tracked Version Releases</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sub-Tabs: Updated Servers vs Updated Advisories -->
+    <nav class="portal-tabs" role="tablist">
+      <button class="portal-tab active" id="tab-update-servers" role="tab" aria-selected="true" data-tab="servers">
+        📦 Updated MCP Servers in this Release
+      </button>
+      <button class="portal-tab" id="tab-update-advisories" role="tab" aria-selected="false" data-tab="advisories">
+        🚨 New & Modified Advisories
+      </button>
+    </nav>
+
+    <!-- TAB 1: Updated Servers View -->
+    <section id="update-servers-view" class="tab-content active" role="tabpanel">
+      <div class="results-header">
+        <span id="update-servers-count">Showing updated servers...</span>
+      </div>
+      <div class="servers-grid" id="servers-container">
+        <div class="loading-state">Loading release delta servers...</div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Updated Advisories View -->
+    <section id="update-advisories-view" class="tab-content" role="tabpanel" style="display: none;">
+      <div class="results-header">
+        <span id="update-advisories-count">Showing release advisories...</span>
+      </div>
+      <div class="advisories-list" id="advisories-container">
+        <div class="loading-state">Loading release advisories...</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Deep-Dive Server & Version Vulnerability Inspector Modal -->
+  <dialog id="server-modal" class="modal-dialog modal-large">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h2 id="modal-server-title">Server Name</h2>
+          <span class="modal-server-pkg" id="modal-server-pkg">pkg:generic/server</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="server-modal-close" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-body" id="server-modal-body">
+        <!-- Identity Metadata Row -->
+        <div class="server-metadata-bar">
+          <span class="badge" id="modal-server-risk">RISK TIER</span>
+          <span class="badge" id="modal-server-status">SECURITY STATUS</span>
+          <span class="meta-tag" id="modal-server-eco">Ecosystem</span>
+          <span class="meta-tag" id="modal-server-license">License</span>
+          <span class="meta-tag" id="modal-server-author">Author</span>
+          <a href="#" id="modal-server-repo" class="meta-link" target="_blank" rel="noopener">📁 Source Repo</a>
+          <a href="#" id="modal-server-homepage" class="meta-link" target="_blank" rel="noopener">🌐 Homepage</a>
+        </div>
+
+        <!-- Security Summary Comment -->
+        <div class="security-comment-box" id="modal-security-comment">
+          Security comment loading...
+        </div>
+
+        <!-- Interactive Version Selector -->
+        <div class="version-section">
+          <h3>📦 Version Release History & Vulnerability Status</h3>
+          <p class="section-hint">Select a version below to inspect isolated CVEs, tools, and parameter schemas for that specific release:</p>
+          <div class="version-pills-row" id="modal-version-pills">
+            <!-- Populated dynamically: version buttons with 🔴 or 🟢 badges -->
+          </div>
+        </div>
+
+        <!-- Version Vulnerability Matrix -->
+        <div class="matrix-section">
+          <div class="matrix-header">
+            <h4>🛡️ Vulnerability Matrix for Selected Version: <span id="selected-version-label">v1.0.0</span></h4>
+            <span id="selected-version-badge" class="badge">CLEAN</span>
+          </div>
+          <div id="selected-version-vuln-container">
+            <!-- Advisory list or safe banner -->
+          </div>
+        </div>
+
+        <!-- Toolset & Rich Parameter Schemas -->
+        <div class="tools-section">
+          <div class="tools-header-row">
+            <h4>🛠️ Tool Signatures & Parameter Schemas (<span id="tools-count-label">0</span>)</h4>
+            <span class="canonical-hash-badge" id="modal-canonical-hash">hash: none</span>
+          </div>
+          <div id="modal-tools-container">
+            <!-- Tool cards with full parameter schema tables: Name, Type, Required, Default, Enum, Description -->
+          </div>
+        </div>
+
+        <!-- Safe Client Config Exporters -->
+        <div class="config-exporter-section">
+          <div class="exporter-header">
+            <h4>⚙️ Safe AI Client Config Exporter</h4>
+            <span class="safe-pin-note">Pins automatically to <strong id="exporter-pinned-version">v...</strong></span>
+          </div>
+          <p class="section-hint">Click below to generate and copy a zero-trust configuration pre-pinned to a safe version:</p>
+          <div class="exporter-buttons-row">
+            <button type="button" class="btn btn-export" data-client="claude">📋 Copy Claude Desktop</button>
+            <button type="button" class="btn btn-export" data-client="cursor">📋 Copy Cursor</button>
+            <button type="button" class="btn btn-export" data-client="cline">📋 Copy Cline</button>
+            <button type="button" class="btn btn-export" data-client="zed">📋 Copy Zed</button>
+            <button type="button" class="btn btn-export" data-client="windsurf">📋 Copy Windsurf</button>
+          </div>
+          <div id="export-toast" class="export-toast" style="display: none;">Config copied to clipboard!</div>
+          <pre id="export-preview" class="export-preview"><code>// Select client above to preview config</code></pre>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Legacy Advisory Modal (for Tab 2) -->
+  <dialog id="advisory-modal" class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div>
+          <span class="badge" id="modal-severity">SEVERITY</span>
+          <h2 id="modal-id">GHSA-xxxx</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="modal-close" aria-label="Close dialog">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Injected via updates.js -->
+      </div>
+      <div class="modal-footer">
+        <a id="modal-external-link" href="#" target="_blank" rel="noopener" class="btn btn-primary">View Upstream Advisory ↗</a>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="updates.js"></script>
+</body>
+</html>
