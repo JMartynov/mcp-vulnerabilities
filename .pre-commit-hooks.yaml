@@ -1,0 +1,13 @@
+- id: mcp-vuln-audit
+  name: MCP Vulnerability Security Auditor
+  description: Audit AI client configurations or dependency lockfiles for known MCP vulnerabilities
+  entry: mcp-vuln audit
+  language: python
+  files: '(?i)(.*mcp.*\.json|claude_desktop_config\.json|cursor_settings\.json|uv\.lock|package\.json|pyproject\.toml|requirements\.txt)$'
+
+- id: mcp-audit-config
+  name: MCP Client Configuration Auditor
+  description: Audit MCP client configurations for vulnerabilities and tool collisions
+  entry: mcp-vuln audit-config
+  language: python
+  files: '(?i)(.*mcp.*\.json|claude_desktop_config\.json|cursor_settings\.json)$'

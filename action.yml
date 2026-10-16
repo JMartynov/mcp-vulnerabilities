@@ -4,6 +4,9 @@ inputs:
   config-path:
     description: "Path to AI client config file (e.g., .claude/claude_desktop_config.json)"
     required: false
+  config-file:
+    description: "Alias for config-path (e.g., .claude/claude_desktop_config.json)"
+    required: false
   manifest-path:
     description: "Path to dependency manifest or lockfile (e.g., package.json, uv.lock)"
     required: false
@@ -46,12 +49,15 @@ runs:
       shell: bash
       env:
         INPUT_CONFIG_PATH: ${{ inputs.config-path }}
+        INPUT_CONFIG_FILE: ${{ inputs.config-file }}
         INPUT_MANIFEST_PATH: ${{ inputs.manifest-path }}
         INPUT_FAIL_ON_SEVERITY: ${{ inputs.fail-on-severity }}
         INPUT_FORMAT: ${{ inputs.format }}
       run: |
         set +e
         
+        CONFIG_PATH="${INPUT_CONFIG_PATH:-$INPUT_CONFIG_FILE}"
+
         # Prepare arguments
         ARGS="--format json"
         
@@ -63,9 +69,9 @@ runs:
         # For audit logic, we run it twice if SARIF is requested: once for the GitHub step summary (table) 
         # and once for the output file (SARIF). But actually we can just pass the requested format, except
         # we need JSON for counts. Let's just always generate JSON for counts first.
-        if [ -n "$INPUT_CONFIG_PATH" ]; then
-          echo "Running config audit on $INPUT_CONFIG_PATH..."
-          OUTPUT=$(mcp-vuln audit --config "$INPUT_CONFIG_PATH" $ARGS)
+        if [ -n "$CONFIG_PATH" ]; then
+          echo "Running config audit on $CONFIG_PATH..."
+          OUTPUT=$(mcp-vuln audit --config "$CONFIG_PATH" $ARGS)
           EXIT_CODE=$?
         elif [ -n "$INPUT_MANIFEST_PATH" ]; then
           echo "Running transitive dependency audit on $INPUT_MANIFEST_PATH..."
@@ -101,8 +107,8 @@ runs:
         if [ "$INPUT_FORMAT" == "table" ]; then
           echo "" >> $GITHUB_STEP_SUMMARY
           echo '```text' >> $GITHUB_STEP_SUMMARY
-          if [ -n "$INPUT_CONFIG_PATH" ]; then
-            mcp-vuln audit --config "$INPUT_CONFIG_PATH" --format table >> $GITHUB_STEP_SUMMARY
+          if [ -n "$CONFIG_PATH" ]; then
+            mcp-vuln audit --config "$CONFIG_PATH" --format table >> $GITHUB_STEP_SUMMARY
           elif [ -n "$INPUT_MANIFEST_PATH" ]; then
             mcp-vuln audit-transitive --manifest "$INPUT_MANIFEST_PATH" --format table >> $GITHUB_STEP_SUMMARY
           else
@@ -114,8 +120,8 @@ runs:
         # If user requested sarif format, generate it to a file
         if [ "$INPUT_FORMAT" == "sarif" ]; then
           echo "Generating SARIF report..."
-          if [ -n "$INPUT_CONFIG_PATH" ]; then
-            mcp-vuln audit --config "$INPUT_CONFIG_PATH" --format sarif > mcp_audit_results.sarif
+          if [ -n "$CONFIG_PATH" ]; then
+            mcp-vuln audit --config "$CONFIG_PATH" --format sarif > mcp_audit_results.sarif
           elif [ -n "$INPUT_MANIFEST_PATH" ]; then
             mcp-vuln audit-transitive --manifest "$INPUT_MANIFEST_PATH" --format sarif > mcp_audit_results.sarif
           else

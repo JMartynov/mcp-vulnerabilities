@@ -123,6 +123,8 @@ def handle_scan_probe(handler, server):
         "vulnerabilities": vulnerabilities
     }
 
+handle_probe = handle_scan_probe
+
 def handle_identify(handler, server):
     body = parse_body(handler)
     if body is None:
@@ -194,17 +196,20 @@ def handle_scan_config(handler, server):
         return 400, {"Content-Type": "application/json"}, format_error("BAD_REQUEST", "Missing config object")
         
     detect_collisions = body.get("detect_collisions", True)
-    
+    severity_threshold = body.get("severity_threshold")
+
     servers = ClientConfigParser.parse_dict(config)
-    
+
     results = {
         "servers_audited": len(servers),
         "vulnerabilities": [],
-        "collisions": []
+        "collisions": [],
     }
-    
+
     if server.vulnerability_matcher:
-        report = server.vulnerability_matcher.audit_servers(servers, server.fingerprint_matcher)
+        report = server.vulnerability_matcher.audit_servers(
+            servers, severity_threshold=severity_threshold
+        )
         for f in report.findings:
             results["vulnerabilities"].append({
                 "server": f.server_name,
