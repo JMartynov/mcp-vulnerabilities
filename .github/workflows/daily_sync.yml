@@ -15,6 +15,8 @@ permissions:
 jobs:
   sync-mcp-vulnerabilities:
     runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.commit_push.outputs.release_created }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,6 +31,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
+          
+      - name: Fetch Latest Passports from mcp-fingerprints (Cross-Repo Sync)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -c "import os; from mcp_vulnerabilities.sync_manager import CrossRepoSyncManager; CrossRepoSyncManager().fetch_latest_passports(github_token=os.environ.get('GITHUB_TOKEN'))"
 
       - name: Run Multi-Registry MCP Server Discovery
         run: |
@@ -58,17 +66,78 @@ jobs:
         run: |
           python -m mcp_vulnerabilities.cli export-osv --data-dir data/vulnerabilities --output-dir dist/osv
 
-      - name: Build Web Explorer Static Data
+      - name: Run Cross-Repo Correlation
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python -m mcp_vulnerabilities.cli correlate || true
+
+      - name: Build Web Explorer Static Data & Release Feeds
         run: |
           python -m mcp_vulnerabilities.site_builder
+          python -m mcp_vulnerabilities.updates_builder
 
-      - name: Commit & Push Canonical Vulnerability Updates Directly to Main
+      - name: Commit and push updated security advisories & snapshot
+        id: commit_push
         if: github.ref == 'refs/heads/main'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/mcp_servers.json data/ docs/data/ vulnerabilities.json.gz
-          git add -f dist/osv/ 2>/dev/null || true
-          git diff --staged --quiet || git commit -m "chore(osv): automated daily sync of MCP security advisories, feeds and web explorer data [skip ci]"
-          git push origin main
 
+          # Check if there are substantive vulnerability or passport changes
+          VULN_CHANGES=$(git status --porcelain data/vulnerabilities/ data/passports.json.gz data/mcp_servers.json | grep -v "sync_state.json" | grep -v "index.json" || true)
+
+          git add data/mcp_servers.json data/ vulnerabilities.json.gz
+          git add -f dist/osv/ 2>/dev/null || true
+
+          if ! git diff --staged --quiet; then
+            if [ -n "$VULN_CHANGES" ]; then
+              # Bump version
+              NEW_VERSION=$(python scripts/bump_version.py --dry-run)
+              python scripts/bump_version.py --apply
+              python -m mcp_vulnerabilities.site_builder
+              python -m mcp_vulnerabilities.updates_builder --version "${NEW_VERSION}"
+              git add pyproject.toml src/mcp_vulnerabilities/__init__.py docs/data/
+              git commit -m "chore(release): bump version to v${NEW_VERSION} and sync MCP security advisories"
+              git tag "v${NEW_VERSION}"
+              echo "release_created=true" >> "$GITHUB_OUTPUT"
+              echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
+            else
+              python -m mcp_vulnerabilities.site_builder
+              python -m mcp_vulnerabilities.updates_builder
+              git add docs/data/
+              git commit -m "chore(osv): automated daily sync of MCP security advisories, feeds and web explorer data [skip ci]"
+              echo "release_created=false" >> "$GITHUB_OUTPUT"
+            fi
+
+            pushed=false
+            for i in 1 2 3 4 5; do
+              if git push origin main --tags; then
+                pushed=true
+                break
+              fi
+              echo "Push attempt $i failed. Retrying in $((i * 5))s..."
+              sleep $((i * 5))
+              git pull --rebase origin main || true
+            done
+            if [ "$pushed" = false ]; then
+              echo "Failed to push after multiple attempts"
+              exit 1
+            fi
+
+            if [ -n "$VULN_CHANGES" ]; then
+              gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
+            fi
+          else
+            echo "release_created=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  pypi-release:
+    needs: sync-mcp-vulnerabilities
+    if: needs.sync-mcp-vulnerabilities.outputs.release_created == 'true'
+    permissions:
+      id-token: write
+      contents: read
+    uses: ./.github/workflows/release.yaml

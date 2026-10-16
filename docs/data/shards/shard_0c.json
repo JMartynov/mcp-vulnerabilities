@@ -396,17 +396,6 @@
             "security_comment": "Tool `country_overview` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "citiesLimit",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "id",
                 "type": "string",
                 "description": null,
@@ -433,6 +422,17 @@
                 "type": "string",
                 "description": null,
                 "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "citiesLimit",
+                "type": "string",
+                "description": null,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -704,17 +704,6 @@
             "security_comment": "Tool `list_countries` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "limit",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "name",
                 "type": "string",
                 "description": null,
@@ -726,7 +715,7 @@
                 "nested_properties": null
               },
               {
-                "name": "offset",
+                "name": "telephoneCode",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -737,7 +726,18 @@
                 "nested_properties": null
               },
               {
-                "name": "telephoneCode",
+                "name": "limit",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "offset",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -814,6 +814,17 @@
             "security_comment": "Tool `search_cities` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "countryCode",
                 "type": "string",
                 "description": null,
@@ -825,18 +836,7 @@
                 "nested_properties": null
               },
               {
-                "name": "limit",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "maxPopulation",
+                "name": "regionId",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -858,7 +858,18 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
+                "name": "maxPopulation",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -870,17 +881,6 @@
               },
               {
                 "name": "offset",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "regionId",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -957,18 +957,7 @@
                 "nested_properties": null
               },
               {
-                "name": "limit",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "maxPopulation",
+                "name": "name",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -990,18 +979,7 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "offset",
+                "name": "maxPopulation",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -1013,6 +991,28 @@
               },
               {
                 "name": "preferredLanguages",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "offset",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -2904,10 +2904,10 @@
             "security_comment": "Tool `deploy_service` [LOW] inspects or modifies host environment variables.",
             "parameters": [
               {
-                "name": "env",
+                "name": "slug",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -2915,10 +2915,10 @@
                 "nested_properties": null
               },
               {
-                "name": "slug",
+                "name": "env",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -3067,8 +3067,8 @@
             "security_comment": "Tool `generate` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
             "parameters": [
               {
-                "name": "input",
-                "type": "object",
+                "name": "model",
+                "type": "string",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -3078,8 +3078,8 @@
                 "nested_properties": null
               },
               {
-                "name": "model",
-                "type": "string",
+                "name": "input",
+                "type": "object",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -3100,10 +3100,10 @@
             "security_comment": "Tool `get_price` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "input",
-                "type": "object",
+                "name": "model",
+                "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -3111,10 +3111,10 @@
                 "nested_properties": null
               },
               {
-                "name": "model",
-                "type": "string",
+                "name": "input",
+                "type": "object",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -3175,8 +3175,8 @@
             "security_comment": "Tool `recipe` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "args",
-                "type": "object",
+                "name": "name",
+                "type": "string",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -3186,8 +3186,8 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
-                "type": "string",
+                "name": "args",
+                "type": "object",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -3208,8 +3208,8 @@
             "security_comment": "Tool `tool` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "args",
-                "type": "object",
+                "name": "name",
+                "type": "string",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -3219,8 +3219,8 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
-                "type": "string",
+                "name": "args",
+                "type": "object",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -3394,9 +3394,42 @@
             "security_comment": "Tool `hasdata_web_scraping_web_scraping_scrapeWebPage` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
             "parameters": [
               {
-                "name": "aiExtractRules",
+                "name": "url",
+                "type": "string",
+                "description": "The URL of the web page to scrape.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "wait",
+                "type": "number",
+                "description": "Time in milliseconds to wait after the page load.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "headers",
                 "type": "object",
-                "description": "Defines custom rules for AI-based data extraction using LLMs. This enables the system to extract structured data directly from the HTML of the page. Each key in the object represents a desired output field name, and the value specifies its type and optional description to guide the AI.\n\nSupported types:\n- `string`: plain text value\n- `number`: numeric value\n- `boolean`: true/false\n- `list`: an array of values\n- `item`: a nested object with its own structure defined under `output`\n",
+                "description": "Optional custom headers to send with the request.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "waitFor",
+                "type": "string",
+                "description": "CSS selector to wait for before scraping.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -3416,17 +3449,6 @@
                 "nested_properties": null
               },
               {
-                "name": "blockResources",
-                "type": "boolean",
-                "description": "Whether to block loading of resources like images and stylesheets.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "blockUrls",
                 "type": "array",
                 "description": "List of URLs to block.",
@@ -3435,6 +3457,42 @@
                 "enum": null,
                 "format": null,
                 "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "proxyType",
+                "type": "string",
+                "description": "Type of proxy to use.",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "datacenter",
+                  "residential"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "jsScenario",
+                "type": "array",
+                "description": "Enables custom JavaScript interactions on the target webpage during scraping. It's an array where each object defines a specific action or step. These actions can include clicking elements, waiting for elements, executing custom scripts, and more. Key actions within this field include:\n\n- `evaluate`: Run custom JavaScript code on the page.\n- `click`: Click on an element specified by a CSS selector.\n- `wait`: Pause for a set duration (in milliseconds).\n- `waitFor`: Delay until a specific element appears.\n- `waitForAndClick`: Combine waiting for an element and then clicking it.\n- `scrollX`, `scrollY`: Scroll to specified positions on the page.\n- `fill`: Enter values into input fields identified by CSS selectors.\n\nActions are executed sequentially.\n",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "object",
+                "nested_properties": null
+              },
+              {
+                "name": "screenshot",
+                "type": "boolean",
+                "description": "Whether to take a screenshot of the page.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
                 "nested_properties": null
               },
               {
@@ -3449,9 +3507,9 @@
                 "nested_properties": null
               },
               {
-                "name": "extractEmails",
+                "name": "jsRendering",
                 "type": "boolean",
-                "description": "Extract emails from the page.",
+                "description": "Enable JavaScript rendering.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -3479,50 +3537,6 @@
                 "enum": null,
                 "format": null,
                 "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "headers",
-                "type": "object",
-                "description": "Optional custom headers to send with the request.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "includeOnlyTags",
-                "type": "array",
-                "description": "The `includeOnlyTags` parameter accepts an array of valid CSS selectors.\nWhen specified, only the elements matching these selectors will be included in the response content.\nEach value must be a valid `querySelectorAll` selector. Useful for extracting specific parts of the document.\n",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": "string",
-                "nested_properties": null
-              },
-              {
-                "name": "jsRendering",
-                "type": "boolean",
-                "description": "Enable JavaScript rendering.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "jsScenario",
-                "type": "array",
-                "description": "Enables custom JavaScript interactions on the target webpage during scraping. It's an array where each object defines a specific action or step. These actions can include clicking elements, waiting for elements, executing custom scripts, and more. Key actions within this field include:\n\n- `evaluate`: Run custom JavaScript code on the page.\n- `click`: Click on an element specified by a CSS selector.\n- `wait`: Pause for a set duration (in milliseconds).\n- `waitFor`: Delay until a specific element appears.\n- `waitForAndClick`: Combine waiting for an element and then clicking it.\n- `scrollX`, `scrollY`: Scroll to specified positions on the page.\n- `fill`: Enter values into input fields identified by CSS selectors.\n\nActions are executed sequentially.\n",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": "object",
                 "nested_properties": null
               },
               {
@@ -3562,67 +3576,53 @@
                 "nested_properties": null
               },
               {
-                "name": "proxyType",
-                "type": "string",
-                "description": "Type of proxy to use.",
+                "name": "extractEmails",
+                "type": "boolean",
+                "description": "Extract emails from the page.",
                 "required": false,
                 "default": null,
-                "enum": [
-                  "datacenter",
-                  "residential"
-                ],
+                "enum": null,
                 "format": null,
                 "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "aiExtractRules",
+                "type": "object",
+                "description": "Defines custom rules for AI-based data extraction using LLMs. This enables the system to extract structured data directly from the HTML of the page. Each key in the object represents a desired output field name, and the value specifies its type and optional description to guide the AI.\n\nSupported types:\n- `string`: plain text value\n- `number`: numeric value\n- `boolean`: true/false\n- `list`: an array of values\n- `item`: a nested object with its own structure defined under `output`\n",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "blockResources",
+                "type": "boolean",
+                "description": "Whether to block loading of resources like images and stylesheets.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "includeOnlyTags",
+                "type": "array",
+                "description": "The `includeOnlyTags` parameter accepts an array of valid CSS selectors.\nWhen specified, only the elements matching these selectors will be included in the response content.\nEach value must be a valid `querySelectorAll` selector. Useful for extracting specific parts of the document.\n",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
                 "nested_properties": null
               },
               {
                 "name": "removeBase64Images",
                 "type": "boolean",
                 "description": "If set to `true`, any images embedded as base64-encoded strings will be removed from the output.\nUseful for reducing response size or when base64 images are not needed.\n",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "screenshot",
-                "type": "boolean",
-                "description": "Whether to take a screenshot of the page.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "url",
-                "type": "string",
-                "description": "The URL of the web page to scrape.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "wait",
-                "type": "number",
-                "description": "Time in milliseconds to wait after the page load.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "waitFor",
-                "type": "string",
-                "description": "CSS selector to wait for before scraping.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -3996,21 +3996,10 @@
             "security_comment": "Tool `enforce_policy` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "callerId",
+                "name": "toolName",
                 "type": "string",
                 "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "confirmationToken",
-                "type": "string",
-                "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -4029,10 +4018,21 @@
                 "nested_properties": null
               },
               {
-                "name": "toolName",
+                "name": "callerId",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "confirmationToken",
+                "type": "string",
+                "description": null,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -4094,7 +4094,7 @@
             "security_comment": "Tool `request_confirmation_token` [LOW] handles sensitive credentials, tokens, or private secrets.",
             "parameters": [
               {
-                "name": "actionFingerprint",
+                "name": "toolName",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -4105,10 +4105,10 @@
                 "nested_properties": null
               },
               {
-                "name": "reason",
+                "name": "actionFingerprint",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -4127,10 +4127,10 @@
                 "nested_properties": null
               },
               {
-                "name": "toolName",
-                "type": "string",
+                "name": "ttlSeconds",
+                "type": "number",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -4138,8 +4138,8 @@
                 "nested_properties": null
               },
               {
-                "name": "ttlSeconds",
-                "type": "number",
+                "name": "reason",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -4160,10 +4160,10 @@
             "security_comment": "Tool `simulate_action` [CRITICAL] executes arbitrary host system commands or shell scripts; issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "actionType",
+                "name": "commandOrQuery",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -4171,10 +4171,10 @@
                 "nested_properties": null
               },
               {
-                "name": "commandOrQuery",
+                "name": "actionType",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -4469,9 +4469,9 @@
                 "nested_properties": null
               },
               {
-                "name": "owner_token",
-                "type": "string",
-                "description": "Owner token from register/claim",
+                "name": "product_id",
+                "type": "integer",
+                "description": "Product ID to add MCP config to",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4480,9 +4480,9 @@
                 "nested_properties": null
               },
               {
-                "name": "product_id",
-                "type": "integer",
-                "description": "Product ID to add MCP config to",
+                "name": "owner_token",
+                "type": "string",
+                "description": "Owner token from register/claim",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4502,31 +4502,9 @@
             "security_comment": "Tool `manage.register` [CRITICAL] executes arbitrary host system commands or shell scripts; initiates outbound network requests (potential SSRF risk).",
             "parameters": [
               {
-                "name": "category",
+                "name": "url",
                 "type": "string",
-                "description": "Category slug (use 'categories' tool to see options)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "description",
-                "type": "string",
-                "description": "What this product or business does (max 500 chars)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "mcp_config",
-                "type": "object",
-                "description": "MCP connection config so other agents can connect. For SSE: {\"transport\": \"sse\", \"url\": \"https://...\"}. For stdio: {\"transport\": \"stdio\", \"command\": \"npx\", \"args\": [\"pkg\"]}. For streamable-http: {\"transport\": \"streamable-http\", \"url\": \"https://...\"}.",
+                "description": "Homepage or primary URL",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4546,9 +4524,9 @@
                 "nested_properties": null
               },
               {
-                "name": "subcategory",
+                "name": "category",
                 "type": "string",
-                "description": "Subcategory slug (optional)",
+                "description": "Category slug (use 'categories' tool to see options)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4557,9 +4535,31 @@
                 "nested_properties": null
               },
               {
-                "name": "url",
+                "name": "mcp_config",
+                "type": "object",
+                "description": "MCP connection config so other agents can connect. For SSE: {\"transport\": \"sse\", \"url\": \"https://...\"}. For stdio: {\"transport\": \"stdio\", \"command\": \"npx\", \"args\": [\"pkg\"]}. For streamable-http: {\"transport\": \"streamable-http\", \"url\": \"https://...\"}.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "description",
                 "type": "string",
-                "description": "Homepage or primary URL",
+                "description": "What this product or business does (max 500 chars)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "subcategory",
+                "type": "string",
+                "description": "Subcategory slug (optional)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4579,9 +4579,9 @@
             "security_comment": "Tool `manage.update` [MEDIUM] initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets.",
             "parameters": [
               {
-                "name": "owner_token",
-                "type": "string",
-                "description": "Owner token from register/claim",
+                "name": "updates",
+                "type": "object",
+                "description": "Fields to update. Index fields: name, description, short_description, url, category, subcategory, price_model, has_free_tier. Any other keys go into the data blob (features, integrations, etc).",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4601,9 +4601,9 @@
                 "nested_properties": null
               },
               {
-                "name": "updates",
-                "type": "object",
-                "description": "Fields to update. Index fields: name, description, short_description, url, category, subcategory, price_model, has_free_tier. Any other keys go into the data blob (features, integrations, etc).",
+                "name": "owner_token",
+                "type": "string",
+                "description": "Owner token from register/claim",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4623,22 +4623,22 @@
             "security_comment": "Tool `search.alternatives` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "max_results",
+                "name": "product_id",
                 "type": "integer",
-                "description": "Maximum alternatives to return (default 5, max 10)",
+                "description": "Product ID to find alternatives for",
                 "required": false,
-                "default": 5,
+                "default": null,
                 "enum": null,
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
               },
               {
-                "name": "product_id",
+                "name": "max_results",
                 "type": "integer",
-                "description": "Product ID to find alternatives for",
+                "description": "Maximum alternatives to return (default 5, max 10)",
                 "required": false,
-                "default": null,
+                "default": 5,
                 "enum": null,
                 "format": null,
                 "items_type": null,
@@ -4710,61 +4710,6 @@
             "security_comment": "Tool `search.discover` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "category",
-                "type": "string",
-                "description": "Filter by category slug. Use 'categories' tool to see available categories. Examples: project-management, crm, communication, design, development, analytics, marketing, hr, finance, security, ai-ml, deployment, customer-support",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "has_free_tier",
-                "type": "boolean",
-                "description": "Only show products with a free plan/tier",
-                "required": false,
-                "default": false,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "max_price",
-                "type": "number",
-                "description": "Maximum price per unit in USD",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "max_results",
-                "type": "integer",
-                "description": "Maximum results to return (default 5, max 20)",
-                "required": false,
-                "default": 5,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "min_rating",
-                "type": "number",
-                "description": "Minimum rating (0-5 scale)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "query",
                 "type": "string",
                 "description": "Natural language search query, e.g. 'project management tool for small teams' or 'CRM with Slack integration'",
@@ -4787,9 +4732,20 @@
                 "nested_properties": null
               },
               {
-                "name": "subcategory",
+                "name": "category",
                 "type": "string",
-                "description": "Filter by subcategory slug. Use 'categories' tool to see subcategories within a category.",
+                "description": "Filter by category slug. Use 'categories' tool to see available categories. Examples: project-management, crm, communication, design, development, analytics, marketing, hr, finance, security, ai-ml, deployment, customer-support",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "max_price",
+                "type": "number",
+                "description": "Maximum price per unit in USD",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4807,6 +4763,50 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
+              },
+              {
+                "name": "min_rating",
+                "type": "number",
+                "description": "Minimum rating (0-5 scale)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "max_results",
+                "type": "integer",
+                "description": "Maximum results to return (default 5, max 20)",
+                "required": false,
+                "default": 5,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "subcategory",
+                "type": "string",
+                "description": "Filter by subcategory slug. Use 'categories' tool to see subcategories within a category.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "has_free_tier",
+                "type": "boolean",
+                "description": "Only show products with a free plan/tier",
+                "required": false,
+                "default": false,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
               }
             ],
             "annotations": {}
@@ -4820,9 +4820,31 @@
             "security_comment": "Tool `search.feedback` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
+                "name": "query",
+                "type": "string",
+                "description": "The search query that produced bad results (if applicable)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "actual",
                 "type": "string",
                 "description": "What you actually got (brief summary)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "message",
+                "type": "string",
+                "description": "Free-form feedback message with details",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -4854,28 +4876,6 @@
                   "suggestion",
                   "other"
                 ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "message",
-                "type": "string",
-                "description": "Free-form feedback message with details",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "query",
-                "type": "string",
-                "description": "The search query that produced bad results (if applicable)",
-                "required": false,
-                "default": null,
-                "enum": null,
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
@@ -5110,10 +5110,10 @@
             "security_comment": "Tool `reset_constitution` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "items",
+                "name": "sessionId",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -5121,10 +5121,10 @@
                 "nested_properties": null
               },
               {
-                "name": "sessionId",
+                "name": "items",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -5143,7 +5143,7 @@
             "security_comment": "Tool `update_constitution` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "rule",
+                "name": "sessionId",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -5154,7 +5154,7 @@
                 "nested_properties": null
               },
               {
-                "name": "sessionId",
+                "name": "rule",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -5187,29 +5187,7 @@
                 "nested_properties": null
               },
               {
-                "name": "items",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "plan",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "progress",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5231,7 +5209,29 @@
                 "nested_properties": null
               },
               {
-                "name": "sessionId",
+                "name": "userPrompt",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "progress",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "items",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5253,7 +5253,7 @@
                 "nested_properties": null
               },
               {
-                "name": "userPrompt",
+                "name": "sessionId",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5286,17 +5286,6 @@
                 "nested_properties": null
               },
               {
-                "name": "sessionId",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "solution",
                 "type": "string",
                 "description": null,
@@ -5309,6 +5298,17 @@
               },
               {
                 "name": "type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sessionId",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5568,7 +5568,7 @@
                 "nested_properties": null
               },
               {
-                "name": "project",
+                "name": "scope",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5590,7 +5590,7 @@
                 "nested_properties": null
               },
               {
-                "name": "scope",
+                "name": "project",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5612,7 +5612,29 @@
             "security_comment": "Tool `get_engineering_context` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "allow_historical",
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "top_k",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "repo",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5634,18 +5656,7 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "repo",
+                "name": "task_id",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5667,18 +5678,7 @@
                 "nested_properties": null
               },
               {
-                "name": "task_id",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "top_k",
+                "name": "allow_historical",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5711,7 +5711,7 @@
                 "nested_properties": null
               },
               {
-                "name": "project",
+                "name": "repo",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5722,7 +5722,7 @@
                 "nested_properties": null
               },
               {
-                "name": "repo",
+                "name": "project",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5744,7 +5744,7 @@
             "security_comment": "Tool `get_project_context` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "project",
+                "name": "scope",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5766,7 +5766,7 @@
                 "nested_properties": null
               },
               {
-                "name": "scope",
+                "name": "project",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5810,7 +5810,7 @@
                 "nested_properties": null
               },
               {
-                "name": "project",
+                "name": "repo",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5821,7 +5821,7 @@
                 "nested_properties": null
               },
               {
-                "name": "repo",
+                "name": "project",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5843,7 +5843,7 @@
             "security_comment": "Tool `get_stale_context` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "project",
+                "name": "threshold",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5865,7 +5865,7 @@
                 "nested_properties": null
               },
               {
-                "name": "threshold",
+                "name": "project",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5887,10 +5887,10 @@
             "security_comment": "Tool `get_symbol_context` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "file",
+                "name": "symbol_name",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -5898,7 +5898,7 @@
                 "nested_properties": null
               },
               {
-                "name": "project",
+                "name": "file",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -5920,10 +5920,10 @@
                 "nested_properties": null
               },
               {
-                "name": "symbol_name",
+                "name": "project",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6019,21 +6019,10 @@
             "security_comment": "Tool `record_decision` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "corroborates",
+                "name": "text",
                 "type": "string",
                 "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "force",
-                "type": "string",
-                "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6042,6 +6031,17 @@
               },
               {
                 "name": "module",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "symbol",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -6074,6 +6074,17 @@
                 "nested_properties": null
               },
               {
+                "name": "corroborates",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "supersedes",
                 "type": "string",
                 "description": null,
@@ -6085,21 +6096,10 @@
                 "nested_properties": null
               },
               {
-                "name": "symbol",
+                "name": "force",
                 "type": "string",
                 "description": null,
                 "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "text",
-                "type": "string",
-                "description": null,
-                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6118,10 +6118,10 @@
             "security_comment": "Tool `record_problem` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "module",
+                "name": "text",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6129,7 +6129,7 @@
                 "nested_properties": null
               },
               {
-                "name": "repo",
+                "name": "module",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -6151,10 +6151,10 @@
                 "nested_properties": null
               },
               {
-                "name": "text",
+                "name": "repo",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6184,10 +6184,10 @@
                 "nested_properties": null
               },
               {
-                "name": "repo",
+                "name": "resolution_text",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6195,10 +6195,10 @@
                 "nested_properties": null
               },
               {
-                "name": "resolution_text",
+                "name": "repo",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6217,10 +6217,10 @@
             "security_comment": "Tool `search_context` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "project",
+                "name": "query",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6228,10 +6228,10 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
+                "name": "top_k",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6250,7 +6250,7 @@
                 "nested_properties": null
               },
               {
-                "name": "top_k",
+                "name": "project",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -6303,10 +6303,10 @@
             "security_comment": "Tool `get_crypto_historical_data` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "days",
-                "type": "integer",
+                "name": "symbol",
+                "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6314,10 +6314,10 @@
                 "nested_properties": null
               },
               {
-                "name": "symbol",
-                "type": "string",
+                "name": "days",
+                "type": "integer",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -6497,7 +6497,7 @@
             "security_comment": "Tool `describe_table` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "db_id",
+                "name": "table_name",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6508,7 +6508,7 @@
                 "nested_properties": null
               },
               {
-                "name": "table_name",
+                "name": "db_id",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6530,7 +6530,7 @@
             "security_comment": "Tool `execute_query` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "db_id",
+                "name": "query",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6541,7 +6541,7 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
+                "name": "db_id",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6563,7 +6563,7 @@
             "security_comment": "Tool `execute_query_json` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "db_id",
+                "name": "query",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6574,7 +6574,7 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
+                "name": "db_id",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6650,7 +6650,7 @@
             "security_comment": "Tool `get_table_columns` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "db_id",
+                "name": "table_name",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6661,7 +6661,7 @@
                 "nested_properties": null
               },
               {
-                "name": "table_name",
+                "name": "db_id",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6683,6 +6683,17 @@
             "security_comment": "Tool `get_table_sample` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
+                "name": "table_name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "db_id",
                 "type": "string",
                 "description": null,
@@ -6703,17 +6714,6 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              },
-              {
-                "name": "table_name",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
               }
             ],
             "annotations": {}
@@ -6727,7 +6727,7 @@
             "security_comment": "Tool `get_table_types` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "db_id",
+                "name": "table_name",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -6738,7 +6738,7 @@
                 "nested_properties": null
               },
               {
-                "name": "table_name",
+                "name": "db_id",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -8682,9 +8682,9 @@
                 "nested_properties": null
               },
               {
-                "name": "minTvl",
-                "type": "number",
-                "description": "Minimum TVL in USD to filter pools (default: 100000)",
+                "name": "token",
+                "type": "string",
+                "description": "Token symbol to find yields for (e.g. USDC, ETH, WBTC)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -8693,9 +8693,9 @@
                 "nested_properties": null
               },
               {
-                "name": "token",
-                "type": "string",
-                "description": "Token symbol to find yields for (e.g. USDC, ETH, WBTC)",
+                "name": "minTvl",
+                "type": "number",
+                "description": "Minimum TVL in USD to filter pools (default: 100000)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -8949,6 +8949,28 @@
             "security_comment": "Tool `analyze_text` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
+                "name": "text",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "index",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "analyzer",
                 "type": "string",
                 "description": null,
@@ -8960,7 +8982,18 @@
                 "nested_properties": null
               },
               {
-                "name": "attributes",
+                "name": "tokenizer",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -8982,17 +9015,6 @@
                 "nested_properties": null
               },
               {
-                "name": "cluster",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "explain",
                 "type": "boolean",
                 "description": null,
@@ -9004,7 +9026,7 @@
                 "nested_properties": null
               },
               {
-                "name": "filter",
+                "name": "attributes",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -9015,29 +9037,7 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "text",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "tokenizer",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -9059,10 +9059,10 @@
             "security_comment": "Tool `create_data_stream` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "name",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9070,10 +9070,10 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9092,6 +9092,17 @@
             "security_comment": "Tool `create_index` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
+                "name": "index",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "body",
                 "type": "object",
                 "description": null,
@@ -9107,17 +9118,6 @@
                 "type": "string",
                 "description": null,
                 "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "index",
-                "type": "string",
-                "description": null,
-                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9136,17 +9136,6 @@
             "security_comment": "Tool `delete_alias` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "index",
                 "type": "string",
                 "description": null,
@@ -9162,6 +9151,17 @@
                 "type": "string",
                 "description": null,
                 "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cluster",
+                "type": "string",
+                "description": null,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9180,6 +9180,17 @@
             "security_comment": "Tool `delete_by_query` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
+                "name": "index",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "body",
                 "type": "object",
                 "description": null,
@@ -9195,17 +9206,6 @@
                 "type": "string",
                 "description": null,
                 "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "index",
-                "type": "string",
-                "description": null,
-                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9224,10 +9224,10 @@
             "security_comment": "Tool `delete_data_stream` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "name",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9235,10 +9235,10 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9257,10 +9257,10 @@
             "security_comment": "Tool `delete_document` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "index",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9279,10 +9279,10 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9301,10 +9301,10 @@
             "security_comment": "Tool `delete_index` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "index",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9312,10 +9312,10 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9334,21 +9334,10 @@
             "security_comment": "Tool `general_api_request` [MEDIUM] reads, writes, or modifies host filesystem paths.",
             "parameters": [
               {
-                "name": "body",
-                "type": "object",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "cluster",
+                "name": "method",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9356,7 +9345,7 @@
                 "nested_properties": null
               },
               {
-                "name": "method",
+                "name": "path",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -9378,10 +9367,21 @@
                 "nested_properties": null
               },
               {
-                "name": "path",
+                "name": "body",
+                "type": "object",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9400,10 +9400,10 @@
             "security_comment": "Tool `get_alias` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "index",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9411,10 +9411,10 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9477,7 +9477,7 @@
             "security_comment": "Tool `get_data_stream` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "name",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -9488,7 +9488,7 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -9510,10 +9510,10 @@
             "security_comment": "Tool `get_document` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "index",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9532,10 +9532,10 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9554,10 +9554,10 @@
             "security_comment": "Tool `get_index` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "index",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9565,10 +9565,10 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9587,10 +9587,10 @@
             "security_comment": "Tool `index_document` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "cluster",
+                "name": "index",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9620,10 +9620,10 @@
                 "nested_properties": null
               },
               {
-                "name": "index",
+                "name": "cluster",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -9686,28 +9686,6 @@
             "security_comment": "Tool `put_alias` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "body",
-                "type": "object",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "cluster",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "index",
                 "type": "string",
                 "description": null,
@@ -9728,18 +9706,7 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "search_documents",
-            "canonical_hash": "sha256:264986b049e8c0639db9fa187525bf2a7448a4d95d7f3cd92c22d3c25b72916f",
-            "description": "Search for documents.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `search_documents` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
+              },
               {
                 "name": "body",
                 "type": "object",
@@ -9761,12 +9728,45 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              },
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "search_documents",
+            "canonical_hash": "sha256:264986b049e8c0639db9fa187525bf2a7448a4d95d7f3cd92c22d3c25b72916f",
+            "description": "Search for documents.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_documents` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
               {
                 "name": "index",
                 "type": "string",
                 "description": null,
                 "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "body",
+                "type": "object",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cluster",
+                "type": "string",
+                "description": null,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -10143,9 +10143,9 @@
             "security_comment": "Tool `socrata_dataframe_query` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "canvas_id",
+                "name": "sql",
                 "type": "string",
-                "description": "Canvas ID returned from socrata_query_dataset or socrata_dataframe_describe.",
+                "description": "SELECT-only SQL to run against registered canvas tables. DDL, DML, and file-reading functions are rejected. Use table names from socrata_dataframe_describe.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10165,9 +10165,9 @@
                 "nested_properties": null
               },
               {
-                "name": "sql",
+                "name": "canvas_id",
                 "type": "string",
-                "description": "SELECT-only SQL to run against registered canvas tables. DDL, DML, and file-reading functions are rejected. Use table names from socrata_dataframe_describe.",
+                "description": "Canvas ID returned from socrata_query_dataset or socrata_dataframe_describe.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10187,50 +10187,6 @@
             "security_comment": "Tool `socrata_find_datasets` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "categories",
-                "type": "array",
-                "description": "Filter by domain categories (e.g. [\"Public Safety\", \"Transportation\"]).",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": "string",
-                "nested_properties": null
-              },
-              {
-                "name": "domain",
-                "type": "string",
-                "description": "Scope search to a single portal (e.g. data.seattle.gov, data.cityofnewyork.us). Omit to search all portals.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "limit",
-                "type": "integer",
-                "description": "Number of results to return (1–100). Default 10.",
-                "required": false,
-                "default": 10,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "offset",
-                "type": "integer",
-                "description": "Pagination offset. Default 0.",
-                "required": false,
-                "default": 0,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "only",
                 "type": "string",
                 "description": "Filter by asset type. Omit to include all types. Usually \"datasets\" is what you want.",
@@ -10243,6 +10199,28 @@
                   "calendars",
                   "stories"
                 ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "tags",
+                "type": "array",
+                "description": "Filter by tags (e.g. [\"covid19\", \"permits\"]).",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "integer",
+                "description": "Number of results to return (1–100). Default 10.",
+                "required": false,
+                "default": 10,
+                "enum": null,
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
@@ -10275,9 +10253,31 @@
                 "nested_properties": null
               },
               {
-                "name": "tags",
+                "name": "domain",
+                "type": "string",
+                "description": "Scope search to a single portal (e.g. data.seattle.gov, data.cityofnewyork.us). Omit to search all portals.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "offset",
+                "type": "integer",
+                "description": "Pagination offset. Default 0.",
+                "required": false,
+                "default": 0,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "categories",
                 "type": "array",
-                "description": "Filter by tags (e.g. [\"covid19\", \"permits\"]).",
+                "description": "Filter by domain categories (e.g. [\"Public Safety\", \"Transportation\"]).",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10297,9 +10297,9 @@
             "security_comment": "Tool `socrata_get_dataset` [HIGH] issues raw database queries that could lead to SQL injection; inspects or modifies host environment variables.",
             "parameters": [
               {
-                "name": "dataset_id",
+                "name": "domain",
                 "type": "string",
-                "description": "Four-by-four dataset ID matching pattern like kzjm-xkqj. Obtain from socrata_find_datasets.",
+                "description": "Portal domain (e.g. data.seattle.gov). Defaults to SOCRATA_DEFAULT_DOMAIN env var or data.seattle.gov.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10308,9 +10308,9 @@
                 "nested_properties": null
               },
               {
-                "name": "domain",
+                "name": "dataset_id",
                 "type": "string",
-                "description": "Portal domain (e.g. data.seattle.gov). Defaults to SOCRATA_DEFAULT_DOMAIN env var or data.seattle.gov.",
+                "description": "Four-by-four dataset ID matching pattern like kzjm-xkqj. Obtain from socrata_find_datasets.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10341,22 +10341,22 @@
                 "nested_properties": null
               },
               {
-                "name": "offset",
-                "type": "integer",
-                "description": "Pagination offset. Default 0.",
+                "name": "query",
+                "type": "string",
+                "description": "Keyword to filter portal names or organization names (case-insensitive substring match). Omit to list all portals.",
                 "required": false,
-                "default": 0,
+                "default": null,
                 "enum": null,
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
               },
               {
-                "name": "query",
-                "type": "string",
-                "description": "Keyword to filter portal names or organization names (case-insensitive substring match). Omit to list all portals.",
+                "name": "offset",
+                "type": "integer",
+                "description": "Pagination offset. Default 0.",
                 "required": false,
-                "default": null,
+                "default": 0,
                 "enum": null,
                 "format": null,
                 "items_type": null,
@@ -10374,53 +10374,9 @@
             "security_comment": "Tool `socrata_query_dataset` [HIGH] issues raw database queries that could lead to SQL injection; handles sensitive credentials, tokens, or private secrets.",
             "parameters": [
               {
-                "name": "canvas_id",
-                "type": "string",
-                "description": "Optional 10-char DataCanvas token from a prior call. Omit on first call when CANVAS_PROVIDER_TYPE=duckdb to mint a fresh canvas. Large result sets spill here automatically.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "dataset_id",
-                "type": "string",
-                "description": "Four-by-four dataset ID (e.g. kzjm-xkqj). Obtain from socrata_find_datasets.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "domain",
-                "type": "string",
-                "description": "Portal domain (e.g. data.seattle.gov). Defaults to SOCRATA_DEFAULT_DOMAIN or data.seattle.gov.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "group",
                 "type": "string",
                 "description": "SoQL GROUP BY clause. Requires an aggregate function in select.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "having",
-                "type": "string",
-                "description": "SoQL HAVING clause. Filters on aggregated results, e.g. count > 100.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10440,22 +10396,55 @@
                 "nested_properties": null
               },
               {
-                "name": "offset",
-                "type": "integer",
-                "description": "Row offset for pagination. Default 0.",
+                "name": "order",
+                "type": "string",
+                "description": "SoQL ORDER BY clause, e.g. \"total_deaths DESC\" or \"date ASC\".",
                 "required": false,
-                "default": 0,
+                "default": null,
                 "enum": null,
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
               },
               {
-                "name": "order",
+                "name": "where",
                 "type": "string",
-                "description": "SoQL ORDER BY clause, e.g. \"total_deaths DESC\" or \"date ASC\".",
+                "description": "SoQL WHERE clause. Check column dataType from socrata_get_dataset first — Number columns: year=2023, Text columns: year='2023'. Operators: =, !=, >, <, LIKE, IN(...), BETWEEN, IS NULL, starts_with(), contains(), AND, OR, NOT.",
                 "required": false,
                 "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "domain",
+                "type": "string",
+                "description": "Portal domain (e.g. data.seattle.gov). Defaults to SOCRATA_DEFAULT_DOMAIN or data.seattle.gov.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "having",
+                "type": "string",
+                "description": "SoQL HAVING clause. Filters on aggregated results, e.g. count > 100.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "offset",
+                "type": "integer",
+                "description": "Row offset for pagination. Default 0.",
+                "required": false,
+                "default": 0,
                 "enum": null,
                 "format": null,
                 "items_type": null,
@@ -10484,9 +10473,20 @@
                 "nested_properties": null
               },
               {
-                "name": "where",
+                "name": "canvas_id",
                 "type": "string",
-                "description": "SoQL WHERE clause. Check column dataType from socrata_get_dataset first — Number columns: year=2023, Text columns: year='2023'. Operators: =, !=, >, <, LIKE, IN(...), BETWEEN, IS NULL, starts_with(), contains(), AND, OR, NOT.",
+                "description": "Optional 10-char DataCanvas token from a prior call. Omit on first call when CANVAS_PROVIDER_TYPE=duckdb to mint a fresh canvas. Large result sets spill here automatically.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "dataset_id",
+                "type": "string",
+                "description": "Four-by-four dataset ID (e.g. kzjm-xkqj). Obtain from socrata_find_datasets.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10756,17 +10756,6 @@
             "security_comment": "Tool `dynamoi_get_artist` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "artistId",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": "uuid",
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "format",
                 "type": "string",
                 "description": null,
@@ -10777,6 +10766,17 @@
                   "summary"
                 ],
                 "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "artistId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               }
@@ -10792,17 +10792,6 @@
             "security_comment": "Tool `dynamoi_get_billing` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "artistId",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": "uuid",
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "format",
                 "type": "string",
                 "description": null,
@@ -10813,6 +10802,17 @@
                   "summary"
                 ],
                 "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "artistId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               }
@@ -10828,17 +10828,6 @@
             "security_comment": "Tool `dynamoi_get_campaign` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
             "parameters": [
               {
-                "name": "campaignId",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": "uuid",
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "format",
                 "type": "string",
                 "description": null,
@@ -10849,6 +10838,17 @@
                   "summary"
                 ],
                 "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "campaignId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               }
@@ -10864,13 +10864,16 @@
             "security_comment": "Tool `dynamoi_get_campaign_analytics` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "campaignId",
+                "name": "format",
                 "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
-                "enum": null,
-                "format": "uuid",
+                "enum": [
+                  "json",
+                  "summary"
+                ],
+                "format": null,
                 "items_type": null,
                 "nested_properties": null
               },
@@ -10895,16 +10898,13 @@
                 }
               },
               {
-                "name": "format",
+                "name": "campaignId",
                 "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
-                "enum": [
-                  "json",
-                  "summary"
-                ],
-                "format": null,
+                "enum": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               },
@@ -10959,17 +10959,6 @@
             "security_comment": "Tool `dynamoi_get_platform_status` [LOW] handles sensitive credentials, tokens, or private secrets.",
             "parameters": [
               {
-                "name": "artistId",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": "uuid",
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "format",
                 "type": "string",
                 "description": null,
@@ -10980,6 +10969,17 @@
                   "summary"
                 ],
                 "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "artistId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               }
@@ -11006,7 +11006,7 @@
                 "nested_properties": null
               },
               {
-                "name": "appleMusicUrl",
+                "name": "endDate",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -11028,28 +11028,6 @@
                 "nested_properties": null
               },
               {
-                "name": "budgetAmount",
-                "type": "number",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "budgetSplits",
-                "type": "object",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "budgetType",
                 "type": "string",
                 "description": null,
@@ -11064,32 +11042,7 @@
                 "nested_properties": null
               },
               {
-                "name": "campaignType",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": [
-                  "SMART_CAMPAIGN",
-                  "YOUTUBE"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "clientRequestId",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": "uuid",
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "contentTitle",
+                "name": "spotifyUrl",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -11116,13 +11069,93 @@
                 "nested_properties": null
               },
               {
-                "name": "endDate",
+                "name": "budgetAmount",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "budgetSplits",
+                "type": "object",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "campaignType",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": [
+                  "SMART_CAMPAIGN",
+                  "YOUTUBE"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "contentTitle",
                 "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "appleMusicUrl",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "mediaAssetIds",
+                "type": "array",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "youtubeVideoId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "clientRequestId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               },
@@ -11138,41 +11171,8 @@
                 "nested_properties": null
               },
               {
-                "name": "mediaAssetIds",
-                "type": "array",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": "string",
-                "nested_properties": null
-              },
-              {
-                "name": "spotifyUrl",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "useAiGeneratedCopy",
                 "type": "boolean",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "youtubeVideoId",
-                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -11192,6 +11192,64 @@
             "risk_tier": "low",
             "security_comment": "Tool `dynamoi_list_artists` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
+              {
+                "name": "limit",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cursor",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": [
+                  "json",
+                  "summary"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "dynamoi_list_campaigns",
+            "canonical_hash": "sha256:5b8977c0947c71a5928c30463bd9f0d50aa4ad142cab434e0c87f8ca0be0dd23",
+            "description": "List ad campaigns for an artist — each campaign's content title, type (Smart Campaign for Spotify or YouTube for channel growth), budget, status, and platforms. Supports status filtering and pagination.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `dynamoi_list_campaigns` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "limit",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
               {
                 "name": "cursor",
                 "type": "string",
@@ -11218,8 +11276,8 @@
                 "nested_properties": null
               },
               {
-                "name": "limit",
-                "type": "integer",
+                "name": "status",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -11227,18 +11285,7 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "dynamoi_list_campaigns",
-            "canonical_hash": "sha256:5b8977c0947c71a5928c30463bd9f0d50aa4ad142cab434e0c87f8ca0be0dd23",
-            "description": "List ad campaigns for an artist — each campaign's content title, type (Smart Campaign for Spotify or YouTube for channel growth), budget, status, and platforms. Supports status filtering and pagination.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `dynamoi_list_campaigns` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
+              },
               {
                 "name": "artistId",
                 "type": "string",
@@ -11263,53 +11310,6 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              },
-              {
-                "name": "cursor",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "format",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": [
-                  "json",
-                  "summary"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "limit",
-                "type": "integer",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "status",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
               }
             ],
             "annotations": {}
@@ -11323,13 +11323,13 @@
             "security_comment": "Tool `dynamoi_list_media_assets` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "artistId",
-                "type": "string",
+                "name": "limit",
+                "type": "integer",
                 "description": null,
                 "required": false,
                 "default": null,
                 "enum": null,
-                "format": "uuid",
+                "format": null,
                 "items_type": null,
                 "nested_properties": null
               },
@@ -11359,13 +11359,13 @@
                 "nested_properties": null
               },
               {
-                "name": "limit",
-                "type": "integer",
+                "name": "artistId",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
                 "enum": null,
-                "format": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               }
@@ -11425,13 +11425,39 @@
             "security_comment": "Tool `dynamoi_search` [HIGH] issues raw database queries that could lead to SQL injection; initiates outbound network requests (potential SSRF risk).",
             "parameters": [
               {
-                "name": "artistId",
+                "name": "type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": [
+                  "artist",
+                  "campaign",
+                  "smartlink"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
                 "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
                 "enum": null,
-                "format": "uuid",
+                "format": null,
                 "items_type": null,
                 "nested_properties": null
               },
@@ -11461,39 +11487,13 @@
                 "nested_properties": null
               },
               {
-                "name": "limit",
-                "type": "integer",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "query",
+                "name": "artistId",
                 "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
                 "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "type",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": [
-                  "artist",
-                  "campaign",
-                  "smartlink"
-                ],
-                "format": null,
+                "format": "uuid",
                 "items_type": null,
                 "nested_properties": null
               }
@@ -11509,8 +11509,8 @@
             "security_comment": "Tool `dynamoi_update_budget` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "budgetAmount",
-                "type": "number",
+                "name": "endDate",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -11531,8 +11531,8 @@
                 "nested_properties": null
               },
               {
-                "name": "endDate",
-                "type": "string",
+                "name": "budgetAmount",
+                "type": "number",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -12815,7 +12815,7 @@
                 "nested_properties": null
               },
               {
-                "name": "arxiv_id",
+                "name": "title",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -12826,7 +12826,7 @@
                 "nested_properties": null
               },
               {
-                "name": "title",
+                "name": "arxiv_id",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -13027,65 +13027,6 @@
             "security_comment": "Tool `can_i_run_it` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "active_b",
-                "type": "number",
-                "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "bandwidth_gbps",
-                "type": "number",
-                "description": "For custom hardware: memory bandwidth in GB/s",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "context",
-                "type": "number",
-                "description": "Context window in tokens (default 8192)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "hardware",
-                "type": "string",
-                "description": "Hardware name/id, e.g. 'rtx-3090', 'Mac 128GB', 'Strix Halo'. Use list_hardware to see known ones.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "kv_precision",
-                "type": "string",
-                "description": "KV cache precision (default f16)",
-                "required": false,
-                "default": null,
-                "enum": [
-                  "f16",
-                  "q8",
-                  "q4"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "model",
                 "type": "string",
                 "description": "Model name, e.g. 'Llama 70B', 'gpt-oss-120B', 'Qwen 32B'. Use list_models to see known names.",
@@ -13100,6 +13041,17 @@
                 "name": "mxfp4",
                 "type": "boolean",
                 "description": "True if the model ships natively in MXFP4 (e.g. gpt-oss)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "context",
+                "type": "number",
+                "description": "Context window in tokens (default 8192)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13139,18 +13091,7 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "cheapest_hardware_for_model",
-            "canonical_hash": "sha256:6c763d3065dead08e552106af175d336e497b4b9de61b288c9da53e52d4fad32",
-            "description": "The cheapest catalogued, buyable machine that runs a given model at Q4 with the requested context.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `cheapest_hardware_for_model` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
+              },
               {
                 "name": "active_b",
                 "type": "number",
@@ -13163,9 +13104,9 @@
                 "nested_properties": null
               },
               {
-                "name": "context",
-                "type": "number",
-                "description": "Context window in tokens (default 8192)",
+                "name": "hardware",
+                "type": "string",
+                "description": "Hardware name/id, e.g. 'rtx-3090', 'Mac 128GB', 'Strix Halo'. Use list_hardware to see known ones.",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13173,6 +13114,43 @@
                 "items_type": null,
                 "nested_properties": null
               },
+              {
+                "name": "kv_precision",
+                "type": "string",
+                "description": "KV cache precision (default f16)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "f16",
+                  "q8",
+                  "q4"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "bandwidth_gbps",
+                "type": "number",
+                "description": "For custom hardware: memory bandwidth in GB/s",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "cheapest_hardware_for_model",
+            "canonical_hash": "sha256:6c763d3065dead08e552106af175d336e497b4b9de61b288c9da53e52d4fad32",
+            "description": "The cheapest catalogued, buyable machine that runs a given model at Q4 with the requested context.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cheapest_hardware_for_model` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
               {
                 "name": "model",
                 "type": "string",
@@ -13196,9 +13174,31 @@
                 "nested_properties": null
               },
               {
+                "name": "context",
+                "type": "number",
+                "description": "Context window in tokens (default 8192)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "total_b",
                 "type": "number",
                 "description": "For an unlisted model: total parameters in billions",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "active_b",
+                "type": "number",
+                "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13218,9 +13218,20 @@
             "security_comment": "Tool `compare_hardware` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "active_b",
-                "type": "number",
-                "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
+                "name": "model",
+                "type": "string",
+                "description": "Model name, e.g. 'Llama 70B', 'gpt-oss-120B', 'Qwen 32B'. Use list_models to see known names.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "mxfp4",
+                "type": "boolean",
+                "description": "True if the model ships natively in MXFP4 (e.g. gpt-oss)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13232,6 +13243,28 @@
                 "name": "context",
                 "type": "number",
                 "description": "Context window in tokens (default 8192)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "total_b",
+                "type": "number",
+                "description": "For an unlisted model: total parameters in billions",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "active_b",
+                "type": "number",
+                "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13264,39 +13297,6 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              },
-              {
-                "name": "model",
-                "type": "string",
-                "description": "Model name, e.g. 'Llama 70B', 'gpt-oss-120B', 'Qwen 32B'. Use list_models to see known names.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "mxfp4",
-                "type": "boolean",
-                "description": "True if the model ships natively in MXFP4 (e.g. gpt-oss)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "total_b",
-                "type": "number",
-                "description": "For an unlisted model: total parameters in billions",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
               }
             ],
             "annotations": {}
@@ -13321,28 +13321,6 @@
                 "nested_properties": null
               },
               {
-                "name": "hardware",
-                "type": "string",
-                "description": "Catalogued hardware name/id (see list_hardware), e.g. 'rtx-3090-used'",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "hours",
-                "type": "number",
-                "description": "Active hours per day (default 3)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "kwh",
                 "type": "number",
                 "description": "Electricity $/kWh (default 0.16)",
@@ -13354,9 +13332,9 @@
                 "nested_properties": null
               },
               {
-                "name": "price_usd",
+                "name": "rent",
                 "type": "number",
-                "description": "For custom hardware: price in USD",
+                "description": "Cloud GPU $/hour (default 0.59)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13365,9 +13343,9 @@
                 "nested_properties": null
               },
               {
-                "name": "rent",
+                "name": "hours",
                 "type": "number",
-                "description": "Cloud GPU $/hour (default 0.59)",
+                "description": "Active hours per day (default 3)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13390,6 +13368,28 @@
                 "name": "tokens",
                 "type": "number",
                 "description": "Tokens generated per day, for the API comparison (default 300000)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "hardware",
+                "type": "string",
+                "description": "Catalogued hardware name/id (see list_hardware), e.g. 'rtx-3090-used'",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "price_usd",
+                "type": "number",
+                "description": "For custom hardware: price in USD",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13451,9 +13451,20 @@
             "security_comment": "Tool `recommend_hardware` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "active_b",
-                "type": "number",
-                "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
+                "name": "model",
+                "type": "string",
+                "description": "Model name, e.g. 'Llama 70B', 'gpt-oss-120B', 'Qwen 32B'. Use list_models to see known names.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "mxfp4",
+                "type": "boolean",
+                "description": "True if the model ships natively in MXFP4 (e.g. gpt-oss)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13484,6 +13495,28 @@
                 "nested_properties": null
               },
               {
+                "name": "total_b",
+                "type": "number",
+                "description": "For an unlisted model: total parameters in billions",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "active_b",
+                "type": "number",
+                "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "kv_precision",
                 "type": "string",
                 "description": "KV cache precision (default f16)",
@@ -13497,7 +13530,18 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              },
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "recommend_quant",
+            "canonical_hash": "sha256:48cb1040c0c2dd1772bb7a549c4373cb55fc799d4154a3fadb798c5485569a52",
+            "description": "Which GGUF quantization to download for a model on given hardware: the full quant ladder with file size, max context, and tok/s for each, plus the recommended pick.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `recommend_quant` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
               {
                 "name": "model",
                 "type": "string",
@@ -13521,6 +13565,17 @@
                 "nested_properties": null
               },
               {
+                "name": "context",
+                "type": "number",
+                "description": "Context window in tokens (default 8192)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "total_b",
                 "type": "number",
                 "description": "For an unlisted model: total parameters in billions",
@@ -13530,44 +13585,33 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "recommend_quant",
-            "canonical_hash": "sha256:48cb1040c0c2dd1772bb7a549c4373cb55fc799d4154a3fadb798c5485569a52",
-            "description": "Which GGUF quantization to download for a model on given hardware: the full quant ladder with file size, max context, and tok/s for each, plus the recommended pick.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `recommend_quant` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
+              },
+              {
+                "name": "unified",
+                "type": "boolean",
+                "description": "True for unified-memory machines (Macs, Strix Halo, CPU+RAM)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "vram_gb",
+                "type": "number",
+                "description": "For custom hardware: VRAM or unified memory in GB",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
               {
                 "name": "active_b",
                 "type": "number",
                 "description": "For an unlisted model: active params in billions (= total for dense, less for MoE)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "bandwidth_gbps",
-                "type": "number",
-                "description": "For custom hardware: memory bandwidth in GB/s",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "context",
-                "type": "number",
-                "description": "Context window in tokens (default 8192)",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -13602,53 +13646,9 @@
                 "nested_properties": null
               },
               {
-                "name": "model",
-                "type": "string",
-                "description": "Model name, e.g. 'Llama 70B', 'gpt-oss-120B', 'Qwen 32B'. Use list_models to see known names.",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "mxfp4",
-                "type": "boolean",
-                "description": "True if the model ships natively in MXFP4 (e.g. gpt-oss)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "total_b",
+                "name": "bandwidth_gbps",
                 "type": "number",
-                "description": "For an unlisted model: total parameters in billions",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "unified",
-                "type": "boolean",
-                "description": "True for unified-memory machines (Macs, Strix Halo, CPU+RAM)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "vram_gb",
-                "type": "number",
-                "description": "For custom hardware: VRAM or unified memory in GB",
+                "description": "For custom hardware: memory bandwidth in GB/s",
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -14265,10 +14265,10 @@
             "security_comment": "Tool `ask_whitepapers` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "project_name",
+                "name": "query",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -14276,10 +14276,10 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
+                "name": "project_name",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -15101,10 +15101,10 @@
             "security_comment": "Tool `generate_pdf` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "author",
+                "name": "content",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -15112,10 +15112,10 @@
                 "nested_properties": null
               },
               {
-                "name": "content",
+                "name": "author",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -15381,17 +15381,6 @@
             "security_comment": "Tool `get_output` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "format",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "job_id",
                 "type": "string",
                 "description": null,
@@ -15407,6 +15396,17 @@
                 "type": "string",
                 "description": null,
                 "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": null,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -15580,6 +15580,17 @@
                 "nested_properties": null
               },
               {
+                "name": "userRequest",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "context",
                 "type": "string",
                 "description": null,
@@ -15595,17 +15606,6 @@
                 "type": "string",
                 "description": null,
                 "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "userRequest",
-                "type": "string",
-                "description": null,
-                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -15624,17 +15624,6 @@
             "security_comment": "Tool `ethics_check` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "context",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "conversation",
                 "type": "string",
                 "description": null,
@@ -15646,7 +15635,18 @@
                 "nested_properties": null
               },
               {
-                "name": "previousConcerns",
+                "name": "userRequest",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "context",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -15668,7 +15668,7 @@
                 "nested_properties": null
               },
               {
-                "name": "userRequest",
+                "name": "previousConcerns",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -15690,6 +15690,17 @@
             "security_comment": "Tool `ethics_guide` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
+                "name": "scenario",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "domain",
                 "type": "string",
                 "description": null,
@@ -15705,17 +15716,6 @@
                 "type": "string",
                 "description": null,
                 "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "scenario",
-                "type": "string",
-                "description": null,
-                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -15745,7 +15745,7 @@
             "security_comment": "Tool `ethics_learn` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "category",
+                "name": "concern",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -15756,7 +15756,7 @@
                 "nested_properties": null
               },
               {
-                "name": "concern",
+                "name": "category",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -16091,7 +16091,7 @@
                 "nested_properties": null
               },
               {
-                "name": "page",
+                "name": "quality",
                 "type": "number",
                 "description": null,
                 "required": false,
@@ -16102,7 +16102,7 @@
                 "nested_properties": null
               },
               {
-                "name": "quality",
+                "name": "page",
                 "type": "number",
                 "description": null,
                 "required": false,
@@ -16209,8 +16209,8 @@
             "security_comment": "Tool `list_designs` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "limit",
-                "type": "number",
+                "name": "query",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -16220,8 +16220,8 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
-                "type": "string",
+                "name": "limit",
+                "type": "number",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -17489,7 +17489,7 @@
             "security_comment": "Tool `count_appeal_precedents_for_rejection_code` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "procedure_code",
+                "name": "rejection_code",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17500,7 +17500,7 @@
                 "nested_properties": null
               },
               {
-                "name": "rejection_code",
+                "name": "procedure_code",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17522,7 +17522,7 @@
             "security_comment": "Tool `get_drug_rules` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "drug_category_query",
+                "name": "specialty",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17533,7 +17533,7 @@
                 "nested_properties": null
               },
               {
-                "name": "specialty",
+                "name": "drug_category_query",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17620,10 +17620,10 @@
             "security_comment": "Tool `get_safe_phrases` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "scenario_query",
+                "name": "specialty",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -17631,10 +17631,10 @@
                 "nested_properties": null
               },
               {
-                "name": "specialty",
+                "name": "scenario_query",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -17719,6 +17719,17 @@
             "security_comment": "Tool `lookup_audit_clauses_for_specialty` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
+                "name": "specialty",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "keyword",
                 "type": "string",
                 "description": null,
@@ -17739,17 +17750,6 @@
                 "format": null,
                 "items_type": null,
                 "nested_properties": null
-              },
-              {
-                "name": "specialty",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
               }
             ],
             "annotations": {}
@@ -17763,17 +17763,6 @@
             "security_comment": "Tool `lookup_audit_indicator` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "category",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "indicator_code",
                 "type": "string",
                 "description": null,
@@ -17785,7 +17774,7 @@
                 "nested_properties": null
               },
               {
-                "name": "procedure_code",
+                "name": "category",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17797,6 +17786,17 @@
               },
               {
                 "name": "specialty",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "procedure_code",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17818,7 +17818,7 @@
             "security_comment": "Tool `lookup_chronic_prescription_rule` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "category",
+                "name": "icd_code",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17840,7 +17840,7 @@
                 "nested_properties": null
               },
               {
-                "name": "icd_code",
+                "name": "category",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17862,17 +17862,6 @@
             "security_comment": "Tool `lookup_drug` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "dosage_form",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "q",
                 "type": "string",
                 "description": null,
@@ -17884,7 +17873,7 @@
                 "nested_properties": null
               },
               {
-                "name": "route",
+                "name": "specialty",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17895,7 +17884,18 @@
                 "nested_properties": null
               },
               {
-                "name": "specialty",
+                "name": "dosage_form",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "route",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -17917,6 +17917,17 @@
             "security_comment": "Tool `lookup_fee_code` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
+                "name": "q",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "category",
                 "type": "string",
                 "description": null,
@@ -17932,17 +17943,6 @@
                 "type": "string",
                 "description": null,
                 "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "q",
-                "type": "string",
-                "description": null,
-                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -18060,7 +18060,7 @@
                 "nested_properties": null
               },
               {
-                "name": "q",
+                "name": "specialty",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -18071,7 +18071,7 @@
                 "nested_properties": null
               },
               {
-                "name": "specialty",
+                "name": "q",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -18092,28 +18092,6 @@
             "risk_tier": "low",
             "security_comment": "Tool `lookup_point_value` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
-              {
-                "name": "metric",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "quarter",
-                "type": "integer",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
               {
                 "name": "region",
                 "type": "string",
@@ -18139,6 +18117,28 @@
               {
                 "name": "year",
                 "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "quarter",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "metric",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -18246,8 +18246,8 @@
             "security_comment": "Tool `lookup_special_material` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "current",
-                "type": "boolean",
+                "name": "procedure",
+                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -18257,8 +18257,8 @@
                 "nested_properties": null
               },
               {
-                "name": "procedure",
-                "type": "string",
+                "name": "current",
+                "type": "boolean",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -18279,17 +18279,6 @@
             "security_comment": "Tool `recent_nhi_amendments` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "limit",
-                "type": "integer",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "since_days",
                 "type": "integer",
                 "description": null,
@@ -18303,6 +18292,17 @@
               {
                 "name": "type",
                 "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "integer",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -18356,10 +18356,10 @@
             "security_comment": "Tool `search_nhi_interpretations` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
-                "name": "limit",
-                "type": "integer",
+                "name": "query",
+                "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -18367,10 +18367,10 @@
                 "nested_properties": null
               },
               {
-                "name": "query",
-                "type": "string",
+                "name": "limit",
+                "type": "integer",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -18411,6 +18411,17 @@
             "security_comment": "Tool `search_taiwan_drug` [MEDIUM] issues raw database queries that could lead to SQL injection.",
             "parameters": [
               {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
                 "name": "atc_prefix",
                 "type": "string",
                 "description": null,
@@ -18435,17 +18446,6 @@
               {
                 "name": "limit",
                 "type": "integer",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "query",
-                "type": "string",
                 "description": null,
                 "required": false,
                 "default": null,
@@ -18859,10 +18859,10 @@
                 "nested_properties": null
               },
               {
-                "name": "internal",
-                "type": "boolean",
+                "name": "name",
+                "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -18870,10 +18870,10 @@
                 "nested_properties": null
               },
               {
-                "name": "name",
-                "type": "string",
+                "name": "internal",
+                "type": "boolean",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -19101,10 +19101,10 @@
                 "nested_properties": null
               },
               {
-                "name": "build_id",
-                "type": "string",
+                "name": "uses_non_exempt_encryption",
+                "type": "boolean",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -19112,10 +19112,10 @@
                 "nested_properties": null
               },
               {
-                "name": "uses_non_exempt_encryption",
-                "type": "boolean",
+                "name": "build_id",
+                "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -19144,17 +19144,6 @@
             "security_comment": "Tool `set_phased_release` operates with safe parameters and poses minimal static capability risk.",
             "parameters": [
               {
-                "name": "action",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
                 "name": "app_id",
                 "type": "string",
                 "description": null,
@@ -19167,6 +19156,17 @@
               },
               {
                 "name": "version",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "action",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -19199,21 +19199,10 @@
                 "nested_properties": null
               },
               {
-                "name": "description",
+                "name": "version",
                 "type": "string",
                 "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "keywords",
-                "type": "string",
-                "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -19232,7 +19221,29 @@
                 "nested_properties": null
               },
               {
-                "name": "marketing_url",
+                "name": "whats_new",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keywords",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -19265,18 +19276,7 @@
                 "nested_properties": null
               },
               {
-                "name": "version",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "whats_new",
+                "name": "marketing_url",
                 "type": "string",
                 "description": null,
                 "required": false,
@@ -19331,7 +19331,7 @@
                 "nested_properties": null
               },
               {
-                "name": "build_id",
+                "name": "version",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -19342,7 +19342,7 @@
                 "nested_properties": null
               },
               {
-                "name": "version",
+                "name": "build_id",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -19408,7 +19408,7 @@
                 "nested_properties": null
               },
               {
-                "name": "device_type",
+                "name": "version",
                 "type": "string",
                 "description": null,
                 "required": true,
@@ -19430,8 +19430,8 @@
                 "nested_properties": null
               },
               {
-                "name": "replace",
-                "type": "boolean",
+                "name": "device_type",
+                "type": "string",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -19452,8 +19452,8 @@
                 "nested_properties": null
               },
               {
-                "name": "version",
-                "type": "string",
+                "name": "replace",
+                "type": "boolean",
                 "description": null,
                 "required": true,
                 "default": null,
@@ -19485,10 +19485,10 @@
                 "nested_properties": null
               },
               {
-                "name": "beta_group",
+                "name": "ipa_url",
                 "type": "string",
                 "description": null,
-                "required": false,
+                "required": true,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -19496,10 +19496,10 @@
                 "nested_properties": null
               },
               {
-                "name": "ipa_url",
+                "name": "beta_group",
                 "type": "string",
                 "description": null,
-                "required": true,
+                "required": false,
                 "default": null,
                 "enum": null,
                 "format": null,
@@ -20453,7 +20453,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "*",
+        "version": "< 3.2.0",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -20585,7 +20585,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 3.2.0",
+        "version": "*",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -20860,7 +20860,7 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "< 0.1.33",
+    "latest_version": "< 0.9.43",
     "recommended_safe_version": null,
     "is_vulnerable": true,
     "security_summary": "Package `@agenticmail/openclaw` has 1 security advisories.",
@@ -20869,54 +20869,6 @@
     "versions": [
       {
         "version": "< 0.5.71",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "CVE-2026-57495",
-            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-57495",
-            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-57495",
-            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-57495",
-            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": "< 0.9.43",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -21013,6 +20965,54 @@
       },
       {
         "version": "< 0.1.33",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "CVE-2026-57495",
+            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-57495",
+            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-57495",
+            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-57495",
+            "summary": "AgenticMail gives AI agents real email addresses and phone numbers. In @agenticmail/claudecode prior to version 0.2.39, ",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "< 0.9.43",
         "is_vulnerable": true,
         "advisories": [
           {
