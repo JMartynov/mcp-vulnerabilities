@@ -487,6 +487,74 @@ def main() -> None:
         "--threat-check", action="store_true", help="Automatically runs the YARA/RegEx threat engine against discovered tool descriptions"
     )
 
+    # Timeline
+    timeline_p = subparsers.add_parser(
+        "timeline", help="Display per-version vulnerability timeline for a server"
+    )
+    timeline_p.add_argument("server", help="Server package name")
+    timeline_p.add_argument(
+        "--target-version", help="Filter timeline to a specific version"
+    )
+    timeline_p.add_argument(
+        "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
+    )
+    timeline_p.add_argument(
+        "--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file"
+    )
+
+    # Correlate
+    correlate_p = subparsers.add_parser(
+        "correlate", help="Correlate all server passports against vulnerability database"
+    )
+    correlate_p.add_argument(
+        "--output", default=None, help="Optional output JSON file path"
+    )
+    correlate_p.add_argument(
+        "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
+    )
+    correlate_p.add_argument(
+        "--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file"
+    )
+
+    # Resolve Config
+    resolve_p = subparsers.add_parser(
+        "resolve-config", help="Automated conflict resolver and tool namespacing"
+    )
+    resolve_p.add_argument("config_file", help="Path to client config file")
+    resolve_p.add_argument(
+        "--strategy",
+        choices=["prefix", "priority", "report"],
+        default="prefix",
+        help="Resolution strategy (prefix, priority, report)",
+    )
+    resolve_p.add_argument(
+        "--output", help="Optional file path to output sanitized configuration"
+    )
+    resolve_p.add_argument(
+        "--dir", default="data/fingerprints", help="Passport data directory"
+    )
+    resolve_p.add_argument(
+        "--json", action="store_true", help="Output resolution result as JSON"
+    )
+
+    # Export Config
+    export_cfg_p = subparsers.add_parser(
+        "export-config", help="Export client configuration (Claude, Cursor, Cline, Zed, Windsurf, Docker)"
+    )
+    export_cfg_p.add_argument("package", help="Package name to export configuration for")
+    export_cfg_p.add_argument(
+        "--client",
+        choices=["claude", "cursor", "cline", "zed", "windsurf", "docker"],
+        default="claude",
+        help="Target client environment",
+    )
+    export_cfg_p.add_argument(
+        "--dir", default="data/fingerprints", help="Passport data directory"
+    )
+    export_cfg_p.add_argument(
+        "--output", help="Optional output file path"
+    )
+
     args = parser.parse_args()
 
     if args.command == "discover":
@@ -1567,6 +1635,131 @@ def main() -> None:
             logger.error(f"Sandbox execution error: {e}")
             sys.exit(1)
         sys.exit(0)
+
+    elif args.command == "timeline":
+        from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
+        data_p = Path(args.data_dir)
+        snap_p = Path(args.snapshot)
+        passports_p = Path("data/passports.json.gz")
+        if not passports_p.exists():
+            console.print(f"[bold red]Error:[/] Passports file not found at {passports_p}. Please sync passports.")
+            sys.exit(1)
+        
+        vp = snap_p if snap_p.exists() else data_p
+        correlator = VulnerabilityCorrelator.from_paths(vp, passports_p)
+        
+        timeline = correlator.correlate_package(args.server)
+        if not timeline:
+            console.print(f"[bold red]Error:[/] Server '{args.server}' not found in passports.")
+            sys.exit(1)
+
+        console.print(f"\n[bold cyan]Vulnerability Timeline for {timeline.package_name} ({timeline.ecosystem})[/]\n")
+        
+        for state in timeline.timeline:
+            if args.target_version and args.target_version != state.version:
+                continue
+            
+            v_str = f"[bold red]{state.version} (VULNERABLE)[/]" if state.is_vulnerable else f"[bold green]{state.version} (SAFE)[/]"
+            console.print(f"• {v_str}")
+            for adv in state.advisories:
+                console.print(f"  - {adv.id}: {adv.summary}")
+        
+        console.print("")
+
+    elif args.command == "correlate":
+        from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
+        data_p = Path(args.data_dir)
+        snap_p = Path(args.snapshot)
+        passports_p = Path("data/passports.json.gz")
+        if not passports_p.exists():
+            console.print(f"[bold red]Error:[/] Passports file not found at {passports_p}. Please sync passports.")
+            sys.exit(1)
+        
+        vp = snap_p if snap_p.exists() else data_p
+        correlator = VulnerabilityCorrelator.from_paths(vp, passports_p)
+        
+        with console.status("Correlating all passports..."):
+            results = correlator.correlate_all()
+        
+        out_data = [r.to_dict() for r in results]
+        
+        if args.output:
+            with open(args.output, "w") as f:
+                json.dump(out_data, f, indent=2)
+            console.print(f"\n[bold green]Success:[/] Saved correlation dataset to {args.output}")
+        else:
+            console.print(json.dumps(out_data, indent=2))
+
+    elif args.command == "resolve-config":
+        from mcp_vulnerabilities.audit.conflict_resolver import resolve_client_config
+        try:
+            result = resolve_client_config(
+                config_path=args.config_file,
+                strategy=args.strategy,
+                output_path=args.output,
+                passports_dir=args.dir,
+            )
+        except Exception as e:
+            logger.error("Failed to resolve configuration conflicts: %s", e)
+            console.print(f"[bold red]Error:[/] {e}")
+            sys.exit(1)
+
+        if args.json:
+            print(json.dumps(result.resolved_config, indent=2))
+        else:
+            console.print("==================================================")
+            console.print("         MCP CONFLICT RESOLUTION REPORT           ")
+            console.print("==================================================")
+            console.print(f"Strategy used:      {result.strategy_used}")
+            console.print(f"Modifications made: {len(result.modifications_made)}")
+            for mod in result.modifications_made:
+                console.print(f"  - {mod}")
+            console.print("==================================================")
+            if not args.output:
+                console.print("\nResolved Config Preview:")
+                print(json.dumps(result.resolved_config, indent=2))
+
+    elif args.command == "export-config":
+        from mcp_vulnerabilities.audit.config_exporter import export_client_config
+        dir_p = Path(args.dir)
+        gz_p = Path("data/passports.json.gz")
+        passport_data = None
+
+        if dir_p.exists():
+            for j_file in dir_p.rglob("*.json"):
+                if j_file.name in ("sync_state.json", "index.json", ".passport_index.pickle"):
+                    continue
+                try:
+                    content = json.loads(j_file.read_text(encoding="utf-8"))
+                    if content.get("package_name") == args.package:
+                        passport_data = content
+                        break
+                except Exception:
+                    pass
+
+        if not passport_data and gz_p.exists():
+            try:
+                import gzip
+                with gzip.open(gz_p, "rt", encoding="utf-8") as f:
+                    data = json.load(f)
+                    if isinstance(data, dict):
+                        for k, spec_dict in data.items():
+                            if isinstance(spec_dict, dict) and spec_dict.get("package_name") == args.package:
+                                passport_data = spec_dict
+                                break
+            except Exception:
+                pass
+
+        if not passport_data:
+            passport_data = {"package_name": args.package, "ecosystem": "npm", "versions": []}
+
+        config = export_client_config(passport_data, client=args.client)
+        cfg_str = json.dumps(config, indent=2)
+        if args.output:
+            Path(args.output).write_text(cfg_str, encoding="utf-8")
+            console.print(f"[bold green]Success:[/] Exported {args.client} config to {args.output}")
+        else:
+            print(cfg_str)
 
 
 if __name__ == "__main__":

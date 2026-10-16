@@ -81,3 +81,25 @@ Emits OASIS SARIF v2.1.0 reports for GitHub Code Scanning with specialized struc
 - `MCP-STRUCTURAL-COLLISION-HIGH` (`level: error`)
 - `MCP-STRUCTURAL-COLLISION-MEDIUM` (`level: warning`)
 - `MCP-STRUCTURAL-COLLISION-LOW` (`level: note`)
+
+## 6. Version-Separated Vulnerability Correlation Engine & Unified Security Catalog
+
+### 6.1 Vulnerability Correlation Architecture (`mcp_vulnerabilities.fingerprints.correlator`)
+`VulnerabilityCorrelator` maps upstream structural server passports against OSV vulnerability advisories:
+- Normalizes package names across ecosystems (`PyPI`, `npm`, `golang`, `generic`).
+- Compares discrete version strings against OSV `affected[].ranges` via `VulnerabilityMatcher._is_version_in_ranges()`.
+- Produces `CorrelatedTimeline` and `VersionVulnerabilityState` capturing discrete vulnerability status per version.
+
+### 6.2 Unified MCP Security Catalog (`mcp_vulnerabilities.catalog.build_unified_mcp_security_catalog`)
+`build_unified_mcp_security_catalog(passports_path, vulnerabilities_dir)` creates a unified security catalog:
+- Constructs `UnifiedMcpSecurityRecord` for every passport package and synthesizes milestones for advisory-only packages.
+- Strictly separates vulnerability advisories into per-version `VersionSecurityRecord.advisories` (non-affected versions have `is_vulnerable=False`).
+- Computes `recommended_safe_version` identifying the latest available release without known CVEs.
+- Evaluates individual tools with capability risk classifier and security commentary into `ToolSecurityAssessment`.
+- Structural models support rich schemas: `ParameterMetadata`, `ResourceSignature`, `PromptSignature`, `ToolContractSignature`, `VersionFingerprint`, and `ServerPackageSpec`.
+
+### 6.3 CLI Tooling Extensions
+- `mcp-vuln timeline <server> [--target-version <v>]`: Terminal display of release security timeline.
+- `mcp-vuln correlate [--output <file>]`: Batch correlation export of all passports against advisories.
+- `mcp-vuln resolve-config <file> [--strategy prefix|priority|report]`: Automated client configuration collision resolver.
+- `mcp-vuln export-config <package> [--client claude|cursor|cline|zed|windsurf|docker]`: Client config exporter pinned to safe versions.
