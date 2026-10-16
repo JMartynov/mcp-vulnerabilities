@@ -387,3 +387,23 @@ Total score is bounded at $10.0$ ($\min(\text{score}, 10.0)$).
 - Dedicated environment variable injection instead of prompt arguments for `credential_exposure`.
 - Output is rendered both in tool-level commentary and aggregated server-level security summaries.
 
+## 11. Version-Separated Vulnerability Correlation & Unified Catalog Engine
+
+### 11.1 Architectural Rationale & Strict Per-Version Isolation
+Security advisories rarely affect every release of an MCP server. Collapsing vulnerabilities at the package level creates false positives on patched versions. The `VulnerabilityCorrelator` and `build_unified_mcp_security_catalog()` engine evaluates SemVer ranges against discrete releases to enforce strict per-version security states:
+- Each discrete release receives its own `VersionSecurityRecord` with `is_vulnerable: bool` and specific affecting `advisories: list[OsvVulnerability]`.
+- Non-affected releases are explicitly marked `is_vulnerable=False` with empty advisory lists.
+- `recommended_safe_version` automatically selects the highest available semantic version that has no known CVE/GHSA advisories.
+
+### 11.2 Unified Security Schema
+- `UnifiedMcpSecurityRecord`: Cross-correlates package identity, source repository, PURL, overall risk tier, and per-version timelines.
+- `VersionSecurityRecord`: Per-version advisory isolation, toolset hash, tools, prompts, resources, and required environment variables.
+- `ToolSecurityAssessment`: Individual tool capability risk scoring, protocol annotations, parameter schemas, and security commentaries.
+- Enriched Structural Models: `ParameterMetadata`, `ResourceSignature`, `PromptSignature`, `ToolContractSignature`, `VersionFingerprint`, and `ServerPackageSpec`.
+
+### 11.3 CLI Subcommands
+- `mcp-vuln timeline <server> [--target-version <v>]`: Displays a formatted terminal timeline of releases and security states.
+- `mcp-vuln correlate [--output <file>]`: Correlates all known passports against the OSV advisory database.
+- `mcp-vuln resolve-config <config_file> [--strategy prefix|priority|report]`: Ingests client config, resolves tool name collisions, and outputs sanitized configs.
+- `mcp-vuln export-config <package> [--client claude|cursor|cline|zed|windsurf|docker]`: Generates client configuration snippets pinned to recommended safe versions.
+
