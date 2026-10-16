@@ -487,6 +487,35 @@ def main() -> None:
         "--threat-check", action="store_true", help="Automatically runs the YARA/RegEx threat engine against discovered tool descriptions"
     )
 
+    # Timeline
+    timeline_p = subparsers.add_parser(
+        "timeline", help="Display per-version vulnerability timeline for a server"
+    )
+    timeline_p.add_argument("server", help="Server package name")
+    timeline_p.add_argument(
+        "--target-version", help="Filter timeline to a specific version"
+    )
+    timeline_p.add_argument(
+        "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
+    )
+    timeline_p.add_argument(
+        "--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file"
+    )
+
+    # Correlate
+    correlate_p = subparsers.add_parser(
+        "correlate", help="Correlate all server passports against vulnerability database"
+    )
+    correlate_p.add_argument(
+        "--output", default=None, help="Optional output JSON file path"
+    )
+    correlate_p.add_argument(
+        "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
+    )
+    correlate_p.add_argument(
+        "--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file"
+    )
+
     args = parser.parse_args()
 
     if args.command == "discover":
@@ -1567,6 +1596,60 @@ def main() -> None:
             logger.error(f"Sandbox execution error: {e}")
             sys.exit(1)
         sys.exit(0)
+
+    elif args.command == "timeline":
+        from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
+        data_p = Path(args.data_dir)
+        snap_p = Path(args.snapshot)
+        passports_p = Path("data/passports.json.gz")
+        if not passports_p.exists():
+            console.print(f"[bold red]Error:[/] Passports file not found at {passports_p}. Please sync passports.")
+            sys.exit(1)
+        
+        vp = snap_p if snap_p.exists() else data_p
+        correlator = VulnerabilityCorrelator.from_paths(vp, passports_p)
+        
+        timeline = correlator.correlate_package(args.server)
+        if not timeline:
+            console.print(f"[bold red]Error:[/] Server '{args.server}' not found in passports.")
+            sys.exit(1)
+
+        console.print(f"\n[bold cyan]Vulnerability Timeline for {timeline.package_name} ({timeline.ecosystem})[/]\n")
+        
+        for state in timeline.timeline:
+            if args.target_version and args.target_version != state.version:
+                continue
+            
+            v_str = f"[bold red]{state.version} (VULNERABLE)[/]" if state.is_vulnerable else f"[bold green]{state.version} (SAFE)[/]"
+            console.print(f"• {v_str}")
+            for adv in state.advisories:
+                console.print(f"  - {adv.id}: {adv.summary}")
+        
+        console.print("")
+
+    elif args.command == "correlate":
+        from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
+        data_p = Path(args.data_dir)
+        snap_p = Path(args.snapshot)
+        passports_p = Path("data/passports.json.gz")
+        if not passports_p.exists():
+            console.print(f"[bold red]Error:[/] Passports file not found at {passports_p}. Please sync passports.")
+            sys.exit(1)
+        
+        vp = snap_p if snap_p.exists() else data_p
+        correlator = VulnerabilityCorrelator.from_paths(vp, passports_p)
+        
+        with console.status("Correlating all passports..."):
+            results = correlator.correlate_all()
+        
+        out_data = [r.to_dict() for r in results]
+        
+        if args.output:
+            with open(args.output, "w") as f:
+                json.dump(out_data, f, indent=2)
+            console.print(f"\n[bold green]Success:[/] Saved correlation dataset to {args.output}")
+        else:
+            console.print(json.dumps(out_data, indent=2))
 
 
 if __name__ == "__main__":
