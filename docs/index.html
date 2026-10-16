@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MCP Security Advisory Database | Vulnerability Explorer</title>
-  <meta name="description" content="Open-Source OSV-Compliant Model Context Protocol (MCP) Vulnerability Advisory Database and Real-time Search Explorer.">
+  <title>MCP Security Intelligence & Server Directory | Vulnerability Explorer</title>
+  <meta name="description" content="Unified Model Context Protocol (MCP) Server Directory, Version Vulnerability Matrix, and Canonical OSV Intelligence.">
   <link rel="stylesheet" href="style.css">
   <link rel="alternate" type="application/atom+xml" title="MCP Security Advisories Atom Feed" href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.atom">
   <link rel="alternate" type="application/json" title="MCP Security Advisories JSON Feed" href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.json">
@@ -15,11 +15,12 @@
       <div class="brand">
         <span class="shield-icon">🛡️</span>
         <div>
-          <h1>MCP Vulnerability Database</h1>
-          <p class="subtitle">Canonical OSV-Compliant Security Intelligence for the Model Context Protocol</p>
+          <h1>MCP Security & Directory Portal</h1>
+          <p class="subtitle">Version-Separated Vulnerability Intelligence & Tool Contract Explorer</p>
         </div>
       </div>
       <div class="header-links">
+        <a href="updates.html" class="badge-link nav-updates-link">🔔 Recent Updates</a>
         <a href="analytics.html" class="badge-link">📊 Analytics</a>
         <a href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.atom" class="badge-link" target="_blank" rel="noopener">📡 Atom Feed</a>
         <a href="https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/data/feed.json" class="badge-link" target="_blank" rel="noopener">📄 JSON Feed</a>
@@ -29,93 +30,228 @@
   </header>
 
   <main class="container">
-    <!-- Metrics Banner -->
+    <!-- Top Metrics Banner -->
     <section class="metrics-grid">
       <div class="metric-card">
-        <span class="metric-value" id="stat-total">...</span>
-        <span class="metric-label">Total Advisories</span>
+        <span class="metric-value" id="stat-total-servers">...</span>
+        <span class="metric-label">Known MCP Servers</span>
       </div>
       <div class="metric-card metric-critical">
-        <span class="metric-value" id="stat-critical">...</span>
-        <span class="metric-label">Critical Severity</span>
+        <span class="metric-value" id="stat-vuln-servers">...</span>
+        <span class="metric-label">Servers With Vulnerabilities</span>
       </div>
-      <div class="metric-card metric-high">
-        <span class="metric-value" id="stat-high">...</span>
-        <span class="metric-label">High Severity</span>
+      <div class="metric-card metric-safe">
+        <span class="metric-value" id="stat-safe-servers">...</span>
+        <span class="metric-label">Clean / Safe Servers</span>
       </div>
       <div class="metric-card">
-        <span class="metric-value" id="stat-packages">...</span>
-        <span class="metric-label">Unique Packages</span>
+        <span class="metric-value" id="stat-total-advisories">...</span>
+        <span class="metric-label">OSV / CVE Advisories</span>
       </div>
     </section>
 
-    <!-- Search & Filters -->
-    <section class="search-section">
-      <div class="search-bar">
-        <span class="search-icon">🔍</span>
-        <input type="search" id="search-input" placeholder="Search by CVE, GHSA, package name (e.g. neo4j, n8n, sqlite), or keyword..." autocomplete="off">
-      </div>
+    <!-- Tab Navigation -->
+    <nav class="portal-tabs" role="tablist">
+      <button class="portal-tab active" id="tab-directory" role="tab" aria-selected="true" data-tab="directory">
+        📦 MCP Server Directory (5,050+)
+      </button>
+      <button class="portal-tab" id="tab-advisories" role="tab" aria-selected="false" data-tab="advisories">
+        🚨 Vulnerability Advisories Feed
+      </button>
+    </nav>
 
-      <div class="filters-row">
-        <div class="filter-group">
-          <label>Severity:</label>
-          <div class="chips" id="severity-chips">
-            <button class="chip active" data-severity="ALL">All</button>
-            <button class="chip" data-severity="CRITICAL">Critical</button>
-            <button class="chip" data-severity="HIGH">High</button>
-            <button class="chip" data-severity="MEDIUM">Medium</button>
-            <button class="chip" data-severity="LOW">Low</button>
-          </div>
+    <!-- TAB 1: Server Directory View -->
+    <section id="directory-view" class="tab-content active" role="tabpanel">
+      <div class="search-section">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="directory-search-input" placeholder="Search servers by name, author, keyword, or tool name..." autocomplete="off">
         </div>
 
-        <div class="filter-group">
-          <label>Ecosystem:</label>
-          <div class="chips" id="ecosystem-chips">
-            <button class="chip active" data-ecosystem="ALL">All</button>
-            <button class="chip" data-ecosystem="npm">npm</button>
-            <button class="chip" data-ecosystem="PyPI">PyPI</button>
-            <button class="chip" data-ecosystem="GitHub">GitHub</button>
-            <button class="chip" data-ecosystem="smithery">Smithery</button>
+        <div class="filters-row">
+          <div class="filter-group">
+            <label>Security Status:</label>
+            <div class="chips" id="vuln-status-chips">
+              <button class="chip active" data-vuln="ALL">All Servers</button>
+              <button class="chip chip-danger" data-vuln="VULNERABLE">🔴 Vulnerable Versions</button>
+              <button class="chip chip-success" data-vuln="SAFE">🟢 100% Clean</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Static Capability Risk:</label>
+            <div class="chips" id="risk-tier-chips">
+              <button class="chip active" data-risk="ALL">All Tiers</button>
+              <button class="chip" data-risk="CRITICAL">Critical</button>
+              <button class="chip" data-risk="HIGH">High</button>
+              <button class="chip" data-risk="MEDIUM">Medium</button>
+              <button class="chip" data-risk="LOW">Low</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Ecosystem:</label>
+            <div class="chips" id="directory-eco-chips">
+              <button class="chip active" data-eco="ALL">All</button>
+              <button class="chip" data-eco="npm">npm</button>
+              <button class="chip" data-eco="PyPI">PyPI</button>
+              <button class="chip" data-eco="GitHub">GitHub</button>
+              <button class="chip" data-eco="generic">Generic</button>
+            </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <!-- Results Table/List -->
-    <section class="results-section">
       <div class="results-header">
-        <span id="results-count">Showing advisories...</span>
+        <span id="directory-results-count">Loading MCP servers...</span>
       </div>
+
+      <div class="servers-grid" id="servers-container">
+        <div class="loading-state">Loading MCP catalog index...</div>
+      </div>
+    </section>
+
+    <!-- TAB 2: Advisories Feed View -->
+    <section id="advisories-view" class="tab-content" role="tabpanel" style="display: none;">
+      <div class="search-section">
+        <div class="search-bar">
+          <span class="search-icon">🔍</span>
+          <input type="search" id="advisory-search-input" placeholder="Search advisories by CVE, GHSA, package name, or affected tool..." autocomplete="off">
+        </div>
+
+        <div class="filters-row">
+          <div class="filter-group">
+            <label>Severity:</label>
+            <div class="chips" id="advisory-severity-chips">
+              <button class="chip active" data-severity="ALL">All</button>
+              <button class="chip" data-severity="CRITICAL">Critical</button>
+              <button class="chip" data-severity="HIGH">High</button>
+              <button class="chip" data-severity="MEDIUM">Medium</button>
+              <button class="chip" data-severity="LOW">Low</button>
+            </div>
+          </div>
+
+          <div class="filter-group">
+            <label>Ecosystem:</label>
+            <div class="chips" id="advisory-eco-chips">
+              <button class="chip active" data-ecosystem="ALL">All</button>
+              <button class="chip" data-ecosystem="npm">npm</button>
+              <button class="chip" data-ecosystem="PyPI">PyPI</button>
+              <button class="chip" data-ecosystem="GitHub">GitHub</button>
+              <button class="chip" data-ecosystem="smithery">Smithery</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="results-header">
+        <span id="advisories-results-count">Loading advisories...</span>
+      </div>
+
       <div class="advisories-list" id="advisories-container">
         <div class="loading-state">Loading canonical advisories database...</div>
       </div>
     </section>
   </main>
 
-  <!-- Advisory Details Modal (Native Dialog with Backdrop) -->
+  <!-- Deep-Dive Server & Version Vulnerability Inspector Modal -->
+  <dialog id="server-modal" class="modal-dialog modal-large">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-wrap">
+          <h2 id="modal-server-title">Server Name</h2>
+          <span class="modal-server-pkg" id="modal-server-pkg">pkg:generic/server</span>
+        </div>
+        <button type="button" class="modal-close-btn" id="server-modal-close" aria-label="Close dialog">✕</button>
+      </div>
+
+      <div class="modal-body" id="server-modal-body">
+        <!-- Identity Metadata Row -->
+        <div class="server-metadata-bar">
+          <span class="badge" id="modal-server-risk">RISK TIER</span>
+          <span class="badge" id="modal-server-status">SECURITY STATUS</span>
+          <span class="meta-tag" id="modal-server-eco">Ecosystem</span>
+          <span class="meta-tag" id="modal-server-license">License</span>
+          <span class="meta-tag" id="modal-server-author">Author</span>
+          <a href="#" id="modal-server-repo" class="meta-link" target="_blank" rel="noopener">📁 Source Repo</a>
+          <a href="#" id="modal-server-homepage" class="meta-link" target="_blank" rel="noopener">🌐 Homepage</a>
+        </div>
+
+        <!-- Security Summary Comment -->
+        <div class="security-comment-box" id="modal-security-comment">
+          Security comment loading...
+        </div>
+
+        <!-- Interactive Version Selector -->
+        <div class="version-section">
+          <h3>📦 Version Release History & Vulnerability Status</h3>
+          <p class="section-hint">Select a version below to inspect isolated CVEs, tools, and parameter schemas for that specific release:</p>
+          <div class="version-pills-row" id="modal-version-pills">
+            <!-- Populated dynamically: version buttons with 🔴 or 🟢 badges -->
+          </div>
+        </div>
+
+        <!-- Version Vulnerability Matrix -->
+        <div class="matrix-section">
+          <div class="matrix-header">
+            <h4>🛡️ Vulnerability Matrix for Selected Version: <span id="selected-version-label">v1.0.0</span></h4>
+            <span id="selected-version-badge" class="badge">CLEAN</span>
+          </div>
+          <div id="selected-version-vuln-container">
+            <!-- Advisory list or safe banner -->
+          </div>
+        </div>
+
+        <!-- Toolset & Rich Parameter Schemas -->
+        <div class="tools-section">
+          <div class="tools-header-row">
+            <h4>🛠️ Tool Signatures & Parameter Schemas (<span id="tools-count-label">0</span>)</h4>
+            <span class="canonical-hash-badge" id="modal-canonical-hash">hash: none</span>
+          </div>
+          <div id="modal-tools-container">
+            <!-- Tool cards with full parameter schema tables: Name, Type, Required, Default, Enum, Description -->
+          </div>
+        </div>
+
+        <!-- Safe Client Config Exporters -->
+        <div class="config-exporter-section">
+          <div class="exporter-header">
+            <h4>⚙️ Safe AI Client Config Exporter</h4>
+            <span class="safe-pin-note">Pins automatically to <strong id="exporter-pinned-version">v...</strong></span>
+          </div>
+          <p class="section-hint">Click below to generate and copy a zero-trust configuration pre-pinned to a safe version:</p>
+          <div class="exporter-buttons-row">
+            <button type="button" class="btn btn-export" data-client="claude">📋 Copy Claude Desktop</button>
+            <button type="button" class="btn btn-export" data-client="cursor">📋 Copy Cursor</button>
+            <button type="button" class="btn btn-export" data-client="cline">📋 Copy Cline</button>
+            <button type="button" class="btn btn-export" data-client="zed">📋 Copy Zed</button>
+            <button type="button" class="btn btn-export" data-client="windsurf">📋 Copy Windsurf</button>
+          </div>
+          <div id="export-toast" class="export-toast" style="display: none;">Config copied to clipboard!</div>
+          <pre id="export-preview" class="export-preview"><code>// Select client above to preview config</code></pre>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Legacy Advisory Modal (for Tab 2) -->
   <dialog id="advisory-modal" class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <div>
           <span class="badge" id="modal-severity">SEVERITY</span>
-          <h2 id="modal-id">CVE-XXXX-XXXX</h2>
+          <h2 id="modal-id">GHSA-xxxx</h2>
         </div>
-        <button type="button" class="btn-close" id="modal-close" aria-label="Close modal">✕</button>
+        <button type="button" class="modal-close-btn" id="modal-close" aria-label="Close dialog">✕</button>
       </div>
       <div class="modal-body" id="modal-body">
-        <!-- Injected via JavaScript -->
+        <!-- Injected via app.js -->
       </div>
       <div class="modal-footer">
         <a id="modal-external-link" href="#" target="_blank" rel="noopener" class="btn btn-primary">View Upstream Advisory ↗</a>
       </div>
     </div>
   </dialog>
-
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>Maintained by the MCP Security Community · OSV Schema 1.6.0 Compliant · Apache-2.0 License</p>
-    </div>
-  </footer>
 
   <script src="app.js"></script>
 </body>

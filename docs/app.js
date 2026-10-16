@@ -1,24 +1,86 @@
-// MCP Security Vulnerability Explorer Application
+// MCP Security Vulnerability & Server Directory Explorer Application
 
 (function () {
+  // State
+  let catalogIndex = [];
+  let filteredServers = [];
   let allAdvisories = [];
   let filteredAdvisories = [];
-  let activeSeverity = "ALL";
-  let activeEcosystem = "ALL";
-  let searchQuery = "";
 
-  const elements = {
-    total: document.getElementById("stat-total"),
-    critical: document.getElementById("stat-critical"),
-    high: document.getElementById("stat-high"),
-    packages: document.getElementById("stat-packages"),
-    searchInput: document.getElementById("search-input"),
-    severityChips: document.getElementById("severity-chips"),
-    ecosystemChips: document.getElementById("ecosystem-chips"),
-    container: document.getElementById("advisories-container"),
-    resultsCount: document.getElementById("results-count"),
-    modal: document.getElementById("advisory-modal"),
-    modalClose: document.getElementById("modal-close"),
+  let activeTab = "directory"; // "directory" | "advisories"
+
+  // Directory Filters
+  let activeVulnFilter = "ALL"; // "ALL" | "VULNERABLE" | "SAFE"
+  let activeRiskFilter = "ALL"; // "ALL" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
+  let activeDirectoryEco = "ALL";
+  let directorySearchQuery = "";
+
+  // Advisory Filters
+  let activeAdvisorySeverity = "ALL";
+  let activeAdvisoryEco = "ALL";
+  let advisorySearchQuery = "";
+
+  // Shard Cache
+  const shardCache = new Map();
+  let currentInspectedServer = null;
+  let currentInspectedVersion = null;
+
+  // DOM Elements
+  const el = {
+    // Top Stats
+    statTotalServers: document.getElementById("stat-total-servers"),
+    statVulnServers: document.getElementById("stat-vuln-servers"),
+    statSafeServers: document.getElementById("stat-safe-servers"),
+    statTotalAdvisories: document.getElementById("stat-total-advisories"),
+
+    // Tabs
+    tabDirectory: document.getElementById("tab-directory"),
+    tabAdvisories: document.getElementById("tab-advisories"),
+    viewDirectory: document.getElementById("directory-view"),
+    viewAdvisories: document.getElementById("advisories-view"),
+
+    // Directory Controls
+    directorySearchInput: document.getElementById("directory-search-input"),
+    vulnStatusChips: document.getElementById("vuln-status-chips"),
+    riskTierChips: document.getElementById("risk-tier-chips"),
+    directoryEcoChips: document.getElementById("directory-eco-chips"),
+    directoryResultsCount: document.getElementById("directory-results-count"),
+    serversContainer: document.getElementById("servers-container"),
+
+    // Advisory Controls
+    advisorySearchInput: document.getElementById("advisory-search-input"),
+    advisorySeverityChips: document.getElementById("advisory-severity-chips"),
+    advisoryEcoChips: document.getElementById("advisory-eco-chips"),
+    advisoriesResultsCount: document.getElementById("advisories-results-count"),
+    advisoriesContainer: document.getElementById("advisories-container"),
+
+    // Server Deep-Dive Modal
+    serverModal: document.getElementById("server-modal"),
+    serverModalClose: document.getElementById("server-modal-close"),
+    modalServerTitle: document.getElementById("modal-server-title"),
+    modalServerPkg: document.getElementById("modal-server-pkg"),
+    modalServerRisk: document.getElementById("modal-server-risk"),
+    modalServerStatus: document.getElementById("modal-server-status"),
+    modalServerEco: document.getElementById("modal-server-eco"),
+    modalServerLicense: document.getElementById("modal-server-license"),
+    modalServerAuthor: document.getElementById("modal-server-author"),
+    modalServerRepo: document.getElementById("modal-server-repo"),
+    modalServerHomepage: document.getElementById("modal-server-homepage"),
+    modalSecurityComment: document.getElementById("modal-security-comment"),
+    modalVersionPills: document.getElementById("modal-version-pills"),
+    selectedVersionLabel: document.getElementById("selected-version-label"),
+    selectedVersionBadge: document.getElementById("selected-version-badge"),
+    selectedVersionVulnContainer: document.getElementById("selected-version-vuln-container"),
+    modalCanonicalHash: document.getElementById("modal-canonical-hash"),
+    toolsCountLabel: document.getElementById("tools-count-label"),
+    modalToolsContainer: document.getElementById("modal-tools-container"),
+    exporterPinnedVersion: document.getElementById("exporter-pinned-version"),
+    exportToast: document.getElementById("export-toast"),
+    exportPreview: document.getElementById("export-preview"),
+
+    // Advisory Modal
+    advisoryModal: document.getElementById("advisory-modal"),
+    advisoryModalClose: document.getElementById("modal-close"),
     modalId: document.getElementById("modal-id"),
     modalSeverity: document.getElementById("modal-severity"),
     modalBody: document.getElementById("modal-body"),
@@ -27,302 +89,666 @@
 
   async function init() {
     setupEventListeners();
-    await loadData();
+    await Promise.all([loadCatalogIndex(), loadAdvisories()]);
   }
 
-  async function loadData() {
-    try {
-      const response = await fetch("data/vulnerabilities.json");
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      allAdvisories = await response.json();
-      updateMetrics();
-      applyFilters();
-    } catch (err) {
-      console.warn("Failed to load data/vulnerabilities.json directly, attempting fallback:", err);
-      elements.container.innerHTML = `
-        <div class="loading-state" style="color: #ef4444;">
-          Unable to load static vulnerabilities dataset directly. Please ensure <code>python -m mcp_vulnerabilities.site_builder</code> has been run.
-        </div>
-      `;
-    }
-  }
+  // Event Listeners
+  function setupEventListeners() {
+    // Tab Switching
+    el.tabDirectory.addEventListener("click", () => switchTab("directory"));
+    el.tabAdvisories.addEventListener("click", () => switchTab("advisories"));
 
-  function getSeverity(adv) {
-    if (adv.database_specific?.severity) {
-      return adv.database_specific.severity.toUpperCase();
-    }
-    if (adv.affected?.[0]?.database_specific?.severity) {
-      return adv.affected[0].database_specific.severity.toUpperCase();
-    }
-    const score = getCvssScore(adv);
-    if (score !== null) {
-      if (score >= 9.0) return "CRITICAL";
-      if (score >= 7.0) return "HIGH";
-      if (score >= 4.0) return "MEDIUM";
-      return "LOW";
-    }
-    return "UNKNOWN";
-  }
-
-  function getCvssScore(adv) {
-    const rawScore = adv.severity?.[0]?.score || adv.affected?.[0]?.database_specific?.cvss_score;
-    const parsed = parseFloat(rawScore);
-    return isNaN(parsed) ? null : parsed;
-  }
-
-  function getPackages(adv) {
-    if (!adv.affected) return [];
-    return adv.affected
-      .map((aff) => aff.package?.name)
-      .filter(Boolean);
-  }
-
-  function getEcosystems(adv) {
-    if (!adv.affected) return [];
-    return adv.affected
-      .map((aff) => aff.package?.ecosystem)
-      .filter(Boolean);
-  }
-
-  function updateMetrics() {
-    let crit = 0;
-    let high = 0;
-    const pkgs = new Set();
-
-    allAdvisories.forEach((adv) => {
-      const sev = getSeverity(adv);
-      if (sev === "CRITICAL") crit++;
-      if (sev === "HIGH") high++;
-      getPackages(adv).forEach((p) => pkgs.add(p.toLowerCase()));
+    // Directory Search & Filters
+    el.directorySearchInput.addEventListener("input", (e) => {
+      directorySearchQuery = e.target.value.trim().toLowerCase();
+      applyDirectoryFilters();
     });
 
-    elements.total.textContent = allAdvisories.length;
-    elements.critical.textContent = crit;
-    elements.high.textContent = high;
-    elements.packages.textContent = pkgs.size;
+    el.vulnStatusChips.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      el.vulnStatusChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeVulnFilter = btn.dataset.vuln;
+      applyDirectoryFilters();
+    });
+
+    el.riskTierChips.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      el.riskTierChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeRiskFilter = btn.dataset.risk;
+      applyDirectoryFilters();
+    });
+
+    el.directoryEcoChips.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      el.directoryEcoChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeDirectoryEco = btn.dataset.eco;
+      applyDirectoryFilters();
+    });
+
+    // Advisory Search & Filters
+    el.advisorySearchInput.addEventListener("input", (e) => {
+      advisorySearchQuery = e.target.value.trim().toLowerCase();
+      applyAdvisoryFilters();
+    });
+
+    el.advisorySeverityChips.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      el.advisorySeverityChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeAdvisorySeverity = btn.dataset.severity;
+      applyAdvisoryFilters();
+    });
+
+    el.advisoryEcoChips.addEventListener("click", (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      el.advisoryEcoChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+      btn.classList.add("active");
+      activeAdvisoryEco = btn.dataset.ecosystem;
+      applyAdvisoryFilters();
+    });
+
+    // Modal Close buttons
+    el.serverModalClose.addEventListener("click", () => el.serverModal.close());
+    el.serverModal.addEventListener("click", (e) => {
+      if (e.target === el.serverModal) el.serverModal.close();
+    });
+
+    el.advisoryModalClose.addEventListener("click", () => el.advisoryModal.close());
+    el.advisoryModal.addEventListener("click", (e) => {
+      if (e.target === el.advisoryModal) el.advisoryModal.close();
+    });
+
+    // Exporter Buttons
+    document.querySelectorAll(".btn-export").forEach((btn) => {
+      btn.addEventListener("click", () => exportConfig(btn.dataset.client));
+    });
   }
 
-  function applyFilters() {
-    filteredAdvisories = allAdvisories.filter((adv) => {
-      // 1. Severity filter
-      const sev = getSeverity(adv);
-      if (activeSeverity !== "ALL" && sev !== activeSeverity) {
-        return false;
+  function switchTab(tab) {
+    activeTab = tab;
+    if (tab === "directory") {
+      el.tabDirectory.classList.add("active");
+      el.tabDirectory.setAttribute("aria-selected", "true");
+      el.tabAdvisories.classList.remove("active");
+      el.tabAdvisories.setAttribute("aria-selected", "false");
+      el.viewDirectory.style.display = "block";
+      el.viewAdvisories.style.display = "none";
+    } else {
+      el.tabAdvisories.classList.add("active");
+      el.tabAdvisories.setAttribute("aria-selected", "true");
+      el.tabDirectory.classList.remove("active");
+      el.tabDirectory.setAttribute("aria-selected", "false");
+      el.viewAdvisories.style.display = "block";
+      el.viewDirectory.style.display = "none";
+    }
+  }
+
+  // Load Data
+  async function loadCatalogIndex() {
+    try {
+      const res = await fetch("data/mcp_catalog_index.json");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      catalogIndex = await res.json();
+      updateTopMetrics();
+      applyDirectoryFilters();
+    } catch (err) {
+      console.error("Failed to load mcp_catalog_index.json:", err);
+      el.serversContainer.innerHTML = `<div class="error-msg">Failed to load server catalog index. Ensure <code>python -m mcp_vulnerabilities.site_builder</code> has run.</div>`;
+    }
+  }
+
+  async function loadAdvisories() {
+    try {
+      const res = await fetch("data/vulnerabilities.json");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      allAdvisories = await res.json();
+      updateTopMetrics();
+      applyAdvisoryFilters();
+    } catch (err) {
+      console.error("Failed to load vulnerabilities.json:", err);
+    }
+  }
+
+  function updateTopMetrics() {
+    if (catalogIndex.length > 0) {
+      const total = catalogIndex.length;
+      const vuln = catalogIndex.filter((s) => s.is_vulnerable).length;
+      const safe = total - vuln;
+      el.statTotalServers.textContent = total.toLocaleString();
+      el.statVulnServers.textContent = vuln.toLocaleString();
+      el.statSafeServers.textContent = safe.toLocaleString();
+    }
+    if (allAdvisories.length > 0) {
+      el.statTotalAdvisories.textContent = allAdvisories.length.toLocaleString();
+    }
+  }
+
+  // Directory Filters & Render
+  function applyDirectoryFilters() {
+    filteredServers = catalogIndex.filter((server) => {
+      // Vulnerability filter
+      if (activeVulnFilter === "VULNERABLE" && !server.is_vulnerable) return false;
+      if (activeVulnFilter === "SAFE" && server.is_vulnerable) return false;
+
+      // Risk Tier filter
+      if (activeRiskFilter !== "ALL") {
+        if ((server.static_risk_tier || "LOW").toUpperCase() !== activeRiskFilter) return false;
       }
 
-      // 2. Ecosystem filter
-      if (activeEcosystem !== "ALL") {
-        const ecos = getEcosystems(adv).map((e) => e.toLowerCase());
-        if (!ecos.includes(activeEcosystem.toLowerCase())) {
-          return false;
-        }
+      // Ecosystem filter
+      if (activeDirectoryEco !== "ALL") {
+        if ((server.ecosystem || "").toLowerCase() !== activeDirectoryEco.toLowerCase()) return false;
       }
 
-      // 3. Search query
-      if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        const idMatch = adv.id?.toLowerCase().includes(q);
-        const summaryMatch = (adv.summary || "").toLowerCase().includes(q);
-        const detailsMatch = (adv.details || "").toLowerCase().includes(q);
-        const pkgMatch = getPackages(adv).some((p) => p.toLowerCase().includes(q));
-        if (!idMatch && !summaryMatch && !detailsMatch && !pkgMatch) {
-          return false;
-        }
+      // Search Query
+      if (directorySearchQuery) {
+        const query = directorySearchQuery;
+        const inName = (server.package_name || "").toLowerCase().includes(query);
+        const inDisplay = (server.display_name || "").toLowerCase().includes(query);
+        const inDesc = (server.description || "").toLowerCase().includes(query);
+        const inAuthor = (server.author || "").toLowerCase().includes(query);
+        const inTools = (server.tools_sample || []).some((t) => t.toLowerCase().includes(query));
+        if (!inName && !inDisplay && !inDesc && !inAuthor && !inTools) return false;
       }
 
       return true;
     });
 
-    renderAdvisories();
+    el.directoryResultsCount.textContent = `Showing ${filteredServers.length.toLocaleString()} of ${catalogIndex.length.toLocaleString()} servers`;
+    renderDirectoryCards();
   }
 
-  function renderAdvisories() {
-    elements.resultsCount.textContent = `Showing ${filteredAdvisories.length} of ${allAdvisories.length} advisories`;
-
-    if (filteredAdvisories.length === 0) {
-      elements.container.innerHTML = `
-        <div class="loading-state">
-          No vulnerabilities match the selected filters or search query.
-        </div>
-      `;
+  function renderDirectoryCards() {
+    if (filteredServers.length === 0) {
+      el.serversContainer.innerHTML = `<div class="empty-state">No MCP servers match the current filters.</div>`;
       return;
     }
 
-    elements.container.innerHTML = filteredAdvisories
-      .map((adv) => {
-        const sev = getSeverity(adv);
-        const pkgs = getPackages(adv);
-        const date = (adv.published || adv.modified || "").split("T")[0];
-        const summary = adv.summary || (adv.details || "").slice(0, 140) + "...";
-        const badgeClass = `badge-${sev.toLowerCase()}`;
+    // Render first 100 for DOM performance with scroll
+    const toRender = filteredServers.slice(0, 100);
+    const html = toRender.map((s) => {
+      const riskClass = `risk-${(s.static_risk_tier || "low").toLowerCase()}`;
+      const vulnStatusBadge = s.is_vulnerable
+        ? `<span class="badge badge-danger">🔴 ${s.vulnerable_versions_count || 1} Vulnerable Release${s.vulnerable_versions_count > 1 ? "s" : ""}</span>`
+        : `<span class="badge badge-success">🟢 Clean Release</span>`;
 
-        return `
-          <div class="advisory-card" data-id="${adv.id}">
-            <div class="card-top">
-              <div class="card-ids">
-                <span class="adv-id">${adv.id}</span>
-                <span class="badge ${badgeClass}">${sev}</span>
-              </div>
-              <span class="card-date">${date}</span>
+      const safeVerBadge = s.recommended_safe_version
+        ? `<span class="safe-rec-pill">Recommended: v${escapeHtml(s.recommended_safe_version)}</span>`
+        : "";
+
+      const toolPills = (s.tools_sample || [])
+        .map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t)}">🔧 ${escapeHtml(t)}</span>`)
+        .join("");
+
+      return `
+        <article class="server-card">
+          <div class="server-card-header">
+            <div>
+              <h3 class="server-title">${escapeHtml(s.display_name || s.package_name)}</h3>
+              <span class="server-pkg-name">${escapeHtml(s.package_name)}</span>
             </div>
-            <div class="card-title">${escapeHtml(summary)}</div>
-            <div class="card-meta">
-              <span>Packages: ${pkgs.map((p) => `<span class="meta-pkg">${escapeHtml(p)}</span>`).join(" ")}</span>
+            <div class="card-badges">
+              <span class="badge badge-eco">${escapeHtml(s.ecosystem)}</span>
+              <span class="badge ${riskClass}">Risk: ${escapeHtml(s.static_risk_tier || "LOW")}</span>
             </div>
           </div>
-        `;
-      })
-      .join("");
 
-    // Attach card click handlers
-    elements.container.querySelectorAll(".advisory-card").forEach((card) => {
-      card.addEventListener("click", () => {
-        const advId = card.getAttribute("data-id");
-        const found = allAdvisories.find((a) => a.id === advId);
-        if (found) openModal(found);
-      });
+          <div class="server-status-row">
+            ${vulnStatusBadge}
+            ${safeVerBadge}
+          </div>
+
+          <p class="server-desc">${escapeHtml(s.description || "No description provided.")}</p>
+
+          <div class="server-security-comment">
+            🛡️ ${escapeHtml(s.security_summary || "Automated capability security assessment applied.")}
+          </div>
+
+          <div class="server-tools-row">
+            ${toolPills}
+            ${(s.tools_count > (s.tools_sample || []).length) ? `<span class="tool-more">+${s.tools_count - s.tools_sample.length} more</span>` : ""}
+          </div>
+
+          <div class="server-card-footer">
+            <div class="card-links">
+              ${s.repository_url ? `<a href="${escapeHtml(s.repository_url)}" target="_blank" rel="noopener" class="card-link">📁 Repo</a>` : ""}
+              ${s.homepage_url ? `<a href="${escapeHtml(s.homepage_url)}" target="_blank" rel="noopener" class="card-link">🌐 Home</a>` : ""}
+            </div>
+            <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
+              🔍 Inspect Server & Versions
+            </button>
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    el.serversContainer.innerHTML = html;
+
+    // Attach click handlers to Inspect buttons
+    el.serversContainer.querySelectorAll(".btn-inspect").forEach((btn) => {
+      btn.addEventListener("click", () => openServerModal(btn.dataset.pkg, btn.dataset.shard));
     });
   }
 
-  function openModal(adv) {
+  // Deep-Dive Modal with On-Demand Sharding
+  async function openServerModal(pkgName, shardFile) {
+    el.modalServerTitle.textContent = "Loading server details...";
+    el.modalServerPkg.textContent = pkgName;
+    el.modalVersionPills.innerHTML = '<span class="loading-inline">Fetching shard data...</span>';
+    el.serverModal.showModal();
+
+    try {
+      let shardData = shardCache.get(shardFile);
+      if (!shardData && shardFile) {
+        const res = await fetch(`data/shards/${shardFile}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        shardData = await res.json();
+        shardCache.set(shardFile, shardData);
+      }
+
+      const server = shardData ? shardData[pkgName] : null;
+      if (!server) {
+        throw new Error(`Package ${pkgName} not found in shard ${shardFile}`);
+      }
+
+      currentInspectedServer = server;
+      renderServerModalDetails(server);
+    } catch (err) {
+      console.error("Failed to load shard details:", err);
+      el.modalServerTitle.textContent = pkgName;
+      el.modalVersionPills.innerHTML = `<div class="error-msg">Failed to load detailed shard for ${escapeHtml(pkgName)}.</div>`;
+    }
+  }
+
+  function renderServerModalDetails(server) {
+    el.modalServerTitle.textContent = server.display_name || server.package_name;
+    el.modalServerPkg.textContent = server.purl || `pkg:${server.ecosystem}/${server.package_name}`;
+
+    // Risk tier & Status
+    el.modalServerRisk.textContent = `Risk: ${server.static_risk_tier || "LOW"}`;
+    el.modalServerRisk.className = `badge risk-${(server.static_risk_tier || "low").toLowerCase()}`;
+
+    if (server.is_vulnerable) {
+      el.modalServerStatus.textContent = "🔴 Contains Vulnerable Versions";
+      el.modalServerStatus.className = "badge badge-danger";
+    } else {
+      el.modalServerStatus.textContent = "🟢 100% Clean Releases";
+      el.modalServerStatus.className = "badge badge-success";
+    }
+
+    el.modalServerEco.textContent = `Ecosystem: ${server.ecosystem}`;
+    el.modalServerLicense.textContent = `License: ${server.license || "None specified"}`;
+    el.modalServerAuthor.textContent = `Author: ${server.author || "Unknown"}`;
+
+    if (server.repository_url) {
+      el.modalServerRepo.href = server.repository_url;
+      el.modalServerRepo.style.display = "inline-flex";
+    } else {
+      el.modalServerRepo.style.display = "none";
+    }
+
+    if (server.homepage_url) {
+      el.modalServerHomepage.href = server.homepage_url;
+      el.modalServerHomepage.style.display = "inline-flex";
+    } else {
+      el.modalServerHomepage.style.display = "none";
+    }
+
+    el.modalSecurityComment.textContent = server.security_summary || "Automated capability and version security profile attached.";
+
+    // Version Selector Pills
+    const versions = server.versions || [];
+    if (versions.length === 0) {
+      el.modalVersionPills.innerHTML = '<span class="empty-inline">No discrete version history available.</span>';
+      selectVersion(null);
+      return;
+    }
+
+    // Default to recommended safe version or latest
+    const defaultVer = server.recommended_safe_version
+      ? versions.find((v) => v.version === server.recommended_safe_version) || versions[versions.length - 1]
+      : versions[versions.length - 1];
+
+    el.modalVersionPills.innerHTML = versions.map((v) => {
+      const isVuln = v.is_vulnerable;
+      const isRec = server.recommended_safe_version && v.version === server.recommended_safe_version;
+      let badge = isVuln ? "🔴" : "🟢";
+      let extra = isRec ? " (Recommended)" : "";
+      return `
+        <button type="button" class="version-pill ${isVuln ? "pill-vuln" : "pill-safe"} ${v === defaultVer ? "active" : ""}" data-ver="${escapeHtml(v.version)}">
+          ${badge} v${escapeHtml(v.version)}${extra}
+        </button>
+      `;
+    }).join("");
+
+    el.modalVersionPills.querySelectorAll(".version-pill").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        el.modalVersionPills.querySelectorAll(".version-pill").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const found = versions.find((v) => v.version === btn.dataset.ver);
+        selectVersion(found);
+      });
+    });
+
+    selectVersion(defaultVer);
+
+    // Setup Exporter Pinned Version
+    const pinVer = server.recommended_safe_version || server.latest_version || "latest";
+    el.exporterPinnedVersion.textContent = `v${pinVer}`;
+    exportConfig("claude", true); // preview only
+  }
+
+  function selectVersion(v) {
+    currentInspectedVersion = v;
+    if (!v) {
+      el.selectedVersionLabel.textContent = "N/A";
+      el.selectedVersionBadge.textContent = "UNKNOWN";
+      el.selectedVersionBadge.className = "badge";
+      el.selectedVersionVulnContainer.innerHTML = '<p class="empty-state">No version data available.</p>';
+      el.modalCanonicalHash.textContent = "hash: none";
+      el.toolsCountLabel.textContent = "0";
+      el.modalToolsContainer.innerHTML = "";
+      return;
+    }
+
+    el.selectedVersionLabel.textContent = `v${v.version}`;
+    if (v.is_vulnerable) {
+      el.selectedVersionBadge.textContent = `🔴 VULNERABLE (${v.advisories?.length || 1} CVEs)`;
+      el.selectedVersionBadge.className = "badge badge-danger";
+    } else {
+      el.selectedVersionBadge.textContent = "🟢 CLEAN / SAFE";
+      el.selectedVersionBadge.className = "badge badge-success";
+    }
+
+    // Version Vulnerability Matrix
+    const advs = v.advisories || [];
+    if (advs.length > 0) {
+      el.selectedVersionVulnContainer.innerHTML = `
+        <div class="version-vuln-matrix">
+          ${advs.map((adv) => `
+            <div class="vuln-matrix-item">
+              <div class="vuln-matrix-header">
+                <span class="badge badge-danger">${escapeHtml(adv.id || "CVE")}</span>
+                <span class="badge risk-high">Severity: ${escapeHtml(adv.severity || "UNKNOWN")}</span>
+                ${adv.cvss_score ? `<span class="badge">CVSS: ${escapeHtml(String(adv.cvss_score))}</span>` : ""}
+                ${adv.owasp_mcp_category ? `<span class="badge badge-eco">${escapeHtml(adv.owasp_mcp_category)}</span>` : ""}
+              </div>
+              <p class="vuln-summary">${escapeHtml(adv.summary || "Security vulnerability affects this version release.")}</p>
+              ${adv.vulnerable_tools && adv.vulnerable_tools.length > 0 ? `
+                <div class="vuln-tools-tag-row">
+                  <strong>Affected Tools:</strong>
+                  ${adv.vulnerable_tools.map((t) => `<span class="tool-tag-danger">⚠️ ${escapeHtml(t)}</span>`).join("")}
+                </div>
+              ` : ""}
+              ${adv.remediation_guidance ? `<div class="remediation-box">💡 <strong>Remediation:</strong> ${escapeHtml(adv.remediation_guidance)}</div>` : ""}
+            </div>
+          `).join("")}
+        </div>
+      `;
+    } else {
+      el.selectedVersionVulnContainer.innerHTML = `
+        <div class="safe-release-banner">
+          <span class="safe-icon">✅</span>
+          <div>
+            <strong>Clean Release:</strong>
+            <p>Version <code>${escapeHtml(v.version)}</code> is not affected by any known OSV or CVE security advisories.</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Tools & Parameters Table
+    el.modalCanonicalHash.textContent = `hash: ${v.toolset_canonical_hash || "none"}`;
+    const tools = v.tools || [];
+    el.toolsCountLabel.textContent = String(tools.length);
+
+    if (tools.length === 0) {
+      el.modalToolsContainer.innerHTML = `<p class="empty-state">No extracted tool signatures for version ${escapeHtml(v.version)}.</p>`;
+      return;
+    }
+
+    el.modalToolsContainer.innerHTML = tools.map((tool) => {
+      const riskClass = `risk-${(tool.risk_tier || "low").toLowerCase()}`;
+      const params = tool.parameters || [];
+
+      // Parameter Schema Table
+      const paramTableRows = params.map((p) => `
+        <tr>
+          <td><code>${escapeHtml(p.name || "")}</code></td>
+          <td><span class="param-type">${escapeHtml(p.type || "string")}</span></td>
+          <td>${p.required ? '<span class="param-req">Yes</span>' : '<span class="param-opt">No</span>'}</td>
+          <td><code>${escapeHtml(p.default !== null && p.default !== undefined ? JSON.stringify(p.default) : "-")}</code></td>
+          <td>${p.enum ? `<code>${escapeHtml(JSON.stringify(p.enum))}</code>` : "-"}</td>
+          <td>${escapeHtml(p.description || "-")}</td>
+        </tr>
+      `).join("");
+
+      return `
+        <div class="tool-signature-card">
+          <div class="tool-card-top">
+            <h5 class="tool-name">🔧 ${escapeHtml(tool.name)}</h5>
+            <span class="badge ${riskClass}">Risk: ${escapeHtml(tool.risk_tier || "LOW")} (${tool.risk_score || 0})</span>
+          </div>
+
+          <p class="tool-desc">${escapeHtml(tool.description || "No tool description available.")}</p>
+
+          ${tool.security_comment ? `
+            <div class="tool-security-comment">
+              🛡️ <strong>Tool Assessment:</strong> ${escapeHtml(tool.security_comment)}
+            </div>
+          ` : ""}
+
+          <div class="tool-parameters-table-wrap">
+            <table class="params-table">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Default</th>
+                  <th>Enum</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${paramTableRows.length > 0 ? paramTableRows : '<tr><td colspan="6" class="text-center">No parameters required.</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }).join("");
+  }
+
+  // Safe AI Client Config Exporter
+  function exportConfig(client, previewOnly = false) {
+    if (!currentInspectedServer) return;
+    const server = currentInspectedServer;
+    const pinVer = server.recommended_safe_version || server.latest_version || "latest";
+    const name = server.package_name;
+    const eco = (server.ecosystem || "").toLowerCase();
+
+    let cmd = name;
+    let args = [];
+
+    if (eco === "npm") {
+      cmd = "npx";
+      args = ["-y", `${name}@${pinVer}`];
+    } else if (eco === "pypi") {
+      cmd = "uvx";
+      args = [`${name}==${pinVer}`];
+    } else {
+      cmd = name;
+      args = [];
+    }
+
+    let configObj = {};
+    if (client === "claude") {
+      configObj = {
+        mcpServers: {
+          [name]: {
+            command: cmd,
+            args: args,
+          },
+        },
+      };
+    } else if (client === "cursor") {
+      configObj = {
+        mcpServers: {
+          [name]: {
+            command: cmd,
+            args: args,
+          },
+        },
+      };
+    } else if (client === "cline") {
+      configObj = {
+        mcpServers: {
+          [name]: {
+            command: cmd,
+            args: args,
+            disabled: false,
+            autoApprove: [],
+          },
+        },
+      };
+    } else if (client === "zed") {
+      configObj = {
+        context_servers: [
+          name,
+        ],
+      };
+    } else if (client === "windsurf") {
+      configObj = {
+        mcpServers: {
+          [name]: {
+            command: cmd,
+            args: args,
+          },
+        },
+      };
+    }
+
+    const jsonStr = JSON.stringify(configObj, null, 2);
+    el.exportPreview.textContent = jsonStr;
+
+    if (!previewOnly) {
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        el.exportToast.style.display = "block";
+        setTimeout(() => {
+          el.exportToast.style.display = "none";
+        }, 2500);
+      }).catch((e) => console.warn("Clipboard write failed:", e));
+    }
+  }
+
+  // Advisory Feed (Tab 2) Logic
+  function applyAdvisoryFilters() {
+    filteredAdvisories = allAdvisories.filter((adv) => {
+      // Severity Filter
+      if (activeAdvisorySeverity !== "ALL") {
+        const sev = getSeverity(adv);
+        if (sev !== activeAdvisorySeverity) return false;
+      }
+
+      // Ecosystem Filter
+      if (activeAdvisoryEco !== "ALL") {
+        const ecosystems = getEcosystems(adv);
+        if (!ecosystems.includes(activeAdvisoryEco)) return false;
+      }
+
+      // Search Query
+      if (advisorySearchQuery) {
+        const q = advisorySearchQuery;
+        const inId = (adv.id || "").toLowerCase().includes(q);
+        const inSummary = (adv.summary || "").toLowerCase().includes(q);
+        const inPkgs = getPackages(adv).some((p) => p.toLowerCase().includes(q));
+        if (!inId && !inSummary && !inPkgs) return false;
+      }
+
+      return true;
+    });
+
+    el.advisoriesResultsCount.textContent = `Showing ${filteredAdvisories.length} of ${allAdvisories.length} advisories`;
+    renderAdvisoryCards();
+  }
+
+  function getSeverity(adv) {
+    if (adv.database_specific?.severity) return adv.database_specific.severity.toUpperCase();
+    if (adv.affected?.[0]?.database_specific?.severity) return adv.affected[0].database_specific.severity.toUpperCase();
+    return "UNKNOWN";
+  }
+
+  function getPackages(adv) {
+    if (!adv.affected) return [];
+    return adv.affected.map((a) => a.package?.name).filter(Boolean);
+  }
+
+  function getEcosystems(adv) {
+    if (!adv.affected) return [];
+    return adv.affected.map((a) => a.package?.ecosystem).filter(Boolean);
+  }
+
+  function renderAdvisoryCards() {
+    if (filteredAdvisories.length === 0) {
+      el.advisoriesContainer.innerHTML = `<div class="empty-state">No advisories match the current criteria.</div>`;
+      return;
+    }
+
+    const toRender = filteredAdvisories.slice(0, 100);
+    el.advisoriesContainer.innerHTML = toRender.map((adv) => {
+      const sev = getSeverity(adv);
+      const sevClass = `risk-${sev.toLowerCase()}`;
+      const pkgs = getPackages(adv);
+
+      return `
+        <article class="advisory-card" data-id="${escapeHtml(adv.id)}">
+          <div class="advisory-card-header">
+            <div>
+              <span class="badge ${sevClass}">${escapeHtml(sev)}</span>
+              <span class="advisory-id">${escapeHtml(adv.id)}</span>
+            </div>
+          </div>
+          <h4 class="advisory-summary">${escapeHtml(adv.summary || "No summary available.")}</h4>
+          <div class="advisory-pkgs">
+            <strong>Packages:</strong> ${pkgs.map((p) => `<code>${escapeHtml(p)}</code>`).join(", ") || "Unknown"}
+          </div>
+        </article>
+      `;
+    }).join("");
+
+    el.advisoriesContainer.querySelectorAll(".advisory-card").forEach((card) => {
+      card.addEventListener("click", () => openAdvisoryModal(card.dataset.id));
+    });
+  }
+
+  function openAdvisoryModal(id) {
+    const adv = allAdvisories.find((a) => a.id === id);
+    if (!adv) return;
+    el.modalId.textContent = adv.id;
     const sev = getSeverity(adv);
-    const score = getCvssScore(adv);
-    const pkgs = getPackages(adv);
-    const externalUrl = adv.references?.[0]?.url || `https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/${adv.id}.json`;
-    
-    // Extract MCP specific fields
-    let vulnerableTools = adv.database_specific?.vulnerable_tools || adv.affected?.[0]?.database_specific?.vulnerable_tools;
-    let owaspCategory = adv.database_specific?.owasp_mcp_category || adv.affected?.[0]?.database_specific?.owasp_mcp_category;
-    let remediationGuidance = adv.database_specific?.remediation_guidance || adv.affected?.[0]?.database_specific?.remediation_guidance;
-
-    elements.modalId.textContent = adv.id;
-    
-    // Set title section
-    let severityText = sev + (score ? ` (CVSS ${score})` : "");
-    if (owaspCategory) {
-      severityText += ` <span class="badge owasp-badge">${escapeHtml(owaspCategory)}</span>`;
-    }
-    elements.modalSeverity.innerHTML = severityText;
-    elements.modalSeverity.className = `badge badge-${sev.toLowerCase()}`;
-    elements.modalExternalLink.href = externalUrl;
-
-    const sections = [];
-
-    if (adv.summary) {
-      sections.push(`
-        <div class="modal-section">
-          <h4>Summary</h4>
-          <p>${escapeHtml(adv.summary)}</p>
-        </div>
-      `);
-    }
-
-    sections.push(`
-      <div class="modal-section">
-        <h4>Affected Packages & Versions</h4>
-        ${(adv.affected || [])
-          .map((aff) => {
-            const pkgName = aff.package?.name || "Unknown";
-            const eco = aff.package?.ecosystem || "Generic";
-            const ranges = (aff.ranges || [])
-              .map((r) => {
-                const events = (r.events || []).map((e) => JSON.stringify(e)).join(", ");
-                return `Type: ${r.type} (${events})`;
-              })
-              .join("<br>");
-            return `<p><strong>${escapeHtml(pkgName)}</strong> (${eco})<br>${ranges || "All versions"}</p>`;
-          })
-          .join("")}
-      </div>
-    `);
-
-    if (vulnerableTools && vulnerableTools.length > 0) {
-      sections.push(`
-        <div class="modal-section mcp-tools-section">
-          <span class="section-label">Vulnerable Tools:</span>
-          ${vulnerableTools.map((tool) => `<span class="tool-tag">${escapeHtml(tool)}</span>`).join(" ")}
-        </div>
-      `);
-    }
-
-    if (adv.details) {
-      sections.push(`
-        <div class="modal-section">
-          <h4>Vulnerability Details</h4>
-          <div class="code-box">${escapeHtml(adv.details)}</div>
-        </div>
-      `);
-    }
-
-    if (remediationGuidance) {
-      sections.push(`
-        <div class="modal-section remediation-callout">
-          <strong>🛡️ Actionable Remediation:</strong>
-          <p>${escapeHtml(remediationGuidance)}</p>
-        </div>
-      `);
-    }
-
-    if (adv.references && adv.references.length > 0) {
-      sections.push(`
-        <div class="modal-section">
-          <h4>References</h4>
-          <ul>
-            ${adv.references
-              .map((r) => `<li><a href="${escapeHtml(r.url)}" target="_blank" rel="noopener">${escapeHtml(r.url)}</a></li>`)
-              .join("")}
-          </ul>
-        </div>
-      `);
-    }
-
-    elements.modalBody.innerHTML = sections.join("");
-    elements.modal.showModal();
-  }
-
-  function setupEventListeners() {
-    // Search input debounce
-    let timeout;
-    elements.searchInput.addEventListener("input", (e) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        searchQuery = e.target.value.trim();
-        applyFilters();
-      }, 150);
-    });
-
-    // Severity chips
-    elements.severityChips.querySelectorAll(".chip").forEach((chip) => {
-      chip.addEventListener("click", () => {
-        elements.severityChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-        chip.classList.add("active");
-        activeSeverity = chip.getAttribute("data-severity");
-        applyFilters();
-      });
-    });
-
-    // Ecosystem chips
-    elements.ecosystemChips.querySelectorAll(".chip").forEach((chip) => {
-      chip.addEventListener("click", () => {
-        elements.ecosystemChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
-        chip.classList.add("active");
-        activeEcosystem = chip.getAttribute("data-ecosystem");
-        applyFilters();
-      });
-    });
-
-    // Modal close
-    elements.modalClose.addEventListener("click", () => elements.modal.close());
-    elements.modal.addEventListener("click", (e) => {
-      if (e.target === elements.modal) elements.modal.close();
-    });
+    el.modalSeverity.textContent = sev;
+    el.modalSeverity.className = `badge risk-${sev.toLowerCase()}`;
+    el.modalBody.innerHTML = `
+      <p><strong>Summary:</strong> ${escapeHtml(adv.summary || "")}</p>
+      <p><strong>Details:</strong></p>
+      <pre class="advisory-details-pre"><code>${escapeHtml(adv.details || "No details.")}</code></pre>
+    `;
+    el.modalExternalLink.href = `https://osv.dev/vulnerability/${adv.id}`;
+    el.advisoryModal.showModal();
   }
 
   function escapeHtml(str) {
-    if (!str) return "";
-    return str
+    if (str === null || str === undefined) return "";
+    return String(str)
       .replace(/&/g, "&amp;")
       .replace(/</g, "&lt;")
       .replace(/>/g, "&gt;")
@@ -330,5 +756,6 @@
       .replace(/'/g, "&#039;");
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  // Initialize
+  init();
 })();
