@@ -65,12 +65,29 @@ def build_updates_data(
     # Filter to updated/vulnerable servers for release delta
     updated_servers: list[dict[str, Any]] = []
     for rec in catalog.values():
-        if not rec.is_vulnerable and not rec.recommended_safe_version:
+        # Only include servers with is_vulnerable == True OR genuinely updated records 
+        # where we might determine change_type
+        if not rec.is_vulnerable and not any(v.is_vulnerable for v in rec.versions):
             continue
 
         change_type = "NEW_VULNERABILITY" if rec.is_vulnerable else "PATCHED_VERSION"
+        if change_type not in ("NEW_VULNERABILITY", "NEW_SERVER", "NEW_VERSION", "PATCHED_VERSION"):
+            continue
+
         rec_dict = rec.to_dict()
         rec_dict["change_type"] = change_type
+
+        # Optimize versions: keep recommended safe version, latest version, and recent versions (up to 2)
+        all_vers = rec_dict.get("versions", [])
+        if len(all_vers) > 2:
+            keep_vers = set()
+            if rec_dict.get("recommended_safe_version"):
+                keep_vers.add(rec_dict["recommended_safe_version"])
+            if rec_dict.get("latest_version"):
+                keep_vers.add(rec_dict["latest_version"])
+            for v in all_vers[-2:]:
+                keep_vers.add(v.get("version"))
+            rec_dict["versions"] = [v for v in all_vers if v.get("version") in keep_vers]
 
         # Optimize advisories
         for v in rec_dict.get("versions", []):
@@ -78,15 +95,20 @@ def build_updates_data(
             for adv in v.get("advisories", []):
                 if isinstance(adv, dict):
                     db_spec = adv.get("database_specific", {})
-                    new_advs.append({
+                    adv_item: dict[str, Any] = {
                         "id": adv.get("id"),
-                        "summary": adv.get("summary", ""),
+                        "summary": (adv.get("summary") or "")[:100],
                         "severity": db_spec.get("severity", "UNKNOWN"),
-                        "cvss_score": db_spec.get("cvss_score"),
-                        "owasp_mcp_category": db_spec.get("owasp_mcp_category"),
-                        "vulnerable_tools": db_spec.get("vulnerable_tools", []),
-                        "remediation_guidance": db_spec.get("remediation_guidance", ""),
-                    })
+                    }
+                    if db_spec.get("cvss_score"):
+                        adv_item["cvss_score"] = db_spec.get("cvss_score")
+                    if db_spec.get("owasp_mcp_category"):
+                        adv_item["owasp_mcp_category"] = db_spec.get("owasp_mcp_category")
+                    if db_spec.get("vulnerable_tools"):
+                        adv_item["vulnerable_tools"] = db_spec.get("vulnerable_tools")
+                    if db_spec.get("remediation_guidance"):
+                        adv_item["remediation_guidance"] = db_spec.get("remediation_guidance")
+                    new_advs.append(adv_item)
                 else:
                     new_advs.append({"id": str(adv)})
             v["advisories"] = new_advs
@@ -114,7 +136,7 @@ def build_updates_data(
         "timestamp_utc": now_iso,
         "summary_counts": summary_counts,
         "updated_servers": updated_servers,
-        "updated_advisories": advisories[:100],  # sample most relevant
+        "updated_advisories": advisories[:30],  # sample most relevant
     }
 
     # Write latest_update.json
