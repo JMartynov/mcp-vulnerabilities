@@ -99,9 +99,9 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **35** | **Capability Risk Classifier & Human-Readable Security Commentary Engine** | Threat Analysis & Risk Engine | `Todo` | Implement a specialized `CapabilityRiskClassifier` and `SecurityCommentaryEngine` in `src/mcp_vulnerabilities/analyzers/` (migrating and ele... | [task35_capability_risk_classifier.md](../../.jules/task35_capability_risk_classifier.md) |
-| **36** | **Multi-Server Conflict Detector, Automated Resolver, SARIF Collision Rules & Config Exporters Migration** | Client Security & Configuration | `Todo` | Migrate, integrate, and extend the multi-server conflict detector (`conflict_detector.py`), automated config resolver (`conflict_resolver.py... | [task36_conflict_detector_resolver_migration.md](../../.jules/task36_conflict_detector_resolver_migration.md) |
-| **37** | **Unified Container/VM Sandbox Drivers, Pre-Commit Security Hooks & API Route Bugfix** | Runtime Sandbox & API Daemon | `Todo` | Consolidate container and VM sandbox execution drivers (`DockerSandboxRunner`, `IncusSandboxRunner`, fallback `HostRunner`) within `src/mcp_... | [task37_unified_sandbox_drivers_precommit_hooks.md](../../.jules/task37_unified_sandbox_drivers_precommit_hooks.md) |
+| **35** | **Capability Risk Classifier & Human-Readable Security Commentary Engine** | Threat Analysis & Risk Engine | `Done` | Implement a specialized `CapabilityRiskClassifier` and `SecurityCommentaryEngine` in `src/mcp_vulnerabilities/analyzers/` (migrating and ele... | [task35_capability_risk_classifier.md](../../.jules/task35_capability_risk_classifier.md) |
+| **36** | **Multi-Server Conflict Detector, Automated Resolver, SARIF Collision Rules & Config Exporters Migration** | Client Security & Configuration | `Done` | Migrate, integrate, and extend the multi-server conflict detector (`conflict_detector.py`), automated config resolver (`conflict_resolver.py... | [task36_conflict_detector_resolver_migration.md](../../.jules/task36_conflict_detector_resolver_migration.md) |
+| **37** | **Unified Container/VM Sandbox Drivers, Pre-Commit Security Hooks & API Route Bugfix** | Runtime Sandbox & API Daemon | `Done` | Consolidate container and VM sandbox execution drivers (`DockerSandboxRunner`, `IncusSandboxRunner`, fallback `HostRunner`) within `src/mcp_... | [task37_unified_sandbox_drivers_precommit_hooks.md](../../.jules/task37_unified_sandbox_drivers_precommit_hooks.md) |
 | **38** | **Version-Separated Vulnerability & Passport Correlation Engine + CLI Expansion** | Vulnerability Correlation & Indexing | `Todo` | Implement a version-separated vulnerability and passport correlation engine (`src/mcp_vulnerabilities/fingerprints/correlator.py`) that inde... | [task38_version_separated_correlation_engine.md](../../.jules/task38_version_separated_correlation_engine.md) |
 | **39** | **Version-Aware Unified Site Builder & Sharded Server Datasets** | Static Site Generator & Sharding | `Todo` | Refactor `src/mcp_vulnerabilities/site_builder.py` into a high-performance static site generator that produces version-aware security datase... | [task39_version_aware_site_builder_sharded_data.md](../../.jules/task39_version_aware_site_builder_sharded_data.md) |
 | **40** | **Unified Security, Version Vulnerability Timeline & Fingerprint Web Portal UI** | Web Security Portal | `Todo` | Redesign and enhance the web portal (`docs/index.html`, `docs/app.js`, `docs/style.css`, `docs/timeline.js`) into a unified security and fin... | [task40_web_portal_timeline_ui.md](../../.jules/task40_web_portal_timeline_ui.md) |
@@ -112,10 +112,10 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 188 passed in 39.30s =============================
+============================= 247 passed in 41.34s =============================
 ```
-- Total test count: **188**
-- Passing: **188 (100%)**
+- Total test count: **247**
+- Passing: **247 (100%)**
 - Skipped / Failed: **0**
 
 

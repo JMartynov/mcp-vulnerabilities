@@ -15,11 +15,7 @@ from mcp_vulnerabilities.sandbox.models import SandboxInspectionResult
 
 logger = logging.getLogger(__name__)
 
-class SandboxError(Exception):
-    pass
-
-class TimeoutExpired(SandboxError):
-    pass
+from mcp_vulnerabilities.sandbox.drivers import SandboxError, TimeoutExpired
 
 class EphemeralSandbox:
     def __init__(self, engine_cmd: str | None, timeout: int = 60, network: str = "bridge"):
