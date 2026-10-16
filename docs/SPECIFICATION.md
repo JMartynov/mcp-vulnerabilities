@@ -352,3 +352,38 @@ When querying the advisory database for package $P$ at version $V$:
    - Disables or blocks specific vulnerable tools (`vulnerable_tools`) while allowing safe read-only tools on the same server to continue operating.
 3. **Automated Security Pipelines**:
    - Ingests new advisories daily from CVE List v5 and GHSA to provide continuous protection for AI agent deployments.
+
+---
+
+## 10. Capability Risk Classifier & Security Commentary Model
+
+To elevate threat modeling beyond known CVE/GHSA advisories, `mcp-vulnerabilities` implements static capability risk scoring and natural language commentary generation.
+
+### 10.1 Capability Risk Scoring Weights
+Each tool exposed by an MCP server is evaluated across heuristic pattern matchers (`CMD_PATTERN`, `SQL_PATTERN`, `FS_PATTERN`, `SSRF_PATTERN`, `CRED_PATTERN`, `CONTENT_PATTERN`, `WRITE_SAVE_PATTERN`, `ENV_PATTERN`, `PROMPT_PATTERN`):
+
+| Capability / Risk Indicator | Weight | Risk Description |
+| :--- | :---: | :--- |
+| `command_execution` | `+5.0` | Arbitrary host OS command or shell script execution |
+| `sql_injection` | `+4.0` | Raw database queries without strict ORM parametrization |
+| `filesystem_mutation` | `+3.0` | Read, write, or deletion of host filesystem directories |
+| `ssrf` | `+2.5` | Outbound network egress or webhook invocation |
+| `credential_exposure` | `+2.0` | Access to API tokens, private keys, or passwords |
+| `env_tampering` | `+2.0` | Inspection or mutation of host environment variables |
+| `prompt_injection` | `+1.5` | Processing unstructured prompts susceptible to injection overrides |
+
+Total score is bounded at $10.0$ ($\min(\text{score}, 10.0)$).
+
+### 10.2 Severity Tiers & Autonomy Safety
+- **CRITICAL** ($\ge 7.0$): Exposes multiple severe capabilities; unsafe for autonomous agents (`safe_for_autonomous_agents = False`).
+- **HIGH** ($5.0 \le \text{score} < 7.0$): Exposes command execution or extensive write/modification capabilities (`safe_for_autonomous_agents = False`).
+- **MEDIUM** ($2.5 \le \text{score} < 5.0$): Exposes read-only filesystem or outbound network egress (`safe_for_autonomous_agents = True`).
+- **LOW** ($< 2.5$): Pure informational or arithmetic operations (`safe_for_autonomous_agents = True`).
+
+### 10.3 Security Commentary & Mitigation Engine
+`SecurityCommentaryEngine` translates raw capability indicators into human-readable, executive commentaries with concrete least-privilege mitigation advice:
+- Container namespace isolation (`--network none`, read-only root) for `command_execution`.
+- Ephemeral directory jail for `filesystem_mutation`.
+- Dedicated environment variable injection instead of prompt arguments for `credential_exposure`.
+- Output is rendered both in tool-level commentary and aggregated server-level security summaries.
+

@@ -1,6 +1,11 @@
 import os
 from pathlib import Path
 
+from .capability_classifier import (
+    CapabilityRiskClassifier,
+    SecurityCommentaryEngine,
+    analyze_tool_security,
+)
 from .models import AnalysisTarget, ThreatCategory, ThreatFinding, ThreatSeverity
 from .regex_matcher import RegexThreatMatcher
 
@@ -13,6 +18,8 @@ except ImportError:
 class ThreatEngine:
     def __init__(self, rules_dir: str | None = None):
         self.regex_matcher = RegexThreatMatcher()
+        self.classifier = CapabilityRiskClassifier()
+        self.commentary_engine = SecurityCommentaryEngine()
         self.yara_rules = None
         
         if HAS_YARA:
@@ -127,3 +134,15 @@ class ThreatEngine:
                 surfaces[f"resource:{uri}.description"] = resource["description"]
                 
         return surfaces
+
+    def analyze_capabilities(self, target: AnalysisTarget) -> dict[str, Any]:
+        """Classifies capabilities and security commentary for target tools."""
+        classifications = [self.classifier.classify_tool(t) for t in target.tools]
+        commentary = self.commentary_engine.generate_server_commentary(
+            server_name="target",
+            tool_classifications=classifications,
+        )
+        return {
+            "classifications": classifications,
+            "commentary": commentary,
+        }
