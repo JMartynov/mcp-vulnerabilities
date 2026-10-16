@@ -407,3 +407,16 @@ Security advisories rarely affect every release of an MCP server. Collapsing vul
 - `mcp-vuln resolve-config <config_file> [--strategy prefix|priority|report]`: Ingests client config, resolves tool name collisions, and outputs sanitized configs.
 - `mcp-vuln export-config <package> [--client claude|cursor|cline|zed|windsurf|docker]`: Generates client configuration snippets pinned to recommended safe versions.
 
+## 12. Per-Update Release Delta Feed & Dedicated Updates Web Page (`docs/updates.html`)
+
+### 12.1 Release Delta Feed Architecture
+The `updates_builder` module compiles delta bundles tracking substantive differences during sync workflows:
+- **`docs/data/updates/latest_update.json`**: Current sync release delta containing newly reported advisories and newly tracked or modified MCP server records, annotated with `change_type` (`NEW_VULNERABILITY`, `PATCHED_VERSION`, `NEW_SERVER`).
+- **`docs/data/updates/v<version>.json`**: Immutable snapshot for each semantic release (e.g. `v1.0.0.json`).
+- **`docs/data/updates/updates_history.json`**: Historical catalog of all release deltas, timestamps, and summary counts (`new_advisories`, `updated_advisories`, `new_mcp_servers`, `updated_mcp_versions`).
+
+### 12.2 Dedicated Updates Web Portal (`docs/updates.html` & `docs/updates.js`)
+- Dedicated release explorer maintaining visual parity with `docs/index.html` while scoping strictly to changes in the selected sync release.
+- Interactive release selector dropdown to view historical release bundles.
+- Exact card, version inspector modal, tool parameter schemas, and safe client config exporter integration.
+
