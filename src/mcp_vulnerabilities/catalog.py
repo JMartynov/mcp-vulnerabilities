@@ -398,10 +398,18 @@ def _load_passports(passports_path: str | Path | None) -> dict[str, ServerPackag
             with open_func(target, "rt", encoding="utf-8") as f:
                 data = json.load(f)
                 if isinstance(data, dict):
-                    for k, v in data.items():
-                        if isinstance(v, dict):
-                            spec = ServerPackageSpec.from_dict(v)
-                            passports[spec.package_name] = spec
+                    if "passports" in data and isinstance(data["passports"], (dict, list)):
+                        data = data["passports"]
+                    if isinstance(data, dict):
+                        for k, v in data.items():
+                            if isinstance(v, dict):
+                                spec = ServerPackageSpec.from_dict(v)
+                                passports[spec.package_name] = spec
+                    elif isinstance(data, list):
+                        for v in data:
+                            if isinstance(v, dict):
+                                spec = ServerPackageSpec.from_dict(v)
+                                passports[spec.package_name] = spec
                 elif isinstance(data, list):
                     for v in data:
                         if isinstance(v, dict):
@@ -621,7 +629,7 @@ def build_unified_mcp_security_catalog(
                         try:
                             matching_advs.append(OsvVulnerability.from_dict(adv_dict))
                         except Exception:
-                            pass
+                            matching_advs.append(adv_dict)
 
             is_vuln = len(matching_advs) > 0
             syn_version_records.append(
