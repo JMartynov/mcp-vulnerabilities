@@ -46,3 +46,38 @@ The acceptance test suite includes:
 - **State Preservation**: Verifies that state parameters (checkpoint timestamps and commit SHAs) are consistently updated following a successful run.
 
 Developers are encouraged to execute this suite prior to opening PRs to guarantee the integrity of the data processing pipelines.
+
+---
+
+## 5. Multi-Server Tool Conflict Detection, Automated Resolver & Client Config Exporters
+
+To mitigate tool shadowing, parameter hijacking, and prompt injection attacks in multi-server client configurations, `mcp_vulnerabilities.audit` provides:
+
+### 5.1 Multi-Server Conflict Detector (`mcp_vulnerabilities.audit.conflict_detector`)
+- **Ingestion**: Evaluates Claude Desktop (`mcpServers`), Zed (`context_servers`), Cursor, and Cline configuration files.
+- **AST Matching**: Resolves configured servers against passport tool registries to index all exposed tools by canonical hash and parameter schema.
+- **Collision Flagging**: Flags when multiple servers expose identical tool names, identifying whether signatures are `IDENTICAL` (same hash) or `DIVERGENT` (parameter mismatch or conflicting descriptions).
+- **Risk Assessment**: Flags `has_critical_conflicts` if any colliding tool carries `critical` or `high` capability risk (e.g., arbitrary command execution or filesystem modification).
+
+### 5.2 Automated Conflict Resolver (`mcp_vulnerabilities.audit.conflict_resolver`)
+Implements automated configuration rewriting under three distinct strategies:
+- `prefix`: Namespaces conflicting tools via environment variables (`MCP_PREFIX_<TOOL>=<server>__`) and server argument prefixes (`--prefix=<server>__`).
+- `priority`: Preserves the tool on the preferred primary server while adding the tool to `disabledTools` on shadowing servers.
+- `report`: Audits without modifying files, generating human-readable and machine-actionable collision diagnostics.
+
+### 5.3 Client Configuration Exporters (`mcp_vulnerabilities.audit.config_exporter`)
+Provides modular client configuration generation and JSONC patching for:
+- **Claude Desktop** (`ClaudeExporter`, root key `mcpServers`)
+- **Cursor** (`CursorExporter`, root key `mcpServers`)
+- **Cline** (`ClineExporter`, root key `mcpServers`)
+- **Zed** (`ZedExporter`, root key `context_servers` with `{command: {path, args}}` schema)
+- **Windsurf** (`WindsurfExporter`, root key `mcpServers`)
+- **Docker** (`DockerExporter`, containerized execution with `--network none`)
+- Preserves user comments in existing configuration files using delimiter-safe `patch_jsonc()`.
+
+### 5.4 SARIF v2.1.0 Collision Rules (`SarifReporter.generate_collision_sarif`)
+Emits OASIS SARIF v2.1.0 reports for GitHub Code Scanning with specialized structural rules:
+- `MCP-STRUCTURAL-COLLISION-CRITICAL` (`level: error`)
+- `MCP-STRUCTURAL-COLLISION-HIGH` (`level: error`)
+- `MCP-STRUCTURAL-COLLISION-MEDIUM` (`level: warning`)
+- `MCP-STRUCTURAL-COLLISION-LOW` (`level: note`)

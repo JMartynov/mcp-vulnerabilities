@@ -55,7 +55,12 @@ class ClientConfigParser:
     def parse_dict(cls, data: dict[str, Any], source_file: Path | None = None) -> list[DiscoveredClientServer]:
         """Parses a loaded config dictionary containing server configurations."""
         servers: list[DiscoveredClientServer] = []
-        raw_servers = data.get("mcpServers") or data.get("mcp_servers") or data.get("servers")
+        raw_servers = (
+            data.get("mcpServers")
+            or data.get("mcp_servers")
+            or data.get("context_servers")
+            or data.get("servers")
+        )
 
         if not isinstance(raw_servers, dict):
             # Check if root itself is a dictionary of server configs
