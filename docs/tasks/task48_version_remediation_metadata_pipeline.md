@@ -25,39 +25,39 @@ This task extends the correlation engine (`src/mcp_vulnerabilities/fingerprints/
 ## 3. Acceptance Scenarios & Criteria
 
 ### Scenario 1: Multi-Version Aggregation & SemVer Sorting
-- [ ] GIVEN an MCP server tracked in passports or catalog index (e.g. `mcp-server-git`, `@modelcontextprotocol/server-filesystem`)
-- [ ] WHEN the correlation pipeline processes the server
-- [ ] THEN it gathers all published versions and sorts them according to Semantic Versioning (SemVer) order (e.g. `["0.1.0", "0.1.1", "0.2.0", "1.0.0"]`).
+- [x] GIVEN an MCP server tracked in passports or catalog index (e.g. `mcp-server-git`, `@modelcontextprotocol/server-filesystem`)
+- [x] WHEN the correlation pipeline processes the server
+- [x] THEN it gathers all published versions and sorts them according to Semantic Versioning (SemVer) order (e.g. `["0.1.0", "0.1.1", "0.2.0", "1.0.0"]`).
 
 ### Scenario 2: Per-Version Vulnerability Mapping
-- [ ] GIVEN an MCP server with versions `["1.0.0", "1.0.1", "1.1.0", "1.2.0"]` and an OSV advisory affecting `< 1.1.0`
-- [ ] WHEN the pipeline evaluates version status
-- [ ] THEN versions `1.0.0` and `1.0.1` are tagged with `is_vulnerable: true` and linked to the specific advisory ID(s)
-- [ ] AND versions `1.1.0` and `1.2.0` are tagged with `is_vulnerable: false` (clean / unaffected).
+- [x] GIVEN an MCP server with versions `["1.0.0", "1.0.1", "1.1.0", "1.2.0"]` and an OSV advisory affecting `< 1.1.0`
+- [x] WHEN the pipeline evaluates version status
+- [x] THEN versions `1.0.0` and `1.0.1` are tagged with `is_vulnerable: true` and linked to the specific advisory ID(s)
+- [x] AND versions `1.1.0` and `1.2.0` are tagged with `is_vulnerable: false` (clean / unaffected).
 
 ### Scenario 3: Remediation Target Calculation
-- [ ] GIVEN a user inspecting a vulnerable version (e.g. `1.0.0`)
-- [ ] WHEN the pipeline calculates remediation metadata
-- [ ] THEN `recommended_version` is identified as `1.1.0` (the minimum safe patched release)
-- [ ] AND if no fixed version exists in upstream advisories, it is tagged as `no_fix_available: true` with workaround/mitigation advice.
+- [x] GIVEN a user inspecting a vulnerable version (e.g. `1.0.0`)
+- [x] WHEN the pipeline calculates remediation metadata
+- [x] THEN `recommended_version` is identified as `1.1.0` (the minimum safe patched release)
+- [x] AND if no fixed version exists in upstream advisories, it is tagged as `no_fix_available: true` with workaround/mitigation advice.
 
 ### Scenario 4: Ecosystem-Aware Upgrade Command Generation
-- [ ] GIVEN an identified server with a known ecosystem (`npm`, `pypi`, `docker`)
-- [ ] WHEN generating remediation commands for a safe target version
-- [ ] THEN for `npm`: emits `npm install <package>@^<target_version>`
-- [ ] AND for `pypi`: emits `pip install --upgrade <package>>=<target_version>`
-- [ ] AND for `docker`: emits `docker pull <image>:<target_version>`.
+- [x] GIVEN an identified server with a known ecosystem (`npm`, `pypi`, `docker`)
+- [x] WHEN generating remediation commands for a safe target version
+- [x] THEN for `npm`: emits `npm install <package>@^<target_version>`
+- [x] AND for `pypi`: emits `pip install --upgrade <package>>=<target_version>`
+- [x] AND for `docker`: emits `docker pull <image>:<target_version>`.
 
 ### Scenario 5: Sharded JSON Payload Optimization
-- [ ] GIVEN 5,000+ servers in the catalog
-- [ ] WHEN building static site data artifacts in `docs/data/`
-- [ ] THEN the index file contains lightweight summaries and sharded detail files contain the full version matrices, maintaining gzip transfer under performance budgets.
+- [x] GIVEN 5,000+ servers in the catalog
+- [x] WHEN building static site data artifacts in `docs/data/`
+- [x] THEN the index file contains lightweight summaries and sharded detail files contain the full version matrices, maintaining gzip transfer under performance budgets.
 
 ---
 
 ## 4. Implementation Steps
-- [ ] 1. Enhance `src/mcp_vulnerabilities/fingerprints/correlator.py` to index all known versions per server.
-- [ ] 2. Implement `resolve_version_status(server, version)` evaluating OSV affected ranges.
-- [ ] 3. Implement `compute_remediation_target(server, current_version)` determining the safe target version and upgrade command.
-- [ ] 4. Update `site_builder.py` to write `version_matrix` and `remediation` fields into `docs/data/`.
-- [ ] 5. Write unit tests in `tests/test_version_remediation_pipeline.py` verifying SemVer sorting, edge cases (yanked versions, pre-releases, unpatched vulns), and remediation targets.
+- [x] 1. Enhance `src/mcp_vulnerabilities/fingerprints/correlator.py` to index all known versions per server.
+- [x] 2. Implement `resolve_version_status(server, version)` evaluating OSV affected ranges.
+- [x] 3. Implement `compute_remediation_target(server, current_version)` determining the safe target version and upgrade command.
+- [x] 4. Update `site_builder.py` to write `version_matrix` and `remediation` fields into `docs/data/`.
+- [x] 5. Write unit tests in `tests/test_version_remediation_pipeline.py` verifying SemVer sorting, edge cases (yanked versions, pre-releases, unpatched vulns), and remediation targets.

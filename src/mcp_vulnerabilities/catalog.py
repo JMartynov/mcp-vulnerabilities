@@ -45,6 +45,62 @@ def normalize_version(ver_str: str | None) -> str:
         return clean
 
 
+def compute_remediation_target(
+    current_version: str,
+    versions: list[VersionSecurityRecord],
+) -> str | None:
+    """
+    Computes the recommended update version for a given current_version.
+    Returns the lowest safe version that is >= current_version.
+    If no such version exists, returns None (meaning no fix is available).
+    """
+    def parse_ver(v_str: str) -> Version:
+        clean = v_str.lstrip("v=").strip()
+        try:
+            return Version(clean)
+        except InvalidVersion:
+            return Version("0.0.0")
+
+    try:
+        curr_v = parse_ver(current_version)
+    except Exception:
+        return None
+
+    # Filter to safe versions that are >= current_version
+    safe_candidates = [
+        r for r in versions
+        if not r.is_vulnerable and parse_ver(r.version) >= curr_v
+    ]
+
+    if not safe_candidates:
+        return None
+
+    # Return the lowest among the safe candidates
+    safe_candidates.sort(key=lambda r: parse_ver(r.version))
+    return safe_candidates[0].version
+
+
+def generate_upgrade_command(
+    ecosystem: str,
+    package_name: str,
+    target_version: str | None,
+) -> str | None:
+    """
+    Generates an ecosystem-specific upgrade command.
+    """
+    if not target_version:
+        return None
+
+    eco = ecosystem.lower()
+    if eco in ("npm", "javascript"):
+        return f"npm install {package_name}@^{target_version}"
+    elif eco in ("pypi", "python", "pip"):
+        return f"pip install --upgrade {package_name}>={target_version}"
+    elif eco == "docker":
+        return f"docker pull {package_name}:{target_version}"
+    return None
+
+
 def _parse_sort_version(ver_str: str) -> Version:
     """Safely parse version for sorting."""
     clean = normalize_version(ver_str)
@@ -235,6 +291,9 @@ class VersionSecurityRecord:
     resources: list[ResourceSignature] = field(default_factory=list)
     release_date: str | None = None
     required_env_vars: tuple[str, ...] = ()
+    recommended_update_version: str | None = None
+    upgrade_command: str | None = None
+    no_fix_available: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -288,6 +347,9 @@ class VersionSecurityRecord:
             resources=resources,
             release_date=data.get("release_date"),
             required_env_vars=tuple(data.get("required_env_vars", ())),
+            recommended_update_version=data.get("recommended_update_version"),
+            upgrade_command=data.get("upgrade_command"),
+            no_fix_available=bool(data.get("no_fix_available", False)),
         )
 
 
@@ -542,6 +604,20 @@ def build_unified_mcp_security_catalog(
         # Sort versions chronologically/semantically
         version_records.sort(key=lambda r: _parse_sort_version(r.version))
 
+        # Add per-version remediation targets
+        for v_rec in version_records:
+            if v_rec.is_vulnerable:
+                rec_ver = compute_remediation_target(v_rec.version, version_records)
+                v_rec.recommended_update_version = rec_ver
+                if rec_ver:
+                    v_rec.upgrade_command = generate_upgrade_command(
+                        spec.ecosystem,
+                        spec.package_name,
+                        rec_ver,
+                    )
+                else:
+                    v_rec.no_fix_available = True
+
         # Determine latest_version and recommended_safe_version
         latest_version = version_records[-1].version if version_records else ""
         recommended_safe_version: str | None = None
@@ -639,6 +715,19 @@ def build_unified_mcp_security_catalog(
                     advisories=matching_advs,
                 )
             )
+
+        for v_rec in syn_version_records:
+            if v_rec.is_vulnerable:
+                rec_ver = compute_remediation_target(v_rec.version, syn_version_records)
+                v_rec.recommended_update_version = rec_ver
+                if rec_ver:
+                    v_rec.upgrade_command = generate_upgrade_command(
+                        eco,
+                        pkg_name,
+                        rec_ver,
+                    )
+                else:
+                    v_rec.no_fix_available = True
 
         latest_version = syn_version_records[-1].version
         rec_safe = None
