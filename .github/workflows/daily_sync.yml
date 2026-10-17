@@ -19,6 +19,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync-mcp-vulnerabilities:
@@ -137,6 +138,7 @@ jobs:
 
             if [ -n "$VULN_CHANGES" ] || [ "${{ inputs.force_release }}" = "true" ]; then
               gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
+              gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
             fi
           else
             echo "release_created=false" >> "$GITHUB_OUTPUT"
