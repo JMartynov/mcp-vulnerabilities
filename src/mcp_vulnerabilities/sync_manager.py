@@ -14,9 +14,10 @@ logger = logging.getLogger(__name__)
 class CrossRepoSyncManager:
     """Manages cross-repository synchronization of passports.json.gz from mcp-fingerprints."""
     
-    def __init__(self, target_path: Path = Path("data/passports.json.gz")):
+    def __init__(self, target_path: Path = Path("data/passports.json.gz"), raw_github_url: Optional[str] = "https://raw.githubusercontent.com/jmartynov/mcp-fingerprints/main/passports.json.gz"):
         self.target_path = target_path
         self.github_api_url = "https://api.github.com/repos/jmartynov/mcp-fingerprints/releases/latest"
+        self.raw_github_url = raw_github_url
         
     def fetch_latest_passports(self, github_token: Optional[str] = None) -> bool:
         """
@@ -67,7 +68,14 @@ class CrossRepoSyncManager:
             logger.error(f"Error fetching passports: {e}. Falling back to raw github content.")
             
         # Fallback to downloading from raw.githubusercontent.com
-        fallback_url = "https://raw.githubusercontent.com/jmartynov/mcp-fingerprints/main/passports.json.gz"
+        if not self.raw_github_url:
+            return False
+            
+        if ("127.0.0.1" in self.github_api_url or "localhost" in self.github_api_url) and "githubusercontent.com" in self.raw_github_url:
+            logger.info("Custom local API host detected; skipping external raw fallback.")
+            return False
+
+        fallback_url = self.raw_github_url
         logger.info(f"Attempting fallback download from {fallback_url}")
         
         try:
