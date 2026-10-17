@@ -2,18 +2,25 @@ import subprocess
 import json
 import os
 import sys
+import shutil
 from pathlib import Path
 
 def test_acceptance_cyclonedx_audit():
     config_path = Path("tests/fixtures/claude_desktop_config_sbom.json")
     
     # Run the audit command with cyclonedx format
+    cmd = [
+        "uv", "run", "mcp-vuln", "audit", 
+        "--config", str(config_path), 
+        "--format", "cyclonedx"
+    ] if shutil.which("uv") else [
+        sys.executable, "-m", "mcp_vulnerabilities.cli", "audit", 
+        "--config", str(config_path), 
+        "--format", "cyclonedx"
+    ]
+    
     result = subprocess.run(
-        [
-            "uv", "run", "mcp-vuln", "audit", 
-            "--config", str(config_path), 
-            "--format", "cyclonedx"
-        ],
+        cmd,
         capture_output=True,
         text=True,
         env={**os.environ, "PYTHONPATH": "src"}
@@ -114,12 +121,17 @@ if __name__ == '__main__':
     main()
     """)
 
+    cmd = [
+        "uv", "run", "mcp-vuln", "probe", 
+        "--command", f"{sys.executable} {mock_server_path}", 
+        "--format", "cyclonedx"
+    ] if shutil.which("uv") else [
+        sys.executable, "-m", "mcp_vulnerabilities.cli", "probe", 
+        "--command", f"{sys.executable} {mock_server_path}", 
+        "--format", "cyclonedx"
+    ]
     result = subprocess.run(
-        [
-            "uv", "run", "mcp-vuln", "probe", 
-            "--command", f"{sys.executable} {mock_server_path}", 
-            "--format", "cyclonedx"
-        ],
+        cmd,
         capture_output=True,
         text=True,
         env={**os.environ, "PYTHONPATH": "src"}
