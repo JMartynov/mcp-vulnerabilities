@@ -143,10 +143,23 @@ jobs:
           fi
 
   pypi-release:
+    runs-on: ubuntu-latest
     needs: sync-mcp-vulnerabilities
     if: needs.sync-mcp-vulnerabilities.outputs.release_created == 'true'
     continue-on-error: true
     permissions:
       id-token: write
       contents: read
-    uses: ./.github/workflows/release.yaml
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build wheel and sdist
+        run: |
+          pip install --upgrade pip build
+          python -m build
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          skip-existing: true
