@@ -33,10 +33,10 @@ jobs:
           pip install build
 
       - name: Build binary wheel and source tarball
-        run: python -m build
+        run: python -m build --outdir dist-pypi
 
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: dist/
+          packages-dir: dist-pypi/
           skip-existing: true
