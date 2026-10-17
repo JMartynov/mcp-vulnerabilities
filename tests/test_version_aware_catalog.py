@@ -212,3 +212,7 @@ def test_build_unified_mcp_security_catalog_version_separation(tmp_path: Path):
     assert record.is_vulnerable is True
     assert len(v1_0_0.tools) == 1
     assert v1_0_0.tools[0].name == "read_file"
+
+    assert v1_0_0.recommended_update_version == "1.1.0"
+    assert v1_0_0.upgrade_command == "npm install @test/mcp-server@^1.1.0"
+    assert v1_0_0.no_fix_available is False
