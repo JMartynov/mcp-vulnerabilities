@@ -90,6 +90,34 @@
   async function init() {
     setupEventListeners();
     await Promise.all([loadCatalogIndex(), loadAdvisories()]);
+    
+    // Handle deep linking from URL query params
+    const params = new URLSearchParams(window.location.search);
+    const serverParam = params.get('server');
+    const versionParam = params.get('version');
+    
+    if (serverParam) {
+      // Find the server in the catalog
+      const serverEntry = catalogIndex.find(s => s.package_name === serverParam || s.display_name === serverParam);
+      if (serverEntry) {
+        switchTab("directory");
+        // Open modal
+        await openServerModal(serverEntry.package_name, serverEntry.shard_file);
+        
+        // If version param provided, select it after modal opens
+        if (versionParam && currentInspectedServer && currentInspectedServer.versions) {
+          const targetVer = currentInspectedServer.versions.find(v => v.version === versionParam);
+          if (targetVer) {
+            // Update UI pills
+            el.modalVersionPills.querySelectorAll(".version-pill").forEach((b) => b.classList.remove("active"));
+            const pill = el.modalVersionPills.querySelector(`.version-pill[data-ver="${versionParam}"]`);
+            if (pill) pill.classList.add("active");
+            
+            selectVersion(targetVer);
+          }
+        }
+      }
+    }
   }
 
   // Event Listeners
@@ -447,6 +475,18 @@
   }
 
   function selectVersion(v) {
+    // Update URL query param for deep linking without reloading
+    if (currentInspectedServer && v) {
+      const url = new URL(window.location);
+      url.searchParams.set('server', currentInspectedServer.package_name);
+      url.searchParams.set('version', v.version);
+      window.history.replaceState({}, '', url);
+    } else if (!currentInspectedServer) {
+      const url = new URL(window.location);
+      url.searchParams.delete('server');
+      url.searchParams.delete('version');
+      window.history.replaceState({}, '', url);
+    }
     currentInspectedVersion = v;
     if (!v) {
       el.selectedVersionLabel.textContent = "N/A";
@@ -470,6 +510,43 @@
 
     // Version Vulnerability Matrix
     const advs = v.advisories || [];
+    
+    // Remediation box logic
+    let remediationHtml = "";
+    if (v.is_vulnerable && currentInspectedServer) {
+      const recVer = currentInspectedServer.recommended_safe_version;
+      const eco = currentInspectedServer.ecosystem || "";
+      const pkgName = currentInspectedServer.package_name || "";
+      
+      if (recVer) {
+        let upgradeCmd = "";
+        if (eco.toLowerCase() === "npm") {
+          upgradeCmd = `npm install ${pkgName}@^${recVer}`;
+        } else if (eco.toLowerCase() === "pypi") {
+          upgradeCmd = `pip install ${pkgName}>=${recVer}`;
+        } else {
+          upgradeCmd = `Update ${pkgName} to v${recVer}`;
+        }
+        
+        remediationHtml = `
+          <div class="remediation-box">
+            <strong>⚠️ Remediation: Update to version ${escapeHtml(recVer)} or higher to resolve this issue.</strong>
+            <div class="remediation-command-wrap">
+              <code id="remediation-cmd-text">${escapeHtml(upgradeCmd)}</code>
+              <button class="btn-copy-cmd" id="btn-copy-remediation">Copy Command</button>
+            </div>
+          </div>
+        `;
+      } else {
+        remediationHtml = `
+          <div class="remediation-box">
+            <strong>⚠️ No fixed version available upstream yet</strong>
+            <p>Consider applying sandbox isolation rules or disabling affected tools.</p>
+          </div>
+        `;
+      }
+    }
+    
     if (advs.length > 0) {
       el.selectedVersionVulnContainer.innerHTML = `
         <div class="version-vuln-matrix">
@@ -488,11 +565,30 @@
                   ${adv.vulnerable_tools.map((t) => `<span class="tool-tag-danger">⚠️ ${escapeHtml(t)}</span>`).join("")}
                 </div>
               ` : ""}
-              ${adv.remediation_guidance ? `<div class="remediation-box">💡 <strong>Remediation:</strong> ${escapeHtml(adv.remediation_guidance)}</div>` : ""}
             </div>
           `).join("")}
         </div>
+        ${remediationHtml}
       `;
+      
+      const copyBtn = document.getElementById("btn-copy-remediation");
+      if (copyBtn) {
+        copyBtn.addEventListener("click", () => {
+          const cmdText = document.getElementById("remediation-cmd-text").textContent;
+          navigator.clipboard.writeText(cmdText).then(() => {
+            const originalText = copyBtn.textContent;
+            copyBtn.textContent = "Copied!";
+            copyBtn.style.backgroundColor = "#10b981";
+            copyBtn.style.color = "#fff";
+            setTimeout(() => {
+              copyBtn.textContent = originalText;
+              copyBtn.style.backgroundColor = "";
+              copyBtn.style.color = "";
+            }, 2000);
+          });
+        });
+      }
+      
     } else {
       el.selectedVersionVulnContainer.innerHTML = `
         <div class="safe-release-banner">
