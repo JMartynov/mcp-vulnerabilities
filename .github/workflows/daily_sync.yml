@@ -100,7 +100,7 @@ jobs:
           git add data/mcp_servers.json data/ vulnerabilities.json.gz
           git add -f dist/osv/ 2>/dev/null || true
 
-          if ! git diff --staged --quiet; then
+          if ! git diff --staged --quiet || [ "${{ inputs.force_release }}" = "true" ]; then
             if [ -n "$VULN_CHANGES" ] || [ "${{ inputs.force_release }}" = "true" ]; then
               # Bump version
               NEW_VERSION=$(python scripts/bump_version.py --dry-run)
