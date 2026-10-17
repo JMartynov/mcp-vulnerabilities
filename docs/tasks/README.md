@@ -108,6 +108,22 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 | **41** | **Cross-Repo Snapshot Sync, Daily Workflow Alignment & Final E2E Verification** | Cross-Repo Automation & CI | `Done` | Establish automated cross-repository snapshot synchronization and daily workflow alignment between `mcp-fingerprints` and `mcp-vulnerabiliti... | [task41_cross_repo_snapshot_sync.md](../../.jules/task41_cross_repo_snapshot_sync.md) |
 | **42** | **Automated Sync Delta Detection, Version Bumper (bump_version.py) & PyPI Release Pipeline** | Release Engineering & Automation | `Done` | Implement automated sync delta detection (`src/mcp_vulnerabilities/delta_detector.py`) to identify substantive security data updates (new CV... | [task42_delta_detection_version_bumper_release.md](../../.jules/task42_delta_detection_version_bumper_release.md) |
 | **43** | **Per-Update Release Delta Feed & Dedicated Updates Web Page (docs/updates.html)** | Threat Intelligence Feed & UI | `Done` | Generate a per-update release delta feed (`docs/feed.json`, `docs/feed.xml`) and build a dedicated 'Updates & Threat Advisories' web page (`... | [task43_release_delta_feed_updates_page.md](../../.jules/task43_release_delta_feed_updates_page.md) |
+| **44** | **Updates Payload Optimization and Documentation Synchronization** | Feed Performance & Docs | `Done` | Optimize delta filtering to keep payload size < 1 MB and synchronize documentation. | [task44_updates_payload_and_docs_sync.md](../../.jules/task44_updates_payload_and_docs_sync.md) |
+| **45** | **Cross-Repository Dependency Triggering Workflow** | Cross-Repo CI Automation | `Done` | Upstream repository dispatch workflows connecting fingerprints and vulnerability releases. | [task45_cross_repo_dependency_trigger.md](../../.jules/task45_cross_repo_dependency_trigger.md) |
+| **45b** | **CI Test Suite Resilience & Pytest Mock Fixes** | CI Reliability & Testing | `Done` | Hardened mock fixtures and cross-environment test guarantees across Python 3.12/3.14. | [task45b_ci_test_fixes.md](../../.jules/task45b_ci_test_fixes.md) |
+| **46** | **CI Resilience, PyPI Graceful Fallback & Force-Release Support** | Release Engineering & CI | `Done` | Force-release dispatch flags, graceful PyPI OIDC fallback, and release automation. | [task46_ci_resilience_and_force_release.md](../../.jules/task46_ci_resilience_and_force_release.md) |
+
+---
+
+### 9. Web Security Explorer, Version-Switching & Live Feed Deployment Wave (Wave 9 - Active Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_SECURITY_EXPLORER.md](IMPLEMENTATION_PLAN_SECURITY_EXPLORER.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **47** | **GitHub Pages Deployment & Live Web Portal / Feed Reference Fix** | Web Hosting & Deployment | `Pending` | Fix public live portal and updates feed links via `.github/workflows/pages.yml`, audit relative paths, and verify HTTP 200 uptime. | [task47_github_pages_live_portal_feed_fix.md](task47_github_pages_live_portal_feed_fix.md) |
+| **48** | **MCP Server Multi-Version Vulnerability & Remediation Metadata Pipeline** | Version Correlator & Data Engine | `Pending` | Ingest complete version histories per MCP server, map version vulnerabilities, and compute target safe update versions and upgrade commands. | [task48_version_remediation_metadata_pipeline.md](task48_version_remediation_metadata_pipeline.md) |
+| **49** | **Searchable MCP Security Explorer with Interactive Version Switcher & Remediation UI** | Web Security Portal UI | `Pending` | Searchable server directory, interactive version switcher, dynamic safe vs vulnerable posture, and copyable remediation upgrade commands. | [task49_security_explorer_version_switcher_remediation_ui.md](task49_security_explorer_version_switcher_remediation_ui.md) |
 
 ## Verification Test Results
 ```
