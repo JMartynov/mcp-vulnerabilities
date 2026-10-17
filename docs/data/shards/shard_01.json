@@ -4,11 +4,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/82ch",
     "display_name": "82ch",
-    "description": "MCP Security Framework with Desktop UI",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/82ch/MCP-Dandan",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -50,8 +50,207 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:b9179cefe5900b54a0d7dd2c6e92f2683f07db59c6bf68b1b9bf881f46865486",
+        "tools": [
+          {
+            "name": "company_xray",
+            "canonical_hash": "sha256:be3361ed64a065050c0cba6d32bce2988f71f1db4df78c4136786b422769529f",
+            "description": "Company intelligence powered by People Data Labs + Hunter.io. Industry, employee count, revenue estimate, tech stack, verified email contacts, social presence. 9 data sources scored 0-100. Price: $0.15 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `company_xray` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "domain",
+                "type": "string",
+                "description": "Company domain (e.g. hubspot.com)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "compliance_check",
+            "canonical_hash": "sha256:3b590713560e56d182cfd901a46a78f22ff7850f595419cceecaff00d4c75ed9",
+            "description": "IT security compliance audit with Qualys SSL Labs grading. Email auth, SSL/TLS, OWASP headers, cookies, privacy, DNSSEC, hosting, data exposure. 8 checks letter graded. Price: $0.15 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compliance_check` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "domain",
+                "type": "string",
+                "description": "Domain to audit (e.g. stripe.com)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "domain_shield",
+            "canonical_hash": "sha256:e94801ebe292bf22193113403db84576dce69f0a2575bb515700476055a087d4",
+            "description": "Domain security scan with VirusTotal malware detection (70+ antivirus engines). SPF, DKIM, DMARC, SSL, MX, DNSSEC, domain info. 8 checks scored 0-100 with prioritized recommendations. Price: $0.12 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `domain_shield` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "domain",
+                "type": "string",
+                "description": "Domain to scan (e.g. stripe.com)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "health_signal",
+            "canonical_hash": "sha256:4132ba982b52fa7c187309e8bfaae689dbd5a2ea9f8bf5dbeb4a761e5c559bdb",
+            "description": "Health intelligence with NIH RxNorm drug interaction checking + FDA data. Drug labels, adverse events, recalls, nutrition, drug-to-drug interactions with severity ratings. 7 sources risk scored 0-100. Price: $0.10 USDC on Base.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `health_signal` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "query",
+                "type": "string",
+                "description": "Drug name or food item (e.g. ibuprofen)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": "drug, food, or auto (default: auto)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "property_intel",
+            "canonical_hash": "sha256:6bd4fe1146311d3cea713d800c52fc28e0eb21fdc91b4287760e341a96407826",
+            "description": "Location intelligence with US Census Bureau + OpenWeather data. Geocoding, nearby amenities, schools, elevation, demographics, walkability. 7 sources scored 0-100. Price: $0.10 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `property_intel` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "string",
+                "description": "Full address (e.g. 123 Main St Milwaukee WI)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "prospect_iq",
+            "canonical_hash": "sha256:34def5975eda7811d5c78a6637f453deb846c5eb52003198959eed7b80ec7eaa",
+            "description": "Sales intelligence powered by People Data Labs + Hunter.io. Web presence, tech stack, verified contacts, social signals, contact readiness. 7 sources scored 0-100. Price: $0.12 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `prospect_iq` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "domain",
+                "type": "string",
+                "description": "Domain to analyze (e.g. example.com)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "sports_edge",
+            "canonical_hash": "sha256:de01e4a203b7a2684e8a95f9f209571a4dc3308bfbf603107ff1433e147dcd70",
+            "description": "Pre-game sports intelligence with ESPN + The Odds API + Claude AI synthesis. Live standings, odds comparison from 15+ bookmakers, AI-generated game analysis. Price: $0.12 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sports_edge` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "sport",
+                "type": "string",
+                "description": "Sport key: nba, nfl, mlb, nhl, mls, epl",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "team",
+                "type": "string",
+                "description": "Team name filter (e.g. lakers)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "threat_pulse",
+            "canonical_hash": "sha256:42ec6f633443ce98ba6c6bf42a411cb0dfbe062167573b732f92049a07235e65",
+            "description": "Threat intelligence with VirusTotal (70+ engines) + AbuseIPDB (30K+ community reporters). Blacklists, reverse DNS, open ports, SSL analysis, email security. 7 sources scored 0-100. Price: $0.10 USDC on Base.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `threat_pulse` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "target",
+                "type": "string",
+                "description": "IP address or domain (e.g. 8.8.8.8 or example.com)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -130,18 +329,570 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/@lincolnminto%2Fzendesk-mcp-server",
     "display_name": "@lincolnminto/zendesk-mcp-server",
-    "description": "Deep Zendesk MCP server for your AI assistant: search, draft, update and translate Help Center articles and manage Support tickets end to end — comments, triage and image attachments.",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/lincolnminto/zendesk-mcp-server#readme",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "2.23.0",
     "recommended_safe_version": "2.23.0",
     "is_vulnerable": false,
-    "security_summary": "Server `@lincolnminto/zendesk-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "security_summary": "Server `@lincolnminto/zendesk-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:04ab7e526a74a3abb9009b70e7052abbd6868924f3751e5affd4d6acddf38116",
+        "tools": [
+          {
+            "name": "add_private_note",
+            "canonical_hash": "sha256:21c2d1a67ff6b0e9afd3eb023fd2c995a20ccfee263797d2c3e2330a347e2b6c",
+            "description": "Add an internal note (not visible to requester) to a ticket, optionally with file attachments (uploaded via the Zendesk Uploads API and carried on the note). The note is appended to the ticket thread; use add_public_comment instead when the reply should be visible to the requester.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_private_note` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "add_public_comment",
+            "canonical_hash": "sha256:332e12a5c4c44c3f47984f4124654e0f31b32bc8b9f303ccc2460377148de208",
+            "description": "Add a public comment (visible to requester) to a ticket, optionally with file attachments (uploaded via the Zendesk Uploads API and carried on the comment). The comment is appended to the ticket thread and emails the requester; use add_private_note instead for an internal, agent-only note.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_public_comment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "archive_article",
+            "canonical_hash": "sha256:985687bd70016d80890b9e7beb8c2a25b1c8532ee6b058bb77d846bc3444df0c",
+            "description": "Archive (soft-delete) a Help Center article: it is removed from the Help Center but can be restored from the Guide admin UI. Returns a confirmation message; the article and all its translations become invisible to end users. This is the only removal the Zendesk API offers — permanent deletion is not available via the API (do it from the Guide admin UI). To only hide an article temporarily while keeping it in the knowledge base, use update_article with draft: true (unpublish) instead. Guarded by a required confirm flag.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `archive_article` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "compare_translations",
+            "canonical_hash": "sha256:8d4b50066421d6653da9a670921fde71f1c261f4d33e3f66df9917a9e6fdf7e0",
+            "description": "Compare two locales of the same article to decide whether the target translation needs work, reporting independent signals instead of one ambiguous verdict. (1) Header — a \\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_translations` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_article",
+            "canonical_hash": "sha256:c411b222b473bb281965d81d6c719f11c6ff497e815f6bf35f51a83cab1cc429",
+            "description": "Create a new article in a section and return the created article with its id. The locale becomes the article",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_article` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_article_attachment",
+            "canonical_hash": "sha256:3b9ae4578b362394f7ae50f961c8d33719629633727805c31705a5dd17412b1c",
+            "description": "Upload a file to a Help Center article and return the created attachment (its id, file name, content type, size and content URL). Not idempotent: calling it again uploads another copy rather than replacing the previous one. This is for article assets — for files on support tickets use get_ticket_attachments, and to see an article",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `create_article_attachment` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_article_translation",
+            "canonical_hash": "sha256:3408a4615e8a7373b3fedd137822d212574f0efb52722e0b957b948c9ffe0fb5",
+            "description": "Create a translation for an existing article in a specific locale. The article must already exist (create it with create_article); this adds a new localized version and returns the created translation (locale, title, draft state). The target locale must not already have a translation — use update_article_translation to modify an existing one, and list_article_translations to see which locales exist. Provide the full HTML body.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_article_translation` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_content_tag",
+            "canonical_hash": "sha256:46d175700d043ce91ebb0492b7a28f666c901e169d2348fe5f343f1f7979740b",
+            "description": "Create a new content tag for Guide articles. Content tags are end-user visible labels that help readers discover related articles; this returns the created tag with its id. Check list_content_tags first (filter by name_prefix) to avoid duplicates, then attach the new id via the content_tag_ids parameter of create_article or update_article. For internal search-ranking labels that are not shown to end users, use article labels (list_labels) instead.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_content_tag` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_ticket",
+            "canonical_hash": "sha256:b217badc0ad039b3942c9161d67dcc3b044fa49a63bc257ddb7d5a1da9479edf",
+            "description": "Create a new Zendesk support ticket with subject, description, and optional priority/type/assignee/tags. The description becomes the first public comment of the ticket, and the new ticket id is returned. After creation, use update_ticket to change status or assignee, add_public_comment or add_private_note to reply, and manage_tags to adjust tags. Look up valid assignee_id / group_id and custom field ids via search_users or your Zendesk admin settings. Discover custom field ids and their accepted option values with list_ticket_fields.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_ticket` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "find_translation_gaps",
+            "canonical_hash": "sha256:a262b4d1d7185be6c03034cf5733203715ad3a8776b167af0713de896c2175ff",
+            "description": "Audit the Help Center tree for a target locale and report every category and section that has no translation, or one that is still an unpublished draft. Use it before or after translating articles: an article published in a second locale is unreachable while its parent section only exists in the source locale. Listing sections in that locale cannot answer this — a node with no translation is simply absent, without saying why, and a node whose translation is an unpublished draft may still be listed under its draft name — so this audit reads the draft flag on each node instead of trusting that listing. Costs two listings and covers up to 100 categories and 100 sections; past that only the first page of each level is audited, and the report says so — pass category_id to narrow it. Fix what it reports with set_section_translation / set_category_translation.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_translation_gaps` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_article",
+            "canonical_hash": "sha256:473dfa720cb81f09d167244d482a4f7af8739c8e60cb3390562231759e6de02e",
+            "description": "Retrieve an article by ID with full body content. For large articles, prefer get_article_outline + get_article_section to save tokens. Optionally specify locale for a translated version. Returns body (HTML), metadata, source_locale, and list of available translations.",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_article` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_article_outline",
+            "canonical_hash": "sha256:d9153cc763795d74b8a7c2a9ba5186ab4db3375e9e9e649ba658dec577b62dd3",
+            "description": "Return a compact outline of an article (list of sections delimited by h1/h2/h3, with word counts) for the given locale (defaults to source_locale). Includes available translations with their outdated status. Use get_article_section to fetch a specific section.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_article_outline` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_article_section",
+            "canonical_hash": "sha256:14b97199ecab7c95a4df4e3d3f26a96114308a955c36915ac48cd941c91ad537",
+            "description": "Retrieve the content of a single section of an article in a given locale. Use get_article_outline first to discover section indexes. Default format=\\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_article_section` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_current_user",
+            "canonical_hash": "sha256:d597b4ab172303261e01502eb59ae1453e3ccc28360d1b8ddaeaabae34a9ab09",
+            "description": "Get the currently authenticated Zendesk user. Useful to verify identity and permissions.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_current_user` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_linked_incidents",
+            "canonical_hash": "sha256:53b7a116a24721851ff23d84eba016be7860f9be1b881a66a442ad4243d559d2",
+            "description": "Get all incident tickets linked to a problem ticket. Returns the list of incidents that reference the given problem (Zendesk problem/incident relationship); useful to gauge a problem",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_linked_incidents` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_organization",
+            "canonical_hash": "sha256:e9a13082d7259fd47cf1b23308d0d954fa31103bf6e44446d67b0b1ddca03eeb",
+            "description": "Retrieve a single organization by its numeric id. Returns full details (name, tags, domains, notes) — more than the name/id that search or list_organizations surface. Use list_organizations to browse or search for a name-based lookup.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_organization` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_ticket",
+            "canonical_hash": "sha256:24241539c8494bc2a9b39aab8fe0273c09b03f54c5dc51ca0ce5478ee87f9f53",
+            "description": "Retrieve a Zendesk ticket by ID, including its live SLA state (per-metric stage and breach countdown) when an SLA policy applies, plus its comments if requested. Returns ticket details (subject, status, priority, assignee, tags, description) and optionally all comments/internal notes. The per-ticket Show endpoint exposes no SLA, so the SLA block is resolved via a scoped search and may be absent for a very high-volume requester or a just-updated ticket; SLA targets and policy conditions live in list_sla_policies. This returns the ticket as it stands now; for the history of changes behind that state (who changed what, and when), use get_ticket_history. The comment thread is appended in one block — the first page of comments Zendesk returns, cut past the response character limit — so on a long ticket read it with list_ticket_comments, which pages the comments and returns the newest first.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_ticket` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_ticket_attachments",
+            "canonical_hash": "sha256:8dfb174ef545ee2d2e66547a4c0da50f6d23dea988547026c61f4bc161b113c2",
+            "description": "Retrieve ticket attachments. Images are embedded inline; other files are listed as text references.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_ticket_attachments` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_ticket_history",
+            "canonical_hash": "sha256:f3da7bbc96dc18f315acb688b037af6e82f033875aa84741ef719b50214da7f2",
+            "description": "Read a ticket",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_ticket_history` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_ticket_relations",
+            "canonical_hash": "sha256:8ee4a3b5b09422f90fce6c9f36563c775775c3fbf5340a3584b850d0f728593c",
+            "description": "List the tickets a Zendesk ticket is linked to (the closed ticket it is a follow-up of, the follow-ups created from it, and for an incident its problem ticket) as ticket ids, one line per relationship present. A closed ticket cannot be reopened, so when the customer replies to one Zendesk opens a new follow-up ticket instead and a single issue ends up split across tickets; use this to walk that chain in either direction, then read each ticket with get_ticket. Follow-ups are listed on the original only once it is closed (Zendesk hides them before), and the source ticket subject is shown when Zendesk provides it. For a problem ticket it points to get_linked_incidents, which lists the incidents linked to it; a ticket with none of these relationships returns a line saying so. Merges and side-conversation child tickets are not covered. Read-only: one ticket fetch, nothing is changed; an unknown ticket id returns a not-found error.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_ticket_relations` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_user",
+            "canonical_hash": "sha256:681e6c67a498669177b292a0e83c2f7b948348d371d4f873a8e12e229b2494dd",
+            "description": "Retrieve a single user by their numeric id. Returns the full user record (name, email, role, organization, tags). Use search_users when you only have a name or email, or get_current_user for the authenticated identity.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_user` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_view_tickets",
+            "canonical_hash": "sha256:a50f328b1842803160bae2e038ffe96a24d356cb6adfbd4e71446d033d1b1db7",
+            "description": "Read the tickets inside a Zendesk view, in the view",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_view_tickets` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_article_attachments",
+            "canonical_hash": "sha256:be67cb149bff17e4b6e8da8db24e87e55c2562a978e514c47f6747f34dc2627d",
+            "description": "List all attachments for an article. Returns attachment metadata only (id, file name, content type, size, URL), not the file bytes; both inline and block attachments are included. This is for Help Center articles — for attachments on support tickets use get_ticket_attachments instead. Upload new files with create_article_attachment.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_article_attachments` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_article_translations",
+            "canonical_hash": "sha256:edcb5fec5a046437e0a5abe898dd77188f415e326f096832e1bfe0dfa03c7545",
+            "description": "List all available translations for an article (metadata only, no body: locale, title, draft, updated_at). Use get_article with locale for full translated content.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_article_translations` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_articles",
+            "canonical_hash": "sha256:785b8cead109a84b8d2c37f4ccbe31c04aed4d2ba1c8d2fbb86775a675cbb1a5",
+            "description": "List articles (metadata only, no body). Use get_article for full content. Optionally filter by section ID and locale. Supports sort_by (\\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_articles` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_categories",
+            "canonical_hash": "sha256:7cfd72534716b2125247a5592e52a4bb31b3f4a59d33e78112b611a577992685",
+            "description": "List all Help Center categories. Categories are the top level of the Guide hierarchy (category → section → article); each entry includes its id, name and locale. Results are cursor-paginated. Pair a returned category id with list_sections to drill down, then list_articles to reach articles. Pass a locale to read category names in that translation.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_categories` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_category_translations",
+            "canonical_hash": "sha256:70e0846b69e6e33e28332823549b239b8bdb813829d7780617ea4a9bdce1aaed",
+            "description": "List the translations of a Help Center category: for each locale, the localized name, whether a description is set, and whether the translation is published or still a draft. Reach for this when a category looks wrong in a locale, because list_categories with that locale cannot settle it: a category with no translation is omitted from it, while a category whose translation is an unpublished draft may still be listed there under the draft name — so appearing in that listing does not mean published, and the draft flag here is what decides. Fix either case with set_category_translation; to sweep every category and section at once, use find_translation_gaps.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_category_translations` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_content_tags",
+            "canonical_hash": "sha256:c1d76f8c919f9dc8e6dad383176e92cc5b8fe3bd0438d4b22543a897715523bd",
+            "description": "List Guide content tags, which are end-user-visible labels that help readers find related articles. Results are cursor-paginated (follow the returned cursor to enumerate the full list) and sorted by name by default. Pass name_prefix to look a tag up by the start of its name — do this before create_content_tag to reuse an existing tag rather than fragment the taxonomy. For internal, non-end-user search labels, see list_labels instead.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_content_tags` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_labels",
+            "canonical_hash": "sha256:febfc7103bad0c019305a5bb06a2830d0933c04b1806f1c38dbcbe4539823fe2",
+            "description": "List all article labels. Labels improve Help Center search ranking and are not visible to end users.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_labels` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_macros",
+            "canonical_hash": "sha256:6fbad48568adc5fb6f6c995d3229b6149dcf143bfd9d2d3c80f1ee90878321ed",
+            "description": "List the active macros available to the authenticated user. A macro bundles a canned reply and/or a set of field changes (status, priority, assignee, group, tags, custom fields) an agent applies to a ticket in one gesture; this returns each macro id, title, description, availability scope, and its ordered list of actions, offset-paginated. Results are scoped by per-user OAuth to what the current user can see, so no shared admin key is needed. Pass a macro id from here to preview_macro_diff to preview its effect on a specific ticket.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_macros` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_organizations",
+            "canonical_hash": "sha256:2740189fe07accf7efeb5bd606f7d0a103204ae926b23733c473ec6261bd7282",
+            "description": "List all organizations with pagination. Returns the name and id of each organization plus basic fields; results are cursor-paginated. Use get_organization with an id for full details (tags, domains, notes), or search for query-based lookups by name. Organizations group end users and can be referenced when creating or filtering tickets.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_organizations` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_permission_groups",
+            "canonical_hash": "sha256:64a1257e447a73f0c9279cb6d7fb5043f7577a38541d575b245f9d88ef6e9ca1",
+            "description": "List all Guide permission groups. Use this to find the permission_group_id required when creating articles.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_permission_groups` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_section_translations",
+            "canonical_hash": "sha256:3c7adb5b6f14a6aacd70c7aca14dac8447b282f8a768b4e2fc3f3521e8468b3e",
+            "description": "List the translations of a Help Center section: for each locale, the localized name, whether a description is set, and whether the translation is published or still a draft. Reach for this when a section looks wrong in a locale, because list_sections with that locale cannot settle it: a section with no translation is omitted from it, while a section whose translation is an unpublished draft may still be listed there under the draft name — so appearing in that listing does not mean published, and the draft flag here is what decides. Fix either case with set_section_translation; to sweep every category and section at once, use find_translation_gaps.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_section_translations` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_sections",
+            "canonical_hash": "sha256:10bef6803371c3d5e4e8b55a2eda5f49ce995f6cd1f50d50a8682b0fd1adc13f",
+            "description": "List Help Center sections. Sections are the middle level of the Guide hierarchy (category → section → article) and group related articles; each entry includes its id, name, category_id and locale. Results are cursor-paginated. Pass category_id to list only one category",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sections` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_sla_policies",
+            "canonical_hash": "sha256:7f557709311621918bdd9a3c4209e3ed7372527b88a89a47e41a474a3ed1abf4",
+            "description": "List the configured SLA policies with their filter conditions and per-priority reply/resolution targets. Use this to explain why a given target applies to a ticket and to reconstruct deadlines deterministically instead of hard-coding the policy matrix. Requires an admin token (or a custom role granted the SLA-management permission); a standard agent token gets 403 here, though it can still read live per-ticket SLA via get_ticket / search_tickets.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sla_policies` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_ticket_comments",
+            "canonical_hash": "sha256:f91505ace79d586396040c2e6e1fc217a259a5f7e00f37ee5053d1d79dbba136",
+            "description": "Read a ticket",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_ticket_comments` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_ticket_fields",
+            "canonical_hash": "sha256:9b948204dfd403ef2a9bc1d2642267768c3f92ea811a08732c16f628988e2143",
+            "description": "List the ticket field definitions configured on this Zendesk (both system fields and custom fields), returning each field",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_ticket_fields` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_tickets",
+            "canonical_hash": "sha256:758d7849b1617c19291f832041fda6b65ed3d215fa0610f262176774beb5d1ab",
+            "description": "List tickets with cursor-based pagination, in Zendesk",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tickets` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_user_segments",
+            "canonical_hash": "sha256:4591ba88e148aec631b5ad2297a5b5f3b443e429e66d406680c48e19205c1565",
+            "description": "List all user segments. User segments control article visibility (who can view). Use the ID when creating or updating articles.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_user_segments` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_views",
+            "canonical_hash": "sha256:e7c8d4ca0c965c005ee875454a019f2a9af1fe05eb7ef49c1380ed1e6f755c1c",
+            "description": "List the agent",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_views` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "manage_tags",
+            "canonical_hash": "sha256:623b3966919268d6b6dd5eb8ac4deaa4eb7f505a350a9404ffbf78ebebe30a4a",
+            "description": "Add or remove tags on a ticket. Performs an incremental read-modify-write: it fetches the ticket",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `manage_tags` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "preview_macro_diff",
+            "canonical_hash": "sha256:9f9469ab7e31f95f17a0b3ee27f4c14ebec41c50df19ceacb0cf545f06bf23cf",
+            "description": "Preview the exact changes a macro would make to a specific ticket, as a before → after diff, WITHOUT saving anything. Orchestrates two reads — the ticket",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `preview_macro_diff` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "reload_tools",
+            "canonical_hash": "sha256:fda9a392f82d3282f6d4a467f7383c386cb1e299f125f299bb2d5fa44f8e1e76",
+            "description": "Dev only. Re-imports the Zendesk tool modules from source and re-registers them on this live session, so tool code you just edited takes effect without restarting the server or reconnecting the client. Call it once at the end of an edit cycle, before testing your changes; the refreshed tool list is announced via tools/list_changed. Only the tool modules (tickets, search, help_center, users) are reloaded — edits to shared infrastructure (HTTP client, shared definitions, server wiring) still require a full restart. Takes no arguments and makes no Zendesk API calls.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reload_tools` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "reorder_article",
+            "canonical_hash": "sha256:fec523f4f473ddc626951fb277ee1188c78eecd916b527c477c635e93453e824",
+            "description": "Reorder an article within its current section by moving it relative to its siblings (top, bottom, or before/after another article), and return whether the new order was applied. This is the reliable way to satisfy \\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reorder_article` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "search",
+            "canonical_hash": "sha256:605eb99a9e1f48886fc9b2ebe4ab99602d3b204e70696055df9236ff6cce51ac",
+            "description": "Search across tickets, users, and organizations. Supports filters like \\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "search_articles",
+            "canonical_hash": "sha256:c617f2b55924295234a79f60f5aa2a6ecba9f6a94fb6f8492c993d79118dd249",
+            "description": "Full-text search across Help Center articles (metadata only, no body). Use get_article for full content. Supports locale filtering. Returns total count.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_articles` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "search_tickets",
+            "canonical_hash": "sha256:6e19181c856ae64d16a397e3d29c9427719b269ac21be2c29075591b08ec4d70",
+            "description": "Search tickets using Zendesk query syntax, returning each result with its live SLA state (per-metric stage and breach countdown) when an SLA policy applies. Examples: \\",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_tickets` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "search_users",
+            "canonical_hash": "sha256:7f3989e7efe602fe954044059a49ff501ceb2b6cad45392486099515a5f8760d",
+            "description": "Search for users by name, email, or other criteria using Zendesk search query syntax. Returns total count.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_users` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "set_category_translation",
+            "canonical_hash": "sha256:6068aabebc7e56329d5151ead058701e10e0c037dd9b9306274655176600a5ea",
+            "description": "Create or update the translation of a Help Center category in one locale, and return the resulting translation (locale, localized name, draft state). Creates the translation when the locale has none and updates it otherwise, so no listing call is needed first; only the fields you pass are written, which makes \\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_category_translation` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "set_section_translation",
+            "canonical_hash": "sha256:96e79a6a85ed7631ea55fc1fb364905dba743d366a901de32ea2ac490c35a353",
+            "description": "Create or update the translation of a Help Center section in one locale, and return the resulting translation (locale, localized name, draft state). Creates the translation when the locale has none and updates it otherwise, so no listing call is needed first; only the fields you pass are written, which makes \\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_section_translation` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "update_article",
+            "canonical_hash": "sha256:4248229a4981d06ab1d772781ac518b2d1330be85351a553280f24166014a696",
+            "description": "Update article metadata only (draft, promoted, labels, tags, visibility, section, sort position, etc.) and return the updated article. Does NOT update content (title, body) — use update_article_translation for that.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_article` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "update_article_section",
+            "canonical_hash": "sha256:7d7a5f9170ad170c63bda1ceb1e9a2c976fe305eea3f2ea50d14af92173f10ab",
+            "description": "Replace the content of a single section of an article in a given locale, keeping the rest of the body intact. The server fetches the current body, replaces the targeted section, and PUTs the full reconstructed body via the Translations API. Default format=\\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_article_section` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "update_article_translation",
+            "canonical_hash": "sha256:3da30cd0bd4b71458d68ca53c68e137115b0f7c5f33072d3d53fb1bc1b2d5dce",
+            "description": "Update article content (title, body) in a specific locale. For targeted edits on one or a few sections, prefer update_article_section — this tool replaces the FULL body and re-sends the entire article on each write. Use the article",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `update_article_translation` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "update_ticket",
+            "canonical_hash": "sha256:622d8b640bd7c1df3741d2e913f9b25dcc193009db1cb25ca43e419aeb30fd96",
+            "description": "Update an existing ticket (status, priority, type, assignee, group, subject, tags, custom fields). Only the fields you pass are changed, and the updated ticket is returned. Setting tags here replaces the whole tag set — use manage_tags to add or remove individual tags without overwriting the rest. This tool does not post replies: use add_public_comment or add_private_note for that. Find the ticket id via search_tickets or list_tickets.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_ticket` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
       {
         "version": "2.20.0",
         "is_vulnerable": false,
@@ -171,11 +922,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/@theyahia%2Famocrm-mcp",
     "display_name": "@theyahia/amocrm-mcp",
-    "description": "MCP server for amoCRM — leads, contacts, pipelines, tasks (Russia)",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/theYahia/amocrm-mcp#readme",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "2.0.2",
     "recommended_safe_version": "2.0.2",
     "is_vulnerable": false,
@@ -198,8 +949,219 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:177834e3fc4815548d38138e74d494ef965c3711add527e8dca9535975f1b5ba",
+        "tools": [
+          {
+            "name": "accept_unsorted",
+            "canonical_hash": "sha256:6f84a7b94b3dd12e6f1e56ada5ab7b5d93d041843aaddda571505f196f787cbe",
+            "description": "Accept an unsorted lead — moves it into a pipeline as a real lead. Optionally specify target pipeline, status, and responsible user.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `accept_unsorted` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "add_note",
+            "canonical_hash": "sha256:f5fdf3bdefb4730b607de68300803850aa9effe7223e97e409199f78b12d3bbf",
+            "description": "Add a note to a lead, contact, or company. Supports common notes, incoming/outgoing call logs, and service messages.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_note` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "complete_task",
+            "canonical_hash": "sha256:180f7f85b3486bb8e3ffb57fc37e9f40a4ad70349be38f4efaa3ac073af54db9",
+            "description": "complete_task",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `complete_task` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_company",
+            "canonical_hash": "sha256:7e5d717eb397f313279dbdb5762d0e761365ebbbe71e60dc31c04198e9b3a1d9",
+            "description": "Create a new company in amoCRM. Use custom_fields_values for address, website, etc.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_company` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_contact",
+            "canonical_hash": "sha256:e0410bb98cd07ed6e84eee5d38f22202533f1b48707921814cee73560534c69e",
+            "description": "Create a new contact in amoCRM. Use custom_fields_values to set phone, email, and other fields.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_contact` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_lead",
+            "canonical_hash": "sha256:3acf026882b8bd193efa4d46fdc2c0ac82ad54cd1277039233c804829fba3eb5",
+            "description": "Create a new lead (deal) in amoCRM. Requires a name. Optionally set price, pipeline, status, responsible user, and custom fields.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_lead` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_task",
+            "canonical_hash": "sha256:6451d3ea29e51cc757a8425ae33e916e0e7d5c58c4202c87c8345a18461e4ac3",
+            "description": "Create a task linked to a lead, contact, or company. Set deadline (complete_till as Unix timestamp) and task type (1=Call, 2=Meeting, 3=Email).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_task` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_account",
+            "canonical_hash": "sha256:28b9841d33d3d3697d6f7cbce5454af4687ee9ca2e9bd3221263cffec7aa3a44",
+            "description": "get_account",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_account` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_contact",
+            "canonical_hash": "sha256:97a05c3f818c2a1d7da4d693aff4ca8164ef7e93d0784e859ae5fc17eeffaa07",
+            "description": "Get a single contact by ID with full details including custom fields (phone, email, etc.).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_contact` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_lead",
+            "canonical_hash": "sha256:6e8c2ca916e617d96e822abaa202d0a188def558b06ca50b6dbdd657accf9cc9",
+            "description": "get_lead",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_lead` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_companies",
+            "canonical_hash": "sha256:6215e6298eb2981d45f22880fc41522f680e1d910fd5caa2edf37852ad0e0315",
+            "description": "list_companies",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_companies` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_contacts",
+            "canonical_hash": "sha256:b43556c260319341b2a313227f548c2773ff6d77dcb31fa12a5f71e9ee205cd8",
+            "description": "Search and list contacts in amoCRM. Supports full-text search across name, phone, and email.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_contacts` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_events",
+            "canonical_hash": "sha256:bc25ee5aa16198043f39be6208d93203aba355eae8c0bf1286858640bd787c35",
+            "description": "List events (activity log) in amoCRM. Filter by entity type, entity ID, or event type. Shows status changes, calls, notes, and other activities.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_events` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_leads",
+            "canonical_hash": "sha256:4d66decb71f2c5302628bd48afbd24c4c52b9763e95328df7771dd724f74665a",
+            "description": "list_leads",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_leads` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_pipelines",
+            "canonical_hash": "sha256:4510df4a92bf34c6ba4a79706e82a9922f97586baacb63222ad013d883b778c4",
+            "description": "List all sales pipelines with their statuses (stages). Essential for understanding the sales funnel structure before creating or filtering leads.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_pipelines` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_tasks",
+            "canonical_hash": "sha256:64a8464ba3fa5234f5d43fb2757abb21e9535ee492a507f1abd419ad60b12ff1",
+            "description": "List tasks in amoCRM. Filter by entity (lead/contact/company), completion status, or responsible user.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tasks` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_unsorted",
+            "canonical_hash": "sha256:85f888400c8142d14a32f9da2fff78780b8ef80109f66d135a8e99cc45868ffd",
+            "description": "List incoming unsorted leads (from forms, email parsing, etc.) that need to be accepted or declined.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_unsorted` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "search",
+            "canonical_hash": "sha256:605eb99a9e1f48886fc9b2ebe4ab99602d3b204e70696055df9236ff6cce51ac",
+            "description": "Universal search across amoCRM — finds leads, contacts, and companies matching the query. Min 3 characters.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "skill-enrich-lead",
+            "canonical_hash": "sha256:e7a8ee9e64db224425eda480d1bf5d7d6ec8cca13f4deb09348514271dfa8e6e",
+            "description": "Обогатить лид данными компании по ИНН. Использует dadata-mcp для получения реквизитов, затем обновляет лид в amoCRM.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skill-enrich-lead` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "skill-pipeline-report",
+            "canonical_hash": "sha256:18e71e39506a80ced8f492452afb1c79be852b7cb2613c4a12d61614eb7dae34",
+            "description": "Построить отчёт по воронке продаж: количество лидов на каждом этапе, суммарный бюджет, средний чек.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skill-pipeline-report` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "update_lead",
+            "canonical_hash": "sha256:fb642b938df53ce7c94641561ab00840ed6599e65b552787f2d9c7e5d072a28b",
+            "description": "Update an existing lead — change name, price, status, pipeline, responsible user, or custom fields. Useful for moving deals between stages.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_lead` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": "2026-03-31T04:44:12.436Z",
@@ -5159,6 +6121,210 @@
       }
     ]
   },
+  "HasData/indeed-mcp": {
+    "package_name": "HasData/indeed-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/HasData%2Findeed-mcp",
+    "display_name": "HasData/indeed-mcp",
+    "description": "Search Indeed job listings by keyword and location, and read a single posting in full, as structured JSON. Runs on HasData's hosted API.",
+    "author": null,
+    "repository_url": "https://github.com/HasData/indeed-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.8",
+    "recommended_safe_version": "1.0.8",
+    "is_vulnerable": false,
+    "security_summary": "Server `HasData/indeed-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.8",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:3ba73626a95d74fbf81284d94c6dd35cc895bea0c366383996a49c79e3a204d2",
+        "tools": [
+          {
+            "name": "hasdata_indeed_job_getJobDetails",
+            "canonical_hash": "sha256:db22270231d1b347334d65f87cb87805e39c4dc7ea2a9b974033d1c58112f3e3",
+            "description": "Get Indeed Job Details\n\nFetches a single Indeed job posting by its viewjob URL. Returns job title, company, location, salary/compensation, employment type, full description, and benefits. Use for ATS/CRM enrichment, compensation benchmarking, resume-to-JD matching with LLMs, and structured archival of postings discovered via the Indeed Listing endpoint.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `hasdata_indeed_job_getJobDetails` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "url",
+                "type": "string",
+                "description": "The URL of the job vacancy to retrieve details for.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "hasdata_indeed_listing_getJobListings",
+            "canonical_hash": "sha256:7a5a1f1167d2224d1de6f8ac7f32f2280cba27f5fb8c220e4959cac2c7c4f40d",
+            "description": "Get Indeed Job Listings\n\nSearches Indeed job listings by keyword and location with sort (relevance/date), country domain targeting, date-posted (1/3/7/14 days) and remote/hybrid filters, and offset-based pagination (start). Returns an array of jobs with title, company, location, salary, posted date, job URL, sponsored flag, and jobKey (Indeed's stable job id, the only reliable dedup key for sponsored postings) for the requested page. With sponsoredOnly the request exits from the domain's country, where Indeed serves Canadian searches as sponsored postings. Use for job-market dashboards, role/geo hiring-trend analysis, sourcing pipelines, and generating URL lists to feed into the Indeed Job endpoint.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `hasdata_indeed_listing_getJobListings` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "datePosted",
+                "type": "number",
+                "description": "Returns only jobs posted within the given number of days.",
+                "required": false,
+                "default": null,
+                "enum": [
+                  1,
+                  3,
+                  7,
+                  14
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "domain",
+                "type": "string",
+                "description": "The domain of the Indeed site (optional). Provide one exact documented value (62 allowed), e.g. `ar.indeed.com`, `au.indeed.com`.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keyword",
+                "type": "string",
+                "description": "The keyword used to search for job listings.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "location",
+                "type": "string",
+                "description": "The location to search for job listings.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "remoteType",
+                "type": "string",
+                "description": "Returns only remote (`remote`) or hybrid (`hybrid`) jobs. In the US, Indeed ties fully remote jobs to the country rather than a city, so use a country-wide location such as `United States`: with a city, Indeed returns few or no remote jobs.",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "remote",
+                  "hybrid"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sort",
+                "type": "string",
+                "description": "The sorting option for the search results.",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "relevance",
+                  "date"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sponsoredOnly",
+                "type": "boolean",
+                "description": "When enabled, the request is made in a way that returns more sponsored listings. Defaults to false.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "start",
+                "type": "number",
+                "description": "The starting index of the results to retrieve (optional).",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [
+          {
+            "name": "indeed_hiring_map",
+            "description": "",
+            "argument_keys": [
+              "location",
+              "role",
+              "site",
+              "sort"
+            ],
+            "required_arguments": [
+              "location",
+              "role"
+            ],
+            "arguments": []
+          }
+        ],
+        "resources": [
+          {
+            "uri_template": "hasdata://indeed/sort",
+            "name": "indeed_sort",
+            "description": "",
+            "mime_type": "application/json"
+          },
+          {
+            "uri_template": "hasdata://indeed/domain",
+            "name": "indeed_domain",
+            "description": "",
+            "mime_type": "application/json"
+          },
+          {
+            "uri_template": "hasdata://indeed/datePosted",
+            "name": "indeed_datePosted",
+            "description": "",
+            "mime_type": "application/json"
+          },
+          {
+            "uri_template": "hasdata://indeed/remoteType",
+            "name": "indeed_remoteType",
+            "description": "",
+            "mime_type": "application/json"
+          }
+        ],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "HasData/yellowpages-mcp": {
     "package_name": "HasData/yellowpages-mcp",
     "ecosystem": "generic",
@@ -9497,6 +10663,36 @@
       }
     ]
   },
+  "dotpals": {
+    "package_name": "dotpals",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/dotpals",
+    "display_name": "dotpals",
+    "description": "See what your coding agent actually did, and make it fix the tests it broke: a floating pal for Claude Code, Codex and any agent that checks every file changed, command run and test result, plus an MCP server any AI tool can ask for the evidence. New: talk to Blu, who sees your screen, draws on it as it explains and uses your apps. Also a zero-dependency animated Web Component for agent UIs.",
+    "author": null,
+    "repository_url": "https://github.com/rikinshah787/dotpals#readme",
+    "homepage_url": null,
+    "license": "MIT",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `dotpals` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "ScopeBlind/verify-mcp": {
     "package_name": "ScopeBlind/verify-mcp",
     "ecosystem": "generic",
@@ -12471,9 +13667,9 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/therundown-data-mcp-scaffold",
     "display_name": "therundown-data-mcp-scaffold",
-    "description": "Local read-only MCP example for TheRundown Product API",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/TheRundown/data-mcp",
+    "repository_url": null,
     "homepage_url": null,
     "license": null,
     "latest_version": "1.0.0",
@@ -12646,6 +13842,36 @@
       }
     ]
   },
+  "ai.autron/autron": {
+    "package_name": "ai.autron/autron",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ai.autron%2Fautron",
+    "display_name": "ai.autron/autron",
+    "description": "Read and manage the Amazon Ads accounts connected to Autron.",
+    "author": null,
+    "repository_url": "https://autron.ai/mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "2.0.0",
+    "recommended_safe_version": "2.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ai.autron/autron` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "2.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "ai.b77/apple-search-ads": {
     "package_name": "ai.b77/apple-search-ads",
     "ecosystem": "generic",
@@ -12686,10 +13912,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.1.4",
-    "recommended_safe_version": "0.1.4",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `skill-ninja-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 5 safe version(s).",
+    "security_summary": "Server `skill-ninja-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -12743,6 +13969,270 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:d59b01d0a619eaf34f8edecf5217b75d3727c70599835d605ccf13537b69423d",
+        "tools": [
+          {
+            "name": "skillNinja_addSource",
+            "canonical_hash": "sha256:edb154d966a652e04acacecfec694a845cd7d1497dfb3d94a9d4078bdff90c3c",
+            "description": "Add a new GitHub repository as a skill source. Repository should contain SKILL.md files. / 新しいリポジトリをスキルソースとして追加",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_addSource` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "repoUrl",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_install",
+            "canonical_hash": "sha256:a81bf5fd7f6857567e394c16b079e8b2d5192e328c2a261ee8fab0288c2363e5",
+            "description": "Install an Agent Skill to the workspace. Downloads SKILL.md when source content is resolvable, otherwise generates a minimal stub and updates AGENTS.md. / スキルをワークスペースにインストールし、取得できる場合は SKILL.md を保存、できない場合は最小内容を生成",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_install` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "skillName",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "source",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "workspacePath",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_list",
+            "canonical_hash": "sha256:494b54850c8106c4fae043759e402404bb40a63509a391c578ad1a5c9dfc8398",
+            "description": "List all installed Agent Skills in the workspace. / インストール済みスキル一覧を表示",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_list` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "workspacePath",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_localize",
+            "canonical_hash": "sha256:605683f3e5ab6645c880e11bbcf05bbabfb4800a6c5e336f9149cc98f2a2c3c3",
+            "description": "Translate/localize skill descriptions in the index. Provide skillName and description_en and/or description_ja. / スキル説明を翻訳・ローカライズ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_localize` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "description_en",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "description_ja",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "skillName",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "source",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_recommend",
+            "canonical_hash": "sha256:dbc27ab7bdbdb5e93a1cb68c7bd9d5d565c028fc8a4e60408c08d39ae0817242",
+            "description": "Get skill recommendations based on popularity. / 人気スキルのおすすめを取得",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_recommend` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "workspacePath",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_search",
+            "canonical_hash": "sha256:0f4f12ce74a4a956020e08ef823e0ee0f680327a3e9a0cb70dcbf1422d815588",
+            "description": "Search for Agent Skills by keyword. Returns matching skills with trust badges and recommendations. / キーワードでエージェントスキルを検索",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `skillNinja_search` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_uninstall",
+            "canonical_hash": "sha256:ae614f943e1c362335b7b821d21dda4dc7fbef97f0d4df512f1f9c8cada79a9a",
+            "description": "Uninstall an Agent Skill from the workspace. Removes skill folder and updates AGENTS.md. / スキルをアンインストール",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_uninstall` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "skillName",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "workspacePath",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_updateIndex",
+            "canonical_hash": "sha256:2ba8388548d3e6d3658ed754754b9eead38ef686b003bcd703b87680655a8846",
+            "description": "Update the skill index from all registered sources. Fetches latest skills from GitHub repositories. / スキルインデックスを更新",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `skillNinja_updateIndex` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "skillNinja_webSearch",
+            "canonical_hash": "sha256:3a8c3af84568ddcc7ca35291e1923c2f05fe890c9f993fa39b4569b9124a0282",
+            "description": "Search for Agent Skills on GitHub. Finds SKILL.md files across GitHub repositories. / GitHub でスキルを検索",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `skillNinja_webSearch` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -12853,10 +14343,21 @@
     "latest_version": "1.0.2",
     "recommended_safe_version": "1.0.2",
     "is_vulnerable": false,
-    "security_summary": "Server `@asyntai/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "security_summary": "Server `@asyntai/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
       {
         "version": "1.0.1",
         "is_vulnerable": false,
@@ -12891,10 +14392,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.2.3",
-    "recommended_safe_version": "0.2.3",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `supasidebar-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
+    "security_summary": "Server `supasidebar-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 5 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -12937,6 +14438,1110 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:83edd18beef765b53d2635f2f365045016c87b72ee4792cc62ae6e281cc49bc0",
+        "tools": [
+          {
+            "name": "addFinderFolder",
+            "canonical_hash": "sha256:6b3cafc4bba6200860e90678b06d96f0b06fb5846a85cbdf959f359b70a2ea5f",
+            "description": "Add current Finder folder to sidebar",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `addFinderFolder` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "add_atc_rule",
+            "canonical_hash": "sha256:97ac5ae5d6962623250a713b69120181b079db80dd30f458f281aede719b58d7",
+            "description": "Create a new Air Traffic Control rule. Save rules route saved links to a specific space. Open rules open matching URLs in a specific browser/profile. Use list_browser_profiles to get profile IDs and list_spaces to get space IDs.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_atc_rule` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "isEnabled",
+                "type": "boolean",
+                "description": "Whether rule is active. Defaults to true.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "matchType",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": [
+                  "contains",
+                  "equals"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Human-readable name for the rule.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "openInBrowser",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "openInProfileID",
+                "type": "string",
+                "description": "[Open rules] Browser profile ID. Get IDs from list_browser_profiles.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "routeType",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": [
+                  "save",
+                  "open"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sourceBrowser",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sourceSpaceID",
+                "type": "string",
+                "description": "[Open rules] Only trigger in this space. Get IDs from list_spaces.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "targetSpaceID",
+                "type": "string",
+                "description": "[Save rules] Space ID to route saved links into. Get IDs from list_spaces.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "urlPattern",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "add_link",
+            "canonical_hash": "sha256:b54687df8fffc802cc82de7273e93c514cc3afa83b52d07ce126278f33d668e7",
+            "description": "Save a new link to SupaSidebar. If name is omitted, the title is fetched from the page automatically.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `add_link` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "folderId",
+                "type": "string",
+                "description": "Folder ID to place the link in. Omit for unfiled. Get IDs from list_folders.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Display name for the link. If omitted, SupaSidebar fetches the page title automatically.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "notes",
+                "type": "string",
+                "description": "Optional notes to attach to the link.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "spaceId",
+                "type": "string",
+                "description": "The space ID to save the link into. Get IDs from list_spaces.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "url",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "add_search_shortcut",
+            "canonical_hash": "sha256:b571d616b205bd3e9e700b6995602a762502ad9fba66ff8e9586e8aad2ecbc4d",
+            "description": "add_search_shortcut",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_search_shortcut` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "clear_shortcut",
+            "canonical_hash": "sha256:e09dc6f2cacd2246be5378917696fe68cab0260b3c57233c0579eae1a46ddd21",
+            "description": "Remove a keyboard shortcut binding so it no longer has a key combination assigned.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear_shortcut` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "copyCurrentURL",
+            "canonical_hash": "sha256:b9313a86de83b6a3f55224a31eb20ebfbd20aaacae5dda9121e39a12cb00ec5f",
+            "description": "Copy URL from browsers or file paths from Finder",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `copyCurrentURL` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_folder",
+            "canonical_hash": "sha256:658f984f5f2daf3f1d694d0a09fdcbf7c441445e4fa7a2a07215865cbddbb5b7",
+            "description": "Create a new folder inside a space. Use list_spaces for space IDs, list_folders for parent folder IDs.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_folder` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Name for the new folder.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "parentFolderId",
+                "type": "string",
+                "description": "ID of the parent folder for nesting. Omit for a root-level folder. Get IDs from list_folders.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "spaceId",
+                "type": "string",
+                "description": "The space ID to create the folder in. Get IDs from list_spaces.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_space",
+            "canonical_hash": "sha256:2965b2e74af1a7e4b3fa890aa4b0ead80c751706ee8e3234a751e9166882a3e6",
+            "description": "Create a new space in SupaSidebar. Spaces are top-level collections that organize your links.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_space` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "color",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "icon",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "delete_atc_rule",
+            "canonical_hash": "sha256:4c7343d119fc8bbc521c0627aba9f10e11da09724a4a11e04732522f69dab49f",
+            "description": "Delete an ATC rule by ID. Get rule IDs from list_atc_rules.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_atc_rule` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": "The ATC rule ID to delete.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "enable_feature",
+            "canonical_hash": "sha256:6cecca63d5edb6b9b86fb67cbdbd655b13c727e2f9d82311708a5f71b98035c5",
+            "description": "enable_feature",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `enable_feature` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "focusSidebar",
+            "canonical_hash": "sha256:16ec5d580c03d6298e08c6c678cbe2c4fe42720d4a1ba2b0f67fd31dce3bc85a",
+            "description": "Bring sidebar into focus",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `focusSidebar` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_live_tabs",
+            "canonical_hash": "sha256:08468856847b943f8604fc544a394d9e28f9ac42c7097b5eb5467a5c44d5d888",
+            "description": "Get currently open browser tabs. Can filter by browser (Arc, Chrome, Safari, Firefox, Edge, Brave, etc).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_live_tabs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "browser",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_settings",
+            "canonical_hash": "sha256:d9f54749ea6e9e21ffea6e0a76b1d8c77e43c41979ce0e286e3a747b4249424c",
+            "description": "get_settings",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_settings` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_shortcuts",
+            "canonical_hash": "sha256:8f54f168001cc0dbedb36a15db958246fdcbf5d1ba427b2aba4fe65362a4f48f",
+            "description": "List all configurable keyboard shortcuts with their current key bindings. Shows the shortcut name (used for updates), display string, title, and description.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_shortcuts` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_visibility",
+            "canonical_hash": "sha256:3558f0c68d4352b16837bb1ea9076ca0e579f0531899b8f02fbf7ccf8b67f4d9",
+            "description": "Check whether the sidebar and command panel are currently visible, without changing their state. Use this instead of toggling just to check.",
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `get_visibility` [HIGH] executes arbitrary host system commands or shell scripts.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "guide",
+            "canonical_hash": "sha256:03852d59589dd1f222a917898609876dc198a5ef5d0b77069ae7c8bea0124a71",
+            "description": "guide",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `guide` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "launch_sidebar",
+            "canonical_hash": "sha256:0806a98e7aeb3d23f0605ea02df673e7a0729e5205bc4357d77e478e25534e9a",
+            "description": "launch_sidebar",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `launch_sidebar` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_atc_rules",
+            "canonical_hash": "sha256:1329409bc15d6b8c2444063f43d675b3eba4b3bedef4ba61f879a45970ad0b1d",
+            "description": "List all Air Traffic Control (ATC) rules. ATC rules automatically route URLs to specific spaces (save rules) or browsers/profiles (open rules). Rules are evaluated top-to-bottom; first match wins.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_atc_rules` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_browser_profiles",
+            "canonical_hash": "sha256:6b505f7c778d5455cbae48096a4f0685bb12af64a7e9d75d7463ba94bb517947",
+            "description": "list_browser_profiles",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_browser_profiles` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_folders",
+            "canonical_hash": "sha256:ee8c7322971d3aa89410ef8cc2d31a96d19e3aad3c9bc93b36bd0087240aa078",
+            "description": "List folders in a space. Folders organize links hierarchically within a space.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_folders` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "spaceId",
+                "type": "string",
+                "description": "The space ID to list folders from.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_installed_browsers",
+            "canonical_hash": "sha256:94d7ab70d3dc8c4a819658f55615a68754449e4b52c4d5522ad915f398b98c56",
+            "description": "list_installed_browsers",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_installed_browsers` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_links",
+            "canonical_hash": "sha256:2897a6e693dc0e1cb22a76972f9bb0d9971804a9eed03b0c1c9f7d5a9112b983",
+            "description": "List links in a specific space or folder. Returns link names, URLs, tags, and notes.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_links` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "folderId",
+                "type": "string",
+                "description": "Optional folder ID to filter links. Get IDs from list_folders.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "spaceId",
+                "type": "string",
+                "description": "The space ID to list links from. Get IDs from list_spaces.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_recent",
+            "canonical_hash": "sha256:47528d9607e2141b6795e7e3edc7d0b070cb088a845d4b07fbc5e2ff71db29fb",
+            "description": "list_recent",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_recent` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_search_shortcuts",
+            "canonical_hash": "sha256:4ec1abda51b8af94549c3d0e99da3b77bf97cf8a9b20a669a3c3865f92831170",
+            "description": "List all available search engines and custom website search shortcuts. Shows built-in engines (Google, Bing, etc.) and user-created shortcuts (YouTube, Reddit, etc.) with their keywords for use with web_search.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_search_shortcuts` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_spaces",
+            "canonical_hash": "sha256:dbd8a00dd3f86421b597d4e188508f8b9f91f923abf82c04dbd55d3637dc58fe",
+            "description": "List all spaces in SupaSidebar. Spaces are top-level collections that organize your links.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_spaces` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_tags",
+            "canonical_hash": "sha256:628156e1fd32205ae4d35d9509fb1ff1e737cfa8a584ad11cd009ef8683ac660",
+            "description": "List all tags used across your links, sorted by usage count.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tags` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "move_link",
+            "canonical_hash": "sha256:52b537057af10e20fc1cc71aef1a09701e242bddc84c5365f3044889a4bbb89a",
+            "description": "Move an existing link to a different space or folder. Get link IDs from list_links or search. Pass targetFolderId as null to move to root (unfiled).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `move_link` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "linkId",
+                "type": "string",
+                "description": "The link ID to move. Get IDs from list_links or search.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "targetFolderId",
+                "type": "string",
+                "description": "Move into this folder (get IDs from list_folders), or pass null to move to unfiled root. Omit to leave folder unchanged.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "targetSpaceId",
+                "type": "string",
+                "description": "Move the link to this space. Get IDs from list_spaces. Omit to keep in current space.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "openCurrentTabInOtherBrowser",
+            "canonical_hash": "sha256:e12b2df9925b2d75020c2688e0af161ac1b60c3a927cccffcc5b6619647aa918",
+            "description": "Open the current browser tab in a different browser",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `openCurrentTabInOtherBrowser` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "open_link",
+            "canonical_hash": "sha256:798942bfbf6596988326bbb8b4b091ef1e83376fb04ffb7e20efb152130cdb11",
+            "description": "open_link",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `open_link` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "open_preferences",
+            "canonical_hash": "sha256:dbeff5d79495e8d2fdfb6827068dc3f59c3f918055f67885c0c046a5875dd8db",
+            "description": "Open the SupaSidebar Preferences window, optionally jumping to a specific tab. Useful when the user wants to see or adjust settings visually.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `open_preferences` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "tab",
+                "type": "string",
+                "description": "Preferences tab to open: general, sidebar, mouseTriggers, shortcuts, spaces, liveTabs, voice, aiTags, importExport, commandPanel, airTrafficControl, refer, about",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "remove_search_shortcut",
+            "canonical_hash": "sha256:27fe3b0d58b89cbcf6567b28def355cdb7a9f6d0173cd0e008f8ba781b664f20",
+            "description": "Remove a custom website search shortcut by its keyword or ID.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_search_shortcut` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "keyword",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "reorder_atc_rules",
+            "canonical_hash": "sha256:d1581a5eea2b60b58e07cb658da9c86adb4fe6b2ee8db28d17206ddf9d2e6b04",
+            "description": "Change ATC rule priority order. Rules are evaluated top-to-bottom, first match wins. Provide all rule IDs in desired order.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reorder_atc_rules` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "orderedIds",
+                "type": "array",
+                "description": "All ATC rule IDs in desired priority order (first = highest priority). Get IDs from list_atc_rules. Omitted rules go to the end.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "saveAllBrowserTabs",
+            "canonical_hash": "sha256:1cff5c8e24c496aa51f3f92b6cd215ad83ba7bd4052a13a941534fda7611636e",
+            "description": "Save all open browser tabs to a new folder",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `saveAllBrowserTabs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "saveCurrentPage",
+            "canonical_hash": "sha256:9e550831b9140527419cbb37177035a1ec02edd9dc3560951ec91c723e23c846",
+            "description": "Save current page from browser or add files from Finder",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `saveCurrentPage` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "search",
+            "canonical_hash": "sha256:075fdf6fd5149aec500778a4bb69603c32a060bfe6724438aac7cdbed4a4d381",
+            "description": "Search across all links in SupaSidebar by name, URL, notes, or tags. Uses fuzzy matching.",
+            "risk_score": 6.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `search` [HIGH] issues raw database queries that could lead to SQL injection; initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Max results to return (default: 20).",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": "Search query — matches against link names, URLs, notes, and tags.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "switch_space",
+            "canonical_hash": "sha256:6c66968c0ed2d46194d23bff8e17ef2f0e733d21ef8a91668c685a66d7b31243",
+            "description": "Switch to a different space. Spaces organize your links into separate workspaces. Get space IDs from list_spaces.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `switch_space` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "spaceId",
+                "type": "string",
+                "description": "The space ID to switch to. Get IDs from list_spaces.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "toggleCommandPanel",
+            "canonical_hash": "sha256:fbccf746fe830351a630c39f3a1b1fa1f9903162d423bb9e98c9660dc74dd7f4",
+            "description": "Quick access to search and commands",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toggleCommandPanel` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "toggleFillScreen",
+            "canonical_hash": "sha256:5b44aa15b3c0208e7501c2c594f83bd5748ec032aaa9dc44e2a361daeb4515fc",
+            "description": "Toggle browser fill screen mode",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toggleFillScreen` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "toggleFollowActiveSpace",
+            "canonical_hash": "sha256:c7ee0ee6b2ad68e130edfe9bc76666f6ec8bf6765d8f33c0b1792398dd091f26",
+            "description": "Pin sidebar to follow you across all desktop spaces",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toggleFollowActiveSpace` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "toggleSidebar",
+            "canonical_hash": "sha256:c48b4b872bd2b2198148bac8a74e005ed051f20d47eae2633f739bd60cd42cdc",
+            "description": "Show or hide the main sidebar",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toggleSidebar` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "toggleSidebarSide",
+            "canonical_hash": "sha256:5192a1ca68d65344e4256fbb9d5d4078cb2ca2ca94fd806d69c52a92187f48eb",
+            "description": "Switch sidebar between left and right sides",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toggleSidebarSide` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "toggle_command_panel",
+            "canonical_hash": "sha256:5011078d251fc5cfa4557a927052464d5cad78a1869b623121ff5aa8588efd6c",
+            "description": "Toggle the SupaSidebar command panel (search/command palette). Opens it if closed, closes it if open.",
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `toggle_command_panel` [HIGH] executes arbitrary host system commands or shell scripts.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "toggle_sidebar",
+            "canonical_hash": "sha256:86a3ad57e303312cef7a28da23a3e825f9ae24c5950193af837003fa268b0331",
+            "description": "Toggle SupaSidebar visibility (show/hide). Returns the new visibility state.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toggle_sidebar` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "update_atc_rule",
+            "canonical_hash": "sha256:a106724be6c20075d83f0dda6f62e31bc29fbc9422a64d728ab189fc4e07c55c",
+            "description": "Update an existing ATC rule. Only the fields you provide will be changed. Get rule IDs from list_atc_rules.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `update_atc_rule` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": "The ATC rule ID to update. Get IDs from list_atc_rules.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "isEnabled",
+                "type": "boolean",
+                "description": "Enable or disable the rule.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "matchType",
+                "type": "string",
+                "description": "New match type.",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "contains",
+                  "equals"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "New name for the rule.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "openInBrowser",
+                "type": "string",
+                "description": "[Open rules] New target browser. Set to null to clear.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "openInProfileID",
+                "type": "string",
+                "description": "[Open rules] New profile ID. Set to null to clear.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sourceBrowser",
+                "type": "string",
+                "description": "[Save rules] New source browser filter. Set to null to clear.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sourceSpaceID",
+                "type": "string",
+                "description": "[Open rules] New source space filter. Set to null to clear.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "targetSpaceID",
+                "type": "string",
+                "description": "[Save rules] New target space ID. Set to null to clear.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "urlPattern",
+                "type": "string",
+                "description": "New URL pattern.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "update_setting",
+            "canonical_hash": "sha256:f4c89eaf78b92c27732b1f41415659a10d729201a867228795a438f0933b0407",
+            "description": "Change a SupaSidebar setting. Use get_settings first to see available settings and their current values. Boolean settings use true/false, string settings use the documented options.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_setting` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "key",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "value",
+                "type": "number",
+                "description": "The new value. Booleans for toggles, strings for mode selections, numbers for numeric settings.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "update_shortcut",
+            "canonical_hash": "sha256:e3bcb5e7fd1e9070ba13c68a0691bc8d61b27714c6271911d69e5fcae3849bd3",
+            "description": "Change a keyboard shortcut binding. Requires at least one modifier key. Use get_shortcuts to see available shortcut names.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_shortcut` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "key",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "modifiers",
+                "type": "array",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "web_search",
+            "canonical_hash": "sha256:f36daafd93a3fe4e759292fba4f7f9faf13fbccafb74e3fdc10334e3d085b2a4",
+            "description": "Search the web using a search engine or custom website shortcut. Built-in engines: Google, Bing, DuckDuckGo, Yahoo, Perplexity, Brave, Kagi. Custom shortcuts let you search specific sites (e.g. YouTube, Reddit, GitHub). Use list_search_shortcuts to see all available.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `web_search` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "browser",
+                "type": "string",
+                "description": "Browser to open results in. Omit for default browser.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "engine",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": "The search query.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -13013,11 +15618,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/mcp-code-runner",
     "display_name": "mcp-code-runner",
-    "description": "mcp code runner",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/axliupore/mcp-code-runner",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -13029,8 +15634,42 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:c3100ddf98238f0062fbde15878f9ea7dc6802f4f1adaf6cfcea1a8b5b2ed73f",
+        "tools": [
+          {
+            "name": "run",
+            "canonical_hash": "sha256:74db90eaa51a22d118aa5e90d5af5177dd19143b936f48700ed14b1e139fb035",
+            "description": "run code and return the result",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "code",
+                "type": "string",
+                "description": "code to run",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": "language of the code",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -13089,8 +15728,953 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:29fbccbd8279d450ec25c68db339aa8dd44c7ce80e70c519df9a3bcd6d97c5ac",
+        "tools": [
+          {
+            "name": "add_item",
+            "canonical_hash": "sha256:b616d949f4154a35ee405105f6419a28f26b0ba9b8149cbb98b9f50ee9b52282",
+            "description": "Add an item to an existing shopping cart. Uses W3SHIP_PUBLIC_KEY as cartId if not provided.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_item` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "amount",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cartId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "add_tracking",
+            "canonical_hash": "sha256:07c0168804ce759e1b846caf6395a5b0bc96f4be059a968c4adaa5263df48559",
+            "description": "Seller tool: Add real shipping tracking info to an order after shipping the item. Provides the buyer with a tracking number and carrier.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_tracking` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "carrier",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "orderId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sellerAddress",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "trackingNumber",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "check_token_approval",
+            "canonical_hash": "sha256:a27e72ea738d8b93528488df936e629f9461c2dabc6e625c296c466fe2143fba",
+            "description": "Check if a token is approved for swapping on Uniswap. Returns whether approval is needed and the approval transaction if so. Requires UNISWAP_API_KEY env var.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `check_token_approval` [MEDIUM] handles sensitive credentials, tokens, or private secrets; inspects or modifies host environment variables.",
+            "parameters": [
+              {
+                "name": "amount",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "chainId",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "walletAddress",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "claim_promo",
+            "canonical_hash": "sha256:27211b7985b176cfd56532b74f5d1544e55d0b222308124bac6197acca939056",
+            "description": "Claim a FREE promotional listing. Items are $0. For shipping promos you pay shipping only; for pickup promos it is completely free. One claim per wallet. Must have a registered W3Ship/Dah.mx identity (address required for shipping, wallet-only for pickup).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `claim_promo` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "fulfillmentChoice",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "listingId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "pickupLocationId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "publicKey",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "confirm_payment",
+            "canonical_hash": "sha256:1413b953cf800c9f1fac2311a1aef89682dd2da3392ba23732c7c0d2e46de89b",
+            "description": "Submit an on-chain payment transaction for verification. After paying the seller (send crypto to their wallet address), provide the transaction hash here to verify payment and update the order status to",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `confirm_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "chainId",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "orderId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "txHash",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_cart",
+            "canonical_hash": "sha256:fd1e61b2152c1532cf4bdf4cf9c9a2cdde0eac030e79142ce30c2cd0d46f5d9e",
+            "description": "Create a new TMF663 shopping cart. If W3SHIP_PUBLIC_KEY is configured, it is used automatically — no id required. Otherwise provide an SLH-DSA or ECDSA public key (hex).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_cart` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_listing",
+            "canonical_hash": "sha256:c5b120573154d0cf3097901b743bc2be8ce91ac8a0059582beb123853e2aa402",
+            "description": "Create a P2P marketplace listing. Anyone can sell items — no merchant onboarding needed. Specify title, price, currency (USDC/ETH/etc), and your wallet address for payment.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_listing` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "category",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "condition",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "currency",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "expiresInDays",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "fulfillmentType",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "isPromo",
+                "type": "boolean",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "items",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "price",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "promoQuantity",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "quantity",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sellerAddress",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sellerName",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "shippingCost",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_order",
+            "canonical_hash": "sha256:7df2a70d3e97a7f92903ea86c43ab2a2d72ddfcc403bed8732eb36a4ad9505f2",
+            "description": "Convert a Shopping Cart into a confirmed Order (TMF622) and initiate fulfillment.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_order` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "cartId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "delete_cart",
+            "canonical_hash": "sha256:572572f0f995e1b43bf640677639747ec7ee2062434988572a17cde195aaa24f",
+            "description": "Delete a shopping cart.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_cart` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "generate_demo_key",
+            "canonical_hash": "sha256:558548f5d83f0af2d6fb82dfb33962b6986931e86ba4b0aa9ae249d6ed068549",
+            "description": "Generate a demo ECDSA key pair for testing. Returns a public key hex that can be used with create_cart and other tools. Useful for trying out the commerce flow without a real wallet.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_demo_key` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_available_slots",
+            "canonical_hash": "sha256:a3e143b87d99833ed03399f2408d18b9dfca4bea453efe109c10959a6427196a",
+            "description": "Get available session time slots for a location on a given date. Returns times, capacity, pricing, and activity type. Works for any bookable service (VR, fitness, dining, salon, etc.).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_available_slots` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "activityId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "date",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "locationId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_cart",
+            "canonical_hash": "sha256:b1bed4b5557a8216af720fca7127f9915bd81d6e544cbd44cc0c33a9ab33a39a",
+            "description": "Retrieve a shopping cart by its Public Key ID. Uses W3SHIP_PUBLIC_KEY if no id is provided.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_cart` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_identity",
+            "canonical_hash": "sha256:ea904bed1ab608c027ce5eadddab0819b5db24dd3fcf04bba10ea1eff9294fee",
+            "description": "Show the currently configured identity (W3SHIP_PUBLIC_KEY). Returns the public key and its type if set, or instructions on how to configure one.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_identity` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_listing",
+            "canonical_hash": "sha256:101d3b7b7d96e2ea5dea57dc2100d803b90c615920fb6e715722e34148abbfb6",
+            "description": "Get full details of a specific marketplace listing by ID.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_listing` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "listingId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_order",
+            "canonical_hash": "sha256:d35a1bdd709ce552f57681a0f091628382e7d31d6c3fc4cbf53ac7e65100a9a7",
+            "description": "Retrieve detailed information about a specific Order (TMF622).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_order` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_swap_quote",
+            "canonical_hash": "sha256:ff429c8637f2db72491fb621e74c8bb5c336f347514109433fce9106f0e13922",
+            "description": "Get a swap quote from Uniswap. Returns estimated output, routing path, gas fees, and price impact. Supports V2, V3, V4, and UniswapX protocols. Requires UNISWAP_API_KEY env var.",
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `get_swap_quote` [HIGH] reads, writes, or modifies host filesystem paths; inspects or modifies host environment variables.",
+            "parameters": [
+              {
+                "name": "amount",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "chainId",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "tokenIn",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "tokenOut",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "walletAddress",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "hold_slot",
+            "canonical_hash": "sha256:2163c1a11c75cdd5f74a5e40a15ac01a52557761c04e958497ee9356e452a4b7",
+            "description": "Hold/reserve a session time slot for a customer. The slot is held for 10 minutes pending payment. Works for any bookable service.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `hold_slot` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "cartId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "participants",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "slotId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_bookings",
+            "canonical_hash": "sha256:7137fccfb8a8f0c2528847d21829013893d01581e4877c9bcbe6e949ef1ec287",
+            "description": "List all confirmed session bookings. Optionally filter by location or date.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_bookings` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "date",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "locationId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "remove_listing",
+            "canonical_hash": "sha256:6086a49ed0be973c703464278aef73620c701f78f9e9ca60357fa466a0a5b70f",
+            "description": "Remove a marketplace listing. Only the seller can remove their own listing.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_listing` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "listingId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sellerAddress",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "search_listings",
+            "canonical_hash": "sha256:7f70c8ae8ba818089fcfffb635ade93ddc7703d676fcbc876ccb59cbfbaf13bb",
+            "description": "Browse the W3Ship P2P marketplace. Search by category (electronics, gifts, clothing, etc.) or keyword. Returns active listings with prices and seller info.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_listings` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "category",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keyword",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "ship_address",
+            "canonical_hash": "sha256:e8447ce739c02b867797a48342ee183874d2eb7edef6d0778500e7f1cbbdfcc8",
+            "description": "Securely retrieve a physical address using a public key and a timed cryptographic signature.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ship_address` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "publicKey",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "signature",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "timestamp",
+                "type": "number",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "track_shipment",
+            "canonical_hash": "sha256:ddf63740a019332660a708b7bd31119acafcb735bd9563afa8fe43fccd99216b",
+            "description": "Track the delivery status of a shipment (TMF621).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `track_shipment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "orderId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "shipmentId",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -15958,6 +19542,36 @@
     "versions": [
       {
         "version": "0.15.8",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "gbatistuta0/appfactory": {
+    "package_name": "gbatistuta0/appfactory",
+    "ecosystem": "github",
+    "purl": "pkg:github/gbatistuta0%2Fappfactory",
+    "display_name": "gbatistuta0/appfactory",
+    "description": "",
+    "author": null,
+    "repository_url": "https://github.com/gbatistuta0/appfactory",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `gbatistuta0/appfactory` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -20075,6 +23689,167 @@
       }
     ]
   },
+  "jamalofski/conv2pdf-mcp": {
+    "package_name": "jamalofski/conv2pdf-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/jamalofski%2Fconv2pdf-mcp",
+    "display_name": "jamalofski/conv2pdf-mcp",
+    "description": "Convert Office files, images and e-books to PDF; merge, compress or protect local PDFs.",
+    "author": null,
+    "repository_url": "https://github.com/Jamalofski/conv2pdf-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.1",
+    "recommended_safe_version": "1.0.1",
+    "is_vulnerable": false,
+    "security_summary": "Server `jamalofski/conv2pdf-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:79443cffe2759fb48a574edb32939bf7decba4ffd7e542471da40f6bf5475ed4",
+        "tools": [
+          {
+            "name": "add_page_numbers",
+            "canonical_hash": "sha256:c640d5424c0975ffded7e42c5b003a9ccdb74671a0f84e1bbf486109dae0087b",
+            "description": "Prints the page number at the bottom of every page of a PDF.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_page_numbers` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "add_watermark",
+            "canonical_hash": "sha256:9e59c5d26dd2599c640bcc19e62acb79964b48d19b186577522b0b02f01395a9",
+            "description": "Stamps a text diagonally across every page of a PDF.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_watermark` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "compress_pdf",
+            "canonical_hash": "sha256:33a5b4097abbccd32e3941880dabcaa4934a81215a72f4d416911be93a0eecd0",
+            "description": "Reduces the size of a PDF by lowering the resolution of its images.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compress_pdf` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "convert_heic_to_jpg",
+            "canonical_hash": "sha256:e2e44659aa8b9432699623733b63c2a2fe267a24666aa68d4be5d8045ed33ccb",
+            "description": "Converts an iPhone HEIC or HEIF photo to a JPG image.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `convert_heic_to_jpg` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "convert_pdf_to_images",
+            "canonical_hash": "sha256:ec2ddbbfa70559b9edfab60f12c85fd5f0987919e18b8e5375e582b19fb557c7",
+            "description": "Renders each page of a PDF as an image at 150 DPI. The result is one ZIP archive with an image per page. Up to 100 pages.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `convert_pdf_to_images` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "convert_pdf_to_word",
+            "canonical_hash": "sha256:7e6b880a4b6ffdebff20c7495e421f93d842feb417eebf4b841f8cbaeac1b1be",
+            "description": "Converts a PDF that contains real text to an editable Word document (DOCX). A scanned PDF, made of images without text, is refused.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `convert_pdf_to_word` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "convert_to_pdf",
+            "canonical_hash": "sha256:705ed352973838cbd5d9f383a0be2e478c2d47c0ba10f6be7d213cb98195d86c",
+            "description": "Converts a document, an image or an e-book to PDF: Word, Excel, PowerPoint, OpenDocument, Apple Pages, RTF, TXT, CSV, PNG, JPG, WebP, GIF, TIFF, HEIC and EPUB. The converter is chosen from the extension of the file.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `convert_to_pdf` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "extract_pdf_pages",
+            "canonical_hash": "sha256:1dbc3ea78faf244ac0daec66d63c2df2011f56522c69c7476548e48ce4452148",
+            "description": "Keeps some pages of a PDF in a new PDF. The pages keep the order they have in the document.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `extract_pdf_pages` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_quota",
+            "canonical_hash": "sha256:a444697a3646d3f817b6e8105759a12c3299257ae73ede829f90a2514811b34e",
+            "description": "Returns the plan of the conv2pdf API key and how many conversions it has used and may still use. Reading the quota is free.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_quota` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "merge_pdfs",
+            "canonical_hash": "sha256:bb9ab0694fd52e03ab893a0ec4994c25859e1c1b30e2e13ea5ba3a5dfee74d0a",
+            "description": "Combines several PDFs into one, in the order given. 2 files on the Dev plan, up to 20 on paid plans. The result is written next to the first file.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `merge_pdfs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "protect_pdf",
+            "canonical_hash": "sha256:895694575881cf847af9d3b2fc85e444a29b57c76b5f653e42ae8020384f637e",
+            "description": "Encrypts a PDF (AES-256) so that it asks for a password to open, and optionally forbids printing or copying.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `protect_pdf` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "rotate_pdf",
+            "canonical_hash": "sha256:3d68651c54a2d44ca2faef84e0462aeebd719eb7907fbd36a5c89453727c6dfe",
+            "description": "Rotates every page of a PDF clockwise.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rotate_pdf` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "unlock_pdf",
+            "canonical_hash": "sha256:84b4cc69242d2afc7cc97b9db8fb3185ceca351920d5eebbbb9b38692b087402",
+            "description": "Removes the password and the restrictions of a PDF whose password is known. It does not find a forgotten password.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `unlock_pdf` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "meigen": {
     "package_name": "meigen",
     "ecosystem": "npm",
@@ -20085,10 +23860,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "2.0.2",
-    "recommended_safe_version": "2.0.2",
+    "latest_version": "3.2.0",
+    "recommended_safe_version": "3.2.0",
     "is_vulnerable": false,
-    "security_summary": "Server `meigen` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 34 safe version(s).",
+    "security_summary": "Server `meigen` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 38 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -20457,6 +24232,50 @@
       },
       {
         "version": "2.0.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "3.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "3.1.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "3.1.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "3.2.0",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -23858,10 +27677,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.1.6",
-    "recommended_safe_version": "0.1.6",
+    "latest_version": "0.1.9",
+    "recommended_safe_version": "0.1.9",
     "is_vulnerable": false,
-    "security_summary": "Server `plori-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
+    "security_summary": "Server `plori-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 10 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -23933,6 +27752,39 @@
       },
       {
         "version": "0.1.6",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "0.1.7",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "0.1.8",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "0.1.9",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -30215,6 +34067,36 @@
       }
     ]
   },
+  "@wsapichat/mcp-server": {
+    "package_name": "@wsapichat/mcp-server",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/@wsapichat%2Fmcp-server",
+    "display_name": "@wsapichat/mcp-server",
+    "description": "A comprehensive Model Context Protocol (MCP) server for WSAPI - the powerful WhatsApp API Gateway. Enables LLMs to send messages, manage contacts and groups, handle chat operations, and monitor session status through WhatsApp.",
+    "author": "WSAPI",
+    "repository_url": "https://wsapi.chat",
+    "homepage_url": null,
+    "license": "MIT",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `@wsapichat/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "xns-cloud/relayer-mcp": {
     "package_name": "xns-cloud/relayer-mcp",
     "ecosystem": "generic",
@@ -31460,7 +35342,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 0.4.112",
+        "version": "< 0.4.85",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -31898,7 +35780,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 0.4.85",
+        "version": "< 0.4.112",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -33401,7 +37283,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "*",
+        "version": "< 3.2.0",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -33467,7 +37349,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 3.2.0",
+        "version": "*",
         "is_vulnerable": true,
         "advisories": [
           {

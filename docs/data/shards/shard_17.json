@@ -2753,15 +2753,15 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/@mseep%2Fflux-cloudflare-mcp",
     "display_name": "@mseep/flux-cloudflare-mcp",
-    "description": "MCP for Flux Image Generation with Cloudflare Worker",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/Hzzy2O/flux-cloudflare-mcp",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
-    "latest_version": "0.0.1",
-    "recommended_safe_version": "0.0.1",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `@mseep/flux-cloudflare-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "security_summary": "Server `@mseep/flux-cloudflare-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -2775,6 +2775,69 @@
         "resources": [],
         "release_date": "2026-08-13T10:15:03.625Z",
         "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:16307aa0d3852d4822d9f6040dc1bed66c7bdabef33f390c2419660d491a0956",
+        "tools": [
+          {
+            "name": "generate_image",
+            "canonical_hash": "sha256:13d5a714d78d57597377561e38e880d4603b8e3dad1a52adef242814b491687c",
+            "description": "Generate an image from a text prompt using Flux model",
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_image` [LOW] processes unstructured prompts susceptible to injection overrides.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "@open-deltat/mcp": {
+    "package_name": "@open-deltat/mcp",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/@open-deltat%2Fmcp",
+    "display_name": "@open-deltat/mcp",
+    "description": "MCP server for real-time scheduling: give an agent a calendar it can find, hold and commit slots on without ever double-booking.",
+    "author": "Simon Orzel",
+    "repository_url": "https://delt.at",
+    "homepage_url": null,
+    "license": "MIT",
+    "latest_version": "0.2.0",
+    "recommended_safe_version": "0.2.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `@open-deltat/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": "2026-09-30T21:16:58.832Z",
+        "required_env_vars": []
+      },
+      {
+        "version": "0.2.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": "2026-10-04T13:12:28.906Z",
+        "required_env_vars": []
       }
     ]
   },
@@ -2783,11 +2846,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/@theyahia%2Ftkassa-mcp",
     "display_name": "@theyahia/tkassa-mcp",
-    "description": "MCP server for T-Kassa — payments, refunds, recurring, SBP, receipts (Russia)",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/theYahia/tkassa-mcp#readme",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "2.0.1",
     "recommended_safe_version": "2.0.1",
     "is_vulnerable": false,
@@ -2810,8 +2873,149 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:94e37feb78d78e46d3fba4fa7a9cb87730cd683073d934868d64d18f82835c36",
+        "tools": [
+          {
+            "name": "add_customer",
+            "canonical_hash": "sha256:4a38dc4d8b19855f14912700d8bcd7c9ed991db7fd7fd8c337cc665bc196aae2",
+            "description": "Register a customer in T-Kassa for saving cards and recurring payments. Provide CustomerKey (your internal ID), optionally Email and Phone.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_customer` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "cancel_payment",
+            "canonical_hash": "sha256:3d8c8253ee88c679248d52b657ab53211d937c2f9d0d9116dc02d73d5ec95c02",
+            "description": "Cancel a payment before or after confirmation. For partial cancellation, specify amount. Works on payments in NEW, AUTHORIZED, or CONFIRMED status.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "charge_payment",
+            "canonical_hash": "sha256:ea837439615fe14e4f4ef2d68f1b24bc5a2c3b20a44a2e79b26415a9c8876f8a",
+            "description": "Charge a recurring payment using a saved card (RebillId). First create a payment with init_payment (Recurrent=Y, CustomerKey), then call charge with the RebillId from the notification or get_card_list.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `charge_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "confirm_payment",
+            "canonical_hash": "sha256:d87e91dc51578dfdcc2eeda45d9abfc10640276c573c6d35cecabed96e697443",
+            "description": "Confirm a two-step (PayType=T) payment. Optionally confirm a partial amount (less than original). The payment must be in AUTHORIZED status.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `confirm_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_sbp_qr",
+            "canonical_hash": "sha256:a7149a1b26b5be2933cbc768fdb0a2a1039eb60237ee96e9a19c8f59ca92f824",
+            "description": "Generate a QR code for SBP (Sistema Bystrykh Platezhey / Fast Payments System) payment. First call init_payment, then pass the PaymentId here. Returns QR payload or base64 PNG image.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_sbp_qr` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_card_list",
+            "canonical_hash": "sha256:ee28809a9dd07be1bf087c32fb096adc56cb5391381a02fed01bf2a56a91f320",
+            "description": "Get list of saved cards for a customer. Returns CardId, Pan (masked), ExpDate, CardType, and RebillId (needed for recurring charges).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_card_list` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_customer",
+            "canonical_hash": "sha256:c63f3515c540434ea44888872497a58ab92969bd479d529a0a4225fc75f81bc1",
+            "description": "Get customer data by CustomerKey. Returns stored Email and Phone.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_customer` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_payment_state",
+            "canonical_hash": "sha256:2c9fbc20e8286f0c8fddcd150b4883c8faa9a32361c4395714505a50bf7a832f",
+            "description": "Get current status of a payment by PaymentId. Returns Status (NEW, AUTHORIZED, CONFIRMED, REVERSED, REFUNDED, REJECTED, etc.), Amount, OrderId.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_payment_state` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_sbp_qr_state",
+            "canonical_hash": "sha256:52012c3f90ede54f5e2c9d21ebf855529f017a6b73f16e030478d3947dd676ec",
+            "description": "Check the status of an SBP QR code payment. Returns whether the customer has scanned and paid via SBP.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_sbp_qr_state` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "init_payment",
+            "canonical_hash": "sha256:c2634c41e575b6166eb92b67e0568c7ccb85f68fb555d9d90bc729910539fd3f",
+            "description": "Create a new payment in T-Kassa. Returns PaymentURL for the customer to pay. Supports one-step (PayType=O) and two-step (PayType=T) payments, receipts (54-FZ), recurring (Recurrent=Y), and custom DATA fields.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `init_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "refund_payment",
+            "canonical_hash": "sha256:b25a974187c7de4f013a0ff89960b70855f153468c3f5d6aa10a72e818f9efa5",
+            "description": "Refund a payment (full or partial). For partial refund, specify amount in rubles. Uses the /Cancel endpoint internally. The payment must be in CONFIRMED status.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `refund_payment` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "remove_card",
+            "canonical_hash": "sha256:e2822f5511be0aa25f0786302fb26211658fed7ce0f34452ae267c4248ea3159",
+            "description": "Remove a saved card from a customer. Requires CustomerKey and CardId (from get_card_list).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_card` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "remove_customer",
+            "canonical_hash": "sha256:8a271c1305d2fa92f17d85a9f0edcf32573ed21f48b1c5ff6e4a324b7172ceb3",
+            "description": "Remove a customer and all their saved cards from T-Kassa.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_customer` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "send_closing_receipt",
+            "canonical_hash": "sha256:85258c6000dd998f263a094faae1fa339734ed721b39faf93e015d0c3cd8641e",
+            "description": "Send a closing receipt (zakryvayushchiy chek) for 54-FZ fiscal compliance. Provide Items with Name, Price, Quantity, Amount, Tax. Requires Email or Phone for delivery.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `send_closing_receipt` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": "2026-03-30T16:38:52.092Z",
@@ -2898,11 +3102,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/bangermap-integrations",
     "display_name": "bangermap-integrations",
-    "description": "Shared scoring engine and YouTube client behind bangermap-mcp and n8n-nodes-bangermap",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/AdesiaHQ/bangermap-integrations",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -2914,8 +3118,171 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:fde6f2dd059a74a72c01cc0688e8372af74caf3ee24a4906ed107041d12b5954",
+        "tools": [
+          {
+            "name": "channel_baseline",
+            "canonical_hash": "sha256:60cb71813cfaa9b2adc47fa7c407ad83bf08094660d50bf3207d92b4844dc56d",
+            "description": "Report what normal performance looks like for a YouTube channel, as the median views of its recent settled uploads, with subscriber count and upload cadence. Call this when the user asks whether a view count is good for a given channel, or needs a reference point before judging a video. Costs about 5 quota units.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `channel_baseline` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "channel",
+                "type": "string",
+                "description": "Channel URL, @handle, channel id, or any video URL",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "compare_channels",
+            "canonical_hash": "sha256:e89a5eee575464b2f8c93b993dcffba9e916e86583a7986fb1d99b7bb2a566a9",
+            "description": "Scan several YouTube channels at once and return the strongest outliers across all of them, each measured against its own channel",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_channels` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "channels",
+                "type": "string",
+                "description": "Channel URLs, @handles or ids, separated by spaces, commas or newlines",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "depth",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": "light",
+                "enum": [
+                  "light",
+                  "standard",
+                  "deep"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": 20,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "find_outliers",
+            "canonical_hash": "sha256:a3357bac0ba02220a53410ecda15a233cb20d049c59674b0c3ba0515e96fa9c4",
+            "description": "Rank a YouTube channel",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `find_outliers` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "channel",
+                "type": "string",
+                "description": "Channel URL, @handle, channel id, or the URL of any video on the channel",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "depth",
+                "type": "string",
+                "description": "How many recent uploads to read: light 50, standard 100, deep 200",
+                "required": false,
+                "default": "standard",
+                "enum": [
+                  "light",
+                  "standard",
+                  "deep"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "How many rows to return",
+                "required": false,
+                "default": 15,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "sweep_niche",
+            "canonical_hash": "sha256:2a85006002c46e492e934bee74a8e726e3277ddd26121b80d5b58521f1594b84",
+            "description": "Find channels related to a seed channel through the channels it features, then rank the strongest outliers across all of them. Call this when the user wants to discover channels in a niche they do not already know, rather than analyse ones they named. Costs about 5 quota units per channel found.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sweep_niche` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "limit",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": 20,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "max_channels",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": 8,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "seed",
+                "type": "string",
+                "description": "The channel to expand from",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -3023,10 +3390,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "1.15.2",
-    "recommended_safe_version": "1.15.2",
+    "latest_version": "1.16.1",
+    "recommended_safe_version": "1.16.1",
     "is_vulnerable": false,
-    "security_summary": "Server `normativa-colombia-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 24 safe version(s).",
+    "security_summary": "Server `normativa-colombia-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 26 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -3285,6 +3652,28 @@
       },
       {
         "version": "1.15.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.16.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.16.1",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -5218,11 +5607,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/yueque-mcp-server",
     "display_name": "yueque-mcp-server",
-    "description": "Model Context Protocol server for Yuque API integration",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/HenryHaoson/Yuque-MCP-Server",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "ISC",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -5234,8 +5623,901 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:65e42d0e9badc7a9126f39ba8c7ed7045ed40edc5b929121e440d9af1bf7ec64",
+        "tools": [
+          {
+            "name": "create_doc",
+            "canonical_hash": "sha256:a609f007858594efa980210f8507f850eb1538ccbaab0e8556287a6d64c7abb9",
+            "description": "在指定知识库中创建新的语雀文档，支持多种格式内容",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_doc` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "body",
+                "type": "string",
+                "description": "文档内容，支持Markdown格式",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": "内容格式，可选值：markdown、html、lake，默认为 markdown",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "namespace",
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "public_level",
+                "type": "string",
+                "description": "公开性，可选值：0(私密)、1(公开)、2(企业内公开)，默认为 1",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "slug",
+                "type": "string",
+                "description": "文档的短链接名称，用于URL路径",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "description": "文档标题",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "delete_doc",
+            "canonical_hash": "sha256:9492a013e9e7029d277bf5b27d0c5b7856f781d37cec7e4aac236ad39033e505",
+            "description": "从语雀知识库中删除指定文档，此操作不可撤销",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_doc` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "id",
+                "type": "number",
+                "description": "要删除的文档ID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "namespace",
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_current_user",
+            "canonical_hash": "sha256:2acf53ba2c61f0c873e78dadfb58174c799df9bf49fb8bab385650e1b62ccdcb",
+            "description": "获取当前认证用户的信息，包括用户ID、用户名、头像等语雀账号基本信息",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_current_user` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_doc",
+            "canonical_hash": "sha256:3a588d7c48f119afaf3b18beba44650ba31177cf4d11e6effab3aea8b6ff5b8b",
+            "description": "获取语雀中特定文档的详细内容，包括正文、修改历史和权限信息（支持分块处理大型文档）",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_doc` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "chunk_index",
+                "type": "string",
+                "description": "要获取的文档块索引，不提供则返回第一块或全部（如果内容较小）",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "chunk_size",
+                "type": "string",
+                "description": "分块大小（字符数），默认为100000",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "namespace",
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "slug",
+                "type": "string",
+                "description": "文档的唯一标识或短链接名称",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_doc_chunks_info",
+            "canonical_hash": "sha256:9c1e9c8c8ae1fa06eb0138280b06646cf79d100406b1462bb8f3a81b0ecc5902",
+            "description": "获取文档的分块元信息，包括总块数、每块的字符数等",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_doc_chunks_info` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "chunk_size",
+                "type": "string",
+                "description": "分块大小（字符数），默认为100000",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "namespace",
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "slug",
+                "type": "string",
+                "description": "文档的唯一标识或短链接名称",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_group_book_statistics",
+            "canonical_hash": "sha256:28f18445b57368d74160d2df111ba3ae0d52a1db69b8faa444f111a874891b52",
+            "description": "获取团队知识库的统计数据，包括各知识库的文档数、字数、阅读量等",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_group_book_statistics` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "login",
+                "type": "string",
+                "description": "团队的登录名或唯一标识",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "知识库名称，用于过滤特定知识库",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": "页码，默认为1",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "range",
+                "type": "string",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sortField",
+                "type": "string",
+                "description": "排序字段，可选值：content_updated_at_ms、word_count、post_count、read_count、like_count、watch_count、comment_count",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sortOrder",
+                "type": "string",
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_group_doc_statistics",
+            "canonical_hash": "sha256:51554abbbce4e4eaf0efa41cca939ecab02b1cd412d2334e8dad7e746a92fea2",
+            "description": "获取团队文档的统计数据，包括各文档的字数、阅读量、评论量等",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_group_doc_statistics` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "bookId",
+                "type": "string",
+                "description": "知识库ID，用于过滤特定知识库的文档",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "login",
+                "type": "string",
+                "description": "团队的登录名或唯一标识",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "文档名称，用于过滤特定文档",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": "页码，默认为1",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "range",
+                "type": "string",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sortField",
+                "type": "string",
+                "description": "排序字段，可选值：content_updated_at、word_count、read_count、like_count、comment_count、created_at",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sortOrder",
+                "type": "string",
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_group_member_statistics",
+            "canonical_hash": "sha256:948445054c4b72ef15d657b3a394e13afb4f74ed1d48d796ee7f7852e34a8824",
+            "description": "获取团队成员的统计数据，包括各成员的编辑次数、阅读量、点赞量等",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_group_member_statistics` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "每页数量，默认为10，最大为20",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "login",
+                "type": "string",
+                "description": "团队的登录名或唯一标识",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "成员名称，用于过滤特定成员",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": "页码，默认为1",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "range",
+                "type": "string",
+                "description": "时间范围（0: 全部, 30: 近30天, 365: 近一年）",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sortField",
+                "type": "string",
+                "description": "排序字段，可选值：write_doc_count、write_count、read_count、like_count",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sortOrder",
+                "type": "string",
+                "description": "排序方向，可选值：desc（降序）、asc（升序），默认为desc",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "desc",
+                  "asc"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_group_statistics",
+            "canonical_hash": "sha256:da02fdc3c249c09a0971fa197bb452cdfbc6c863499b93c362c5193e8945cb91",
+            "description": "获取团队的汇总统计数据，包括成员人数、文档数量、阅读量和互动数据等",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_group_statistics` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "login",
+                "type": "string",
+                "description": "团队的登录名或唯一标识",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_repo_docs",
+            "canonical_hash": "sha256:ff7cb75bcc1b360e9042ad06051911b740d422f656ba5bc7de62d9f3e4bfed8b",
+            "description": "获取特定知识库中的所有文档列表，包括文档标题、更新时间等信息",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_repo_docs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "namespace",
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_user_docs",
+            "canonical_hash": "sha256:8b2c1a9470fb2869b0687f60084b12c380fbf3e66bcd20f8a6399a276afa479a",
+            "description": "获取当前用户的所有知识库文档列表，包括私人和协作文档",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_user_docs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_user_repos",
+            "canonical_hash": "sha256:4814e38a073f94c340fa934893c49d9ed4bbf1e8cbc58afacf69a34d8d82ab00",
+            "description": "获取指定用户的知识库列表，知识库是语雀中组织文档的集合",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_user_repos` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "login",
+                "type": "string",
+                "description": "用户的登录名或唯一标识",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "search",
+            "canonical_hash": "sha256:7a38189b4958d9ba2a5853d24daf7837a814e1c76e75966200544e7ae9324e9c",
+            "description": "在语雀平台中搜索文档或知识库内容，支持范围和作者筛选",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "creator",
+                "type": "string",
+                "description": "仅搜索指定作者的内容",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": "页码，默认为1",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": "搜索关键词",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "scope",
+                "type": "string",
+                "description": "搜索范围，不填默认搜索当前用户/团队",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": "要搜索的内容类型：doc(文档) 或 repo(知识库)",
+                "required": true,
+                "default": null,
+                "enum": [
+                  "doc",
+                  "repo"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "update_doc",
+            "canonical_hash": "sha256:360d02659d469fad4cca02787901ef32637664ac44ae0118afe8646b67997b10",
+            "description": "更新语雀中已存在的文档，可以修改标题、内容或权限设置",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_doc` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "accessToken",
+                "type": "string",
+                "description": "用于认证 API 请求的令牌",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "body",
+                "type": "string",
+                "description": "文档的新内容，支持Markdown格式",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": "内容格式，可选值：markdown、html、lake",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "id",
+                "type": "number",
+                "description": "要更新的文档ID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "namespace",
+                "type": "string",
+                "description": "知识库的命名空间，格式为 user/repo",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "public",
+                "type": "string",
+                "description": "文档的公开状态，0(私密)、1(公开)、2(企业内公开)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "slug",
+                "type": "string",
+                "description": "文档的新短链接名称",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "title",
+                "type": "string",
+                "description": "文档的新标题",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -9496,15 +10778,141 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/multi-model-advisor",
     "display_name": "multi-model-advisor",
-    "description": "MCP server that queries multiple Ollama models",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/YuChenSSR/multi-ai-advisor-mcp",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "ISC",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
     "security_summary": "Server `multi-model-advisor` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:5c53dd913d3013f878b068d3d5a2429303d970842d0ae02d0f57159ddc9842dd",
+        "tools": [
+          {
+            "name": "list-available-models",
+            "canonical_hash": "sha256:0c1118b8d744b6220148267e7122edb2576b12545a091d6fc41fc320b9b6fa65",
+            "description": "List all available models in Ollama that can be used with query-models",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list-available-models` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "query-models",
+            "canonical_hash": "sha256:c230284da62b737a22e2f3a82790970c24275d9c57a79cb4dbbce6e6588a40bf",
+            "description": "Query multiple AI models via Ollama and get their responses to compare perspectives",
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `query-models` [HIGH] issues raw database queries that could lead to SQL injection; processes unstructured prompts susceptible to injection overrides.",
+            "parameters": [
+              {
+                "name": "model_system_prompts",
+                "type": "string",
+                "description": "Optional object mapping model names to specific system prompts",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "models",
+                "type": "array",
+                "description": "Array of model names to query (defaults to configured models)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "question",
+                "type": "string",
+                "description": "The question to ask all models",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "system_prompt",
+                "type": "string",
+                "description": "Optional system prompt to provide context to all models (overridden by model_system_prompts if provided)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "academy.apexai/apex-ai-academy": {
+    "package_name": "academy.apexai/apex-ai-academy",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/academy.apexai%2Fapex-ai-academy",
+    "display_name": "academy.apexai/apex-ai-academy",
+    "description": "Lessons, news and pricing from Apex AI Academy, an AI academy run by agents. Free lessons, no key.",
+    "author": null,
+    "repository_url": "https://github.com/ApexAI-Academy/sample-agents",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `academy.apexai/apex-ai-academy` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "ai.0si/disclosures": {
+    "package_name": "ai.0si/disclosures",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ai.0si%2Fdisclosures",
+    "display_name": "ai.0si/disclosures",
+    "description": "Korean (DART/KIND) and US SEC filings with AI summaries, direction labels and market reaction.",
+    "author": null,
+    "repository_url": "https://0si.ai/developers.html#mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ai.0si/disclosures` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -9701,6 +11109,66 @@
       }
     ]
   },
+  "ai.aunoo/agentic": {
+    "package_name": "ai.aunoo/agentic",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ai.aunoo%2Fagentic",
+    "display_name": "ai.aunoo/agentic",
+    "description": "Cited news coverage, source trust signals, consensus and foresight for AI agents, over MCP.",
+    "author": null,
+    "repository_url": "https://agentic.aunoo.ai/agentic",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.1.0",
+    "recommended_safe_version": "0.1.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ai.aunoo/agentic` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "ai.bamf/bamf": {
+    "package_name": "ai.bamf/bamf",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ai.bamf%2Fbamf",
+    "display_name": "ai.bamf/bamf",
+    "description": "LinkedIn/X content, scheduling, analytics and outreach agent for founders — over MCP, one key.",
+    "author": null,
+    "repository_url": "https://github.com/houstongolden/bamfaiapp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ai.bamf/bamf` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "alibaizhanov/mengram": {
     "package_name": "alibaizhanov/mengram",
     "ecosystem": "generic",
@@ -9738,9 +11206,9 @@
     "display_name": "mcpspend",
     "description": "",
     "author": null,
-    "repository_url": "https://mcpspend.com",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -11643,14 +13111,14 @@
     "purl": "pkg:pypi/dbt-mcp",
     "display_name": "dbt-mcp",
     "description": "A MCP (Model Context Protocol) server for interacting with dbt resources.",
-    "author": null,
-    "repository_url": "https://pypi.org/project/dbt-mcp/",
+    "author": "dbt Labs",
+    "repository_url": "https://github.com/dbt-labs/dbt-mcp",
     "homepage_url": null,
     "license": "Apache License\n                                   Version 2.0, January 2004\n                                http://www.apache.org/licenses/\n        \n           TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION\n        \n           1. Definitions.\n        \n              \"License\" shall mean the terms and conditions for use, reproduction,\n              and distribution as defined by Sections 1 through 9 of this document.\n        \n              \"Licensor\" shall mean the copyright owner or entity authorized by\n              the copyright owner that is granting the License.\n        \n              \"Legal Entity\" shall mean the union of the acting entity and all\n              other entities that control, are controlled by, or are under common\n              control with that entity. For the purposes of this definition,\n              \"control\" means (i) the power, direct or indirect, to cause the\n              direction or management of such entity, whether by contract or\n              otherwise, or (ii) ownership of fifty percent (50%) or more of the\n              outstanding shares, or (iii) beneficial ownership of such entity.\n        \n              \"You\" (or \"Your\") shall mean an individual or Legal Entity\n              exercising permissions granted by this License.\n        \n              \"Source\" form shall mean the preferred form for making modifications,\n              including but not limited to software source code, documentation\n              source, and configuration files.\n        \n              \"Object\" form shall mean any form resulting from mechanical\n              transformation or translation of a Source form, including but\n              not limited to compiled object code, generated documentation,\n              and conversions to other media types.\n        \n              \"Work\" shall mean the work of authorship, whether in Source or\n              Object form, made available under the License, as indicated by a\n              copyright notice that is included in or attached to the work\n              (an example is provided in the Appendix below).\n        \n              \"Derivative Works\" shall mean any work, whether in Source or Object\n              form, that is based on (or derived from) the Work and for which the\n              editorial revisions, annotations, elaborations, or other modifications\n              represent, as a whole, an original work of authorship. For the purposes\n              of this License, Derivative Works shall not include works that remain\n              separable from, or merely link (or bind by name) to the interfaces of,\n              the Work and Derivative Works thereof.\n        \n              \"Contribution\" shall mean any work of authorship, including\n              the original version of the Work and any modifications or additions\n              to that Work or Derivative Works thereof, that is intentionally\n              submitted to Licensor for inclusion in the Work by the copyright owner\n              or by an individual or Legal Entity authorized to submit on behalf of\n              the copyright owner. For the purposes of this definition, \"submitted\"\n              means any form of electronic, verbal, or written communication sent\n              to the Licensor or its representatives, including but not limited to\n              communication on electronic mailing lists, source code control systems,\n              and issue tracking systems that are managed by, or on behalf of, the\n              Licensor for the purpose of discussing and improving the Work, but\n              excluding communication that is conspicuously marked or otherwise\n              designated in writing by the copyright owner as \"Not a Contribution.\"\n        \n              \"Contributor\" shall mean Licensor and any individual or Legal Entity\n              on behalf of whom a Contribution has been received by Licensor and\n              subsequently incorporated within the Work.\n        \n           2. Grant of Copyright License. Subject to the terms and conditions of\n              this License, each Contributor hereby grants to You a perpetual,\n              worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n              copyright license to reproduce, prepare Derivative Works of,\n              publicly display, publicly perform, sublicense, and distribute the\n              Work and such Derivative Works in Source or Object form.\n        \n           3. Grant of Patent License. Subject to the terms and conditions of\n              this License, each Contributor hereby grants to You a perpetual,\n              worldwide, non-exclusive, no-charge, royalty-free, irrevocable\n              (except as stated in this section) patent license to make, have made,\n              use, offer to sell, sell, import, and otherwise transfer the Work,\n              where such license applies only to those patent claims licensable\n              by such Contributor that are necessarily infringed by their\n              Contribution(s) alone or by combination of their Contribution(s)\n              with the Work to which such Contribution(s) was submitted. If You\n              institute patent litigation against any entity (including a\n              cross-claim or counterclaim in a lawsuit) alleging that the Work\n              or a Contribution incorporated within the Work constitutes direct\n              or contributory patent infringement, then any patent licenses\n              granted to You under this License for that Work shall terminate\n              as of the date such litigation is filed.\n        \n           4. Redistribution. You may reproduce and distribute copies of the\n              Work or Derivative Works thereof in any medium, with or without\n              modifications, and in Source or Object form, provided that You\n              meet the following conditions:\n        \n              (a) You must give any other recipients of the Work or\n                  Derivative Works a copy of this License; and\n        \n              (b) You must cause any modified files to carry prominent notices\n                  stating that You changed the files; and\n        \n              (c) You must retain, in the Source form of any Derivative Works\n                  that You distribute, all copyright, patent, trademark, and\n                  attribution notices from the Source form of the Work,\n                  excluding those notices that do not pertain to any part of\n                  the Derivative Works; and\n        \n              (d) If the Work includes a \"NOTICE\" text file as part of its\n                  distribution, then any Derivative Works that You distribute must\n                  include a readable copy of the attribution notices contained\n                  within such NOTICE file, excluding those notices that do not\n                  pertain to any part of the Derivative Works, in at least one\n                  of the following places: within a NOTICE text file distributed\n                  as part of the Derivative Works; within the Source form or\n                  documentation, if provided along with the Derivative Works; or,\n                  within a display generated by the Derivative Works, if and\n                  wherever such third-party notices normally appear. The contents\n                  of the NOTICE file are for informational purposes only and\n                  do not modify the License. You may add Your own attribution\n                  notices within Derivative Works that You distribute, alongside\n                  or as an addendum to the NOTICE text from the Work, provided\n                  that such additional attribution notices cannot be construed\n                  as modifying the License.\n        \n              You may add Your own copyright statement to Your modifications and\n              may provide additional or different license terms and conditions\n              for use, reproduction, or distribution of Your modifications, or\n              for any such Derivative Works as a whole, provided Your use,\n              reproduction, and distribution of the Work otherwise complies with\n              the conditions stated in this License.\n        \n           5. Submission of Contributions. Unless You explicitly state otherwise,\n              any Contribution intentionally submitted for inclusion in the Work\n              by You to the Licensor shall be under the terms and conditions of\n              this License, without any additional terms or conditions.\n              Notwithstanding the above, nothing herein shall supersede or modify\n              the terms of any separate license agreement you may have executed\n              with Licensor regarding such Contributions.\n        \n           6. Trademarks. This License does not grant permission to use the trade\n              names, trademarks, service marks, or product names of the Licensor,\n              except as required for reasonable and customary use in describing the\n              origin of the Work and reproducing the content of the NOTICE file.\n        \n           7. Disclaimer of Warranty. Unless required by applicable law or\n              agreed to in writing, Licensor provides the Work (and each\n              Contributor provides its Contributions) on an \"AS IS\" BASIS,\n              WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or\n              implied, including, without limitation, any warranties or conditions\n              of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A\n              PARTICULAR PURPOSE. You are solely responsible for determining the\n              appropriateness of using or redistributing the Work and assume any\n              risks associated with Your exercise of permissions under this License.\n        \n           8. Limitation of Liability. In no event and under no legal theory,\n              whether in tort (including negligence), contract, or otherwise,\n              unless required by applicable law (such as deliberate and grossly\n              negligent acts) or agreed to in writing, shall any Contributor be\n              liable to You for damages, including any direct, indirect, special,\n              incidental, or consequential damages of any character arising as a\n              result of this License or out of the use or inability to use the\n              Work (including but not limited to damages for loss of goodwill,\n              work stoppage, computer failure or malfunction, or any and all\n              other commercial damages or losses), even if such Contributor\n              has been advised of the possibility of such damages.\n        \n           9. Accepting Warranty or Additional Liability. While redistributing\n              the Work or Derivative Works thereof, You may choose to offer,\n              and charge a fee for, acceptance of support, warranty, indemnity,\n              or other liability obligations and/or rights consistent with this\n              License. However, in accepting such obligations, You may act only\n              on Your own behalf and on Your sole responsibility, not on behalf\n              of any other Contributor, and only if You agree to indemnify,\n              defend, and hold each Contributor harmless for any liability\n              incurred by, or claims asserted against, such Contributor by reason\n              of your accepting any such warranty or additional liability.\n        \n           END OF TERMS AND CONDITIONS\n        \n           APPENDIX: How to apply the Apache License to your work.\n        \n              To apply the Apache License to your work, attach the following\n              boilerplate notice, with the fields enclosed by brackets \"[]\"\n              replaced with your own identifying information. (Don't include\n              the brackets!)  The text should be enclosed in the appropriate\n              comment syntax for the file format. We also recommend that a\n              file or class name and description of purpose be included on the\n              same \"printed page\" as the copyright notice for easier\n              identification within third-party archives.\n        \n           Copyright 2025 dbt Labs\n        \n           Licensed under the Apache License, Version 2.0 (the \"License\");\n           you may not use this file except in compliance with the License.\n           You may obtain a copy of the License at\n        \n               http://www.apache.org/licenses/LICENSE-2.0\n        \n           Unless required by applicable law or agreed to in writing, software\n           distributed under the License is distributed on an \"AS IS\" BASIS,\n           WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n           See the License for the specific language governing permissions and\n           limitations under the License.",
-    "latest_version": "2.6.0",
-    "recommended_safe_version": "2.6.0",
+    "latest_version": "2.7.0",
+    "recommended_safe_version": "2.7.0",
     "is_vulnerable": false,
-    "security_summary": "Server `dbt-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 95 safe version(s).",
+    "security_summary": "Server `dbt-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 96 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -12697,6 +14165,17 @@
         "prompts": [],
         "resources": [],
         "release_date": "2026-10-06T15:43:09.035594Z",
+        "required_env_vars": []
+      },
+      {
+        "version": "2.7.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": "2026-10-09T14:31:38.747003Z",
         "required_env_vars": []
       }
     ]
@@ -24440,10 +25919,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "12.49.9",
-    "recommended_safe_version": "12.49.9",
+    "latest_version": "13.0.0",
+    "recommended_safe_version": "13.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `@juspay/neurolink` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 856 safe version(s).",
+    "security_summary": "Server `@juspay/neurolink` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 890 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -33862,6 +35341,380 @@
         "resources": [],
         "release_date": null,
         "required_env_vars": []
+      },
+      {
+        "version": "12.49.10",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.11",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.12",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.13",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.14",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.15",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.16",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.17",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.18",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.19",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.49.20",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.50.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.51.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.51.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.51.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.51.3",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.51.4",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.52.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.52.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.53.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.54.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.54.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.54.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.55.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.55.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.55.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.55.3",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.56.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.56.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.57.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.58.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.58.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "12.59.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "13.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
       }
     ]
   },
@@ -35884,6 +37737,47 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "mambalabsdev/mcp-expert-witness-directory": {
+    "package_name": "mambalabsdev/mcp-expert-witness-directory",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/mambalabsdev%2Fmcp-expert-witness-directory",
+    "display_name": "mambalabsdev/mcp-expert-witness-directory",
+    "description": "Expert witness and medico-legal directory records for the US and Australia, one row per person.",
+    "author": null,
+    "repository_url": "https://github.com/mambalabsdev/mcp-expert-witness-directory",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.1.2",
+    "recommended_safe_version": "1.1.2",
+    "is_vulnerable": false,
+    "security_summary": "Server `mambalabsdev/mcp-expert-witness-directory` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.1.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:bcd9c494bd18720e73179b4adc23afb236dd0ef155b92fbc6bef250df474f70e",
+        "tools": [
+          {
+            "name": "find_expert_witnesses",
+            "canonical_hash": "sha256:6bc5c79c6648744be454a85f8baad7cc3aea0c43dfc258d9492a8027439c1d83",
+            "description": "Find expert witnesses and medico-legal assessors in the United States and Australia. Reads 18 public directories, merges the same person across directories into one record, and maps every source",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_expert_witnesses` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -39769,6 +41663,36 @@
       }
     ]
   },
+  "t3ratech/market-pulse-mcp": {
+    "package_name": "t3ratech/market-pulse-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/t3ratech%2Fmarket-pulse-mcp",
+    "display_name": "t3ratech/market-pulse-mcp",
+    "description": "Evidence-graded agent-work lanes, bid advice, live agent jobs and a hash-chained evidence ledger.",
+    "author": null,
+    "repository_url": "https://github.com/t3ratech/market-pulse-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `t3ratech/market-pulse-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "tengolabs/killbottleneck": {
     "package_name": "tengolabs/killbottleneck",
     "ecosystem": "github",
@@ -41592,7 +43516,7 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "de5a51525a69822290eaee569a1ab447b490746d",
+    "latest_version": "bc597e391f184d2187062fd567599a3cb72adf51",
     "recommended_safe_version": null,
     "is_vulnerable": true,
     "security_summary": "Package `mcp-data-vis` has 2 security advisories.",
@@ -41600,7 +43524,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "bc597e391f184d2187062fd567599a3cb72adf51",
+        "version": "de5a51525a69822290eaee569a1ab447b490746d",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -41630,7 +43554,7 @@
         "required_env_vars": []
       },
       {
-        "version": "de5a51525a69822290eaee569a1ab447b490746d",
+        "version": "bc597e391f184d2187062fd567599a3cb72adf51",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -43915,7 +45839,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 1.4.0",
+        "version": "*",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -43954,7 +45878,7 @@
         "required_env_vars": []
       },
       {
-        "version": "*",
+        "version": "< 1.4.0",
         "is_vulnerable": true,
         "advisories": [
           {
