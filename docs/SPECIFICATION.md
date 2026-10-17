@@ -319,7 +319,13 @@ The `data/vulnerabilities/index.json` acts as the definitive source of truth for
 
 ---
 
-## 7. OSV 1.6 Range Integrity & Grouped Deduplication Rules
+## 7. Dual Upstream Data Architecture
+
+`mcp-vulnerabilities` operates across two upstream data flows:
+1. **External OSV/NVD/CVE Advisories**: Raw threat intelligence that powers the `data/vulnerabilities` directory.
+2. **Upstream MCP Fingerprints (`mcp-fingerprints`)**: Structural tool schemas and passport databases. Updates via `repository_dispatch` triggers force immediate downstream correlation re-runs and semantic release pipeline publication.
+
+## 8. OSV 1.6 Range Integrity & Grouped Deduplication Rules
 
 To maintain OSV schema validity and prevent illogical overlapping `affected` range boundaries:
 

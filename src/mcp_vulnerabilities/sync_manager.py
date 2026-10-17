@@ -41,8 +41,8 @@ class CrossRepoSyncManager:
                     break
                     
             if not download_url:
-                logger.warning("passports.json.gz asset not found in the latest release.")
-                return False
+                logger.warning("passports.json.gz asset not found in the latest release. Falling back to raw github content.")
+                raise Exception("Asset not found")
                 
             logger.info(f"Downloading passports.json.gz from {download_url}")
             asset_req = urllib.request.Request(download_url)
@@ -60,12 +60,32 @@ class CrossRepoSyncManager:
             
         except urllib.error.HTTPError as e:
             if e.code == 403 and "rate limit" in str(e.reason).lower():
-                logger.warning("GitHub API rate limit exceeded during cross-repo sync. Falling back to local snapshot.")
+                logger.warning("GitHub API rate limit exceeded during cross-repo sync. Falling back to raw github content.")
             else:
-                logger.error(f"HTTPError fetching passports: {e.code} {e.reason}. Falling back to local snapshot.")
-            return False
+                logger.error(f"HTTPError fetching passports: {e.code} {e.reason}. Falling back to raw github content.")
         except Exception as e:
-            logger.error(f"Error fetching passports: {e}. Falling back to local snapshot.")
+            logger.error(f"Error fetching passports: {e}. Falling back to raw github content.")
+            
+        # Fallback to downloading from raw.githubusercontent.com
+        fallback_url = "https://raw.githubusercontent.com/jmartynov/mcp-fingerprints/main/passports.json.gz"
+        logger.info(f"Attempting fallback download from {fallback_url}")
+        
+        try:
+            fallback_req = urllib.request.Request(fallback_url)
+            fallback_req.add_header("User-Agent", "mcp-vulnerabilities-sync")
+            if github_token:
+                fallback_req.add_header("Authorization", f"Bearer {github_token}")
+            
+            with urllib.request.urlopen(fallback_req) as fallback_response:
+                self.target_path.parent.mkdir(parents=True, exist_ok=True)
+                with open(self.target_path, "wb") as f:
+                    f.write(fallback_response.read())
+                    
+            logger.info(f"Successfully downloaded passports.json.gz from fallback to {self.target_path}")
+            return True
+            
+        except Exception as fallback_e:
+            logger.error(f"Fallback download also failed: {fallback_e}. Using local snapshot if available.")
             return False
 
     def sync_and_correlate(self, vulnerabilities_path: Path, github_token: Optional[str] = None) -> Optional[List[CorrelatedTimeline]]:

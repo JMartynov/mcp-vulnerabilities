@@ -114,10 +114,14 @@ The project provides interactive, client-side static web portals hosted directly
 
 ## Automated PyPI Release Pipeline on Data Updates
 
+`mcp-vulnerabilities` is dependent on two distinct upstream data sources:
+1. External OSV/NVD/CVE security advisories (stored in `data/vulnerabilities/`)
+2. Upstream MCP server fingerprints and tool schemas from `mcp-fingerprints` (`data/passports.json.gz`)
+
 To keep downstream tools, scanners, and Python consumers immediately updated with zero human intervention:
-1. **Daily Scheduled Ingestion (`.github/workflows/daily_sync.yml`)**: Executes daily at 03:00 UTC.
-2. **Cross-Repo Sync**: Automatically pulls the latest `passports.json.gz` release asset from `mcp-fingerprints`.
-3. **Substantive Change Detection (`VULN_CHANGES`)**: Assesses whether new security advisories, catalog updates, or passport changes occurred.
+1. **Triggers (`.github/workflows/daily_sync.yml`)**: Executes daily at 03:00 UTC. It is also triggered reactively via a `repository_dispatch` event (`upstream_fingerprints_updated`) whenever `mcp-fingerprints` publishes a new release.
+2. **Cross-Repo Sync**: Automatically pulls the latest `passports.json.gz` release asset from `mcp-fingerprints` (with a raw fallback mechanism in case of missing asset or rate limits).
+3. **Substantive Change Detection (`VULN_CHANGES`)**: Assesses whether new security advisories, catalog updates, or passport changes (`data/passports.json.gz`) occurred.
 4. **Automated Semantic Version Bump**: Runs `scripts/bump_version.py --apply` to increment the patch version.
 5. **Static Artifact Recompilation**: Rebuilds `docs/data/` catalog shards, advisory indexes, and release delta feeds via `site_builder` and `updates_builder`.
 6. **Automated PyPI Publishing**: Tags the commit (`vX.Y.Z`), creates an official GitHub Release with generated release notes, and invokes `./.github/workflows/release.yaml` to publish the updated wheel to PyPI via OIDC Trusted Publishing.
