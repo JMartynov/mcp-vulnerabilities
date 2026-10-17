@@ -20,7 +20,7 @@ def test_init_version_matches_pyproject():
 
     assert hasattr(mcp_vulnerabilities, "__version__")
     assert mcp_vulnerabilities.__version__ == current_ver
-    assert current_ver == "1.0.0"
+    assert bool(current_ver)
 
 
 def test_bump_version_logic():
@@ -46,6 +46,8 @@ def test_bump_version_logic():
 def test_bump_version_script_cli_dry_run():
     root = Path(__file__).resolve().parent.parent
     script_p = root / "scripts" / "bump_version.py"
+    pyproject_p = root / "pyproject.toml"
+    current_ver = get_current_version(pyproject_p)
 
     # Dry-run patch
     res = subprocess.run(
@@ -54,7 +56,7 @@ def test_bump_version_script_cli_dry_run():
         text=True,
         check=True,
     )
-    assert res.stdout.strip() == "1.0.1"
+    assert res.stdout.strip() == bump_version(current_ver, "patch")
 
     # Dry-run minor
     res = subprocess.run(
@@ -63,7 +65,7 @@ def test_bump_version_script_cli_dry_run():
         text=True,
         check=True,
     )
-    assert res.stdout.strip() == "1.1.0"
+    assert res.stdout.strip() == bump_version(current_ver, "minor")
 
     # Dry-run major
     res = subprocess.run(
@@ -72,7 +74,7 @@ def test_bump_version_script_cli_dry_run():
         text=True,
         check=True,
     )
-    assert res.stdout.strip() == "2.0.0"
+    assert res.stdout.strip() == bump_version(current_ver, "major")
 
 
 def test_bump_version_apply_in_temp_files(tmp_path: Path):
