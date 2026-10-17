@@ -10047,9 +10047,9 @@
         "CVE-2025-71427"
       ]
     },
-    "details": "Office-PowerPoint-MCP-Server through 2.0.7 contains a path traversal vulnerability that allows MCP callers to write and read files outside the working directory by supplying absolute paths or ../ sequences. Attackers can steer an AI agent via prompt injection to abuse save_presentation, open_presentation, or manage_image output_path to overwrite any server-writable file or load external files.",
+    "details": "Office-PowerPoint-MCP-Server through 2.0.7 contains a path traversal vulnerability that allows MCP callers to write and read files outside the working directory by supplying absolute paths or ../ sequences. Attackers can steer an AI agent via prompt injection to abuse save_presentation, open_presentation, or manage_image output_path to overwrite any server-writable file or load external files.\n\nOffice-PowerPoint-MCP-Server hasta la versión 2.0.7 contiene una vulnerabilidad de salto de ruta que permite a los llamadores de MCP escribir y leer archivos fuera del directorio de trabajo al proporcionar rutas absolutas o secuencias ../. Los atacantes pueden dirigir un agente de IA mediante inyección de prompts para abusar de save_presentation, open_presentation o manage_image output_path y sobrescribir cualquier archivo escribible por el servidor o cargar archivos externos.",
     "id": "CVE-2025-71427",
-    "modified": "2026-10-02T20:16:59.250Z",
+    "modified": "2026-10-14T13:10:00.187Z",
     "published": "2026-10-01T23:16:46.613Z",
     "references": [
       {
@@ -13407,7 +13407,7 @@
     },
     "details": "x64dbg-MCP Server is a native Model Context Protocol (MCP) plugin for x64dbg that exposes the debugger's full functionality over HTTP. Prior to 1.1, x64dbg-MCP Server exposes all MCP debugger tools over HTTP and SSE without authentication while listening on 0.0.0.0 by default. Any unauthenticated network client that can reach the default port, 9094 for x64 or 9095 for x32, can execute arbitrary x64dbg commands, attach to processes by PID, read and write debuggee memory, and write files to arbitrary paths. This issue is fixed in version 1.1.",
     "id": "CVE-2026-107824",
-    "modified": "2026-10-09T18:17:04.350Z",
+    "modified": "2026-10-16T16:00:33.533Z",
     "published": "2026-10-09T18:17:04.350Z",
     "references": [
       {
@@ -13448,6 +13448,309 @@
     "affected": [
       {
         "database_specific": {
+          "cvss_score": 7.5,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cwe_ids": [
+            "CWE-770"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": ">= 0.8.0, < 0.13.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_score": 7.5,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cwe_ids": [
+            "CWE-770"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": ">= 0.13.0, < 0.18.4"
+              },
+              {
+                "introduced": ">= 1.0.0, < 1.1.4"
+              },
+              {
+                "introduced": ">= 2.0.0-M1, < 2.0.1"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "HIGH",
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "NONE",
+            "integrityImpact": "NONE",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 3.9,
+          "impactScore": 3.6,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        },
+        "ssvcV203": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "ssvcData": {
+              "id": "CVE-2026-108395",
+              "options": [
+                {
+                  "exploitation": "none"
+                },
+                {
+                  "automatable": "yes"
+                },
+                {
+                  "technicalImpact": "partial"
+                }
+              ],
+              "role": "CISA Coordinator",
+              "timestamp": "2026-10-14T19:28:50.574551Z",
+              "version": "2.0.3"
+            }
+          }
+        ]
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "io.modelcontextprotocol.sdk:mcp",
+                "vendor": "modelcontextprotocol",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": ">= 0.8.0, < 0.13.0"
+                  }
+                ]
+              },
+              {
+                "product": "io.modelcontextprotocol.sdk:mcp-core",
+                "vendor": "modelcontextprotocol",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": ">= 0.13.0, < 0.18.4"
+                  },
+                  {
+                    "status": "affected",
+                    "version": ">= 1.0.0, < 1.1.4"
+                  },
+                  {
+                    "status": "affected",
+                    "version": ">= 2.0.0-M1, < 2.0.1"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "The Model Context Protocol Java SDK is the official Java SDK for Model Context Protocol servers and clients. From version 0.8.0 through 0.12.0 in the io.modelcontextprotocol.sdk:mcp artifact, from 0.13.0 through 0.18.3 and 1.0.0 through 1.1.3 in io.modelcontextprotocol.sdk:mcp-core, and from mcp-core 2.0.0-M1 through 2.0.0, the Servlet-based SSE, Streamable HTTP, and Stateless server transports read an HTTP request body into memory without enforcing a maximum size. An unauthenticated remote client able to reach an affected transport can stream an arbitrarily large POST body, including with chunked transfer encoding, until the Java process exhausts its heap and becomes unavailable. Authentication, Origin or Host validation, or an upstream request-size limit can reject the request before the vulnerable read. The maintained mcp-core lines are fixed in versions 0.18.4, 1.1.4, and 2.0.1."
+          }
+        ],
+        "id": "CVE-2026-108395",
+        "lastModified": "2026-10-16T16:00:33.533",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "HIGH",
+                "baseScore": 7.5,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "NONE",
+                "integrityImpact": "NONE",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ],
+          "ssvcV203": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "ssvcData": {
+                "id": "CVE-2026-108395",
+                "options": [
+                  {
+                    "exploitation": "none"
+                  },
+                  {
+                    "automatable": "yes"
+                  },
+                  {
+                    "technicalImpact": "partial"
+                  }
+                ],
+                "role": "CISA Coordinator",
+                "timestamp": "2026-10-14T19:28:50.574551Z",
+                "version": "2.0.3"
+              }
+            }
+          ]
+        },
+        "published": "2026-10-14T18:17:27.370",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/commit/1499df22c7023aa257223143a5dcf5b1db7ef80d"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/commit/6a41dedaa0625551582d8247e5a4d78eae1131b2"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/commit/8c0fdd1b1f76adba3ce7945d29f73fa2ddc66598"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/commit/9e4d5fa827b6ba69457f5fd93573184789528efa"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/releases/tag/v0.18.4"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/releases/tag/v1.1.4"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/releases/tag/v2.0.1"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/java-sdk/security/advisories/GHSA-4x8c-5vv7-973f"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Awaiting Analysis",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-770"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Awaiting Analysis",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Secondary",
+          "value": "CWE-770"
+        }
+      ]
+    },
+    "details": "The Model Context Protocol Java SDK is the official Java SDK for Model Context Protocol servers and clients. From version 0.8.0 through 0.12.0 in the io.modelcontextprotocol.sdk:mcp artifact, from 0.13.0 through 0.18.3 and 1.0.0 through 1.1.3 in io.modelcontextprotocol.sdk:mcp-core, and from mcp-core 2.0.0-M1 through 2.0.0, the Servlet-based SSE, Streamable HTTP, and Stateless server transports read an HTTP request body into memory without enforcing a maximum size. An unauthenticated remote client able to reach an affected transport can stream an arbitrarily large POST body, including with chunked transfer encoding, until the Java process exhausts its heap and becomes unavailable. Authentication, Origin or Host validation, or an upstream request-size limit can reject the request before the vulnerable read. The maintained mcp-core lines are fixed in versions 0.18.4, 1.1.4, and 2.0.1.",
+    "id": "CVE-2026-108395",
+    "modified": "2026-10-16T16:00:33.533Z",
+    "published": "2026-10-14T18:17:27.370Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/commit/1499df22c7023aa257223143a5dcf5b1db7ef80d"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/commit/6a41dedaa0625551582d8247e5a4d78eae1131b2"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/commit/8c0fdd1b1f76adba3ce7945d29f73fa2ddc66598"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/commit/9e4d5fa827b6ba69457f5fd93573184789528efa"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/releases/tag/v0.18.4"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/releases/tag/v1.1.4"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/releases/tag/v2.0.1"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/modelcontextprotocol/java-sdk/security/advisories/GHSA-4x8c-5vv7-973f"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "The Model Context Protocol Java SDK is the official Java SDK for Model Context Protocol servers and clients. From versio"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
           "cvss_score": 5.5,
           "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
           "cwe_ids": [
@@ -13483,7 +13786,7 @@
     },
     "details": "GenOffice through 0.11.505 contains an incorrect permissions vulnerability in its HTTP MCP server file store that allows local unprivileged users to read uploaded and generated documents. Attackers can list the world-readable genoffice-mcp-http directory under the system temporary directory to read client uploads and converted outputs, bypassing the HTTP bearer token.",
     "id": "CVE-2026-108582",
-    "modified": "2026-10-10T16:16:31.520Z",
+    "modified": "2026-10-16T19:18:44.867Z",
     "published": "2026-10-10T16:16:31.520Z",
     "references": [
       {
@@ -13551,7 +13854,7 @@
     },
     "details": "argocd-mcp (Argo CD MCP Server) through 0.9.0 contains a path traversal vulnerability in the delete_application tool that allows MCP clients to reach unintended API endpoints via unvalidated applicationName values. Attackers or prompt-injected models can supply dot-segment values like ../repositories/ to send authenticated DELETE requests deleting repositories, clusters, or projects within the token's RBAC permissions.",
     "id": "CVE-2026-108585",
-    "modified": "2026-10-10T17:17:00.550Z",
+    "modified": "2026-10-14T16:17:32.853Z",
     "published": "2026-10-10T17:17:00.437Z",
     "references": [
       {
@@ -13623,7 +13926,7 @@
     },
     "details": "1MCP Agent (@1mcp/agent) 0.20.0 through 0.39.0 contains an incorrect authorization vulnerability that allows authenticated clients to bypass OAuth tag-scope enforcement using negated advanced tag-filter expressions. Attackers holding a single-tag token can send a filter like not <granted-tag> to list and invoke tools on backend MCP servers outside their granted scopes.",
     "id": "CVE-2026-108586",
-    "modified": "2026-10-10T17:17:00.593Z",
+    "modified": "2026-10-16T19:21:14.417Z",
     "published": "2026-10-10T17:17:00.593Z",
     "references": [
       {
@@ -13901,7 +14204,7 @@
     },
     "details": "JeecgBoot through 3.9.5 contains a missing authorization vulnerability that allows any authenticated user to read MCP server configurations because the queryById permission check is commented out. Attackers can obtain record ids from the unguarded /airag/app/queryById endpoint and retrieve MCP endpoint URLs, headers, and outbound authentication tokens.",
     "id": "CVE-2026-108671",
-    "modified": "2026-10-10T22:16:43.920Z",
+    "modified": "2026-10-13T20:43:34.023Z",
     "published": "2026-10-10T22:16:43.920Z",
     "references": [
       {
@@ -13965,7 +14268,7 @@
     },
     "details": "phpMyFAQ through 4.1.10 contains a missing authorization vulnerability in the MCP server faq_search tool that allows MCP clients to read restricted FAQs because Search::searchDatabase() never applies user or group permission checks. Attackers connected to the phpmyfaq:mcp:server can issue search queries to retrieve the full question and answer text of active FAQs restricted to specific users or groups.",
     "id": "CVE-2026-108851",
-    "modified": "2026-10-11T14:17:04.777Z",
+    "modified": "2026-10-13T14:17:21.390Z",
     "published": "2026-10-11T14:17:04.667Z",
     "references": [
       {
@@ -14037,7 +14340,7 @@
     },
     "details": "UnicomAI Wanwu through 0.6.5 contains an authorization bypass vulnerability that allows authenticated users to mint AppKeys bound to other users' MCP servers via POST /v1/appspace/app/key. Attackers supplying a victim's MCP server UUID with appType mcpserver can open MCP sessions and invoke the server's tools using the victim's upstream authentication.",
     "id": "CVE-2026-108856",
-    "modified": "2026-10-11T14:17:05.370Z",
+    "modified": "2026-10-16T19:18:44.867Z",
     "published": "2026-10-11T14:17:05.370Z",
     "references": [
       {
@@ -14059,6 +14362,10 @@
       {
         "type": "ADVISORY",
         "url": "https://www.vulncheck.com/advisories/unicomai-wanwu-through-0.6.5-authorization-bypass-via-v1-appspace-app-key-appkey-minting"
+      },
+      {
+        "type": "WEB",
+        "url": "https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/cve-2026-108856-unicomai-wanwu-mcp-key-arbitrary-resource"
       }
     ],
     "schema_version": "1.6.0",
@@ -14109,7 +14416,7 @@
     },
     "details": "mac-shell-mcp before 2.0.0 contains an OS command injection vulnerability that allows MCP clients to bypass the command whitelist by injecting shell metacharacters into execute_command arguments. Attackers or malicious prompts can call a safe command such as pwd with arguments like ';' to run forbidden commands as the server user without approval.",
     "id": "CVE-2026-108953",
-    "modified": "2026-10-12T13:17:28.307Z",
+    "modified": "2026-10-16T19:18:44.867Z",
     "published": "2026-10-12T13:17:28.307Z",
     "references": [
       {
@@ -14141,6 +14448,863 @@
       }
     ],
     "summary": "mac-shell-mcp before 2.0.0 contains an OS command injection vulnerability that allows MCP clients to bypass the command "
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 7.5,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "cwe_ids": [
+            "CWE-770"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "< 1.29.1"
+              },
+              {
+                "introduced": ">= 2.0.0a1, < 2.1.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "HIGH",
+            "baseScore": 7.5,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "NONE",
+            "integrityImpact": "NONE",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 3.9,
+          "impactScore": 3.6,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "python-sdk",
+                "vendor": "modelcontextprotocol",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "< 1.29.1"
+                  },
+                  {
+                    "status": "affected",
+                    "version": ">= 2.0.0a1, < 2.1.0"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp versions before 1.29.1 and from 2.0.0a1 through 2.0.1, the Streamable HTTP session manager, SSE message endpoint, and OAuth authorization-server routes buffer complete HTTP request bodies without enforcing a maximum size. An unauthenticated remote client able to reach an affected endpoint can send a large declared or streamed request body that consumes multiple times the body size in process memory and can repeatedly exhaust memory or terminate the server. Stdio-only servers and deployments with an effective upstream request-size limit are not affected, and applications that use StreamableHTTPServerTransport directly remain responsible for enforcing their own limit. The standard SDK server applications and session managers are fixed in versions 1.29.1 and 2.1.0."
+          }
+        ],
+        "id": "CVE-2026-109527",
+        "lastModified": "2026-10-16T16:00:33.533",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "HIGH",
+                "baseScore": 7.5,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "NONE",
+                "integrityImpact": "NONE",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 3.9,
+              "impactScore": 3.6,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-14T18:17:33.447",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/commit/4dc224fab201bdef2fd5a065976b7ca31420187c"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/commit/57394b0548d1e2dc2dce8d67d84985769df3b8bb"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/commit/5f0b6af9f2b0aad3be3ba5cbfe80a9e4ea32e189"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.29.1"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.1.0"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/security/advisories/GHSA-fmmv-w9g8-j3gc"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Awaiting Analysis",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-770"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Awaiting Analysis",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-770"
+        }
+      ]
+    },
+    "details": "The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp versions before 1.29.1 and from 2.0.0a1 through 2.0.1, the Streamable HTTP session manager, SSE message endpoint, and OAuth authorization-server routes buffer complete HTTP request bodies without enforcing a maximum size. An unauthenticated remote client able to reach an affected endpoint can send a large declared or streamed request body that consumes multiple times the body size in process memory and can repeatedly exhaust memory or terminate the server. Stdio-only servers and deployments with an effective upstream request-size limit are not affected, and applications that use StreamableHTTPServerTransport directly remain responsible for enforcing their own limit. The standard SDK server applications and session managers are fixed in versions 1.29.1 and 2.1.0.",
+    "id": "CVE-2026-109527",
+    "modified": "2026-10-16T16:00:33.533Z",
+    "published": "2026-10-14T18:17:33.447Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/commit/4dc224fab201bdef2fd5a065976b7ca31420187c"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/commit/57394b0548d1e2dc2dce8d67d84985769df3b8bb"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/commit/5f0b6af9f2b0aad3be3ba5cbfe80a9e4ea32e189"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.29.1"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.1.0"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/security/advisories/GHSA-fmmv-w9g8-j3gc"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp "
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 8.1,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "cwe_ids": [
+            "CWE-306"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0",
+                "last_affected": "2026.5.29"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "HIGH",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "HIGH",
+            "baseScore": 8.1,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 2.2,
+          "impactScore": 5.9,
+          "source": "disclosure@vulncheck.com",
+          "type": "Primary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "defaultStatus": "unaffected",
+                "product": "NullHub",
+                "repo": "https://github.com/nullclaw/nullhub",
+                "vendor": "nullclaw",
+                "versions": [
+                  {
+                    "lessThanOrEqual": "2026.5.29",
+                    "status": "affected",
+                    "version": "0",
+                    "versionType": "custom"
+                  }
+                ]
+              }
+            ],
+            "source": "disclosure@vulncheck.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to access the /api/* management API because the auth_token field defaults to null and is never assigned. Attackers sending requests without Authorization or Origin headers to non-loopback listeners can control agent instances, rewrite configurations including provider credentials, and manage cron jobs and MCP servers."
+          }
+        ],
+        "id": "CVE-2026-110616",
+        "lastModified": "2026-10-16T19:18:44.867",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "HIGH",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "HIGH",
+                "baseScore": 8.1,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 2.2,
+              "impactScore": 5.9,
+              "source": "disclosure@vulncheck.com",
+              "type": "Primary"
+            }
+          ],
+          "cvssMetricV40": [
+            {
+              "cvssData": {
+                "Automatable": "NOT_DEFINED",
+                "Recovery": "NOT_DEFINED",
+                "Safety": "NOT_DEFINED",
+                "attackComplexity": "LOW",
+                "attackRequirements": "PRESENT",
+                "attackVector": "NETWORK",
+                "availabilityRequirement": "NOT_DEFINED",
+                "baseScore": 9.2,
+                "baseSeverity": "CRITICAL",
+                "confidentialityRequirement": "NOT_DEFINED",
+                "exploitMaturity": "NOT_DEFINED",
+                "integrityRequirement": "NOT_DEFINED",
+                "modifiedAttackComplexity": "NOT_DEFINED",
+                "modifiedAttackRequirements": "NOT_DEFINED",
+                "modifiedAttackVector": "NOT_DEFINED",
+                "modifiedPrivilegesRequired": "NOT_DEFINED",
+                "modifiedSubAvailabilityImpact": "NOT_DEFINED",
+                "modifiedSubConfidentialityImpact": "NOT_DEFINED",
+                "modifiedSubIntegrityImpact": "NOT_DEFINED",
+                "modifiedUserInteraction": "NOT_DEFINED",
+                "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
+                "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
+                "modifiedVulnIntegrityImpact": "NOT_DEFINED",
+                "privilegesRequired": "NONE",
+                "providerUrgency": "NOT_DEFINED",
+                "subAvailabilityImpact": "NONE",
+                "subConfidentialityImpact": "NONE",
+                "subIntegrityImpact": "NONE",
+                "userInteraction": "NONE",
+                "valueDensity": "NOT_DEFINED",
+                "vectorString": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                "version": "4.0",
+                "vulnAvailabilityImpact": "HIGH",
+                "vulnConfidentialityImpact": "HIGH",
+                "vulnIntegrityImpact": "HIGH",
+                "vulnerabilityResponseEffort": "NOT_DEFINED"
+              },
+              "source": "disclosure@vulncheck.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-14T15:17:13.767",
+        "references": [
+          {
+            "source": "disclosure@vulncheck.com",
+            "url": "https://github.com/nullclaw/nullhub"
+          },
+          {
+            "source": "disclosure@vulncheck.com",
+            "url": "https://github.com/nullclaw/nullhub/blob/v2026.5.29/Dockerfile#L69-L71"
+          },
+          {
+            "source": "disclosure@vulncheck.com",
+            "url": "https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/api/settings.zig#L29-L54"
+          },
+          {
+            "source": "disclosure@vulncheck.com",
+            "url": "https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/server.zig#L546-L556"
+          },
+          {
+            "source": "disclosure@vulncheck.com",
+            "url": "https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/rJrLma3izg"
+          },
+          {
+            "source": "disclosure@vulncheck.com",
+            "url": "https://www.vulncheck.com/advisories/nullhub-through-2026.5.29-missing-authentication-for-api-management-api"
+          }
+        ],
+        "sourceIdentifier": "disclosure@vulncheck.com",
+        "vulnStatus": "Deferred",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-306"
+              }
+            ],
+            "source": "disclosure@vulncheck.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "disclosure@vulncheck.com",
+      "vulnStatus": "Deferred",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "disclosure@vulncheck.com",
+          "type": "Primary",
+          "value": "CWE-306"
+        }
+      ]
+    },
+    "details": "NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to access the /api/* management API because the auth_token field defaults to null and is never assigned. Attackers sending requests without Authorization or Origin headers to non-loopback listeners can control agent instances, rewrite configurations including provider credentials, and manage cron jobs and MCP servers.",
+    "id": "CVE-2026-110616",
+    "modified": "2026-10-16T19:18:44.867Z",
+    "published": "2026-10-14T15:17:13.767Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/nullclaw/nullhub"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nullclaw/nullhub/blob/v2026.5.29/Dockerfile#L69-L71"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/api/settings.zig#L29-L54"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/server.zig#L546-L556"
+      },
+      {
+        "type": "WEB",
+        "url": "https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/rJrLma3izg"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://www.vulncheck.com/advisories/nullhub-through-2026.5.29-missing-authentication-for-api-management-api"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to acces"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 7.8,
+          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "cwe_ids": [
+            "CWE-829"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "fixed": "26.8.3",
+                "introduced": "0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "LOCAL",
+            "availabilityImpact": "HIGH",
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "REQUIRED",
+            "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 1.8,
+          "impactScore": 5.9,
+          "source": "cve@jetbrains.com",
+          "type": "Secondary"
+        },
+        "ssvcV203": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "ssvcData": {
+              "id": "CVE-2026-111091",
+              "options": [
+                {
+                  "exploitation": "none"
+                },
+                {
+                  "automatable": "no"
+                },
+                {
+                  "technicalImpact": "total"
+                }
+              ],
+              "role": "CISA Coordinator",
+              "timestamp": "2026-10-15T16:05:16.044096Z",
+              "version": "2.0.3"
+            }
+          }
+        ]
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "defaultStatus": "unaffected",
+                "product": "Junie CLI",
+                "vendor": "JetBrains",
+                "versions": [
+                  {
+                    "lessThan": "26.8.3",
+                    "status": "affected",
+                    "version": "0",
+                    "versionType": "semver"
+                  }
+                ]
+              }
+            ],
+            "source": "cve@jetbrains.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "In JetBrains Junie CLI before 26.8.3 code execution was possible via an untrusted project's MCP server configuration"
+          }
+        ],
+        "id": "CVE-2026-111091",
+        "lastModified": "2026-10-15T17:17:16.380",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "LOCAL",
+                "availabilityImpact": "HIGH",
+                "baseScore": 7.8,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "REQUIRED",
+                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 1.8,
+              "impactScore": 5.9,
+              "source": "cve@jetbrains.com",
+              "type": "Secondary"
+            }
+          ],
+          "ssvcV203": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "ssvcData": {
+                "id": "CVE-2026-111091",
+                "options": [
+                  {
+                    "exploitation": "none"
+                  },
+                  {
+                    "automatable": "no"
+                  },
+                  {
+                    "technicalImpact": "total"
+                  }
+                ],
+                "role": "CISA Coordinator",
+                "timestamp": "2026-10-15T16:05:16.044096Z",
+                "version": "2.0.3"
+              }
+            }
+          ]
+        },
+        "published": "2026-10-15T16:17:48.637",
+        "references": [
+          {
+            "source": "cve@jetbrains.com",
+            "url": "https://www.jetbrains.com/privacy-security/issues-fixed/"
+          }
+        ],
+        "sourceIdentifier": "cve@jetbrains.com",
+        "vulnStatus": "Awaiting Analysis",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-829"
+              }
+            ],
+            "source": "cve@jetbrains.com",
+            "type": "Secondary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "cve@jetbrains.com",
+      "vulnStatus": "Awaiting Analysis",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "cve@jetbrains.com",
+          "type": "Secondary",
+          "value": "CWE-829"
+        }
+      ]
+    },
+    "details": "In JetBrains Junie CLI before 26.8.3 code execution was possible via an untrusted project's MCP server configuration",
+    "id": "CVE-2026-111091",
+    "modified": "2026-10-15T17:17:16.380Z",
+    "published": "2026-10-15T16:17:48.637Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://www.jetbrains.com/privacy-security/issues-fixed/"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "In JetBrains Junie CLI before 26.8.3 code execution was possible via an untrusted project's MCP server configuration"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 7.8,
+          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "cwe_ids": [
+            "CWE-78"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "fixed": "4.1.2",
+                "introduced": "4.0.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "LOCAL",
+            "availabilityImpact": "HIGH",
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "REQUIRED",
+            "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 1.8,
+          "impactScore": 5.9,
+          "source": "cve@mitre.org",
+          "type": "Secondary"
+        },
+        "ssvcV203": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "ssvcData": {
+              "id": "CVE-2026-111451",
+              "options": [
+                {
+                  "exploitation": "none"
+                },
+                {
+                  "automatable": "no"
+                },
+                {
+                  "technicalImpact": "total"
+                }
+              ],
+              "role": "CISA Coordinator",
+              "timestamp": "2026-10-16T16:05:07.402059Z",
+              "version": "2.0.3"
+            }
+          }
+        ]
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "defaultStatus": "unaffected",
+                "product": "Wheels CLI",
+                "repo": "https://github.com/wheels-dev/wheels",
+                "vendor": "Wheels",
+                "versions": [
+                  {
+                    "lessThan": "4.1.2",
+                    "status": "affected",
+                    "version": "4.0.0",
+                    "versionType": "semver"
+                  }
+                ]
+              }
+            ],
+            "source": "cve@mitre.org"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Wheels CLI 4.0.0 through 4.1.1 insufficiently validates or escapes caller-supplied values and package contents. Deploy release/version/rollback values can execute shell commands on deploy hosts as the SSH user and on the CI runner during builds. Package removal and destroy paths can delete unintended files; package extraction can overwrite other vendor files; generator names can write outside the project or inject executable CFML into generated code. Inputs may originate from CI variables, branch names, packages or an AI agent using the CLI's MCP tools. Also relevant are unencoded display properties in generated scaffold show views since 4.1.0 and in generated admin views, permitting stored XSS, and stale process-ID handling in RustCFML server commands that can terminate an unrelated process. This is fixed in 4.1.2; existing affected generated views also require the documented edit."
+          }
+        ],
+        "id": "CVE-2026-111451",
+        "lastModified": "2026-10-16T16:17:04.480",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "LOCAL",
+                "availabilityImpact": "HIGH",
+                "baseScore": 7.8,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "REQUIRED",
+                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 1.8,
+              "impactScore": 5.9,
+              "source": "cve@mitre.org",
+              "type": "Secondary"
+            }
+          ],
+          "ssvcV203": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "ssvcData": {
+                "id": "CVE-2026-111451",
+                "options": [
+                  {
+                    "exploitation": "none"
+                  },
+                  {
+                    "automatable": "no"
+                  },
+                  {
+                    "technicalImpact": "total"
+                  }
+                ],
+                "role": "CISA Coordinator",
+                "timestamp": "2026-10-16T16:05:07.402059Z",
+                "version": "2.0.3"
+              }
+            }
+          ]
+        },
+        "published": "2026-10-16T04:18:31.667",
+        "references": [
+          {
+            "source": "cve@mitre.org",
+            "url": "https://github.com/wheels-dev/wheels/security/advisories/GHSA-cghp-86c6-6fjc"
+          }
+        ],
+        "sourceIdentifier": "cve@mitre.org",
+        "vulnStatus": "Deferred",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-78"
+              }
+            ],
+            "source": "cve@mitre.org",
+            "type": "Secondary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "cve@mitre.org",
+      "vulnStatus": "Deferred",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "cve@mitre.org",
+          "type": "Secondary",
+          "value": "CWE-78"
+        }
+      ]
+    },
+    "details": "Wheels CLI 4.0.0 through 4.1.1 insufficiently validates or escapes caller-supplied values and package contents. Deploy release/version/rollback values can execute shell commands on deploy hosts as the SSH user and on the CI runner during builds. Package removal and destroy paths can delete unintended files; package extraction can overwrite other vendor files; generator names can write outside the project or inject executable CFML into generated code. Inputs may originate from CI variables, branch names, packages or an AI agent using the CLI's MCP tools. Also relevant are unencoded display properties in generated scaffold show views since 4.1.0 and in generated admin views, permitting stored XSS, and stale process-ID handling in RustCFML server commands that can terminate an unrelated process. This is fixed in 4.1.2; existing affected generated views also require the documented edit.",
+    "id": "CVE-2026-111451",
+    "modified": "2026-10-16T16:17:04.480Z",
+    "published": "2026-10-16T04:18:31.667Z",
+    "references": [
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/wheels-dev/wheels/security/advisories/GHSA-cghp-86c6-6fjc"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "Wheels CLI 4.0.0 through 4.1.1 insufficiently validates or escapes caller-supplied values and package contents. Deploy r"
   },
   {
     "affected": [
@@ -53432,6 +54596,184 @@
     "affected": [
       {
         "database_specific": {
+          "cvss_score": 9.6,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+          "cwe_ids": [
+            "CWE-22"
+          ],
+          "severity": "CRITICAL"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "< 0.1.8"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "NONE",
+            "baseScore": 9.6,
+            "baseSeverity": "CRITICAL",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "LOW",
+            "scope": "CHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 3.1,
+          "impactScore": 5.8,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "NetLicensing-MCP",
+                "vendor": "Labs64",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "< 0.1.8"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensing lifecycle in Labs64 NetLicensing. Prior to 0.1.8, netlicensing_get_product passes the caller-controlled product_number to src/netlicensing_mcp/tools/products.py, which interpolates it into a REST path consumed by nl_get() in src/netlicensing_mcp/client.py without path-segment validation. A traversal segment can be normalized from the intended product path to the /token endpoint, after which the response is serialized through _wrap_json instead of _wrap_json_token_read, bypassing redact_token_read() protections for APIKEY number and SHOP shopURL fields. An authenticated MCP client with a non-administrative API key can retrieve plaintext token values, and a recovered administrative token can provide broad read, write, and delete access to the NetLicensing account. This issue is fixed in version 0.1.8."
+          }
+        ],
+        "id": "CVE-2026-57496",
+        "lastModified": "2026-10-16T20:04:29.760",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "NONE",
+                "baseScore": 9.6,
+                "baseSeverity": "CRITICAL",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "LOW",
+                "scope": "CHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 3.1,
+              "impactScore": 5.8,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-15T19:17:41.733",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/Labs64/NetLicensing-MCP/commit/b8fd0ea76d533202573eb24add9fb2fbd9331496"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/Labs64/NetLicensing-MCP/pull/6"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/Labs64/NetLicensing-MCP/releases/tag/0.1.8"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/Labs64/NetLicensing-MCP/security/advisories/GHSA-hxpf-9xvq-wph8"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Deferred",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-22"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Deferred",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-22"
+        }
+      ]
+    },
+    "details": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensing lifecycle in Labs64 NetLicensing. Prior to 0.1.8, netlicensing_get_product passes the caller-controlled product_number to src/netlicensing_mcp/tools/products.py, which interpolates it into a REST path consumed by nl_get() in src/netlicensing_mcp/client.py without path-segment validation. A traversal segment can be normalized from the intended product path to the /token endpoint, after which the response is serialized through _wrap_json instead of _wrap_json_token_read, bypassing redact_token_read() protections for APIKEY number and SHOP shopURL fields. An authenticated MCP client with a non-administrative API key can retrieve plaintext token values, and a recovered administrative token can provide broad read, write, and delete access to the NetLicensing account. This issue is fixed in version 0.1.8.",
+    "id": "CVE-2026-57496",
+    "modified": "2026-10-16T20:04:29.760Z",
+    "published": "2026-10-15T19:17:41.733Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/Labs64/NetLicensing-MCP/commit/b8fd0ea76d533202573eb24add9fb2fbd9331496"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/Labs64/NetLicensing-MCP/pull/6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/Labs64/NetLicensing-MCP/releases/tag/0.1.8"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/Labs64/NetLicensing-MCP/security/advisories/GHSA-hxpf-9xvq-wph8"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:N",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
           "cvss_score": 7.8,
           "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
           "cvss_v4_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:A/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
@@ -55181,6 +56523,314 @@
     "affected": [
       {
         "database_specific": {
+          "cvss_score": 6.9,
+          "cvss_v4_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "cwe_ids": [
+            "CWE-400",
+            "CWE-772"
+          ],
+          "severity": "MEDIUM"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": ">= 1.8.0, < 1.30.0"
+              },
+              {
+                "introduced": ">= 2.0.0, < 2.2.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV40": {
+          "cvssData": {
+            "Automatable": "NOT_DEFINED",
+            "Recovery": "NOT_DEFINED",
+            "Safety": "NOT_DEFINED",
+            "attackComplexity": "LOW",
+            "attackRequirements": "NONE",
+            "attackVector": "NETWORK",
+            "availabilityRequirement": "NOT_DEFINED",
+            "baseScore": 6.9,
+            "baseSeverity": "MEDIUM",
+            "confidentialityRequirement": "NOT_DEFINED",
+            "exploitMaturity": "NOT_DEFINED",
+            "integrityRequirement": "NOT_DEFINED",
+            "modifiedAttackComplexity": "NOT_DEFINED",
+            "modifiedAttackRequirements": "NOT_DEFINED",
+            "modifiedAttackVector": "NOT_DEFINED",
+            "modifiedPrivilegesRequired": "NOT_DEFINED",
+            "modifiedSubAvailabilityImpact": "NOT_DEFINED",
+            "modifiedSubConfidentialityImpact": "NOT_DEFINED",
+            "modifiedSubIntegrityImpact": "NOT_DEFINED",
+            "modifiedUserInteraction": "NOT_DEFINED",
+            "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
+            "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
+            "modifiedVulnIntegrityImpact": "NOT_DEFINED",
+            "privilegesRequired": "NONE",
+            "providerUrgency": "NOT_DEFINED",
+            "subAvailabilityImpact": "NONE",
+            "subConfidentialityImpact": "NONE",
+            "subIntegrityImpact": "NONE",
+            "userInteraction": "NONE",
+            "valueDensity": "NOT_DEFINED",
+            "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "version": "4.0",
+            "vulnAvailabilityImpact": "LOW",
+            "vulnConfidentialityImpact": "NONE",
+            "vulnIntegrityImpact": "NONE",
+            "vulnerabilityResponseEffort": "NOT_DEFINED"
+          },
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        },
+        "ssvcV203": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "ssvcData": {
+              "id": "CVE-2026-59951",
+              "options": [
+                {
+                  "exploitation": "none"
+                },
+                {
+                  "automatable": "yes"
+                },
+                {
+                  "technicalImpact": "partial"
+                }
+              ],
+              "role": "CISA Coordinator",
+              "timestamp": "2026-10-15T13:55:54.339140Z",
+              "version": "2.0.3"
+            }
+          }
+        ]
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "python-sdk",
+                "vendor": "modelcontextprotocol",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": ">= 1.8.0, < 1.30.0"
+                  },
+                  {
+                    "status": "affected",
+                    "version": ">= 2.0.0, < 2.2.0"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.8.0 until 1.30.0 and 2.2.0, stateful Streamable HTTP servers, including FastMCP, MCPServer, Server.streamable_http_app(), and StreamableHTTPSessionManager, retain session entries without an idle expiration or aggregate session-count limit. DELETE, refused opening requests, and completed sessions do not reliably discard their entries, and each entry can retain parsed initialize parameters. A client that can reach the endpoint can therefore create ordinary short requests that grow server memory without bound until restart. Stateless HTTP, stdio, and SSE transports are not affected. This issue is fixed in versions 1.30.0 and 2.2.0."
+          }
+        ],
+        "id": "CVE-2026-59951",
+        "lastModified": "2026-10-16T16:00:33.533",
+        "metrics": {
+          "cvssMetricV40": [
+            {
+              "cvssData": {
+                "Automatable": "NOT_DEFINED",
+                "Recovery": "NOT_DEFINED",
+                "Safety": "NOT_DEFINED",
+                "attackComplexity": "LOW",
+                "attackRequirements": "NONE",
+                "attackVector": "NETWORK",
+                "availabilityRequirement": "NOT_DEFINED",
+                "baseScore": 6.9,
+                "baseSeverity": "MEDIUM",
+                "confidentialityRequirement": "NOT_DEFINED",
+                "exploitMaturity": "NOT_DEFINED",
+                "integrityRequirement": "NOT_DEFINED",
+                "modifiedAttackComplexity": "NOT_DEFINED",
+                "modifiedAttackRequirements": "NOT_DEFINED",
+                "modifiedAttackVector": "NOT_DEFINED",
+                "modifiedPrivilegesRequired": "NOT_DEFINED",
+                "modifiedSubAvailabilityImpact": "NOT_DEFINED",
+                "modifiedSubConfidentialityImpact": "NOT_DEFINED",
+                "modifiedSubIntegrityImpact": "NOT_DEFINED",
+                "modifiedUserInteraction": "NOT_DEFINED",
+                "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
+                "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
+                "modifiedVulnIntegrityImpact": "NOT_DEFINED",
+                "privilegesRequired": "NONE",
+                "providerUrgency": "NOT_DEFINED",
+                "subAvailabilityImpact": "NONE",
+                "subConfidentialityImpact": "NONE",
+                "subIntegrityImpact": "NONE",
+                "userInteraction": "NONE",
+                "valueDensity": "NOT_DEFINED",
+                "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                "version": "4.0",
+                "vulnAvailabilityImpact": "LOW",
+                "vulnConfidentialityImpact": "NONE",
+                "vulnIntegrityImpact": "NONE",
+                "vulnerabilityResponseEffort": "NOT_DEFINED"
+              },
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ],
+          "ssvcV203": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "ssvcData": {
+                "id": "CVE-2026-59951",
+                "options": [
+                  {
+                    "exploitation": "none"
+                  },
+                  {
+                    "automatable": "yes"
+                  },
+                  {
+                    "technicalImpact": "partial"
+                  }
+                ],
+                "role": "CISA Coordinator",
+                "timestamp": "2026-10-15T13:55:54.339140Z",
+                "version": "2.0.3"
+              }
+            }
+          ]
+        },
+        "published": "2026-10-14T17:18:29.690",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/commit/92120b4b0f50385af096592d7cee932fc1d994e7"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/commit/d2290ca3434731b68ea3e2270bc06a6e6575931b"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3395"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3426"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.30.0"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.2.0"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/modelcontextprotocol/python-sdk/security/advisories/GHSA-84m7-p3x7-pcfv"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Awaiting Analysis",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-400"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-772"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Secondary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Awaiting Analysis",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Secondary",
+          "value": "CWE-400"
+        },
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Secondary",
+          "value": "CWE-772"
+        }
+      ]
+    },
+    "details": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.8.0 until 1.30.0 and 2.2.0, stateful Streamable HTTP servers, including FastMCP, MCPServer, Server.streamable_http_app(), and StreamableHTTPSessionManager, retain session entries without an idle expiration or aggregate session-count limit. DELETE, refused opening requests, and completed sessions do not reliably discard their entries, and each entry can retain parsed initialize parameters. A client that can reach the endpoint can therefore create ordinary short requests that grow server memory without bound until restart. Stateless HTTP, stdio, and SSE transports are not affected. This issue is fixed in versions 1.30.0 and 2.2.0.",
+    "id": "CVE-2026-59951",
+    "modified": "2026-10-16T16:00:33.533Z",
+    "published": "2026-10-14T17:18:29.690Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/commit/92120b4b0f50385af096592d7cee932fc1d994e7"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/commit/d2290ca3434731b68ea3e2270bc06a6e6575931b"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3395"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/pull/3426"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v1.30.0"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.2.0"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/modelcontextprotocol/python-sdk/security/advisories/GHSA-84m7-p3x7-pcfv"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:L/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "type": "CVSS_V4"
+      }
+    ],
+    "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.8.0 until"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
           "cvss_score": 10.0,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
           "cwe_ids": [
@@ -56786,9 +58436,9 @@
         "CVE-2026-62674"
       ]
     },
-    "details": "Omnigent is an open-source AI agent framework and meta-harness for orchestrating coding agents. Prior to 0.3.0, PUT /sessions/{session_id}/agent checks LEVEL_EDIT permission for a session but does not reject a bound shared or template agent whose agent.session_id is None. An authenticated user with edit access to a session can replace that shared agent bundle through omnigent/server/routes/sessions.py, add a stdio MCP server, and cause later sessions that use the shared agent to launch an attacker-controlled command through omnigent/tools/mcp.py. The command executes with the Omnigent runner process permissions and can expose files, credentials, workspace data, internal services, and runner availability. This issue is fixed in version 0.3.0.",
+    "details": "Omnigent is an open-source AI agent framework and meta-harness for orchestrating coding agents. Prior to 0.3.0, PUT /sessions/{session_id}/agent checks LEVEL_EDIT permission for a session but does not reject a bound shared or template agent whose agent.session_id is None. An authenticated user with edit access to a session can replace that shared agent bundle through omnigent/server/routes/sessions.py, add a stdio MCP server, and cause later sessions that use the shared agent to launch an attacker-controlled command through omnigent/tools/mcp.py. The command executes with the Omnigent runner process permissions and can expose files, credentials, workspace data, internal services, and runner availability. This issue is fixed in version 0.3.0.\n\nOmnigent es un framework de agente de IA de código abierto y un meta-arnés para orquestar agentes de codificación. Antes de la 0.3.0, PUT /sessions/{session_id}/agent verifica el permiso LEVEL_EDIT para una sesión pero no rechaza un agente compartido o de plantilla vinculado cuyo agent.session_id es None. Un usuario autenticado con acceso de edición a una sesión puede reemplazar ese paquete de agente compartido a través de omnigent/server/routes/sessions.py, añadir un servidor MCP stdio, y hacer que sesiones posteriores que utilicen el agente compartido lancen un comando controlado por el atacante a través de omnigent/tools/mcp.py. El comando se ejecuta con los permisos del proceso del ejecutor de Omnigent y puede exponer archivos, credenciales, datos del espacio de trabajo, servicios internos y la disponibilidad del ejecutor. Este problema está solucionado en la versión 0.3.0.",
     "id": "CVE-2026-62674",
-    "modified": "2026-09-18T20:09:01.757Z",
+    "modified": "2026-10-14T21:10:00.183Z",
     "published": "2026-08-21T17:47:37.976Z",
     "references": [
       {
@@ -69449,7 +71099,7 @@
     },
     "details": "obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, the Streamable HTTP transport does not validate the Host or Origin header or enable DNS-rebinding protection. When the documented loopback configuration uses auth.mode set to none, a malicious web page can send requests to the local MCP endpoint and receive unrestricted vault access through the http-local caller. Version 1.3.1 fixes the vulnerability by enabling host, origin, and DNS-rebinding validation.",
     "id": "CVE-2026-77363",
-    "modified": "2026-10-12T18:17:23.513Z",
+    "modified": "2026-10-16T20:04:29.760Z",
     "published": "2026-10-12T17:45:57.107Z",
     "references": [
       {
@@ -71846,7 +73496,7 @@
     },
     "details": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfigFile) is a security control that blocks dangerous nginx directives — js_*, perl_*, load_module of the njs/perl modules, and user root. It is enforced on three of the four config-write paths: api/config/add.go, api/config/modify.go, and mcp/config/config_modify.go. The fourth path — the MCP tool nginx_config_add (mcp/config/config_add.go) — does NOT call it: it writes the caller-supplied content straight to disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection) can therefore inject exactly the directives the control is meant to block, leading to nginx code execution on deployments where the njs/perl module is available (e.g. the official Docker image). This issue is fixed in version 2.4.1.",
     "id": "CVE-2026-84317",
-    "modified": "2026-10-12T21:17:22.213Z",
+    "modified": "2026-10-13T18:17:26.047Z",
     "published": "2026-10-12T21:17:22.213Z",
     "references": [
       {
@@ -71907,7 +73557,7 @@
     },
     "details": "Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add writes nginx configuration files to disk and triggers an nginx reload without calling config.ValidateConfigFile. The identical flow in the REST API (POST /api/configs) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (perl, js_import, load_module, user root, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution. This issue is fixed in version 2.4.1.",
     "id": "CVE-2026-84318",
-    "modified": "2026-10-12T21:17:22.360Z",
+    "modified": "2026-10-13T15:17:50.383Z",
     "published": "2026-10-12T21:17:22.360Z",
     "references": [
       {
@@ -71968,7 +73618,7 @@
     },
     "details": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects restricted Nginx directives such as load_module, js_import, and js_content. However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. This allows the user to load ngx_http_js_module.so, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context. This issue is fixed in version 2.4.1.",
     "id": "CVE-2026-84319",
-    "modified": "2026-10-12T21:17:22.517Z",
+    "modified": "2026-10-13T21:19:11.433Z",
     "published": "2026-10-12T21:17:22.517Z",
     "references": [
       {
@@ -72864,6 +74514,261 @@
       }
     ],
     "summary": "Improper Input Validation vulnerability in BeamMCP.Schema in ScriptKittyOS beam_mcp allows an MCP client to reach a tool"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 7.8,
+          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "cwe_ids": [
+            "CWE-78",
+            "CWE-200",
+            "CWE-284",
+            "CWE-863"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "n/a"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "LOCAL",
+            "availabilityImpact": "HIGH",
+            "baseScore": 7.8,
+            "baseSeverity": "HIGH",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "HIGH",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "REQUIRED",
+            "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 1.8,
+          "impactScore": 5.9,
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "type": "Secondary"
+        },
+        "ssvcV203": [
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "ssvcData": {
+              "id": "CVE-2026-88755",
+              "options": [
+                {
+                  "exploitation": "poc"
+                },
+                {
+                  "automatable": "no"
+                },
+                {
+                  "technicalImpact": "total"
+                }
+              ],
+              "role": "CISA Coordinator",
+              "timestamp": "2026-10-16T19:06:22.170802Z",
+              "version": "2.0.3"
+            }
+          }
+        ]
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "n/a",
+                "vendor": "n/a",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "n/a"
+                  }
+                ]
+              }
+            ],
+            "source": "cve@mitre.org"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Z.ai ZCode v3.11.2.6792 was discovered to automatically establish connections with MCP servers declared inside a repository's workspace configuration, possibly allowing attackers to execute arbitrary code via opening a crafted repository."
+          }
+        ],
+        "id": "CVE-2026-88755",
+        "lastModified": "2026-10-16T20:18:12.557",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "LOCAL",
+                "availabilityImpact": "HIGH",
+                "baseScore": 7.8,
+                "baseSeverity": "HIGH",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "HIGH",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "REQUIRED",
+                "vectorString": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 1.8,
+              "impactScore": 5.9,
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "type": "Secondary"
+            }
+          ],
+          "ssvcV203": [
+            {
+              "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+              "ssvcData": {
+                "id": "CVE-2026-88755",
+                "options": [
+                  {
+                    "exploitation": "poc"
+                  },
+                  {
+                    "automatable": "no"
+                  },
+                  {
+                    "technicalImpact": "total"
+                  }
+                ],
+                "role": "CISA Coordinator",
+                "timestamp": "2026-10-16T19:06:22.170802Z",
+                "version": "2.0.3"
+              }
+            }
+          ]
+        },
+        "published": "2026-10-16T15:17:33.537",
+        "references": [
+          {
+            "source": "cve@mitre.org",
+            "url": "http://zai.com"
+          },
+          {
+            "source": "cve@mitre.org",
+            "url": "http://zcode.com"
+          },
+          {
+            "source": "cve@mitre.org",
+            "url": "https://gist.github.com/lkloliver/aac8dcf8a53fc4b3c1b0a5dfbf36ef68"
+          },
+          {
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "url": "https://github.com/lkloliver/poc/tree/main/CVE-2026-88755"
+          }
+        ],
+        "sourceIdentifier": "cve@mitre.org",
+        "vulnStatus": "Deferred",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-78"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-200"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-284"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-863"
+              }
+            ],
+            "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+            "type": "Secondary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "cve@mitre.org",
+      "vulnStatus": "Deferred",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "type": "Secondary",
+          "value": "CWE-78"
+        },
+        {
+          "lang": "en",
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "type": "Secondary",
+          "value": "CWE-200"
+        },
+        {
+          "lang": "en",
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "type": "Secondary",
+          "value": "CWE-284"
+        },
+        {
+          "lang": "en",
+          "source": "134c704f-9b21-4f2e-91b3-4a467353bcc0",
+          "type": "Secondary",
+          "value": "CWE-863"
+        }
+      ]
+    },
+    "details": "Z.ai ZCode v3.11.2.6792 was discovered to automatically establish connections with MCP servers declared inside a repository's workspace configuration, possibly allowing attackers to execute arbitrary code via opening a crafted repository.",
+    "id": "CVE-2026-88755",
+    "modified": "2026-10-16T20:18:12.557Z",
+    "published": "2026-10-16T15:17:33.537Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "http://zai.com"
+      },
+      {
+        "type": "WEB",
+        "url": "http://zcode.com"
+      },
+      {
+        "type": "WEB",
+        "url": "https://gist.github.com/lkloliver/aac8dcf8a53fc4b3c1b0a5dfbf36ef68"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/lkloliver/poc/tree/main/CVE-2026-88755"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "Z.ai ZCode v3.11.2.6792 was discovered to automatically establish connections with MCP servers declared inside a reposit"
   },
   {
     "affected": [
@@ -73841,6 +75746,250 @@
       }
     ],
     "summary": "The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an object-level authorization check on one "
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 9.2,
+          "cvss_v4_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+          "cwe_ids": [
+            "CWE-20",
+            "CWE-78",
+            "CWE-88"
+          ],
+          "severity": "CRITICAL"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "< 0.2.121"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV40": {
+          "cvssData": {
+            "Automatable": "NOT_DEFINED",
+            "Recovery": "NOT_DEFINED",
+            "Safety": "NOT_DEFINED",
+            "attackComplexity": "LOW",
+            "attackRequirements": "PRESENT",
+            "attackVector": "NETWORK",
+            "availabilityRequirement": "NOT_DEFINED",
+            "baseScore": 9.2,
+            "baseSeverity": "CRITICAL",
+            "confidentialityRequirement": "NOT_DEFINED",
+            "exploitMaturity": "NOT_DEFINED",
+            "integrityRequirement": "NOT_DEFINED",
+            "modifiedAttackComplexity": "NOT_DEFINED",
+            "modifiedAttackRequirements": "NOT_DEFINED",
+            "modifiedAttackVector": "NOT_DEFINED",
+            "modifiedPrivilegesRequired": "NOT_DEFINED",
+            "modifiedSubAvailabilityImpact": "NOT_DEFINED",
+            "modifiedSubConfidentialityImpact": "NOT_DEFINED",
+            "modifiedSubIntegrityImpact": "NOT_DEFINED",
+            "modifiedUserInteraction": "NOT_DEFINED",
+            "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
+            "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
+            "modifiedVulnIntegrityImpact": "NOT_DEFINED",
+            "privilegesRequired": "NONE",
+            "providerUrgency": "NOT_DEFINED",
+            "subAvailabilityImpact": "NONE",
+            "subConfidentialityImpact": "NONE",
+            "subIntegrityImpact": "NONE",
+            "userInteraction": "NONE",
+            "valueDensity": "NOT_DEFINED",
+            "vectorString": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+            "version": "4.0",
+            "vulnAvailabilityImpact": "HIGH",
+            "vulnConfidentialityImpact": "HIGH",
+            "vulnIntegrityImpact": "HIGH",
+            "vulnerabilityResponseEffort": "NOT_DEFINED"
+          },
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "claude-agent-sdk-python",
+                "vendor": "anthropics",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "< 0.2.121"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a separate token without validation, so a dash-leading value is parsed as an independent CLI flag. An attacker can inject the --mcp-config flag to define a stdio MCP server, causing arbitrary command execution at CLI startup outside the SDK permission controls. The issue is exploitable when an application passes untrusted input as the session ID to resume. This issue is fixed in version 0.2.121."
+          }
+        ],
+        "id": "CVE-2026-96620",
+        "lastModified": "2026-10-16T20:18:28.293",
+        "metrics": {
+          "cvssMetricV40": [
+            {
+              "cvssData": {
+                "Automatable": "NOT_DEFINED",
+                "Recovery": "NOT_DEFINED",
+                "Safety": "NOT_DEFINED",
+                "attackComplexity": "LOW",
+                "attackRequirements": "PRESENT",
+                "attackVector": "NETWORK",
+                "availabilityRequirement": "NOT_DEFINED",
+                "baseScore": 9.2,
+                "baseSeverity": "CRITICAL",
+                "confidentialityRequirement": "NOT_DEFINED",
+                "exploitMaturity": "NOT_DEFINED",
+                "integrityRequirement": "NOT_DEFINED",
+                "modifiedAttackComplexity": "NOT_DEFINED",
+                "modifiedAttackRequirements": "NOT_DEFINED",
+                "modifiedAttackVector": "NOT_DEFINED",
+                "modifiedPrivilegesRequired": "NOT_DEFINED",
+                "modifiedSubAvailabilityImpact": "NOT_DEFINED",
+                "modifiedSubConfidentialityImpact": "NOT_DEFINED",
+                "modifiedSubIntegrityImpact": "NOT_DEFINED",
+                "modifiedUserInteraction": "NOT_DEFINED",
+                "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
+                "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
+                "modifiedVulnIntegrityImpact": "NOT_DEFINED",
+                "privilegesRequired": "NONE",
+                "providerUrgency": "NOT_DEFINED",
+                "subAvailabilityImpact": "NONE",
+                "subConfidentialityImpact": "NONE",
+                "subIntegrityImpact": "NONE",
+                "userInteraction": "NONE",
+                "valueDensity": "NOT_DEFINED",
+                "vectorString": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                "version": "4.0",
+                "vulnAvailabilityImpact": "HIGH",
+                "vulnConfidentialityImpact": "HIGH",
+                "vulnIntegrityImpact": "HIGH",
+                "vulnerabilityResponseEffort": "NOT_DEFINED"
+              },
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-16T20:18:28.293",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/anthropics/claude-agent-sdk-python/pull/1123"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Received",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-20"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-78"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-88"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Received",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-20"
+        },
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-78"
+        },
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-88"
+        }
+      ]
+    },
+    "details": "Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a separate token without validation, so a dash-leading value is parsed as an independent CLI flag. An attacker can inject the --mcp-config flag to define a stdio MCP server, causing arbitrary command execution at CLI startup outside the SDK permission controls. The issue is exploitable when an application passes untrusted input as the session ID to resume. This issue is fixed in version 0.2.121.",
+    "id": "CVE-2026-96620",
+    "modified": "2026-10-16T20:18:28.293Z",
+    "published": "2026-10-16T20:18:28.293Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/pull/1123"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:4.0/AV:N/AC:L/AT:P/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+        "type": "CVSS_V4"
+      }
+    ],
+    "summary": "Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s"
   },
   {
     "affected": [
