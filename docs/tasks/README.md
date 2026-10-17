@@ -121,7 +121,7 @@ Master Plan: [IMPLEMENTATION_PLAN_SECURITY_EXPLORER.md](IMPLEMENTATION_PLAN_SECU
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **47** | **GitHub Pages Deployment & Live Web Portal / Feed Reference Fix** | Web Hosting & Deployment | `Pending` | Fix public live portal and updates feed links via `.github/workflows/pages.yml`, audit relative paths, and verify HTTP 200 uptime. | [task47_github_pages_live_portal_feed_fix.md](task47_github_pages_live_portal_feed_fix.md) |
+| **47** | **GitHub Pages Deployment & Live Web Portal / Feed Reference Fix** | Web Hosting & Deployment | `Done` | Fix public live portal and updates feed links via `.github/workflows/pages.yml`, audit relative paths, and verify HTTP 200 uptime. | [task47_github_pages_live_portal_feed_fix.md](task47_github_pages_live_portal_feed_fix.md) |
 | **48** | **MCP Server Multi-Version Vulnerability & Remediation Metadata Pipeline** | Version Correlator & Data Engine | `Done` | Ingest complete version histories per MCP server, map version vulnerabilities, and compute target safe update versions and upgrade commands. | [task48_version_remediation_metadata_pipeline.md](task48_version_remediation_metadata_pipeline.md) |
 | **49** | **Searchable MCP Security Explorer with Interactive Version Switcher & Remediation UI** | Web Security Portal UI | `Pending` | Searchable server directory, interactive version switcher, dynamic safe vs vulnerable posture, and copyable remediation upgrade commands. | [task49_security_explorer_version_switcher_remediation_ui.md](task49_security_explorer_version_switcher_remediation_ui.md) |
 

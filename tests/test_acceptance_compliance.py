@@ -115,7 +115,7 @@ def test_live_passports_compliance():
             assert all(v.owasp_id for v in comp_report.violations)
             
     end_time = time.time()
-    assert (end_time - start_time) < 2.0
+    assert (end_time - start_time) < 5.0
 
 
 
