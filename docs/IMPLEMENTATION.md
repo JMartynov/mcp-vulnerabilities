@@ -104,7 +104,13 @@ Emits OASIS SARIF v2.1.0 reports for GitHub Code Scanning with specialized struc
 - `mcp-vuln resolve-config <file> [--strategy prefix|priority|report]`: Automated client configuration collision resolver.
 - `mcp-vuln export-config <package> [--client claude|cursor|cline|zed|windsurf|docker]`: Client config exporter pinned to safe versions.
 
-## 7. Automated Sync Delta Detection, Semantic Version Bumper & PyPI Release Pipeline
+## 7. Dual Upstream Data Architecture & Automated Release Pipeline
+
+`mcp-vulnerabilities` is dependent on two distinct upstream data sources:
+1. **External OSV/NVD/CVE Security Advisories**: Stored in `data/vulnerabilities/`.
+2. **Upstream MCP Server Passports**: Fingerprints and tool schemas fetched from `mcp-fingerprints` (`data/passports.json.gz`).
+
+To maintain real-time correlation and data integrity, `mcp-vulnerabilities` triggers an immediate downstream sync via `repository_dispatch` (`upstream_fingerprints_updated`) whenever `mcp-fingerprints` publishes a new release. This cross-repo workflow pulls the updated `passports.json.gz`, runs correlation against existing CVEs, bumps the release version, and publishes to PyPI automatically.
 
 ### 7.1 Automated Delta Detection (`mcp_vulnerabilities.delta_detector.DeltaDetector`)
 `DeltaDetector` inspects differences between existing and incoming security advisory collections to trigger releases only when substantive changes occur:
