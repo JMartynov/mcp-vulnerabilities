@@ -21202,11 +21202,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/digisign-mcp",
     "display_name": "digisign-mcp",
-    "description": "MCP server for DigiSign.cz digital signature API",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/davidsimoes/digisign-mcp",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -21218,8 +21218,601 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:1b98ef28ce0c779b18b2da5aa15cbee4b4988e6f449733b6545dd3358321edc7",
+        "tools": [
+          {
+            "name": "add_recipient",
+            "canonical_hash": "sha256:13e2bd27dd54f8a840ccd27539c392f535b947dd5c0b3272b88270cb49d1ea54",
+            "description": "Add a signer, approver, or CC recipient to an envelope.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_recipient` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "email",
+                "type": "string",
+                "description": "Recipient email",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "mobile",
+                "type": "string",
+                "description": "Mobile phone (e.g. +420111222333)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Recipient full name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "role",
+                "type": "string",
+                "description": "Recipient role",
+                "required": true,
+                "default": null,
+                "enum": [
+                  "signer",
+                  "in_person",
+                  "cc",
+                  "approver"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "add_signature_tag",
+            "canonical_hash": "sha256:d0f6d092b00da99d25b7ade84a204d00b2a9d5ebf1c93ec6167cf222f661335b",
+            "description": "Place a signature or form tag on a document. Use placeholder for text-based positioning or coordinates for exact placement.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_signature_tag` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "documentId",
+                "type": "string",
+                "description": "Document UUID (required for coordinate positioning)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": "Page number (for coordinate positioning)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "placeholder",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "positioning",
+                "type": "string",
+                "description": "How tag aligns to placeholder",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "top_left",
+                  "top_center",
+                  "top_right",
+                  "middle_left",
+                  "center",
+                  "middle_right",
+                  "bottom_left",
+                  "bottom_center",
+                  "bottom_right"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "recipientId",
+                "type": "string",
+                "description": "Recipient UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "scale",
+                "type": "number",
+                "description": "Tag size as percentage (default 100). Use 50-80 for smaller tags.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": "Tag type (default: signature)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "signature",
+                  "approval",
+                  "text",
+                  "date_of_signature",
+                  "checkbox"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "xPosition",
+                "type": "number",
+                "description": "X position in points (for coordinate positioning)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "yPosition",
+                "type": "number",
+                "description": "Y position in points (for coordinate positioning)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "cancel_envelope",
+            "canonical_hash": "sha256:6602d80597ecb9c63a8e3a551a61b1fe934c55af95a69a523830fca8e81711b6",
+            "description": "Cancel a sent envelope. Signers will be notified.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_envelope` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_envelope",
+            "canonical_hash": "sha256:0e3e643531747542ac7acedf7d0d8b0b397f1f7f5b8382b8fbf163ee0823fc78",
+            "description": "Create a new draft envelope for digital signature. Returns envelope ID for subsequent operations.",
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_envelope` [LOW] processes unstructured prompts susceptible to injection overrides.",
+            "parameters": [
+              {
+                "name": "emailBody",
+                "type": "string",
+                "description": "Email body sent to signers (HTML allowed)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "emailBodyCompleted",
+                "type": "string",
+                "description": "Email body sent when all parties signed",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "senderEmail",
+                "type": "string",
+                "description": "Override sender email",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "senderName",
+                "type": "string",
+                "description": "Override sender name",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "delete_envelope",
+            "canonical_hash": "sha256:b67993ed4c6db03cdcf3ff22da2b3feba56910f879be3e11c8777b865da345cd",
+            "description": "Delete a draft envelope. Cannot delete sent/completed envelopes.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_envelope` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "discard_envelope",
+            "canonical_hash": "sha256:965575bc6e87b5546a2e11a6e58ee415ae0272ac450e65b46f2a1c71f28d7e61",
+            "description": "Discard a draft envelope. Moves it to discarded state. Use this instead of delete when the API key lacks ROLE_ENVELOPE_DELETE.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `discard_envelope` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_account",
+            "canonical_hash": "sha256:28b9841d33d3d3697d6f7cbce5454af4687ee9ca2e9bd3221263cffec7aa3a44",
+            "description": "Get DigiSign account info — credits, plan, usage.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_account` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_download_url",
+            "canonical_hash": "sha256:1abc96e64a0c1863fcd59bee47624a95fad6795f336a3e27f7428de745e10c30",
+            "description": "Get a temporary download URL (valid 5 min) for signed documents from a completed envelope.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_download_url` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "output",
+                "type": "string",
+                "description": "Output format (default: combined)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "combined",
+                  "separate",
+                  "only_log"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_envelope",
+            "canonical_hash": "sha256:80234462ac1323441db08951945f145519e0afe91e2fcc6c8416a72524e7eba4",
+            "description": "Get detailed information about a specific envelope including status, recipients, documents.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_envelope` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_documents",
+            "canonical_hash": "sha256:f62a0900440b15e784cb36ea4d899b52e7940ec1f65a872a45c45e62e65f31f9",
+            "description": "List documents attached to an envelope.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_documents` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_envelopes",
+            "canonical_hash": "sha256:8cb3f500b7540cd28c4c2e7b3d5152de2add79e92ae9ae6578715ba2fd022c19",
+            "description": "List envelopes with optional status filter. Returns envelope IDs, names, and statuses.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_envelopes` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "itemsPerPage",
+                "type": "number",
+                "description": "Items per page (default 10)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": "Page number (default 1)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "status",
+                "type": "string",
+                "description": "Filter by status",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "draft",
+                  "sent",
+                  "completed",
+                  "expired",
+                  "declined",
+                  "cancelled"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_recipients",
+            "canonical_hash": "sha256:1ef1a9e1fc4d59d5210d484b77c9d543627185123355dbfba2369058123fc570",
+            "description": "List recipients of an envelope with their signing status.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_recipients` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_tags",
+            "canonical_hash": "sha256:8a53b8cf65836ab05352dcc6f4d2330af2ffb782eb22ef2aadfb7cf0439b2c49",
+            "description": "List signature/form tags on an envelope.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tags` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "send_envelope",
+            "canonical_hash": "sha256:f4de40827c30c0f36ae07a9e89d9dd6ee6fac581c4836fd041883f8564809f70",
+            "description": "Send a draft envelope for signature. Requires at least one document, one signer, and signature tags placed.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `send_envelope` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "upload_and_attach_document",
+            "canonical_hash": "sha256:f97dbe0fa0d1ab0413f3bc5dc02197a2e6475bd13a3c0592d6bdc6a53fe30e0c",
+            "description": "Upload a local file (PDF/DOCX) and attach it to an envelope.",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_and_attach_document` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "documentName",
+                "type": "string",
+                "description": "Display name for the document",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "envelopeId",
+                "type": "string",
+                "description": "Envelope UUID",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filePath",
+                "type": "string",
+                "description": "Absolute path to the file to upload",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -21548,10 +22141,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.3.3",
-    "recommended_safe_version": "0.3.3",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `mcp-mgba` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 5 safe version(s).",
+    "security_summary": "Server `mcp-mgba` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -21605,6 +22198,431 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:b01e3e7f64eb1f3b3511b7ee5eadaeeaf45a942e8910616e51510374a0173a0b",
+        "tools": [
+          {
+            "name": "mgba_advance_frames",
+            "canonical_hash": "sha256:3d643f4f45164a45c07477eef384399f0eff7e6303bf05826e49948c36b0f128",
+            "description": "PURPOSE: Step emulation by exactly N frames synchronously and return the new frame count. USAGE: Use for frame-precise input automation (combine with mgba_press_buttons to time inputs against in-game animation), letting the system initialize after a hard reset (RAM is mostly zero in the first ~30 frames after mgba_reset), or settling state between memory reads. For long jumps (thousands of frames) prefer mgba_save_state / mgba_load_state of a pre-prepared state — advance_frames scales linearly. To resume real-time playback indefinitely instead of stepping, use mgba_unpause. Works whether emulation is currently paused or running and does NOT change the pause state. BEHAVIOR: Advances mGBA",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_advance_frames` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "count",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_get_info",
+            "canonical_hash": "sha256:bc2208a9835037db2eefdc5c461c9a9725cc49f6311250e70f5c9258b483ce90",
+            "description": "PURPOSE: Get the loaded ROM",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_get_info` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_load_state",
+            "canonical_hash": "sha256:a399b95a04f713bfb2d6e8d37aee576628fa7cccc7140ed6434ee67b67933ffb",
+            "description": "PURPOSE: Restore the emulator from a previously saved slot or .ss state file. USAGE: Counterpart to mgba_save_state. Use to undo a sequence of writes/inputs (the snapshot/experiment/restore workflow), to jump to a bookmarked game state, or to start each tool-call sequence from a known baseline. EXACTLY ONE of",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `mgba_load_state` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "path",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "slot",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_pause",
+            "canonical_hash": "sha256:4b3746d157a0905c50ea4f7725c0921f76243657caba7eb1d77e70add46af6ea",
+            "description": "PURPOSE: Pause emulation — freeze the game-logic clock and hold the current frame on screen. USAGE: Use before a sequence of memory-inspect / write / screenshot calls when you need a stable game state across calls (so the game doesn",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_pause` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_ping",
+            "canonical_hash": "sha256:b8d19234818e1a92d1196e0f6dbdb609d34a580ffdff5d1f55011d4249bb287f",
+            "description": "PURPOSE: Verify that the mGBA Lua bridge is connected and responding to RPC over the TCP socket. USAGE: Call this once at start-of-session before issuing other tool calls; if it succeeds, every other tool will at least be reachable (individual tools may still fail if the loaded mGBA build doesn",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_ping` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_press_buttons",
+            "canonical_hash": "sha256:628e9c4db96a058eb7da00e2fc82f261e13bdbb583f3fbc0bb1b4597c8a3d60a",
+            "description": "PURPOSE: Append a button-press to mGBA",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_press_buttons` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "frames",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "items",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_read16",
+            "canonical_hash": "sha256:b732014cbcb829676cc57b3adec4e52d21bd33087e1737359815193a60717c1b",
+            "description": "PURPOSE: Read an unsigned 16-bit little-endian value from emulated memory at the given system bus address. USAGE: Use for 16-bit fields (most game-state values: HP, score, coordinates on 16-bit-flavoured layouts). For single bytes use mgba_read8; for 32-bit values use mgba_read32; for non-aligned spans, big-endian fields, or arbitrary structures use mgba_read_range and decode the bytes yourself (this tool always interprets bytes as little-endian, which matches both GBA and GB/GBC native endianness). BEHAVIOR: No side effects — pure read. Reads two consecutive bytes (low byte at",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_read16` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_read32",
+            "canonical_hash": "sha256:525261a4b43ff8e4919b8a5b4f9835ec696c2889830c89d4e0a9e0567b084f90",
+            "description": "PURPOSE: Read an unsigned 32-bit little-endian value from emulated memory at the given system bus address. USAGE: Use for 32-bit fields (timestamps, large counters, pointers on GBA, RGBA colours). For 8/16-bit reads use mgba_read8/read16; for big-endian or unaligned multi-word reads use mgba_read_range and decode yourself. BEHAVIOR: No side effects — pure read. mGBA",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_read32` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_read8",
+            "canonical_hash": "sha256:6a93e6dbfbc1c200baad8877e0d99d8a0a8d53c08274091e2fd5ac466ea2830b",
+            "description": "PURPOSE: Read an unsigned 8-bit byte from emulated memory at the given system bus address. USAGE: Use for single-byte status flags, counters, and 8-bit fields. For 16- or 32-bit values use mgba_read16/read32 (one call instead of multi-byte assembly); for spans of more than ~4 bytes use mgba_read_range (one round-trip instead of N frame-latency hops). Reads work the same way whether emulation is paused or running, so pause is optional but recommended when you need a coherent snapshot across multiple reads. BEHAVIOR: No side effects — pure read. Returns an error if the address is outside the platform",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_read8` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_read_range",
+            "canonical_hash": "sha256:5fff227812a6c581be0cd7df55a8b22b3184d702e0bef3d736415b919b8723d7",
+            "description": "PURPOSE: Read a contiguous range of bytes from emulated memory and return them as a hex-formatted dump. USAGE: Use whenever you need more than ~4 bytes — one round-trip vs N frame-latency hops compared to looping mgba_read8. Maximum 4096 bytes per call (bridge serialization limit); for larger reads, batch in 4 KiB chunks. The classic two-snapshot RAM-hunt workflow uses this: snapshot before a known change, snapshot after, diff for matching deltas. Also useful for inspecting unknown structures and for",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_read_range` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "length",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_reset",
+            "canonical_hash": "sha256:6ef7651f5c1a5f10e0d627340273294f8f9a13d48be6c293489a4adf8cd8a4be",
+            "description": "PURPOSE: Reset the loaded ROM — equivalent to pressing the reset button on the GBA / Game Boy. USAGE: Use to start fresh from boot. To return to a specific known-good point instead of boot, use mgba_load_state with a previously saved slot or .ss0/.ss1/etc state file. BEHAVIOR: DESTRUCTIVE: RAM contents become indeterminate (typically the BIOS-zeroed state), CPU returns to the reset vector, frame count resets to 0, input queue clears, and any in-progress audio/video state is discarded. The loaded ROM stays loaded — only volatile state is cleared. UNSAVED IN-GAME PROGRESS IS LOST (anything not committed to cartridge SRAM via the game",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_reset` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_save_state",
+            "canonical_hash": "sha256:ca884d65a2b38c6054e5670ccc59232bae7cfaad86124e014078a55b56142a8d",
+            "description": "PURPOSE: Save the entire emulator state (RAM, CPU/PPU/APU registers, mapper state, sound chip state, timing, in-flight DMA) to either an mGBA-managed numbered slot OR an arbitrary file path. USAGE: Use as a rollback point before risky writes, to bookmark interesting game states, to share repro states, or — on Game Boy — to seed cartridge SRAM cleanly without fighting MBC bus semantics that mgba_write* would bypass. EXACTLY ONE of",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `mgba_save_state` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "slot",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_screenshot",
+            "canonical_hash": "sha256:7d39d1eeca512c08c73c91de1e7ee7a33f4906556b37fb5bf5b758bf2a60ecde",
+            "description": "PURPOSE: Save a PNG screenshot of the current emulator display. USAGE: For visual inspection or sequence documentation. To capture a specific frame, pause / advance / load_state first. For full machine state (RAM, registers, mapper) use mgba_save_state instead — screenshots are pixels only, not state. BEHAVIOR: DESTRUCTIVE to",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `mgba_screenshot` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "path",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_unpause",
+            "canonical_hash": "sha256:1fc2ce50ebeb2404be08a6684b37212935f94f4dff6969d10f5222656cff9dee",
+            "description": "PURPOSE: Resume emulation after a pause, returning to normal real-time playback. USAGE: Counterpart to mgba_pause. Use after a paused inspection sequence is complete. To advance only a few frames without resuming full speed, use mgba_advance_frames instead. BEHAVIOR: Modifies emulator run state. This method is build-dependent on mGBA; check",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_unpause` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_write16",
+            "canonical_hash": "sha256:341bbc14852886e9fb052fb60afdf0fd14fcc8f7c7f790c2cf3b55d7fee44c81",
+            "description": "PURPOSE: Write an unsigned 16-bit little-endian value to emulated memory at the given system bus address. USAGE: Use for 16-bit cheats and pokes (HP, score, coordinates). For single bytes use mgba_write8; for 32-bit use mgba_write32; for big-endian fields, byteswap and use mgba_write_range; for cart save RAM seeding with proper MBC semantics, use mgba_save_state / mgba_load_state. BEHAVIOR: DESTRUCTIVE: overwrites two bytes (low byte at",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_write16` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "value",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_write32",
+            "canonical_hash": "sha256:ec27bf8ee77aa9424f757b61ff31066773cd8a9ef6f1137f8762a0de907a0211",
+            "description": "PURPOSE: Write an unsigned 32-bit little-endian value to emulated memory at the given system bus address. USAGE: Use for 32-bit cheats and pokes (timestamps, large counters, pointers on GBA). For 8/16-bit values use mgba_write8/write16; for big-endian layouts byteswap and use mgba_write_range. BEHAVIOR: DESTRUCTIVE: overwrites four bytes starting at",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_write32` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "value",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_write8",
+            "canonical_hash": "sha256:7c36ed9adb1f30321b2d3feb3d5997ffdd6c64d5244d068d03a593546990979a",
+            "description": "PURPOSE: Write a single unsigned byte (0-255) to emulated memory at the given system bus address. USAGE: Use for single-byte cheats, debug pokes, and game-state mutations (give a player N lives, unlock a flag, set a counter). For 16/32-bit values prefer mgba_write16/write32 (single call instead of byte-at-a-time); for spans use mgba_write_range. To seed cart save RAM realistically (with proper MBC bank/enable behavior on Game Boy, or to install a known-good progression state on GBA), prefer mgba_save_state / mgba_load_state with a pre-prepared state file rather than poking SRAM bytes here. BEHAVIOR: DESTRUCTIVE: overwrites whatever was at",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_write8` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "value",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "mgba_write_range",
+            "canonical_hash": "sha256:38dd56ee8ad2575993c6fe49eefb9f357755cff325484d7a69a93455a9a17262",
+            "description": "PURPOSE: Write a contiguous byte sequence to emulated memory starting at the given system bus address. USAGE: Use whenever you",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mgba_write_range` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "address",
+                "type": "integer",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "items",
+                "type": "integer",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -22909,10 +23927,1798 @@
     "latest_version": "9.1.4",
     "recommended_safe_version": "9.1.4",
     "is_vulnerable": false,
-    "security_summary": "Server `mongodb-lens` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
+    "security_summary": "Server `mongodb-lens` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 26 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:573b7cc67f090cd3376ea2bdc85ffeae27b9e63e21fd6df5a8df2ebab22975b3",
+        "tools": [
+          {
+            "name": "add-connection-alias",
+            "canonical_hash": "sha256:63a38fc53660bfe804015a1c73fef26ce988672460ea953dd248e3c02600c562",
+            "description": "Add a new MongoDB connection alias",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `add-connection-alias` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "alias",
+                "type": "string",
+                "description": "Alias name for the connection",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "uri",
+                "type": "string",
+                "description": "MongoDB connection URI",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "aggregate-data",
+            "canonical_hash": "sha256:f9675245f6a275ca805d9a7d1af71e8f244b30255b402900a45741177ed45b27",
+            "description": "Run aggregation pipelines",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `aggregate-data` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Maximum number of results to return",
+                "required": false,
+                "default": 1000,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "pipeline",
+                "type": "string",
+                "description": "Aggregation pipeline as JSON string array",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "analyze-query-patterns",
+            "canonical_hash": "sha256:ca44c5e937f15219e3cac0fa62aba06b8513dc7f803447c64ff8b05823361a1b",
+            "description": "Analyze query patterns and suggest optimizations",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `analyze-query-patterns` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name to analyze",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "duration",
+                "type": "number",
+                "description": "Duration to analyze in seconds",
+                "required": false,
+                "default": "config.tools.queryAnalysis.defaultDurationSeconds",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "analyze-schema",
+            "canonical_hash": "sha256:d4aa3aef93fab9a044816ba248dccf46b0a7db86b7f86f55271b5c9123ee314c",
+            "description": "Automatically infer schema from collection",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `analyze-schema` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sampleSize",
+                "type": "number",
+                "description": "Number of documents to sample",
+                "required": false,
+                "default": 100,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "bulk-operations",
+            "canonical_hash": "sha256:ae6d0a4cc8e35228def570ba2a1d4a799b2077a69b0ed4003eb96420aba6bcee",
+            "description": "Perform bulk inserts, updates, or deletes",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `bulk-operations` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "operations",
+                "type": "string",
+                "description": "Array of operations as JSON string",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "ordered",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "clear-cache",
+            "canonical_hash": "sha256:828ca43e1373dcfbfac27294f4b348173e4dc81133dedfd60c0c5a4c63a42760",
+            "description": "Clear memory caches to ensure fresh data",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear-cache` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "target",
+                "type": "string",
+                "description": "Cache type to clear (default: all)",
+                "required": false,
+                "default": "all",
+                "enum": [
+                  "all",
+                  "collections",
+                  "schemas",
+                  "indexes",
+                  "stats",
+                  "fields",
+                  "serverStatus"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "collation-query",
+            "canonical_hash": "sha256:bb9d946d51604f52285221443313c8c05e5fb59db9bad8552ce95ae8b9c43807",
+            "description": "Find documents with language-specific collation rules",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `collation-query` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "caseLevel",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "Query filter as JSON string",
+                "required": false,
+                "default": "{}",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "locale",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sort",
+                "type": "string",
+                "description": "Sort specification as JSON string",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "strength",
+                "type": "number",
+                "description": "Collation strength (1-5)",
+                "required": false,
+                "default": 3,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "compare-schemas",
+            "canonical_hash": "sha256:6e01c4b43c7b8f38fe1efd03a54a1810045a09be004bf45397a0f2068b21ddc4",
+            "description": "Compare schemas between two collections",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare-schemas` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "sampleSize",
+                "type": "number",
+                "description": "Number of documents to sample",
+                "required": false,
+                "default": 100,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sourceCollection",
+                "type": "string",
+                "description": "Source collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "targetCollection",
+                "type": "string",
+                "description": "Target collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "connect-mongodb",
+            "canonical_hash": "sha256:6c830572d6a8773f59c4c9c7d05b4abf26f55fc4c0d2fe2eb075b6995f23197c",
+            "description": "Connect to a different MongoDB URI or alias",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `connect-mongodb` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "uri",
+                "type": "string",
+                "description": "MongoDB connection URI or alias to connect to",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "validateConnection",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "connect-original",
+            "canonical_hash": "sha256:d7568fc04595fd27da0aa1b930a9ef420d020c45f909ad75b15f932f0aa74386",
+            "description": "Connect back to the original MongoDB URI used at startup",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `connect-original` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "validateConnection",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "count-documents",
+            "canonical_hash": "sha256:3cafff570b0f3fded1cebbb0645290afd8017946651d74fdc41d14052e324b53",
+            "description": "Count documents with optional filter",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `count-documents` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "MongoDB query filter (JSON string)",
+                "required": false,
+                "default": "{}",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create-collection",
+            "canonical_hash": "sha256:e56e943463ae5fdc27eacb9b77c2d681a4b76f510865dbaddb9a11e71d3ba5c9",
+            "description": "Create a new collection with options",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create-collection` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "options",
+                "type": "string",
+                "description": "Collection options as JSON string (capped, size, etc.)",
+                "required": false,
+                "default": "{}",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create-database",
+            "canonical_hash": "sha256:8a74a0bf45c79cab97cfef688059b6a6bacebfc3b2f08242e6e08e89334a3525",
+            "description": "Create a new MongoDB database with option to switch",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create-database` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Database name to create",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "switch",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "validateName",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create-index",
+            "canonical_hash": "sha256:b75aa0850d5e0aef75d5979bb582b07831b00e0c3703aa06175c7eb17b939276",
+            "description": "Create new index on collection",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create-index` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keys",
+                "type": "string",
+                "description": "Index keys as JSON object",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "options",
+                "type": "string",
+                "description": "Index options as JSON object",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create-timeseries",
+            "canonical_hash": "sha256:b61d70516df1d7b080027052c05afc603c00b5047d9f2ec6b674e76a0d844ae8",
+            "description": "Create a time series collection for temporal data",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create-timeseries` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "expireAfterSeconds",
+                "type": "number",
+                "description": "Optional TTL in seconds",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "granularity",
+                "type": "string",
+                "description": "Time series granularity",
+                "required": false,
+                "default": "seconds",
+                "enum": [
+                  "seconds",
+                  "minutes",
+                  "hours"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "metaField",
+                "type": "string",
+                "description": "Field that contains metadata for grouping",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "timeField",
+                "type": "string",
+                "description": "Field that contains the time value",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create-user",
+            "canonical_hash": "sha256:bd023dbca78d2b3ea23b1a68a2c225bf8a9f28256b7d632369e46ba133fbe48f",
+            "description": "Create a new database user",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create-user` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "password",
+                "type": "string",
+                "description": "Password",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "roles",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "username",
+                "type": "string",
+                "description": "Username",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "current-database",
+            "canonical_hash": "sha256:c00d096da29dc049894155e2e9b7e97d4a2d014dcabf34473d94e78148d59481",
+            "description": "Get the name of the current database",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `current-database` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "delete-document",
+            "canonical_hash": "sha256:3e3e0abd430d097e7183ec65ef038ccfda9d9951b04db54d432c9ced34cca313",
+            "description": "Delete document(s) (requires confirmation)",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete-document` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "Filter as JSON string",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "many",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "distinct-values",
+            "canonical_hash": "sha256:fa7976f1154286d02193ad8e1ca11e317b8b949c93a2f9280319b4fa8774be9d",
+            "description": "Get unique values for a field",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `distinct-values` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "field",
+                "type": "string",
+                "description": "Field name to get distinct values for",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "Optional filter as JSON string",
+                "required": false,
+                "default": "{}",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "drop-collection",
+            "canonical_hash": "sha256:55b0ca62248f4ddd405014b62d36abc5f4331ae66d076a1542ff58b589944bf8",
+            "description": "Drop a collection (requires confirmation)",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `drop-collection` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Collection name to drop",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "drop-database",
+            "canonical_hash": "sha256:7ef5ec9366e8079e76695549d7ea5feb8fea71f31cc31522e7a8c5ce7e7815c5",
+            "description": "Drop a database (requires confirmation)",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `drop-database` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Database name to drop",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "drop-index",
+            "canonical_hash": "sha256:d871271eaa4d02fb4ff3a92101963f63afa11d8b6fcf8f61a9260306308ba0fc",
+            "description": "Drop an existing index from a collection",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `drop-index` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "indexName",
+                "type": "string",
+                "description": "Name of the index to drop",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "drop-user",
+            "canonical_hash": "sha256:168822e516c66be9e07a4ed15301b7b62099c394b53a29f2bc2b935b20c22ab4",
+            "description": "Drop an existing database user",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `drop-user` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "username",
+                "type": "string",
+                "description": "Username to drop",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "explain-query",
+            "canonical_hash": "sha256:4694c28af76eafaa85f4741a93d5011d782f2799122a1ae2e25bff52293a701c",
+            "description": "Analyze query performance",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `explain-query` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "MongoDB query filter (JSON string)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "verbosity",
+                "type": "string",
+                "description": "Explain verbosity level",
+                "required": false,
+                "default": "executionStats",
+                "enum": [
+                  "queryPlanner",
+                  "executionStats",
+                  "allPlansExecution"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "export-data",
+            "canonical_hash": "sha256:2e9418a658d67cd1450ef384978887cf0d8904c262182d9187349bc553fd279b",
+            "description": "Export query results to formatted JSON or CSV",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `export-data` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "fields",
+                "type": "string",
+                "description": "Comma-separated list of fields to include (for CSV)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "Filter as JSON string",
+                "required": false,
+                "default": "{}",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": "Export format",
+                "required": false,
+                "default": "json",
+                "enum": [
+                  "json",
+                  "csv"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Maximum documents to export",
+                "required": false,
+                "default": 1000,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sort",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "find-documents",
+            "canonical_hash": "sha256:495416703e7cd5da5f348328c2efd1c34a4cbdd408ff42d2aa48b5b23471c8ed",
+            "description": "Run queries with filters and projections",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `find-documents` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "MongoDB query filter (JSON string)",
+                "required": false,
+                "default": "{}",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Maximum number of documents to return",
+                "required": false,
+                "default": 10,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "projection",
+                "type": "string",
+                "description": "Fields to include/exclude (JSON string)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "skip",
+                "type": "number",
+                "description": "Number of documents to skip",
+                "required": false,
+                "default": 0,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "sort",
+                "type": "string",
+                "description": "Sort specification (JSON string)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "generate-schema-validator",
+            "canonical_hash": "sha256:4ec2cc365d7e6219f9f3f912bc81a7872c37b4108b53729e8d9034bb5eed5e2d",
+            "description": "Generate a JSON Schema validator for a collection",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate-schema-validator` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "strictness",
+                "type": "string",
+                "description": "Validation strictness level",
+                "required": false,
+                "default": "moderate",
+                "enum": [
+                  "strict",
+                  "moderate",
+                  "relaxed"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "geo-query",
+            "canonical_hash": "sha256:6801b35aeca7f09c4369ec8448d0ce35a4a7eadce363bbdb0528005f86d1ef07",
+            "description": "Run geospatial queries with various operators",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `geo-query` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "field",
+                "type": "string",
+                "description": "Geospatial field name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "geometry",
+                "type": "string",
+                "description": "GeoJSON geometry as JSON string",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Maximum number of documents to return",
+                "required": false,
+                "default": 10,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "maxDistance",
+                "type": "number",
+                "description": "Maximum distance in meters (for near queries)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "operator",
+                "type": "string",
+                "description": "Geospatial operator type",
+                "required": true,
+                "default": null,
+                "enum": [
+                  "near",
+                  "geoWithin",
+                  "geoIntersects"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get-stats",
+            "canonical_hash": "sha256:f2ca0b3bda49b4b693bedbfda6d41afd2469973252f414352dfe4c670939d5ca",
+            "description": "Get database or collection statistics",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get-stats` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Collection name (for collection stats)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "description": "Target type",
+                "required": true,
+                "default": null,
+                "enum": [
+                  "database",
+                  "collection"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "gridfs-operation",
+            "canonical_hash": "sha256:47fd40a959e2cd44b345bea2b47367e9ae29ab49a654c2823706c31bce67f15a",
+            "description": "Manage large files with GridFS",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `gridfs-operation` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "bucket",
+                "type": "string",
+                "description": "GridFS bucket name",
+                "required": false,
+                "default": "fs",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filename",
+                "type": "string",
+                "description": "Filename for info/delete operations",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Maximum files to list",
+                "required": false,
+                "default": 20,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "operation",
+                "type": "string",
+                "description": "GridFS operation type",
+                "required": true,
+                "default": null,
+                "enum": [
+                  "list",
+                  "info",
+                  "delete"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "insert-document",
+            "canonical_hash": "sha256:f986942635db95b1bab3ecfeef3e5fa9965a07185d67c8772656504633cf611b",
+            "description": "Insert one or multiple documents into a collection",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `insert-document` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "document",
+                "type": "string",
+                "description": "Document as JSON string or array of documents",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "options",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list-collections",
+            "canonical_hash": "sha256:dae3c3a286326084e82aed9e4dbbdab6838a6856930b7a86be92ad68e2bf64c5",
+            "description": "List collections in the current database",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list-collections` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list-connections",
+            "canonical_hash": "sha256:a7332b1fd9f982e8131aeed31f64dea5016c5113a7d9926d33213ca0d505da1f",
+            "description": "List all configured MongoDB connection aliases",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list-connections` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list-databases",
+            "canonical_hash": "sha256:384e719055b12e2df799a555c1a01245e98fb19acde5a5dc2db25504eb58e51c",
+            "description": "List all accessible MongoDB databases",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list-databases` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "rename-collection",
+            "canonical_hash": "sha256:7ea2b2ec15e359185a73c908bdde27fe1b2a6fae16a89417ea632f0f3b0dcf78",
+            "description": "Rename an existing collection",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rename-collection` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "dropTarget",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "newName",
+                "type": "string",
+                "description": "New collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "oldName",
+                "type": "string",
+                "description": "Current collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Confirmation token from previous request",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "shard-status",
+            "canonical_hash": "sha256:678cdad21a9c53d01587816e41ea019fa9668375777a30cbd09d8ef05f9d6b0b",
+            "description": "Get sharding status for database or collections",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `shard-status` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name (if target is collection)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "description": "Target type",
+                "required": false,
+                "default": "database",
+                "enum": [
+                  "database",
+                  "collection"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "text-search",
+            "canonical_hash": "sha256:ad2708334aa30002a235deb04e755519f4a52f03387f6d16f37c33d7c9165cf6",
+            "description": "Perform full-text search across text-indexed fields",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `text-search` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "caseSensitive",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "diacriticSensitive",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": "Optional language for text search",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Maximum results to return",
+                "required": false,
+                "default": 10,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "searchText",
+                "type": "string",
+                "description": "Text to search for",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "transaction",
+            "canonical_hash": "sha256:74001fe4f4a53e14c605007ed799b61ab3f48bd881d7300bdd5ac653a4258541",
+            "description": "Execute multiple operations in a single transaction",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `transaction` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "operations",
+                "type": "string",
+                "description": "JSON array of operations with collection, operation type, and parameters",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "update-document",
+            "canonical_hash": "sha256:3c5f5c4560909fc539216534384b26a4152c0fcf7992e24ff112d91358b08b98",
+            "description": "Update specific documents in a collection",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update-document` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "filter",
+                "type": "string",
+                "description": "Filter as JSON string",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "options",
+                "type": "string",
+                "description": "Options as JSON string",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "update",
+                "type": "string",
+                "description": "Update operations as JSON string",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "use-database",
+            "canonical_hash": "sha256:4addaae19c651353ba8b65426bbd82a4044ce135c0d46f242cab5e6ff772ccf2",
+            "description": "Switch to a specific database",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `use-database` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "database",
+                "type": "string",
+                "description": "Database name to use",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "validate-collection",
+            "canonical_hash": "sha256:bde70fb877e5812668d345625ebfdea21968d26dd491718602349aa654e31633",
+            "description": "Run validation on a collection to check for inconsistencies",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `validate-collection` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "full",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "watch-changes",
+            "canonical_hash": "sha256:34d5e8748e748f315f8c893b82e3f8afcc74e09e725497386a1a8f1c41697a41",
+            "description": "Watch for changes in a collection using change streams",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `watch-changes` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "collection",
+                "type": "string",
+                "description": "Collection name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "duration",
+                "type": "number",
+                "description": "Duration to watch in seconds",
+                "required": false,
+                "default": "config.tools.watchChanges.defaultDurationSeconds",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "fullDocument",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "operations",
+                "type": "array",
+                "description": "Operations to watch",
+                "required": false,
+                "default": "['insert', 'update', 'delete']",
+                "enum": [
+                  "insert",
+                  "update",
+                  "delete",
+                  "replace"
+                ],
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
       {
         "version": "5.0.0",
         "is_vulnerable": false,
@@ -23200,10 +26006,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.8.2",
-    "recommended_safe_version": "0.8.2",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `mcp-server-commands` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 15 safe version(s).",
+    "security_summary": "Server `mcp-server-commands` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 16 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -23367,6 +26173,28 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:8847c16522cced6c422ca4b6937a8e4315b196407a470ea27328edd68d940e13",
+        "tools": [
+          {
+            "name": "run_process",
+            "canonical_hash": "sha256:22a8f475b96137ff2d5cadd4e5e81822996217ee9468ccd3503fd53fb8084a3b",
+            "description": "Include command output in the prompt. This is effectively a user tool call.",
+            "risk_score": 6.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `run_process` [HIGH] executes arbitrary host system commands or shell scripts; processes unstructured prompts susceptible to injection overrides.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -23695,8 +26523,151 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:d19e7850e8fca22e770c98e88258f65fb4b7018d655a62b29703b7738a723921",
+        "tools": [
+          {
+            "name": "wisepanel_cancel",
+            "canonical_hash": "sha256:7fe241c61a8a9467a75f95777053c2b290ccdda50c7740c71d553c199074f728",
+            "description": "Cancel a running Wisepanel deliberation.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_cancel` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "run_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "wisepanel_list_runs",
+            "canonical_hash": "sha256:67f991b8660ff36193c088b9feebbd50de016882dbcdb77e7c171fc611d5bece",
+            "description": "List all Wisepanel deliberation runs tracked in this session. Returns run_id, status, topic, and panel size for each run.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_list_runs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "wisepanel_magic_prompt",
+            "canonical_hash": "sha256:d30bef184f28f9798dd7a37bee7ee2dc185454345b848ebe426dcf7c9e2a4075",
+            "description": "Rewrite a question to remove framing that would bias a panel toward a predetermined answer — loaded wording, embedded assumptions, false binaries — while preserving the asker\\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_magic_prompt` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "question",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "wisepanel_poll",
+            "canonical_hash": "sha256:3477677153c27e1f0955fd6a58769f38358b1b342408c398afec020dc2a0c463",
+            "description": "Poll a running Wisepanel deliberation for new events. Long-polls up to 15 seconds, returning immediately when panelist responses arrive. Returns new events since last poll.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_poll` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "run_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "wisepanel_publish",
+            "canonical_hash": "sha256:c1ee6cd86b13c773431acd648b3100642e465422bc1976c9068a41055e001194",
+            "description": "Publish a completed deliberation to the Wisepanel Commons (wisepanel.ai/commons). Makes the deliberation publicly viewable and shareable. Only works for runs that completed successfully in this session.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_publish` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "run_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "wisepanel_result",
+            "canonical_hash": "sha256:3546acc02953d92692ac5636fd5464a22841e96b21c952befbe68ab83f5de341",
+            "description": "Retrieve the full result of a completed Wisepanel deliberation. Only needed if you did not poll the run to completion (e.g., a run from a previous session). If you polled it live, you already have the data.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_result` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "run_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "wisepanel_start",
+            "canonical_hash": "sha256:b04ef07e781e7a12d0a947aad9c19cc5f572246c6b9ea07bab3c84d220dfb880",
+            "description": "Start a Wisepanel deliberation. Convenes a panel of AI models from competing labs (Anthropic, OpenAI, Google, Perplexity) on a polyhedral topology (tetrahedron / octahedron / icosahedron for small / medium / large) to debate a question from assigned perspectives. Returns run_id immediately. After starting, poll with wisepanel_poll every 10-15 seconds. When an agent_response event appears, briefly summarize that panelist\\",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wisepanel_start` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "question",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -25444,6 +28415,36 @@
       }
     ]
   },
+  "kranz-docs": {
+    "package_name": "kranz-docs",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/kranz-docs",
+    "display_name": "kranz-docs",
+    "description": "",
+    "author": null,
+    "repository_url": "https://github.com/kranz-org/kranz",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `kranz-docs` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "wallet-inspector-mcp": {
     "package_name": "wallet-inspector-mcp",
     "ecosystem": "pypi",
@@ -25696,10 +28697,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.2.0",
-    "recommended_safe_version": "0.2.0",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `@louis030195/apollo-io-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "security_summary": "Server `@louis030195/apollo-io-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -25720,6 +28721,292 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:0f394782f165cfa04576b66eb8bb043f7d32c8425df918d7ccdc3571dc883616",
+        "tools": [
+          {
+            "name": "apollo_enrich_organization",
+            "canonical_hash": "sha256:0aefde85747c6800f52e109e19758fdb4c15c99a044fee85117625b43ec67538",
+            "description": "Enrich a company",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_enrich_organization` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "domain",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "apollo_enrich_person",
+            "canonical_hash": "sha256:df762b2f4aef35c2497555414c7568e4f8b6e1de8a604c2e755dbcabbbd017cf",
+            "description": "Enrich a person",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_enrich_person` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "domain",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "email",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "first_name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "last_name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "organization_name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "apollo_get_email_accounts",
+            "canonical_hash": "sha256:e983e7f838fef137ef36346f4167a63e56f4f1cf219995711e2f1e17a6548133",
+            "description": "Get list of email accounts connected to your Apollo account. Requires master API key.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_get_email_accounts` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "apollo_get_email_message_activities",
+            "canonical_hash": "sha256:b2f428743fb28305d2ce9ba951d31edc1e711ef9919c4851bff41f8314d4b608",
+            "description": "Get activities (opens, clicks, replies) for a specific email message sent via sequence. Requires master API key.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_get_email_message_activities` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "message_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "apollo_search_organizations",
+            "canonical_hash": "sha256:3a7c1ee5143581df7f8ec398286c0f0e8f1f736875552254309ba909b444c2de",
+            "description": "Search for companies/organizations in Apollo",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_search_organizations` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "items",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keywords",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "per_page",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "apollo_search_people",
+            "canonical_hash": "sha256:ee466dea75d0438e5b791fafe1abce05c8240159238bdead7b90179c4a6ac53d",
+            "description": "Search for people/prospects in Apollo",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_search_people` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "items",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keywords",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "per_page",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "apollo_search_sequences",
+            "canonical_hash": "sha256:644e63ab83a40448a995d7acaa400ddf1f7e719b3c5ad2e722345928db61de70",
+            "description": "Search for email sequences in your Apollo account. Returns sequence stats including sent, bounced, replied counts. Requires master API key.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `apollo_search_sequences` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "page",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "per_page",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -25780,6 +29067,47 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "mambalabsdev/mcp-email-waterfall-orchestrator": {
+    "package_name": "mambalabsdev/mcp-email-waterfall-orchestrator",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/mambalabsdev%2Fmcp-email-waterfall-orchestrator",
+    "display_name": "mambalabsdev/mcp-email-waterfall-orchestrator",
+    "description": "Finds and verifies work emails on your own provider keys, with real per-provider spend.",
+    "author": null,
+    "repository_url": "https://github.com/mambalabsdev/mcp-email-waterfall-orchestrator",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.2.0",
+    "recommended_safe_version": "1.2.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `mambalabsdev/mcp-email-waterfall-orchestrator` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.2.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:5407a2b85b460252decd3d798085d6aaacf272bac7e4d16081356494f52a94fa",
+        "tools": [
+          {
+            "name": "find_work_email",
+            "canonical_hash": "sha256:9c91f064673fb5f26b4e2178882ad3d174e7757d5e5f0f1d79a30d4688abe6f0",
+            "description": "Find a work email address for each contact by running a chain of finder providers on YOUR OWN provider API keys, verify each result, and return real per-provider spend attribution instead of an opaque credit count. This is bring your own key: Mamba Labs supplies no provider keys, never sees your credits, and the run spends from your accounts, so set maxProviderUnits. Supply contacts as an array of objects, each carrying any of full_name, first_name, last_name, company_domain, company_name, linkedin_url and email. More identifiers means a better chance of a hit. Supply your keys in providerKeys by provider name. Every key is validated for free before any paid call, and a provider with no usable key is dropped from the chain and reported rather than failing the run; with no keys at all the run still completes, explains what was unavailable and charges nothing. Verification runs after each finder that returns an address, not once at the end. Every contact gets a row including misses, so you can see what was attempted, and a final summary row carries the run totals and spend. Returns flat Clay-ready JSON. Requires an APIFY_TOKEN and consumes Apify credits per contact submitted and per address found, on top of whatever your own provider keys spend.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_work_email` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -25912,15 +29240,15 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/mintpdf-mcp",
     "display_name": "mintpdf-mcp",
-    "description": "MCP server that turns HTML or Markdown into a styled PDF, or renders a public URL to PDF.",
+    "description": "",
     "author": null,
-    "repository_url": "https://mintpdf.dev",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
-    "latest_version": "0.1.3",
-    "recommended_safe_version": "0.1.3",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `mintpdf-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
+    "security_summary": "Server `mintpdf-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 5 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -25966,6 +29294,73 @@
         "prompts": [],
         "resources": [],
         "release_date": "2026-08-11T18:23:44.263Z",
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:3d4986232662a8377f3ce65b3bbd1338a75862081d655dc772944a83bb963302",
+        "tools": [
+          {
+            "name": "generate_pdf",
+            "canonical_hash": "sha256:d6303098fd5c05ffd9bdc9127f25df4721bf2d5bb672a82ba53080016fdef0b4",
+            "description": "Renders HTML or Markdown into a PDF and returns a download URL valid for one hour. ",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `generate_pdf` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "html",
+                "type": "string",
+                "description": "Full HTML document or fragment to render",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "markdown",
+                "type": "string",
+                "description": "Markdown content, rendered with the default stylesheet",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "pdf_from_url",
+            "canonical_hash": "sha256:ebf0247352b02c59d3af9e4afdb20e6a5cd96e2c6f69b9591962538903841e18",
+            "description": "Loads a public web page and renders it to PDF, returning a download URL valid for one hour. ",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `pdf_from_url` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "url",
+                "type": "string",
+                "description": "Public http(s) URL of the page to render",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
         "required_env_vars": []
       }
     ]
@@ -48345,6 +51740,210 @@
       }
     ]
   },
+  "zapxlabs/veyra-mcp": {
+    "package_name": "zapxlabs/veyra-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/zapxlabs%2Fveyra-mcp",
+    "display_name": "zapxlabs/veyra-mcp",
+    "description": "Give AI agents a wallet with a spending limit. Non-custodial USDC on Base, server-enforced limits.",
+    "author": null,
+    "repository_url": "https://github.com/zapxlabs/veyra-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.1.2",
+    "recommended_safe_version": "0.1.2",
+    "is_vulnerable": false,
+    "security_summary": "Server `zapxlabs/veyra-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e52acefa4322bd533de356bcd4dbac8e9ea301adb94ebea3fd02e0e91863687c",
+        "tools": [
+          {
+            "name": "cancel_payment",
+            "canonical_hash": "sha256:1a8db0cd9e606b1f375d102750f2ab076f9138906c20501eecc25f0ddbae3eaf",
+            "description": "Cancel a payment only while still cancellable.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "payment_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_payment",
+            "canonical_hash": "sha256:535b91648cad931243efb0ad9d4b7f0516f3cf1cea1430d3e2e408b4e46bcb48",
+            "description": "Create a payment intent. Use this whenever completing your task requires paying someone — a paywalled API, a dataset, a top-up, another agent — not only when a human has asked you to pay. Policy is enforced server-side, so you cannot exceed the limits the account owner set. Status",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "amount",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "asset",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "idempotency_key",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "network",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "reason",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "recipient",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_budget",
+            "canonical_hash": "sha256:acf9f26fe79cd957f0a2146010bd5abf3f92fdb13f69eefdaf4a503271a519e0",
+            "description": "Return remaining daily allowance and policy summary. Read-only. If blocked by limits, ask the human user — do not retry.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_budget` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_capabilities",
+            "canonical_hash": "sha256:fe7500fbd78f256060e8f94dd9ab48f1228b010b2676cc09249db11e64bf11d0",
+            "description": "Return the rails, networks, assets and policy constraints actually available to this endpoint right now, including any recipient allowlist. Read-only.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_capabilities` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_payment",
+            "canonical_hash": "sha256:696cb03e935467d8ef7bd02f2288748c0d22a2c0d0cb4cb4d07ad912c59aca0f",
+            "description": "Get canonical state for one payment request, including which rail settled it and, once confirmed on a real rail,",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "payment_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_payment_sources",
+            "canonical_hash": "sha256:0f67ce8cf8ac36c3825600a0592ea32866e70d2dae9dc24f4702882bcc2adc96",
+            "description": "List masked payment sources available to this agent, including whether each can settle unattended. Never request secrets.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_payment_sources` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_payments",
+            "canonical_hash": "sha256:3ce75bbf68b9b05e3f89789b8e964665af53723631deaf43ca2ef0507c1bffb0",
+            "description": "List this agent",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_payments` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "limit",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "mcp-server-zoomeye": {
     "package_name": "mcp-server-zoomeye",
     "ecosystem": "pypi",
@@ -48470,7 +52069,7 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "< 4.14.9.5",
+    "latest_version": "< 4.14.17",
     "recommended_safe_version": null,
     "is_vulnerable": true,
     "security_summary": "Package `FastGPT` has 2 security advisories.",
@@ -48478,7 +52077,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 4.14.17",
+        "version": "< 4.14.9.5",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -48526,7 +52125,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 4.14.9.5",
+        "version": "< 4.14.17",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -48912,153 +52511,6 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 0.4.106",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "CVE-2026-73844",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73844",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73844",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-53509",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-53509",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-53509",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73846",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73846",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73846",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73845",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73845",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-73845",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-33060",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-33060",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-33060",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
         "version": "< 0.4.85",
         "is_vulnerable": true,
         "advisories": [
@@ -49207,6 +52659,153 @@
       },
       {
         "version": "< 0.4.112",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "CVE-2026-73844",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73844",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73844",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-53509",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-53509",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-53509",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73846",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73846",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73846",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73845",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73845",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-73845",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-33060",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-33060",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-33060",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "< 0.4.106",
         "is_vulnerable": true,
         "advisories": [
           {

@@ -276,15 +276,15 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/@aimentiontracker%2Fmcp",
     "display_name": "@aimentiontracker/mcp",
-    "description": "Track how often ChatGPT, Claude, Gemini and Perplexity name and cite your brand. Ten read-only MCP tools over AI visibility, share of voice, sentiment and competitor mentions.",
+    "description": "",
     "author": null,
-    "repository_url": "https://aimentiontracker.ai",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
-    "latest_version": "0.1.3",
-    "recommended_safe_version": "0.1.3",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `@aimentiontracker/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 5 safe version(s).",
+    "security_summary": "Server `@aimentiontracker/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -341,6 +341,271 @@
         "prompts": [],
         "resources": [],
         "release_date": "2026-10-09T20:20:43.961Z",
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:3e008b85005ac7a1cf045b8b31b6db6a59ef375fef0f1ad4942a2a7efa76af78",
+        "tools": [
+          {
+            "name": "get_current_date",
+            "canonical_hash": "sha256:b75e0859adf452a25455e493a175ce9040cd6b83e93117cc8b8d79e52752fc26",
+            "description": "The server",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_current_date` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_me",
+            "canonical_hash": "sha256:5c373f4b7d7b0e674fee7a13ecbd6a4136019fc341fcca0c6dc1544ef5583a2f",
+            "description": "Call this FIRST. Returns the organisation, plan, quota, which brand the key reads, and a reporting_rules block carrying the sample floor and the live alert thresholds. The thresholds are the only way to tell ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_me` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_sentiment",
+            "canonical_hash": "sha256:9aff69d105982c57f57c7564b095c28f63a676a84cd156b995ecf7ed4bce31a8",
+            "description": "Recommended, negative and neutral counts per brand. THE DENOMINATOR IS ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_sentiment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Trailing window in days. Default 30.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_share_of_voice",
+            "canonical_hash": "sha256:31d089b93d806023f35c10c81f5bd0b82ea7cf91be2ee5f892ea396469aa4945",
+            "description": "Each tracked brand",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_share_of_voice` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Trailing window in days. Default 30.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_visibility",
+            "canonical_hash": "sha256:2917dd292cd1304d26db448e58907682575c7db1cfb08fd8e60e9492a7caec53",
+            "description": "How often each AI engine named this brand and its competitors over a trailing window, each figure with its denominator. There is NO single visibility score and you must not compute one by averaging the engines: they disagree, and a mean describes no real surface.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_visibility` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Trailing window in days. Default 7.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_alerts",
+            "canonical_hash": "sha256:f0c6a44531f43495f139729b9026b4b4b75dfc462332b9f51030871d245faefd",
+            "description": "Changes worth acting on, newest first. AN EMPTY LIST DOES NOT MEAN NOTHING CHANGED: a finding is raised only when both comparison windows carry enough answers AND the move is larger than its own margin of error, which on a small plan excludes most real moves. Report an empty list as ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_alerts` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "How many findings, default 50.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_answers",
+            "canonical_hash": "sha256:01a7cdb4ee0b7a0ad6da6d61e499374eb564e49253c786be05ad2ddee415c57a",
+            "description": "The raw material every other number traces back to: each stored answer with the brands it mentioned and the sources it cited. Use it to show a customer the exact sentence behind a figure. ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_answers` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "cursor",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "engine",
+                "type": "string",
+                "description": "Filter to one engine slug, e.g. chatgpt.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "limit",
+                "type": "number",
+                "description": "Answers per page, default 50.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_brands",
+            "canonical_hash": "sha256:e24a673a60f4dbd9ae31b4993ff1f33d1ba1f4cc17c990d945c96d9649da03aa",
+            "description": "Every brand this key may read, with the id to pass as the ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_brands` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_competitors",
+            "canonical_hash": "sha256:b6ff81c341d653f39052a07a5732c69615ce22d238c5021763a0a2beeb110ef3",
+            "description": "Competitors ranked by how often the engines named them, with ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_competitors` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Trailing window in days. Default 30.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "quotes",
+                "type": "boolean",
+                "description": "Include up to 3 quoted sentences per competitor. Off by default.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_search_console",
+            "canonical_hash": "sha256:3bdc097dbb32a38782a84b65674380871b10b5e8cb7d6bfeeda05f4c27bb5dc0",
+            "description": "Pages from the customer",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_search_console` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Trailing window in days. Default 28.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "view",
+                "type": "string",
+                "description": "pages (default) joins Google against citations; queries lists real search demand.",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "pages",
+                  "queries"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_sources",
+            "canonical_hash": "sha256:72049b8bfb2b8327893e4d2df027f5c2937c8e24d1dda677cb2e10523f53ad08",
+            "description": "Which sites the AI engines consulted, and whether this brand was named in the answers that cited them. ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sources` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Trailing window in days. Default 30.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
         "required_env_vars": []
       }
     ]
@@ -2629,68 +2894,16 @@
     "display_name": "recallnest",
     "description": "",
     "author": null,
-    "repository_url": null,
+    "repository_url": "https://smithery.ai/servers/recallnest",
     "homepage_url": null,
     "license": null,
-    "latest_version": "3.0.1",
-    "recommended_safe_version": "3.0.1",
+    "latest_version": "4.0.0",
+    "recommended_safe_version": "4.0.0",
     "is_vulnerable": false,
     "security_summary": "Server `recallnest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 10 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:5c73f152fc150630a538a2821177c633a769cc36fb6de01d2892efe4cbd22d44",
-        "tools": [
-          {
-            "name": "debug",
-            "canonical_hash": "sha256:0392ecb0040872066af30e5d3e293f301214bfa38c778bbf75f3e2a1abf8006d",
-            "description": "Favor recent, exact-match operational details such as errors, commands, and fixes.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `debug` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "default",
-            "canonical_hash": "sha256:59e31b57c89ae9be5e1ebf1868b9bc6d091435ccc10d13116474891f1c11b401",
-            "description": "Balanced hybrid retrieval for everyday memory search.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `default` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "fact-check",
-            "canonical_hash": "sha256:72d5d8db75da0bee00beb9cb3a3df93188ab0c496dc89d4c4b2a7863d32609c8",
-            "description": "Favor exact evidence and fresher records; tighten the cutoff to reduce weak matches.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `fact-check` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "writing",
-            "canonical_hash": "sha256:d6c3ef898ccf23ecb9f13ba64b360cbff95b5bb525d692e6a692abc8647019bb",
-            "description": "Prefer broader semantic recall and tolerate older but reusable material.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `writing` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          }
-        ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
       {
         "version": "1.4.1",
         "is_vulnerable": false,
@@ -2785,6 +2998,58 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "4.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:5c73f152fc150630a538a2821177c633a769cc36fb6de01d2892efe4cbd22d44",
+        "tools": [
+          {
+            "name": "debug",
+            "canonical_hash": "sha256:0392ecb0040872066af30e5d3e293f301214bfa38c778bbf75f3e2a1abf8006d",
+            "description": "Favor recent, exact-match operational details such as errors, commands, and fixes.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debug` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "default",
+            "canonical_hash": "sha256:59e31b57c89ae9be5e1ebf1868b9bc6d091435ccc10d13116474891f1c11b401",
+            "description": "Balanced hybrid retrieval for everyday memory search.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `default` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "fact-check",
+            "canonical_hash": "sha256:72d5d8db75da0bee00beb9cb3a3df93188ab0c496dc89d4c4b2a7863d32609c8",
+            "description": "Favor exact evidence and fresher records; tighten the cutoff to reduce weak matches.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fact-check` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "writing",
+            "canonical_hash": "sha256:d6c3ef898ccf23ecb9f13ba64b360cbff95b5bb525d692e6a692abc8647019bb",
+            "description": "Prefer broader semantic recall and tolerate older but reusable material.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `writing` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -17687,10 +17952,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.8.0",
-    "recommended_safe_version": "0.8.0",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `@mcp-audit-gateway/core` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 13 safe version(s).",
+    "security_summary": "Server `@mcp-audit-gateway/core` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 14 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -17832,6 +18097,421 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:fc36f8c9c3643d78efdf50ea98e7dc219662ab2b1efcf77e970e3001ac5b207b",
+        "tools": [
+          {
+            "name": "--help",
+            "canonical_hash": "sha256:a88fd46df030a067028a1b01e10921923199a452c4bcb9739c6e63a17cd5f44c",
+            "description": "Execute --help",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `--help` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "-h",
+            "canonical_hash": "sha256:622b02afbc5447ea1c7edc1f7e6a9c6f193dc3a504393c9a151398001a578004",
+            "description": "Execute -h",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `-h` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "audit_status",
+            "canonical_hash": "sha256:fcf4fba288e3c7efd6be7efc143a6405890b917a844ecee00a997ecb8336b2c2",
+            "description": "Report current audit chain health: total records, last verified timestamp, chain integrity.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit_status` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "audit_tail",
+            "canonical_hash": "sha256:e1ccd5fd78606018b789f2c55e05bd10fe178203ee81b7242e641b94b9b1c975",
+            "description": "Show the most recent audit log entries with verification status.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit_tail` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "count",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "audit_verify",
+            "canonical_hash": "sha256:2e63fbcf384492e7ad11559b3022ce071309dcd8797164aca9416a125d77727e",
+            "description": "Verify integrity of an MCP audit log. Returns chain status and any broken links.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit_verify` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "logPath",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_pr",
+            "canonical_hash": "sha256:5e5a2ce92ffafd62100faaebf52e3632620db872553329f38643d37bf8776afb",
+            "description": "github",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_pr` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "dangerous_delete",
+            "canonical_hash": "sha256:ed1d47a30b6b3222fa5717e2be5cb9f0bdeb7d1473b97c1005853bdabd5e02d7",
+            "description": "fs",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `dangerous_delete` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "dangerous_tool",
+            "canonical_hash": "sha256:a0ff61fd73be31f7ebca5121095ae4308a43e34e9f8406017b84939a04217f73",
+            "description": "A dangerous tool",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `dangerous_tool` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "drop_table",
+            "canonical_hash": "sha256:c71ccaa2cf3d57bb0ff54be03c5cf458c59f824bd1e1b81f9d6c22e0651eee71",
+            "description": "database",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `drop_table` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "echo",
+            "canonical_hash": "sha256:2a2e77abec6c5bdd6ff6eb7399461e9671829073509caaaf8dd7f79f231f3d5c",
+            "description": "Echoes input",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `echo` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "msg",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "greet",
+            "canonical_hash": "sha256:5f227829f530e98bf481ab565af4a96f21c75b5f1be1a5ff69e3b98333322af7",
+            "description": "Greets a user",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `greet` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "help",
+            "canonical_hash": "sha256:5b66f5f83d0cd84fc01b66f99f39f52ef6ef7cddaead50114c502608f5a3de4a",
+            "description": "Execute help",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `help` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "keygen",
+            "canonical_hash": "sha256:2ed5d96d497eeaae089eb47ae31c677bcb99c953fd54334bd0eb46a4d85d2d6b",
+            "description": "Execute keygen",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `keygen` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "read",
+            "canonical_hash": "sha256:43723a482176c3e24d42c46f5e8b3b7b32066f16cd904ab46501e2e225e5e9ec",
+            "description": "api",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "read_data",
+            "canonical_hash": "sha256:e2c59f38dedeefa05479804d7f6715027d8aa9eef15110c996e071b20def2385",
+            "description": "github",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_data` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "read_file",
+            "canonical_hash": "sha256:6be57dca68a2f6c96ff173b9a8d64738da10ab79022c136111244f8f80cc178a",
+            "description": "Read a file from the filesystem",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `read_file` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "path",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "safe_read",
+            "canonical_hash": "sha256:7e51a6acd694b2bff10aa2a2ba84959c9e7165662f1fa6197b6dfa44357e0d7f",
+            "description": "fs",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `safe_read` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "safe_tool",
+            "canonical_hash": "sha256:8bd442c42a61c7186ab8173f06583fd7758d41d3341577706381525f03e81597",
+            "description": "A safe tool",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `safe_tool` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "safe_write",
+            "canonical_hash": "sha256:6bfde259ea0ad43c8e3ef530c931ef8387077470bc3a491e5439fe1b2b702e9c",
+            "description": "fs",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `safe_write` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "secret_tool",
+            "canonical_hash": "sha256:7fd7a75cba4049aede025853762b61dc83aac30a2c6d59695695fda1141a1b79",
+            "description": "Secret",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `secret_tool` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "serve",
+            "canonical_hash": "sha256:d6b3575357df1dde3d6a29c3a954f4fb631f401f3b344b34e115bbd15af5d66e",
+            "description": "Execute serve",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `serve` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "shutdown",
+            "canonical_hash": "sha256:5cea79a95199583dcf3bc13d3654dffa1aa38da791ec48b16c1e20a17b24313e",
+            "description": "admin",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `shutdown` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "string",
+            "canonical_hash": "sha256:282f92bf4dcd436ad888578afc91f1f24986ec67e4f59a8303441c73644dd63f",
+            "description": "Execute string",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `string` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "tail",
+            "canonical_hash": "sha256:bcb81dff77c84491f16471970b48454adfc61e34042acc0d38c68a211e4570eb",
+            "description": "Execute tail",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tail` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "tool",
+            "canonical_hash": "sha256:4f2ff704392b62427a03397b4af777390ce6df78914a02756638c73079ce2736",
+            "description": "desc",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tool` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "a",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "b",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "tool1",
+            "canonical_hash": "sha256:5d702af2a8d375c7a10e1d7ab1bb2d15bf26b05596281ccf486171ba1517243e",
+            "description": "v1",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tool1` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "tool2",
+            "canonical_hash": "sha256:509f87a0f646c46dc577b9cd606c6dac5eafd5f776dd93fcb57739a437f26e9e",
+            "description": "v1",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tool2` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "tool_a",
+            "canonical_hash": "sha256:269b5b127da532a57e54942a02019927eca3a9197d917790526d84bdf812bdd2",
+            "description": "Tool A",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tool_a` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "tool_b",
+            "canonical_hash": "sha256:b70f560cf12eeb56849e2fe5cab59dca2dc454f7debe2d85bd4b48b31c91f089",
+            "description": "Tool B",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tool_b` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "verify",
+            "canonical_hash": "sha256:377cbab6ee5cca0fd02a3a9036f9d145b049bf2ecb2a04f0412a698bcfbc1ed9",
+            "description": "Execute verify",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `verify` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "wrap",
+            "canonical_hash": "sha256:7f3c22e99d8930ac3fa8f7b3bd1e6456cb4a59b31b12607db90b95f7312bbd04",
+            "description": "Execute wrap",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wrap` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "write_file",
+            "canonical_hash": "sha256:a677ffaab07b9a07c83d26a3de40b83969e2c19701465ea2afd70ef070bcb27b",
+            "description": "fs",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `write_file` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -18002,8 +18682,69 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:c99cd8c74164e657122468fc7edcfcf1ee22d3b4fb061d1e6c07d501eb716147",
+        "tools": [
+          {
+            "name": "firefly_codify",
+            "canonical_hash": "sha256:0187380a38483fc0916ac6282638a91e60b4564d1a944ef5f7af608118be8be7",
+            "description": "Execute firefly_codify",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_codify` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "firefly_create_policy",
+            "canonical_hash": "sha256:5eeb7f832d922d170116f6c9dcb22b42f809a7cf517ff06b3dff6133eacb1f82",
+            "description": "Execute firefly_create_policy",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_create_policy` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "firefly_delete_policy",
+            "canonical_hash": "sha256:f73b7eadfccbd034a09ca127e9e6e3e0a00401b1397d12485b1ea4dea30ca74d",
+            "description": "Execute firefly_delete_policy",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_delete_policy` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "firefly_get_policies",
+            "canonical_hash": "sha256:ad0f8d37c4ae2c59ceecdf854741c1ee516701f1aacd61e3e061ae684a9c4f89",
+            "description": "Execute firefly_get_policies",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_get_policies` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "firefly_inventory",
+            "canonical_hash": "sha256:5e61cb94e86e5bb5889ec85a42a5b799bad5845a56baa242ccadb53acd531435",
+            "description": "Execute firefly_inventory",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_inventory` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "firefly_update_policy",
+            "canonical_hash": "sha256:7185b167c062726036c102282d5c84bf2a87900ed198681c4d7eb72237ffb0bb",
+            "description": "Execute firefly_update_policy",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_update_policy` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -18271,10 +19012,10 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "0.2.1",
-    "recommended_safe_version": "0.2.1",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `handsforagents-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
+    "security_summary": "Server `handsforagents-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -18306,6 +19047,28 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:b36c9b966b8975249e0a9b6907492c1c4c2719446c40477e437aaabe99c40728",
+        "tools": [
+          {
+            "name": "AbortError",
+            "canonical_hash": "sha256:5dc9658c1f11972522dcc054b49bd9936024ffea244ab1d247bd2fa2fd597919",
+            "description": "Execute AbortError",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `AbortError` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -19254,9 +20017,9 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/mcp-rss-aggregator",
     "display_name": "mcp-rss-aggregator",
-    "description": "Model Context Protocol Server for aggregating RSS feeds in Claude Desktop",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/imprvhub/mcp-rss-aggregator",
+    "repository_url": null,
     "homepage_url": null,
     "license": null,
     "latest_version": "1.0.0",
@@ -19270,8 +20033,63 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:81326fa6bffe3223a0896577a728b45c41856068286d42f9e757ee1d6e7b557e",
+        "tools": [
+          {
+            "name": "rss_feed",
+            "canonical_hash": "sha256:09d8a8cb53fdfc49bfcf6f37c14013eb75248071eac5f4be72bdbb983f4264ce",
+            "description": "Get the newest articles from one specific RSS feed",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rss_feed` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "feed_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "rss_latest",
+            "canonical_hash": "sha256:92daeff36a6f3774934195416af3000d5b9f669e1b517f839d79110f47fa49ec",
+            "description": "Get the newest articles across all configured RSS feeds, most recent first, optionally limited to one category",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rss_latest` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "category",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "rss_list",
+            "canonical_hash": "sha256:899a9552f7cca1e4363443840878289f87ac0c0ce3972c01627c9df13b5c751e",
+            "description": "List the configured RSS feeds, grouped by category, with the feed_id to use with rss_feed",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rss_list` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -20586,15 +21404,15 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/macbeth",
     "display_name": "macbeth",
-    "description": "Open-source Computer Use for macOS. See and operate Mac applications through MCP or TypeScript, including native and Electron interfaces.",
+    "description": "",
     "author": null,
-    "repository_url": "https://wende.github.io/macbeth/",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
-    "latest_version": "0.2.4",
-    "recommended_safe_version": "0.2.4",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `macbeth` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
+    "security_summary": "Server `macbeth` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -20662,6 +21480,1156 @@
         "prompts": [],
         "resources": [],
         "release_date": "2026-08-02T21:48:30.893Z",
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:9be31ff357fb981413445e58e33d4b7535d3c068ed710af919b2157d986d36f8",
+        "tools": [
+          {
+            "name": "begin_activity",
+            "canonical_hash": "sha256:b1d172a65cbc2b789b38c9b54076cdfcc3707d4cf2bc5b8fdc6e935d41012491",
+            "description": "Turn on the on-screen interaction indicator before you control the computer through some OTHER tool (a different MCP server, computer-use, a shell script) that Macbeth cannot see. Macbeth",
+            "risk_score": 7.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `begin_activity` [CRITICAL] executes arbitrary host system commands or shell scripts; handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Activity token returned by begin_activity",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "click",
+            "canonical_hash": "sha256:97c7b746ba72bff23372c59eafe50dea53fb923be562f9aef9f2bb22d2660b8d",
+            "description": "Click a UI element. Auto-waits for the element to appear. On Electron/web content, the default ",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `click` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Direct element handle (alternative to query)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "strategy",
+                "type": "string",
+                "description": "Click strategy (default: auto)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "auto",
+                  "ax",
+                  "mouse"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "timeout",
+                "type": "number",
+                "description": "Timeout in seconds",
+                "required": false,
+                "default": 30,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "waitForIdleMs",
+                "type": "number",
+                "description": "Mouse fallback only: wait for this much user idle time before briefly activating the target window (capped at 5000ms)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "connect_app",
+            "canonical_hash": "sha256:10a6ae49b741da6ffe69c9587f11c20e81a97b54046a99dcf7ad7cf8bdebccc1",
+            "description": "OPTIONAL preflight. Every app-taking tool (query_tree, click, fill, screenshot, ...) connects on its own, so you do NOT need to call this first. Call it to (a) check an app is reachable through Accessibility before driving it, (b) see exactly how a fuzzy name resolved, or (c) warm up an Electron app",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `connect_app` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "appHandle",
+                "type": "string",
+                "description": "Handle from a previous connect_app; reconnects without re-resolving the name",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "App name (fuzzy match)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "pid",
+                "type": "number",
+                "description": "Process ID",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "readyTimeoutMs",
+                "type": "number",
+                "description": "Electron accessibility-tree readiness timeout in milliseconds",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "dump_attributes",
+            "canonical_hash": "sha256:64e9e4969d8a959e7222e014774b34423ba5dc375f68cc11b6d8a808a34123ff",
+            "description": "Dump all accessibility attributes for a previously resolved element handle.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `dump_attributes` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Element handle returned by query_tree or get_element",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "end_activity",
+            "canonical_hash": "sha256:c0084882a94f2377d015b827248391b7e5f495bb019b4354365b3de3f5a725ab",
+            "description": "End an interaction-indicator scope started by begin_activity. Pass the token that begin_activity returned. Safe to skip if the client disconnects; the daemon expires abandoned scopes on its own.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `end_activity` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Activity token returned by begin_activity",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "extract_text",
+            "canonical_hash": "sha256:85042cd32983240cb2f55901d5623c095ae7f89197d004e98660c31540b7da87",
+            "description": "Extract text from an app window using OCR (Vision framework). Bridges accessibility gaps in apps with poor AX support. Pass either an app name to capture + OCR, or base64 PNG data to OCR directly.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `extract_text` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": "App name or PID (captures a screenshot and runs OCR)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "data",
+                "type": "string",
+                "description": "Base64-encoded PNG image to OCR directly (alternative to app)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "region",
+                "type": "object",
+                "description": "Optional region to restrict OCR (only with app, not data)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "X offset in points"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Y offset in points"
+                  },
+                  "width": {
+                    "type": "number",
+                    "description": "Width in points"
+                  },
+                  "height": {
+                    "type": "number",
+                    "description": "Height in points"
+                  }
+                }
+              },
+              {
+                "name": "windowId",
+                "type": "number",
+                "description": "Window ID returned by list_windows",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "fill",
+            "canonical_hash": "sha256:3150a0d9271f864050100b1d8eff9f8c9e910165d0f5dbae9c66a2386ceaa9c3",
+            "description": "Set the text value of a field. Auto-waits for the element to appear. On Electron/web content, the default ",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `fill` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Direct element handle (alternative to query)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "strategy",
+                "type": "string",
+                "description": "Fill strategy (default: auto)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "auto",
+                  "ax",
+                  "keyboard"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "timeout",
+                "type": "number",
+                "description": "Timeout in seconds",
+                "required": false,
+                "default": 30,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "value",
+                "type": "string",
+                "description": "Text value to set",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_element",
+            "canonical_hash": "sha256:5954b2fb05e8ea71e84d6bb7f018f3d809a8e8724b1c45e53f3dda3ce1112c3d",
+            "description": "Find a specific UI element and return its properties (role, title, value, enabled, focused).",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_element` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Direct element handle (alternative to query)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_apps",
+            "canonical_hash": "sha256:3ef51df06957cc8f7219e667419eb212ced1644f8921812c9a90ffc7821edcd1",
+            "description": "List running macOS apps, split into the ones that are currently reachable through the Accessibility API and the ones that are running but will fail to connect (launchers, helper processes, apps that never implement AX). Blocked entries carry the AX error code, what it means, and what to do instead.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_apps` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Activity token returned by begin_activity",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_daemon_methods",
+            "canonical_hash": "sha256:aabbd7b21c1e3899153a669ddf19866fcd8aec11130626dc5839f803e0145279",
+            "description": "List every JSON-RPC method registered by the daemon. Used to verify that daemon capabilities are exposed through MCP.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_daemon_methods` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "token",
+                "type": "string",
+                "description": "Activity token returned by begin_activity",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_menu_bar",
+            "canonical_hash": "sha256:3154815fd39bc21b81567ba740c098e48dfa188260f054616bd3023b77b1491e",
+            "description": "Return a menu-only Accessibility view. query_tree already includes menus, so use this only when that menu section was omitted, truncated, or a compact menu-only result is needed.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_menu_bar` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_shortcuts",
+            "canonical_hash": "sha256:dcf2bc206210d0edc322f99e58b0d3f23d7ee03e579c8f2f8b4bc34c1fd4cdce",
+            "description": "List all Apple Shortcuts available on this Mac.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_shortcuts` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "Input text to pass to the shortcut",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Shortcut name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_skills",
+            "canonical_hash": "sha256:b0f199d6887f5bc31c2b0004080ddecded19edb6fcafd7a9d5be6489e292e2a1",
+            "description": "List available macbeth skills. Each skill has instructions (SKILL.md) and optional runnable scripts.",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_skills` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Skill name (directory name under skills/)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_windows",
+            "canonical_hash": "sha256:a872f6d1b5a0388966fc4a426867318e014745a710f39253523b2f1b5599cafd",
+            "description": "List open windows across macOS Spaces without touching an accessibility tree. ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_windows` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "includeAllSurfaces",
+                "type": "boolean",
+                "description": null,
+                "required": false,
+                "default": false,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "load_skill",
+            "canonical_hash": "sha256:615c67650a4ee5c3ddabe39847c7a644dd5e46fa45bf3bfb554ead689a36f467",
+            "description": "Load a skill by name. Returns the SKILL.md instructions and lists any runnable scripts.",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `load_skill` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Skill name (directory name under skills/)",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "pin_handle",
+            "canonical_hash": "sha256:fed0261cb1514a58777215ed9f53778397ac46d57b0f6102cad4cbc12b54121d",
+            "description": "Pin an element handle to prevent it from expiring (default TTL is 5 minutes). Useful for long-running workflows where you need a stable reference to a panel or control.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `pin_handle` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "press_key",
+            "canonical_hash": "sha256:ddf0c1ed4c181925d36aac7a415d122137214701b4d78b52b0da3346b9d84a23",
+            "description": "WARNING: This tool steals focus — it activates the target app window before sending input. Use as a last resort when click/fill cannot achieve the goal (e.g. keyboard shortcuts, arrow-key navigation). Prefer ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `press_key` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "key",
+                "type": "string",
+                "description": "Key name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "modifiers",
+                "type": "array",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "press_keys",
+            "canonical_hash": "sha256:c6b7ff3fbe9bc88aab2ff459dde73eb562decb474511f758cd5a273a3297debd",
+            "description": "WARNING: This tool steals focus — it activates the target app window before sending input. Use as a last resort when click/fill cannot achieve the goal. Prefer ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `press_keys` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "keys",
+                "type": "array",
+                "description": "Ordered list of key or text items to send",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "query_tree",
+            "canonical_hash": "sha256:7915af94bb6d359d45c5dc0833106463ba6f160842752f7961fa99b5651000eb",
+            "description": "Get an app",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `query_tree` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": "Tree output format (default: text)",
+                "required": false,
+                "default": "text",
+                "enum": [
+                  "text",
+                  "json"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "includeInvisible",
+                "type": "boolean",
+                "description": "Include structural elements normally filtered from the tree",
+                "required": false,
+                "default": false,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "maxDepth",
+                "type": "number",
+                "description": "Maximum depth to traverse (default: 5)",
+                "required": false,
+                "default": 5,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "read_form",
+            "canonical_hash": "sha256:23e49b4116d29f2569796e2b616b82f75c52abed6f11eef230a8eb7da189aaf0",
+            "description": "Read all form-like controls (text fields, sliders, checkboxes, popups, etc.) from a subtree. Returns each control",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `read_form` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Direct subtree handle (alternative to query)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "maxDepth",
+                "type": "number",
+                "description": "Maximum depth to traverse (default: 10)",
+                "required": false,
+                "default": 10,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": "Optional locator chain to scope the search (e.g. to an Inspector panel)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "run_applescript",
+            "canonical_hash": "sha256:493ad231d478438278b95ecf8da266321b2ea941cb141847fb8a5d5bbc294349",
+            "description": "Run an AppleScript or JavaScript for Automation (JXA) script. Returns the script",
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `run_applescript` [HIGH] executes arbitrary host system commands or shell scripts.",
+            "parameters": [
+              {
+                "name": "interaction",
+                "type": "string",
+                "description": "Whether the script can control apps/input or only inspect state",
+                "required": false,
+                "default": "interactive",
+                "enum": [
+                  "interactive",
+                  "read_only"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": "AppleScript",
+                "enum": [
+                  "AppleScript",
+                  "JavaScript"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "source",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "timeout",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": "SCRIPT_TIMEOUT.defaultMs / 1_000",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "run_shortcut",
+            "canonical_hash": "sha256:c955aeab9fcca166bc4ca78a11f56da2238a314f972c96d32329fb7812a918e2",
+            "description": "Run an Apple Shortcut by name. Shortcuts are system-level automations, not tied to any specific app.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run_shortcut` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "input",
+                "type": "string",
+                "description": "Input text to pass to the shortcut",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Shortcut name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "run_skill_script",
+            "canonical_hash": "sha256:9e5f953b699e3893f096f5e6b56287d5f4f2a35fb6e422631cbed01bb1ad8a76",
+            "description": "Run a script from a skill",
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `run_skill_script` [HIGH] executes arbitrary host system commands or shell scripts.",
+            "parameters": [
+              {
+                "name": "args",
+                "type": "array",
+                "description": "Arguments to pass to the script",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "script",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "skill",
+                "type": "string",
+                "description": "Skill name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "screenshot",
+            "canonical_hash": "sha256:94a74e0ff2f80ff0c05b28707f4000479edbd9989c83b62a38f79dd57236cd07",
+            "description": "Capture the default visible app window, or select a window returned by list_windows. Explicit selection does not activate the window or switch Spaces; some apps may provide blank content for off-Space windows.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `screenshot` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "region",
+                "type": "object",
+                "description": "Optional region to crop (in window-relative points)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": {
+                  "x": {
+                    "type": "number",
+                    "description": "X offset in points from the top-left of the window"
+                  },
+                  "y": {
+                    "type": "number",
+                    "description": "Y offset in points from the top-left of the window"
+                  },
+                  "width": {
+                    "type": "number",
+                    "description": "Width in points"
+                  },
+                  "height": {
+                    "type": "number",
+                    "description": "Height in points"
+                  }
+                }
+              },
+              {
+                "name": "windowId",
+                "type": "number",
+                "description": "Window ID returned by list_windows",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "select_menu_item",
+            "canonical_hash": "sha256:66267b5f5d2d76f8063b161db0ece16e1dd99d635b6347ab2cecd28c4549d10c",
+            "description": "Select a native menu bar item by path (e.g. [\\",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `select_menu_item` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "menuPath",
+                "type": "array",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "unpin_handle",
+            "canonical_hash": "sha256:3fdbda29a707a3c8a2935cd460f0c3bb1b2a585f9bc3c80e43408b0537fa5945",
+            "description": "Unpin a previously pinned handle, resuming normal TTL expiry.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `unpin_handle` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Handle ID to unpin",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "wait_for",
+            "canonical_hash": "sha256:6edee43db358b33a3c83567331fbb96817a6cf9c90db7546d225322f6a08ffca",
+            "description": "Wait for a UI condition. Conditions: ",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `wait_for` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "app",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "condition",
+                "type": "object",
+                "description": "Wait condition (default: exists)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "exists",
+                  "value_equals",
+                  "value_changes",
+                  "enabled"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": {
+                  "kind": {
+                    "type": "string",
+                    "description": "What to wait for",
+                    "enum": [
+                      "exists",
+                      "value_equals",
+                      "value_changes",
+                      "enabled"
+                    ]
+                  },
+                  "value": {
+                    "type": "string",
+                    "description": "Target value (for value_equals)"
+                  }
+                }
+              },
+              {
+                "name": "handleId",
+                "type": "string",
+                "description": "Direct element handle (alternative to query)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "pollMs",
+                "type": "number",
+                "description": "Polling interval in ms (default: 500)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": "Locator chain to find the element",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "timeout",
+                "type": "number",
+                "description": "Timeout in seconds",
+                "required": false,
+                "default": 30,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
         "required_env_vars": []
       }
     ]
@@ -23596,11 +25564,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/devplan-mcp-server",
     "display_name": "devplan-mcp-server",
-    "description": "MCP server for generating development plans",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/mmorris35/devplan-mcp-server",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -23612,8 +25580,1153 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:f21aa434bbd55ad219aca03957abbc2deb7863094f3db40cd5c8ad1ae996679c",
+        "tools": [
+          {
+            "name": "devplan_add_lesson",
+            "canonical_hash": "sha256:da609f7ba004754e79de9b8ce81aed69a44a4f5e86679b24f41995dc0f8c07f0",
+            "description": "Add a lesson learned from verifier feedback. Lessons are stored in KV and used to improve future plan generation.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_add_lesson` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "fix",
+                "type": "string",
+                "description": "How it was fixed - the solution applied",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "issue",
+                "type": "string",
+                "description": "What went wrong - the problem observed",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "pattern",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "project_types",
+                "type": "array",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "root_cause",
+                "type": "string",
+                "description": "Why it happened - the underlying cause",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "severity",
+                "type": "string",
+                "description": "Severity: critical (must fix), warning (should fix), info (nice to know)",
+                "required": false,
+                "default": "warning",
+                "enum": [
+                  "critical",
+                  "warning",
+                  "info"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_archive_lesson",
+            "canonical_hash": "sha256:eab7c315bb070b303fcf9d4efcddd35516aabb70e6f939b2b7fb4d18e071d5fc",
+            "description": "Archive or unarchive a lesson. Archived lessons are preserved but excluded from plan generation. Use this to retire old lessons without deleting them.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_archive_lesson` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "archive",
+                "type": "boolean",
+                "description": "true to archive, false to unarchive",
+                "required": false,
+                "default": true,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "lesson_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_create_brief",
+            "canonical_hash": "sha256:994f1111973d26b0691ff63a1ea8a9d6f831b47a8d64dba1b6e5f1720479c1e8",
+            "description": "Create a PROJECT_BRIEF.md after interviewing the user. This captures their requirements in a structured format.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_create_brief` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "constraints",
+                "type": "array",
+                "description": "Constraints/requirements",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "features",
+                "type": "array",
+                "description": "Must-have MVP features",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "goal",
+                "type": "string",
+                "description": "One-sentence project description",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "name",
+                "type": "string",
+                "description": "Project name",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "nice_to_have",
+                "type": "array",
+                "description": "Nice-to-have features for v2",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "project_type",
+                "type": "string",
+                "description": "Project type: cli, web_app, api, or library",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "target_users",
+                "type": "array",
+                "description": "Target user types",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "team_size",
+                "type": "number",
+                "description": "Number of developers (default: 1)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "tech_stack",
+                "type": "array",
+                "description": "Technology preferences",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "nested_properties": null
+              },
+              {
+                "name": "timeline",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_delete_lesson",
+            "canonical_hash": "sha256:d83ffafda0bb0e2ef1944f58468185e35cf802b2c416ef6462c035c6d18913c0",
+            "description": "Delete a lesson by ID or pattern. Use this to remove outdated, incorrect, or duplicate lessons.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_delete_lesson` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "confirm",
+                "type": "boolean",
+                "description": "Set to true to actually delete. Without this, only shows what would be deleted.",
+                "required": false,
+                "default": false,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "lesson_id",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "pattern",
+                "type": "string",
+                "description": "Delete lessons matching this pattern (partial match)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_export_workflow",
+            "canonical_hash": "sha256:99d348e17b291023de8d2ae14d1ca37a3322c894db62e00a8070052ec28b476d",
+            "description": "Export a DEVELOPMENT_PLAN.md as ReactFlow-compatible JSON for visual workflow tools like Sim.ai. Returns nodes, edges, and metadata for rendering the plan as an interactive diagram.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_export_workflow` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "include_completed",
+                "type": "string",
+                "description": "Include completed subtasks in output (default: true)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "include_success_criteria",
+                "type": "string",
+                "description": "Include success criteria in node data (default: false)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "plan_content",
+                "type": "string",
+                "description": "Full content of DEVELOPMENT_PLAN.md",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "platform",
+                "type": "string",
+                "description": "Target platform format (default: reactflow)",
+                "required": false,
+                "default": null,
+                "enum": [
+                  "sim",
+                  "n8n",
+                  "reactflow",
+                  "generic"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_export_workflow_mermaid",
+            "canonical_hash": "sha256:62cbaced694f5472be34934480b67189b352c3e3e8557fd3d7d96c18a4175ac4",
+            "description": "Export a DEVELOPMENT_PLAN.md as a Mermaid flowchart diagram in markdown format. Perfect for embedding in documentation or viewing in VS Code/GitHub. Save the output as workflow.md to get a visual representation of your plan.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_export_workflow_mermaid` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "include_completed",
+                "type": "string",
+                "description": "Include completed subtasks in output (default: true)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "plan_content",
+                "type": "string",
+                "description": "Full content of DEVELOPMENT_PLAN.md",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_extract_lessons_from_report",
+            "canonical_hash": "sha256:ef5fade8e9fe2f1903551994326253bcebb8fedb87482810668bc8ce4302fa8c",
+            "description": "Parse a verification report and extract suggested lessons. Returns pre-filled lesson data that can be reviewed and saved with devplan_add_lesson.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_extract_lessons_from_report` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "project_type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "report_content",
+                "type": "string",
+                "description": "The full verification report markdown content",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_generate_claude_md",
+            "canonical_hash": "sha256:191297e84bd231cdc68c4c651fd8e531ee673667735a10cf38714d9ad136bea0",
+            "description": "Generate a CLAUDE.md scaffold (or equivalent for other targets like .cursorrules). Use this as a starting point, then enhance it.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_generate_claude_md` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "brief_content",
+                "type": "string",
+                "description": "PROJECT_BRIEF.md or JSON brief",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": "Primary language",
+                "required": false,
+                "default": "python",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "description": "Target tool (claude, cursor, aider, cline, windsurf, generic)",
+                "required": false,
+                "default": "claude",
+                "enum": [
+                  "claude",
+                  "cursor",
+                  "aider",
+                  "cline",
+                  "windsurf",
+                  "generic"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "test_coverage",
+                "type": "number",
+                "description": "Required coverage percentage",
+                "required": false,
+                "default": 80,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_generate_executor",
+            "canonical_hash": "sha256:e53fb7cb6d3215277702cc5df0dbf4517494f030d577d351e40adb4f7aef4011",
+            "description": "Generate an executor agent file (.claude/agents/{project}-executor.md). This creates a specialized Haiku-powered agent for executing subtasks with full project context.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_generate_executor` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "brief_content",
+                "type": "string",
+                "description": "PROJECT_BRIEF.md content or JSON brief",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": "Primary language (python or typescript)",
+                "required": false,
+                "default": "python",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "description": "Target tool (default: claude)",
+                "required": false,
+                "default": "claude",
+                "enum": [
+                  "claude",
+                  "cursor",
+                  "aider",
+                  "cline",
+                  "windsurf",
+                  "generic"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_generate_plan",
+            "canonical_hash": "sha256:db4c0946bc7ad3f02ac7d4ed643cdd3c382bbec1527aa7e3173d51ca185d9abe",
+            "description": "devplan_generate_plan",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_generate_plan` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_generate_verifier",
+            "canonical_hash": "sha256:44c2c402489b06c8d17da36b5e4b5b36d4672f0857b6ddbe965e34232d6655e3",
+            "description": "Generate a verifier agent file (.claude/agents/{project}-verifier.md). This creates a Sonnet-powered agent for validating completed applications against PROJECT_BRIEF.md requirements.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_generate_verifier` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "brief_content",
+                "type": "string",
+                "description": "PROJECT_BRIEF.md content or JSON brief",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": "Primary language (python or typescript)",
+                "required": false,
+                "default": "python",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "target",
+                "type": "string",
+                "description": "Target tool (default: claude)",
+                "required": false,
+                "default": "claude",
+                "enum": [
+                  "claude",
+                  "cursor",
+                  "aider",
+                  "cline",
+                  "windsurf",
+                  "generic"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_get_subtask",
+            "canonical_hash": "sha256:7aa05667bed961c8ed1365cbdd9025d72caa8075cf06f9817a44a551e69a1247",
+            "description": "devplan_get_subtask",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_get_subtask` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_implement",
+            "canonical_hash": "sha256:a28961b951de35c5536cb6e61017452ad43278cb24cecfd2641b173589a0c120",
+            "description": "One-command kickoff to implement an entire development plan. Returns instructions for Claude Code to use the executor agent to build the project, then the verifier agent to validate it.",
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `devplan_implement` [HIGH] executes arbitrary host system commands or shell scripts.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_interview_questions",
+            "canonical_hash": "sha256:8e900b358b7c1cd885ed2d89b4e7e9c4184eb6794b51c907d6bd70195b7ad246",
+            "description": "Get interview questions to ask the user about their project. Ask these ONE AT A TIME, waiting for responses.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_interview_questions` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_issue_to_task",
+            "canonical_hash": "sha256:456fdece309af605d2cd232373089c01eef8188fb1704e2556fbe825c208e014",
+            "description": "Convert a GitHub issue into a remediation task with subtasks. Returns markdown suitable for appending to DEVELOPMENT_PLAN.md or creating a standalone REMEDIATION_PLAN.md.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_issue_to_task` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "existing_plan",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "issue_content",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "language",
+                "type": "string",
+                "description": "Primary language (python, typescript) for appropriate test patterns",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "mode",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": "standalone",
+                "enum": [
+                  "append",
+                  "standalone"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "project_type",
+                "type": "string",
+                "description": "Project type for context (cli, web_app, api, library)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_list_lessons",
+            "canonical_hash": "sha256:ff4f79af7021acb3a4509cc3ba77150cb5918aadc4dbe825a0076613bb65fb8f",
+            "description": "List all lessons learned from previous projects. Optionally filter by project type or include archived lessons.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_list_lessons` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "include_archived",
+                "type": "boolean",
+                "description": "Include archived lessons in the list",
+                "required": false,
+                "default": false,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "project_type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_list_templates",
+            "canonical_hash": "sha256:c64b21bf1b1e8392b7c38ea126a161e8b929056cbc95c4c7cab79d18886d15d0",
+            "description": "List available project templates (cli, web_app, api, library). Use this to show the user what project types are supported.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_list_templates` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "project_type",
+                "type": "string",
+                "description": "Filter by type",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "response_format",
+                "type": "string",
+                "description": "Output format",
+                "required": false,
+                "default": "json",
+                "enum": [
+                  "json",
+                  "markdown"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_parse_brief",
+            "canonical_hash": "sha256:5b18081549b8fd00f6c75885114417af7a5b227b6f5318ba0a0272ac00ec2845",
+            "description": "Parse an existing PROJECT_BRIEF.md file to extract structured data. Use this if a brief already exists.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_parse_brief` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "content",
+                "type": "string",
+                "description": "Full PROJECT_BRIEF.md content",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "response_format",
+                "type": "string",
+                "description": "Output format",
+                "required": false,
+                "default": "json",
+                "enum": [
+                  "json",
+                  "markdown"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_parse_issue",
+            "canonical_hash": "sha256:7cd2200e3811780f26faf7aaced2c6332320169000918ec53bbaaacd6ac77117",
+            "description": "devplan_parse_issue",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_parse_issue` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_progress_summary",
+            "canonical_hash": "sha256:a4c33d755a6193871fbbf593d3827c4816cee73bc5a42e0b2cedffb78e82cd98",
+            "description": "Get a progress summary for a development plan. Shows completion percentage, phase-by-phase progress, next actionable subtask, and recently completed work.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_progress_summary` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "plan_content",
+                "type": "string",
+                "description": "DEVELOPMENT_PLAN.md content",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_start",
+            "canonical_hash": "sha256:8a0f895f260412fefcbb00d1f234474a83c28fa1304b74cb5a880f00cddecedb",
+            "description": "START HERE: Initialize a new project using the DevPlan methodology. This tool provides comprehensive inline instructions for building a development plan that Claude Code can execute step-by-step.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_start` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_update_progress",
+            "canonical_hash": "sha256:d377bd03f598b02aa81e4f0ae3da48a863b9616edaaa9ed12343d07e3763b1bc",
+            "description": "Mark a subtask as complete and add completion notes. Use after finishing a subtask to update DEVELOPMENT_PLAN.md.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_update_progress` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "completion_notes",
+                "type": "string",
+                "description": "Notes about completion",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "plan_content",
+                "type": "string",
+                "description": "Current plan content",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "subtask_id",
+                "type": "string",
+                "description": "ID to mark complete",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_usage_stats",
+            "canonical_hash": "sha256:c60252f7f22fa1af4cce4acb4d28d84d857339a9813bfddec5c2ba6764cca62a",
+            "description": "View usage statistics showing how requests are distributed across users. Helps understand if usage is concentrated among few users or spread across many.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `devplan_usage_stats` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "date",
+                "type": "string",
+                "description": "Date to query (YYYY-MM-DD format). Defaults to today.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "days",
+                "type": "number",
+                "description": "Number of days to include (1-30). Defaults to 7.",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_validate_haiku_executable",
+            "canonical_hash": "sha256:aa10b02693d5e1071b95815fa263ab08513fdd946e4b68036dbffcd059408b46",
+            "description": "Validate that a DEVELOPMENT_PLAN.md is Haiku-executable (can be implemented by Claude Haiku without interpretation). Returns specific errors with fix instructions. IMPORTANT: After calling devplan_generate_plan, you MUST enhance the scaffold with complete code, then call this tool to validate before presenting to the user.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_validate_haiku_executable` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "plan_content",
+                "type": "string",
+                "description": "Full content of DEVELOPMENT_PLAN.md to validate",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "devplan_validate_plan",
+            "canonical_hash": "sha256:bb50e44dbb12c002e08e02bc13674e1889e70536fab55710e7ad6d15a5012eb2",
+            "description": "Validate a DEVELOPMENT_PLAN.md file for required sections and structure. Use this to check if a plan is complete.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `devplan_validate_plan` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "content",
+                "type": "string",
+                "description": "DEVELOPMENT_PLAN.md content",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "strict",
+                "type": "boolean",
+                "description": "Treat warnings as errors",
+                "required": false,
+                "default": false,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "download_attachment",
+            "canonical_hash": "sha256:7418468183ba4068e5cbc42f35a36ed2502406c4407a9f3db584fb46e53fbe6c",
+            "description": "Download a Telegram file by file_id",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `download_attachment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "file_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "edit_message",
+            "canonical_hash": "sha256:a1222528d1320e63d31977ecc77b359ffe9dbbcbaaa124c48ec541db9e09a1db",
+            "description": "Edit a previously sent Telegram message",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `edit_message` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "chat_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "message_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "text",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "react",
+            "canonical_hash": "sha256:b8ad7245b1ef90a1c5febd7292ab66f28d22c1dbf3ac6617facb248e306cb4d8",
+            "description": "Add an emoji reaction to a Telegram message",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `react` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "chat_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "emoji",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "message_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "reply",
+            "canonical_hash": "sha256:ddbd4f36cc93e54a5a4ea6fb205e018043d4265fd59449f0dd741b283aef44bb",
+            "description": "Send a message back to the Telegram chat this channel serves",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reply` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "chat_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "format",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "items",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "reply_to",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "text",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -25740,15 +28853,15 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/paypay-mcp",
     "display_name": "paypay-mcp",
-    "description": "MCP server for PayPay (Japan's largest QR wallet). Bilingual (JP/EN) tools for creating QR codes, accepting payments, refunds, and cancellations via the PayPay Open Payment API.",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/mrslbt/paypay-mcp#readme",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
-    "latest_version": "0.2.1",
-    "recommended_safe_version": "0.2.1",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
-    "security_summary": "Server `paypay-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
+    "security_summary": "Server `paypay-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
@@ -25816,6 +28929,78 @@
         "prompts": [],
         "resources": [],
         "release_date": "2026-08-12T08:00:48.230Z",
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:5f8e3afd4c7c7ac55983c66b66be71bd2da167ae62c3abb3e5c53061fd997e0b",
+        "tools": [
+          {
+            "name": "accept_single_payment",
+            "canonical_hash": "sha256:c437fd0b8bc8e0440961f9cf339baf11dc26c3351640a31bf3c01f6c3540304a",
+            "description": "Walks through creating a QR code and waiting for the customer to pay. 単発の決済を受け付けるフロー。",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `accept_single_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "current_config",
+            "canonical_hash": "sha256:912ffc407e7985b231328b8045c1d11852d8488f0fe0456635881cbb45618f1f",
+            "description": "Non-secret view of the active config: environment, merchant ID, base URL, transport. Credentials are never exposed.",
+            "risk_score": 6.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `current_config` [HIGH] initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets; inspects or modifies host environment variables.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "debug_stuck_payment",
+            "canonical_hash": "sha256:9ffb67ec04a93c49fdc9dbc1eda328762f1fcf9a076808b13c1bdfd9350b8f26",
+            "description": "Investigates a payment whose status is unclear and resolves it safely. ステータスが不明な決済を調査して解決します。",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debug_stuck_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "opa_reference",
+            "canonical_hash": "sha256:1134d82a8cb543ca192f2b8fdade0bdc0e156ce2cf1f0c079acadb71243ba1ed",
+            "description": "Endpoint map, base URLs, auth scheme, and status vocabulary for the PayPay Open Payment API.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `opa_reference` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "payment_states",
+            "canonical_hash": "sha256:516e22f7ad376ecbe37174fa7f83813f5bd24b517c882ff17048b9e2221e0965",
+            "description": "PayPay payment lifecycle and the cancel-vs-refund decision rule, including the 00:14:59 JST window.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `payment_states` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "refund_last_payment",
+            "canonical_hash": "sha256:bc831b2bfd69df4294dd598fde1723543b75ce5d4e42bb057b1c056866d8fdbb",
+            "description": "Refunds a payment by merchantPaymentId. Explains PayPay",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `refund_last_payment` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
         "required_env_vars": []
       }
     ]
@@ -26184,11 +29369,11 @@
     "ecosystem": "npm",
     "purl": "pkg:npm/hn-server",
     "display_name": "hn-server",
-    "description": "MCP server for fetching and parsing Hacker News stories",
+    "description": "",
     "author": null,
-    "repository_url": "https://github.com/pskill9/hn-server#readme",
+    "repository_url": null,
     "homepage_url": null,
-    "license": "MIT",
+    "license": null,
     "latest_version": "1.0.0",
     "recommended_safe_version": "1.0.0",
     "is_vulnerable": false,
@@ -26200,8 +29385,42 @@
         "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
+        "toolset_canonical_hash": "sha256:ddc90419e91bccb87230133136e41da4d1cca6aa02015affd578e5413cc470c1",
+        "tools": [
+          {
+            "name": "get_stories",
+            "canonical_hash": "sha256:db47c9fe629326c9df7ff190380849edf3372c4582eb0ba92d8afadc9224e664",
+            "description": "Get stories from Hacker News",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_stories` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "limit",
+                "type": "number",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -30983,6 +34202,66 @@
       }
     ]
   },
+  "clearjson": {
+    "package_name": "clearjson",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/clearjson",
+    "display_name": "clearjson",
+    "description": "Privacy-first browser JSON viewer (Chrome Extension)",
+    "author": null,
+    "repository_url": "https://github.com/wayknow/clearjson",
+    "homepage_url": null,
+    "license": "MIT",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `clearjson` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "aws-audit-scanner": {
+    "package_name": "aws-audit-scanner",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/aws-audit-scanner",
+    "display_name": "aws-audit-scanner",
+    "description": "Open-source AWS account scanner for common cost and security problems. Read-only, runs locally, covers every region.",
+    "author": null,
+    "repository_url": "https://github.com/whatsinmycloud/aws-audit-scanner",
+    "homepage_url": null,
+    "license": "MIT",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `aws-audit-scanner` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "wkalidev/multichain-mcp": {
     "package_name": "wkalidev/multichain-mcp",
     "ecosystem": "generic",
@@ -31725,175 +35004,91 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
+        "version": "*",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "GHSA-w48q-cv73-mx4w",
+            "summary": "Model Context Protocol (MCP) TypeScript SDK does not enable DNS rebinding protection by default",
+            "severity": "HIGH",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-66414",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-66414",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-66414",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-0621",
+            "summary": "Anthropic's MCP TypeScript SDK versions up to and including 1.25.1 contain a regular expression denial of service (ReDoS",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-104850",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Starting in version 1.",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-25536",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-25536",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
         "version": ">= 2.0.0, < 2.2.0",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "GHSA-w48q-cv73-mx4w",
-            "summary": "Model Context Protocol (MCP) TypeScript SDK does not enable DNS rebinding protection by default",
-            "severity": "HIGH",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2025-66414",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2025-66414",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2025-66414",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-0621",
-            "summary": "Anthropic's MCP TypeScript SDK versions up to and including 1.25.1 contain a regular expression denial of service (ReDoS",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-104850",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Starting in version 1.",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-25536",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-25536",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": ">= 1.12.0, < 1.31.0",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "GHSA-w48q-cv73-mx4w",
-            "summary": "Model Context Protocol (MCP) TypeScript SDK does not enable DNS rebinding protection by default",
-            "severity": "HIGH",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2025-66414",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2025-66414",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2025-66414",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-0621",
-            "summary": "Anthropic's MCP TypeScript SDK versions up to and including 1.25.1 contain a regular expression denial of service (ReDoS",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-104850",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Starting in version 1.",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-25536",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-25536",
-            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": "< 1.24.0",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -32061,7 +35256,91 @@
         "required_env_vars": []
       },
       {
-        "version": "*",
+        "version": "< 1.24.0",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "GHSA-w48q-cv73-mx4w",
+            "summary": "Model Context Protocol (MCP) TypeScript SDK does not enable DNS rebinding protection by default",
+            "severity": "HIGH",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-66414",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-66414",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-66414",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Prior to 1.24.0, The M",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-0621",
+            "summary": "Anthropic's MCP TypeScript SDK versions up to and including 1.25.1 contain a regular expression denial of service (ReDoS",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-104850",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. Starting in version 1.",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-25536",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-25536",
+            "summary": "MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.10.0 to",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": ">= 1.12.0, < 1.31.0",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -33223,7 +36502,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 1.9.4",
+        "version": "< 1.27.2",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -33481,7 +36760,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 1.27.2",
+        "version": "< 1.9.4",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -34313,7 +37592,7 @@
         "required_env_vars": []
       },
       {
-        "version": ">= 1.1.2, < 1.10.3",
+        "version": "< 1.10.3",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -34352,7 +37631,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 1.10.3",
+        "version": ">= 1.1.2, < 1.10.3",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -34679,7 +37958,7 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "< 5.4.5",
+    "latest_version": "< 5.7.2",
     "recommended_safe_version": null,
     "is_vulnerable": true,
     "security_summary": "Package `Network-AI` has 2 security advisories.",
@@ -34687,7 +37966,7 @@
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 5.7.2",
+        "version": "< 5.4.5",
         "is_vulnerable": true,
         "advisories": [
           {
@@ -34735,7 +38014,7 @@
         "required_env_vars": []
       },
       {
-        "version": "< 5.4.5",
+        "version": "< 5.7.2",
         "is_vulnerable": true,
         "advisories": [
           {
