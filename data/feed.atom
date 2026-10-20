@@ -5,15 +5,30 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-10-19T03:16:58.193Z</updated>
+  <updated>2026-10-20T00:19:20.530Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
   <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-8355</id>
+    <title>[UNKNOWN] CVE-2026-8355: IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authe</title>
+    <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-8355.json" />
+    <updated>2026-10-20T00:19:20.530Z</updated>
+    <published>2026-10-20T00:19:20.530Z</published>
+    <summary>IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authe</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-8355&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authenticated users with gateway creation privileges to perform arbitrary HTTP POST requests to internal network resources and cloud metadata endpoints. The vulnerability occurs during OAuth-enabled gateway registration when the system fails to validate the oauth_config.token_url parameter. When registering a gateway with OAuth client credentials authentication, an attacker can supply a malicious token_url pointing to internal services, cloud metadata endpoints (AWS IMDSv1, GCP, Azure), or localhost-bound services. The application immediately performs an HTTP POST request to the attacker-controlled URL with form-encoded credentials in the body. If the response cannot be parsed as a valid OAuth token response, up to 256 characters of the response body are reflected back to the attacker in the HTTP 502 error message. This vulnerability bypasses existing SSRF protections that are applied to the gateway.url field but not to OAuth configuration parameters.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.ibm.com/support/pages/node/7285723"&gt;https://www.ibm.com/support/pages/node/7285723&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-102503</id>
     <title>[UNKNOWN] CVE-2026-102503: Missing Authentication for Critical Function (CWE-306) and Missing Authorization (CWE-862) in the /libp2p-http ingress s</title>
     <link rel="alternate" href="https://github.com/google/sam/commit/433bc99d2a2c10071167bf22acc2c930a12e64e1" />
-    <updated>2026-10-19T03:16:58.193Z</updated>
+    <updated>2026-10-19T21:13:39.973Z</updated>
     <published>2026-10-19T03:16:58.193Z</published>
     <summary>Missing Authentication for Critical Function (CWE-306) and Missing Authorization (CWE-862) in the /libp2p-http ingress s</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-102503&lt;/p&gt;
@@ -24,13 +39,14 @@
 &lt;li&gt;&lt;a href="https://github.com/google/sam/commit/433bc99d2a2c10071167bf22acc2c930a12e64e1"&gt;https://github.com/google/sam/commit/433bc99d2a2c10071167bf22acc2c930a12e64e1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/google/sam/releases/tag/v0.1.0-alpha.3"&gt;https://github.com/google/sam/releases/tag/v0.1.0-alpha.3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/google/sam/security/advisories/GHSA-r6hp-67wp-c7jx"&gt;https://github.com/google/sam/security/advisories/GHSA-r6hp-67wp-c7jx&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/google/agentmesh/security/advisories/GHSA-r6hp-67wp-c7jx"&gt;https://github.com/google/agentmesh/security/advisories/GHSA-r6hp-67wp-c7jx&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
     <id>urn:mcp:vulnerability:CVE-2026-96620</id>
     <title>[UNKNOWN] CVE-2026-96620: Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s</title>
     <link rel="alternate" href="https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662" />
-    <updated>2026-10-16T20:18:28.293Z</updated>
+    <updated>2026-10-19T21:13:39.973Z</updated>
     <published>2026-10-16T20:18:28.293Z</published>
     <summary>Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-96620&lt;/p&gt;
@@ -114,7 +130,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-109527</id>
     <title>[UNKNOWN] CVE-2026-109527: The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp </title>
     <link rel="alternate" href="https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080" />
-    <updated>2026-10-16T16:00:33.533Z</updated>
+    <updated>2026-10-20T02:17:08.867Z</updated>
     <published>2026-10-14T18:17:33.447Z</published>
     <summary>The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp </summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-109527&lt;/p&gt;
@@ -168,7 +184,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-110616</id>
     <title>[UNKNOWN] CVE-2026-110616: NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to acces</title>
     <link rel="alternate" href="https://github.com/nullclaw/nullhub" />
-    <updated>2026-10-16T19:18:44.867Z</updated>
+    <updated>2026-10-20T02:17:09.270Z</updated>
     <published>2026-10-14T15:17:13.767Z</published>
     <summary>NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to acces</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-110616&lt;/p&gt;
@@ -3024,24 +3040,6 @@ Resolve the hostname and validate **every resolved IP** against the private/spec
 &lt;li&gt;&lt;a href="https://github.com/eat-pray-ai/yutu/commit/87026c4eee1ed28775383807087343a750707bf3"&gt;https://github.com/eat-pray-ai/yutu/commit/87026c4eee1ed28775383807087343a750707bf3&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/eat-pray-ai/yutu/releases/tag/v0.10.9"&gt;https://github.com/eat-pray-ai/yutu/releases/tag/v0.10.9&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/eat-pray-ai/yutu/security/advisories/GHSA-2c7f-fxww-6w6c"&gt;https://github.com/eat-pray-ai/yutu/security/advisories/GHSA-2c7f-fxww-6w6c&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-54618</id>
-    <title>[UNKNOWN] CVE-2026-54618: Obsidian Web MCP is a secure remote MCP server for Obsidian vaults. Prior to 0.2.0, /oauth/authorize issues an authoriza</title>
-    <link rel="alternate" href="https://github.com/jimprosser/obsidian-web-mcp/commit/e4924f096ee7494a7999d6c0cceca9be08e48eef" />
-    <updated>2026-09-30T17:32:07.107Z</updated>
-    <published>2026-09-17T20:16:51.823Z</published>
-    <summary>Obsidian Web MCP is a secure remote MCP server for Obsidian vaults. Prior to 0.2.0, /oauth/authorize issues an authoriza</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-54618&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Obsidian Web MCP is a secure remote MCP server for Obsidian vaults. Prior to 0.2.0, /oauth/authorize issues an authorization code without a login, consent, or session check, and /oauth/token can exchange that code for the static VAULT_MCP_TOKEN without authenticating a client. An unauthenticated remote caller who can reach the intended tunnel deployment can therefore call /mcp and use vault_read, vault_write, vault_search, vault_list, vault_move, and vault_delete against the entire vault. Optional PKCE does not prevent an attacker-initiated flow, and unauthenticated /oauth/register also exposes a client_credentials path by returning the configured VAULT_OAUTH_CLIENT_SECRET. This issue is fixed in version 0.2.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/jimprosser/obsidian-web-mcp/commit/e4924f096ee7494a7999d6c0cceca9be08e48eef"&gt;https://github.com/jimprosser/obsidian-web-mcp/commit/e4924f096ee7494a7999d6c0cceca9be08e48eef&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/jimprosser/obsidian-web-mcp/pull/30"&gt;https://github.com/jimprosser/obsidian-web-mcp/pull/30&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/jimprosser/obsidian-web-mcp/releases/tag/v0.2.0"&gt;https://github.com/jimprosser/obsidian-web-mcp/releases/tag/v0.2.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/jimprosser/obsidian-web-mcp/security/advisories/GHSA-hwhg-mrjc-8g43"&gt;https://github.com/jimprosser/obsidian-web-mcp/security/advisories/GHSA-hwhg-mrjc-8g43&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

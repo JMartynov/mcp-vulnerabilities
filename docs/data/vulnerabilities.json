@@ -6132,9 +6132,9 @@
         "CVE-2025-61590"
       ]
     },
-    "details": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (RCE) attacks through Visual Studio Code Workspaces. Workspaces allow users to open more than a single folder and save specific settings (pretty similar to .vscode/settings.json) for the folders / project. An untitled workspace is automatically created by VS Code (untitled.code-workspace), which contains all the folders and workspace settings from the user's current session, opening up an entire new attack vector if the user has a .code-workspace file in path (either untitled created automatically or a saved one). If an attacker is able to hijack the chat context of the victim (such as via a compromised MCP server), they can use prompt injection to make the Cursor Agent write into this file and modify the workspace. This leads to a bypass of CVE-2025-54130 which can lead to RCE by writing to the settings section. This issue is fixed in version 1.7.",
+    "details": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (RCE) attacks through Visual Studio Code Workspaces. Workspaces allow users to open more than a single folder and save specific settings (pretty similar to .vscode/settings.json) for the folders / project. An untitled workspace is automatically created by VS Code (untitled.code-workspace), which contains all the folders and workspace settings from the user's current session, opening up an entire new attack vector if the user has a .code-workspace file in path (either untitled created automatically or a saved one). If an attacker is able to hijack the chat context of the victim (such as via a compromised MCP server), they can use prompt injection to make the Cursor Agent write into this file and modify the workspace. This leads to a bypass of CVE-2025-54130 which can lead to RCE by writing to the settings section. This issue is fixed in version 1.7.\n\nCursor es un editor de código construido para programar con IA. Las versiones 1.6 e inferiores son vulnerables a ataques de ejecución remota de código (RCE) a través de los espacios de trabajo de Visual Studio Code. Los espacios de trabajo permiten a los usuarios abrir más de una sola carpeta y guardar configuraciones específicas (bastante similar a .vscode/settings.json) para las carpetas / el proyecto. VS Code crea automáticamente un espacio de trabajo sin título (untitled.code-workspace), que contiene todas las carpetas y configuraciones del espacio de trabajo de la sesión actual del usuario, abriendo un nuevo vector de ataque completo si el usuario tiene un archivo .code-workspace en la ruta (ya sea sin título creado automáticamente o uno guardado). Si un atacante es capaz de secuestrar el contexto del chat de la víctima (como a través de un servidor MCP comprometido), pueden usar la inyección de prompts para hacer que el Agente de Cursor escriba en este archivo y modifique el espacio de trabajo. Esto lleva a una omisión de CVE-2025-54130 lo que puede llevar a RCE escribiendo en la sección de configuraciones. Este problema está solucionado en la versión 1.7.",
     "id": "CVE-2025-61590",
-    "modified": "2026-06-17T09:50:36.767Z",
+    "modified": "2026-10-19T17:10:00.173Z",
     "published": "2025-10-03T16:27:34.258Z",
     "references": [
       {
@@ -6210,9 +6210,9 @@
         "CVE-2025-61591"
       ]
     },
-    "details": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication with an untrusted MCP server, an attacker can impersonate a malicious MCP server and return crafted, maliciously injected commands during the interaction process, leading to command injection and potential remote code execution. If chained with an untrusted MCP service via OAuth, this command injection vulnerability could allow arbitrary code execution on the host by the agent. This can then be used to directly compromise the system by executing malicious commands with full user privileges. This issue does not currently have a fixed release version, but there is a patch, 2025.09.17-25b418f.",
+    "details": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication with an untrusted MCP server, an attacker can impersonate a malicious MCP server and return crafted, maliciously injected commands during the interaction process, leading to command injection and potential remote code execution. If chained with an untrusted MCP service via OAuth, this command injection vulnerability could allow arbitrary code execution on the host by the agent. This can then be used to directly compromise the system by executing malicious commands with full user privileges. This issue does not currently have a fixed release version, but there is a patch, 2025.09.17-25b418f.\n\nCursor es un editor de código construido para programar con IA. En las versiones 1.7 e inferiores, cuando MCP utiliza autenticación OAuth con un servidor MCP no confiable, un atacante puede suplantar a un servidor MCP malicioso y devolver comandos elaborados y maliciosamente inyectados durante el proceso de interacción, lo que lleva a la inyección de comandos y a una potencial ejecución remota de código. Si se encadena con un servicio MCP no confiable a través de OAuth, esta vulnerabilidad de inyección de comandos podría permitir la ejecución de código arbitrario en el host por parte del agente. Esto puede entonces ser utilizado para comprometer directamente el sistema ejecutando comandos maliciosos con privilegios de usuario completos. Este problema no tiene actualmente una versión de lanzamiento corregida, pero existe un parche, 2025.09.17-25b418f.",
     "id": "CVE-2025-61591",
-    "modified": "2026-06-17T09:50:36.873Z",
+    "modified": "2026-10-19T17:10:00.173Z",
     "published": "2025-10-03T16:44:54.776Z",
     "references": [
       {
@@ -6719,9 +6719,9 @@
         "CVE-2025-64106"
       ]
     },
-    "details": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor's MCP server installation enables specially crafted deep-links to bypass the standard security warnings and conceal executed commands from users if they choose to accept the server. If an attacker is able to convince a victim to navigate to a malicious deeplink, the victim will not see the correct speedbump modal, and if they choose to accept, will execute commands specified by the attackers deeplink.",
+    "details": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor's MCP server installation enables specially crafted deep-links to bypass the standard security warnings and conceal executed commands from users if they choose to accept the server. If an attacker is able to convince a victim to navigate to a malicious deeplink, the victim will not see the correct speedbump modal, and if they choose to accept, will execute commands specified by the attackers deeplink.\n\nCursor es un editor de código diseñado para programar con IA. En las versiones 1.7.28 e inferiores, una falla de validación de entrada en la instalación del servidor MCP de Cursor permite que deep-links especialmente diseñados omitan las advertencias de seguridad estándar y oculten comandos ejecutados a los usuarios si eligen aceptar el servidor. Si un atacante logra convencer a una víctima de navegar a un deeplink malicioso, la víctima no verá el modal de advertencia (speedbump) correcto, y si elige aceptar, ejecutará comandos especificados por el deeplink del atacante.",
     "id": "CVE-2025-64106",
-    "modified": "2026-06-17T09:53:50.113Z",
+    "modified": "2026-10-19T13:10:00.110Z",
     "published": "2025-11-04T22:48:14.832Z",
     "references": [
       {
@@ -6797,9 +6797,9 @@
         "CVE-2025-64109"
       ]
     },
-    "details": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta allowed an attacker to achieve remote code execution through the MCP (Model Context Protocol) server mechanism by uploading a malicious MCP configuration in .cursor/mcp.json file in a GitHub repository. Once a victim clones the project and opens it using Cursor CLI, the command to run the malicious MCP server is immediately executed without any warning, leading to potential code execution as soon as the command runs. This issue is fixed in version 2025.09.17-25b418f.",
+    "details": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta allowed an attacker to achieve remote code execution through the MCP (Model Context Protocol) server mechanism by uploading a malicious MCP configuration in .cursor/mcp.json file in a GitHub repository. Once a victim clones the project and opens it using Cursor CLI, the command to run the malicious MCP server is immediately executed without any warning, leading to potential code execution as soon as the command runs. This issue is fixed in version 2025.09.17-25b418f.\n\nCursor es un editor de código diseñado para programar con IA. En versiones y anteriores, una vulnerabilidad en Cursor CLI Beta permitió a un atacante lograr la ejecución remota de código a través del mecanismo del servidor MCP (Model Context Protocol) al cargar una configuración MCP maliciosa en el archivo .cursor/mcp.json en un repositorio de GitHub. Una vez que una víctima clona el proyecto y lo abre usando Cursor CLI, el comando para ejecutar el servidor MCP malicioso se ejecuta inmediatamente sin ninguna advertencia, lo que lleva a una posible ejecución de código tan pronto como se ejecuta el comando. Este problema está solucionado en la versión 2025.09.17-25b418f.",
     "id": "CVE-2025-64109",
-    "modified": "2026-06-17T09:53:50.447Z",
+    "modified": "2026-10-19T13:10:00.110Z",
     "published": "2025-11-04T23:09:49.147Z",
     "references": [
       {
@@ -11860,8 +11860,10 @@
           {
             "events": [
               {
-                "fixed": "0.1.0-alpha.3",
                 "introduced": "0.1.0-alpha.1"
+              },
+              {
+                "fixed": "0.1.0-alpha.3"
               }
             ],
             "type": "SEMVER"
@@ -11870,181 +11872,14 @@
       }
     ],
     "database_specific": {
-      "raw_metrics": {
-        "cvssV40": {
-          "cvssData": {
-            "Automatable": "NOT_DEFINED",
-            "Recovery": "NOT_DEFINED",
-            "Safety": "NOT_DEFINED",
-            "attackComplexity": "LOW",
-            "attackRequirements": "NONE",
-            "attackVector": "NETWORK",
-            "availabilityRequirement": "NOT_DEFINED",
-            "baseScore": 9.3,
-            "baseSeverity": "CRITICAL",
-            "confidentialityRequirement": "NOT_DEFINED",
-            "exploitMaturity": "NOT_DEFINED",
-            "integrityRequirement": "NOT_DEFINED",
-            "modifiedAttackComplexity": "NOT_DEFINED",
-            "modifiedAttackRequirements": "NOT_DEFINED",
-            "modifiedAttackVector": "NOT_DEFINED",
-            "modifiedPrivilegesRequired": "NOT_DEFINED",
-            "modifiedSubAvailabilityImpact": "NOT_DEFINED",
-            "modifiedSubConfidentialityImpact": "NOT_DEFINED",
-            "modifiedSubIntegrityImpact": "NOT_DEFINED",
-            "modifiedUserInteraction": "NOT_DEFINED",
-            "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
-            "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
-            "modifiedVulnIntegrityImpact": "NOT_DEFINED",
-            "privilegesRequired": "NONE",
-            "providerUrgency": "NOT_DEFINED",
-            "subAvailabilityImpact": "NONE",
-            "subConfidentialityImpact": "NONE",
-            "subIntegrityImpact": "NONE",
-            "userInteraction": "NONE",
-            "valueDensity": "NOT_DEFINED",
-            "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-            "version": "4.0",
-            "vulnAvailabilityImpact": "HIGH",
-            "vulnConfidentialityImpact": "HIGH",
-            "vulnIntegrityImpact": "HIGH",
-            "vulnerabilityResponseEffort": "NOT_DEFINED"
-          },
-          "source": "cve-coordination@google.com",
-          "type": "Secondary"
-        }
-      },
-      "raw_nvd": {
-        "affected": [
-          {
-            "affectedData": [
-              {
-                "defaultStatus": "unaffected",
-                "packageName": "github.com/google/sam",
-                "product": "SAM",
-                "vendor": "Google",
-                "versions": [
-                  {
-                    "lessThan": "0.1.0-alpha.3",
-                    "status": "affected",
-                    "version": "0.1.0-alpha.1",
-                    "versionType": "semver"
-                  }
-                ]
-              }
-            ],
-            "source": "cve-coordination@google.com"
-          }
-        ],
-        "descriptions": [
-          {
-            "lang": "en",
-            "value": "Missing Authentication for Critical Function (CWE-306) and Missing Authorization (CWE-862) in the /libp2p-http ingress server (StartIngressServer in cmd/sam-node/node.go) in Google OSS Agent Mesh (SAM) versions 0.1.0-alpha.1 through 0.1.0-alpha.2 allow an unauthenticated remote libp2p peer to bypass Biscuit capability policy enforcement and invoke arbitrary registered backend services (including command/stdio-backed MCP servers, A2A, and inference endpoints). While the MCP protocol stream handler enforces WithBiscuitAuth and Authorize checks, the parallel /libp2p-http ingress routes requests directly to backend service handlers without verifying a Biscuit token or mesh enrollment. Users should upgrade to version 0.1.0-alpha.3 or later."
-          }
-        ],
-        "id": "CVE-2026-102503",
-        "lastModified": "2026-10-19T03:16:58.193",
-        "metrics": {
-          "cvssMetricV40": [
-            {
-              "cvssData": {
-                "Automatable": "NOT_DEFINED",
-                "Recovery": "NOT_DEFINED",
-                "Safety": "NOT_DEFINED",
-                "attackComplexity": "LOW",
-                "attackRequirements": "NONE",
-                "attackVector": "NETWORK",
-                "availabilityRequirement": "NOT_DEFINED",
-                "baseScore": 9.3,
-                "baseSeverity": "CRITICAL",
-                "confidentialityRequirement": "NOT_DEFINED",
-                "exploitMaturity": "NOT_DEFINED",
-                "integrityRequirement": "NOT_DEFINED",
-                "modifiedAttackComplexity": "NOT_DEFINED",
-                "modifiedAttackRequirements": "NOT_DEFINED",
-                "modifiedAttackVector": "NOT_DEFINED",
-                "modifiedPrivilegesRequired": "NOT_DEFINED",
-                "modifiedSubAvailabilityImpact": "NOT_DEFINED",
-                "modifiedSubConfidentialityImpact": "NOT_DEFINED",
-                "modifiedSubIntegrityImpact": "NOT_DEFINED",
-                "modifiedUserInteraction": "NOT_DEFINED",
-                "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
-                "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
-                "modifiedVulnIntegrityImpact": "NOT_DEFINED",
-                "privilegesRequired": "NONE",
-                "providerUrgency": "NOT_DEFINED",
-                "subAvailabilityImpact": "NONE",
-                "subConfidentialityImpact": "NONE",
-                "subIntegrityImpact": "NONE",
-                "userInteraction": "NONE",
-                "valueDensity": "NOT_DEFINED",
-                "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
-                "version": "4.0",
-                "vulnAvailabilityImpact": "HIGH",
-                "vulnConfidentialityImpact": "HIGH",
-                "vulnIntegrityImpact": "HIGH",
-                "vulnerabilityResponseEffort": "NOT_DEFINED"
-              },
-              "source": "cve-coordination@google.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        "published": "2026-10-19T03:16:58.193",
-        "references": [
-          {
-            "source": "cve-coordination@google.com",
-            "url": "https://github.com/google/sam/commit/433bc99d2a2c10071167bf22acc2c930a12e64e1"
-          },
-          {
-            "source": "cve-coordination@google.com",
-            "url": "https://github.com/google/sam/releases/tag/v0.1.0-alpha.3"
-          },
-          {
-            "source": "cve-coordination@google.com",
-            "url": "https://github.com/google/sam/security/advisories/GHSA-r6hp-67wp-c7jx"
-          }
-        ],
-        "sourceIdentifier": "cve-coordination@google.com",
-        "vulnStatus": "Received",
-        "weaknesses": [
-          {
-            "description": [
-              {
-                "lang": "en",
-                "value": "CWE-306"
-              },
-              {
-                "lang": "en",
-                "value": "CWE-862"
-              }
-            ],
-            "source": "cve-coordination@google.com",
-            "type": "Secondary"
-          }
-        ]
-      },
-      "source": "NVD",
-      "sourceIdentifier": "cve-coordination@google.com",
-      "vulnStatus": "Received",
-      "weaknesses": [
-        {
-          "lang": "en",
-          "source": "cve-coordination@google.com",
-          "type": "Secondary",
-          "value": "CWE-306"
-        },
-        {
-          "lang": "en",
-          "source": "cve-coordination@google.com",
-          "type": "Secondary",
-          "value": "CWE-862"
-        }
+      "sources_merged": [
+        "CVE-2026-102503",
+        "CVE-2026-102503"
       ]
     },
     "details": "Missing Authentication for Critical Function (CWE-306) and Missing Authorization (CWE-862) in the /libp2p-http ingress server (StartIngressServer in cmd/sam-node/node.go) in Google OSS Agent Mesh (SAM) versions 0.1.0-alpha.1 through 0.1.0-alpha.2 allow an unauthenticated remote libp2p peer to bypass Biscuit capability policy enforcement and invoke arbitrary registered backend services (including command/stdio-backed MCP servers, A2A, and inference endpoints). While the MCP protocol stream handler enforces WithBiscuitAuth and Authorize checks, the parallel /libp2p-http ingress routes requests directly to backend service handlers without verifying a Biscuit token or mesh enrollment. Users should upgrade to version 0.1.0-alpha.3 or later.",
     "id": "CVE-2026-102503",
-    "modified": "2026-10-19T03:16:58.193Z",
+    "modified": "2026-10-19T21:13:39.973Z",
     "published": "2026-10-19T03:16:58.193Z",
     "references": [
       {
@@ -12058,6 +11893,10 @@
       {
         "type": "ADVISORY",
         "url": "https://github.com/google/sam/security/advisories/GHSA-r6hp-67wp-c7jx"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/google/agentmesh/security/advisories/GHSA-r6hp-67wp-c7jx"
       }
     ],
     "schema_version": "1.6.0",
@@ -14525,7 +14364,7 @@
     },
     "details": "The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp versions before 1.29.1 and from 2.0.0a1 through 2.0.1, the Streamable HTTP session manager, SSE message endpoint, and OAuth authorization-server routes buffer complete HTTP request bodies without enforcing a maximum size. An unauthenticated remote client able to reach an affected endpoint can send a large declared or streamed request body that consumes multiple times the body size in process memory and can repeatedly exhaust memory or terminate the server. Stdio-only servers and deployments with an effective upstream request-size limit are not affected, and applications that use StreamableHTTPServerTransport directly remain responsible for enforcing their own limit. The standard SDK server applications and session managers are fixed in versions 1.29.1 and 2.1.0.",
     "id": "CVE-2026-109527",
-    "modified": "2026-10-16T16:00:33.533Z",
+    "modified": "2026-10-20T02:17:08.867Z",
     "published": "2026-10-14T18:17:33.447Z",
     "references": [
       {
@@ -14605,7 +14444,7 @@
     },
     "details": "NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to access the /api/* management API because the auth_token field defaults to null and is never assigned. Attackers sending requests without Authorization or Origin headers to non-loopback listeners can control agent instances, rewrite configurations including provider credentials, and manage cron jobs and MCP servers.",
     "id": "CVE-2026-110616",
-    "modified": "2026-10-16T19:18:44.867Z",
+    "modified": "2026-10-20T02:17:09.270Z",
     "published": "2026-10-14T15:17:13.767Z",
     "references": [
       {
@@ -72576,6 +72415,109 @@
     "affected": [
       {
         "database_specific": {
+          "cwe_ids": [
+            "CWE-918"
+          ]
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0",
+                "last_affected": "1.0.5"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "defaultStatus": "unaffected",
+                "product": "ContextForge MCP Gateway",
+                "vendor": "IBM",
+                "versions": [
+                  {
+                    "lessThanOrEqual": "1.0.5",
+                    "status": "affected",
+                    "version": "0.1.0",
+                    "versionType": "semver"
+                  }
+                ]
+              }
+            ],
+            "source": "psirt@us.ibm.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authenticated users with gateway creation privileges to perform arbitrary HTTP POST requests to internal network resources and cloud metadata endpoints. The vulnerability occurs during OAuth-enabled gateway registration when the system fails to validate the oauth_config.token_url parameter. When registering a gateway with OAuth client credentials authentication, an attacker can supply a malicious token_url pointing to internal services, cloud metadata endpoints (AWS IMDSv1, GCP, Azure), or localhost-bound services. The application immediately performs an HTTP POST request to the attacker-controlled URL with form-encoded credentials in the body. If the response cannot be parsed as a valid OAuth token response, up to 256 characters of the response body are reflected back to the attacker in the HTTP 502 error message. This vulnerability bypasses existing SSRF protections that are applied to the gateway.url field but not to OAuth configuration parameters."
+          }
+        ],
+        "id": "CVE-2026-8355",
+        "lastModified": "2026-10-20T00:19:20.530",
+        "published": "2026-10-20T00:19:20.530",
+        "references": [
+          {
+            "source": "psirt@us.ibm.com",
+            "url": "https://www.ibm.com/support/pages/node/7285723"
+          }
+        ],
+        "sourceIdentifier": "psirt@us.ibm.com",
+        "vulnStatus": "Received",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-918"
+              }
+            ],
+            "source": "psirt@us.ibm.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "psirt@us.ibm.com",
+      "vulnStatus": "Received",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "psirt@us.ibm.com",
+          "type": "Primary",
+          "value": "CWE-918"
+        }
+      ]
+    },
+    "details": "IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authenticated users with gateway creation privileges to perform arbitrary HTTP POST requests to internal network resources and cloud metadata endpoints. The vulnerability occurs during OAuth-enabled gateway registration when the system fails to validate the oauth_config.token_url parameter. When registering a gateway with OAuth client credentials authentication, an attacker can supply a malicious token_url pointing to internal services, cloud metadata endpoints (AWS IMDSv1, GCP, Azure), or localhost-bound services. The application immediately performs an HTTP POST request to the attacker-controlled URL with form-encoded credentials in the body. If the response cannot be parsed as a valid OAuth token response, up to 256 characters of the response body are reflected back to the attacker in the HTTP 502 error message. This vulnerability bypasses existing SSRF protections that are applied to the gateway.url field but not to OAuth configuration parameters.",
+    "id": "CVE-2026-8355",
+    "modified": "2026-10-20T00:19:20.530Z",
+    "published": "2026-10-20T00:19:20.530Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://www.ibm.com/support/pages/node/7285723"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "summary": "IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authe"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
           "cvss_score": 8.8,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
           "cwe_ids": [
@@ -74711,7 +74653,7 @@
     },
     "details": "Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a separate token without validation, so a dash-leading value is parsed as an independent CLI flag. An attacker can inject the --mcp-config flag to define a stdio MCP server, causing arbitrary command execution at CLI startup outside the SDK permission controls. The issue is exploitable when an application passes untrusted input as the session ID to resume. This issue is fixed in version 0.2.121.",
     "id": "CVE-2026-96620",
-    "modified": "2026-10-16T20:18:28.293Z",
+    "modified": "2026-10-19T21:13:39.973Z",
     "published": "2026-10-16T20:18:28.293Z",
     "references": [
       {
