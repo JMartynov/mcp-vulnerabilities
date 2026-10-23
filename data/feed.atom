@@ -5,15 +5,33 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-10-21T01:17:33.920Z</updated>
+  <updated>2026-10-22T17:40:46.877Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
   <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-114123</id>
+    <title>[UNKNOWN] CVE-2026-114123: D365 F&amp;O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance &amp; Operations X++ code and metad</title>
+    <link rel="alternate" href="https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818" />
+    <updated>2026-10-22T17:40:46.877Z</updated>
+    <published>2026-10-21T17:18:25.737Z</published>
+    <summary>D365 F&amp;O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance &amp; Operations X++ code and metad</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114123&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;D365 F&amp;O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance &amp; Operations X++ code and metadata. Prior to version 1.11.0, the officially documented Azure one-click deployment uses infrastructure/azuredeploy.json and infrastructure/main.bicep to default the apiKey parameter to an empty string and pass it to the App Service API_KEY setting. With API_KEY unset or empty, src/middleware/apiKeyAuth.ts passes requests through without authentication, while src/index.ts binds the HTTP listener to 0.0.0.0 by default. If the deployer leaves the optional key blank and does not add separate network restrictions or upstream authentication, the resulting public App Service allows unauthenticated JSON-RPC tools/call requests to /mcp. The deployment's MCP_SERVER_MODE=read-only setting does not prevent anonymous access to read/search tools, including search, get_object_info, batch_get_info, extension_info, security_info, find_references, and find_event_handlers, exposing indexed proprietary X++ source snippets and metadata. Exposed information can include business logic, extension and event-handler wiring, security-role and privilege structure, and labels originally indexed from PackagesLocalDirectory. Deployments protected by a configured API key, effective upstream authentication, or network restrictions preventing attacker access are outside this unauthenticated exposure scenario. This issue is fixed in version 1.11.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/commit/e70bd051f817ebb652d664b10a944fe2c5495de2"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/commit/e70bd051f817ebb652d664b10a944fe2c5495de2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/releases/tag/v1.11.0"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/releases/tag/v1.11.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/security/advisories/GHSA-8764-fh3m-wf7g"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/security/advisories/GHSA-8764-fh3m-wf7g&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-114090</id>
     <title>[UNKNOWN] CVE-2026-114090: Trigger.dev cli-v3 from 3.0.0 before 4.5.4 contains a missing authentication vulnerability in the trigger dev --mcp serv</title>
     <link rel="alternate" href="https://github.com/triggerdotdev/trigger.dev/security/advisories/GHSA-pqmg-rq46-vm4m" />
-    <updated>2026-10-21T01:17:33.920Z</updated>
+    <updated>2026-10-22T17:39:56.760Z</updated>
     <published>2026-10-21T01:17:33.920Z</published>
     <summary>Trigger.dev cli-v3 from 3.0.0 before 4.5.4 contains a missing authentication vulnerability in the trigger dev --mcp serv</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114090&lt;/p&gt;
@@ -115,7 +133,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-96620</id>
     <title>[UNKNOWN] CVE-2026-96620: Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s</title>
     <link rel="alternate" href="https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662" />
-    <updated>2026-10-19T21:13:39.973Z</updated>
+    <updated>2026-10-21T22:16:50.597Z</updated>
     <published>2026-10-16T20:18:28.293Z</published>
     <summary>Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-96620&lt;/p&gt;
@@ -2958,21 +2976,6 @@ Resolve the hostname and validate **every resolved IP** against the private/spec
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;MaxKB is an open-source AI assistant for enterprise. In 2.10.2-lts and earlier, a normal workspace user who knows another user's active MCP tool_id in the same workspace can retrieve the hidden tool through the tool-detail route because it does not apply the per-resource authorization used by the list route. The response includes Tool.code, which may contain MCP server configuration and headers, and an attacker who can create or edit an attacker-owned workflow can place the same foreign mcp_tool_id in a workflow mcp-node so workflow debug uses the owner's MCP configuration without verifying permission to use that tool. No fixed version is available as of this review.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/1Panel-dev/MaxKB/security/advisories/GHSA-x65c-w438-c58f"&gt;https://github.com/1Panel-dev/MaxKB/security/advisories/GHSA-x65c-w438-c58f&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-61647</id>
-    <title>[UNKNOWN] CVE-2026-61647: NotebookLM MCP is an MCP server and HTTP service for interacting with Google NotebookLM and exporting generated content </title>
-    <link rel="alternate" href="https://github.com/roomi-fields/notebooklm-mcp/security/advisories/GHSA-jjhp-8crj-mppq" />
-    <updated>2026-09-24T21:25:27.050Z</updated>
-    <published>2026-09-21T21:17:07.107Z</published>
-    <summary>NotebookLM MCP is an MCP server and HTTP service for interacting with Google NotebookLM and exporting generated content </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-61647&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;NotebookLM MCP is an MCP server and HTTP service for interacting with Google NotebookLM and exporting generated content to local vault directories. Versions 1.6.0 through 2.0.2 contain a path traversal vulnerability in the `POST /batch-to-vault` endpoint, also exposed through the `batch_to_vault` MCP tool beginning in version 1.7.0, because attacker-controlled `vault_dir` and `slug_prefix` values can cause Markdown and JSON files to be written outside the intended vault directory to any location writable by the server process. Version 2.0.3 sanitizes `slug_prefix` and supports vault containment when `NOTEBOOKLM_VAULT_ROOT` is configured; containment is not enabled if that variable is unset. Users unable to upgrade should run the server as a dedicated unprivileged account restricted to the intended vault, keep the HTTP endpoint limited to localhost, and validate `vault_dir` values supplied by LLMs processing untrusted content.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/roomi-fields/notebooklm-mcp/security/advisories/GHSA-jjhp-8crj-mppq"&gt;https://github.com/roomi-fields/notebooklm-mcp/security/advisories/GHSA-jjhp-8crj-mppq&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

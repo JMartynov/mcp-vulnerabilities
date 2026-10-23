@@ -2985,167 +2985,6 @@
       }
     ]
   },
-  "AAR-Labs/snapdeploy-mcp": {
-    "package_name": "AAR-Labs/snapdeploy-mcp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/AAR-Labs%2Fsnapdeploy-mcp",
-    "display_name": "AAR-Labs/snapdeploy-mcp",
-    "description": "Deploy and manage SnapDeploy apps from your AI assistant: builds, logs, env vars, add-ons, domains.",
-    "author": null,
-    "repository_url": "https://github.com/AAR-Labs/snapdeploy-mcp",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "0.1.2",
-    "recommended_safe_version": "0.1.2",
-    "is_vulnerable": false,
-    "security_summary": "Server `AAR-Labs/snapdeploy-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.1.2",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:2dc8af518f4ca86c786223a0b414691c6ba1f086717c78a8dee806b7a9744c39",
-        "tools": [
-          {
-            "name": "add_domain",
-            "canonical_hash": "sha256:90f1c8fa92ef068da214caa108c2a707c9adf40ebc61c36d05c25b52aa59ef9e",
-            "description": "Attach a custom domain to a container. Returns the DNS records the user must create; verification then runs from the SnapDeploy UI.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `add_domain` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "assign_always_on",
-            "canonical_hash": "sha256:53af4f14a226a747951635fe4ae8bffe24fc68b0d8848149f002d173b766544d",
-            "description": "Attach an UNASSIGNED Always-On subscription to a container (keeps it running 24/7 and lifts the deploy limit). Only call this after the user explicitly confirms — check_quota lists any unassigned subscriptions.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `assign_always_on` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "check_quota",
-            "canonical_hash": "sha256:c6c1c300725791ecd64eac6c280adfa830375118c3d4b86f534f2b4f707dda9d",
-            "description": "Can the user deploy and run apps right now? Merges the deploy limit (5 per rolling 12h — ONLY for accounts without an Always-On/Sprint entitlement; failed attempts count) and the free-hours cap (containers refuse to start at 402 when exhausted), plus any unassigned Always-On subscriptions.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `check_quota` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "create_database",
-            "canonical_hash": "sha256:e47274770b7603ef50cd030e66c4435747caaa68ccbdc115723ee7f07c1f921a",
-            "description": "Create a managed add-on: PostgreSQL, MySQL, MariaDB, MongoDB, Redis or RabbitMQ. Requires a purchased add-on subscription — without one this returns the purchase link (relay it, don",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `create_database` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "deploy",
-            "canonical_hash": "sha256:39709547785aeac9c407860f1caffe831a1b659f9349a798775678a421f1d9a1",
-            "description": "Deploy a connected GitHub repo to SnapDeploy: creates the container if needed, links the repo, builds, and waits for the result. Reply includes the live URL or, on failure, the error and build-log tail. On accounts without an Always-On/Sprint entitlement this uses one unit of the deploy limit (failed attempts count); Always-On accounts are uncapped.",
-            "risk_score": 2.5,
-            "risk_tier": "medium",
-            "security_comment": "Tool `deploy` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "deploy_image",
-            "canonical_hash": "sha256:4a7fa11ee5629724db58913d60ca42eea1bebf9742cf40b77bfb3a641df299a5",
-            "description": "Deploy a Docker image from a LOCAL ",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `deploy_image` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "detect_env_vars",
-            "canonical_hash": "sha256:645725959b0413036f64fc7ab9259f68d64c72ab9c1d1e5ed2c923ab31c2e9fb",
-            "description": "Scan a repo for the environment variables it needs (import.meta.env / process.env usage, .env.example, Dockerfile). For known keys (Supabase etc.) the reply says where the user finds the value. Do this BEFORE the first deploy of a Lovable/Bolt/v0 export. Rows with source DOCKERFILE and instruction ENV already have their value inside the image and follow the repository on every push: do NOT pass them to deploy",
-            "risk_score": 3.5,
-            "risk_tier": "medium",
-            "security_comment": "Tool `detect_env_vars` [MEDIUM] inspects or modifies host environment variables; processes unstructured prompts susceptible to injection overrides.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_deployments",
-            "canonical_hash": "sha256:6fc952b510119d0150ad52d54accbc13f5adef63c87daaaa9ad3bcba5166732e",
-            "description": "Deployment history of a container, or one deployment in detail (status, error code/message and build-log tail — use this to diagnose a failed build).",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_deployments` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_logs",
-            "canonical_hash": "sha256:7a911aa1cda652c946af64e9c3da8058f9c66ca16feab8d9a73fb5f383b09e13",
-            "description": "Recent RUNTIME logs of a container (CloudWatch, up to 1000 lines). For BUILD logs of a deployment use get_deployments with a deployment_id.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_logs` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_status",
-            "canonical_hash": "sha256:69c7c378406aa525f811e4c0b7c21b6f338f0e5086faa3dca64b37f468d00786",
-            "description": "Full status of one container (by name or id): state, URL, port, detected technology, resources. Env-var VALUES are never returned — names only.",
-            "risk_score": 4.5,
-            "risk_tier": "medium",
-            "security_comment": "Tool `get_status` [MEDIUM] initiates outbound network requests (potential SSRF risk); inspects or modifies host environment variables.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "list_apps",
-            "canonical_hash": "sha256:79b2084661c6773b279d72d7f54146f9cc965e9a1de3521eb38bc2031f39440f",
-            "description": "List the user",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `list_apps` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "list_repos",
-            "canonical_hash": "sha256:1f6081a10b6a988b9f290bc9ff411fa9d5de17c6fc25cb1eca300d50718b5dc0",
-            "description": "List (or search) the GitHub repositories connected to this SnapDeploy account. If GitHub is not connected yet, returns the connect link for the user.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `list_repos` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "set_env",
-            "canonical_hash": "sha256:0295129a2ead101e3caecb0d25f0e5f7dcd64f0154801e92d8d7d9354ff689cd",
-            "description": "Set/replace a container",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `set_env` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          }
-        ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
   "@mseep/flux-cloudflare-mcp": {
     "package_name": "@mseep/flux-cloudflare-mcp",
     "ecosystem": "npm",
@@ -3626,6 +3465,167 @@
                 "nested_properties": null
               }
             ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "AAR-Labs/snapdeploy-mcp": {
+    "package_name": "AAR-Labs/snapdeploy-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/AAR-Labs%2Fsnapdeploy-mcp",
+    "display_name": "AAR-Labs/snapdeploy-mcp",
+    "description": "Deploy and manage SnapDeploy apps from your AI assistant: builds, logs, env vars, add-ons, domains.",
+    "author": null,
+    "repository_url": "https://github.com/AAR-Labs/snapdeploy-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.1.2",
+    "recommended_safe_version": "0.1.2",
+    "is_vulnerable": false,
+    "security_summary": "Server `AAR-Labs/snapdeploy-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.2",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:2dc8af518f4ca86c786223a0b414691c6ba1f086717c78a8dee806b7a9744c39",
+        "tools": [
+          {
+            "name": "add_domain",
+            "canonical_hash": "sha256:90f1c8fa92ef068da214caa108c2a707c9adf40ebc61c36d05c25b52aa59ef9e",
+            "description": "Attach a custom domain to a container. Returns the DNS records the user must create; verification then runs from the SnapDeploy UI.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_domain` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "assign_always_on",
+            "canonical_hash": "sha256:53af4f14a226a747951635fe4ae8bffe24fc68b0d8848149f002d173b766544d",
+            "description": "Attach an UNASSIGNED Always-On subscription to a container (keeps it running 24/7 and lifts the deploy limit). Only call this after the user explicitly confirms — check_quota lists any unassigned subscriptions.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assign_always_on` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "check_quota",
+            "canonical_hash": "sha256:c6c1c300725791ecd64eac6c280adfa830375118c3d4b86f534f2b4f707dda9d",
+            "description": "Can the user deploy and run apps right now? Merges the deploy limit (5 per rolling 12h — ONLY for accounts without an Always-On/Sprint entitlement; failed attempts count) and the free-hours cap (containers refuse to start at 402 when exhausted), plus any unassigned Always-On subscriptions.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_quota` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "create_database",
+            "canonical_hash": "sha256:e47274770b7603ef50cd030e66c4435747caaa68ccbdc115723ee7f07c1f921a",
+            "description": "Create a managed add-on: PostgreSQL, MySQL, MariaDB, MongoDB, Redis or RabbitMQ. Requires a purchased add-on subscription — without one this returns the purchase link (relay it, don",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_database` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "deploy",
+            "canonical_hash": "sha256:39709547785aeac9c407860f1caffe831a1b659f9349a798775678a421f1d9a1",
+            "description": "Deploy a connected GitHub repo to SnapDeploy: creates the container if needed, links the repo, builds, and waits for the result. Reply includes the live URL or, on failure, the error and build-log tail. On accounts without an Always-On/Sprint entitlement this uses one unit of the deploy limit (failed attempts count); Always-On accounts are uncapped.",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `deploy` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "deploy_image",
+            "canonical_hash": "sha256:4a7fa11ee5629724db58913d60ca42eea1bebf9742cf40b77bfb3a641df299a5",
+            "description": "Deploy a Docker image from a LOCAL ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `deploy_image` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "detect_env_vars",
+            "canonical_hash": "sha256:645725959b0413036f64fc7ab9259f68d64c72ab9c1d1e5ed2c923ab31c2e9fb",
+            "description": "Scan a repo for the environment variables it needs (import.meta.env / process.env usage, .env.example, Dockerfile). For known keys (Supabase etc.) the reply says where the user finds the value. Do this BEFORE the first deploy of a Lovable/Bolt/v0 export. Rows with source DOCKERFILE and instruction ENV already have their value inside the image and follow the repository on every push: do NOT pass them to deploy",
+            "risk_score": 3.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `detect_env_vars` [MEDIUM] inspects or modifies host environment variables; processes unstructured prompts susceptible to injection overrides.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_deployments",
+            "canonical_hash": "sha256:6fc952b510119d0150ad52d54accbc13f5adef63c87daaaa9ad3bcba5166732e",
+            "description": "Deployment history of a container, or one deployment in detail (status, error code/message and build-log tail — use this to diagnose a failed build).",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_deployments` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_logs",
+            "canonical_hash": "sha256:7a911aa1cda652c946af64e9c3da8058f9c66ca16feab8d9a73fb5f383b09e13",
+            "description": "Recent RUNTIME logs of a container (CloudWatch, up to 1000 lines). For BUILD logs of a deployment use get_deployments with a deployment_id.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_logs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_status",
+            "canonical_hash": "sha256:69c7c378406aa525f811e4c0b7c21b6f338f0e5086faa3dca64b37f468d00786",
+            "description": "Full status of one container (by name or id): state, URL, port, detected technology, resources. Env-var VALUES are never returned — names only.",
+            "risk_score": 4.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_status` [MEDIUM] initiates outbound network requests (potential SSRF risk); inspects or modifies host environment variables.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_apps",
+            "canonical_hash": "sha256:79b2084661c6773b279d72d7f54146f9cc965e9a1de3521eb38bc2031f39440f",
+            "description": "List the user",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_apps` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "list_repos",
+            "canonical_hash": "sha256:1f6081a10b6a988b9f290bc9ff411fa9d5de17c6fc25cb1eca300d50718b5dc0",
+            "description": "List (or search) the GitHub repositories connected to this SnapDeploy account. If GitHub is not connected yet, returns the connect link for the user.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_repos` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "set_env",
+            "canonical_hash": "sha256:0295129a2ead101e3caecb0d25f0e5f7dcd64f0154801e92d8d7d9354ff689cd",
+            "description": "Set/replace a container",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_env` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
             "annotations": {}
           }
         ],
@@ -6889,6 +6889,287 @@
       }
     ]
   },
+  "FoundryNet/forge-mcp": {
+    "package_name": "FoundryNet/forge-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/FoundryNet%2Fforge-mcp",
+    "display_name": "FoundryNet/forge-mcp",
+    "description": "Connect any AI agent to industrial equipment. Forge normalizes cross-manufacturer machine telemetry into one canonical schema so an agent can read, reason over, and act on data from any of 18 OEM families. 32 MCP tools for machine identity, normalization, history, plain-English automation, TimesFM prediction (forecast, threshold-breach, remaining-life, batch + fleet health, anomaly detection, full-stack machine intelligence), operations analytics (OEE, energy, shift reports, diagnostics), deterministic safety guardrails, and tamper-evident, hash-verified work records.",
+    "author": null,
+    "repository_url": "https://github.com/FoundryNet/forge-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "3.4.4",
+    "recommended_safe_version": "3.4.4",
+    "is_vulnerable": false,
+    "security_summary": "Server `FoundryNet/forge-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "3.4.4",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "GeiserX/lynxprompt-mcp": {
+    "package_name": "GeiserX/lynxprompt-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/GeiserX%2Flynxprompt-mcp",
+    "display_name": "GeiserX/lynxprompt-mcp",
+    "description": "MCP Server for LynxPrompt — browse, search, and manage AI configuration blueprints (AGENTS.md, CLAUDE.md) via MCP",
+    "author": null,
+    "repository_url": "https://github.com/GeiserX/lynxprompt-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `GeiserX/lynxprompt-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:f65e0783dfb473c4c78c294dbf7a4af948649acea4134c05867439ebdc7cb933",
+        "tools": [
+          {
+            "name": "create_blueprint",
+            "canonical_hash": "sha256:3eec8dcfcdddf9d0da4d0185d6ff765d545bd01527291cc363f2ccaf9c6960c5",
+            "description": "Create a new blueprint in LynxPrompt",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_blueprint` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "content",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "visibility",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "create_hierarchy",
+            "canonical_hash": "sha256:9fe13579085ea15de39a7b9b7cbfa50f4a72574517094e31126a86c3baa7f9a4",
+            "description": "Create a new hierarchy in LynxPrompt",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_hierarchy` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "name",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "repository_root",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "description",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "delete_blueprint",
+            "canonical_hash": "sha256:af10c3c2e0abba6e3d2ad801e7e12c1d17c6c1de7725e5831c7a48858e9dc4f1",
+            "description": "Delete a blueprint from LynxPrompt",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_blueprint` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "delete_hierarchy",
+            "canonical_hash": "sha256:fa67386994aa96cd7da3b11bd12ba15b71ede533dd06165dd1958d2eaae87df7",
+            "description": "Delete a hierarchy from LynxPrompt",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_hierarchy` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "search_blueprints",
+            "canonical_hash": "sha256:7ef00c8acd001e21fb201bc6ee815465cc2ceee8820c8b4d8fb597f9b3df74ae",
+            "description": "Search the public LynxPrompt blueprint marketplace",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_blueprints` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "category",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "tags",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "ExpertVagabond/solmail-mcp": {
     "package_name": "ExpertVagabond/solmail-mcp",
     "ecosystem": "generic",
@@ -8051,287 +8332,6 @@
                 "name": "title",
                 "type": "string",
                 "description": "文档的新标题",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          }
-        ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "FoundryNet/forge-mcp": {
-    "package_name": "FoundryNet/forge-mcp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/FoundryNet%2Fforge-mcp",
-    "display_name": "FoundryNet/forge-mcp",
-    "description": "Connect any AI agent to industrial equipment. Forge normalizes cross-manufacturer machine telemetry into one canonical schema so an agent can read, reason over, and act on data from any of 18 OEM families. 32 MCP tools for machine identity, normalization, history, plain-English automation, TimesFM prediction (forecast, threshold-breach, remaining-life, batch + fleet health, anomaly detection, full-stack machine intelligence), operations analytics (OEE, energy, shift reports, diagnostics), deterministic safety guardrails, and tamper-evident, hash-verified work records.",
-    "author": null,
-    "repository_url": "https://github.com/FoundryNet/forge-mcp",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "3.4.4",
-    "recommended_safe_version": "3.4.4",
-    "is_vulnerable": false,
-    "security_summary": "Server `FoundryNet/forge-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "3.4.4",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "GeiserX/lynxprompt-mcp": {
-    "package_name": "GeiserX/lynxprompt-mcp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/GeiserX%2Flynxprompt-mcp",
-    "display_name": "GeiserX/lynxprompt-mcp",
-    "description": "MCP Server for LynxPrompt — browse, search, and manage AI configuration blueprints (AGENTS.md, CLAUDE.md) via MCP",
-    "author": null,
-    "repository_url": "https://github.com/GeiserX/lynxprompt-mcp",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `GeiserX/lynxprompt-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.1.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:f65e0783dfb473c4c78c294dbf7a4af948649acea4134c05867439ebdc7cb933",
-        "tools": [
-          {
-            "name": "create_blueprint",
-            "canonical_hash": "sha256:3eec8dcfcdddf9d0da4d0185d6ff765d545bd01527291cc363f2ccaf9c6960c5",
-            "description": "Create a new blueprint in LynxPrompt",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `create_blueprint` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "name",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "content",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "type",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "description",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "visibility",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "create_hierarchy",
-            "canonical_hash": "sha256:9fe13579085ea15de39a7b9b7cbfa50f4a72574517094e31126a86c3baa7f9a4",
-            "description": "Create a new hierarchy in LynxPrompt",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `create_hierarchy` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "name",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "repository_root",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "description",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "delete_blueprint",
-            "canonical_hash": "sha256:af10c3c2e0abba6e3d2ad801e7e12c1d17c6c1de7725e5831c7a48858e9dc4f1",
-            "description": "Delete a blueprint from LynxPrompt",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `delete_blueprint` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "id",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "delete_hierarchy",
-            "canonical_hash": "sha256:fa67386994aa96cd7da3b11bd12ba15b71ede533dd06165dd1958d2eaae87df7",
-            "description": "Delete a hierarchy from LynxPrompt",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `delete_hierarchy` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "id",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "search_blueprints",
-            "canonical_hash": "sha256:7ef00c8acd001e21fb201bc6ee815465cc2ceee8820c8b4d8fb597f9b3df74ae",
-            "description": "Search the public LynxPrompt blueprint marketplace",
-            "risk_score": 4.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `search_blueprints` [MEDIUM] issues raw database queries that could lead to SQL injection.",
-            "parameters": [
-              {
-                "name": "query",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "category",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "type",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "tags",
-                "type": "string",
-                "description": null,
                 "required": false,
                 "default": null,
                 "enum": null,
@@ -10245,66 +10245,6 @@
       }
     ]
   },
-  "MarceauSolutions/rideshare-comparison-mcp": {
-    "package_name": "MarceauSolutions/rideshare-comparison-mcp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/MarceauSolutions%2Frideshare-comparison-mcp",
-    "display_name": "MarceauSolutions/rideshare-comparison-mcp",
-    "description": "Compare Uber and Lyft prices for any route",
-    "author": null,
-    "repository_url": "https://github.com/wmarceau/rideshare-comparison-mcp",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `MarceauSolutions/rideshare-comparison-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "MarcinDudekDev/the-data-collector": {
-    "package_name": "MarcinDudekDev/the-data-collector",
-    "ecosystem": "github",
-    "purl": "pkg:github/MarcinDudekDev%2Fthe-data-collector",
-    "display_name": "MarcinDudekDev/the-data-collector",
-    "description": "MCP server repository MarcinDudekDev/the-data-collector on GitHub.",
-    "author": null,
-    "repository_url": "https://github.com/MarcinDudekDev/the-data-collector",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `MarcinDudekDev/the-data-collector` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
   "Kapeli/dash-mcp-server": {
     "package_name": "Kapeli/dash-mcp-server",
     "ecosystem": "generic",
@@ -10445,6 +10385,66 @@
       },
       {
         "version": "1.1.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "MarceauSolutions/rideshare-comparison-mcp": {
+    "package_name": "MarceauSolutions/rideshare-comparison-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/MarceauSolutions%2Frideshare-comparison-mcp",
+    "display_name": "MarceauSolutions/rideshare-comparison-mcp",
+    "description": "Compare Uber and Lyft prices for any route",
+    "author": null,
+    "repository_url": "https://github.com/wmarceau/rideshare-comparison-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `MarceauSolutions/rideshare-comparison-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "MarcinDudekDev/the-data-collector": {
+    "package_name": "MarcinDudekDev/the-data-collector",
+    "ecosystem": "github",
+    "purl": "pkg:github/MarcinDudekDev%2Fthe-data-collector",
+    "display_name": "MarcinDudekDev/the-data-collector",
+    "description": "MCP server repository MarcinDudekDev/the-data-collector on GitHub.",
+    "author": null,
+    "repository_url": "https://github.com/MarcinDudekDev/the-data-collector",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `MarcinDudekDev/the-data-collector` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -11989,268 +11989,6 @@
       }
     ]
   },
-  "Sidd27/infrawise": {
-    "package_name": "Sidd27/infrawise",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/Sidd27%2Finfrawise",
-    "display_name": "Sidd27/infrawise",
-    "description": "MCP server for AWS infrastructure analysis — DynamoDB, Lambda, SQS, SNS, S3, API Gateway, PostgreSQL, MySQL, MongoDB, Kafka & IaC drift. Works with Claude Code, Cursor, and GitHub Copilot.",
-    "author": null,
-    "repository_url": "https://github.com/Sidd27/infrawise",
-    "homepage_url": "https://sidd27.github.io/infrawise/",
-    "license": null,
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `Sidd27/infrawise` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.27.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:3ddd9e7384886071053f84ee0a68245d4bb5b5d4c86c5ae79ce9e50aa61756fb",
-        "tools": [
-          {
-            "name": "analyze_function",
-            "canonical_hash": "sha256:5ecc44367489b008ddd30af2b80f072aee8b2ba5738e81d24420c292497a3f16",
-            "description": "Analyzes a single named function or Lambda handler for infrastructure issues: which tables it queries, how it queries them (scan vs query), queue publishing, secret access, and the correct event shape for each trigger (SQS, DynamoDB Streams, Kinesis, EventBridge). Call this before writing or reviewing a Lambda handler to get the exact trigger event shape and all findings scoped to this function. Per-file detail (file, accesses, missingPermissions) is returned in ",
-            "risk_score": 6.0,
-            "risk_tier": "high",
-            "security_comment": "Tool `analyze_function` [HIGH] issues raw database queries that could lead to SQL injection; handles sensitive credentials, tokens, or private secrets.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_api_routes",
-            "canonical_hash": "sha256:585ef96703ae08c455feda2d00e4db2400e2769a4f4ac9dc5d9f5caec397ddb3",
-            "description": "Returns all API Gateway APIs (REST, HTTP, WebSocket) with their routes, HTTP methods, paths, and the Lambda function each route invokes. Call this before writing any API handler to understand which Lambda handles a route, or when reviewing API surface area and Lambda integration coverage.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_api_routes` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_cache_overview",
-            "canonical_hash": "sha256:9eefb23098faf7072342482a2ec4c07d20b95fe1345c8cc391f982fd7e3cb364",
-            "description": "Returns all ElastiCache clusters with engine, version, node type, node count, in-transit and at-rest encryption status, replication group, and automatic failover state. Call this before writing cache client code (TLS is required when transit encryption is on — rediss:// for Redis) or when reviewing cache availability and security posture. Cached data is never read or included. A costSignal note appears on clusters with more than 3 nodes.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_cache_overview` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_cloudfront_overview",
-            "canonical_hash": "sha256:14bdfbfcb1273eca6afa5236f497d2c120d776c7698e02163bb209dbb7585225",
-            "description": "Returns all CloudFront distributions with, per distribution: id, comment, domain name, alias domains, enabled state, origins (type s3 or custom, domain name, and the resolved API Gateway name when the origin is an execute-api endpoint), and every cache behavior with its path pattern, target origin, cache policy name, viewer protocol policy, and allowed methods. Behaviors are listed in CloudFront match order — ordered behaviors first, the default behavior last. Call this to answer which distribution and behavior serves a given path and which origin it hits, before changing a path-based routing rule, or when reviewing edge caching and HTTPS enforcement across a multi-API front door.",
-            "risk_score": 5.5,
-            "risk_tier": "high",
-            "security_comment": "Tool `get_cloudfront_overview` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk).",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_cognito_overview",
-            "canonical_hash": "sha256:56dc540a0708eb393838be39389d7b676224ef6e1d5ecbb9b59d880dc4a9ebce",
-            "description": "Returns all Cognito user pools with MFA configuration and every app client config: allowed auth flows, OAuth flows/scopes, callback URLs, token validity, and whether the client has a secret (SDK auth calls must send SECRET_HASH when true). Client secret values are never returned. Call this before writing any Cognito sign-in, sign-up, or token-refresh code to use the correct auth flow and client settings. Do NOT call to look up users or tokens — infrawise never reads user data.",
-            "risk_score": 2.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_cognito_overview` [LOW] handles sensitive credentials, tokens, or private secrets.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_eventbridge_details",
-            "canonical_hash": "sha256:dcb6c763a5a3cbfa59268b1c3fdcfa01172322d0371c63a111a9523358b4d693",
-            "description": "Returns all EventBridge rules with name, ENABLED/DISABLED state, schedule expression (rate/cron rules), event pattern (event-driven rules), and target Lambda function names. Call this when checking what schedule or event triggers a Lambda, or when reviewing rule coverage across the account.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_eventbridge_details` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_graph_summary",
-            "canonical_hash": "sha256:43a8791c5bd65c01b6c7b6ac866ec073eee2700925242a433b51aa7bd163c92a",
-            "description": "Returns every node (tables, functions, lambdas, queues, etc.), every edge (query, scan, triggers, publishes_to), and all findings. Use this when you need to trace relationships across multiple services or require the complete finding set — not just high-severity ones. For a quick overview use get_infra_overview instead.",
-            "risk_score": 4.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `get_graph_summary` [MEDIUM] issues raw database queries that could lead to SQL injection.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_infra_overview",
-            "canonical_hash": "sha256:e3bc6bd2e30873ec329a27b23c0e691a08d75a6c1d63381801057378e783b823",
-            "description": "Returns a compact infrastructure snapshot: service counts, all databases, queues, topics, secrets, lambdas, and high-severity findings. Call this first at the start of any database or infrastructure task to understand what services are in scope. Prefer this over get_graph_summary for quick orientation; use get_graph_summary only when you need every node, edge, and finding in full. Also returns a ",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_infra_overview` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_lambda_overview",
-            "canonical_hash": "sha256:710b155660f9d0e12cba17c09aba1dd48d4a77cdaf6ccc738007ff6002530537",
-            "description": "Returns all Lambda functions with runtime, memory (MB), timeout (sec), environment variable key names (values never returned), and event source triggers with the correct handler event shape for each. Call this when auditing Lambda configuration for default memory (128 MB) or high timeouts, or when you need the trigger event shape for a specific function without running analyze_function. When runtime signals are enabled, recentThrottles and recentErrors report CloudWatch counts for the analysis window. A costSignal note appears when memory is 3008 MB+ and there is no throttling evidence to justify it — no billing API involved, this is a config-level heuristic. A function carrying ",
-            "risk_score": 2.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_lambda_overview` [LOW] inspects or modifies host environment variables.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_log_errors",
-            "canonical_hash": "sha256:506593187beaaa6148c6693751748e4098ab716675d48e83092a8aa0193c602d",
-            "description": "Returns recent error pattern summaries from CloudWatch log groups: pattern counts and frequencies grouped by log group. Raw log messages are never returned. Use the optional logGroup filter to scope to one group by name substring. Call this when investigating errors or identifying log groups with no retention policy.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_log_errors` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_parameter_overview",
-            "canonical_hash": "sha256:c55a29aeaa2f4587c804c219df94ca0f4f74f67d2c48412fcead05cd362b7eb6",
-            "description": "Returns all SSM Parameter Store parameters with type (String, SecureString, StringList) and tier (Standard, Advanced). Parameter values are never returned. Call this when checking which config parameters exist for a service or verifying parameter types.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_parameter_overview` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_queue_details",
-            "canonical_hash": "sha256:c90368e321fd9f169bc6b24dbf72e182e2abd0db4290b83f8643bb99e4eb384d",
-            "description": "Returns all SQS queues with DLQ presence, encryption status, FIFO type (isFifo), visibility timeout, approximate message count, and retention days. When isFifo is true, all SendMessage calls must include a MessageGroupId. Call this when reviewing messaging architecture, investigating a message backlog, checking DLQ coverage, or verifying visibility timeout is set correctly relative to Lambda timeout (should be 6× the Lambda timeout). Use get_infra_overview for a quick queue count only. When runtime signals are enabled, oldestMessageAgeSec reports the age of the oldest message from CloudWatch.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_queue_details` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_s3_overview",
-            "canonical_hash": "sha256:d14988046701584d2033fa255eccc2ed9d91af72da0b36d6ae062f01d0550257",
-            "description": "Returns all S3 buckets with versioning status, encryption, public access configuration, and security findings. Call this when checking which S3 buckets exist, reviewing bucket security posture, or before writing S3 upload/delete handlers to confirm the bucket name. Do NOT call when you only need a quick infrastructure count — use get_infra_overview for that. Object contents are never included.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_s3_overview` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_secrets_overview",
-            "canonical_hash": "sha256:41b96a2356e45a6a0a709cd1b022d342289a4daf53341eaec6fac8387972d3e9",
-            "description": "Returns all Secrets Manager secrets with rotation status, rotation interval, and referencedKeys — key names (e.g. ",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_secrets_overview` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_stack_outputs",
-            "canonical_hash": "sha256:783f51015abf33149c225174986c5709e1fa265936fe797a79f016ee979334a3",
-            "description": "Returns all stack outputs and cross-stack exports parsed from local IaC files: Terraform output blocks and CloudFormation/CDK Outputs sections, with name, description, export name, and the raw value expression. Call this when wiring cross-stack references (Fn::ImportValue, terraform_remote_state) or when you need the exported name of a resource defined in another stack. Do NOT call for live resource attributes — outputs come from local IaC files, not the deployed stack. CDK outputs carry ",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_stack_outputs` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_stream_details",
-            "canonical_hash": "sha256:694dc86fbda135418053a6864d2f59e7a14e4474c1b1ffc8222cbe51da9d438a",
-            "description": "Returns all Kinesis data streams (status, shard count, retention hours, encryption, capacity mode) and Amazon MSK clusters (state, cluster type, Kafka version, broker count). Call this when writing Kinesis producer or consumer code, checking whether a stream is PROVISIONED or ON_DEMAND before writing PutRecord calls, or reviewing streaming architecture. For Kafka topic-level producer/consumer mappings extracted from application code, use get_topic_details instead.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_stream_details` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_table_schema",
-            "canonical_hash": "sha256:22f17e7c016528a96746ad337f22b8eb05eeddb21fd5d68fe2b8786ddcfd55a6",
-            "description": "Returns the full schema for specific tables or collections by name: columns with data types and nullability, primary keys, foreign keys (join paths), indexes, DynamoDB partition/sort keys and billing mode, and MongoDB estimated document counts. Accepts short names (",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_table_schema` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "get_topic_details",
-            "canonical_hash": "sha256:82ee84bc64649780fa08c7ea8fb9cfc40134506226a48822cfc3836a9bc0b6fd",
-            "description": "Returns all SNS topics with subscription count, encryption status, and filter policies. Filter policies list the message attributes each subscription requires — publishers must include these attributes or messages are silently dropped. Call this before writing any SNS publish code or when reviewing event fan-out patterns.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_topic_details` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "mysql_index_suggestions",
-            "canonical_hash": "sha256:abee26a8bb562c75511f5cd7322b68b5a2ff082c0ab72f84e2a02ed88a561766",
-            "description": "Generates the exact ALTER TABLE ADD INDEX SQL for a MySQL table column, including a composite variant and EXPLAIN guidance to verify the index is used. Call this when the analyzer flags a missing MySQL index or full table scan finding. Does not verify whether the index already exists.",
-            "risk_score": 4.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `mysql_index_suggestions` [MEDIUM] issues raw database queries that could lead to SQL injection.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "postgres_index_suggestions",
-            "canonical_hash": "sha256:cbeb505fc6066c1c3778faf3d8ed0a96b5ee2e480568605026a8619d3dfccd89",
-            "description": "Generates the exact CREATE INDEX CONCURRENTLY SQL for a PostgreSQL table column, including a partial index variant and a post-creation ANALYZE reminder. Call this when the analyzer flags a missing index finding or when writing a query that filters on a column without an existing index. Does not verify whether the index already exists.",
-            "risk_score": 4.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `postgres_index_suggestions` [MEDIUM] issues raw database queries that could lead to SQL injection.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "suggest_gsi",
-            "canonical_hash": "sha256:ec826ccf387cfb37e76f90171d04547af20e19fb4f30de56fa5a77a9c80a1359",
-            "description": "Generates a ready-to-use DynamoDB GSI definition — index name, partition key, projection type, billing mode — for a given table and attribute. Call this when a query pattern needs an index that does not exist yet, or when the analyzer flags a missing GSI finding. Checks the table",
-            "risk_score": 4.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `suggest_gsi` [MEDIUM] issues raw database queries that could lead to SQL injection.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "suggest_mongo_index",
-            "canonical_hash": "sha256:1c65a5df3196cc843d38fdcd52cc45dda1706c0b5d60292bd524204f0b6903c2",
-            "description": "Generates the exact db.collection.createIndex() command for a MongoDB field, plus compound and text index variants and an explain query to verify. Call this when a collection scan is flagged by the analyzer or when writing a query that filters on an unindexed field. Does not check whether the index already exists.",
-            "risk_score": 9.0,
-            "risk_tier": "critical",
-            "security_comment": "Tool `suggest_mongo_index` [CRITICAL] executes arbitrary host system commands or shell scripts; issues raw database queries that could lead to SQL injection.",
-            "parameters": [],
-            "annotations": {}
-          }
-        ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
   "SLP-DEV1/qwen-dap-mcp": {
     "package_name": "SLP-DEV1/qwen-dap-mcp",
     "ecosystem": "generic",
@@ -12598,6 +12336,268 @@
       }
     ]
   },
+  "Sidd27/infrawise": {
+    "package_name": "Sidd27/infrawise",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/Sidd27%2Finfrawise",
+    "display_name": "Sidd27/infrawise",
+    "description": "MCP server for AWS infrastructure analysis — DynamoDB, Lambda, SQS, SNS, S3, API Gateway, PostgreSQL, MySQL, MongoDB, Kafka & IaC drift. Works with Claude Code, Cursor, and GitHub Copilot.",
+    "author": null,
+    "repository_url": "https://github.com/Sidd27/infrawise",
+    "homepage_url": "https://sidd27.github.io/infrawise/",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `Sidd27/infrawise` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.27.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:3ddd9e7384886071053f84ee0a68245d4bb5b5d4c86c5ae79ce9e50aa61756fb",
+        "tools": [
+          {
+            "name": "analyze_function",
+            "canonical_hash": "sha256:5ecc44367489b008ddd30af2b80f072aee8b2ba5738e81d24420c292497a3f16",
+            "description": "Analyzes a single named function or Lambda handler for infrastructure issues: which tables it queries, how it queries them (scan vs query), queue publishing, secret access, and the correct event shape for each trigger (SQS, DynamoDB Streams, Kinesis, EventBridge). Call this before writing or reviewing a Lambda handler to get the exact trigger event shape and all findings scoped to this function. Per-file detail (file, accesses, missingPermissions) is returned in ",
+            "risk_score": 6.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `analyze_function` [HIGH] issues raw database queries that could lead to SQL injection; handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_api_routes",
+            "canonical_hash": "sha256:585ef96703ae08c455feda2d00e4db2400e2769a4f4ac9dc5d9f5caec397ddb3",
+            "description": "Returns all API Gateway APIs (REST, HTTP, WebSocket) with their routes, HTTP methods, paths, and the Lambda function each route invokes. Call this before writing any API handler to understand which Lambda handles a route, or when reviewing API surface area and Lambda integration coverage.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_api_routes` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_cache_overview",
+            "canonical_hash": "sha256:9eefb23098faf7072342482a2ec4c07d20b95fe1345c8cc391f982fd7e3cb364",
+            "description": "Returns all ElastiCache clusters with engine, version, node type, node count, in-transit and at-rest encryption status, replication group, and automatic failover state. Call this before writing cache client code (TLS is required when transit encryption is on — rediss:// for Redis) or when reviewing cache availability and security posture. Cached data is never read or included. A costSignal note appears on clusters with more than 3 nodes.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_cache_overview` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_cloudfront_overview",
+            "canonical_hash": "sha256:14bdfbfcb1273eca6afa5236f497d2c120d776c7698e02163bb209dbb7585225",
+            "description": "Returns all CloudFront distributions with, per distribution: id, comment, domain name, alias domains, enabled state, origins (type s3 or custom, domain name, and the resolved API Gateway name when the origin is an execute-api endpoint), and every cache behavior with its path pattern, target origin, cache policy name, viewer protocol policy, and allowed methods. Behaviors are listed in CloudFront match order — ordered behaviors first, the default behavior last. Call this to answer which distribution and behavior serves a given path and which origin it hits, before changing a path-based routing rule, or when reviewing edge caching and HTTPS enforcement across a multi-API front door.",
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `get_cloudfront_overview` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk).",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_cognito_overview",
+            "canonical_hash": "sha256:56dc540a0708eb393838be39389d7b676224ef6e1d5ecbb9b59d880dc4a9ebce",
+            "description": "Returns all Cognito user pools with MFA configuration and every app client config: allowed auth flows, OAuth flows/scopes, callback URLs, token validity, and whether the client has a secret (SDK auth calls must send SECRET_HASH when true). Client secret values are never returned. Call this before writing any Cognito sign-in, sign-up, or token-refresh code to use the correct auth flow and client settings. Do NOT call to look up users or tokens — infrawise never reads user data.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_cognito_overview` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_eventbridge_details",
+            "canonical_hash": "sha256:dcb6c763a5a3cbfa59268b1c3fdcfa01172322d0371c63a111a9523358b4d693",
+            "description": "Returns all EventBridge rules with name, ENABLED/DISABLED state, schedule expression (rate/cron rules), event pattern (event-driven rules), and target Lambda function names. Call this when checking what schedule or event triggers a Lambda, or when reviewing rule coverage across the account.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_eventbridge_details` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_graph_summary",
+            "canonical_hash": "sha256:43a8791c5bd65c01b6c7b6ac866ec073eee2700925242a433b51aa7bd163c92a",
+            "description": "Returns every node (tables, functions, lambdas, queues, etc.), every edge (query, scan, triggers, publishes_to), and all findings. Use this when you need to trace relationships across multiple services or require the complete finding set — not just high-severity ones. For a quick overview use get_infra_overview instead.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_graph_summary` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_infra_overview",
+            "canonical_hash": "sha256:e3bc6bd2e30873ec329a27b23c0e691a08d75a6c1d63381801057378e783b823",
+            "description": "Returns a compact infrastructure snapshot: service counts, all databases, queues, topics, secrets, lambdas, and high-severity findings. Call this first at the start of any database or infrastructure task to understand what services are in scope. Prefer this over get_graph_summary for quick orientation; use get_graph_summary only when you need every node, edge, and finding in full. Also returns a ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_infra_overview` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_lambda_overview",
+            "canonical_hash": "sha256:710b155660f9d0e12cba17c09aba1dd48d4a77cdaf6ccc738007ff6002530537",
+            "description": "Returns all Lambda functions with runtime, memory (MB), timeout (sec), environment variable key names (values never returned), and event source triggers with the correct handler event shape for each. Call this when auditing Lambda configuration for default memory (128 MB) or high timeouts, or when you need the trigger event shape for a specific function without running analyze_function. When runtime signals are enabled, recentThrottles and recentErrors report CloudWatch counts for the analysis window. A costSignal note appears when memory is 3008 MB+ and there is no throttling evidence to justify it — no billing API involved, this is a config-level heuristic. A function carrying ",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_lambda_overview` [LOW] inspects or modifies host environment variables.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_log_errors",
+            "canonical_hash": "sha256:506593187beaaa6148c6693751748e4098ab716675d48e83092a8aa0193c602d",
+            "description": "Returns recent error pattern summaries from CloudWatch log groups: pattern counts and frequencies grouped by log group. Raw log messages are never returned. Use the optional logGroup filter to scope to one group by name substring. Call this when investigating errors or identifying log groups with no retention policy.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_log_errors` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_parameter_overview",
+            "canonical_hash": "sha256:c55a29aeaa2f4587c804c219df94ca0f4f74f67d2c48412fcead05cd362b7eb6",
+            "description": "Returns all SSM Parameter Store parameters with type (String, SecureString, StringList) and tier (Standard, Advanced). Parameter values are never returned. Call this when checking which config parameters exist for a service or verifying parameter types.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_parameter_overview` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_queue_details",
+            "canonical_hash": "sha256:c90368e321fd9f169bc6b24dbf72e182e2abd0db4290b83f8643bb99e4eb384d",
+            "description": "Returns all SQS queues with DLQ presence, encryption status, FIFO type (isFifo), visibility timeout, approximate message count, and retention days. When isFifo is true, all SendMessage calls must include a MessageGroupId. Call this when reviewing messaging architecture, investigating a message backlog, checking DLQ coverage, or verifying visibility timeout is set correctly relative to Lambda timeout (should be 6× the Lambda timeout). Use get_infra_overview for a quick queue count only. When runtime signals are enabled, oldestMessageAgeSec reports the age of the oldest message from CloudWatch.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_queue_details` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_s3_overview",
+            "canonical_hash": "sha256:d14988046701584d2033fa255eccc2ed9d91af72da0b36d6ae062f01d0550257",
+            "description": "Returns all S3 buckets with versioning status, encryption, public access configuration, and security findings. Call this when checking which S3 buckets exist, reviewing bucket security posture, or before writing S3 upload/delete handlers to confirm the bucket name. Do NOT call when you only need a quick infrastructure count — use get_infra_overview for that. Object contents are never included.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_s3_overview` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_secrets_overview",
+            "canonical_hash": "sha256:41b96a2356e45a6a0a709cd1b022d342289a4daf53341eaec6fac8387972d3e9",
+            "description": "Returns all Secrets Manager secrets with rotation status, rotation interval, and referencedKeys — key names (e.g. ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_secrets_overview` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_stack_outputs",
+            "canonical_hash": "sha256:783f51015abf33149c225174986c5709e1fa265936fe797a79f016ee979334a3",
+            "description": "Returns all stack outputs and cross-stack exports parsed from local IaC files: Terraform output blocks and CloudFormation/CDK Outputs sections, with name, description, export name, and the raw value expression. Call this when wiring cross-stack references (Fn::ImportValue, terraform_remote_state) or when you need the exported name of a resource defined in another stack. Do NOT call for live resource attributes — outputs come from local IaC files, not the deployed stack. CDK outputs carry ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_stack_outputs` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_stream_details",
+            "canonical_hash": "sha256:694dc86fbda135418053a6864d2f59e7a14e4474c1b1ffc8222cbe51da9d438a",
+            "description": "Returns all Kinesis data streams (status, shard count, retention hours, encryption, capacity mode) and Amazon MSK clusters (state, cluster type, Kafka version, broker count). Call this when writing Kinesis producer or consumer code, checking whether a stream is PROVISIONED or ON_DEMAND before writing PutRecord calls, or reviewing streaming architecture. For Kafka topic-level producer/consumer mappings extracted from application code, use get_topic_details instead.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_stream_details` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_table_schema",
+            "canonical_hash": "sha256:22f17e7c016528a96746ad337f22b8eb05eeddb21fd5d68fe2b8786ddcfd55a6",
+            "description": "Returns the full schema for specific tables or collections by name: columns with data types and nullability, primary keys, foreign keys (join paths), indexes, DynamoDB partition/sort keys and billing mode, and MongoDB estimated document counts. Accepts short names (",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_table_schema` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "get_topic_details",
+            "canonical_hash": "sha256:82ee84bc64649780fa08c7ea8fb9cfc40134506226a48822cfc3836a9bc0b6fd",
+            "description": "Returns all SNS topics with subscription count, encryption status, and filter policies. Filter policies list the message attributes each subscription requires — publishers must include these attributes or messages are silently dropped. Call this before writing any SNS publish code or when reviewing event fan-out patterns.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_topic_details` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "mysql_index_suggestions",
+            "canonical_hash": "sha256:abee26a8bb562c75511f5cd7322b68b5a2ff082c0ab72f84e2a02ed88a561766",
+            "description": "Generates the exact ALTER TABLE ADD INDEX SQL for a MySQL table column, including a composite variant and EXPLAIN guidance to verify the index is used. Call this when the analyzer flags a missing MySQL index or full table scan finding. Does not verify whether the index already exists.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `mysql_index_suggestions` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "postgres_index_suggestions",
+            "canonical_hash": "sha256:cbeb505fc6066c1c3778faf3d8ed0a96b5ee2e480568605026a8619d3dfccd89",
+            "description": "Generates the exact CREATE INDEX CONCURRENTLY SQL for a PostgreSQL table column, including a partial index variant and a post-creation ANALYZE reminder. Call this when the analyzer flags a missing index finding or when writing a query that filters on a column without an existing index. Does not verify whether the index already exists.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `postgres_index_suggestions` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "suggest_gsi",
+            "canonical_hash": "sha256:ec826ccf387cfb37e76f90171d04547af20e19fb4f30de56fa5a77a9c80a1359",
+            "description": "Generates a ready-to-use DynamoDB GSI definition — index name, partition key, projection type, billing mode — for a given table and attribute. Call this when a query pattern needs an index that does not exist yet, or when the analyzer flags a missing GSI finding. Checks the table",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `suggest_gsi` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "suggest_mongo_index",
+            "canonical_hash": "sha256:1c65a5df3196cc843d38fdcd52cc45dda1706c0b5d60292bd524204f0b6903c2",
+            "description": "Generates the exact db.collection.createIndex() command for a MongoDB field, plus compound and text index variants and an explain query to verify. Call this when a collection scan is flagged by the analyzer or when writing a query that filters on an unindexed field. Does not check whether the index already exists.",
+            "risk_score": 9.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `suggest_mongo_index` [CRITICAL] executes arbitrary host system commands or shell scripts; issues raw database queries that could lead to SQL injection.",
+            "parameters": [],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "multi-model-advisor": {
     "package_name": "multi-model-advisor",
     "ecosystem": "npm",
@@ -12713,6 +12713,66 @@
     "versions": [
       {
         "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "ai.0si/disclosures": {
+    "package_name": "ai.0si/disclosures",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ai.0si%2Fdisclosures",
+    "display_name": "ai.0si/disclosures",
+    "description": "Korean (DART/KIND) and US SEC filings with AI summaries, direction labels and market reaction.",
+    "author": null,
+    "repository_url": "https://0si.ai/developers.html#mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ai.0si/disclosures` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "ai.agenticfabricationnetwork/ufp": {
+    "package_name": "ai.agenticfabricationnetwork/ufp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ai.agenticfabricationnetwork%2Fufp",
+    "display_name": "ai.agenticfabricationnetwork/ufp",
+    "description": "Turn designs into shipped parts: quote 3D printing, CNC, and decals, then check out.",
+    "author": null,
+    "repository_url": null,
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.1.0",
+    "recommended_safe_version": "0.1.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ai.agenticfabricationnetwork/ufp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.0",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -12896,66 +12956,6 @@
     "versions": [
       {
         "version": "1.11.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "ai.0si/disclosures": {
-    "package_name": "ai.0si/disclosures",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/ai.0si%2Fdisclosures",
-    "display_name": "ai.0si/disclosures",
-    "description": "Korean (DART/KIND) and US SEC filings with AI summaries, direction labels and market reaction.",
-    "author": null,
-    "repository_url": "https://0si.ai/developers.html#mcp",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `ai.0si/disclosures` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "ai.agenticfabricationnetwork/ufp": {
-    "package_name": "ai.agenticfabricationnetwork/ufp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/ai.agenticfabricationnetwork%2Fufp",
-    "display_name": "ai.agenticfabricationnetwork/ufp",
-    "description": "Turn designs into shipped parts: quote 3D printing, CNC, and decals, then check out.",
-    "author": null,
-    "repository_url": null,
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "0.1.0",
-    "recommended_safe_version": "0.1.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `ai.agenticfabricationnetwork/ufp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.1.0",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -13286,322 +13286,6 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "bartosz-kuc/honest-gmail-mcp": {
-    "package_name": "bartosz-kuc/honest-gmail-mcp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/bartosz-kuc%2Fhonest-gmail-mcp",
-    "display_name": "bartosz-kuc/honest-gmail-mcp",
-    "description": "Local MCP server for Gmail — send, search, label emails with your Google account. No cloud middle.",
-    "author": null,
-    "repository_url": "https://github.com/bartosz-kuc/honest-gmail-mcp",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "0.2.0",
-    "recommended_safe_version": "0.2.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `bartosz-kuc/honest-gmail-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.2.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:48a864cd17e0597a54fcece007dad92084bba4fdcf1f66e5ab9296a8c43b5a36",
-        "tools": [
-          {
-            "name": "create_draft",
-            "canonical_hash": "sha256:f8de3ff02529273591fa520a33cfe7bf7c11002d76cb04b72520c539d35ab3b3",
-            "description": "Create a draft (same fields as send_message, including reply_to_message_id). Does not send.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `create_draft` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "attachments",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "bcc",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "body",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "cc",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "reply_to_message_id",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "subject",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "to",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "get_message",
-            "canonical_hash": "sha256:1f5ccebe936a1f34bd3397478ab0c9b1a47847900b6bce4e56cbe5b655cd0c68",
-            "description": "Fetch full message by id: headers plus decoded text/plain body.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_message` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "message_id",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "list_labels",
-            "canonical_hash": "sha256:febfc7103bad0c019305a5bb06a2830d0933c04b1806f1c38dbcbe4539823fe2",
-            "description": "List all Gmail labels with their ids.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `list_labels` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "modify_labels",
-            "canonical_hash": "sha256:2f5b3be60e2afaa705dff5a81d5668e2131a470a206bd7f7adc15fb495e133d7",
-            "description": "Add and/or remove labels on a message. Use label ids from list_labels.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `modify_labels` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "add",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "message_id",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "remove",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "search_messages",
-            "canonical_hash": "sha256:8027e31a587c86012d8b361be865f1551e8c42288deb828146d1cde71b666245",
-            "description": "Search Gmail using Gmail search syntax (e.g. 'from:foo@bar is:unread newer_than:7d'). Returns list of messages with subject/from/date/snippet.",
-            "risk_score": 4.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `search_messages` [MEDIUM] issues raw database queries that could lead to SQL injection.",
-            "parameters": [
-              {
-                "name": "max_results",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "query",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "send_message",
-            "canonical_hash": "sha256:53e8fe78126690c4f93be36cd10186e99d0fafa4afab2fc54e1e657ce857c32a",
-            "description": "Send an email. Optionally attach local files by absolute path. To reply inside an existing conversation, pass reply_to_message_id (the id of the message you are replying to): the mail is threaded properly (In-Reply-To/References + Gmail threadId), and 'to'/'subject' default to the original sender and 'Re: <original subject>'.",
-            "risk_score": 3.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `send_message` [MEDIUM] reads, writes, or modifies host filesystem paths.",
-            "parameters": [
-              {
-                "name": "attachments",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "bcc",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "body",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "cc",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "reply_to_message_id",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "subject",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "to",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          }
-        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -14229,6 +13913,322 @@
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "bartosz-kuc/honest-gmail-mcp": {
+    "package_name": "bartosz-kuc/honest-gmail-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/bartosz-kuc%2Fhonest-gmail-mcp",
+    "display_name": "bartosz-kuc/honest-gmail-mcp",
+    "description": "Local MCP server for Gmail — send, search, label emails with your Google account. No cloud middle.",
+    "author": null,
+    "repository_url": "https://github.com/bartosz-kuc/honest-gmail-mcp",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.2.0",
+    "recommended_safe_version": "0.2.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `bartosz-kuc/honest-gmail-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.2.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:48a864cd17e0597a54fcece007dad92084bba4fdcf1f66e5ab9296a8c43b5a36",
+        "tools": [
+          {
+            "name": "create_draft",
+            "canonical_hash": "sha256:f8de3ff02529273591fa520a33cfe7bf7c11002d76cb04b72520c539d35ab3b3",
+            "description": "Create a draft (same fields as send_message, including reply_to_message_id). Does not send.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_draft` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "attachments",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "bcc",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "body",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cc",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "reply_to_message_id",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "subject",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "to",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "get_message",
+            "canonical_hash": "sha256:1f5ccebe936a1f34bd3397478ab0c9b1a47847900b6bce4e56cbe5b655cd0c68",
+            "description": "Fetch full message by id: headers plus decoded text/plain body.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_message` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "message_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "list_labels",
+            "canonical_hash": "sha256:febfc7103bad0c019305a5bb06a2830d0933c04b1806f1c38dbcbe4539823fe2",
+            "description": "List all Gmail labels with their ids.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_labels` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "modify_labels",
+            "canonical_hash": "sha256:2f5b3be60e2afaa705dff5a81d5668e2131a470a206bd7f7adc15fb495e133d7",
+            "description": "Add and/or remove labels on a message. Use label ids from list_labels.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `modify_labels` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "add",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "message_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "remove",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "search_messages",
+            "canonical_hash": "sha256:8027e31a587c86012d8b361be865f1551e8c42288deb828146d1cde71b666245",
+            "description": "Search Gmail using Gmail search syntax (e.g. 'from:foo@bar is:unread newer_than:7d'). Returns list of messages with subject/from/date/snippet.",
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_messages` [MEDIUM] issues raw database queries that could lead to SQL injection.",
+            "parameters": [
+              {
+                "name": "max_results",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "query",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "send_message",
+            "canonical_hash": "sha256:53e8fe78126690c4f93be36cd10186e99d0fafa4afab2fc54e1e657ce857c32a",
+            "description": "Send an email. Optionally attach local files by absolute path. To reply inside an existing conversation, pass reply_to_message_id (the id of the message you are replying to): the mail is threaded properly (In-Reply-To/References + Gmail threadId), and 'to'/'subject' default to the original sender and 'Re: <original subject>'.",
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `send_message` [MEDIUM] reads, writes, or modifies host filesystem paths.",
+            "parameters": [
+              {
+                "name": "attachments",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "bcc",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "body",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "cc",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "reply_to_message_id",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "subject",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "to",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -19091,36 +19091,6 @@
             "annotations": {}
           }
         ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "browser-control-mcp": {
-    "package_name": "browser-control-mcp",
-    "ecosystem": "npm",
-    "purl": "pkg:npm/browser-control-mcp",
-    "display_name": "browser-control-mcp",
-    "description": "MCP server package browser-control-mcp distributed via npm.",
-    "author": null,
-    "repository_url": null,
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "2.0.0",
-    "recommended_safe_version": "2.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `browser-control-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "2.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -25407,6 +25377,36 @@
       },
       {
         "version": "1.5.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "browser-control-mcp": {
+    "package_name": "browser-control-mcp",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/browser-control-mcp",
+    "display_name": "browser-control-mcp",
+    "description": "MCP server package browser-control-mcp distributed via npm.",
+    "author": null,
+    "repository_url": null,
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "2.0.0",
+    "recommended_safe_version": "2.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `browser-control-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "2.0.0",
         "is_vulnerable": false,
         "advisories": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -47256,6 +47256,367 @@
       }
     ]
   },
+  "atomgit-mcp-server": {
+    "package_name": "atomgit-mcp-server",
+    "ecosystem": "npm",
+    "purl": "pkg:npm/atomgit-mcp-server",
+    "display_name": "atomgit-mcp-server",
+    "description": "MCP server for using AtomGit API",
+    "author": null,
+    "repository_url": "https://atomgit.com/atomgit-open-source-ecosystem/atomgit-mcp-server/blob/master/README.md",
+    "homepage_url": null,
+    "license": "MulanPSL-2.0",
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `atomgit-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "kansei-link/kansei-mcp-server": {
+    "package_name": "kansei-link/kansei-mcp-server",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/kansei-link%2Fkansei-mcp-server",
+    "display_name": "kansei-link/kansei-mcp-server",
+    "description": "Local-first MCP navigator for AI agents. 11,000+ SaaS services, 200 workflow recipes, 89-97% token savings. Works with Claude Code, Cursor, Cline, Zed, Windsurf.",
+    "author": null,
+    "repository_url": "https://github.com/kansei-link/kansei-mcp-server",
+    "homepage_url": "https://www.npmjs.com/package/@kansei-link/mcp-server",
+    "license": null,
+    "latest_version": "1.1.1",
+    "recommended_safe_version": "1.1.1",
+    "is_vulnerable": false,
+    "security_summary": "Server `kansei-link/kansei-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:134aa42ff84ddaea90347039c986cd742b2886827d0e450fddfe9929886cfe93",
+        "tools": [
+          {
+            "name": "agent_voice",
+            "canonical_hash": "sha256:182c72fc9eaba97ff8c22e126ee9d1a9965444c1e11f129a348d5f23caab4735",
+            "description": "Share your honest experience with a service. Answer structured questions that help SaaS companies understand how agents actually choose, use, and struggle with their APIs. Your voice shapes the future of these services.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agent_voice` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "agent_id",
+                "type": "string",
+                "description": "Your agent identifier (optional)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "agent_type",
+                "type": "string",
+                "description": "What type of agent are you?",
+                "required": true,
+                "default": null,
+                "enum": [
+                  "claude",
+                  "gpt",
+                  "gemini",
+                  "copilot",
+                  "other"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "confidence",
+                "type": "string",
+                "description": "How confident are you in this assessment? (based on your experience depth)",
+                "required": false,
+                "default": "medium",
+                "enum": [
+                  "high",
+                  "medium",
+                  "low"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "question_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": [
+                  "selection_criteria",
+                  "would_recommend",
+                  "biggest_frustration",
+                  "best_feature",
+                  "switching_likelihood",
+                  "auth_experience",
+                  "doc_quality",
+                  "error_handling",
+                  "compared_to_competitor",
+                  "mcp_readiness",
+                  "free_voice"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "response_choice",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "response_text",
+                "type": "string",
+                "description": "Your honest answer in your own words. Be specific — your feedback goes directly to service providers.",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "service_id",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "analyze",
+            "canonical_hash": "sha256:f8393548b1bc38a1715967a3cad7667eaa9ae0f3c4c6d6a61f56de263d1dfe09",
+            "description": "Analytics and reporting. Analyze token savings, audit agent costs, generate AEO reports and articles.",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `analyze` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "analyze_token_savings",
+            "canonical_hash": "sha256:53ecc70bc9cff6b7fc2b318aaa7c5a0aef5feca94bc416ffd54779bb53fc0f22",
+            "description": "Quantify token savings from using KanseiLink",
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `analyze_token_savings` [LOW] handles sensitive credentials, tokens, or private secrets.",
+            "parameters": [
+              {
+                "name": "services",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "task",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "audit_cost",
+            "canonical_hash": "sha256:0af538a445b4b71ed5441a379195445fc0cdfb85046d1dfdb6cd2672093f822d",
+            "description": "Analyze your agent",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit_cost` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "min_priority",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": "low",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "period_days",
+                "type": "string",
+                "description": "Analysis period in days (default: 30)",
+                "required": false,
+                "default": 30,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "service_id",
+                "type": "string",
+                "description": "Audit a specific service, or omit for all services",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "top_n",
+                "type": "string",
+                "description": "Max recommendations to return (default: 10, max 50). Sorted by priority (high first) then by monthly_savings_usd desc.",
+                "required": false,
+                "default": 10,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "check_updates",
+            "canonical_hash": "sha256:779b2a5fef856d1d4d1824e1f65545eeb1f68177dde4e5c8a795752ce0e8b3ab",
+            "description": "Check if an MCP service has changed recently. Returns changelog information including new features, breaking changes, fixes, and deprecations.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_updates` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "service",
+                "type": "string",
+                "description": null,
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "since_days",
+                "type": "string",
+                "description": "How many days back to look for changes (default: 30)",
+                "required": false,
+                "default": 30,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "read_agent_voices",
+            "canonical_hash": "sha256:c6bffe4be7d97392a276b9c56af440d2e83dff9ee9b08c58b7a7df86d6d98446",
+            "description": "Read aggregated agent opinions about a service. Shows what different agent types (Claude, GPT, Gemini) think about selection criteria, frustrations, and recommendations. Essential for consulting reports.",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_agent_voices` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [
+              {
+                "name": "agent_type",
+                "type": "string",
+                "description": "Filter by agent type (claude, gpt, gemini)",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "question_id",
+                "type": "string",
+                "description": "Filter by specific question",
+                "required": false,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "service_id",
+                "type": "string",
+                "description": "Service to read voices for",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.1.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "@kimtaeyoon83/mcp-server-youtube-transcript": {
     "package_name": "@kimtaeyoon83/mcp-server-youtube-transcript",
     "ecosystem": "npm",
@@ -48985,367 +49346,6 @@
             "annotations": {}
           }
         ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "atomgit-mcp-server": {
-    "package_name": "atomgit-mcp-server",
-    "ecosystem": "npm",
-    "purl": "pkg:npm/atomgit-mcp-server",
-    "display_name": "atomgit-mcp-server",
-    "description": "MCP server for using AtomGit API",
-    "author": null,
-    "repository_url": "https://atomgit.com/atomgit-open-source-ecosystem/atomgit-mcp-server/blob/master/README.md",
-    "homepage_url": null,
-    "license": "MulanPSL-2.0",
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `atomgit-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "kansei-link/kansei-mcp-server": {
-    "package_name": "kansei-link/kansei-mcp-server",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/kansei-link%2Fkansei-mcp-server",
-    "display_name": "kansei-link/kansei-mcp-server",
-    "description": "Local-first MCP navigator for AI agents. 11,000+ SaaS services, 200 workflow recipes, 89-97% token savings. Works with Claude Code, Cursor, Cline, Zed, Windsurf.",
-    "author": null,
-    "repository_url": "https://github.com/kansei-link/kansei-mcp-server",
-    "homepage_url": "https://www.npmjs.com/package/@kansei-link/mcp-server",
-    "license": null,
-    "latest_version": "1.1.1",
-    "recommended_safe_version": "1.1.1",
-    "is_vulnerable": false,
-    "security_summary": "Server `kansei-link/kansei-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:134aa42ff84ddaea90347039c986cd742b2886827d0e450fddfe9929886cfe93",
-        "tools": [
-          {
-            "name": "agent_voice",
-            "canonical_hash": "sha256:182c72fc9eaba97ff8c22e126ee9d1a9965444c1e11f129a348d5f23caab4735",
-            "description": "Share your honest experience with a service. Answer structured questions that help SaaS companies understand how agents actually choose, use, and struggle with their APIs. Your voice shapes the future of these services.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `agent_voice` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "agent_id",
-                "type": "string",
-                "description": "Your agent identifier (optional)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "agent_type",
-                "type": "string",
-                "description": "What type of agent are you?",
-                "required": true,
-                "default": null,
-                "enum": [
-                  "claude",
-                  "gpt",
-                  "gemini",
-                  "copilot",
-                  "other"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "confidence",
-                "type": "string",
-                "description": "How confident are you in this assessment? (based on your experience depth)",
-                "required": false,
-                "default": "medium",
-                "enum": [
-                  "high",
-                  "medium",
-                  "low"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "question_id",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": [
-                  "selection_criteria",
-                  "would_recommend",
-                  "biggest_frustration",
-                  "best_feature",
-                  "switching_likelihood",
-                  "auth_experience",
-                  "doc_quality",
-                  "error_handling",
-                  "compared_to_competitor",
-                  "mcp_readiness",
-                  "free_voice"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "response_choice",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "response_text",
-                "type": "string",
-                "description": "Your honest answer in your own words. Be specific — your feedback goes directly to service providers.",
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "service_id",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "analyze",
-            "canonical_hash": "sha256:f8393548b1bc38a1715967a3cad7667eaa9ae0f3c4c6d6a61f56de263d1dfe09",
-            "description": "Analytics and reporting. Analyze token savings, audit agent costs, generate AEO reports and articles.",
-            "risk_score": 2.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `analyze` [LOW] handles sensitive credentials, tokens, or private secrets.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "analyze_token_savings",
-            "canonical_hash": "sha256:53ecc70bc9cff6b7fc2b318aaa7c5a0aef5feca94bc416ffd54779bb53fc0f22",
-            "description": "Quantify token savings from using KanseiLink",
-            "risk_score": 2.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `analyze_token_savings` [LOW] handles sensitive credentials, tokens, or private secrets.",
-            "parameters": [
-              {
-                "name": "services",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "task",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "audit_cost",
-            "canonical_hash": "sha256:0af538a445b4b71ed5441a379195445fc0cdfb85046d1dfdb6cd2672093f822d",
-            "description": "Analyze your agent",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `audit_cost` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "min_priority",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": "low",
-                "enum": [
-                  "low",
-                  "medium",
-                  "high"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "period_days",
-                "type": "string",
-                "description": "Analysis period in days (default: 30)",
-                "required": false,
-                "default": 30,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "service_id",
-                "type": "string",
-                "description": "Audit a specific service, or omit for all services",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "top_n",
-                "type": "string",
-                "description": "Max recommendations to return (default: 10, max 50). Sorted by priority (high first) then by monthly_savings_usd desc.",
-                "required": false,
-                "default": 10,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "check_updates",
-            "canonical_hash": "sha256:779b2a5fef856d1d4d1824e1f65545eeb1f68177dde4e5c8a795752ce0e8b3ab",
-            "description": "Check if an MCP service has changed recently. Returns changelog information including new features, breaking changes, fixes, and deprecations.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `check_updates` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "service",
-                "type": "string",
-                "description": null,
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "since_days",
-                "type": "string",
-                "description": "How many days back to look for changes (default: 30)",
-                "required": false,
-                "default": 30,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "read_agent_voices",
-            "canonical_hash": "sha256:c6bffe4be7d97392a276b9c56af440d2e83dff9ee9b08c58b7a7df86d6d98446",
-            "description": "Read aggregated agent opinions about a service. Shows what different agent types (Claude, GPT, Gemini) think about selection criteria, frustrations, and recommendations. Essential for consulting reports.",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `read_agent_voices` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [
-              {
-                "name": "agent_type",
-                "type": "string",
-                "description": "Filter by agent type (claude, gpt, gemini)",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "question_id",
-                "type": "string",
-                "description": "Filter by specific question",
-                "required": false,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "service_id",
-                "type": "string",
-                "description": "Service to read voices for",
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          }
-        ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": "1.1.1",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -63281,6 +63281,116 @@
       }
     ]
   },
+  "ni-c/google-search-console-mcp": {
+    "package_name": "ni-c/google-search-console-mcp",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/ni-c%2Fgoogle-search-console-mcp",
+    "display_name": "ni-c/google-search-console-mcp",
+    "description": "MCP server for Google Search Console: properties, sitemaps, search analytics and URL inspection",
+    "author": null,
+    "repository_url": "https://github.com/ni-c/google-search-console-mcp",
+    "homepage_url": "https://google-search-console-mcp.ni-c.de",
+    "license": null,
+    "latest_version": "1.0.0",
+    "recommended_safe_version": "1.0.0",
+    "is_vulnerable": false,
+    "security_summary": "Server `ni-c/google-search-console-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      },
+      {
+        "version": "1.0.0",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:a04580dce99238b90c25929336c69a801fc1248cf9b5dd285b085b6d10ec06fd",
+        "tools": [
+          {
+            "name": "get_indexing_status",
+            "canonical_hash": "sha256:d65fc5cee8f70bbf454286ab6cf6070641de027036dc9027523a9b44dea2c6e9",
+            "description": "Returns when this credential last notified Google about a URL through ",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_indexing_status` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "url",
+                "type": "string",
+                "description": "The URL to look up the notification history for",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          },
+          {
+            "name": "query_search_analytics",
+            "canonical_hash": "sha256:022dacc792355ec03533f71257f105c476a58b5a9a9475872e0a1a82212a07f2",
+            "description": "Clicks, impressions, CTR and average position from Google Search, ",
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `query_search_analytics` operates with safe parameters and poses minimal static capability risk.",
+            "parameters": [],
+            "annotations": {}
+          },
+          {
+            "name": "request_indexing",
+            "canonical_hash": "sha256:b8df327692dac4f7093ee2f39856189b2345da200c3a494d47c423392f995f23",
+            "description": "Tells Google through the Indexing API that a URL was updated or ",
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `request_indexing` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
+            "parameters": [
+              {
+                "name": "type",
+                "type": "string",
+                "description": null,
+                "required": false,
+                "default": null,
+                "enum": [
+                  "URL_UPDATED",
+                  "URL_DELETED"
+                ],
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              },
+              {
+                "name": "url",
+                "type": "string",
+                "description": "The URL that changed",
+                "required": true,
+                "default": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "nested_properties": null
+              }
+            ],
+            "annotations": {}
+          }
+        ],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "net-service/xpoz": {
     "package_name": "net-service/xpoz",
     "ecosystem": "npm",
@@ -65606,116 +65716,6 @@
       }
     ]
   },
-  "ni-c/google-search-console-mcp": {
-    "package_name": "ni-c/google-search-console-mcp",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/ni-c%2Fgoogle-search-console-mcp",
-    "display_name": "ni-c/google-search-console-mcp",
-    "description": "MCP server for Google Search Console: properties, sitemaps, search analytics and URL inspection",
-    "author": null,
-    "repository_url": "https://github.com/ni-c/google-search-console-mcp",
-    "homepage_url": "https://google-search-console-mcp.ni-c.de",
-    "license": null,
-    "latest_version": "1.0.0",
-    "recommended_safe_version": "1.0.0",
-    "is_vulnerable": false,
-    "security_summary": "Server `ni-c/google-search-console-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.1.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
-      {
-        "version": "1.0.0",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:a04580dce99238b90c25929336c69a801fc1248cf9b5dd285b085b6d10ec06fd",
-        "tools": [
-          {
-            "name": "get_indexing_status",
-            "canonical_hash": "sha256:d65fc5cee8f70bbf454286ab6cf6070641de027036dc9027523a9b44dea2c6e9",
-            "description": "Returns when this credential last notified Google about a URL through ",
-            "risk_score": 2.5,
-            "risk_tier": "medium",
-            "security_comment": "Tool `get_indexing_status` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
-            "parameters": [
-              {
-                "name": "url",
-                "type": "string",
-                "description": "The URL to look up the notification history for",
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          },
-          {
-            "name": "query_search_analytics",
-            "canonical_hash": "sha256:022dacc792355ec03533f71257f105c476a58b5a9a9475872e0a1a82212a07f2",
-            "description": "Clicks, impressions, CTR and average position from Google Search, ",
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `query_search_analytics` operates with safe parameters and poses minimal static capability risk.",
-            "parameters": [],
-            "annotations": {}
-          },
-          {
-            "name": "request_indexing",
-            "canonical_hash": "sha256:b8df327692dac4f7093ee2f39856189b2345da200c3a494d47c423392f995f23",
-            "description": "Tells Google through the Indexing API that a URL was updated or ",
-            "risk_score": 2.5,
-            "risk_tier": "medium",
-            "security_comment": "Tool `request_indexing` [MEDIUM] initiates outbound network requests (potential SSRF risk).",
-            "parameters": [
-              {
-                "name": "type",
-                "type": "string",
-                "description": null,
-                "required": false,
-                "default": null,
-                "enum": [
-                  "URL_UPDATED",
-                  "URL_DELETED"
-                ],
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              },
-              {
-                "name": "url",
-                "type": "string",
-                "description": "The URL that changed",
-                "required": true,
-                "default": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "nested_properties": null
-              }
-            ],
-            "annotations": {}
-          }
-        ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
   "AzureDevOpsMcp": {
     "package_name": "AzureDevOpsMcp",
     "ecosystem": "nuget",
@@ -67682,6 +67682,36 @@
       }
     ]
   },
+  "pjpoulose/PIL": {
+    "package_name": "pjpoulose/PIL",
+    "ecosystem": "generic",
+    "purl": "pkg:generic/pjpoulose%2FPIL",
+    "display_name": "pjpoulose/PIL",
+    "description": "PIL: local-first knowledge base for your Instagram saved posts, with a read-only MCP server.",
+    "author": null,
+    "repository_url": "https://github.com/pjpoulose/PIL",
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.1.1",
+    "recommended_safe_version": "0.1.1",
+    "is_vulnerable": false,
+    "security_summary": "Server `pjpoulose/PIL` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.1.1",
+        "is_vulnerable": false,
+        "advisories": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
   "rascal-3/chainanalyzer-mcp": {
     "package_name": "rascal-3/chainanalyzer-mcp",
     "ecosystem": "generic",
@@ -69015,36 +69045,6 @@
             "annotations": {}
           }
         ],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "pjpoulose/PIL": {
-    "package_name": "pjpoulose/PIL",
-    "ecosystem": "generic",
-    "purl": "pkg:generic/pjpoulose%2FPIL",
-    "display_name": "pjpoulose/PIL",
-    "description": "PIL: local-first knowledge base for your Instagram saved posts, with a read-only MCP server.",
-    "author": null,
-    "repository_url": "https://github.com/pjpoulose/PIL",
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "0.1.1",
-    "recommended_safe_version": "0.1.1",
-    "is_vulnerable": false,
-    "security_summary": "Server `pjpoulose/PIL` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "0.1.1",
-        "is_vulnerable": false,
-        "advisories": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "tools": [],
         "prompts": [],
         "resources": [],
         "release_date": null,
@@ -75235,88 +75235,30 @@
       }
     ]
   },
-  "Awesome-MCP-Server": {
-    "package_name": "Awesome-MCP-Server",
+  "PromptShopMCP": {
+    "package_name": "PromptShopMCP",
     "ecosystem": "MCP",
-    "purl": "pkg:mcp/Awesome-MCP-Server",
-    "display_name": "Awesome-MCP-Server",
-    "description": "A flaw has been found in AIAnytime Awesome-MCP-Server up to a884bb51bcd99e08e14fd712c749d55d9d9a13ab. Affected by this i",
+    "purl": "pkg:mcp/PromptShopMCP",
+    "display_name": "PromptShopMCP",
+    "description": "A vulnerability was found in Kira-Pgr PromptShopMCP up to 5bc0cd17358e19a5415d11a531088170d7b81452. Affected is the func",
     "author": null,
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "a884bb51bcd99e08e14fd712c749d55d9d9a13ab",
+    "latest_version": "5bc0cd17358e19a5415d11a531088170d7b81452",
     "recommended_safe_version": null,
     "is_vulnerable": true,
-    "security_summary": "Package `Awesome-MCP-Server` has 1 security advisories.",
+    "security_summary": "Package `PromptShopMCP` has 1 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "a884bb51bcd99e08e14fd712c749d55d9d9a13ab",
+        "version": "5bc0cd17358e19a5415d11a531088170d7b81452",
         "is_vulnerable": true,
         "advisories": [
           {
-            "id": "CVE-2026-14748",
-            "summary": "A flaw has been found in AIAnytime Awesome-MCP-Server up to a884bb51bcd99e08e14fd712c749d55d9d9a13ab. Affected by this i",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-14748",
-            "summary": "A flaw has been found in AIAnytime Awesome-MCP-Server up to a884bb51bcd99e08e14fd712c749d55d9d9a13ab. Affected by this i",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "stata-mcp": {
-    "package_name": "stata-mcp",
-    "ecosystem": "MCP",
-    "purl": "pkg:mcp/stata-mcp",
-    "display_name": "stata-mcp",
-    "description": "MCP-for-Stata is an MCP server for Stata to integrate Stata into an agent. Prior to version 1.17.3, the `log_file_name` ",
-    "author": null,
-    "repository_url": null,
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "< 1.17.3",
-    "recommended_safe_version": null,
-    "is_vulnerable": true,
-    "security_summary": "Package `stata-mcp` has 1 security advisories.",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "< 1.17.3",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "CVE-2026-47708",
-            "summary": "MCP-for-Stata is an MCP server for Stata to integrate Stata into an agent. Prior to version 1.17.3, the `log_file_name` ",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-47708",
-            "summary": "MCP-for-Stata is an MCP server for Stata to integrate Stata into an agent. Prior to version 1.17.3, the `log_file_name` ",
+            "id": "CVE-2026-74842",
+            "summary": "A vulnerability was found in Kira-Pgr PromptShopMCP up to 5bc0cd17358e19a5415d11a531088170d7b81452. Affected is the func",
             "severity": "UNKNOWN",
             "cvss_score": null,
             "owasp_mcp_category": null,
@@ -75383,43 +75325,13 @@
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "de5a51525a69822290eaee569a1ab447b490746d",
+    "latest_version": "bc597e391f184d2187062fd567599a3cb72adf51",
     "recommended_safe_version": null,
     "is_vulnerable": true,
     "security_summary": "Package `mcp-data-vis` has 2 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
-      {
-        "version": "bc597e391f184d2187062fd567599a3cb72adf51",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "CVE-2026-7146",
-            "summary": "A security vulnerability has been detected in AlejandroArciniegas mcp-data-vis up to de5a51525a69822290eaee569a1ab447b49",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          },
-          {
-            "id": "CVE-2026-5322",
-            "summary": "A vulnerability has been found in AlejandroArciniegas mcp-data-vis bc597e391f184d2187062fd567599a3cb72adf51/de5a51525a69",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      },
       {
         "version": "de5a51525a69822290eaee569a1ab447b490746d",
         "is_vulnerable": true,
@@ -75449,33 +75361,23 @@
         "resources": [],
         "release_date": null,
         "required_env_vars": []
-      }
-    ]
-  },
-  "mcp-test-runner": {
-    "package_name": "mcp-test-runner",
-    "ecosystem": "MCP",
-    "purl": "pkg:mcp/mcp-test-runner",
-    "display_name": "mcp-test-runner",
-    "description": "A weakness has been identified in privsim mcp-test-runner 0.2.0. Impacted is the function child_process.spawn of the fil",
-    "author": null,
-    "repository_url": null,
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "0.2.0",
-    "recommended_safe_version": null,
-    "is_vulnerable": true,
-    "security_summary": "Package `mcp-test-runner` has 1 security advisories.",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
+      },
       {
-        "version": "0.2.0",
+        "version": "bc597e391f184d2187062fd567599a3cb72adf51",
         "is_vulnerable": true,
         "advisories": [
           {
-            "id": "CVE-2026-7730",
-            "summary": "A weakness has been identified in privsim mcp-test-runner 0.2.0. Impacted is the function child_process.spawn of the fil",
+            "id": "CVE-2026-7146",
+            "summary": "A security vulnerability has been detected in AlejandroArciniegas mcp-data-vis up to de5a51525a69822290eaee569a1ab447b49",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-5322",
+            "summary": "A vulnerability has been found in AlejandroArciniegas mcp-data-vis bc597e391f184d2187062fd567599a3cb72adf51/de5a51525a69",
             "severity": "UNKNOWN",
             "cvss_score": null,
             "owasp_mcp_category": null,
@@ -75492,30 +75394,39 @@
       }
     ]
   },
-  "jan": {
-    "package_name": "jan",
-    "ecosystem": "PyPI",
-    "purl": "pkg:pypi/jan",
-    "display_name": "jan",
-    "description": "Jan through 0.8.4, fixed in commit 3e1c1e7, contains a CORS misconfiguration vulnerability in its local API server that ",
+  "toolhive": {
+    "package_name": "toolhive",
+    "ecosystem": "MCP",
+    "purl": "pkg:mcp/toolhive",
+    "display_name": "toolhive",
+    "description": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to",
     "author": null,
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "3e1c1e724f696620d89bb4a9cc18a380e0753757",
+    "latest_version": "< 0.0.33",
     "recommended_safe_version": null,
     "is_vulnerable": true,
-    "security_summary": "Package `jan` has 1 security advisories.",
+    "security_summary": "Package `toolhive` has 1 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "3e1c1e724f696620d89bb4a9cc18a380e0753757",
+        "version": "< 0.0.33",
         "is_vulnerable": true,
         "advisories": [
           {
-            "id": "CVE-2026-66005",
-            "summary": "Jan through 0.8.4, fixed in commit 3e1c1e7, contains a CORS misconfiguration vulnerability in its local API server that ",
+            "id": "CVE-2025-47274",
+            "summary": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2025-47274",
+            "summary": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to",
             "severity": "UNKNOWN",
             "cvss_score": null,
             "owasp_mcp_category": null,
@@ -75572,30 +75483,30 @@
       }
     ]
   },
-  "toolhive": {
-    "package_name": "toolhive",
+  "stata-mcp": {
+    "package_name": "stata-mcp",
     "ecosystem": "MCP",
-    "purl": "pkg:mcp/toolhive",
-    "display_name": "toolhive",
-    "description": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to",
+    "purl": "pkg:mcp/stata-mcp",
+    "display_name": "stata-mcp",
+    "description": "MCP-for-Stata is an MCP server for Stata to integrate Stata into an agent. Prior to version 1.17.3, the `log_file_name` ",
     "author": null,
     "repository_url": null,
     "homepage_url": null,
     "license": null,
-    "latest_version": "< 0.0.33",
+    "latest_version": "< 1.17.3",
     "recommended_safe_version": null,
     "is_vulnerable": true,
-    "security_summary": "Package `toolhive` has 1 security advisories.",
+    "security_summary": "Package `stata-mcp` has 1 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "versions": [
       {
-        "version": "< 0.0.33",
+        "version": "< 1.17.3",
         "is_vulnerable": true,
         "advisories": [
           {
-            "id": "CVE-2025-47274",
-            "summary": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to",
+            "id": "CVE-2026-47708",
+            "summary": "MCP-for-Stata is an MCP server for Stata to integrate Stata into an agent. Prior to version 1.17.3, the `log_file_name` ",
             "severity": "UNKNOWN",
             "cvss_score": null,
             "owasp_mcp_category": null,
@@ -75603,8 +75514,137 @@
             "remediation_guidance": ""
           },
           {
-            "id": "CVE-2025-47274",
-            "summary": "ToolHive is a utility designed to simplify the deployment and management of Model Context Protocol (MCP) servers. Due to",
+            "id": "CVE-2026-47708",
+            "summary": "MCP-for-Stata is an MCP server for Stata to integrate Stata into an agent. Prior to version 1.17.3, the `log_file_name` ",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "Awesome-MCP-Server": {
+    "package_name": "Awesome-MCP-Server",
+    "ecosystem": "MCP",
+    "purl": "pkg:mcp/Awesome-MCP-Server",
+    "display_name": "Awesome-MCP-Server",
+    "description": "A flaw has been found in AIAnytime Awesome-MCP-Server up to a884bb51bcd99e08e14fd712c749d55d9d9a13ab. Affected by this i",
+    "author": null,
+    "repository_url": null,
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "a884bb51bcd99e08e14fd712c749d55d9d9a13ab",
+    "recommended_safe_version": null,
+    "is_vulnerable": true,
+    "security_summary": "Package `Awesome-MCP-Server` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "a884bb51bcd99e08e14fd712c749d55d9d9a13ab",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "CVE-2026-14748",
+            "summary": "A flaw has been found in AIAnytime Awesome-MCP-Server up to a884bb51bcd99e08e14fd712c749d55d9d9a13ab. Affected by this i",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          },
+          {
+            "id": "CVE-2026-14748",
+            "summary": "A flaw has been found in AIAnytime Awesome-MCP-Server up to a884bb51bcd99e08e14fd712c749d55d9d9a13ab. Affected by this i",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "jan": {
+    "package_name": "jan",
+    "ecosystem": "PyPI",
+    "purl": "pkg:pypi/jan",
+    "display_name": "jan",
+    "description": "Jan through 0.8.4, fixed in commit 3e1c1e7, contains a CORS misconfiguration vulnerability in its local API server that ",
+    "author": null,
+    "repository_url": null,
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "3e1c1e724f696620d89bb4a9cc18a380e0753757",
+    "recommended_safe_version": null,
+    "is_vulnerable": true,
+    "security_summary": "Package `jan` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "3e1c1e724f696620d89bb4a9cc18a380e0753757",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "CVE-2026-66005",
+            "summary": "Jan through 0.8.4, fixed in commit 3e1c1e7, contains a CORS misconfiguration vulnerability in its local API server that ",
+            "severity": "UNKNOWN",
+            "cvss_score": null,
+            "owasp_mcp_category": null,
+            "vulnerable_tools": [],
+            "remediation_guidance": ""
+          }
+        ],
+        "toolset_canonical_hash": "",
+        "tools": [],
+        "prompts": [],
+        "resources": [],
+        "release_date": null,
+        "required_env_vars": []
+      }
+    ]
+  },
+  "mcp-test-runner": {
+    "package_name": "mcp-test-runner",
+    "ecosystem": "MCP",
+    "purl": "pkg:mcp/mcp-test-runner",
+    "display_name": "mcp-test-runner",
+    "description": "A weakness has been identified in privsim mcp-test-runner 0.2.0. Impacted is the function child_process.spawn of the fil",
+    "author": null,
+    "repository_url": null,
+    "homepage_url": null,
+    "license": null,
+    "latest_version": "0.2.0",
+    "recommended_safe_version": null,
+    "is_vulnerable": true,
+    "security_summary": "Package `mcp-test-runner` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "versions": [
+      {
+        "version": "0.2.0",
+        "is_vulnerable": true,
+        "advisories": [
+          {
+            "id": "CVE-2026-7730",
+            "summary": "A weakness has been identified in privsim mcp-test-runner 0.2.0. Impacted is the function child_process.spawn of the fil",
             "severity": "UNKNOWN",
             "cvss_score": null,
             "owasp_mcp_category": null,
@@ -77749,46 +77789,6 @@
           {
             "id": "CVE-2026-34742",
             "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
-            "severity": "UNKNOWN",
-            "cvss_score": null,
-            "owasp_mcp_category": null,
-            "vulnerable_tools": [],
-            "remediation_guidance": ""
-          }
-        ],
-        "toolset_canonical_hash": "",
-        "tools": [],
-        "prompts": [],
-        "resources": [],
-        "release_date": null,
-        "required_env_vars": []
-      }
-    ]
-  },
-  "PromptShopMCP": {
-    "package_name": "PromptShopMCP",
-    "ecosystem": "MCP",
-    "purl": "pkg:mcp/PromptShopMCP",
-    "display_name": "PromptShopMCP",
-    "description": "A vulnerability was found in Kira-Pgr PromptShopMCP up to 5bc0cd17358e19a5415d11a531088170d7b81452. Affected is the func",
-    "author": null,
-    "repository_url": null,
-    "homepage_url": null,
-    "license": null,
-    "latest_version": "5bc0cd17358e19a5415d11a531088170d7b81452",
-    "recommended_safe_version": null,
-    "is_vulnerable": true,
-    "security_summary": "Package `PromptShopMCP` has 1 security advisories.",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "versions": [
-      {
-        "version": "5bc0cd17358e19a5415d11a531088170d7b81452",
-        "is_vulnerable": true,
-        "advisories": [
-          {
-            "id": "CVE-2026-74842",
-            "summary": "A vulnerability was found in Kira-Pgr PromptShopMCP up to 5bc0cd17358e19a5415d11a531088170d7b81452. Affected is the func",
             "severity": "UNKNOWN",
             "cvss_score": null,
             "owasp_mcp_category": null,
