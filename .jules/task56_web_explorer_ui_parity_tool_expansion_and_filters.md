@@ -95,14 +95,19 @@ However, in `mcp-vulnerabilities`, the web portal (`docs/index.html`, `docs/app.
 2. Update `docs/index.html` & `docs/updates.html`:
    - Add `#filterToolsOnly` checkbox control to the filter bars.
 3. Update `docs/app.js`:
-   - Implement `toggleToolsExpand(serverName)`.
-   - Render `.no-tools-badge` when `tool_count === 0`.
-   - Update `applyFilters()` to evaluate `filterToolsOnly`.
-   - Bind `.tool-tag` clicks to modal inspection.
+   - Define `let expandedToolServers = new Set();` inside the top of the IIFE.
+   - Implement `window.toggleToolsExpand = function(serverName) { ... }`.
+   - Render `.no-tools-badge` when `tool_count === 0` (or `s.tools.length === 0`).
+   - Update `applyDirectoryFilters()` to evaluate `filterToolsOnly`.
+   - Implement `window.openInspectorModal = function(serverName, toolName) { ... }` and bind `.tool-tag` clicks.
 4. Update `docs/updates.js`:
    - Mirror tool tag expansion, zero-tool badge, and filter toggle in the updates feed.
-5. Author comprehensive verification tests in `tests/test_web_catalog_ui_parity.py`.
-6. Verify `pytest -q tests/test_web_catalog_ui_parity.py` passes 100%.
+5. Author comprehensive verification tests in `tests/test_web_catalog_ui_parity.py`:
+   - Follow the same pattern as `tests/test_web_portal_ui.py` and `tests/test_web_ui.py` using Python file inspection, AST/regex parsing, and structural assertions.
+   - STRICT MANDATE: DO NOT use Playwright, Selenium, or headless browser binaries (no browser executable is installed).
+   - STRICT MANDATE: DO NOT modify, truncate, or delete any files under `docs/data/` (such as `docs/data/mcp_catalog_index.json`).
+   - STRICT MANDATE: Clean up any temporary scratch files (`patch_*.py`) before finalizing.
+6. Verify `pytest -q tests/test_web_catalog_ui_parity.py` passes 100% and `pytest -q` passes 100%.
 
 ## Non-Interactive Completion Directive
-Execute this task end-to-end without asking interactive questions. Implement all UI and styling changes cleanly across `docs/index.html`, `docs/app.js`, `docs/updates.html`, `docs/updates.js`, and `docs/style.css`. Add the comprehensive test suite in `tests/test_web_catalog_ui_parity.py`, verify that all tests pass (`pytest -q`), and conclude directly with a complete patch so the remote environment cleanly transitions to `Completed`.
+Execute this task end-to-end without asking interactive questions. Implement all UI and styling changes cleanly across `docs/index.html`, `docs/app.js`, `docs/updates.html`, `docs/updates.js`, and `docs/style.css`. Add the comprehensive test suite in `tests/test_web_catalog_ui_parity.py`, verify that all tests pass (`pytest -q`), clean up scratch files, and conclude directly with a complete patch so the remote environment cleanly transitions to `Completed`.
