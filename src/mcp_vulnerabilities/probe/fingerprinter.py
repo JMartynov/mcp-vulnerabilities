@@ -114,3 +114,72 @@ class McpFingerprinter:
                 "resources": client.surface.resources,
             },
         )
+
+
+@dataclass
+class IdentificationResult:
+    match_result: Any  # FingerprintMatchResult from mcp_fingerprints
+    is_identified: bool
+    package_name: str | None = None
+    version: str | None = None
+    confidence_score: float = 0.0
+    vulnerabilities: List[Any] = field(default_factory=list)  # OsvVulnerability objects
+
+
+class BehavioralTopologyIdentifier:
+    def __init__(self, matcher=None, correlator=None):
+        self.matcher = matcher
+        self.correlator = correlator
+
+    def identify_and_correlate(
+        self,
+        target: str | List[str],
+        headers: Dict[str, str] | None = None,
+        timeout: float = 10.0,
+        min_confidence: float = 0.85,
+    ) -> IdentificationResult:
+        from mcp_fingerprints.prober import McpProber
+
+        prober = McpProber(matcher=self.matcher)
+
+        # probe() handles stdio vs http depending on target structure
+        report = prober.probe(
+            target=target,
+            headers=headers,
+            timeout=timeout,
+            min_confidence_threshold=min_confidence,
+        )
+
+        if report.error:
+            if "TimeoutExpired" in report.error or "timeout" in report.error.lower() or "failed to receive" in report.error.lower():
+                raise TimeoutError(f"PROCESS_PROBE_TIMEOUT: {report.error}")
+            raise RuntimeError(f"Probing failed: {report.error}")
+
+        match = report.match_result
+        if not match or not getattr(match, "matched", getattr(match, "is_identified", match.confidence_score >= min_confidence)):
+            return IdentificationResult(
+                match_result=match,
+                is_identified=False,
+                confidence_score=match.confidence_score if match else 0.0,
+            )
+
+        pkg_name = match.package_name
+        version = match.matched_version if hasattr(match, "matched_version") else getattr(match, "version", None)
+
+        vulns = []
+        if self.correlator and pkg_name:
+            timeline_res = self.correlator.correlate_package(pkg_name)
+            if timeline_res:
+                for state in timeline_res.timeline:
+                    if state.version == version and state.is_vulnerable:
+                        vulns.extend(state.matching_advisories if hasattr(state, "matching_advisories") else getattr(state, "advisories", []))
+
+        return IdentificationResult(
+            match_result=match,
+            is_identified=True,
+            package_name=pkg_name,
+            version=version,
+            confidence_score=match.confidence_score,
+            vulnerabilities=vulns,
+        )
+
