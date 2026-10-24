@@ -1,0 +1,83 @@
+name: "Wave 15-16: Wave 14 Code Review Remediation & v1.2 Security Engines"
+repo: "JMartynov/mcp-vulnerabilities"
+base_branch: "main"
+
+tasks:
+  # Wave 15A: Frontend & Pipeline Defect Remediation
+  - id: "task-78"
+    prompt_file: ".jules/task78_advisory_filter_reference_error_fix.md"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  - id: "task-79"
+    prompt_file: ".jules/task79_precomputed_composite_risk_tier_catalog_index.md"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  - id: "task-80"
+    prompt_file: ".jules/task80_config_auditor_cve_ids_and_cvss_scores.md"
+    depends_on:
+      - "task-78"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  - id: "task-81"
+    prompt_file: ".jules/task81_latest_version_analytics_and_catalog_ingestion.md"
+    depends_on:
+      - "task-79"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  - id: "task-82"
+    prompt_file: ".jules/task82_css_variables_accessibility_and_ui_hygiene.md"
+    depends_on:
+      - "task-80"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  # Wave 15B: Verification & Automated Test Gate
+  - id: "task-83"
+    prompt_file: ".jules/task83_wave14_automated_test_coverage.md"
+    depends_on:
+      - "task-78"
+      - "task-79"
+      - "task-80"
+      - "task-81"
+      - "task-82"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  # Wave 16: v1.2 Strategic Runtime & Reachability Engines (Independent / Parallel)
+  - id: "task-84"
+    prompt_file: ".jules/task84_inline_mcp_reverse_proxy_interceptor.md"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true
+
+  - id: "task-85"
+    prompt_file: ".jules/task85_ast_call_graph_reachability_engine.md"
+    verify: true
+    auto_merge: true
+    condition: "on_success"
+    timeout: 45
+    skip_ci: true

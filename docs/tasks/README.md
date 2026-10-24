@@ -202,18 +202,31 @@ Master Code Review & Verification Report: [`code_review_wave14_portal_and_analyt
 
 ---
 
-### 15. Wave 15: Wave 14 Code Review Remediation & Automated Test Suite (Active Wave)
+### 15. Wave 15: Wave 14 Code Review Remediation & 100% Quality Gate (Active Wave)
 
 Master Plan: [IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md](IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md)  
 Source Review: [`code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **78** | **Advisory Filter `ReferenceError` Fix** | Front-End UI (`docs/app.js`) | `Todo` | Resolve W14-01: Eliminate undefined `server.tools_count` inside `applyAdvisoryFilters()` and replace with advisory-scoped `vulnerable_tools` check. | [task78_advisory_filter_reference_error_fix.md](task78_advisory_filter_reference_error_fix.md) |
-| **79** | **Precomputed `composite_risk_tier` in Catalog Index** | Pipeline & UI (`site_builder.py`, `app.js`) | `Todo` | Resolve W14-02: Compute `highest_cve_severity` and `composite_risk_tier` in `catalog_index` so directory cards show true composite risk instead of defaulting to `LOW`. | [task79_precomputed_composite_risk_tier_catalog_index.md](task79_precomputed_composite_risk_tier_catalog_index.md) |
-| **80** | **Config Auditor CVE IDs & CVSS Scores** | Client Auditor (`docs/app.js`, `style.css`) | `Todo` | Resolve W14-03: Cross-reference `allAdvisories` in `renderAuditResults()` to render CVE/GHSA IDs, severity badges, and CVSS scores per Task 77 Scenario 2. | [task80_config_auditor_cve_ids_and_cvss_scores.md](task80_config_auditor_cve_ids_and_cvss_scores.md) |
-| **81** | **Latest-Version Analytics & Catalog Tool Ingestion** | Analytics Pipeline (`site_builder.py`) | `Todo` | Resolve W14-05: Select `versions[-1]` (latest version) instead of `versions[0]` (oldest alpha version) when extracting catalog tools, capabilities, and required env vars. | [task81_latest_version_analytics_and_catalog_ingestion.md](task81_latest_version_analytics_and_catalog_ingestion.md) |
-| **82** | **Wave 14 Automated Test Coverage (`test_analytics.py`)** | Automated Testing (`tests/`) | `Todo` | Resolve W14-04: Author contracted `tests/test_analytics.py` and `tests/test_wave14_portal.py` covering analytics invariants, composite risk, and portal DOM/JS guards. | [task82_wave14_automated_test_coverage.md](task82_wave14_automated_test_coverage.md) |
+| **78** | **Advisory Filter `ReferenceError` Fix & Vulnerable Tools Predicate** | Front-End UI (`docs/app.js`) | `Todo` | Resolve `DEFECT-W14-01` (`P0`): Eliminate undefined `server.tools_count` inside `applyAdvisoryFilters()` and replace with `advisoryHasVulnerableTools(adv)`. | [task78_advisory_filter_reference_error_fix.md](task78_advisory_filter_reference_error_fix.md) |
+| **79** | **Precomputed `composite_risk_tier` & `highest_cve_severity` in Catalog Index** | Pipeline & UI (`site_builder.py`, `app.js`, `updates.js`) | `Todo` | Resolve `DEFECT-W14-02` (`P0`): Precompute and stamp `highest_cve_severity` and `composite_risk_tier` in `mcp_catalog_index.json` so directory cards show true composite risk instead of defaulting to `LOW`. | [task79_precomputed_composite_risk_tier_catalog_index.md](task79_precomputed_composite_risk_tier_catalog_index.md) |
+| **80** | **In-Browser Config Auditor CVE IDs, CVSS Scores & Posture Report** | Client Auditor (`docs/app.js`, `style.css`) | `Todo` | Resolve `DEFECT-W14-03` (`P0`): Cross-reference `allAdvisories` in `auditConfigContent()` and `renderAuditResults()` to render CVE/GHSA IDs, severity badges, and CVSS scores per Task 77 Scenario 2. | [task80_config_auditor_cve_ids_and_cvss_scores.md](task80_config_auditor_cve_ids_and_cvss_scores.md) |
+| **81** | **Latest-Version (`versions[-1]`) Analytics & Catalog Tool Ingestion Fix** | Analytics Pipeline (`site_builder.py`) | `Todo` | Resolve `DEFECT-W14-05` (`P1`): Select `versions[-1]` (latest version) instead of `versions[0]` (oldest alpha version) when extracting catalog tools, capabilities, and required env vars. | [task81_latest_version_analytics_and_catalog_ingestion.md](task81_latest_version_analytics_and_catalog_ingestion.md) |
+| **82** | **CSS Design Tokens, Sub-Tab Reset, Sparkline `viewBox` & UI Hygiene** | Front-End Polish (`style.css`, `app.js`, `updates.*`) | `Todo` | Resolve `DEFECT-W14-06`..`W14-10` (`P1`): Define `--bg-tertiary`, `--primary-color`, `.badge-eco`; reset primitive sub-tabs on version switch; add `.fp-badge` keyboard a11y, `rel="noopener"`, and sparkline `viewBox`. | [task82_css_variables_accessibility_and_ui_hygiene.md](task82_css_variables_accessibility_and_ui_hygiene.md) |
+| **83** | **Comprehensive Automated Test Suite (`test_analytics.py` & `test_wave14_portal.py`)** | Automated Testing (`tests/`) | `Todo` | Resolve `DEFECT-W14-04` (`P0`): Author contracted `tests/test_analytics.py` and `tests/test_wave14_portal.py` covering analytics invariants, composite risk, and portal DOM/JS guards. | [task83_wave14_automated_test_coverage.md](task83_wave14_automated_test_coverage.md) |
+
+---
+
+### 16. Wave 16: v1.2 Runtime Reverse Proxy Interceptor & AST Call-Graph Reachability Engine (Active Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md](IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md)  
+Strategic Roadmap Source: [`CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`](../audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **84** | **v1.2 Inline MCP Reverse Proxy Interceptor (`mcp-vuln proxy`)** | Runtime Firewall (`src/mcp_vulnerabilities/proxy/`) | `Todo` | Implement Blueprint 1 (Task 67/72): Bidirectional STDIO JSON-RPC firewall intercepting `tools/list` and `tools/call` to block OSV `vulnerable_tools`, shadow tools, and injection payloads in real time. | [task84_inline_mcp_reverse_proxy_interceptor.md](task84_inline_mcp_reverse_proxy_interceptor.md) |
+| **85** | **v1.2 AST Interprocedural Call-Graph Reachability Engine** | Context-Aware SCA (`analyzers/reachability/`) | `Todo` | Implement Blueprint 2 (Task 69/72): Python & JS/TS AST call-graph analyzer tracing from `@mcp.tool` entrypoints into third-party dependencies to classify transitive findings as `REACHABLE`, `UNREACHABLE_IMPORT`, or `NOT_IMPORTED`. | [task85_ast_call_graph_reachability_engine.md](task85_ast_call_graph_reachability_engine.md) |
 
 ## Verification Test Results
 ```
