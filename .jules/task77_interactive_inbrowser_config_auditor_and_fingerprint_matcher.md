@@ -38,3 +38,12 @@ This task creates an interactive in-browser configuration auditor that parses cl
 - **Invariants**:
   - [x] **INVARIANT_3A (Patch Generation)**: Generate a JSON configuration diff showing the updated version pins (e.g. `@modelcontextprotocol/server-filesystem@0.6.0`).
   - [x] **INVARIANT_3B (Copy Action)**: Provide a one-click "Copy Remediated Config" button with visual feedback.
+
+---
+
+---
+
+## 4. Execution Directives & Non-Interactive Completion
+- **Non-Interactive Completion Directive**: Implement the required changes directly, ensure all acceptance criteria and invariants are satisfied, run relevant local tests to confirm pass, and finalize directly without asking open-ended questions so the remote VM cleanly transitions to Completed.
+- **Heavy Dataset Guard**: Do NOT execute full dataset compilation or multi-megabyte builds (passports.json.gz). Use test mocks/fixtures.
+- **Documentation Parity**: Keep comments, type annotations, and docstrings intact.

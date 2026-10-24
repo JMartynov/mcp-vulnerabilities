@@ -42,3 +42,12 @@ This task integrates cryptographic fingerprints, complete MCP primitives, transp
   - [x] **INVARIANT_3A (Transport Tag)**: Tag each server card with its transport topology (`🖥️ Local Stdio` vs `🌐 Remote SSE Gateway`).
   - [x] **INVARIANT_3B (Required Env Vars)**: Render required environment variables (`🔑 GITHUB_TOKEN`, etc.) in cards and inspector modals so operators know required secrets prior to installation.
   - [x] **INVARIANT_3C (Supply Chain Health Flag)**: Flag servers whose repositories returned 404 or were archived with a prominent `⚠️ Repo 404 / Archived` badge.
+
+---
+
+---
+
+## 4. Execution Directives & Non-Interactive Completion
+- **Non-Interactive Completion Directive**: Implement the required changes directly, ensure all acceptance criteria and invariants are satisfied, run relevant local tests to confirm pass, and finalize directly without asking open-ended questions so the remote VM cleanly transitions to Completed.
+- **Heavy Dataset Guard**: Do NOT execute full dataset compilation or multi-megabyte builds (passports.json.gz). Use test mocks/fixtures.
+- **Documentation Parity**: Keep comments, type annotations, and docstrings intact.

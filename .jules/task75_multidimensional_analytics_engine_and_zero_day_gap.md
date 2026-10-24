@@ -49,3 +49,12 @@ This task extends `src/mcp_vulnerabilities/site_builder.py` to calculate multi-d
   - [x] **INVARIANT_3A (Top Required Secrets)**: Rank top 10 required environment variables (`OPENAI_API_KEY`, `GITHUB_TOKEN`, etc.).
   - [x] **INVARIANT_3B (Transport Topology)**: Compute distribution of `stdio` vs `sse` vs `stream`.
   - [x] **INVARIANT_3C (Tool Shadowing Entropy)**: Identify top 10 most shadowed tool names across distinct packages (e.g. `read_file`, `execute_command`) and compute schema variance.
+
+---
+
+---
+
+## 4. Execution Directives & Non-Interactive Completion
+- **Non-Interactive Completion Directive**: Implement the required changes directly, ensure all acceptance criteria and invariants are satisfied, run relevant local tests to confirm pass, and finalize directly without asking open-ended questions so the remote VM cleanly transitions to Completed.
+- **Heavy Dataset Guard**: Do NOT execute full dataset compilation or multi-megabyte builds (passports.json.gz). Use test mocks/fixtures.
+- **Documentation Parity**: Keep comments, type annotations, and docstrings intact.

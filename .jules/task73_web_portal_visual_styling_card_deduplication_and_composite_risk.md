@@ -42,3 +42,12 @@ This task resolves all card styling, hierarchy, de-duplication, accessibility, a
 - **Invariants**:
   - [x] **INVARIANT_3A (Composite Risk)**: In `app.js` and `updates.js`, compute effective risk: if `s.is_vulnerable`, reflect the highest CVE severity instead of defaulting to `Risk: LOW`.
   - [x] **INVARIANT_3B (Form Accessibility)**: Add `aria-label="Search MCP servers"` and `aria-label="Search security advisories"` to search inputs on both pages.
+
+---
+
+---
+
+## 4. Execution Directives & Non-Interactive Completion
+- **Non-Interactive Completion Directive**: Implement the required changes directly, ensure all acceptance criteria and invariants are satisfied, run relevant local tests to confirm pass, and finalize directly without asking open-ended questions so the remote VM cleanly transitions to Completed.
+- **Heavy Dataset Guard**: Do NOT execute full dataset compilation or multi-megabyte builds (passports.json.gz). Use test mocks/fixtures.
+- **Documentation Parity**: Keep comments, type annotations, and docstrings intact.

@@ -41,3 +41,12 @@ This task adds change-type filter chips, an SVG historical velocity trendline, s
 - **Invariants**:
   - [x] **INVARIANT_3A (Tool Diffs)**: Highlight tools added in green (`+ tool_name`) and deprecated/removed tools in red (`- tool_name`).
   - [x] **INVARIANT_3B (Fingerprint Evolution)**: Display fingerprint transition: `sha256:old... ➔ sha256:new...`.
+
+---
+
+---
+
+## 4. Execution Directives & Non-Interactive Completion
+- **Non-Interactive Completion Directive**: Implement the required changes directly, ensure all acceptance criteria and invariants are satisfied, run relevant local tests to confirm pass, and finalize directly without asking open-ended questions so the remote VM cleanly transitions to Completed.
+- **Heavy Dataset Guard**: Do NOT execute full dataset compilation or multi-megabyte builds (passports.json.gz). Use test mocks/fixtures.
+- **Documentation Parity**: Keep comments, type annotations, and docstrings intact.
