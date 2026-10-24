@@ -3,6 +3,8 @@ name: Daily MCP Vulnerability Ingestion & Sync
 on:
   schedule:
     - cron: "0 3 * * *" # Daily at 03:00 UTC
+  repository_dispatch:
+    types: [upstream_fingerprints_updated]
   workflow_dispatch:
     inputs:
       force_release:
@@ -10,8 +12,6 @@ on:
         required: false
         default: false
         type: boolean
-  repository_dispatch:
-    types: [upstream_fingerprints_updated]
   push:
     paths:
       - "tests/fixtures/osv/**"

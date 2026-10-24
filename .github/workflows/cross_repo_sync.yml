@@ -4,9 +4,12 @@ on:
   schedule:
     - cron: "0 4 * * *" # Daily at 04:00 UTC
   workflow_dispatch:
+  repository_dispatch:
+    types: [upstream_fingerprints_updated]
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   cross-repo-sync:
@@ -14,6 +17,12 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Extract Dispatch Payload Version (if available)
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          echo "Upstream Fingerprints Version: ${{ github.event.client_payload.upstream_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "Passports Count: ${{ github.event.client_payload.passports_count }}" >> $GITHUB_STEP_SUMMARY
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
@@ -24,7 +33,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -e ".[dev]"
+          pip install -e ".[dev]" uv
           
       - name: Fetch Latest Passports from mcp-fingerprints (Cross-Repo Sync)
         env:
@@ -32,9 +41,9 @@ jobs:
         run: |
           python -c "import os; from mcp_vulnerabilities.sync_manager import CrossRepoSyncManager; CrossRepoSyncManager().fetch_latest_passports(github_token=os.environ.get('GITHUB_TOKEN'))"
 
-      - name: Compile Consolidated Snapshot
+      - name: Backup Vulnerabilities for Delta Check
         run: |
-          python -m mcp_vulnerabilities.snapshot data/vulnerabilities vulnerabilities.json.gz
+          cp -r data/vulnerabilities data/vulnerabilities_backup || true
 
       - name: Run Cross-Repo Correlation
         env:
@@ -42,15 +51,58 @@ jobs:
         run: |
           python -m mcp_vulnerabilities.cli correlate || true
 
+      - name: Check for Deltas
+        id: delta_check
+        run: |
+          python scripts/check_deltas.py >> $GITHUB_OUTPUT
+          cat $GITHUB_OUTPUT
+
+      - name: Build Web Explorer Static Data & Release Feeds
+        run: |
+          python -m mcp_vulnerabilities.site_builder --workers 4
+          python -m mcp_vulnerabilities.updates_builder
+
+      - name: Compile Consolidated Snapshot
+        run: |
+          python -m mcp_vulnerabilities.snapshot data/vulnerabilities vulnerabilities.json.gz
+
       - name: Run E2E Integration Tests
         run: |
           pytest tests/test_e2e_cross_repo_sync.py -v
 
-      - name: Commit & Push Canonical Vulnerability Updates Directly to Main
-        if: github.ref == 'refs/heads/main'
+      - name: Bump Version and Release if Delta Detected
+        if: github.ref == 'refs/heads/main' && steps.delta_check.outputs.delta_detected == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/passports.json.gz
+          NEW_VERSION=$(python scripts/bump_version.py --dry-run)
+          python scripts/bump_version.py --apply
+          python -m mcp_vulnerabilities.site_builder --workers 4
+          python -m mcp_vulnerabilities.updates_builder --version "${NEW_VERSION}"
+          
+          git add pyproject.toml src/mcp_vulnerabilities/__init__.py docs/data/ data/passports.json.gz vulnerabilities.json.gz
+          if [ -d "data/vulnerabilities" ]; then
+            git add data/vulnerabilities/
+          fi
+          
+          git diff --staged --quiet || git commit -m "chore(release): bump version to v${NEW_VERSION} after cross-repo sync"
+          git tag "v${NEW_VERSION}"
+          
+          git push origin main --tags || echo "Failed to push"
+          
+          gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
+          gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
+
+      - name: Commit & Push Canonical Vulnerability Updates Directly to Main
+        if: github.ref == 'refs/heads/main' && steps.delta_check.outputs.delta_detected != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/passports.json.gz vulnerabilities.json.gz docs/data/
+          if [ -d "data/vulnerabilities" ]; then
+            git add data/vulnerabilities/
+          fi
           git diff --staged --quiet || git commit -m "chore(sync): automated cross-repo sync of passports.json.gz [skip ci]"
-          git push origin main
+          git push origin main || echo "Failed to push"
