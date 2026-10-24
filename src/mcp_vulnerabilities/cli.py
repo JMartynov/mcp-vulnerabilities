@@ -50,6 +50,17 @@ def main() -> None:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+    # proxy command
+    proxy_parser = subparsers.add_parser("proxy", help="Inline JSON-RPC Reverse Proxy")
+    proxy_parser.add_argument("--package", help="Package name for vulnerabilities")
+    proxy_parser.add_argument("--mode", choices=["block", "audit"], default="block")
+    proxy_parser.add_argument("--block-tool", action="append", default=[], dest="blocked_tools")
+    proxy_parser.add_argument("--strict-passport", action="store_true")
+    proxy_parser.add_argument("--no-payload-guardrails", action="store_false", dest="enable_payload_guardrails")
+    proxy_parser.add_argument("--audit-log", help="Path to audit log file")
+    proxy_parser.add_argument("--dir", help="Path to vulnerabilities directory")
+    proxy_parser.add_argument("command_args", nargs=argparse.REMAINDER, help="-- <command> [args...]")
+
 
     # Site Build
     site_build_p = subparsers.add_parser(
@@ -625,6 +636,34 @@ def main() -> None:
     )
 
     args = parser.parse_args()
+
+    if args.command == "proxy":
+        from mcp_vulnerabilities.proxy.policy import ProxyPolicyEngine
+        from mcp_vulnerabilities.proxy.interceptor import McpStdioProxy
+
+        cmd_args = args.command_args
+        if cmd_args and cmd_args[0] == "--":
+            cmd_args = cmd_args[1:]
+
+        if not cmd_args:
+            print("Error: Must specify a command to wrap", file=sys.stderr)
+            sys.exit(1)
+
+        policy_engine = ProxyPolicyEngine(
+            package_name=args.package,
+            blocked_tools=set(args.blocked_tools),
+            strict_passport=args.strict_passport,
+            enable_payload_guardrails=args.enable_payload_guardrails,
+            vulnerabilities_dir=Path(args.dir) if args.dir else None
+        )
+
+        proxy = McpStdioProxy(
+            policy_engine=policy_engine,
+            mode=args.mode,
+            audit_log_path=args.audit_log
+        )
+
+        sys.exit(proxy.run_stdio(cmd_args))
 
     if args.command == "site-build":
         import os
