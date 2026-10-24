@@ -87,3 +87,6 @@ CLI argument parsing cannot determine what package or version is running, blindi
    - Connect results directly to `VulnerabilityCorrelator`.
 3. Author comprehensive unit and integration tests in `tests/test_behavioral_topology_prober.py`.
 4. Verify `pytest -q tests/test_behavioral_topology_prober.py` passes 100%.
+
+## Non-Interactive Completion Directive
+Execute this task end-to-end without asking interactive questions. Implement all code changes cleanly, add the comprehensive test suite in `tests/test_behavioral_topology_prober.py`, verify that all tests pass (`pytest -q`), and conclude directly with a complete patch so the remote environment cleanly transitions to `Completed`.

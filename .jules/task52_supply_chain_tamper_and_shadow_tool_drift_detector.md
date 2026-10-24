@@ -95,3 +95,6 @@ Because the version number remains unchanged, conventional scanners report the s
    - Add SARIF rules for `MCP001` and `MCP002`.
 4. Author comprehensive test suite in `tests/test_supply_chain_tamper_detector.py`.
 5. Verify `pytest -q tests/test_supply_chain_tamper_detector.py` passes 100%.
+
+## Non-Interactive Completion Directive
+Execute this task end-to-end without asking interactive questions. Implement all code changes cleanly, add the comprehensive test suite in `tests/test_supply_chain_tamper_detector.py`, verify that all tests pass (`pytest -q`), and conclude directly with a complete patch so the remote environment cleanly transitions to `Completed`.
