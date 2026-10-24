@@ -4,7 +4,6 @@ import logging
 from pathlib import Path
 from typing import Any, Dict, List, Set, Tuple, Optional
 
-from mcp_fingerprints.data_loader import get_passports_path
 from .models import FingerprintMatchResult, ServerPackageSpec, VersionFingerprint
 from .canonicalizer import extract_tool_signature, compute_toolset_canonical_hash
 
@@ -29,7 +28,7 @@ class FingerprintMatcher:
                 path = candidate
             else:
                 try:
-                    path = get_passports_path(download_if_missing=False)
+                    path = candidate
                 except Exception:
                     path = candidate
 

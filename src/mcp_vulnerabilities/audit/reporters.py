@@ -206,6 +206,64 @@ class SarifReporter:
         run["results"] = results
         return sarif
 
+
+    @classmethod
+    def generate_tamper_sarif(cls, reports: list, target_path: str = "mcp_client_config.json") -> Dict[str, Any]:
+        sarif = cls._create_base_sarif()
+        run = sarif["runs"][0]
+        rules_dict = {}
+        results = []
+
+        for report in reports:
+            if report.status in ("INTEGRITY_VERIFIED", "INTEGRITY_UNKNOWN (NO_PASSPORT_BASELINE)"):
+                continue
+
+            for inc in report.incidents:
+                if inc.incident_type == "SHADOW_TOOL_INJECTED":
+                    rule_id = "MCP002"
+                    name = "mcp-shadow-tool-injection"
+                    desc = "Unadvertised shadow tools injected at runtime."
+                elif inc.incident_type == "SCHEMA_TAMPERING":
+                    rule_id = "MCP001"
+                    name = "mcp-supply-chain-tampering"
+                    desc = "Tool schema tampered with without version bump."
+                else:
+                    rule_id = "MCP001"
+                    name = "mcp-supply-chain-tampering"
+                    desc = "Tool definitions altered."
+
+                level = cls._map_severity_to_level(inc.severity)
+
+                if rule_id not in rules_dict:
+                    rules_dict[rule_id] = {
+                        "id": rule_id,
+                        "name": name,
+                        "shortDescription": {"text": desc},
+                        "fullDescription": {"text": f"{desc} Detects unauthorized tool modifications."},
+                        "defaultConfiguration": {"level": level},
+                        "help": {"text": "Review tool configuration for unexpected shadow tools or tampered schemas."},
+                    }
+
+                msg = f"Server {report.package_name} (v{report.version}): {inc.details} [Baseline: {report.baseline_hash}, Live: {report.live_hash}]"
+                results.append(
+                    {
+                        "ruleId": rule_id,
+                        "level": level,
+                        "message": {"text": msg},
+                        "locations": [
+                            {
+                                "physicalLocation": {
+                                    "artifactLocation": {"uri": str(target_path)}
+                                }
+                            }
+                        ],
+                    }
+                )
+
+        run["tool"]["driver"]["rules"] = sorted(list(rules_dict.values()), key=lambda r: r["id"])
+        run["results"] = results
+        return sarif
+
     @classmethod
     def generate_collision_sarif(
         cls, report: Any, config_path: str = "mcp_client_config.json"

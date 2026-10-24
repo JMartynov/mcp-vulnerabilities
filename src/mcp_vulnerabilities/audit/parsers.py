@@ -26,6 +26,7 @@ class DiscoveredClientServer:
     source_file: Path | None = None
     client_name: str | None = None
     env: dict[str, str] = field(default_factory=dict)
+    declared_tools: list[dict[str, Any]] = field(default_factory=list)
 
 
 class ClientConfigParser:
@@ -183,6 +184,10 @@ class ClientConfigParser:
                         package_name = arg
                     break
 
+        declared_tools = conf.get("tools", command_val.get("tools", []) if isinstance(command_val, dict) else [])
+        if not isinstance(declared_tools, list):
+            declared_tools = []
+            
         return DiscoveredClientServer(
             server_name=name,
             package_name=package_name,
@@ -193,6 +198,7 @@ class ClientConfigParser:
             source_file=source_file,
             client_name=client_name,
             env=env,
+            declared_tools=declared_tools,
         )
 
     @staticmethod
