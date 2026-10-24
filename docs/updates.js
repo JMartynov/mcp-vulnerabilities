@@ -287,6 +287,24 @@
       const title = s.display_name || s.package_name;
       const showPkgName = title !== s.package_name;
 
+      const transportTag = s.transport === 'sse' ? '🌐 Remote SSE Gateway' : '🖥️ Local Stdio';
+      let supplyChainBadge = "";
+      if (s.is_unpublished || s.repo_http_status === 404 || s.archival_reason) {
+          supplyChainBadge = `<span class="badge badge-danger">⚠️ Repo 404 / Archived</span>`;
+      }
+      
+      let primitivesHtml = `<div class="primitives-tally">🔧 ${s.tools_count || 0} Tools • 📄 ${s.prompts_count || 0} Prompts • 📦 ${s.resources_count || 0} Resources</div>`;
+      
+      let envVarsHtml = "";
+      if (s.required_env_vars && s.required_env_vars.length > 0) {
+          envVarsHtml = `<div class="env-vars-tag">Required Secrets: ${s.required_env_vars.map(e => `<code>🔑 ${escapeHtml(e)}</code>`).join(", ")}</div>`;
+      }
+      
+      let fpBadge = "";
+      if (s.toolset_canonical_hash) {
+          fpBadge = `<div class="fp-badge" style="cursor: pointer;" onclick="navigator.clipboard.writeText('${s.toolset_canonical_hash}'); const t = this.querySelector('.tooltip'); t.textContent = 'Copied!'; t.style.display = 'inline'; setTimeout(() => { t.textContent = 'Copy'; t.style.display = 'none'; }, 2000);">🔑 sha256:${s.toolset_canonical_hash.substring(0, 8)}...<span class="tooltip" style="display:none;">Copy</span></div>`;
+      }
+
       return `
         <article class="server-card">
           <div class="server-card-header">
@@ -298,12 +316,17 @@
               <span class="badge ${changeTypeClass}">${escapeHtml(changeTypeLabel)}</span>
               <span class="badge badge-eco">${escapeHtml(s.ecosystem)}</span>
               <span class="badge ${riskClass}">Risk: ${escapeHtml(compRisk)}</span>
+              <span class="badge badge-transport">${escapeHtml(transportTag)}</span>
+              ${supplyChainBadge}
+              ${fpBadge}
             </div>
           </div>
 
           <div class="server-status-row">
             ${vulnStatusBadge}
             ${safeVerBadge}
+            ${primitivesHtml}
+            ${envVarsHtml}
           </div>
 
           <p class="server-desc">${escapeHtml(s.description || "No description provided.")}</p>
@@ -511,9 +534,60 @@
       `;
     }
 
-    el.modalCanonicalHash.textContent = `hash: ${v.toolset_canonical_hash || "none"}`;
+    el.modalCanonicalHash.innerHTML = `<span class="verified-contract">🛡️ Verified Toolset Contract</span> <span style="cursor: pointer;" onclick="navigator.clipboard.writeText('${v.toolset_canonical_hash || ''}');">hash: ${v.toolset_canonical_hash || "none"}</span>`;
+    
+    // Tools
     const tools = v.tools || [];
     el.toolsCountLabel.textContent = String(tools.length);
+    
+    // Prompts
+    const prompts = v.prompts || [];
+    const promptsTab = document.getElementById("modal-prompts-container");
+    if (promptsTab) {
+        document.getElementById("prompts-count-label").textContent = String(prompts.length);
+        if (prompts.length === 0) {
+            promptsTab.innerHTML = `<p class="empty-state">No extracted prompt signatures for version ${escapeHtml(v.version)}.</p>`;
+        } else {
+            promptsTab.innerHTML = prompts.map(p => {
+                const argsHtml = (p.arguments || []).map(a => `<tr><td><code>${escapeHtml(a.name)}</code></td><td>${a.required ? 'Yes' : 'No'}</td><td>${escapeHtml(a.description || '-')}</td></tr>`).join("");
+                return `
+                <div class="tool-signature-card">
+                  <h5 class="tool-name">📄 ${escapeHtml(p.name)}</h5>
+                  <p class="tool-desc">${escapeHtml(p.description || "No description.")}</p>
+                  ${argsHtml ? `<table class="params-table"><thead><tr><th>Arg</th><th>Required</th><th>Description</th></tr></thead><tbody>${argsHtml}</tbody></table>` : ""}
+                </div>`;
+            }).join("");
+        }
+    }
+    
+    // Resources
+    const resources = v.resources || [];
+    const resourcesTab = document.getElementById("modal-resources-container");
+    if (resourcesTab) {
+        document.getElementById("resources-count-label").textContent = String(resources.length);
+        if (resources.length === 0) {
+            resourcesTab.innerHTML = `<p class="empty-state">No extracted resource signatures for version ${escapeHtml(v.version)}.</p>`;
+        } else {
+            resourcesTab.innerHTML = resources.map(r => `
+                <div class="tool-signature-card">
+                  <h5 class="tool-name">📦 ${escapeHtml(r.name)}</h5>
+                  <p class="tool-desc">${escapeHtml(r.description || "No description.")}</p>
+                  <p><strong>URI Template:</strong> <code>${escapeHtml(r.uriTemplate)}</code></p>
+                </div>
+            `).join("");
+        }
+    }
+    
+    // Env vars display inside modal
+    const modalEnvContainer = document.getElementById("modal-env-vars-container");
+    if (modalEnvContainer) {
+        if (v.required_env_vars && v.required_env_vars.length > 0) {
+            modalEnvContainer.innerHTML = `<strong>Required Environment Variables:</strong> ` + v.required_env_vars.map(e => `<code>🔑 ${escapeHtml(e)}</code>`).join(", ");
+            modalEnvContainer.style.display = "block";
+        } else {
+            modalEnvContainer.style.display = "none";
+        }
+    }
 
     if (tools.length === 0) {
       el.modalToolsContainer.innerHTML = `<p class="empty-state">No extracted tool signatures for version ${escapeHtml(v.version)}.</p>`;

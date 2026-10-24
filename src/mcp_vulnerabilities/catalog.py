@@ -376,6 +376,14 @@ class UnifiedMcpSecurityRecord:
     security_summary: str = ""
     static_risk_score: float = 0.0
     static_risk_tier: str = "LOW"
+    is_unpublished: bool = False
+    repo_http_status: int = 200
+    archival_reason: str | None = None
+    transport: str | None = None
+    prompts_count: int = 0
+    resources_count: int = 0
+    toolset_canonical_hash: str | None = None
+    required_env_vars: tuple[str, ...] = field(default_factory=tuple)
     versions: list[VersionSecurityRecord] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
@@ -395,6 +403,14 @@ class UnifiedMcpSecurityRecord:
             "security_summary": self.security_summary,
             "static_risk_score": self.static_risk_score,
             "static_risk_tier": self.static_risk_tier,
+            "is_unpublished": self.is_unpublished,
+            "repo_http_status": self.repo_http_status,
+            "archival_reason": self.archival_reason,
+            "transport": self.transport,
+            "prompts_count": self.prompts_count,
+            "resources_count": self.resources_count,
+            "toolset_canonical_hash": self.toolset_canonical_hash,
+            "required_env_vars": list(self.required_env_vars),
             "versions": [v.to_dict() for v in self.versions],
         }
 
@@ -424,6 +440,14 @@ class UnifiedMcpSecurityRecord:
             security_summary=data.get("security_summary", ""),
             static_risk_score=float(data.get("static_risk_score", 0.0)),
             static_risk_tier=data.get("static_risk_tier", "LOW"),
+            is_unpublished=bool(data.get("is_unpublished", False)),
+            repo_http_status=int(data.get("repo_http_status", 200)),
+            archival_reason=data.get("archival_reason"),
+            transport=data.get("transport"),
+            prompts_count=int(data.get("prompts_count", 0)),
+            resources_count=int(data.get("resources_count", 0)),
+            toolset_canonical_hash=data.get("toolset_canonical_hash"),
+            required_env_vars=tuple(data.get("required_env_vars", ())),
             versions=versions,
         )
 
