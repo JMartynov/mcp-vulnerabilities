@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any
 
 from packaging.version import InvalidVersion, Version
+
 from mcp_vulnerabilities.models import OsvVulnerability
 
 from .parsers import DiscoveredClientServer
@@ -290,6 +291,14 @@ class VulnerabilityMatcher:
                         continue
                     if srv_eco == "pypi" and eco not in ("pypi", "python"):
                         continue
+                    if srv_eco in ("cargo", "rust") and eco not in ("cargo", "crates.io", "rust"):
+                        continue
+                    if srv_eco in ("go", "golang") and eco not in ("go", "golang"):
+                        continue
+                    if srv_eco in ("maven", "java") and eco not in ("maven", "java"):
+                        continue
+                    if srv_eco in ("docker", "containers") and eco not in ("docker", "containers"):
+                        continue
 
                 results.append((adv, affected))
 
@@ -435,6 +444,21 @@ class VulnerabilityMatcher:
     @staticmethod
     def _parse_version(v_str: str) -> Version:
         clean = v_str.lstrip("v=").strip()
+        
+        # Handle Maven qualifiers
+        clean = re.sub(r'[\.\-]?(RELEASE|Final)$', '', clean, flags=re.IGNORECASE)
+        clean = re.sub(r'[\.\-]?SNAPSHOT$', '.dev0', clean, flags=re.IGNORECASE)
+        
+        # Handle Go pseudo-versions: v0.0.0-20260101120000-abcdef123456
+        if '-' in clean:
+            parts = clean.split('-')
+            if len(parts) >= 3 and len(parts[-2]) == 14 and parts[-2].isdigit():
+                clean = f"{parts[0]}.dev{parts[-2]}"
+                
+        # Handle docker tags like "latest"
+        if clean.lower() == "latest":
+            return Version("9999.9999.9999")
+            
         try:
             return Version(clean)
         except InvalidVersion:

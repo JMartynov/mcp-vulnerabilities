@@ -9,7 +9,7 @@ import os
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from packaging.version import InvalidVersion, Version
 
@@ -26,8 +26,6 @@ from mcp_vulnerabilities.fingerprints.models import (
     PromptSignature,
     ResourceSignature,
     ServerPackageSpec,
-    ToolContractSignature,
-    VersionFingerprint,
 )
 from mcp_vulnerabilities.models import OsvVulnerability
 
@@ -96,8 +94,14 @@ def generate_upgrade_command(
         return f"npm install {package_name}@^{target_version}"
     elif eco in ("pypi", "python", "pip"):
         return f"pip install --upgrade {package_name}>={target_version}"
-    elif eco == "docker":
+    elif eco in ("docker", "containers"):
         return f"docker pull {package_name}:{target_version}"
+    elif eco in ("cargo", "crates.io", "rust"):
+        return f"cargo update -p {package_name} --precise {target_version}"
+    elif eco in ("go", "golang"):
+        return f"go get {package_name}@{target_version}"
+    elif eco in ("maven", "java", "kotlin"):
+        return "mvn versions:use-latest-versions"
     return None
 
 
@@ -428,7 +432,7 @@ def _load_passports(passports_path: str | Path | None) -> dict[str, ServerPackag
     """Helper to load ServerPackageSpecs from gz, json, or directory."""
     passports: dict[str, ServerPackageSpec] = {}
 
-    target: Optional[Path] = None
+    target: Path | None = None
     if passports_path:
         target = Path(passports_path)
     else:
@@ -497,7 +501,7 @@ def build_unified_mcp_security_catalog(
     """
     # 1. Load Vulnerability Matcher
     matcher: VulnerabilityMatcher
-    v_path: Optional[Path] = None
+    v_path: Path | None = None
     if vulnerabilities_dir:
         v_path = Path(vulnerabilities_dir)
     else:
@@ -549,9 +553,7 @@ def build_unified_mcp_security_catalog(
                     if eco and spec.ecosystem:
                         spec_eco = spec.ecosystem.lower()
                         if eco != spec_eco:
-                            if eco == "pypi" and spec_eco in ("pypi", "pip"):
-                                pass
-                            elif eco == "golang" and spec_eco in ("go", "golang"):
+                            if eco == "pypi" and spec_eco in ("pypi", "pip") or eco == "golang" and spec_eco in ("go", "golang"):
                                 pass
                             else:
                                 continue
