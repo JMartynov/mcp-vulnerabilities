@@ -344,7 +344,11 @@
     return out;
   }
 
-  function handleAuditText(text) {
+  async function handleAuditText(text) {
+    if (!allAdvisories || allAdvisories.length === 0) {
+      await loadAdvisories();
+    }
+    
     let configObj = null;
     try {
       const cleanText = stripComments(text);
@@ -396,6 +400,7 @@
       let matchedServer = null;
       let isVuln = false;
       let safeVersion = null;
+      let advisories = [];
 
       if (parsed && parsed.packageName) {
          matchedServer = catalogIndex.find(s => s.package_name === parsed.packageName || s.display_name === parsed.packageName);
@@ -406,8 +411,16 @@
             isVuln = true;
             safeVersion = matchedServer.recommended_safe_version;
             
+            if (parsed && parsed.version && safeVersion && parsed.version === safeVersion) {
+               isVuln = false;
+            }
+
+            if (isVuln) {
+                advisories = findMatchingAdvisoriesForPackage(parsed.packageName);
+            }
+            
             // Generate remediation diff if safe version exists
-            if (safeVersion) {
+            if (safeVersion && isVuln) {
                remediated = true;
                remediatedServersObj[name] = generateRemediatedConfig(conf, parsed, safeVersion);
             }
@@ -421,11 +434,62 @@
          parsedVersion: parsed ? parsed.version : "Unknown",
          isVulnerable: isVuln,
          matchedServer: matchedServer,
-         safeVersion: safeVersion
+         safeVersion: safeVersion,
+         advisories: advisories
       });
     }
 
     renderAuditResults(auditResults, configObj, remediatedServersObj, remediated);
+  }
+
+  function normalizePkgName(name) {
+    if (!name) return "";
+    return name.toLowerCase().replace(/_/g, '-');
+  }
+
+  function findMatchingAdvisoriesForPackage(pkgName) {
+    const normPkg = normalizePkgName(pkgName);
+    const matches = [];
+
+    for (const adv of allAdvisories) {
+      if (!adv.affected) continue;
+      
+      let isMatch = false;
+      for (const a of adv.affected) {
+        if (!a.package || !a.package.name) continue;
+        const advPkg = normalizePkgName(a.package.name);
+        
+        if (advPkg === normPkg || advPkg.endsWith("/" + normPkg)) {
+          isMatch = true;
+          break;
+        }
+      }
+
+      if (isMatch) {
+        let displayId = adv.id;
+        if (!displayId.startsWith("CVE-") && adv.aliases) {
+          const cveAlias = adv.aliases.find(alias => alias.startsWith("CVE-"));
+          if (cveAlias) displayId = cveAlias;
+        }
+
+        const sev = getSeverity(adv);
+        let cvssScore = null;
+        if (adv.database_specific && adv.database_specific.cvss_score !== undefined) {
+          cvssScore = Number(adv.database_specific.cvss_score).toFixed(1);
+        } else if (adv.affected && adv.affected[0] && adv.affected[0].database_specific && adv.affected[0].database_specific.cvss_score !== undefined) {
+          cvssScore = Number(adv.affected[0].database_specific.cvss_score).toFixed(1);
+        }
+
+        matches.push({
+          id: adv.id,
+          displayId: displayId,
+          summary: adv.summary || "No summary available.",
+          severity: sev,
+          cvss: cvssScore
+        });
+      }
+    }
+    return matches;
   }
 
   function extractPackageInfo(command, args) {
@@ -540,12 +604,15 @@
 
       let safeCount = 0;
       let vulnCount = 0;
+      let advisoriesCount = 0;
 
       let listHtml = "";
 
       results.forEach(res => {
           if (res.isVulnerable) vulnCount++;
           else if (res.matchedServer) safeCount++;
+          
+          if (res.advisories) advisoriesCount += res.advisories.length;
 
           let statusClass = res.isVulnerable ? "vulnerable" : (res.matchedServer ? "clean" : "unknown");
           let statusBadge = "";
@@ -553,10 +620,32 @@
 
           if (res.isVulnerable) {
               statusBadge = `<span class="badge badge-danger">🔴 Vulnerable</span>`;
+              
+              let advListHtml = "";
+              if (res.advisories && res.advisories.length > 0) {
+                  advListHtml = `<div class="audit-cve-list">`;
+                  res.advisories.forEach(adv => {
+                      const sev = adv.severity || "UNKNOWN";
+                      const sevClass = `risk-${sev.toLowerCase()}`;
+                      const cvssText = adv.cvss ? `${sev} • CVSS ${adv.cvss}` : sev;
+                      advListHtml += `
+                          <div class="audit-cve-item">
+                              <div class="cve-item-header">
+                                  <span class="badge ${sevClass}">${escapeHtml(cvssText)}</span>
+                                  <a href="https://osv.dev/vulnerability/${escapeHtml(adv.id)}" target="_blank" class="cve-id-link">${escapeHtml(adv.displayId)}</a>
+                              </div>
+                              <div class="cve-item-summary">${escapeHtml(adv.summary)}</div>
+                          </div>
+                      `;
+                  });
+                  advListHtml += `</div>`;
+              }
+              
               vulnInfo = `
                   <div class="audit-server-vuln-info">
                       <p><strong>⚠️ Security Risk Detected</strong></p>
                       <p>Found <strong>${escapeHtml(res.parsedPackage)}</strong> which has known vulnerabilities.</p>
+                      ${advListHtml}
                       ${res.safeVersion ? `<p>Recommended Fix: Pin to <strong>v${escapeHtml(res.safeVersion)}</strong></p>` : `<p>No safe version known yet.</p>`}
                   </div>
               `;
@@ -583,6 +672,18 @@
       el.auditTotalServers.textContent = results.length;
       el.auditSafeServers.textContent = safeCount;
       el.auditVulnServers.textContent = vulnCount;
+      
+      const elAdvisoriesStat = document.getElementById("audit-advisories-stat");
+      const elAdvisoriesCount = document.getElementById("audit-advisories-count");
+      if (elAdvisoriesStat && elAdvisoriesCount) {
+          if (advisoriesCount > 0) {
+              elAdvisoriesStat.style.display = "block";
+              elAdvisoriesCount.textContent = advisoriesCount;
+          } else {
+              elAdvisoriesStat.style.display = "none";
+          }
+      }
+      
       el.auditServerList.innerHTML = listHtml;
 
       if (remediated) {
