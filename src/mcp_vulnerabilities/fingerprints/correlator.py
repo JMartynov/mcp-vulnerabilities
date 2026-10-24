@@ -1,16 +1,20 @@
-import json
 import gzip
+import json
 from pathlib import Path
-from typing import Any, Dict, List, Optional
-from dataclasses import dataclass, field
-from packaging.version import Version, InvalidVersion
+
+from packaging.version import Version
 
 from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
+from mcp_vulnerabilities.fingerprints.models import (
+    CorrelatedTimeline,
+    ServerPackageSpec,
+    VersionVulnerabilityState,
+)
 from mcp_vulnerabilities.models import OsvVulnerability
-from mcp_vulnerabilities.fingerprints.models import ServerPackageSpec, VersionFingerprint, VersionVulnerabilityState, CorrelatedTimeline
+
 
 class VulnerabilityCorrelator:
-    def __init__(self, matcher: VulnerabilityMatcher, passports: Dict[str, ServerPackageSpec]):
+    def __init__(self, matcher: VulnerabilityMatcher, passports: dict[str, ServerPackageSpec]):
         self.matcher = matcher
         self.passports = passports
 
@@ -31,7 +35,7 @@ class VulnerabilityCorrelator:
 
         return cls(matcher=matcher, passports=passports)
 
-    def correlate_package(self, package_name: str) -> Optional[CorrelatedTimeline]:
+    def correlate_package(self, package_name: str) -> CorrelatedTimeline | None:
         """Correlates vulnerability advisories for all versions of a specific package."""
         package_spec = None
         # Try to find the package in passports
@@ -61,13 +65,13 @@ class VulnerabilityCorrelator:
                         continue
                     
                     eco = pkg.get("ecosystem", "").lower()
-                    if eco and eco != package_spec.ecosystem.lower():
-                        if eco == "pypi" and package_spec.ecosystem.lower() in ("pypi", "pip"):
-                            pass
-                        elif eco == "golang" and package_spec.ecosystem.lower() in ("go", "golang"):
-                            pass
-                        else:
-                            continue
+                    if eco and package_spec.ecosystem:
+                        spec_eco = package_spec.ecosystem.lower()
+                        if eco != spec_eco:
+                            if eco == "pypi" and spec_eco in ("pypi", "pip", "python") or eco in ("go", "golang") and spec_eco in ("go", "golang") or eco in ("cargo", "crates.io", "rust") and spec_eco in ("cargo", "crates.io", "rust") or eco in ("maven", "java") and spec_eco in ("maven", "java") or eco in ("docker", "containers") and spec_eco in ("docker", "containers") or eco in ("npm", "javascript") and spec_eco in ("npm", "javascript"):
+                                pass
+                            else:
+                                continue
 
                     # Check if version is in ranges
                     ranges = affected.get("ranges", [])
@@ -79,7 +83,7 @@ class VulnerabilityCorrelator:
             timeline.append(VersionVulnerabilityState(
                 version=version_str,
                 is_vulnerable=is_vulnerable,
-                advisories=matching_advisories
+                matching_advisories=matching_advisories
             ))
         
         # Sort timeline by version
@@ -93,11 +97,15 @@ class VulnerabilityCorrelator:
 
         return CorrelatedTimeline(
             package_name=package_spec.package_name,
-            ecosystem=package_spec.ecosystem,
             timeline=timeline
         )
+        
+    def generate_remediation_command(self, ecosystem: str, package: str, safe_version: str) -> str | None:
+        """Generates an ecosystem-specific remediation upgrade command."""
+        from mcp_vulnerabilities.catalog import generate_upgrade_command
+        return generate_upgrade_command(ecosystem, package, safe_version)
 
-    def correlate_all(self) -> List[CorrelatedTimeline]:
+    def correlate_all(self) -> list[CorrelatedTimeline]:
         """Correlates vulnerabilities for all packages in the passports."""
         results = []
         for key, spec in self.passports.items():
