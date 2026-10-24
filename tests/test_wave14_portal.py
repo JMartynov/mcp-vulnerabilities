@@ -38,3 +38,21 @@ def test_js_syntax():
     
     subprocess.run([node, "-c", "docs/app.js"], check=True)
     subprocess.run([node, "-c", "docs/updates.js"], check=True)
+
+
+def test_wave15_frontend_remediations():
+    app_js = Path("docs/app.js").read_text(encoding="utf-8")
+    # Task 78: applyAdvisoryFilters must use advisoryHasVulnerableTools and never reference server.tools_count
+    assert "function advisoryHasVulnerableTools(" in app_js
+    adv_filter_start = app_js.index("function applyAdvisoryFilters()")
+    adv_filter_body = app_js[adv_filter_start:adv_filter_start + 1500]
+    assert "server.tools_count" not in adv_filter_body
+    assert "advisoryHasVulnerableTools(adv)" in adv_filter_body
+
+    # Task 79: composite_risk_tier consumed in getServerCompositeRisk
+    assert "server.composite_risk_tier" in app_js
+
+    # Task 80: CVE/GHSA & CVSS posture rendering in Config Auditor
+    assert "findMatchingAdvisoriesForPackage" in app_js
+    assert "audit-cve-list" in app_js
+
