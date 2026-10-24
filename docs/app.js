@@ -650,7 +650,7 @@
 
       // Risk Tier filter
       if (activeRiskFilter !== "ALL") {
-        if ((server.static_risk_tier || "LOW").toUpperCase() !== activeRiskFilter) return false;
+        if (getServerCompositeRisk(server).toUpperCase() !== activeRiskFilter) return false;
       }
 
       // Ecosystem filter
@@ -682,10 +682,23 @@
   }
 
   function getServerCompositeRisk(server) {
-    if (!server.is_vulnerable) return server.static_risk_tier || "LOW";
+    if (server.composite_risk_tier) {
+      const tier = server.composite_risk_tier.toUpperCase();
+      return tier === "MODERATE" ? "MEDIUM" : tier;
+    }
+    if (!server.is_vulnerable) return (server.static_risk_tier || "LOW").toUpperCase();
     let highest = "LOW";
     const severities = { "CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "MODERATE": 2, "LOW": 1, "UNKNOWN": 0 };
     let currentScore = severities[(server.static_risk_tier || "LOW").toUpperCase()] || 0;
+
+    if (server.highest_cve_severity) {
+      const cveSev = server.highest_cve_severity.toUpperCase();
+      const cveScore = severities[cveSev] || 0;
+      if (cveScore > currentScore) {
+        currentScore = cveScore;
+        highest = cveSev === "MODERATE" ? "MEDIUM" : cveSev;
+      }
+    }
 
     (server.versions || []).forEach(v => {
       if (v.is_vulnerable && v.advisories) {
@@ -701,7 +714,7 @@
           const score = severities[sev] || 0;
           if (score > currentScore) {
             currentScore = score;
-            highest = sev;
+            highest = sev === "MODERATE" ? "MEDIUM" : sev;
           }
         });
       }

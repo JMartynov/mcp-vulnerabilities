@@ -59,6 +59,8 @@ def test_build_static_site_data_minimal(tmp_path: Path):
     entry = next(e for e in index if e["package_name"] == "test-pkg")
     assert entry["is_vulnerable"] is True
     assert entry["vulnerable_versions_count"] >= 1
+    assert entry["highest_cve_severity"] == "HIGH"
+    assert entry["composite_risk_tier"] == "HIGH"
     assert "shard_file" in entry
     assert "shard_id" in entry
 
@@ -174,4 +176,81 @@ def test_latest_version_analytics_and_catalog_ingestion(tmp_path: Path):
     assert top_secrets.get("API_KEY") == 1
     assert top_secrets.get("FOO") == 1
     assert analytics_data.get("capabilities", {}).get("shell_exec") == 1
+
+
+def test_composite_risk_tier_and_highest_cve_severity_stamping(tmp_path: Path):
+    """Verify INVARIANT_79_1A, 1B, 1C: composite_risk_tier & highest_cve_severity stamping."""
+    vuln_dir = tmp_path / "vulnerabilities"
+    vuln_dir.mkdir()
+
+    crit_adv = {
+        "id": "GHSA-test-crit-001",
+        "summary": "Critical RCE vulnerability",
+        "details": "Remote code execution via tool arguments",
+        "modified": "2026-10-16T00:00:00Z",
+        "affected": [
+            {
+                "package": {"name": "low-static-crit-cve-pkg", "ecosystem": "PyPI"},
+                "ranges": [{"type": "ECOSYSTEM", "events": [{"introduced": "0"}, {"fixed": "2.0.0"}]}],
+                "versions": ["1.0.0"],
+                "database_specific": {
+                    "cvss_score": 9.8,
+                    "severity": "CRITICAL",
+                },
+            }
+        ],
+    }
+    (vuln_dir / "GHSA-test-crit-001.json").write_text(json.dumps(crit_adv), encoding="utf-8")
+
+    mock_passports_path = tmp_path / "passports.json"
+    passports_data = {
+        "passports": {
+            "low-static-crit-cve-pkg": {
+                "package_name": "low-static-crit-cve-pkg",
+                "purl": "pkg:pypi/low-static-crit-cve-pkg",
+                "ecosystem": "PyPI",
+                "versions": [
+                    {
+                        "version": "1.0.0",
+                        "toolset_canonical_hash": "hash_v100",
+                        "tool_signatures": [],
+                    }
+                ],
+            },
+            "clean-pkg": {
+                "package_name": "clean-pkg",
+                "purl": "pkg:pypi/clean-pkg",
+                "ecosystem": "PyPI",
+                "versions": [
+                    {
+                        "version": "1.0.0",
+                        "toolset_canonical_hash": "hash_v100",
+                        "tool_signatures": [],
+                    }
+                ],
+            },
+        }
+    }
+    mock_passports_path.write_text(json.dumps(passports_data), encoding="utf-8")
+
+    out_dir = tmp_path / "docs_data"
+    result = build_static_site_data(
+        data_dir=vuln_dir,
+        output_dir=out_dir,
+        passports_path=mock_passports_path,
+        use_cache=False,
+        num_shards=4,
+    )
+
+    index_data = json.loads(result["mcp_catalog_index"].read_text(encoding="utf-8"))
+    vuln_entry = next(e for e in index_data if e["package_name"] == "low-static-crit-cve-pkg")
+    assert vuln_entry["static_risk_tier"] == "LOW"
+    assert vuln_entry["highest_cve_severity"] == "CRITICAL"
+    assert vuln_entry["composite_risk_tier"] == "CRITICAL"
+
+    clean_entry = next(e for e in index_data if e["package_name"] == "clean-pkg")
+    assert clean_entry["is_vulnerable"] is False
+    assert clean_entry["highest_cve_severity"] is None
+    assert clean_entry["composite_risk_tier"] == "LOW"
+
 
