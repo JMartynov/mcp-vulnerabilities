@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [1.1.3] - 2026-10-24
+## [1.1.4] - 2026-10-24
 
 ### 🌐 Wave 14: Web Security Intelligence, Fingerprint Synergy & Enhanced Analytics
 
@@ -42,6 +42,13 @@ This release delivers the comprehensive web portal styling reconciliation, crypt
   - Suppressed duplicate `🔴 Vulnerable` badge on updates cards when `🔴 New Security Vulnerability` badge is present.
 - **Runtime Async Execution (`docs/updates.js`)**:
   - Converted `init()` to `async` and cleaned up conflict syntax, resolving browser script parse failures.
+
+---
+
+## [1.1.3] - 2026-10-24
+
+### 📦 Automated Catalog & Advisory Sync
+- Automated daily sync and security advisory updates.
 
 ---
 
