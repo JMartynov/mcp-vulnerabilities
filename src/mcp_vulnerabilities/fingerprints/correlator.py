@@ -95,10 +95,28 @@ class VulnerabilityCorrelator:
 
         timeline.sort(key=sort_key)
 
+        recommended_safe_version: str | None = None
+        no_fix_available = False
+
+        if any(item.is_vulnerable for item in timeline):
+            # Find safe versions that are greater than the latest vulnerable version?
+            # Actually, to compute recommended_safe_version for the package overall,
+            # we just find the highest safe version, or the lowest safe version that is > highest vulnerable version.
+            # But wait, a specific current version might be checked. Let's just provide the latest safe version.
+            # Or perhaps, find if there are ANY safe versions.
+            safe_versions = [item for item in timeline if not item.is_vulnerable]
+            if not safe_versions:
+                no_fix_available = True
+            else:
+                # Get the highest safe version as the recommended one for the package overall
+                recommended_safe_version = safe_versions[-1].version
+
         return CorrelatedTimeline(
             package_name=package_spec.package_name,
             timeline=timeline,
-            package_spec=package_spec
+            package_spec=package_spec,
+            recommended_safe_version=recommended_safe_version,
+            no_fix_available=no_fix_available
         )
         
     def generate_remediation_command(self, ecosystem: str, package: str, safe_version: str) -> str | None:
