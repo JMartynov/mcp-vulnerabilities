@@ -284,6 +284,7 @@ def build_site_parallel(
     
     catalog_dicts: dict[str, Any] = {}
     
+    all_warnings = []
     with ProcessPoolExecutor(max_workers=workers) as executor:
         futures = [
             executor.submit(_process_server_batch, chunk, str(in_dir), use_cache)
@@ -296,11 +297,18 @@ def build_site_parallel(
                     result, batch_warnings = res
                     for w in batch_warnings:
                         logger.warning(w)
+                    all_warnings.extend(batch_warnings)
                 else:
                     result = res
                 catalog_dicts.update(result)
-            except Exception as e:
-                logger.error(f"Worker exception: {e}")
+            except BaseException as e:
+                msg = f"Worker batch exception: A process in the process pool was terminated abruptly or failed: {type(e).__name__}"
+                logger.error(msg)
+                all_warnings.append(msg)
+                
+    if all_warnings:
+        errors_file = out_dir / "build_errors.json"
+        errors_file.write_text(json.dumps(all_warnings, indent=2), encoding="utf-8")
                 
     # Also handle advisory-only packages not in passports (from matcher index)
     # We can use the original function for this part if needed, or simply let the old function run for them.
@@ -511,14 +519,14 @@ def build_site_parallel(
 
     index_file = out_dir / "mcp_catalog_index.json"
     index_file.write_text(
-        json.dumps(catalog_index, ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(catalog_index, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8"
     )
 
     shard_paths: list[Path] = []
     for s_id, s_data in shards.items():
         s_file = shards_dir / f"shard_{s_id}.json"
         s_file.write_text(
-            json.dumps(s_data, ensure_ascii=False, indent=2), encoding="utf-8"
+            json.dumps(s_data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8"
         )
         shard_paths.append(s_file)
 
@@ -712,7 +720,7 @@ def build_site_parallel(
 
     analytics_file = out_dir / "analytics.json"
     analytics_file.write_text(
-        json.dumps(analytics_data, ensure_ascii=False, indent=2), encoding="utf-8"
+        json.dumps(analytics_data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8"
     )
     
     t4 = time.time()
