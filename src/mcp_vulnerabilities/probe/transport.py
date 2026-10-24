@@ -137,9 +137,32 @@ class StdioTransport(BaseTransport):
 
         def read_line():
             try:
-                # readline blocks
-                line = self.process.stdout.readline()
-                result[0] = line
+                # readline blocks, keep reading until we get valid json
+                while True:
+                    line = self.process.stdout.readline()
+                    if not line:
+                        result[0] = None
+                        break
+                    
+                    line_str = line.strip()
+                    if not line_str:
+                        continue
+                        
+                    # Try to parse to see if it's JSON, if not keep going
+                    try:
+                        import json
+                        json.loads(line_str)
+                        result[0] = line
+                        break
+                    except Exception:
+                        # Log it or just append to stderr buffer
+                        if hasattr(self, 'stderr_buffer'):
+                            # Safely handle if line_str is bytes
+                            if isinstance(line_str, bytes):
+                                self.stderr_buffer.append("stdout noise: " + line_str.decode('utf-8', 'ignore'))
+                            else:
+                                self.stderr_buffer.append("stdout noise: " + line_str)
+                        continue
             except Exception as e:
                 error[0] = e
 
