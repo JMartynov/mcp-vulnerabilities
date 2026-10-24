@@ -240,6 +240,16 @@ def main() -> None:
 
     # Audit
     aud_p = subparsers.add_parser("audit", aliases=["audit-config"], help="Audit AI client MCP servers or packages against OSV database")
+    aud_p.add_argument(
+        "--verify-signatures",
+        action="store_true",
+        help="Verify tools runtime signatures against baseline passport hashes to detect tampering",
+    )
+    aud_p.add_argument(
+        "--strict-integrity",
+        action="store_true",
+        help="Exit with non-zero code if signature tampering is detected",
+    )
     aud_p.add_argument("--config", default=None, help="Path to AI client config file (e.g. claude_desktop_config.json)")
     aud_p.add_argument("--package", default=None, help="Specific package to audit, e.g. @modelcontextprotocol/server-neo4j@0.6.1")
     aud_p.add_argument("--all-clients", action="store_true", help="Audit all 9 supported AI clients (Claude, Cursor, VS Code, Zed, Cline, Windsurf, Continue, LibreChat, OpenWebUI)")
@@ -884,19 +894,36 @@ def main() -> None:
                 for c in conflicts:
                     print(f"✗ {c['warning']}")
                 print("!" * 70 + "\n")
+        tamper_reports = []
+        has_strict_failure = False
+        if getattr(args, "verify_signatures", False):
+            from mcp_vulnerabilities.audit.tamper_detector import SupplyChainTamperDetector
+            tamper_detector = SupplyChainTamperDetector(matcher.fingerprint_matcher if hasattr(matcher, "fingerprint_matcher") else matcher)
+            for srv in servers:
+                tr = tamper_detector.verify_server_integrity(srv, srv.declared_tools)
+                tamper_reports.append(tr)
+                if tr.status == "TAMPERED":
+                    has_strict_failure = True
+
         report = matcher.audit_servers(
             servers, severity_threshold=args.severity_threshold
         )
 
         if args.format == "json":
             import json
-
-            print(json.dumps(report.to_dict(), indent=2))
+            out = report.to_dict()
+            if tamper_reports:
+                out["tamper_reports"] = [r.to_dict() for r in tamper_reports]
+            print(json.dumps(out, indent=2))
         elif args.format == "sarif":
             import json
 
             from mcp_vulnerabilities.audit.reporters import SarifReporter
             sarif_report = SarifReporter.generate_audit_sarif(report, target_path=args.config)
+            if tamper_reports:
+                tamper_sarif = SarifReporter.generate_tamper_sarif(tamper_reports, target_path=args.config or "mcp_client_config.json")
+                sarif_report["runs"][0]["tool"]["driver"]["rules"].extend(tamper_sarif["runs"][0]["tool"]["driver"]["rules"])
+                sarif_report["runs"][0]["results"].extend(tamper_sarif["runs"][0]["results"])
             print(json.dumps(sarif_report, indent=2))
         elif args.format in ("cyclonedx", "sbom"):
             import json
@@ -906,6 +933,18 @@ def main() -> None:
             builder.add_audit_report(report)
             print(json.dumps(builder.build(), indent=2))
         else:
+            if tamper_reports:
+                print("\n" + "=" * 70)
+                print(" MCP SUPPLY-CHAIN TAMPER DETECTION REPORT")
+                print("=" * 70)
+                for tr in tamper_reports:
+                    status_badge = f"[{tr.status}]"
+                    print(f"\n{status_badge} Server: {tr.server_name} ({tr.package_name}@{tr.version})")
+                    for inc in tr.incidents:
+                        print(f"  [{inc.severity}] {inc.incident_type}: {inc.details}")
+                        if inc.affected_tools:
+                            print(f"  Affected Tools: {', '.join(inc.affected_tools)}")
+                            
             print("\n" + "=" * 70)
             print(
                 f" MCP SECURITY AUDIT REPORT: {len(report.scanned_servers)} servers scanned"
@@ -943,6 +982,8 @@ def main() -> None:
                 )
                 print("-" * 70)
 
+        if getattr(args, "strict_integrity", False) and has_strict_failure:
+            sys.exit(2)
         sys.exit(1 if report.has_critical_or_high else 0)
 
     elif args.command == "audit-transitive":
@@ -1202,6 +1243,33 @@ def main() -> None:
         except Exception as e:
             logger.error(f"Probe failed: {e}")
             sys.exit(1)
+        tamper_report = None
+        has_strict_failure = False
+        if getattr(args, "verify_signatures", False):
+            from mcp_vulnerabilities.audit.tamper_detector import SupplyChainTamperDetector
+            from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer
+            
+            # Use matcher's fingerprint_matcher or fallback appropriately
+            # But wait, probe usually initializes VulnerabilityMatcher, which may not have fingerprint_matcher initialized unless called?
+            # Actually VulnerabilityMatcher initializes it.
+            fp_matcher = getattr(matcher, "fingerprint_matcher", None)
+            
+            tamper_detector = SupplyChainTamperDetector(fp_matcher)
+            runtime_tools = client.tools
+            
+            srv = None
+            if fp_matcher:
+                matches = fp_matcher.match_tools(runtime_tools)
+                if matches:
+                    top = matches[0]
+                    srv = DiscoveredClientServer(server_name=top.package_name, package_name=top.package_name, version=top.version, ecosystem=top.ecosystem, command="", args=[])
+            
+            if not srv:
+                srv = DiscoveredClientServer(server_name="unknown", package_name="", version="", ecosystem="", command="", args=[])
+                
+            tamper_report = tamper_detector.verify_server_integrity(srv, runtime_tools)
+            has_strict_failure = (tamper_report.status == "TAMPERED")
+
 
 
         if args.format not in ("json", "cyclonedx", "sbom", "sarif"):

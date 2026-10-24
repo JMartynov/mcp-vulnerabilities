@@ -9,11 +9,7 @@ def test_acceptance_cyclonedx_audit():
     config_path = Path("tests/fixtures/claude_desktop_config_sbom.json")
     
     # Run the audit command with cyclonedx format
-    cmd = [
-        "uv", "run", "mcp-vuln", "audit", 
-        "--config", str(config_path), 
-        "--format", "cyclonedx"
-    ] if shutil.which("uv") else [
+    cmd =  [
         sys.executable, "-m", "mcp_vulnerabilities.cli", "audit", 
         "--config", str(config_path), 
         "--format", "cyclonedx"
@@ -121,11 +117,7 @@ if __name__ == '__main__':
     main()
     """)
 
-    cmd = [
-        "uv", "run", "mcp-vuln", "probe", 
-        "--command", f"{sys.executable} {mock_server_path}", 
-        "--format", "cyclonedx"
-    ] if shutil.which("uv") else [
+    cmd =  [
         sys.executable, "-m", "mcp_vulnerabilities.cli", "probe", 
         "--command", f"{sys.executable} {mock_server_path}", 
         "--format", "cyclonedx"

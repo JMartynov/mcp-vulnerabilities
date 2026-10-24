@@ -97,7 +97,8 @@ class VulnerabilityCorrelator:
 
         return CorrelatedTimeline(
             package_name=package_spec.package_name,
-            timeline=timeline
+            timeline=timeline,
+            package_spec=package_spec
         )
         
     def generate_remediation_command(self, ecosystem: str, package: str, safe_version: str) -> str | None:

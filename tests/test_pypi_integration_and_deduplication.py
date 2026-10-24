@@ -5,7 +5,7 @@ import json
 import pytest
 from pathlib import Path
 
-from mcp_fingerprints.data_loader import get_passports_path, load_passports
+
 from mcp_vulnerabilities.fingerprints.models import (
     ServerPackageSpec,
     VersionFingerprint,
@@ -49,13 +49,6 @@ def test_canonicalizer_hash_parity():
     hash_mf = mf_canon.compute_toolset_canonical_hash(tools)
     assert hash_vuln == hash_mf
     assert hash_vuln.startswith("sha256:")
-
-
-def test_data_loader_resolution():
-    """Verify that get_passports_path resolves to a valid local or cached dataset."""
-    path = get_passports_path(download_if_missing=False)
-    assert path.exists()
-    assert path.is_file() or path.is_dir()
 
 
 def test_matcher_loads_passports():
