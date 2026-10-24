@@ -318,34 +318,67 @@ body {
   letter-spacing: 0.04em;
 }
 
-.badge-critical {
+.badge-critical, .risk-critical {
   background: var(--critical-bg);
   color: var(--critical-color);
   border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-.badge-high {
+.badge-high, .risk-high {
   background: var(--high-bg);
   color: var(--high-color);
   border: 1px solid rgba(249, 115, 22, 0.3);
 }
 
-.badge-medium, .badge-moderate {
+.badge-medium, .badge-moderate, .risk-medium, .risk-moderate {
   background: var(--medium-bg);
   color: var(--medium-color);
   border: 1px solid rgba(234, 179, 8, 0.3);
 }
 
-.badge-low {
+.badge-low, .risk-low {
   background: var(--low-bg);
   color: var(--low-color);
   border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
-.badge-unknown {
+.badge-unknown, .risk-unknown {
   background: rgba(148, 163, 184, 0.15);
   color: #94a3b8;
   border: 1px solid rgba(148, 163, 184, 0.3);
+}
+
+/* Advisory Card Selectors */
+.advisory-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.advisory-id {
+  font-family: monospace;
+  color: #60a5fa;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.advisory-summary {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.advisory-pkgs code {
+  font-family: monospace;
+  background: rgba(30, 41, 59, 0.6);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  border: 1px solid var(--border-color);
 }
 
 .card-date {
@@ -674,6 +707,11 @@ body {
   gap: 6px;
   flex-wrap: wrap;
   margin-bottom: 16px;
+}
+
+.server-tools-row:empty {
+  display: none;
+  margin: 0;
 }
 
 .tool-pill {
@@ -1178,9 +1216,9 @@ body {
 }
 
 .no-tools-badge {
-  background: var(--bg-alt);
+  background: var(--surface-hover);
   color: var(--text-secondary);
-  border: 1px dashed var(--border);
+  border: 1px dashed var(--border-color);
   padding: 8px 12px;
   border-radius: var(--radius-md);
   font-size: 0.85rem;

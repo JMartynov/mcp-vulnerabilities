@@ -314,6 +314,35 @@
     renderDirectoryCards();
   }
 
+  function getServerCompositeRisk(server) {
+    if (!server.is_vulnerable) return server.static_risk_tier || "LOW";
+    let highest = "LOW";
+    const severities = { "CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "MODERATE": 2, "LOW": 1, "UNKNOWN": 0 };
+    let currentScore = severities[(server.static_risk_tier || "LOW").toUpperCase()] || 0;
+
+    (server.versions || []).forEach(v => {
+      if (v.is_vulnerable && v.advisories) {
+        v.advisories.forEach(adv => {
+          let sev = "UNKNOWN";
+          if (adv.database_specific?.severity) {
+             sev = adv.database_specific.severity.toUpperCase();
+          } else if (adv.affected?.[0]?.database_specific?.severity) {
+             sev = adv.affected[0].database_specific.severity.toUpperCase();
+          } else if (adv.severity) {
+             sev = adv.severity.toUpperCase();
+          }
+          const score = severities[sev] || 0;
+          if (score > currentScore) {
+            currentScore = score;
+            highest = sev;
+          }
+        });
+      }
+    });
+    
+    return currentScore > severities[(server.static_risk_tier || "LOW").toUpperCase()] ? highest : (server.static_risk_tier || "LOW");
+  }
+
   function renderDirectoryCards() {
     if (filteredServers.length === 0) {
       el.serversContainer.innerHTML = `<div class="empty-state">No MCP servers match the current filters.</div>`;
@@ -323,7 +352,8 @@
     // Render first 100 for DOM performance with scroll
     const toRender = filteredServers.slice(0, 100);
     const html = toRender.map((s) => {
-      const riskClass = `risk-${(s.static_risk_tier || "low").toLowerCase()}`;
+      const compRisk = getServerCompositeRisk(s);
+      const riskClass = `risk-${compRisk.toLowerCase()}`;
       const vulnStatusBadge = s.is_vulnerable
         ? `<span class="badge badge-danger">🔴 ${s.vulnerable_versions_count || 1} Vulnerable Release${s.vulnerable_versions_count > 1 ? "s" : ""}</span>`
         : `<span class="badge badge-success">🟢 Clean Release</span>`;
@@ -360,16 +390,19 @@
         toolsHtml = toolPillsHtml + expandBtn;
       }
 
+      const title = s.display_name || s.package_name;
+      const showPkgName = title !== s.package_name;
+
       return `
         <article class="server-card">
           <div class="server-card-header">
             <div>
-              <h3 class="server-title">${escapeHtml(s.display_name || s.package_name)}</h3>
-              <span class="server-pkg-name">${escapeHtml(s.package_name)}</span>
+              <h3 class="server-title">${escapeHtml(title)}</h3>
+              ${showPkgName ? `<span class="server-pkg-name">${escapeHtml(s.package_name)}</span>` : ""}
             </div>
             <div class="card-badges">
               <span class="badge badge-eco">${escapeHtml(s.ecosystem)}</span>
-              <span class="badge ${riskClass}">Risk: ${escapeHtml(s.static_risk_tier || "LOW")}</span>
+              <span class="badge ${riskClass}">Risk: ${escapeHtml(compRisk)}</span>
             </div>
           </div>
 
@@ -453,12 +486,14 @@
   }
 
   function renderServerModalDetails(server) {
-    el.modalServerTitle.textContent = server.display_name || server.package_name;
+    const title = server.display_name || server.package_name;
+    el.modalServerTitle.textContent = title;
     el.modalServerPkg.textContent = server.purl || `pkg:${server.ecosystem}/${server.package_name}`;
 
     // Risk tier & Status
-    el.modalServerRisk.textContent = `Risk: ${server.static_risk_tier || "LOW"}`;
-    el.modalServerRisk.className = `badge risk-${(server.static_risk_tier || "low").toLowerCase()}`;
+    const compRisk = getServerCompositeRisk(server);
+    el.modalServerRisk.textContent = `Risk: ${compRisk}`;
+    el.modalServerRisk.className = `badge risk-${compRisk.toLowerCase()}`;
 
     if (server.is_vulnerable) {
       el.modalServerStatus.textContent = "🔴 Contains Vulnerable Versions";
