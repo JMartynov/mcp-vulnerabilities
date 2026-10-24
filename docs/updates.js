@@ -3,6 +3,7 @@
 (function () {
   let releaseHistory = [];
   let currentReleaseData = null;
+  let expandedToolServers = new Set();
   let activeTab = "servers"; // "servers" | "advisories"
 
   let currentInspectedServer = null;
@@ -48,6 +49,7 @@
     modalToolsContainer: document.getElementById("modal-tools-container"),
     exporterPinnedVersion: document.getElementById("exporter-pinned-version"),
     exportToast: document.getElementById("export-toast"),
+    filterToolsOnly: document.getElementById("filterToolsOnly"),
     exportPreview: document.getElementById("export-preview"),
 
     // Advisory Modal
@@ -59,13 +61,36 @@
     modalExternalLink: document.getElementById("modal-external-link"),
   };
 
-  async function init() {
+  window.toggleToolsExpand = async function(serverName) {
+    if (expandedToolServers.has(serverName)) {
+      expandedToolServers.delete(serverName);
+    } else {
+      expandedToolServers.add(serverName);
+    }
+    renderUpdatedServers(currentReleaseData.updated_servers || []);
+  };
+
+  window.openInspectorModal = function(pkgName, toolName) {
+    openServerModal(pkgName);
+    setTimeout(() => {
+      const toolHeader = Array.from(document.querySelectorAll(".tool-name")).find(el => el.textContent.includes(toolName));
+      if (toolHeader) {
+        toolHeader.scrollIntoView({ behavior: "smooth", block: "center" });
+        toolHeader.closest(".tool-signature-card").style.backgroundColor = "rgba(59, 130, 246, 0.1)";
+        setTimeout(() => toolHeader.closest(".tool-signature-card").style.backgroundColor = "", 2000);
+      }
+    }, 500);
+  };
+
+  function init() {
     setupEventListeners();
     await loadReleaseHistory();
   }
 
   function setupEventListeners() {
     // Release dropdown selector
+    if (el.filterToolsOnly) el.filterToolsOnly.addEventListener("change", (e) => { renderUpdatedServers(currentReleaseData.updated_servers || []); });
+
     el.releaseSelect.addEventListener("change", (e) => {
       loadReleasePayload(e.target.value);
     });
@@ -171,13 +196,19 @@
   }
 
   function renderUpdatedServers(servers) {
-    el.serversCount.textContent = `Showing ${servers.length.toLocaleString()} updated MCP servers`;
     if (servers.length === 0) {
+      el.serversCount.textContent = `Showing 0 updated MCP servers`;
       el.serversContainer.innerHTML = `<div class="empty-state">No modified or newly tracked MCP servers in this release update.</div>`;
       return;
     }
 
-    el.serversContainer.innerHTML = servers.map((s) => {
+    let serversToRender = servers;
+    if (el.filterToolsOnly && el.filterToolsOnly.checked) {
+      serversToRender = serversToRender.filter(s => s.versions?.[0]?.tools?.length > 0);
+    }
+    el.serversCount.textContent = `Showing ${serversToRender.length.toLocaleString()} updated MCP servers`;
+
+    el.serversContainer.innerHTML = serversToRender.map((s) => {
       const riskClass = `risk-${(s.static_risk_tier || "low").toLowerCase()}`;
       const changeTypeClass = s.change_type === "PATCHED_VERSION" ? "badge-success" : "badge-danger";
       const changeTypeLabel = s.change_type === "PATCHED_VERSION" ? "🟢 Patched Release Available" : "🔴 New Security Vulnerability";
@@ -191,9 +222,32 @@
         : "";
 
       const tools = s.versions?.[0]?.tools || [];
-      const toolPills = tools.slice(0, 5)
-        .map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t.name)}">🔧 ${escapeHtml(t.name)}</span>`)
-        .join("");
+      let toolsHtml = "";
+      if (!tools || tools.length === 0) {
+        toolsHtml = `
+          <div class="tools-section">
+            <div class="no-tools-badge">No static tools declared (Remote Endpoint / Gateway)</div>
+          </div>
+        `;
+      } else {
+        const isExpanded = expandedToolServers.has(s.package_name);
+        const displayCount = isExpanded ? tools.length : Math.min(5, tools.length);
+        
+        let toolPillsHtml = tools.slice(0, displayCount)
+          .map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t.name)}" onclick="openInspectorModal('${escapeHtml(s.package_name)}', '${escapeHtml(t.name)}')">🔧 ${escapeHtml(t.name)}</span>`)
+          .join("");
+          
+        let expandBtn = "";
+        if (tools.length > 5) {
+          if (isExpanded) {
+            expandBtn = `<span class="tool-tag-more" role="button" tabindex="0" onclick="toggleToolsExpand('${escapeHtml(s.package_name)}')" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleToolsExpand('${escapeHtml(s.package_name)}'); }">Show less ▴</span>`;
+          } else {
+            expandBtn = `<span class="tool-more" role="button" tabindex="0" onclick="toggleToolsExpand('${escapeHtml(s.package_name)}')" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleToolsExpand('${escapeHtml(s.package_name)}'); }">+${tools.length - 5} more</span>`;
+          }
+        }
+        
+        toolsHtml = toolPillsHtml + expandBtn;
+      }
 
       return `
         <article class="server-card">
@@ -221,8 +275,7 @@
           </div>
 
           <div class="server-tools-row">
-            ${toolPills}
-            ${(tools.length > 5) ? `<span class="tool-more">+${tools.length - 5} more</span>` : ""}
+            ${toolsHtml}
           </div>
 
           <div class="server-card-footer">
