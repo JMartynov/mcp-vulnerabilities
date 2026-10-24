@@ -51,6 +51,16 @@
     exportToast: document.getElementById("export-toast"),
     filterToolsOnly: document.getElementById("filterToolsOnly"),
     exportPreview: document.getElementById("export-preview"),
+    
+    // Filters
+    changeTypeFilters: document.getElementById("change-type-filters"),
+    countAll: document.getElementById("count-all"),
+    countPatched: document.getElementById("count-patched"),
+    countVuln: document.getElementById("count-vuln"),
+    countNew: document.getElementById("count-new"),
+
+    // Sparkline
+    historicalSparkline: document.getElementById("historical-sparkline"),
 
     // Advisory Modal
     advisoryModal: document.getElementById("advisory-modal"),
@@ -90,6 +100,18 @@
   function setupEventListeners() {
     // Release dropdown selector
     if (el.filterToolsOnly) el.filterToolsOnly.addEventListener("change", (e) => { renderUpdatedServers(currentReleaseData.updated_servers || []); });
+
+    if (el.changeTypeFilters) {
+      el.changeTypeFilters.addEventListener("click", (e) => {
+        const chip = e.target.closest(".chip");
+        if (!chip) return;
+        
+        el.changeTypeFilters.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        
+        renderUpdatedServers(currentReleaseData?.updated_servers || []);
+      });
+    }
 
     el.releaseSelect.addEventListener("change", (e) => {
       loadReleasePayload(e.target.value);
@@ -155,6 +177,8 @@
           </option>
         `;
       }).join("");
+      
+      renderSparkline(releaseHistory);
 
       // Load initial selected release
       await loadReleasePayload(releaseHistory[0].data_file || "latest_update.json");
@@ -163,6 +187,51 @@
       el.releaseSelect.innerHTML = '<option value="latest_update.json">Latest Sync Update</option>';
       await loadReleasePayload("latest_update.json");
     }
+  }
+  
+  function renderSparkline(history) {
+    if (!el.historicalSparkline || history.length < 2) return;
+    
+    // Reverse history to show chronological order (oldest to newest)
+    const reversedHistory = [...history].slice(0, 10).reverse();
+    
+    const svgWidth = el.historicalSparkline.clientWidth || 1000;
+    const svgHeight = el.historicalSparkline.clientHeight || 80;
+    const padding = 10;
+    
+    // Extract points
+    const pointsAdvisories = reversedHistory.map(r => r.summary_counts?.new_advisories || 0);
+    const pointsServers = reversedHistory.map(r => r.summary_counts?.new_mcp_servers || 0);
+    
+    const maxVal = Math.max(...pointsAdvisories, ...pointsServers, 1);
+    
+    const xScale = (svgWidth - 2 * padding) / (reversedHistory.length - 1);
+    const yScale = (val) => svgHeight - padding - (val / maxVal) * (svgHeight - 2 * padding);
+    
+    const getPolyline = (points, color, width) => {
+      const coords = points.map((val, i) => `${padding + i * xScale},${yScale(val)}`).join(" ");
+      return `<polyline points="${coords}" fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round"/>`;
+    };
+    
+    // Create the SVG content
+    let svgContent = '';
+    
+    // Advisories line (Critical color)
+    svgContent += getPolyline(pointsAdvisories, "var(--critical-color)", 3);
+    
+    // Servers line (Accent color)
+    svgContent += getPolyline(pointsServers, "var(--accent-color)", 2);
+    
+    // Add dots
+    pointsAdvisories.forEach((val, i) => {
+      svgContent += `<circle cx="${padding + i * xScale}" cy="${yScale(val)}" r="4" fill="var(--bg-color)" stroke="var(--critical-color)" stroke-width="2"/>`;
+    });
+    
+    pointsServers.forEach((val, i) => {
+      svgContent += `<circle cx="${padding + i * xScale}" cy="${yScale(val)}" r="3" fill="var(--bg-color)" stroke="var(--accent-color)" stroke-width="2"/>`;
+    });
+    
+    el.historicalSparkline.innerHTML = svgContent;
   }
 
   async function loadReleasePayload(filename) {
@@ -225,23 +294,52 @@
   }
 
   function renderUpdatedServers(servers) {
-    if (servers.length === 0) {
-      el.serversCount.textContent = `Showing 0 updated MCP servers`;
-      el.serversContainer.innerHTML = `<div class="empty-state">No modified or newly tracked MCP servers in this release update.</div>`;
-      return;
+    if (el.changeTypeFilters) {
+      const allCount = servers.length;
+      const patchedCount = servers.filter(s => s.change_type === "PATCHED_VERSION").length;
+      const vulnCount = servers.filter(s => s.change_type === "NEW_VULNERABILITY").length;
+      const newCount = servers.filter(s => s.change_type === "NEW_SERVER").length;
+      
+      if (el.countAll) el.countAll.textContent = `(${allCount})`;
+      if (el.countPatched) el.countPatched.textContent = `(${patchedCount})`;
+      if (el.countVuln) el.countVuln.textContent = `(${vulnCount})`;
+      if (el.countNew) el.countNew.textContent = `(${newCount})`;
     }
 
     let serversToRender = servers;
+    
+    if (el.changeTypeFilters) {
+      const activeChip = el.changeTypeFilters.querySelector(".chip.active");
+      if (activeChip && activeChip.dataset.filter !== "ALL") {
+        serversToRender = serversToRender.filter(s => s.change_type === activeChip.dataset.filter);
+      }
+    }
+    
     if (el.filterToolsOnly && el.filterToolsOnly.checked) {
       serversToRender = serversToRender.filter(s => s.versions?.[0]?.tools?.length > 0);
     }
+
+    if (serversToRender.length === 0) {
+      el.serversCount.textContent = `Showing 0 updated MCP servers`;
+      el.serversContainer.innerHTML = `<div class="empty-state">No modified or newly tracked MCP servers match these filters.</div>`;
+      return;
+    }
+
     el.serversCount.textContent = `Showing ${serversToRender.length.toLocaleString()} updated MCP servers`;
 
     el.serversContainer.innerHTML = serversToRender.map((s) => {
-      const compRisk = getServerCompositeRisk(s);
+      const compRisk = typeof getServerCompositeRisk === "function" ? getServerCompositeRisk(s) : (s.static_risk_tier || "low");
       const riskClass = `risk-${compRisk.toLowerCase()}`;
-      const changeTypeClass = s.change_type === "PATCHED_VERSION" ? "badge-success" : "badge-danger";
-      const changeTypeLabel = s.change_type === "PATCHED_VERSION" ? "🟢 Patched Release Available" : "🔴 New Security Vulnerability";
+      
+      let changeTypeClass = "badge-danger";
+      let changeTypeLabel = "🔴 New Security Vulnerability";
+      if (s.change_type === "PATCHED_VERSION") {
+        changeTypeClass = "badge-success";
+        changeTypeLabel = "🟢 Patched Release Available";
+      } else if (s.change_type === "NEW_SERVER") {
+        changeTypeClass = "badge-eco";
+        changeTypeLabel = "🆕 Newly Tracked Server";
+      }
 
       let vulnStatusBadge = "";
       if (s.change_type === "PATCHED_VERSION") {
@@ -534,10 +632,27 @@
       `;
     }
 
-    el.modalCanonicalHash.innerHTML = `<span class="verified-contract">🛡️ Verified Toolset Contract</span> <span style="cursor: pointer;" onclick="navigator.clipboard.writeText('${v.toolset_canonical_hash || ''}');">hash: ${v.toolset_canonical_hash || "none"}</span>`;
+    // Toolset Delta Comparison
+    const versions = currentInspectedServer?.versions || [];
+    const vIndex = versions.findIndex(ver => ver.version === v.version);
+    const prevVersion = vIndex < versions.length - 1 ? versions[vIndex + 1] : null;
     
-    // Tools
+    let fingerprintHtml = `<span class="verified-contract">🛡️ Verified Toolset Contract</span> <span style="cursor: pointer;" onclick="navigator.clipboard.writeText('${v.toolset_canonical_hash || ''}');">hash: ${v.toolset_canonical_hash || "none"}</span>`;
+    
     const tools = v.tools || [];
+    const prevTools = prevVersion?.tools || [];
+    
+    const toolNames = new Set(tools.map(t => t.name));
+    const prevToolNames = new Set(prevTools.map(t => t.name));
+    
+    const addedTools = [...toolNames].filter(name => !prevToolNames.has(name));
+    const removedTools = [...prevToolNames].filter(name => !toolNames.has(name));
+    
+    if (prevVersion && prevVersion.toolset_canonical_hash !== v.toolset_canonical_hash) {
+      fingerprintHtml = `<span class="verified-contract">🛡️ Verified Toolset Contract</span> <span style="opacity: 0.6; text-decoration: line-through;">sha256:${prevVersion.toolset_canonical_hash?.substring(0, 8) || "none"}...</span> ➔ sha256:${v.toolset_canonical_hash?.substring(0, 8) || "none"}...`;
+    }
+    
+    el.modalCanonicalHash.innerHTML = fingerprintHtml;
     el.toolsCountLabel.textContent = String(tools.length);
     
     // Prompts
@@ -589,61 +704,81 @@
         }
     }
 
-    if (tools.length === 0) {
+    let deltaHtml = "";
+    if (addedTools.length > 0 || removedTools.length > 0) {
+      deltaHtml = `<div class="toolset-delta-box" style="margin-bottom: 20px; padding: 12px; background: var(--surface-hover); border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+        <h5 style="margin-bottom: 8px; font-size: 0.85rem; color: var(--text-secondary);">Toolset Changes vs v${escapeHtml(prevVersion?.version || "")}</h5>
+        <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+          ${addedTools.map(t => `<span style="color: var(--low-color); background: var(--low-bg); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(16, 185, 129, 0.3);">+ ${escapeHtml(t)}</span>`).join("")}
+          ${removedTools.map(t => `<span style="color: var(--critical-color); background: var(--critical-bg); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(239, 68, 68, 0.3);">- ${escapeHtml(t)}</span>`).join("")}
+        </div>
+      </div>`;
+    }
+    }
+
+    if (tools.length === 0 && removedTools.length === 0) {
       el.modalToolsContainer.innerHTML = `<p class="empty-state">No extracted tool signatures for version ${escapeHtml(v.version)}.</p>`;
       return;
     }
 
-    el.modalToolsContainer.innerHTML = tools.map((tool) => {
-      const riskClass = `risk-${(tool.risk_tier || "low").toLowerCase()}`;
-      const params = tool.parameters || [];
+    let toolsHtml = "";
+    
+    if (tools.length > 0) {
+      toolsHtml = tools.map((tool) => {
+        const riskClass = `risk-${(tool.risk_tier || "low").toLowerCase()}`;
+        const isNew = addedTools.includes(tool.name);
+        const namePrefix = isNew ? `<span style="color: var(--low-color); margin-right: 6px;">[NEW]</span>` : "";
+        const params = tool.parameters || [];
 
-      const paramTableRows = params.map((p) => `
-        <tr>
-          <td><code>${escapeHtml(p.name || "")}</code></td>
-          <td><span class="param-type">${escapeHtml(p.type || "string")}</span></td>
-          <td>${p.required ? '<span class="param-req">Yes</span>' : '<span class="param-opt">No</span>'}</td>
-          <td><code>${escapeHtml(p.default !== null && p.default !== undefined ? JSON.stringify(p.default) : "-")}</code></td>
-          <td>${p.enum ? `<code>${escapeHtml(JSON.stringify(p.enum))}</code>` : "-"}</td>
-          <td>${escapeHtml(p.description || "-")}</td>
-        </tr>
-      `).join("");
+        const paramTableRows = params.map((p) => `
+          <tr>
+            <td><code>${escapeHtml(p.name || "")}</code></td>
+            <td><span class="param-type">${escapeHtml(p.type || "string")}</span></td>
+            <td>${p.required ? '<span class="param-req">Yes</span>' : '<span class="param-opt">No</span>'}</td>
+            <td><code>${escapeHtml(p.default !== null && p.default !== undefined ? JSON.stringify(p.default) : "-")}</code></td>
+            <td>${p.enum ? `<code>${escapeHtml(JSON.stringify(p.enum))}</code>` : "-"}</td>
+            <td>${escapeHtml(p.description || "-")}</td>
+          </tr>
+        `).join("");
 
-      return `
-        <div class="tool-signature-card">
-          <div class="tool-card-top">
-            <h5 class="tool-name">🔧 ${escapeHtml(tool.name)}</h5>
-            <span class="badge ${riskClass}">Risk: ${escapeHtml(tool.risk_tier || "LOW")} (${tool.risk_score || 0})</span>
-          </div>
-
-          <p class="tool-desc">${escapeHtml(tool.description || "No tool description available.")}</p>
-
-          ${tool.security_comment ? `
-            <div class="tool-security-comment">
-              🛡️ <strong>Tool Assessment:</strong> ${escapeHtml(tool.security_comment)}
+        return `
+          <div class="tool-signature-card">
+            <div class="tool-card-top">
+              <h5 class="tool-name">${namePrefix}🔧 ${escapeHtml(tool.name)}</h5>
+              <span class="badge ${riskClass}">Risk: ${escapeHtml(tool.risk_tier || "LOW")} (${tool.risk_score || 0})</span>
             </div>
-          ` : ""}
 
-          <div class="tool-parameters-table-wrap">
-            <table class="params-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Default</th>
-                  <th>Enum</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                ${paramTableRows.length > 0 ? paramTableRows : '<tr><td colspan="6" class="text-center">No parameters required.</td></tr>'}
-              </tbody>
-            </table>
+            <p class="tool-desc">${escapeHtml(tool.description || "No tool description available.")}</p>
+
+            ${tool.security_comment ? `
+              <div class="tool-security-comment">
+                🛡️ <strong>Tool Assessment:</strong> ${escapeHtml(tool.security_comment)}
+              </div>
+            ` : ""}
+
+            <div class="tool-parameters-table-wrap">
+              <table class="params-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Required</th>
+                    <th>Default</th>
+                    <th>Enum</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${paramTableRows.length > 0 ? paramTableRows : '<tr><td colspan="6" class="text-center">No parameters required.</td></tr>'}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-      `;
-    }).join("");
+        `;
+      }).join("");
+    }
+    
+    el.modalToolsContainer.innerHTML = deltaHtml + toolsHtml;
   }
 
   function exportConfig(client, previewOnly = false) {
