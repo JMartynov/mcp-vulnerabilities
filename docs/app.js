@@ -233,6 +233,7 @@
     // Advisory Search & Filters
     el.filterToolsOnly.addEventListener("change", (e) => {
       applyDirectoryFilters();
+      if (allAdvisories.length > 0) applyAdvisoryFilters();
     });
 
     el.advisorySearchInput.addEventListener("input", (e) => {
@@ -1282,6 +1283,18 @@
     }
   }
 
+  function advisoryHasVulnerableTools(adv) {
+    if (Array.isArray(adv.database_specific?.vulnerable_tools) && adv.database_specific.vulnerable_tools.length > 0) {
+      return true;
+    }
+    if (Array.isArray(adv.affected)) {
+      return adv.affected.some(
+        (aff) => Array.isArray(aff.database_specific?.vulnerable_tools) && aff.database_specific.vulnerable_tools.length > 0
+      );
+    }
+    return false;
+  }
+
   // Advisory Feed (Tab 2) Logic
   function applyAdvisoryFilters() {
     filteredAdvisories = allAdvisories.filter((adv) => {
@@ -1299,7 +1312,7 @@
 
       // Has Tools Only Filter
       if (el.filterToolsOnly && el.filterToolsOnly.checked) {
-        if (!server.tools_count || server.tools_count === 0) return false;
+        if (!advisoryHasVulnerableTools(adv)) return false;
       }
 
       // Search Query
