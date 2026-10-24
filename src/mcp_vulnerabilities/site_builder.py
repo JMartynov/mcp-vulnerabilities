@@ -529,6 +529,12 @@ def build_site_parallel(
     owasp_stats: dict[str, Any] = {}
     ecosystems: dict[str, int] = {}
 
+    fs_read_write = 0
+    shell_exec = 0
+    network_egress = 0
+    mutating_tools = 0
+    read_only_tools = 0
+
     for adv in advisories:
         adv_tools = set()
         adv_owasp = set()
@@ -586,6 +592,89 @@ def build_site_parallel(
         })
     top_tools = sorted(top_tools, key=lambda x: x["count"], reverse=True)[:10]
 
+    import collections
+    env_vars = collections.Counter()
+    tool_counts = collections.defaultdict(set)
+    transports_dist = collections.Counter()
+    
+    for s_id, s_data in shards.items():
+        for pkg, pkg_data in s_data.items():
+            has_fs = False
+            has_shell = False
+            has_network = False
+            has_mutating = False
+            has_tools = False
+            
+            versions = pkg_data.get("versions", [])
+            if not versions:
+                continue
+            v = versions[0]
+            
+            req_envs = v.get("required_env_vars", [])
+            for env in req_envs:
+                env_vars[env] += 1
+                
+            tools = v.get("tools", [])
+            if tools:
+                has_tools = True
+            for t in tools:
+                name = t.get("name")
+                chash = t.get("canonical_hash")
+                if name and chash:
+                    tool_counts[name].add(chash)
+                
+                tname = (t.get("name") or "").lower()
+                if any(x in tname for x in ["read", "write", "file", "fs", "path", "dir"]): has_fs = True
+                if any(x in tname for x in ["exec", "bash", "cmd", "shell", "run", "script"]): has_shell = True
+                if any(x in tname for x in ["http", "request", "fetch", "url", "network", "api", "curl"]): has_network = True
+                if any(x in tname for x in ["create", "update", "delete", "write", "insert", "put", "post", "remove", "add", "set"]): has_mutating = True
+            
+            if has_fs: fs_read_write += 1
+            if has_shell: shell_exec += 1
+            if has_network: network_egress += 1
+            
+            if has_tools:
+                if has_mutating: mutating_tools += 1
+                else: read_only_tools += 1
+
+    patched_remediable_count = 0
+    zero_day_unpatched_count = 0
+    for s in catalog_index:
+        if s.get("is_vulnerable"):
+            if s.get("recommended_safe_version"):
+                patched_remediable_count += 1
+            else:
+                zero_day_unpatched_count += 1
+                
+    if passports_path:
+        p = Path(passports_path)
+        if p.exists():
+            try:
+                if p.suffix == ".gz":
+                    with gzip.open(p, "rt", encoding="utf-8") as f:
+                        data = json.load(f)
+                else:
+                    data = json.loads(p.read_text(encoding="utf-8"))
+                passports_data = data.get("passports", data) if isinstance(data, dict) else data
+                if isinstance(passports_data, dict):
+                    for k, v in passports_data.items():
+                        transports_dist[v.get("transport", "unknown")] += 1
+            except Exception:
+                pass
+    else:
+        try:
+            ps = _load_passports(None)
+            for k, v in ps.items():
+                transports_dist[v.get("transport", "unknown")] += 1
+        except Exception:
+            pass
+
+    shadow_list = []
+    for tname, hashes in tool_counts.items():
+        if len(hashes) > 1:
+            shadow_list.append({"tool": tname, "entropy": len(hashes)})
+    shadow_list.sort(key=lambda x: x["entropy"], reverse=True)
+
     total_owasp = sum(stat["count"] for stat in owasp_stats.values())
     owasp_breakdown = []
     for cat, stats in owasp_stats.items():
@@ -603,6 +692,18 @@ def build_site_parallel(
         "total_servers": len(catalog_index),
         "vulnerable_servers_count": vuln_servers_count,
         "safe_servers_count": safe_servers_count,
+        "patched_remediable_count": patched_remediable_count,
+        "zero_day_unpatched_count": zero_day_unpatched_count,
+        "capabilities": {
+            "fs_read_write": fs_read_write,
+            "shell_exec": shell_exec,
+            "network_egress": network_egress,
+            "mutating": mutating_tools,
+            "read_only": read_only_tools,
+        },
+        "top_secrets": [{"name": k, "count": v} for k, v in env_vars.most_common(10)],
+        "transports": dict(transports_dist),
+        "tool_shadowing": shadow_list[:10],
         "risk_tier_counts": risk_tier_counts,
         "top_tools": top_tools,
         "owasp_breakdown": owasp_breakdown,
