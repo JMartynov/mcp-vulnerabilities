@@ -195,6 +195,35 @@
     renderUpdatedAdvisories(r.updated_advisories || []);
   }
 
+  function getServerCompositeRisk(server) {
+    if (!server.is_vulnerable) return server.static_risk_tier || "LOW";
+    let highest = "LOW";
+    const severities = { "CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "MODERATE": 2, "LOW": 1, "UNKNOWN": 0 };
+    let currentScore = severities[(server.static_risk_tier || "LOW").toUpperCase()] || 0;
+
+    (server.versions || []).forEach(v => {
+      if (v.is_vulnerable && v.advisories) {
+        v.advisories.forEach(adv => {
+          let sev = "UNKNOWN";
+          if (adv.database_specific?.severity) {
+             sev = adv.database_specific.severity.toUpperCase();
+          } else if (adv.affected?.[0]?.database_specific?.severity) {
+             sev = adv.affected[0].database_specific.severity.toUpperCase();
+          } else if (adv.severity) {
+             sev = adv.severity.toUpperCase();
+          }
+          const score = severities[sev] || 0;
+          if (score > currentScore) {
+            currentScore = score;
+            highest = sev;
+          }
+        });
+      }
+    });
+    
+    return currentScore > severities[(server.static_risk_tier || "LOW").toUpperCase()] ? highest : (server.static_risk_tier || "LOW");
+  }
+
   function renderUpdatedServers(servers) {
     if (servers.length === 0) {
       el.serversCount.textContent = `Showing 0 updated MCP servers`;
@@ -209,13 +238,19 @@
     el.serversCount.textContent = `Showing ${serversToRender.length.toLocaleString()} updated MCP servers`;
 
     el.serversContainer.innerHTML = serversToRender.map((s) => {
-      const riskClass = `risk-${(s.static_risk_tier || "low").toLowerCase()}`;
+      const compRisk = getServerCompositeRisk(s);
+      const riskClass = `risk-${compRisk.toLowerCase()}`;
       const changeTypeClass = s.change_type === "PATCHED_VERSION" ? "badge-success" : "badge-danger";
       const changeTypeLabel = s.change_type === "PATCHED_VERSION" ? "🟢 Patched Release Available" : "🔴 New Security Vulnerability";
 
-      const vulnStatusBadge = s.is_vulnerable
-        ? `<span class="badge badge-danger">🔴 Vulnerable</span>`
-        : `<span class="badge badge-success">🟢 Clean</span>`;
+      let vulnStatusBadge = "";
+      if (s.change_type === "PATCHED_VERSION") {
+         vulnStatusBadge = s.is_vulnerable
+          ? `<span class="badge badge-danger">🔴 Vulnerable</span>`
+          : `<span class="badge badge-success">🟢 Clean</span>`;
+      } else if (!s.is_vulnerable) {
+         vulnStatusBadge = `<span class="badge badge-success">🟢 Clean</span>`;
+      }
 
       const safeVerBadge = s.recommended_safe_version
         ? `<span class="safe-rec-pill">Recommended: v${escapeHtml(s.recommended_safe_version)}</span>`
@@ -249,17 +284,20 @@
         toolsHtml = toolPillsHtml + expandBtn;
       }
 
+      const title = s.display_name || s.package_name;
+      const showPkgName = title !== s.package_name;
+
       return `
         <article class="server-card">
           <div class="server-card-header">
             <div>
-              <h3 class="server-title">${escapeHtml(s.display_name || s.package_name)}</h3>
-              <span class="server-pkg-name">${escapeHtml(s.package_name)}</span>
+              <h3 class="server-title">${escapeHtml(title)}</h3>
+              ${showPkgName ? `<span class="server-pkg-name">${escapeHtml(s.package_name)}</span>` : ""}
             </div>
             <div class="card-badges">
               <span class="badge ${changeTypeClass}">${escapeHtml(changeTypeLabel)}</span>
               <span class="badge badge-eco">${escapeHtml(s.ecosystem)}</span>
-              <span class="badge ${riskClass}">Risk: ${escapeHtml(s.static_risk_tier || "LOW")}</span>
+              <span class="badge ${riskClass}">Risk: ${escapeHtml(compRisk)}</span>
             </div>
           </div>
 
@@ -338,11 +376,13 @@
   // Deep Dive Server Inspector Modal
   function openServerModal(server) {
     currentInspectedServer = server;
-    el.modalServerTitle.textContent = server.display_name || server.package_name;
+    const title = server.display_name || server.package_name;
+    el.modalServerTitle.textContent = title;
     el.modalServerPkg.textContent = server.purl || `pkg:${server.ecosystem}/${server.package_name}`;
 
-    el.modalServerRisk.textContent = `Risk: ${server.static_risk_tier || "LOW"}`;
-    el.modalServerRisk.className = `badge risk-${(server.static_risk_tier || "low").toLowerCase()}`;
+    const compRisk = getServerCompositeRisk(server);
+    el.modalServerRisk.textContent = `Risk: ${compRisk}`;
+    el.modalServerRisk.className = `badge risk-${compRisk.toLowerCase()}`;
 
     if (server.is_vulnerable) {
       el.modalServerStatus.textContent = "🔴 Contains Vulnerable Versions";
