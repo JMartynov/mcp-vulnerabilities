@@ -11,6 +11,7 @@ from mcp_vulnerabilities.audit import (
     ClientConfigFixer,
     ClientConfigParser,
     DiscoveredClientServer,
+    UniversalClientConfigScanner,
     VulnerabilityMatcher,
 )
 from mcp_vulnerabilities.discovery import (
@@ -241,6 +242,10 @@ def main() -> None:
     aud_p = subparsers.add_parser("audit", aliases=["audit-config"], help="Audit AI client MCP servers or packages against OSV database")
     aud_p.add_argument("--config", default=None, help="Path to AI client config file (e.g. claude_desktop_config.json)")
     aud_p.add_argument("--package", default=None, help="Specific package to audit, e.g. @modelcontextprotocol/server-neo4j@0.6.1")
+    aud_p.add_argument("--all-clients", action="store_true", help="Audit all 9 supported AI clients (Claude, Cursor, VS Code, Zed, Cline, Windsurf, Continue, LibreChat, OpenWebUI)")
+    aud_p.add_argument("--client", default=None, help="Audit a specific AI client (claude, cursor, vscode, zed, cline, windsurf, continue, librechat, openwebui)")
+    aud_p.add_argument("--global", dest="audit_global", action="store_true", help="Audit globally installed npm/npx MCP packages")
+    aud_p.add_argument("--custom-config", default=None, help="Audit custom config file path (JSON/YAML)")
     aud_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
     aud_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
     aud_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
@@ -836,6 +841,20 @@ def main() -> None:
                     args=[spec],
                 )
             )
+        elif getattr(args, "custom_config", None):
+            cfg_p = Path(args.custom_config)
+            servers = ClientConfigParser.parse_file(cfg_p)
+        elif getattr(args, "client", None):
+            scanner = UniversalClientConfigScanner()
+            servers = scanner.scan_client(args.client)
+        elif getattr(args, "all_clients", False):
+            scanner = UniversalClientConfigScanner()
+            servers = scanner.scan_all_clients()
+            if getattr(args, "audit_global", False):
+                servers.extend(scanner.scan_global())
+        elif getattr(args, "audit_global", False):
+            scanner = UniversalClientConfigScanner()
+            servers = scanner.scan_global()
         elif args.config:
             cfg_p = Path(args.config)
             servers = ClientConfigParser.parse_file(cfg_p)

@@ -2,7 +2,7 @@
 
 from .fixer import ClientConfigFixer
 from .matcher import AuditFinding, AuditReport, VulnerabilityMatcher
-from .parsers import ClientConfigParser, DiscoveredClientServer
+from .parsers import ClientConfigParser, DiscoveredClientServer, UniversalClientConfigScanner
 
 __all__ = [
     "AuditFinding",
@@ -10,5 +10,6 @@ __all__ = [
     "ClientConfigFixer",
     "ClientConfigParser",
     "DiscoveredClientServer",
+    "UniversalClientConfigScanner",
     "VulnerabilityMatcher",
 ]
