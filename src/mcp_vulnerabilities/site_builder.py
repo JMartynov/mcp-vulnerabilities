@@ -182,6 +182,17 @@ def _process_server_batch(
                 vuln_versions_count=vuln_count,
                 safe_versions_count=safe_count,
             )
+            
+            is_unpublished = raw_spec.get('is_unpublished', False) if isinstance(raw_spec, dict) else getattr(raw_spec, 'is_unpublished', False)
+            repo_http_status = raw_spec.get('repo_http_status', 200) if isinstance(raw_spec, dict) else getattr(raw_spec, 'repo_http_status', 200)
+            archival_reason = raw_spec.get('archival_reason') if isinstance(raw_spec, dict) else getattr(raw_spec, 'archival_reason', None)
+            transport = raw_spec.get('transport', 'stdio') if isinstance(raw_spec, dict) else getattr(raw_spec, 'transport', 'stdio')
+            
+            latest_v_record = version_records[-1] if version_records else None
+            prompts_count = len(latest_v_record.prompts) if latest_v_record else 0
+            resources_count = len(latest_v_record.resources) if latest_v_record else 0
+            toolset_canonical_hash = latest_v_record.toolset_canonical_hash if latest_v_record else None
+            required_env_vars = latest_v_record.required_env_vars if latest_v_record else ()
 
             record = UnifiedMcpSecurityRecord(
                 package_name=spec.package_name,
@@ -199,6 +210,14 @@ def _process_server_batch(
                 security_summary=sec_summary,
                 static_risk_score=float(profile.get("overall_risk_score", 0.0)),
                 static_risk_tier=profile.get("risk_tier", "LOW"),
+                is_unpublished=is_unpublished,
+                repo_http_status=repo_http_status,
+                archival_reason=archival_reason,
+                transport=transport,
+                prompts_count=prompts_count,
+                resources_count=resources_count,
+                toolset_canonical_hash=toolset_canonical_hash,
+                required_env_vars=required_env_vars,
                 versions=version_records,
             )
             
@@ -506,6 +525,14 @@ def build_site_parallel(
             "static_risk_tier": record.get("static_risk_tier"),
             "tools_count": tools_count,
             "tools_sample": tools_sample,
+            "is_unpublished": record.get("is_unpublished", False),
+            "repo_http_status": record.get("repo_http_status", 200),
+            "archival_reason": record.get("archival_reason"),
+            "transport": record.get("transport"),
+            "prompts_count": record.get("prompts_count", 0),
+            "resources_count": record.get("resources_count", 0),
+            "toolset_canonical_hash": record.get("toolset_canonical_hash"),
+            "required_env_vars": record.get("required_env_vars", []),
             "shard_id": shard_id,
             "shard_file": shard_file,
         })
