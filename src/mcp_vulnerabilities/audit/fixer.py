@@ -1,6 +1,5 @@
 """Automated remediation for vulnerable MCP servers in client configurations."""
 
-import json
 import logging
 import os
 import re
@@ -12,7 +11,9 @@ from typing import Any
 from packaging.version import InvalidVersion, Version
 
 from .matcher import VulnerabilityMatcher, AuditFinding
-from .parsers import ClientConfigParser
+import difflib
+
+from .parsers import ClientConfigParser, UniversalClientConfigScanner
 
 logger = logging.getLogger(__name__)
 
@@ -47,14 +48,14 @@ class ClientConfigFixer:
 
         return best_version_str
 
-    def fix_config(self, config_path: Path, dry_run: bool = False) -> dict[str, Any]:
-        """Fixes a client configuration file by replacing vulnerable versions."""
+    def fix_config(self, config_path: Path, dry_run: bool = False, client_name: str | None = None) -> dict[str, Any]:
+        """Fixes a client configuration file by replacing vulnerable versions, preserving format and comments."""
         if not config_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
 
-        servers = ClientConfigParser.parse_file(config_path)
-        with open(config_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
+        servers = ClientConfigParser.parse_file(config_path, client_name=client_name)
+        original_text = config_path.read_text(encoding="utf-8")
+        patched_text = original_text
 
         report = self.matcher.audit_servers(servers)
         
@@ -64,17 +65,6 @@ class ClientConfigFixer:
             findings_by_server.setdefault(f.server_name, []).append(f)
 
         changes_made = []
-        
-        # We need to find the specific mcpServers key or use root
-        raw_servers = data.get("mcpServers") or data.get("mcp_servers") or data.get("servers")
-        
-        
-        if not isinstance(raw_servers, dict):
-            if all(isinstance(v, dict) and ("command" in v or "args" in v) for v in data.values()):
-                raw_servers = data
-                
-            else:
-                return {"status": "no_servers_found"}
 
         for server in servers:
             findings = findings_by_server.get(server.server_name)
@@ -95,70 +85,92 @@ class ClientConfigFixer:
 
             old_version = server.version or "unpinned"
             
-            # Find the args in the original dict
-            srv_dict = raw_servers.get(server.server_name)
-            if not srv_dict or not isinstance(srv_dict, dict):
-                continue
-                
-            args = srv_dict.get("args", [])
-            new_args = list(args)
+            pkg_esc = re.escape(server.package_name)
             
-            # We need to rewrite the args
-            # Simple approach: find the arg that contains the package name and old version
-            for i, arg in enumerate(new_args):
-                if server.package_name in str(arg):
-                    # Rewrite this arg based on ecosystem
-                    if server.ecosystem == "npm":
-                        if "@" in server.package_name and server.package_name.startswith("@"):
-                            # scoped package
-                            new_args[i] = f"{server.package_name}@{safe_version}"
-                        else:
-                            new_args[i] = f"{server.package_name}@{safe_version}"
-                    elif server.ecosystem == "PyPI":
-                        # We use == for pipx/uvx
-                        if "==" in arg or ">=" in arg:
-                            new_args[i] = re.sub(r"(==|>=|<=|>|<|~=|@).*", f"=={safe_version}", arg)
-                        else:
-                            new_args[i] = f"{arg}=={safe_version}"
-                    elif server.ecosystem == "Docker":
-                        if ":" in arg:
-                            pkg = arg.rsplit(":", 1)[0]
-                            new_args[i] = f"{pkg}:{safe_version}"
-                        else:
-                            new_args[i] = f"{arg}:{safe_version}"
-                    break
-            
-            srv_dict["args"] = new_args
-            changes_made.append({
-                "server_name": server.server_name,
-                "package_name": server.package_name,
-                "old_version": old_version,
-                "new_version": safe_version
-            })
+            # Safe string replacement for the config file text
+            if old_version and old_version != "unpinned":
+                old_esc = re.escape(old_version)
+                if server.ecosystem == "npm":
+                    pattern = rf'({pkg_esc}@){old_esc}'
+                    patched_text = re.sub(pattern, rf'\g<1>{safe_version}', patched_text)
+                elif server.ecosystem == "PyPI":
+                    pattern = rf'({pkg_esc}(?:==|>=|<=|>|<|~=|@)){old_esc}'
+                    patched_text = re.sub(pattern, rf'\g<1>{safe_version}', patched_text)
+                elif server.ecosystem == "Docker":
+                    pattern = rf'({pkg_esc}:){old_esc}'
+                    patched_text = re.sub(pattern, rf'\g<1>{safe_version}', patched_text)
+            else:
+                if server.ecosystem == "npm":
+                    pattern = rf'("{pkg_esc}")'
+                    patched_text = re.sub(pattern, f'"{server.package_name}@{safe_version}"', patched_text)
+                elif server.ecosystem == "PyPI":
+                    pattern = rf'("{pkg_esc}")'
+                    patched_text = re.sub(pattern, f'"{server.package_name}=={safe_version}"', patched_text)
+                elif server.ecosystem == "Docker":
+                    pattern = rf'("{pkg_esc}")'
+                    patched_text = re.sub(pattern, f'"{server.package_name}:{safe_version}"', patched_text)
+
+            if patched_text != original_text:
+                changes_made.append({
+                    "server_name": server.server_name,
+                    "package_name": server.package_name,
+                    "old_version": old_version,
+                    "new_version": safe_version
+                })
+                # Update original text baseline for multiple changes
+                original_text = patched_text
 
         if not changes_made:
             return {"status": "no_changes_needed", "changes": []}
 
-        if not dry_run:
-            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-            backup_path = config_path.with_name(f"{config_path.name}.bak.{timestamp}")
-            shutil.copy2(config_path, backup_path)
-            
-            # Atomically write
-            tmp_path = config_path.with_name(f"{config_path.name}.tmp")
-            with open(tmp_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2)
-                f.write("\n")
-            os.replace(tmp_path, config_path)
-            
+        if dry_run:
+            diff = list(difflib.unified_diff(
+                config_path.read_text(encoding="utf-8").splitlines(keepends=True),
+                patched_text.splitlines(keepends=True),
+                fromfile=f"a/{config_path.name}",
+                tofile=f"b/{config_path.name}"
+            ))
+            diff_text = "".join(diff)
+            print(diff_text)
             return {
-                "status": "success",
+                "status": "dry_run",
                 "changes": changes_made,
-                "backup_path": str(backup_path)
+                "diff": diff_text
             }
+
+        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        backup_path = config_path.with_name(f"{config_path.name}.bak.{timestamp}")
+        shutil.copy2(config_path, backup_path)
+        
+        # Atomically write
+        tmp_path = config_path.with_name(f"{config_path.name}.tmp")
+        tmp_path.write_text(patched_text, encoding="utf-8")
+        os.replace(tmp_path, config_path)
         
         return {
-            "status": "dry_run",
-            "changes": changes_made
+            "status": "success",
+            "changes": changes_made,
+            "backup_path": str(backup_path)
         }
+
+    def fix_all_clients(self, dry_run: bool = False, specific_client: str | None = None) -> list[dict[str, Any]]:
+        """Fixes configurations across all supported clients or a specific one."""
+        scanner = UniversalClientConfigScanner()
+        results = []
+        
+        clients_to_scan = [specific_client] if specific_client else scanner.SUPPORTED_CLIENTS
+        
+        for client in clients_to_scan:
+            paths = scanner.get_client_paths(client)
+            for path in paths:
+                if path.exists():
+                    try:
+                        res = self.fix_config(path, dry_run=dry_run, client_name=client)
+                        if res["status"] in ("success", "dry_run"):
+                            res["client"] = client
+                            res["path"] = str(path)
+                            results.append(res)
+                    except Exception as e:
+                        logger.error(f"Error fixing {client} config at {path}: {e}")
+        return results
 

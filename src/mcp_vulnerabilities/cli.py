@@ -7,6 +7,7 @@ import logging
 import sys
 from pathlib import Path
 
+
 from mcp_vulnerabilities.audit import (
     ClientConfigFixer,
     ClientConfigParser,
@@ -267,20 +268,42 @@ def main() -> None:
     trans_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
     trans_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
 
+    # Hub
+    subparsers.add_parser(
+        "hub",
+        help="Launch the interactive MCP Security Command Hub",
+    )
+
     # Fix Config
     fix_p = subparsers.add_parser(
-        "fix-config",
+        "fix",
+        aliases=["fix-config"],
         help="Automatically remediate vulnerable servers in a client config",
     )
     fix_p.add_argument(
         "--config",
-        required=True,
+        required=False,
         help="Path to AI client config file (e.g. claude_desktop_config.json)",
+    )
+    fix_p.add_argument(
+        "--client",
+        type=str,
+        help="Name of the specific AI client to fix (e.g. claude, zed, cursor)",
+    )
+    fix_p.add_argument(
+        "--all-clients",
+        action="store_true",
+        help="Fix configurations across all 9 supported AI clients",
     )
     fix_p.add_argument(
         "--dry-run",
         action="store_true",
-        help="Display proposed version upgrades without modifying the file",
+        help="Display proposed version upgrades without modifying the file (default unless --write is passed)",
+    )
+    fix_p.add_argument(
+        "--write",
+        action="store_true",
+        help="Write changes to disk (creates atomic timestamped backups)",
     )
     fix_p.add_argument(
         "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
@@ -1052,7 +1075,10 @@ def main() -> None:
 
         sys.exit(1 if res.has_critical_or_high else 0)
 
-    elif args.command == "fix-config":
+    elif args.command == "hub":
+        from .hub import run_hub
+        run_hub(args)
+    elif args.command in ("fix", "fix-config"):
         snap_p = Path(args.snapshot)
         data_p = Path(args.data_dir)
         if snap_p.exists():
