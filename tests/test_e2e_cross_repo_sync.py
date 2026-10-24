@@ -36,10 +36,12 @@ class MockGitHubApiHandler(BaseHTTPRequestHandler):
             passports = {
                 "pypi:dummy-server": {
                     "package_name": "dummy-server",
+                    "purl": "pkg:pypi/dummy-server",
                     "ecosystem": "pypi",
                     "versions": [
                         {
                             "version": "1.0.0",
+                            "toolset_canonical_hash": "0000000000000000000000000000000000000000000000000000000000000000",
                             "tools": [],
                             "resources": [],
                             "prompts": []
