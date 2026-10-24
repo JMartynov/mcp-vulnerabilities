@@ -112,6 +112,7 @@ mcp-vuln build-site --workers 8 --output-dir docs/data
 | :--- | :--- | :---: |
 | **Cumulative Technical Audit Report** | Synthesis of all 8 empirical audits (Tasks 59–66); 26/26 invariants verified; 15 cataloged & resolved defects (8 HIGH, 5 MEDIUM, 2 LOW); subsystem health scorecards. | [**`CUMULATIVE_TECHNICAL_AUDIT_REPORT.md`**](docs/audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md) |
 | **Cumulative Competitive Gap Analysis & Roadmap** | Grand Unified Feature Matrix across 10 products (Verity, Anthropic, Cursor, Smithery, Glama, Snyk, Semgrep, Trivy, OSV, Sigstore); strategic gap register; v1.2–v2.0 architecture blueprints (Reverse Proxy, AST Reachability, Keyless Signatures). | [**`CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`**](docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md) |
+| **Wave 14 Portal & Analytics Code Review** | Comprehensive verification & line-by-line code review of Tasks 73–77; evaluation of visual styling, cryptographic fingerprints, zero-day gap analytics, historical sparklines, and in-browser config auditor dropzone. | [**`code_review_wave14_portal_and_analytics.md`**](docs/reports/code_review_wave14_portal_and_analytics.md) |
 
 ### Detailed Subsystem Audit Reports
 - [**Task 59: Ingestion & Monotonic Stream Audit**](docs/audit/audit_task59_ingestion_and_schema.md): OSV 1.6 range integrity, deduplicator range collapsing fix, mid-batch recovery.
@@ -145,18 +146,29 @@ Unlike generic package databases, `mcp-vulnerabilities` maintains version-separa
 * **Discrete Advisory Matrices**: Links specific CVEs, GHSAs, and OWASP MCP categories to the exact tool signatures and endpoints affected.
 * **Automated Safe Version Recommendation**: Identifies the minimum recommended non-vulnerable version and generates 1-click pinned client configurations for **Claude Desktop**, **Cursor**, **Cline**, **Zed**, and **Windsurf**.
 
-## Web Explorer & Live Updates Portals
+## Web Explorer, Live Updates & Enhanced Analytics Portals
 
 The project provides interactive, client-side static web portals hosted directly from GitHub Pages:
 
 * **[Unified MCP Security Explorer (`docs/index.html`)](https://jmartynov.github.io/mcp-vulnerabilities/)**:
-  - **Directory Tab**: Search and filter 5,000+ indexed MCP servers with capability risk badges, version status indicators, and tool previews.
-  - **Advisories Tab**: Full-text search across all published OSV/CVE advisories with severity filters (CRITICAL, HIGH, MEDIUM, LOW) and OWASP MCP categories.
-  - **Deep-Dive Server Inspector**: Interactive version switcher, tool parameter schema tables (`Name`, `Type`, `Required`, `Default`, `Enum`, `Description`), security commentary, and 1-click configuration exporters.
+  - **Directory Explorer**: Search and filter 5,000+ indexed MCP servers with de-duplicated titles, composite risk tiers ($\max(\text{AST}, \text{CVE})$), and ecosystem indicators (npm, PyPI, GitHub, Generic).
+  - **MCP Primitives & Passports**: Surfaces live counts for `🔧 Tools`, `📄 Prompts`, and `📦 Resources`, one-click copyable cryptographic toolset hashes (`toolset_canonical_hash`), transport tags (`🖥️ Local Stdio` vs. `🌐 Remote SSE Gateway`), and required environment variables (`modal-env-vars-container`).
+  - **Advisories Feed**: Full-text search across all published OSV/CVE advisories with severity filters (CRITICAL, HIGH, MEDIUM, LOW) and OWASP MCP categories.
+  - **Interactive Server Modal**: Version switcher, parameter schema tables (`Name`, `Type`, `Required`, `Default`, `Enum`, `Description`), security commentary, and 1-click configuration exporters for 5 AI clients.
+  - **🛡️ Audit My MCP Setup (Tab 3)**: Zero-install, 100% in-browser client configuration dropzone. Parses `claude_desktop_config.json`, `cline_mcp_settings.json`, and `cursor_config.json` locally in memory with zero telemetry, cross-matches installed tools against vulnerability records, and provides one-click copyable remediation diffs.
+
 * **[Release Updates & Advisory Delta Feed (`docs/updates.html`)](https://jmartynov.github.io/mcp-vulnerabilities/updates.html)**:
-  - Real-time release timeline tracking newly published advisories and patched MCP servers per version.
-  - Summary metrics: new advisories, updated servers, and patched versions.
-  - Standalone JSON feed endpoints available at `docs/data/updates/latest_update.json` and `docs/data/updates/updates_history.json`.
+  - **Historical Release Selector**: Timeline dropdown covering historical sync releases (v1.1.3 through v1.0.0).
+  - **Velocity Sparkline**: Dual-series responsive SVG trend chart tracking server growth and advisory volume over the past 10 releases.
+  - **Dynamic Change-Type Filter Chips**: Instant filtering across *All Updates*, *🟢 Patched Versions Available*, *🔴 New Security Vulnerabilities*, and *🆕 Newly Tracked Servers* with live count indicators.
+  - **Toolset Evolution**: Side-by-side delta visualization tracking added (`+`) and removed (`-`) tools, parameter changes, and SHA-256 fingerprint transitions (`sha256:old... ➔ sha256:new...`).
+  - **Syndication Feeds**: One-click subscription via [Atom Feed (`docs/data/feed.atom`)](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.atom) and [JSON Feed (`docs/data/feed.json`)](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.json).
+
+* **[Multi-Dimensional Analytics Dashboard (`docs/analytics.html`)](https://jmartynov.github.io/mcp-vulnerabilities/analytics.html)**:
+  - **Zero-Day & Remediation Gap**: Quantifies patched vs. unpatched vulnerable servers (32.0% safe patches vs. 68.0% active zero-days with no upstream fix) with actionable containment guidance.
+  - **Static Capability Surface**: Aggregates high-risk permissions across the catalog, including Filesystem Access, Shell / Process Execution, Network Egress, and Mutating vs. Read-Only tool balances.
+  - **Tool Shadowing Risk**: Identifies collision-prone generic tool names (e.g., `search`, `raw_request`, `send_message`) with multiple divergent canonical implementations.
+  - **OWASP MCP Category Breakdown**: Frequency distribution across prompt injection, unauthorized data access, and unsafe tool execution.
 
 ## Automated PyPI Release Pipeline on Data Updates
 

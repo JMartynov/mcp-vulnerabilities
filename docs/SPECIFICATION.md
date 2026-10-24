@@ -478,4 +478,50 @@ The system guarantees 26 core invariants across 8 operational domains:
 7. **Static Site Builder**: Bit-for-bit SHA-256 byte equality across worker thread counts, isolated worker fault tolerance, content-addressed caching.
 8. **Web Portal UI**: Filter state synchronization, zero-tool visual parity, DOM XSS prevention, network retry handling.
 
+---
+
+## 16. Multi-Dimensional Analytics, Cryptographic Fingerprints & In-Browser Configuration Auditor Specification
+
+### 16.1 Zero-Day & Remediation Gap Intelligence Specification
+The analytics pipeline evaluates the vulnerability remediation posture across all tracked servers in the catalog:
+$$\text{Remediation Gap} = \frac{\text{Servers with Advisories and No Upstream Safe Version}}{\text{Total Servers with Advisories}}$$
+- **Patched / Remediable (`patched_remediable_count`)**: Servers where at least one non-vulnerable version is available in package registries (`recommended_safe_version` exists).
+- **Unpatched / Zero-Day (`zero_day_unpatched_count`)**: Servers with confirmed security advisories where 100% of published releases remain vulnerable.
+- **Guidance Invariant**: The UI must display explicit containment recommendations for unpatched servers (e.g. isolated network sandboxing or dependency removal).
+
+### 16.2 Static Capability & Risk Surface Model
+The static capability surface analyzes extracted tool parameters and descriptions across the catalog to identify latent operational hazards:
+- **Filesystem Access**: Tools invoking filesystem I/O, directory traversal, or file reads/writes.
+- **Shell / Process Execution**: Tools invoking child processes, system commands, or dynamic code evaluation.
+- **Network / Egress**: Tools establishing outbound HTTP, WebSocket, or raw socket connections.
+- **Mutating vs. Read-Only**: Operational ratio between state-altering tools (`CREATE`, `UPDATE`, `DELETE`, `EXEC`) and passive inspection tools (`GET`, `LIST`, `QUERY`).
+
+### 16.3 Tool Shadowing & Collision Detection Model
+When multiple MCP servers declare identical tool names, AI agent clients risk tool shadowing attacks where one server hijacks invocations intended for another.
+- **Collision Metric**: Track frequency of identical tool names across distinct packages.
+- **Divergent Canonical Hashes**: Track distinct SHA-256 parameter hashes for a given tool name to detect semantic divergence.
+
+### 16.4 Cryptographic Toolset Passports & Complete MCP Primitives
+Every server record in the unified security catalog correlates structural passports from `mcp-fingerprints`:
+- **`toolset_canonical_hash`**: Deterministic SHA-256 hash computed over sorted tool names, parameter names, types, and descriptions:
+  $$\text{Hash} = \text{SHA256}(\text{JSON}_{\text{canonical}}(\text{tools}))$$
+- **MCP Primitives**: Extends beyond tools to capture full MCP primitives:
+  - **Prompts (`prompt_signatures`)**: Name, description, and argument schemas.
+  - **Resources (`resource_signatures`)**: Name, description, and URI templates.
+  - **Transport Topology**: `stdio` vs. `sse` vs. `streamable_http`.
+  - **Required Environment Variables**: List of mandatory secret tokens or configuration keys.
+
+### 16.5 In-Browser Configuration Auditor Specification
+Embedded client-side auditing within `docs/index.html` enforcing zero-telemetry operational guarantees:
+- **Zero-Telemetry Assurance**: Execution occurs strictly within the local browser runtime memory; no network requests, analytics beacons, or remote logging are emitted.
+- **Permissive JSONC Cleaning**: Strips single-line (`//`) and multi-line (`/* */`) comments, BOM headers, and trailing commas prior to JSON parsing.
+- **Multi-Client Schema Support**: Normalizes configuration formats from:
+  - Claude Desktop (`mcpServers.<name>.command` and `args`)
+  - Cline (`mcpServers.<name>.command` and `args`)
+  - Cursor (`mcpServers.<name>.command` and `args`)
+  - Zed (`context_servers.<name>.command.path` and `args`)
+  - Windsurf (`mcpServers.<name>.command` and `args`)
+- **Remediation Diff Generator**: Produces updated client configuration JSON with vulnerable version pins upgraded to the authoritative `recommended_safe_version`.
+
+
 

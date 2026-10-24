@@ -189,26 +189,28 @@ Master Plan: [IMPLEMENTATION_PLAN_FULL_SYSTEM_AUDIT_AND_COMPETITIVE_BENCHMARK.md
 
 ### 14. Web Security Intelligence, Fingerprint Synergy & Enhanced Analytics Wave (Wave 14 - Active Wave)
 
-Master Plan: [IMPLEMENTATION_PLAN_WEB_PORTAL_AND_ENHANCED_ANALYTICS.md](IMPLEMENTATION_PLAN_WEB_PORTAL_AND_ENHANCED_ANALYTICS.md)
+Master Plan: [IMPLEMENTATION_PLAN_WEB_PORTAL_AND_ENHANCED_ANALYTICS.md](IMPLEMENTATION_PLAN_WEB_PORTAL_AND_ENHANCED_ANALYTICS.md)  
+Master Code Review & Verification Report: [`code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **73** | **Web Portal Visual Styling, Card De-Duplication & Composite Risk** | Front-End UI & CSS | `Done` | Fix `.risk-*` and `.advisory-*` CSS class mismatches, eliminate duplicate titles, suppress redundant badges, and compute composite risk tiers. | [task73_web_portal_visual_styling_card_deduplication_and_composite_risk.md](task73_web_portal_visual_styling_card_deduplication_and_composite_risk.md) |
-| **74** | **Cryptographic Fingerprints & Complete MCP Primitives UI Integration** | Fingerprint Synergy | `Done` | Surface SHA-256 canonical toolset hashes with one-click copy, Prompts & Resources sub-tabs, transport tags, and required environment variables. | [task74_cryptographic_fingerprints_and_mcp_primitives_ui.md](task74_cryptographic_fingerprints_and_mcp_primitives_ui.md) |
-| **75** | **Multi-Dimensional Analytics Engine & Zero-Day Gap Intelligence** | Analytics & Pipeline | `Done` | Calculate the 17.4% vs 82.6% Zero-Day gap, static capability distribution, secrets perimeter, transport topology, and tool shadowing entropy. | [task75_multidimensional_analytics_engine_and_zero_day_gap.md](task75_multidimensional_analytics_engine_and_zero_day_gap.md) |
-| **76** | **Updates Portal Polish, Historical Sparkline & Syndication Feeds** | Updates Portal UI | `Done` | Add change-type filter chips (Patched vs New Threats), an SVG historical release sparkline, and prominent Atom/JSON feed buttons. | [task76_updates_portal_historical_sparkline_and_syndication_feeds.md](task76_updates_portal_historical_sparkline_and_syndication_feeds.md) |
-| **77** | **Interactive In-Browser Config Auditor & Fingerprint Matcher Dropzone** | Client-Side Auditing | `Done` | Zero-install, in-browser client config dropzone on `index.html` with instant CVE/fingerprint matching and one-click copyable config diffs. | [task77_interactive_inbrowser_config_auditor_and_fingerprint_matcher.md](task77_interactive_inbrowser_config_auditor_and_fingerprint_matcher.md) |
+| **73** | **Web Portal Visual Styling, Card De-Duplication & Composite Risk** | Front-End UI & CSS | `Verified (Review Audit: 75%)` | Fix `.risk-*` and `.advisory-*` CSS class mismatches, eliminate duplicate titles, suppress redundant badges, and compute composite risk tiers. (Identified: `applyAdvisoryFilters` tools check and card composite risk data starvation). | [task73_web_portal_visual_styling_card_deduplication_and_composite_risk.md](task73_web_portal_visual_styling_card_deduplication_and_composite_risk.md) |
+| **74** | **Cryptographic Fingerprints & Complete MCP Primitives UI Integration** | Fingerprint Synergy | `Verified (Review Audit: 90%)` | Surface SHA-256 canonical toolset hashes with one-click copy, Prompts & Resources sub-tabs, transport tags, and required environment variables. (Identified: Undefined CSS variables `--bg-tertiary` and `--primary-color`). | [task74_cryptographic_fingerprints_and_mcp_primitives_ui.md](task74_cryptographic_fingerprints_and_mcp_primitives_ui.md) |
+| **75** | **Multi-Dimensional Analytics Engine & Zero-Day Gap Intelligence** | Analytics & Pipeline | `Verified (Review Audit: 85%)` | Calculate the Zero-Day gap (32.0% patched vs 68.0% unpatched), static capability distribution, secrets perimeter, transport topology, and tool shadowing entropy. (Identified: `versions[0]` vs `versions[-1]` logic inversion; missing `tests/test_analytics.py`). | [task75_multidimensional_analytics_engine_and_zero_day_gap.md](task75_multidimensional_analytics_engine_and_zero_day_gap.md) |
+| **76** | **Updates Portal Polish, Historical Sparkline & Syndication Feeds** | Updates Portal UI | `Verified (Review Audit: 95%)` | Add change-type filter chips (Patched vs New Threats), an SVG historical release sparkline, and prominent Atom/JSON feed buttons. (Identified: Missing `rel="noopener"` on external links; sparkline resize listener). | [task76_updates_portal_historical_sparkline_and_syndication_feeds.md](task76_updates_portal_historical_sparkline_and_syndication_feeds.md) |
+| **77** | **Interactive In-Browser Config Auditor & Fingerprint Matcher Dropzone** | Client-Side Auditing | `Verified (Review Audit: 70%)` | Zero-install, in-browser client config dropzone on `index.html` with instant CVE/fingerprint matching and one-click copyable config diffs. (Identified: Missing CVE IDs & CVSS scores in posture report; missing automated tests). | [task77_interactive_inbrowser_config_auditor_and_fingerprint_matcher.md](task77_interactive_inbrowser_config_auditor_and_fingerprint_matcher.md) |
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 346 passed, 5 skipped in 92.21s =============================
+============================= 346 passed, 5 skipped in 93.77s =============================
 ```
 - Total test count: **351**
 - Passing: **346 (100% of runnable)**
 - Skipped: **5**
 - Failed: **0**
 - Empirical Invariant Suite (`tests/audit/`): **28 passed in 12.08s (100%)**
+- Code Review Scorecard: **68 / 100** (Full register in [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md))
 
 
 

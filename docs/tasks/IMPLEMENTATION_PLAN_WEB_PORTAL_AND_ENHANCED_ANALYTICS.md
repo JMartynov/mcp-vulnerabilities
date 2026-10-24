@@ -60,3 +60,40 @@ Each task requires:
 2. **Headless Chrome Verification:** Validation via `chrome-devtools-mcp` across desktop (1280x800) and mobile (375x812) viewports.
 3. **Accessibility Audit:** Zero missing form labels and complete contrast compliance across dark mode theme.
 4. **Data Parity:** Verified synchronization between `mcp_catalog_index.json`, `shards/*.json`, `analytics.json`, and UI card elements.
+
+---
+
+## 5. Wave 14 Implementation Results & Live Deployment
+
+All 5 tasks were dispatched and implemented in parallel via Google Jules (EULIS) agents, verified locally, merged into `main`, and deployed to GitHub Pages:
+
+| Task | Jules Session ID | Integration Commit | Verification Summary | Live Route Verified |
+| :---: | :---: | :---: | :--- | :--- |
+| **Task 73** | `12298213116751134624` | `4c6f10c` | `.risk-*` badges, card de-duplication, empty row suppression | [`index.html`](https://jmartynov.github.io/mcp-vulnerabilities/) |
+| **Task 74** | `4887855707909350741` | `8098823` | SHA-256 fingerprint badges, modal sub-tabs, transport tags, env vars | [`index.html`](https://jmartynov.github.io/mcp-vulnerabilities/) |
+| **Task 75** | `16394962457708508716` | `288b38a` | Zero-Day gap (32% vs 68%), capability matrix, tool shadowing | [`analytics.html`](https://jmartynov.github.io/mcp-vulnerabilities/analytics.html) |
+| **Task 76** | `15322902625308839813` | `85d6de8` / `c166ac2` | Sparkline velocity, change-type chips, syndication feeds | [`updates.html`](https://jmartynov.github.io/mcp-vulnerabilities/updates.html) |
+| **Task 77** | `10854960582540794587` | `982840b` | Multi-client config dropzone, JSONC comment cleaner, in-memory matching | [`index.html#audit`](https://jmartynov.github.io/mcp-vulnerabilities/) |
+
+- **GitHub Pages Workflow Run:** `40131397001` (Success)
+- **Runtime Hotfix Applied:** Commit `d12b3af` converted `init()` in `docs/updates.js` to `async` and removed a 3-way conflict brace.
+- **Automated Regression Suite:** `.venv/bin/pytest` -> **346 passed, 5 skipped in 93.77s (100% pass)**.
+
+---
+
+## 6. Independent Code Review Findings & Defect Register
+
+A comprehensive line-by-line review of Wave 14 deliverables was conducted (documented in full in [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md)).
+
+### Defect Register Summary:
+1. **[HIGH] Uncaught `ReferenceError: server is not defined` (`docs/app.js:1302`):** Triggered when filtering advisories if "Has Tools Only" is checked.
+2. **[HIGH] Card Composite Risk Starvation (`docs/app.js:683-710` & `site_builder.py:512-543`):** Directory cards display `Risk: LOW` because `mcp_catalog_index.json` omits `versions`. Requires precomputing and stamping `composite_risk_tier` in `catalog_index`.
+3. **[HIGH] Incomplete Scenario 2 in Config Auditor (`docs/app.js:553-561`):** Omits CVE IDs and CVSS scores in the client-side audit posture report.
+4. **[HIGH] Missing Test Coverage:** Absence of `tests/test_analytics.py` and frontend DOM assertion tests for dropzone, sparklines, and chips.
+5. **[MED] Analytics Ingestion Logic Inversion (`site_builder.py:651`):** Uses `v = versions[0]` (oldest version) instead of `versions[-1]` (latest version).
+6. **[MED] Undefined CSS Variables (`docs/style.css:1256, 1281`):** Missing `--bg-tertiary`, `--primary-color`, and `.badge-eco` declarations.
+7. **[LOW] Modal Sub-Tab Desync (`docs/app.js` & `docs/updates.js`):** Sub-tabs do not reset to "Tools" on version pill switch.
+8. **[LOW] Keyboard Accessibility:** Missing keyboard event handlers on `.fp-badge` elements.
+9. **[LOW] Missing `rel="noopener"` on external syndication feed links.**
+10. **[LOW] SVG Sparkline missing `viewBox` attribute for dynamic window resizing.**
+

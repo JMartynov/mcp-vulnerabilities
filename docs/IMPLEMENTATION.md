@@ -133,13 +133,34 @@ Configured with `workflow_call:` trigger and `skip-existing: true` allowing invo
 
 ### 8.1 Unified Static Data Architecture
 The static site builder compiles high-performance assets for browser client consumption without requiring backend runtime servers:
-- **`docs/data/mcp_catalog_index.json`**: Compact, fast-loading search index covering all 5,050+ known MCP servers. Contains server identity, ecosystem, repository links, static capability risk tier, version vulnerability counts, recommended safe version, security summary comments, tool preview samples, and shard references (`shard_id`, `shard_file`).
-- **`docs/data/shards/shard_<00..1f>.json`**: 32 deterministic hex-partitioned JSON files (hashed by `sha256(ecosystem:package_name) % 32`). Each shard contains full deep-dive records (`UnifiedMcpSecurityRecord`) including discrete version histories (`versions[]`), isolated vulnerability advisories per version, toolset canonical hashes, tool capability risk scores and security comments, protocol annotations, and full parameter metadata schemas (`ParameterMetadata`).
+- **`docs/data/mcp_catalog_index.json`**: Compact, fast-loading search index covering all 5,050+ known MCP servers. Contains server identity, ecosystem, repository links, static capability risk tier, composite risk tier, version vulnerability counts, recommended safe version, toolset canonical hash, primitive counts (`tools_count`, `prompts_count`, `resources_count`), transport type, required environment variables, security summary comments, tool preview samples, and shard references (`shard_id`, `shard_file`).
+- **`docs/data/shards/shard_<00..1f>.json`**: 32 deterministic hex-partitioned JSON files (hashed by `sha256(ecosystem:package_name) % 32`). Each shard contains full deep-dive records (`UnifiedMcpSecurityRecord`) including discrete version histories (`versions[]`), isolated vulnerability advisories per version, toolset canonical hashes, prompt and resource signatures with parameter schemas, tool capability risk scores and security comments, transport protocol annotations, and required environment variables.
 - **`docs/data/vulnerabilities.json`**: Complete OSV-compliant database of security advisories with database-specific MCP extensions (`vulnerable_tools`, `owasp_mcp_category`, `remediation_guidance`).
-- **`docs/data/analytics.json`**: Pre-aggregated metrics covering ecosystem distributions, OWASP MCP Top 10 category frequencies, risk tier totals, safe vs. vulnerable package counts, and top vulnerable tool names.
+- **`docs/data/analytics.json`**: Multi-dimensional analytics payload pre-computed during site compilation:
+  - **Zero-Day & Remediation Gap**: `total_vulnerable_servers`, `patched_remediable_count`, `zero_day_unpatched_count`, and percentage allocations.
+  - **Static Capability Surface**: Static permission frequencies (`filesystem`, `shell_exec`, `network_egress`, `mutating`, `read_only`).
+  - **Tool Shadowing Risk**: Identification of collision-prone generic tool names with divergent implementation hash counts.
+  - **Secrets Perimeter & Transport Topology**: Distribution of required environment variables and server transport protocols.
+  - **OWASP MCP Category & Ecosystem Distributions**: Vulnerability frequencies across OWASP MCP Top 10 categories.
+- **`docs/data/feed.atom` & `docs/data/feed.json`**: Real-time syndication feeds capturing newly published security advisories and patched MCP server releases.
 
-### 8.2 Execution and Testing
-- Run module: `.venv/bin/python -m mcp_vulnerabilities.site_builder`
+### 8.2 In-Browser Client Configuration Auditor (`Audit My MCP Setup`)
+Embedded within `docs/index.html` (Tab 3) and executed via `docs/app.js`:
+- **100% Client-Side Privacy**: Runs completely in browser memory with zero network telemetry or tracking.
+- **Multi-Client Ingestion**: Drag-and-drop or clipboard paste supporting Claude Desktop (`mcpServers`), Cline (`mcpServers`), Cursor (`mcpServers`), Zed (`context_servers`), and Windsurf.
+- **Permissive JSONC Normalizer**: Strips single-line (`//`) and multi-line (`/* */`) comments, BOM headers, and trailing commas.
+- **Package Extraction Engine**: Normalizes package names, ecosystems, and SemVer pins across npm, uvx, and pipx command invocations.
+- **In-Memory Vulnerability Matching**: Cross-matches installed servers against `catalogIndex` and advisory records, identifying vulnerable tools and generating one-click copyable remediation configurations.
+
+### 8.3 Release Updates & Historical Velocity Sparkline (`docs/updates.html`)
+Dedicated delta feed portal rendering release-by-release changes:
+- **Historical Release Timeline**: Dropdown switcher across historical sync releases (v1.1.3 through v1.0.0).
+- **Dual-Series SVG Sparkline**: Responsive trend chart rendering advisory volumes and server counts over the past 10 releases.
+- **Dynamic Change-Type Filter Chips**: Instant client-side filtering by change category (*All Updates*, *🟢 Patched Versions Available*, *🔴 New Security Vulnerabilities*, *🆕 Newly Tracked Servers*).
+- **Toolset Evolution Diff**: Side-by-side modal visualization of added (`+`) and removed (`-`) tools, parameter changes, and SHA-256 fingerprint transitions.
+
+### 8.4 Execution and Testing
+- Run module: `.venv/bin/python -m mcp_server_registry.site_builder`
 - Unit and acceptance tests: `tests/test_site_builder_unified.py`
 
 ---

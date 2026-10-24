@@ -6,6 +6,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.3] - 2026-10-24
+
+### 🌐 Wave 14: Web Security Intelligence, Fingerprint Synergy & Enhanced Analytics
+
+This release delivers the comprehensive web portal styling reconciliation, cryptographic toolset passport integration, multi-dimensional analytics engine, and in-browser client configuration security auditor.
+
+#### Added
+- **Interactive In-Browser Config Auditor (`index.html`)**:
+  - Embedded zero-install, 100% in-browser memory dropzone supporting Claude Desktop, Cline, Cursor, Zed, and Windsurf configurations.
+  - Permissive JSONC comment stripping and regex-free parsing with zero telemetry.
+  - In-memory matching against `mcp_catalog_index.json` and `vulnerabilities.json` to compute vulnerable tool mappings and output 1-click copyable remediation diffs.
+- **Cryptographic Fingerprints & Complete MCP Primitives UI (`index.html` & `updates.html`)**:
+  - Surfaced SHA-256 canonical toolset hashes (`toolset_canonical_hash`) and individual tool hashes with one-click clipboard copy.
+  - Full MCP primitives integration: `🔧 Tools`, `📄 Prompts`, and `📦 Resources` counters on directory cards and dedicated sub-tabs in `#server-modal`.
+  - Transport protocol indicators (`🖥️ Local Stdio` vs `🌐 Remote SSE Gateway`), required environment variables (`modal-env-vars-container`), and supply chain health flags (`⚠️ Repo 404 / Archived`).
+- **Multi-Dimensional Analytics Engine (`analytics.html`)**:
+  - **Zero-Day & Remediation Gap**: Quantifies patched vs. unpatched vulnerable servers (32.0% safe patches vs. 68.0% active zero-days with no upstream fix) with actionable containment guidance.
+  - **Static Capability Surface**: Analyzes catalog-wide permissions: Filesystem (524), Shell/Exec (322), Network (392), Mutating (890), and Read-Only (1,516).
+  - **Tool Shadowing Risk**: Detects collision-prone generic tool names (e.g. `search`, `raw_request`, `send_message`) with multiple divergent canonical implementations.
+  - **Secrets Perimeter & Transport Topology**: Visualizes required environment variables and transport protocol distribution.
+- **Updates Portal Polish & Historical Velocity (`updates.html`)**:
+  - Dual-series SVG historical velocity sparkline tracking server growth and advisory volume across the past 10 releases.
+  - Dynamic change-type filter chips (*All Updates*, *🟢 Patched Versions Available*, *🔴 New Security Vulnerabilities*, *🆕 Newly Tracked Servers*) with live count indicators.
+  - Toolset evolution diff modal highlighting added (`+`) and removed (`-`) tools and SHA-256 fingerprint transitions.
+  - Direct Atom (`data/feed.atom`) and JSON Feed (`data/feed.json`) syndication endpoints.
+- **Comprehensive Code Review & Verification Report**:
+  - Documented line-by-line verification in `docs/reports/code_review_wave14_portal_and_analytics.md` and registered defects for continuous remediation.
+
+#### Fixed
+- **Portal Visual Styling & Badges (`docs/style.css`)**:
+  - Resolved missing `.risk-*` and `.advisory-*` CSS class definitions ensuring risk tiers render with proper themed backgrounds and borders.
+  - Eliminated redundant `display_name === package_name` duplicated headers across 100% of directory cards.
+  - Suppressed empty `.server-tools-row` spacing via CSS `:empty`.
+  - Suppressed duplicate `🔴 Vulnerable` badge on updates cards when `🔴 New Security Vulnerability` badge is present.
+- **Runtime Async Execution (`docs/updates.js`)**:
+  - Converted `init()` to `async` and cleaned up conflict syntax, resolving browser script parse failures.
+
+---
+
 ## [1.1.2] - 2026-10-24
 
 ### 📦 Release Engineering & Comprehensive Documentation Integration
