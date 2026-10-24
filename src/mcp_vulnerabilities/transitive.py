@@ -41,6 +41,8 @@ class TransitiveFinding:
     severity: str
     cvss_score: float | None
     fixed_version: str | None
+    reachability: str = "UNKNOWN"
+    reachable_from_tools: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -75,10 +77,27 @@ class TransitiveAuditResult:
                     "severity": f.severity,
                     "cvss_score": f.cvss_score,
                     "fixed_version": f.fixed_version,
+                    "reachability": f.reachability,
+                    "reachable_from_tools": f.reachable_from_tools,
                 }
                 for f in self.findings
             ],
         }
+
+
+def annotate_reachability(result: TransitiveAuditResult, source_dir: str | Path, reachable_only: bool = False) -> TransitiveAuditResult:
+    from mcp_vulnerabilities.analyzers.reachability.call_graph import AstReachabilityAnalyzer
+    report = AstReachabilityAnalyzer.analyze_directory(source_dir)
+    
+    for finding in result.findings:
+        reach = AstReachabilityAnalyzer.evaluate_package(finding.dependency_name, report)
+        finding.reachability = reach.status
+        finding.reachable_from_tools = reach.reachable_from_tools
+        
+    if reachable_only:
+        result.findings = [f for f in result.findings if f.reachability == "REACHABLE"]
+        
+    return result
 
 
 class TransitiveDependencyAuditor:
