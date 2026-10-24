@@ -281,10 +281,12 @@ def main() -> None:
     trans_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
 
     # Hub
-    subparsers.add_parser(
+    hub_p = subparsers.add_parser(
         "hub",
         help="Launch the interactive MCP Security Command Hub",
     )
+    hub_p.add_argument("--json", action="store_true", help="Output machine-readable JSON (Non-interactive)")
+    hub_p.add_argument("--batch", action="store_true", help="Run in non-interactive batch mode")
 
     # Fix Config
     fix_p = subparsers.add_parser(
@@ -1104,7 +1106,7 @@ def main() -> None:
         sys.exit(1 if res.has_critical_or_high else 0)
 
     elif args.command == "hub":
-        from .hub import run_hub
+        from .audit.hub import run_hub
         run_hub(args)
     elif args.command in ("fix", "fix-config"):
         snap_p = Path(args.snapshot)
