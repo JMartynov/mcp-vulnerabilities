@@ -244,6 +244,70 @@ def _process_server_batch(
     return results, warnings
 
 
+def _extract_advisory_severity(adv: Any) -> str:
+    """Extracts severity string from OSV advisory."""
+    if hasattr(adv, "to_dict"):
+        adv = adv.to_dict()
+    if not isinstance(adv, dict):
+        return "UNKNOWN"
+    sev = adv.get("database_specific", {}).get("severity")
+    if sev:
+        return str(sev).upper()
+    affected = adv.get("affected", [])
+    if affected and isinstance(affected, list) and isinstance(affected[0], dict):
+        sev = affected[0].get("database_specific", {}).get("severity")
+        if sev:
+            return str(sev).upper()
+    sev = adv.get("severity")
+    if sev:
+        return str(sev).upper()
+    return "UNKNOWN"
+
+
+def _compute_composite_risk(
+    static_risk_tier: str | None, is_vulnerable: bool, versions: list[dict[str, Any]]
+) -> tuple[str | None, str]:
+    """Computes (highest_cve_severity, composite_risk_tier)."""
+    rank_map = {
+        "CRITICAL": 4,
+        "HIGH": 3,
+        "MEDIUM": 2,
+        "MODERATE": 2,
+        "LOW": 1,
+        "NONE": 0,
+        "UNKNOWN": 0,
+    }
+    tier_map = {4: "CRITICAL", 3: "HIGH", 2: "MEDIUM", 1: "LOW", 0: "LOW"}
+
+    base_tier = (static_risk_tier or "LOW").upper()
+    if base_tier == "MODERATE":
+        base_tier = "MEDIUM"
+    if base_tier not in rank_map:
+        base_tier = "LOW"
+    base_rank = rank_map[base_tier]
+    normalized_base_tier = tier_map[base_rank]
+
+    if not is_vulnerable:
+        return None, normalized_base_tier
+
+    highest_cve_rank = 0
+    for v in versions:
+        if v.get("is_vulnerable"):
+            for adv in v.get("advisories", []):
+                sev_str = _extract_advisory_severity(adv)
+                rank = rank_map.get(sev_str, 0)
+                if rank > highest_cve_rank:
+                    highest_cve_rank = rank
+
+    if highest_cve_rank == 0:
+        highest_cve_rank = 3  # default HIGH
+
+    highest_cve_severity = tier_map[highest_cve_rank]
+    composite_risk_tier = tier_map[max(base_rank, highest_cve_rank)]
+
+    return highest_cve_severity, composite_risk_tier
+
+
 def build_site_parallel(
     passports_path: str | Path | None = None,
     vuln_path: str | Path | None = None,
@@ -485,6 +549,10 @@ def build_site_parallel(
         shard_id = f"{shard_num:02x}"
         shard_file = f"shard_{shard_id}.json"
 
+        highest_cve_sev, composite_tier = _compute_composite_risk(
+            record.get("static_risk_tier"), is_vuln, record.get("versions", [])
+        )
+
         rec_dict = record
         # Optimize version advisories for browser payload efficiency
         for v in rec_dict.get("versions", []):
@@ -553,6 +621,8 @@ def build_site_parallel(
             "security_summary": record.get("security_summary"),
             "static_risk_score": record.get("static_risk_score"),
             "static_risk_tier": record.get("static_risk_tier"),
+            "highest_cve_severity": highest_cve_sev,
+            "composite_risk_tier": composite_tier,
             "tools_count": tools_count,
             "tools_sample": tools_sample,
             "is_unpublished": record.get("is_unpublished", False),
