@@ -14937,8 +14937,8 @@
           "cvss_score": 7.5,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
           "cwe_ids": [
-            "CWE-306",
-            "CWE-1188"
+            "CWE-1188",
+            "CWE-306"
           ],
           "severity": "HIGH"
         },
@@ -14960,132 +14960,9 @@
       }
     ],
     "database_specific": {
-      "raw_metrics": {
-        "cvssV31": {
-          "cvssData": {
-            "attackComplexity": "LOW",
-            "attackVector": "NETWORK",
-            "availabilityImpact": "NONE",
-            "baseScore": 7.5,
-            "baseSeverity": "HIGH",
-            "confidentialityImpact": "HIGH",
-            "integrityImpact": "NONE",
-            "privilegesRequired": "NONE",
-            "scope": "UNCHANGED",
-            "userInteraction": "NONE",
-            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-            "version": "3.1"
-          },
-          "exploitabilityScore": 3.9,
-          "impactScore": 3.6,
-          "source": "security-advisories@github.com",
-          "type": "Secondary"
-        }
-      },
-      "raw_nvd": {
-        "affected": [
-          {
-            "affectedData": [
-              {
-                "product": "d365fo-mcp-server",
-                "vendor": "dynamics365ninja",
-                "versions": [
-                  {
-                    "status": "affected",
-                    "version": "< 1.11.0"
-                  }
-                ]
-              }
-            ],
-            "source": "security-advisories@github.com"
-          }
-        ],
-        "descriptions": [
-          {
-            "lang": "en",
-            "value": "D365 F&O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance & Operations X++ code and metadata. Prior to version 1.11.0, the officially documented Azure one-click deployment uses infrastructure/azuredeploy.json and infrastructure/main.bicep to default the apiKey parameter to an empty string and pass it to the App Service API_KEY setting. With API_KEY unset or empty, src/middleware/apiKeyAuth.ts passes requests through without authentication, while src/index.ts binds the HTTP listener to 0.0.0.0 by default. If the deployer leaves the optional key blank and does not add separate network restrictions or upstream authentication, the resulting public App Service allows unauthenticated JSON-RPC tools/call requests to /mcp. The deployment's MCP_SERVER_MODE=read-only setting does not prevent anonymous access to read/search tools, including search, get_object_info, batch_get_info, extension_info, security_info, find_references, and find_event_handlers, exposing indexed proprietary X++ source snippets and metadata. Exposed information can include business logic, extension and event-handler wiring, security-role and privilege structure, and labels originally indexed from PackagesLocalDirectory. Deployments protected by a configured API key, effective upstream authentication, or network restrictions preventing attacker access are outside this unauthenticated exposure scenario. This issue is fixed in version 1.11.0."
-          }
-        ],
-        "id": "CVE-2026-114123",
-        "lastModified": "2026-10-22T17:40:46.877",
-        "metrics": {
-          "cvssMetricV31": [
-            {
-              "cvssData": {
-                "attackComplexity": "LOW",
-                "attackVector": "NETWORK",
-                "availabilityImpact": "NONE",
-                "baseScore": 7.5,
-                "baseSeverity": "HIGH",
-                "confidentialityImpact": "HIGH",
-                "integrityImpact": "NONE",
-                "privilegesRequired": "NONE",
-                "scope": "UNCHANGED",
-                "userInteraction": "NONE",
-                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
-                "version": "3.1"
-              },
-              "exploitabilityScore": 3.9,
-              "impactScore": 3.6,
-              "source": "security-advisories@github.com",
-              "type": "Secondary"
-            }
-          ]
-        },
-        "published": "2026-10-21T17:18:25.737",
-        "references": [
-          {
-            "source": "security-advisories@github.com",
-            "url": "https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818"
-          },
-          {
-            "source": "security-advisories@github.com",
-            "url": "https://github.com/dynamics365ninja/d365fo-mcp-server/commit/e70bd051f817ebb652d664b10a944fe2c5495de2"
-          },
-          {
-            "source": "security-advisories@github.com",
-            "url": "https://github.com/dynamics365ninja/d365fo-mcp-server/releases/tag/v1.11.0"
-          },
-          {
-            "source": "security-advisories@github.com",
-            "url": "https://github.com/dynamics365ninja/d365fo-mcp-server/security/advisories/GHSA-8764-fh3m-wf7g"
-          }
-        ],
-        "sourceIdentifier": "security-advisories@github.com",
-        "vulnStatus": "Deferred",
-        "weaknesses": [
-          {
-            "description": [
-              {
-                "lang": "en",
-                "value": "CWE-306"
-              },
-              {
-                "lang": "en",
-                "value": "CWE-1188"
-              }
-            ],
-            "source": "security-advisories@github.com",
-            "type": "Primary"
-          }
-        ]
-      },
-      "source": "NVD",
-      "sourceIdentifier": "security-advisories@github.com",
-      "vulnStatus": "Deferred",
-      "weaknesses": [
-        {
-          "lang": "en",
-          "source": "security-advisories@github.com",
-          "type": "Primary",
-          "value": "CWE-306"
-        },
-        {
-          "lang": "en",
-          "source": "security-advisories@github.com",
-          "type": "Primary",
-          "value": "CWE-1188"
-        }
+      "sources_merged": [
+        "CVE-2026-114123",
+        "CVE-2026-114123"
       ]
     },
     "details": "D365 F&O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance & Operations X++ code and metadata. Prior to version 1.11.0, the officially documented Azure one-click deployment uses infrastructure/azuredeploy.json and infrastructure/main.bicep to default the apiKey parameter to an empty string and pass it to the App Service API_KEY setting. With API_KEY unset or empty, src/middleware/apiKeyAuth.ts passes requests through without authentication, while src/index.ts binds the HTTP listener to 0.0.0.0 by default. If the deployer leaves the optional key blank and does not add separate network restrictions or upstream authentication, the resulting public App Service allows unauthenticated JSON-RPC tools/call requests to /mcp. The deployment's MCP_SERVER_MODE=read-only setting does not prevent anonymous access to read/search tools, including search, get_object_info, batch_get_info, extension_info, security_info, find_references, and find_event_handlers, exposing indexed proprietary X++ source snippets and metadata. Exposed information can include business logic, extension and event-handler wiring, security-role and privilege structure, and labels originally indexed from PackagesLocalDirectory. Deployments protected by a configured API key, effective upstream authentication, or network restrictions preventing attacker access are outside this unauthenticated exposure scenario. This issue is fixed in version 1.11.0.",
@@ -15398,6 +15275,222 @@
       }
     ],
     "summary": "A vulnerability was determined in designcomputer mysql-mcp-server up to 0.2.2. The impacted element is the function read"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 6.4,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+          "cwe_ids": [
+            "CWE-184"
+          ],
+          "severity": "MEDIUM"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "N/A"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "cveTags": [
+        {
+          "sourceIdentifier": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "tags": [
+            "exclusively-hosted-service"
+          ]
+        }
+      ],
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "LOW",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "NONE",
+            "baseScore": 6.4,
+            "baseSeverity": "MEDIUM",
+            "confidentialityImpact": "LOW",
+            "integrityImpact": "LOW",
+            "privilegesRequired": "LOW",
+            "scope": "CHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 3.1,
+          "impactScore": 2.7,
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "defaultStatus": "unaffected",
+                "product": "AWS MCP Server",
+                "vendor": "AWS",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "N/A",
+                    "versionType": "custom"
+                  }
+                ]
+              }
+            ],
+            "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5"
+          }
+        ],
+        "cveTags": [
+          {
+            "sourceIdentifier": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+            "tags": [
+              "exclusively-hosted-service"
+            ]
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "An incomplete list of disallowed inputs in the Python code validator of the run_script tool in AWS MCP Server might allow an authenticated remote user to execute arbitrary code within their own isolated session environment via a crafted script.\n\n\n\nAWS fixed this issue service-side. No customer action is required."
+          }
+        ],
+        "id": "CVE-2026-115845",
+        "lastModified": "2026-10-23T19:23:01.467",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "LOW",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "NONE",
+                "baseScore": 6.4,
+                "baseSeverity": "MEDIUM",
+                "confidentialityImpact": "LOW",
+                "integrityImpact": "LOW",
+                "privilegesRequired": "LOW",
+                "scope": "CHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 3.1,
+              "impactScore": 2.7,
+              "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+              "type": "Secondary"
+            }
+          ],
+          "cvssMetricV40": [
+            {
+              "cvssData": {
+                "Automatable": "NOT_DEFINED",
+                "Recovery": "NOT_DEFINED",
+                "Safety": "NOT_DEFINED",
+                "attackComplexity": "LOW",
+                "attackRequirements": "NONE",
+                "attackVector": "NETWORK",
+                "availabilityRequirement": "NOT_DEFINED",
+                "baseScore": 5.3,
+                "baseSeverity": "MEDIUM",
+                "confidentialityRequirement": "NOT_DEFINED",
+                "exploitMaturity": "NOT_DEFINED",
+                "integrityRequirement": "NOT_DEFINED",
+                "modifiedAttackComplexity": "NOT_DEFINED",
+                "modifiedAttackRequirements": "NOT_DEFINED",
+                "modifiedAttackVector": "NOT_DEFINED",
+                "modifiedPrivilegesRequired": "NOT_DEFINED",
+                "modifiedSubAvailabilityImpact": "NOT_DEFINED",
+                "modifiedSubConfidentialityImpact": "NOT_DEFINED",
+                "modifiedSubIntegrityImpact": "NOT_DEFINED",
+                "modifiedUserInteraction": "NOT_DEFINED",
+                "modifiedVulnAvailabilityImpact": "NOT_DEFINED",
+                "modifiedVulnConfidentialityImpact": "NOT_DEFINED",
+                "modifiedVulnIntegrityImpact": "NOT_DEFINED",
+                "privilegesRequired": "LOW",
+                "providerUrgency": "NOT_DEFINED",
+                "subAvailabilityImpact": "NONE",
+                "subConfidentialityImpact": "LOW",
+                "subIntegrityImpact": "LOW",
+                "userInteraction": "NONE",
+                "valueDensity": "NOT_DEFINED",
+                "vectorString": "CVSS:4.0/AV:N/AC:L/AT:N/PR:L/UI:N/VC:L/VI:L/VA:N/SC:L/SI:L/SA:N/E:X/CR:X/IR:X/AR:X/MAV:X/MAC:X/MAT:X/MPR:X/MUI:X/MVC:X/MVI:X/MVA:X/MSC:X/MSI:X/MSA:X/S:X/AU:X/R:X/V:X/RE:X/U:X",
+                "version": "4.0",
+                "vulnAvailabilityImpact": "NONE",
+                "vulnConfidentialityImpact": "LOW",
+                "vulnIntegrityImpact": "LOW",
+                "vulnerabilityResponseEffort": "NOT_DEFINED"
+              },
+              "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-23T19:17:44.643",
+        "references": [
+          {
+            "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+            "url": "https://aws.amazon.com/security/security-bulletins/2026-149-aws/"
+          }
+        ],
+        "sourceIdentifier": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+        "vulnStatus": "Awaiting Analysis",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-184"
+              }
+            ],
+            "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+            "type": "Secondary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+      "vulnStatus": "Awaiting Analysis",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "ff89ba41-3aa1-4d27-914a-91399e9639e5",
+          "type": "Secondary",
+          "value": "CWE-184"
+        }
+      ]
+    },
+    "details": "An incomplete list of disallowed inputs in the Python code validator of the run_script tool in AWS MCP Server might allow an authenticated remote user to execute arbitrary code within their own isolated session environment via a crafted script.\n\n\n\nAWS fixed this issue service-side. No customer action is required.",
+    "id": "CVE-2026-115845",
+    "modified": "2026-10-23T19:23:01.467Z",
+    "published": "2026-10-23T19:17:44.643Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://aws.amazon.com/security/security-bulletins/2026-149-aws/"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:L/I:L/A:N",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "An incomplete list of disallowed inputs in the Python code validator of the run_script tool in AWS MCP Server might allo"
   },
   {
     "affected": [
@@ -21465,9 +21558,9 @@
         "CVE-2026-17623"
       ]
     },
-    "details": "IBM Langflow OSS 1.0.0 through 1.10.3 could allow a remote authenticated attacker to execute arbitrary commands due to improper validation of the command field in MCP server configurations.\n\n<p>IBM Langflow OSS 1.0.0 through 1.10.3 could allow a remote authenticated attacker to execute arbitrary commands due to improper validation of the command field in MCP server configurations.</p>",
+    "details": "IBM Langflow OSS 1.0.0 through 1.10.3 could allow a remote authenticated attacker to execute arbitrary commands due to improper validation of the command field in MCP server configurations.\n\nIBM Langflow OSS 1.0.0 hasta 1.10.3 podría permitir a un atacante remoto autenticado ejecutar comandos arbitrarios debido a una validación incorrecta del campo de comando en las configuraciones del servidor MCP.",
     "id": "CVE-2026-17623",
-    "modified": "2026-08-06T19:35:32.393Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-05T16:34:22.418Z",
     "references": [
       {
@@ -21711,9 +21804,9 @@
         "CVE-2026-17626"
       ]
     },
-    "details": "IBM Langflow OSS 1.0.0 through 1.10.3 Langflow could allow an authenticated attacker to read, modify, or expose sensitive host files via Docker-based MCP servers due to incomplete filtering of dangerous Docker volume-mount and device-mapping arguments.\n\n<p>IBM Langflow OSS 1.0.0 through 1.10.3 Langflow could allow an authenticated attacker to read, modify, or expose sensitive host files via Docker-based MCP servers due to incomplete filtering of dangerous Docker volume-mount and device-mapping arguments.</p>",
+    "details": "IBM Langflow OSS 1.0.0 through 1.10.3 Langflow could allow an authenticated attacker to read, modify, or expose sensitive host files via Docker-based MCP servers due to incomplete filtering of dangerous Docker volume-mount and device-mapping arguments.\n\nIBM Langflow OSS 1.0.0 hasta 1.10.3 Langflow podría permitir a un atacante autenticado leer, modificar o exponer archivos sensibles del host a través de servidores MCP basados en Docker debido a un filtrado incompleto de argumentos peligrosos de montaje de volumen y mapeo de dispositivos de Docker.",
     "id": "CVE-2026-17626",
-    "modified": "2026-08-06T19:35:09.230Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-05T16:31:13.037Z",
     "references": [
       {
@@ -22047,9 +22140,9 @@
         "CVE-2026-18655"
       ]
     },
-    "details": "Improper restriction of intended endpoints in the RabbitMQ broker connection tools of the Amazon MQ MCP Server (awslabs.amazon-mq-mcp-server) before 2.0.24 may allow a remote unauthenticated actor (via prompt injection) to obtain Amazon MQ for RabbitMQ broker credentials or OAuth access tokens sent to a crafted endpoint controlled through a broker hostname introduced in the MCP client context.\n\n\n\nTo remediate this issue, users should upgrade to version 2.0.24.\n\n<p>Improper restriction of intended endpoints in the RabbitMQ broker connection tools of the Amazon MQ MCP Server (awslabs.amazon-mq-mcp-server) before <strong>2.0.24</strong> may allow a remote unauthenticated actor (via prompt injection) to obtain Amazon MQ for RabbitMQ broker credentials or OAuth access tokens sent to a crafted endpoint controlled through a broker hostname introduced in the MCP client context.</p><p>To remediate this issue, users should upgrade to version 2.0.24.</p>",
+    "details": "Improper restriction of intended endpoints in the RabbitMQ broker connection tools of the Amazon MQ MCP Server (awslabs.amazon-mq-mcp-server) before 2.0.24 may allow a remote unauthenticated actor (via prompt injection) to obtain Amazon MQ for RabbitMQ broker credentials or OAuth access tokens sent to a crafted endpoint controlled through a broker hostname introduced in the MCP client context.\n\n\n\nTo remediate this issue, users should upgrade to version 2.0.24.\n\nRestricción indebida de los puntos finales previstos en las herramientas de conexión del bróker RabbitMQ del servidor Amazon MQ MCP (awslabs.amazon-mq-mcp-server) anterior a la versión 2.0.24 puede permitir a un actor remoto no autenticado (mediante inyección de prompt) obtener credenciales del bróker Amazon MQ para RabbitMQ o tokens de acceso OAuth enviados a un punto final manipulado controlado a través de un nombre de host de bróker introducido en el contexto del cliente MCP.\n\nPara solucionar este problema, los usuarios deben actualizar a la versión 2.0.24.",
     "id": "CVE-2026-18655",
-    "modified": "2026-08-04T14:48:22.933Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-03T19:04:12.505Z",
     "references": [
       {
@@ -22430,9 +22523,9 @@
         "CVE-2026-18954"
       ]
     },
-    "details": "Incorrect authorization in the aggregation pipeline tool in Amazon AWS Labs DocumentDB MCP Server before 1.0.12 might allow an authenticated MCP client to perform inappropriate write operations on the connected database via write-capable aggregation pipeline stages that bypass the read-only mode enforcement logic.\n\n\n\nTo remediate this issue, users should upgrade to version 1.0.12 or later.\n\n<p>Incorrect authorization in the aggregation pipeline tool in Amazon AWS Labs DocumentDB MCP Server before 1.0.12 might allow an authenticated MCP client to perform inappropriate write operations on the connected database via write-capable aggregation pipeline stages that bypass the read-only mode enforcement logic.</p><p>To remediate this issue, users should upgrade to version 1.0.12 or later.</p>",
+    "details": "Incorrect authorization in the aggregation pipeline tool in Amazon AWS Labs DocumentDB MCP Server before 1.0.12 might allow an authenticated MCP client to perform inappropriate write operations on the connected database via write-capable aggregation pipeline stages that bypass the read-only mode enforcement logic.\n\n\n\nTo remediate this issue, users should upgrade to version 1.0.12 or later.\n\nAutorización incorrecta en la herramienta de pipeline de agregación en el servidor MCP de Amazon AWS Labs DocumentDB anterior a la versión 1.0.12 podría permitir a un cliente MCP autenticado realizar operaciones de escritura inapropiadas en la base de datos conectada a través de etapas de pipeline de agregación con capacidad de escritura que eluden la lógica de aplicación del modo de solo lectura.\n\nPara remediar este problema, los usuarios deben actualizar a la versión 1.0.12 o posterior.",
     "id": "CVE-2026-18954",
-    "modified": "2026-08-10T15:23:15.883Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-05T20:07:35.451Z",
     "references": [
       {
@@ -22523,9 +22616,9 @@
         "CVE-2026-19039"
       ]
     },
-    "details": "A vulnerability was detected in Kino-Kafkaesque ssh-mcp-server up to 8ebbbb99b26f80ff6162fe00957c6dec73fbc5a5. Impacted is the function ssh_exec of the file src/index.ts of the component SSH Command Handler. Performing a manipulation of the argument host/username results in command injection. The attack requires a local approach. The actual existence of this vulnerability is currently in question. This product adopts a rolling release strategy to maintain continuous delivery. Therefore, version details for affected or updated releases cannot be specified. The project maintainer explains: \"The intended threat model is that this MCP server is a local/trusted tool for an agent to execute commands over SSH, so callers already have meaningful execution capability through the exposed shell.\"",
+    "details": "A vulnerability was detected in Kino-Kafkaesque ssh-mcp-server up to 8ebbbb99b26f80ff6162fe00957c6dec73fbc5a5. Impacted is the function ssh_exec of the file src/index.ts of the component SSH Command Handler. Performing a manipulation of the argument host/username results in command injection. The attack requires a local approach. The actual existence of this vulnerability is currently in question. This product adopts a rolling release strategy to maintain continuous delivery. Therefore, version details for affected or updated releases cannot be specified. The project maintainer explains: \"The intended threat model is that this MCP server is a local/trusted tool for an agent to execute commands over SSH, so callers already have meaningful execution capability through the exposed shell.\"\n\nSe detectó una vulnerabilidad en el servidor ssh-mcp de Kino-Kafkaesque hasta 8ebbbb99b26f80ff6162fe00957c6dec73fbc5a5. La función ssh_exec del archivo src/index.ts del componente Gestor de Comandos SSH se ve afectada. Realizar una manipulación del argumento host/username resulta en inyección de comandos. El ataque requiere un enfoque local. La existencia real de esta vulnerabilidad está actualmente en cuestión. Este producto adopta una estrategia de lanzamiento continuo para mantener la entrega continua. Por lo tanto, los detalles de la versión para las versiones afectadas o actualizadas no pueden especificarse. El mantenedor del proyecto explica: ’El modelo de amenaza previsto es que este servidor MCP es una herramienta local/de confianza para que un agente ejecute comandos a través de SSH, por lo que los llamadores ya tienen una capacidad de ejecución significativa a través del shell expuesto.’",
     "id": "CVE-2026-19039",
-    "modified": "2026-08-12T21:00:37.147Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-06T13:00:10.636Z",
     "references": [
       {
@@ -46522,9 +46615,9 @@
         "CVE-2026-48039"
       ]
     },
-    "details": "Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.109, `AuthInjectionMiddleware.dispatch()` at `http_auth_integration.py:272` unconditionally forwards unauthenticated Streamable HTTP requests to downstream MCP tool handlers without issuing a `401` response, allowing any network-reachable caller to invoke MCP tools without authentication. When no per-request credential is present, tool handlers fall back to the `META_ACCESS_TOKEN` environment variable, and when the downstream Meta Graph API call fails, `api.py:263–269` serialises the raw `httpx` request URL—including the operator's `access_token` as a query parameter—into the JSON-RPC response body, delivering the credential to the unauthenticated caller. Version 1.0.109 fixes the issue.",
+    "details": "Meta Ads MCP is a Model Context Protocol (MCP) server that lets AI assistants run Meta Ads. Prior to version 1.0.109, `AuthInjectionMiddleware.dispatch()` at `http_auth_integration.py:272` unconditionally forwards unauthenticated Streamable HTTP requests to downstream MCP tool handlers without issuing a `401` response, allowing any network-reachable caller to invoke MCP tools without authentication. When no per-request credential is present, tool handlers fall back to the `META_ACCESS_TOKEN` environment variable, and when the downstream Meta Graph API call fails, `api.py:263–269` serialises the raw `httpx` request URL—including the operator's `access_token` as a query parameter—into the JSON-RPC response body, delivering the credential to the unauthenticated caller. Version 1.0.109 fixes the issue.\n\nMeta Ads MCP es un servidor de Protocolo de Contexto de Modelo (MCP) que permite a los asistentes de IA ejecutar Meta Ads. Antes de la versión 1.0.109, “AuthInjectionMiddleware.dispatch()” en “http_auth_integration.py:272” reenvía incondicionalmente las solicitudes HTTP transmitibles no autenticadas a los manejadores de herramientas MCP posteriores sin emitir una respuesta “401”, permitiendo a cualquier llamador accesible por red invocar herramientas MCP sin autenticación. Cuando no hay una credencial por solicitud presente, los manejadores de herramientas recurren a la variable de entorno “META_ACCESS_TOKEN”, y cuando la llamada a la API de Meta Graph posterior falla, “api.py:263-269” serializa la URL de solicitud “httpx” sin procesar -incluyendo el “access_token” del operador como un parámetro de consulta- en el cuerpo de la respuesta JSON-RPC, entregando la credencial al llamador no autenticado. La versión 1.0.109 soluciona el problema.",
     "id": "CVE-2026-48039",
-    "modified": "2026-09-10T20:42:39.707Z",
+    "modified": "2026-10-23T20:10:00.160Z",
     "published": "2026-08-07T19:29:39.875Z",
     "references": [
       {
@@ -47518,9 +47611,9 @@
         "CVE-2026-49856"
       ]
     },
-    "details": "@jshookmcp/jshook is an MCP server that gives AI agents tools for JavaScript analysis and security research. In version 0.3.1, he network domain has a central SSRF authorization policy that blocks private, loopback, link-local, and reserved targets unless an explicit authorization object allows private network access. The policy is enforced by raw HTTP/TCP/TLS RTT tools, but the ICMP probe and traceroute tools resolve the target and invoke the native ICMP/traceroute sink directly. An MCP client with access to an active network domain can therefore ask the jshookmcp server to probe internal addresses even when local SSRF access is disabled for the other raw network tools. This exposes an internal reachability and route mapping primitive from the server network position. Version 0.3.2 fixes the issue.",
+    "details": "@jshookmcp/jshook is an MCP server that gives AI agents tools for JavaScript analysis and security research. In version 0.3.1, he network domain has a central SSRF authorization policy that blocks private, loopback, link-local, and reserved targets unless an explicit authorization object allows private network access. The policy is enforced by raw HTTP/TCP/TLS RTT tools, but the ICMP probe and traceroute tools resolve the target and invoke the native ICMP/traceroute sink directly. An MCP client with access to an active network domain can therefore ask the jshookmcp server to probe internal addresses even when local SSRF access is disabled for the other raw network tools. This exposes an internal reachability and route mapping primitive from the server network position. Version 0.3.2 fixes the issue.\n\n@jshookmcp/jshook es un servidor MCP que proporciona a los agentes de IA herramientas para el análisis de JavaScript y la investigación de seguridad. En la versión 0.3.1, el dominio de red tiene una política de autorización SSRF central que bloquea objetivos privados, de bucle invertido, de enlace local y reservados, a menos que un objeto de autorización explícito permita el acceso a la red privada. La política es aplicada por herramientas HTTP/TCP/TLS RTT sin procesar, pero las herramientas de sondeo ICMP y traceroute resuelven el objetivo e invocan directamente el sumidero nativo de ICMP/traceroute. Un cliente MCP con acceso a un dominio de red activo puede, por lo tanto, pedir al servidor jshookmcp que sondee direcciones internas incluso cuando el acceso SSRF local está deshabilitado para las otras herramientas de red sin procesar. Esto expone una primitiva de accesibilidad interna y mapeo de rutas desde la posición de red del servidor. La versión 0.3.2 corrige el problema.",
     "id": "CVE-2026-49856",
-    "modified": "2026-09-18T20:09:01.757Z",
+    "modified": "2026-10-23T18:10:00.167Z",
     "published": "2026-08-13T15:00:26.022Z",
     "references": [
       {
@@ -47600,9 +47693,9 @@
         "CVE-2026-49857"
       ]
     },
-    "details": "auth-fetch-mcp is an MCP server that lets AI assistants fetch content from authenticated web pages. Version 3.0.1 implements SSRF protection in `assertSafeUrl()` (`src/security.ts`) to block requests to private and loopback addresses. However, the `isPrivateV6()` function fails to detect IPv4-mapped IPv6 loopback addresses in their hex-normalized form. When an attacker supplies a URL such as `http://[::ffff:127.0.0.1]:PORT/`, the Node.js WHATWG URL parser silently normalizes the host to `[::ffff:7f00:1]`. Because `net.isIPv4('7f00:1')` returns `false`, the private-IP check is bypassed and the URL is passed to the browser or HTTP client, allowing the MCP tool to reach loopback services that are supposed to be blocked. The issue is exploitable under default configuration without any special environment variable. Version 3.0.1 patches the issue.",
+    "details": "auth-fetch-mcp is an MCP server that lets AI assistants fetch content from authenticated web pages. Version 3.0.1 implements SSRF protection in `assertSafeUrl()` (`src/security.ts`) to block requests to private and loopback addresses. However, the `isPrivateV6()` function fails to detect IPv4-mapped IPv6 loopback addresses in their hex-normalized form. When an attacker supplies a URL such as `http://[::ffff:127.0.0.1]:PORT/`, the Node.js WHATWG URL parser silently normalizes the host to `[::ffff:7f00:1]`. Because `net.isIPv4('7f00:1')` returns `false`, the private-IP check is bypassed and the URL is passed to the browser or HTTP client, allowing the MCP tool to reach loopback services that are supposed to be blocked. The issue is exploitable under default configuration without any special environment variable. Version 3.0.1 patches the issue.\n\nauth-fetch-mcp es un servidor MCP que permite a los asistentes de IA obtener contenido de páginas web autenticadas. La versión 3.0.1 implementa protección SSRF en ’assertSafeUrl()’ (’src/security.ts’) para bloquear solicitudes a direcciones privadas y de bucle invertido. Sin embargo, la función ’isPrivateV6()’ no detecta las direcciones de bucle invertido IPv6 mapeadas a IPv4 en su forma hex-normalizada. Cuando un atacante proporciona una URL como ’http://[::ffff:127.0.0.1]:PUERTO/’, el analizador de URL WHATWG de Node.js normaliza silenciosamente el host a ’[::ffff:7f00:1]’. Debido a que ’net.isIPv4(’7f00:1’)’ devuelve ’false’, la verificación de IP privada se omite y la URL se pasa al navegador o cliente HTTP, permitiendo que la herramienta MCP acceda a servicios de bucle invertido que se supone que deben estar bloqueados. El problema es explotable bajo la configuración predeterminada sin ninguna variable de entorno especial. La versión 3.0.1 corrige el problema.",
     "id": "CVE-2026-49857",
-    "modified": "2026-09-18T20:09:01.757Z",
+    "modified": "2026-10-23T18:10:00.167Z",
     "published": "2026-08-13T14:50:25.324Z",
     "references": [
       {
@@ -52025,9 +52118,9 @@
         "CVE-2026-54785"
       ]
     },
-    "details": "gemini-bridge is a lightweight MCP server bridging AI agents to Google's Gemini AI via the official CLI. From 1.0.0 until 1.3.1, consult_gemini_with_files in inline mode read any file path supplied in the files argument without confining it to the working directory, then forwarded the contents to the Gemini CLI. Because the caller also controls query, the file contents are echoed back through the Gemini round-trip (and sent to Google), making this an arbitrary local file read. This issue is fixed in version 1.3.1.",
+    "details": "gemini-bridge is a lightweight MCP server bridging AI agents to Google's Gemini AI via the official CLI. From 1.0.0 until 1.3.1, consult_gemini_with_files in inline mode read any file path supplied in the files argument without confining it to the working directory, then forwarded the contents to the Gemini CLI. Because the caller also controls query, the file contents are echoed back through the Gemini round-trip (and sent to Google), making this an arbitrary local file read. This issue is fixed in version 1.3.1.\n\ngemini-bridge es un ligero servidor MCP que conecta agentes de IA con la IA Gemini de Google a través de la CLI oficial. Desde la versión 1.0.0 hasta la 1.3.1, consult_gemini_with_files en modo en línea leía cualquier ruta de archivo proporcionada en el argumento files sin confinarla al directorio de trabajo, luego reenviaba el contenido a la CLI de Gemini. Debido a que el llamador también controla la consulta, el contenido del archivo es devuelto a través del viaje de ida y vuelta de Gemini (y enviado a Google), lo que convierte esto en una lectura arbitraria de archivos locales. Este problema está solucionado en la versión 1.3.1.",
     "id": "CVE-2026-54785",
-    "modified": "2026-09-10T20:31:16.483Z",
+    "modified": "2026-10-23T23:10:00.157Z",
     "published": "2026-07-31T22:31:04.190Z",
     "references": [
       {
@@ -53734,6 +53827,179 @@
       }
     ],
     "summary": "Flowise before 3.1.2 contains multiple OS command injection vulnerabilities in the Custom MCP Server feature due to inco"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 5.9,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+          "cwe_ids": [
+            "CWE-306",
+            "CWE-1059"
+          ],
+          "severity": "MEDIUM"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "< 1.2.1"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "raw_metrics": {
+        "cvssV31": {
+          "cvssData": {
+            "attackComplexity": "HIGH",
+            "attackVector": "NETWORK",
+            "availabilityImpact": "NONE",
+            "baseScore": 5.9,
+            "baseSeverity": "MEDIUM",
+            "confidentialityImpact": "HIGH",
+            "integrityImpact": "NONE",
+            "privilegesRequired": "NONE",
+            "scope": "UNCHANGED",
+            "userInteraction": "NONE",
+            "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+            "version": "3.1"
+          },
+          "exploitabilityScore": 2.2,
+          "impactScore": 3.6,
+          "source": "security-advisories@github.com",
+          "type": "Secondary"
+        }
+      },
+      "raw_nvd": {
+        "affected": [
+          {
+            "affectedData": [
+              {
+                "product": "netbox-mcp-server",
+                "vendor": "netboxlabs",
+                "versions": [
+                  {
+                    "status": "affected",
+                    "version": "< 1.2.1"
+                  }
+                ]
+              }
+            ],
+            "source": "security-advisories@github.com"
+          }
+        ],
+        "descriptions": [
+          {
+            "lang": "en",
+            "value": "NetBox MCP Server is a simple read-only Model Context Protocol server for NetBox. Prior to version 1.2.1, when running with TRANSPORT=http, the MCP server has no authentication on the HTTP endpoint. Any client that can reach the port gets a valid MCP session and full access to all four NetBox tools - no token or credential needed. This issue has been patched in version 1.2.1."
+          }
+        ],
+        "id": "CVE-2026-57207",
+        "lastModified": "2026-10-23T19:57:42.660",
+        "metrics": {
+          "cvssMetricV31": [
+            {
+              "cvssData": {
+                "attackComplexity": "HIGH",
+                "attackVector": "NETWORK",
+                "availabilityImpact": "NONE",
+                "baseScore": 5.9,
+                "baseSeverity": "MEDIUM",
+                "confidentialityImpact": "HIGH",
+                "integrityImpact": "NONE",
+                "privilegesRequired": "NONE",
+                "scope": "UNCHANGED",
+                "userInteraction": "NONE",
+                "vectorString": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+                "version": "3.1"
+              },
+              "exploitabilityScore": 2.2,
+              "impactScore": 3.6,
+              "source": "security-advisories@github.com",
+              "type": "Secondary"
+            }
+          ]
+        },
+        "published": "2026-10-23T14:17:56.197",
+        "references": [
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/netboxlabs/netbox-mcp-server/releases/tag/v1.2.1"
+          },
+          {
+            "source": "security-advisories@github.com",
+            "url": "https://github.com/netboxlabs/netbox-mcp-server/security/advisories/GHSA-5qg7-j8mr-9477"
+          }
+        ],
+        "sourceIdentifier": "security-advisories@github.com",
+        "vulnStatus": "Deferred",
+        "weaknesses": [
+          {
+            "description": [
+              {
+                "lang": "en",
+                "value": "CWE-306"
+              },
+              {
+                "lang": "en",
+                "value": "CWE-1059"
+              }
+            ],
+            "source": "security-advisories@github.com",
+            "type": "Primary"
+          }
+        ]
+      },
+      "source": "NVD",
+      "sourceIdentifier": "security-advisories@github.com",
+      "vulnStatus": "Deferred",
+      "weaknesses": [
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-306"
+        },
+        {
+          "lang": "en",
+          "source": "security-advisories@github.com",
+          "type": "Primary",
+          "value": "CWE-1059"
+        }
+      ]
+    },
+    "details": "NetBox MCP Server is a simple read-only Model Context Protocol server for NetBox. Prior to version 1.2.1, when running with TRANSPORT=http, the MCP server has no authentication on the HTTP endpoint. Any client that can reach the port gets a valid MCP session and full access to all four NetBox tools - no token or credential needed. This issue has been patched in version 1.2.1.",
+    "id": "CVE-2026-57207",
+    "modified": "2026-10-23T19:57:42.660Z",
+    "published": "2026-10-23T14:17:56.197Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://github.com/netboxlabs/netbox-mcp-server/releases/tag/v1.2.1"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://github.com/netboxlabs/netbox-mcp-server/security/advisories/GHSA-5qg7-j8mr-9477"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "NetBox MCP Server is a simple read-only Model Context Protocol server for NetBox. Prior to version 1.2.1, when running w"
   },
   {
     "affected": [
@@ -59521,9 +59787,9 @@
         "CVE-2026-66065"
       ]
     },
-    "details": "Ouroboros is a local-first runtime for AI coding agents that records their actions and applies user-defined policies to constrain behavior. Versions prior to 0.42.1 have an incomplete denylist. Several execution-routing keys of the same RCE class were omitted, so a malicious cloned repo can still reach arbitrary command execution by shipping a .env (auto-loaded at import, with no review step). The CVE-2026-47211 fix added _UNTRUSTED_ENV_DENYLIST to stop an untrusted project-directory .env from redirecting execution, but it did not account for all keys. The backend config-home and MCP/plugin roots bypass the approval gate by pointing the nested agent, MCP servers, and plugin roster at attacker config. Other variables re-enable blocked local transports, replace sub-agent prompts, switch backends, and lower tool approval classes, further weakening the approval gate. This issue has been fixed in version 0.42.1.",
+    "details": "Ouroboros is a local-first runtime for AI coding agents that records their actions and applies user-defined policies to constrain behavior. Versions prior to 0.42.1 have an incomplete denylist. Several execution-routing keys of the same RCE class were omitted, so a malicious cloned repo can still reach arbitrary command execution by shipping a .env (auto-loaded at import, with no review step). The CVE-2026-47211 fix added _UNTRUSTED_ENV_DENYLIST to stop an untrusted project-directory .env from redirecting execution, but it did not account for all keys. The backend config-home and MCP/plugin roots bypass the approval gate by pointing the nested agent, MCP servers, and plugin roster at attacker config. Other variables re-enable blocked local transports, replace sub-agent prompts, switch backends, and lower tool approval classes, further weakening the approval gate. This issue has been fixed in version 0.42.1.\n\nOuroboros es un entorno de ejecución local-first para agentes de codificación de IA que registra sus acciones y aplica políticas definidas por el usuario para restringir el comportamiento. Las versiones anteriores a la 0.42.1 tienen una denylist incompleta. Varias claves de enrutamiento de ejecución de la misma clase RCE fueron omitidas, por lo que un repositorio clonado malicioso aún puede lograr la ejecución arbitraria de comandos al enviar un .env (cargado automáticamente al importar, sin paso de revisión). La corrección de CVE-2026-47211 añadió _UNTRUSTED_ENV_DENYLIST para evitar que un .env de directorio de proyecto no confiable redirigiera la ejecución, pero no tuvo en cuenta todas las claves. El config-home del backend y las raíces de MCP/plugin eluden la puerta de aprobación al apuntar el agente anidado, los servidores MCP y la lista de plugins a la configuración del atacante. Otras variables reactivan transportes locales bloqueados, reemplazan las indicaciones de subagentes, cambian de backends y reducen las clases de aprobación de herramientas, debilitando aún más la puerta de aprobación. Este problema ha sido solucionado en la versión 0.42.1.",
     "id": "CVE-2026-66065",
-    "modified": "2026-09-10T20:31:16.483Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-03T20:20:27.599Z",
     "references": [
       {
@@ -60176,9 +60442,9 @@
         "CVE-2026-69263"
       ]
     },
-    "details": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the mitigation for CVE-2025-8943 blocked -y and --yes flags on npx, but packages/components/nodes/tools/MCP/core.ts denied only PATH, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, and NODE_OPTIONS by exact environment-variable name. Because npm reads configuration from npm_config_* variables, setting npm_config_yes=true reproduced --yes behavior without using a blocked flag, causing npx to auto-install and execute the named package when a Custom MCP server launched. This issue is fixed in version 3.1.3.",
+    "details": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the mitigation for CVE-2025-8943 blocked -y and --yes flags on npx, but packages/components/nodes/tools/MCP/core.ts denied only PATH, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH, and NODE_OPTIONS by exact environment-variable name. Because npm reads configuration from npm_config_* variables, setting npm_config_yes=true reproduced --yes behavior without using a blocked flag, causing npx to auto-install and execute the named package when a Custom MCP server launched. This issue is fixed in version 3.1.3.\n\nFlowise es una interfaz de usuario de arrastrar y soltar para construir un flujo de modelo de lenguaje grande personalizado. Antes de la versión 3.1.3, la mitigación para CVE-2025-8943 bloqueaba las banderas -y y --yes en npx, pero packages/components/nodes/tools/MCP/core.ts denegaba solo PATH, LD_LIBRARY_PATH, DYLD_LIBRARY_PATH y NODE_OPTIONS por nombre exacto de variable de entorno. Debido a que npm lee la configuración de las variables npm_config_*, establecer npm_config_yes=true reproducía el comportamiento de --yes sin usar una bandera bloqueada, lo que provocaba que npx auto-instalara y ejecutara el paquete nombrado cuando se iniciaba un servidor MCP personalizado. Este problema está solucionado en la versión 3.1.3.",
     "id": "CVE-2026-69263",
-    "modified": "2026-09-14T19:24:10.777Z",
+    "modified": "2026-10-23T21:10:00.157Z",
     "published": "2026-08-04T16:54:36.893Z",
     "references": [
       {
@@ -62225,9 +62491,9 @@
         "CVE-2026-72768"
       ]
     },
-    "details": "n8n versions before 2.32.1 contain a server-side request forgery protection bypass vulnerability in the MCP Client node that allows authenticated users to bypass SSRF protections. Attackers can craft workflows that send requests to internal or blocked hosts without routing through SSRF protection, exposing internal services and reading responses back through the workflow.",
+    "details": "n8n versions before 2.32.1 contain a server-side request forgery protection bypass vulnerability in the MCP Client node that allows authenticated users to bypass SSRF protections. Attackers can craft workflows that send requests to internal or blocked hosts without routing through SSRF protection, exposing internal services and reading responses back through the workflow.\n\nn8n versiones anteriores a 2.32.1 contienen una vulnerabilidad de omisión de protección contra falsificación de petición del lado del servidor en el nodo Cliente MCP que permite a usuarios autenticados omitir las protecciones SSRF. Los atacantes pueden crear flujos de trabajo que envían peticiones a hosts internos o bloqueados sin enrutamiento a través de la protección SSRF, exponiendo servicios internos y leyendo las respuestas de vuelta a través del flujo de trabajo.",
     "id": "CVE-2026-72768",
-    "modified": "2026-09-01T20:19:31.680Z",
+    "modified": "2026-10-23T19:10:00.167Z",
     "published": "2026-08-11T12:17:08.540Z",
     "references": [
       {
@@ -63372,9 +63638,9 @@
         "CVE-2026-73498"
       ]
     },
-    "details": "MCP Atlassian is a Model Context Protocol (MCP) server for Atlassian products (Confluence and Jira). Prior to 0.22.0, confluence_upload_attachment passes its client-supplied file_path directly to open(file_path, \"rb\") in src/mcp_atlassian/confluence/attachments.py through _upload_attachment_direct() without calling validate_safe_path. An authenticated MCP client can read any file accessible to the server process and exfiltrate it to Confluence as an attachment. If an AI agent can be induced to call the tool through untrusted content, the same flaw can disclose server environment variables such as CONFLUENCE_API_TOKEN and other credentials. This issue is fixed in version 0.22.0.",
+    "details": "MCP Atlassian is a Model Context Protocol (MCP) server for Atlassian products (Confluence and Jira). Prior to 0.22.0, confluence_upload_attachment passes its client-supplied file_path directly to open(file_path, \"rb\") in src/mcp_atlassian/confluence/attachments.py through _upload_attachment_direct() without calling validate_safe_path. An authenticated MCP client can read any file accessible to the server process and exfiltrate it to Confluence as an attachment. If an AI agent can be induced to call the tool through untrusted content, the same flaw can disclose server environment variables such as CONFLUENCE_API_TOKEN and other credentials. This issue is fixed in version 0.22.0.\n\nMCP Atlassian es un servidor de Protocolo de Contexto de Modelo (MCP) para productos de Atlassian (Confluence y Jira). Antes de 0.22.0, confluence_upload_attachment pasa su file_path suministrado por el cliente directamente a open(file_path, ’rb’) en src/mcp_atlassian/confluence/attachments.py a través de _upload_attachment_direct() sin llamar a validate_safe_path. Un cliente MCP autenticado puede leer cualquier archivo accesible al proceso del servidor y exfiltrarlo a Confluence como un adjunto. Si un agente de IA puede ser inducido a llamar a la herramienta a través de contenido no confiable, la misma falla puede divulgar variables de entorno del servidor como CONFLUENCE_API_TOKEN y otras credenciales. Este problema está solucionado en la versión 0.22.0.",
     "id": "CVE-2026-73498",
-    "modified": "2026-09-18T20:09:01.757Z",
+    "modified": "2026-10-23T19:10:00.167Z",
     "published": "2026-08-12T21:17:24.634Z",
     "references": [
       {
@@ -67542,9 +67808,9 @@
         "CVE-2026-76404"
       ]
     },
-    "details": "In Splunk MCP Server app versions below 1.2.1, a user who holds the \"admin\" Splunk role could execute arbitrary commands on the underlying operating system. The vulnerability is possible because of missing input validation in the app's credential management component, which deserializes stored data without checking whether the content is of the expected type.\n\nIn Splunk MCP Server app versions below 1.2.1, a user who holds the \"admin\" Splunk role could execute arbitrary commands on the underlying operating system. The vulnerability is possible because of missing input validation in the app's credential management component, which deserializes stored data without checking whether the content is of the expected type.",
+    "details": "In Splunk MCP Server app versions below 1.2.1, a user who holds the \"admin\" Splunk role could execute arbitrary commands on the underlying operating system. The vulnerability is possible because of missing input validation in the app's credential management component, which deserializes stored data without checking whether the content is of the expected type.\n\nEn las versiones de la aplicación Splunk MCP Server anteriores a la 1.2.1, un usuario con el rol de Splunk ’admin’ podría ejecutar comandos arbitrarios en el sistema operativo subyacente. La vulnerabilidad es posible debido a la falta de validación de entrada en el componente de gestión de credenciales de la aplicación, que deserializa datos almacenados sin comprobar si el contenido es del tipo esperado.",
     "id": "CVE-2026-76404",
-    "modified": "2026-08-24T18:37:33.990Z",
+    "modified": "2026-10-23T23:10:00.157Z",
     "published": "2026-08-19T21:35:17.448Z",
     "references": [
       {
