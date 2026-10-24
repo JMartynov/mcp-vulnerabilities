@@ -200,6 +200,21 @@ Master Code Review & Verification Report: [`code_review_wave14_portal_and_analyt
 | **76** | **Updates Portal Polish, Historical Sparkline & Syndication Feeds** | Updates Portal UI | `Verified (Review Audit: 95%)` | Add change-type filter chips (Patched vs New Threats), an SVG historical release sparkline, and prominent Atom/JSON feed buttons. (Identified: Missing `rel="noopener"` on external links; sparkline resize listener). | [task76_updates_portal_historical_sparkline_and_syndication_feeds.md](task76_updates_portal_historical_sparkline_and_syndication_feeds.md) |
 | **77** | **Interactive In-Browser Config Auditor & Fingerprint Matcher Dropzone** | Client-Side Auditing | `Verified (Review Audit: 70%)` | Zero-install, in-browser client config dropzone on `index.html` with instant CVE/fingerprint matching and one-click copyable config diffs. (Identified: Missing CVE IDs & CVSS scores in posture report; missing automated tests). | [task77_interactive_inbrowser_config_auditor_and_fingerprint_matcher.md](task77_interactive_inbrowser_config_auditor_and_fingerprint_matcher.md) |
 
+---
+
+### 15. Wave 15: Wave 14 Code Review Remediation & Automated Test Suite (Active Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md](IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md)  
+Source Review: [`code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **78** | **Advisory Filter `ReferenceError` Fix** | Front-End UI (`docs/app.js`) | `Todo` | Resolve W14-01: Eliminate undefined `server.tools_count` inside `applyAdvisoryFilters()` and replace with advisory-scoped `vulnerable_tools` check. | [task78_advisory_filter_reference_error_fix.md](task78_advisory_filter_reference_error_fix.md) |
+| **79** | **Precomputed `composite_risk_tier` in Catalog Index** | Pipeline & UI (`site_builder.py`, `app.js`) | `Todo` | Resolve W14-02: Compute `highest_cve_severity` and `composite_risk_tier` in `catalog_index` so directory cards show true composite risk instead of defaulting to `LOW`. | [task79_precomputed_composite_risk_tier_catalog_index.md](task79_precomputed_composite_risk_tier_catalog_index.md) |
+| **80** | **Config Auditor CVE IDs & CVSS Scores** | Client Auditor (`docs/app.js`, `style.css`) | `Todo` | Resolve W14-03: Cross-reference `allAdvisories` in `renderAuditResults()` to render CVE/GHSA IDs, severity badges, and CVSS scores per Task 77 Scenario 2. | [task80_config_auditor_cve_ids_and_cvss_scores.md](task80_config_auditor_cve_ids_and_cvss_scores.md) |
+| **81** | **Latest-Version Analytics & Catalog Tool Ingestion** | Analytics Pipeline (`site_builder.py`) | `Todo` | Resolve W14-05: Select `versions[-1]` (latest version) instead of `versions[0]` (oldest alpha version) when extracting catalog tools, capabilities, and required env vars. | [task81_latest_version_analytics_and_catalog_ingestion.md](task81_latest_version_analytics_and_catalog_ingestion.md) |
+| **82** | **Wave 14 Automated Test Coverage (`test_analytics.py`)** | Automated Testing (`tests/`) | `Todo` | Resolve W14-04: Author contracted `tests/test_analytics.py` and `tests/test_wave14_portal.py` covering analytics invariants, composite risk, and portal DOM/JS guards. | [task82_wave14_automated_test_coverage.md](task82_wave14_automated_test_coverage.md) |
+
 ## Verification Test Results
 ```
 .venv/bin/pytest
