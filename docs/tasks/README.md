@@ -141,15 +141,15 @@ Master Plan: [IMPLEMENTATION_PLAN_WAVE_10_MCP_FINGERPRINTS_ENHANCEMENTS.md](IMPL
 | **55** | **Multi-Client Auto-Fix Exporters & Interactive Security Hub** | Remediation & Developer Experience | `Done` | One-click auto-patching across all 9 clients in native formats; interactive emoji-driven terminal management hub (`mcp-vuln hub`). | [task55_multiclient_autofix_exporters_and_interactive_security_hub.md](task55_multiclient_autofix_exporters_and_interactive_security_hub.md) |
 | **56** | **Web Security Explorer UI Parity (Tool Expansion, Zero-Tool & Filters)** | Web Security Portal UI | `Done` | Interactive expandable tool chips (`+N more` / `Show less ▴`), zero-tool state badge, and "Has Tools Only" filter checkbox. | [task56_web_explorer_ui_parity_tool_expansion_and_filters.md](task56_web_explorer_ui_parity_tool_expansion_and_filters.md) |
 | **57** | **High-Performance Multi-Core Parallel Site Builder & Two-Tier SHA Cache** | Performance & Sharding Engine | `Done` | Parallel process pool sharding across CPU cores and content-addressable two-tier SHA-256 caching for 5x–10x faster site builds. | [task57_high_performance_multicore_parallel_site_builder.md](task57_high_performance_multicore_parallel_site_builder.md) |
-| **58** | **PyPI Release Publishing & Upstream Cross-Repo Dispatch Pipeline** | Release Engineering & CI/CD | `In Progress` | Automated Trusted Publishing to PyPI.org for `mcp-fingerprints` and reactive cross-repo dispatch triggering on new fingerprint releases. | [task58_pypi_release_publishing_and_cross_repo_dispatch.md](task58_pypi_release_publishing_and_cross_repo_dispatch.md) |
+| **58** | **PyPI Release Publishing & Upstream Cross-Repo Dispatch Pipeline** | Release Engineering & CI/CD | `Done` | Automated Trusted Publishing to PyPI.org for `mcp-fingerprints` and reactive cross-repo dispatch triggering on new fingerprint releases. | [task58_pypi_release_publishing_and_cross_repo_dispatch.md](task58_pypi_release_publishing_and_cross_repo_dispatch.md) |
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 308 passed, 5 skipped in 74.5s =============================
+============================= 318 passed, 5 skipped in 74.3s =============================
 ```
-- Total test count: **313**
-- Passing: **308 (100% of runnable)**
+- Total test count: **323**
+- Passing: **318 (100% of runnable)**
 - Skipped: **5**
 - Failed: **0**
 
