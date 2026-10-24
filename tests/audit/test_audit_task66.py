@@ -1,10 +1,12 @@
 import pytest
-from playwright.sync_api import sync_playwright
 import subprocess
 import time
 import os
 import json
 import socket
+
+playwright_sync = pytest.importorskip("playwright.sync_api")
+sync_playwright = playwright_sync.sync_playwright
 
 def get_free_port():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -87,7 +89,10 @@ def test_all_scenarios(server):
     }
 
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        try:
+            browser = p.chromium.launch()
+        except Exception as e:
+            pytest.skip(f"Playwright chromium browser not available: {e}")
         page = browser.new_page()
         
         # Intercept network requests for the synthetic data
