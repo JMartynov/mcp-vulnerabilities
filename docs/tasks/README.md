@@ -202,12 +202,14 @@ Master Plan: [IMPLEMENTATION_PLAN_WEB_PORTAL_AND_ENHANCED_ANALYTICS.md](IMPLEMEN
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 318 passed, 5 skipped in 74.3s =============================
+============================= 346 passed, 5 skipped in 92.21s =============================
 ```
-- Total test count: **323**
-- Passing: **318 (100% of runnable)**
+- Total test count: **351**
+- Passing: **346 (100% of runnable)**
 - Skipped: **5**
 - Failed: **0**
+- Empirical Invariant Suite (`tests/audit/`): **28 passed in 12.08s (100%)**
+
 
 
 

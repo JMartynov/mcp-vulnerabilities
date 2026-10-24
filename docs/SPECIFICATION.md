@@ -426,3 +426,56 @@ The `updates_builder` module compiles delta bundles tracking substantive differe
 - Interactive release selector dropdown to view historical release bundles.
 - Exact card, version inspector modal, tool parameter schemas, and safe client config exporter integration.
 
+---
+
+## 13. Universal Multi-Client Configuration Parsing & Secret Masking Specification
+
+### 13.1 Supported Client Platforms & File Locations
+The configuration ingestion engine supports nine modern AI agent and IDE client formats:
+1. **Claude Desktop**: `~/Library/Application Support/Claude/claude_desktop_config.json` (`mcpServers`)
+2. **Cursor**: `~/.cursor/mcp.json` or `.cursor/mcp.json` (`mcpServers`)
+3. **Zed Editor**: `~/.config/zed/settings.json` (`context_servers` mapping to `{command: {path, args}}`)
+4. **Cline**: `globalStorage/.../cline_mcp_settings.json` (`mcpServers`)
+5. **Windsurf**: `~/.codeium/windsurf/mcp_config.json` (`mcpServers`)
+6. **Roo Code**: `globalStorage/.../mcp_settings.json` (`mcpServers`)
+7. **LibreChat**: `librechat.yaml` (`mcpServers`)
+8. **Continue.dev**: `~/.continue/config.json` (`experimental.modelContextProtocolServers`)
+9. **Amazon Q Developer**: `~/.aws/amazon-q/mcp.json` (`mcpServers`)
+
+### 13.2 JSONC Cleaning & Encoding Tolerances
+- **BOM Handling**: Strip UTF-8, UTF-16 LE, and UTF-16 BE Byte Order Marks before token parsing.
+- **URL-Safe Comment Strip**: Remove single-line (`//`) and multi-line (`/* ... */`) comments while preserving URL schemes (`http://`, `https://`).
+- **Trailing Commas**: Normalize trailing commas in objects and arrays to conform to strict JSON standards.
+
+### 13.3 Secret Token Masking
+All API keys, Bearer authorization tokens, and credentials matching high-entropy or prefix patterns (`sk-`, `ghp_`, `AKIA`, `ey...`) MUST be redacted with asterisks (`***REDACTED***`) when serialized into diagnostics, terminal outputs, or export bundles.
+
+---
+
+## 14. Runtime Supply Chain Tampering & Shadow Tool Detection Specification
+
+### 14.1 Runtime Schema Verification
+When probing an MCP server via JSON-RPC `tools/list`, the prober matches runtime signatures against static baseline passports in `data/passports.json.gz`:
+- **Shadow Tool Injection**: Any tool returned by `tools/list` that was NOT advertised in the upstream passport package spec is classified as a shadow tool and assigned **`CRITICAL`** severity.
+- **Parameter Drift**: Any newly introduced mandatory parameters or modified parameter types trigger **`HIGH`** severity alerts.
+- **Docstring Injection**: Descriptions containing hidden instructions, role overrides (e.g. `Ignore previous instructions`), or prompt injection heuristics trigger **`HIGH`** severity alerts.
+
+### 14.2 Transport Resilience & Lifecycle Management
+- **STDIO Noise Filtering**: Probers must ignore arbitrary non-JSON stdout/stderr emitted by host runtimes during server startup.
+- **Subprocess Isolation**: Subprocesses must be spawned with timeout guards and guaranteed process group termination (`SIGTERM` followed by `SIGKILL` on timeout) to eliminate zombie processes.
+
+---
+
+## 15. Empirical Invariant Safety Contracts & 26-Point Invariant Matrix
+
+The system guarantees 26 core invariants across 8 operational domains:
+1. **Ingestion & Normalization**: OSV 1.6 range integrity, non-overlapping interval deduplication, and crash recovery.
+2. **Client Config Discovery**: Universal 9-client path resolution, BOM and comment stripping, secret redaction.
+3. **Supply Chain Tamper Detection**: Runtime signature drift calculation, shadow tool alerting, docstring inspection.
+4. **Behavioral Topology Prober**: Pre-init noise rejection, socket disconnect resilience, process tree cleanup.
+5. **Polyglot Fixer**: Schema structure preservation, atomic backup generation, rollback on failure, monotonic SemVer resolution.
+6. **Terminal Security Hub**: Headless CI fallback, unified diff rendering, SIGINT terminal recovery, ANSI sequence sanitization.
+7. **Static Site Builder**: Bit-for-bit SHA-256 byte equality across worker thread counts, isolated worker fault tolerance, content-addressed caching.
+8. **Web Portal UI**: Filter state synchronization, zero-tool visual parity, DOM XSS prevention, network retry handling.
+
+

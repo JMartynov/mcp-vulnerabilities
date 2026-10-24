@@ -6,6 +6,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.1.1] - 2026-10-24
+
+### 🛡️ Waves 11–13: Full-System Empirical Audit, Competitive Benchmarking & Cumulative Syntheses
+
+This release publishes the comprehensive empirical live-run audit across all 8 core subsystems, completes competitive benchmarking against 10 industry solutions, and delivers the 2 master cumulative synthesis reports.
+
+#### Added
+- **Full Empirical Audit Test Suite** (`tests/audit/`):
+  - 28 dedicated empirical invariant tests (`test_audit_task59.py` through `test_audit_task66.py`) evaluating 26 core invariants across live environments.
+  - Overall test suite expanded to **346 passed, 5 skipped (100% pass rate)**.
+- **Cumulative Master Deliverables**:
+  - `docs/audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md`: Comprehensive synthesis of all 8 empirical subsystem audits; 26 invariants matrix; 15 resolved defects (8 HIGH, 5 MEDIUM, 2 LOW); subsystem scorecards (100% post-patch).
+  - `docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`: Grand Unified Competitive Feature Matrix across 10 industry solutions (Verity, Anthropic, Cursor, Smithery, Glama, Snyk, Semgrep, Trivy, OSV, Sigstore); strategic gap register; v1.2–v2.0 architecture blueprints.
+- **Competitive Benchmark Reports**:
+  - `docs/audit/competitive_verity_anthropic_runtime.md`: Runtime tool interception, AST database query guarding, and inline MCP reverse proxy architecture.
+  - `docs/audit/competitive_smithery_glama_registries.md`: Cloud container sandboxing, uptime health telemetry, and composite Server Trust Score formula (`mcp_trust_score`).
+  - `docs/audit/competitive_snyk_semgrep_trivy_osv.md`: Interprocedural call-graph reachability analysis, typosquatting & LLM hallucinated package detection, automated PR bot blueprint.
+  - `docs/audit/competitive_supply_chain_sbom.md`: Sigstore keyless Cosign signing, SLSA Level 3 build provenance, CycloneDX v1.6 AI BOM mapping, OpenSSF Scorecards API integration.
+- **Interactive Terminal Hub Automation**:
+  - Added `--json` and `--batch` flags to `mcp-vuln hub` for seamless non-interactive CI/CD execution.
+  - Added ANSI escape sequence scrubbing (`sanitize_ansi`) preventing terminal injection (CWE-150).
+  - Added SIGINT trap restoring terminal cursor visibility and alternate buffer state.
+
+#### Fixed
+- **Ingestion Deduplication**: Fixed range duplication in `OsvDeduplicator._merge_affected()` to collapse redundant open ranges when merging cross-source advisories.
+- **Multi-Client Config Parsing**: Added UTF-8 BOM stripping, URL-safe comment stripping, trailing comma tolerance, Windows path normalization, and automated secret token redaction (`***REDACTED***`).
+- **Supply Chain Tamper Engine**: Elevated unadvertised shadow tool injection to `CRITICAL` severity with dedicated OWASP MCP SARIF rules (`MCP002`); added description drift tracking (`MCP001`).
+- **Behavioral Prober Transport**: Progressive stdout noise filtering in `StdioTransport` discarding initialization debug logs until valid JSON-RPC frames arrive; added child process zombie cleanup.
+- **Auto-Fixer Atomicity**: Enforced atomic backup creation (`<config>.bak.<timestamp>`) and atomic writes via tempfile with automated rollback on write failure; enforced monotonic SemVer upgrade targets.
+- **Multicore Site Builder**: Enforced `sort_keys=True` in all JSON outputs for bit-for-bit SHA-256 byte determinism across worker counts; caught `BaseException` in process pool future aggregator to isolate worker deaths and log diagnostics to `build_errors.json`.
+- **Static Security Portal UI**: Added inline "Retry Fetch" button upon lazy shard network failures (404/500/offline); verified complete DOM XSS immunity via `escapeHtml()`.
+
+---
+
 ## [1.1.0] - 2026-10-24
 
 ### 🚀 Wave 10: Next-Gen AI Runtime Security & Fingerprint Synergy

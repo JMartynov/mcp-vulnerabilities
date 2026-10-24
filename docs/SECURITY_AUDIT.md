@@ -89,3 +89,41 @@ Enterprise pipelines can enforce zero-vulnerability guarantees through distribut
 
 * **404 Tombstoning**: Upstream packages deleted or privatized on PyPI, NPM, or Smithery are permanently tombstoned in `index.json` to preserve historical security records.
 * **Cryptographic Toolset Hashing**: Canonical SHA-256 hashes detect unexpected tool additions or signature mutations across versions, signaling supply chain tampering.
+
+---
+
+## 8. Zero-Day Supply Chain Tamper & Shadow Tool Drift Detection
+
+The `SupplyChainTamperDetector` engine (`src/mcp_vulnerabilities/audit/tamper_detector.py`) evaluates live server packages against baseline passport signatures to intercept unbumped supply-chain poisoning:
+
+* **Unadvertised Shadow Tool Injection (`MCP002`)**: Detects tools present at runtime that were not declared in the upstream registry manifest or passport baseline. Automatically elevated to `CRITICAL` severity with dedicated SARIF level `error`.
+* **Schema Parameter Mutation (`MCP001`)**: Identifies modifications to tool input parameter types (e.g. widening a string parameter to `any` or changing default values), preventing parameter pollution and hidden backdoors (`HIGH` severity).
+* **Behavioral Description Drift**: Computes cryptographic hashes of tool docstrings (`description_hash`). Detects prompt injection payloads planted inside tool descriptions to manipulate AI agent execution decisions (`MEDIUM` severity).
+
+---
+
+## 9. Universal Multi-Client Config Parsing & Secret Masking
+
+The configuration scanning engine (`src/mcp_vulnerabilities/audit/parsers.py`) implements zero-trust grammar parsing across 9 major AI clients (Claude Desktop, Cursor, Zed, Windsurf, Cline, Continue, Roo Code, LibreChat, OpenWebUI):
+
+* **Permissive Format Recovery**: Strips UTF-8 Byte Order Marks (`\ufeff`), strips C-style single-line (`//`) and multi-line comments while preserving URLs, and cleans trailing commas.
+* **Cross-Platform Normalization**: Canonicalizes Windows backslashes (`\`) into POSIX slashes (`/`) and expands environment variables (`os.path.expandvars`) in execution arguments.
+* **Automated Secret Token Redaction**: Scans all configuration arguments and environment blocks with regex matching (`KEY|TOKEN|SECRET|PASSWORD`) and redacts values to `***REDACTED***` before emission to stdout, logs, or SARIF reports.
+
+---
+
+## 10. Terminal Security Hub & CWE-150 ANSI Sanitization
+
+The interactive command hub (`src/mcp_vulnerabilities/audit/hub.py`) enforces terminal security and pipeline compatibility:
+
+* **Terminal Escape Injection Scrubbing (CWE-150)**: Advisory titles, CVE summaries, and package names retrieved from external registries are sanitized via `sanitize_ansi()`, stripping raw ANSI control characters (`\033[...]`) to prevent screen-clearing, buffer manipulation, or terminal command injection.
+* **Terminal State Restoration (SIGINT)**: Registers signal handlers to restore normal screen buffers (`\033[?1049l`) and re-enable cursor visibility (`\033[?25h`) upon `SIGINT` (Ctrl+C) or unhandled exceptions.
+* **Headless CI/CD Fallback**: Automatically senses non-TTY standard output (`not sys.stdout.isatty()`) and falls back cleanly to automated batch scanning without curses or termios ioctl crashes.
+
+---
+
+## 11. Empirical Invariant Health & Master Audit Matrix
+
+The codebase has undergone an empirical live-run audit across all 8 core subsystems (Tasks 59–66) validating **26 core security and data invariants**. For the complete defect register and remediation roadmap, see:
+👉 [**`docs/audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md`**](audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md)
+👉 [**`docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`**](audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md)

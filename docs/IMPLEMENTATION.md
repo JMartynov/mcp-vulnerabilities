@@ -142,3 +142,98 @@ The static site builder compiles high-performance assets for browser client cons
 - Run module: `.venv/bin/python -m mcp_vulnerabilities.site_builder`
 - Unit and acceptance tests: `tests/test_site_builder_unified.py`
 
+---
+
+## 9. Universal Multi-Client Config Discovery, Parsing & Safe Migration
+
+The `mcp_vulnerabilities.audit` subsystem provides complete coverage across modern AI coding assistants and desktop environments to detect and remediate vulnerabilities in client configurations:
+
+### 9.1 Multi-Client Support (9 Environments)
+The discovery and parser engine automatically detects configuration files across macOS, Linux, and Windows for:
+1. **Claude Desktop**: `~/Library/Application Support/Claude/claude_desktop_config.json` (`mcpServers`)
+2. **Cursor**: `~/.cursor/mcp.json` or `.cursor/mcp.json` (`mcpServers`)
+3. **Zed Editor**: `~/.config/zed/settings.json` (`context_servers` with `{command: {path, args}}` schema)
+4. **Cline (VS Code Extension)**: `globalStorage/saoudrizwan.claude-dev/.../cline_mcp_settings.json` (`mcpServers`)
+5. **Windsurf**: `~/.codeium/windsurf/mcp_config.json` (`mcpServers`)
+6. **Roo Code (VS Code Extension)**: `globalStorage/rooveterinaryinc.roo-cline/.../mcp_settings.json` (`mcpServers`)
+7. **LibreChat**: `librechat.yaml` (`mcpServers`)
+8. **Continue.dev**: `~/.continue/config.json` (`experimental.modelContextProtocolServers`)
+9. **Amazon Q Developer**: `~/.aws/amazon-q/mcp.json` (`mcpServers`)
+
+### 9.2 Resilient JSONC & Encoding Engine (`client_parser.py`)
+- **Byte Order Mark (BOM) Stripping**: Automatically strips UTF-8, UTF-16 LE, and UTF-16 BE BOMs prior to tokenization.
+- **URL-Safe Comment Stripping**: Removes `//` single-line and `/* ... */` multi-line comments without mangling URLs (e.g. `http://` or `https://`).
+- **Trailing Comma & Whitespace Tolerance**: Cleans trailing commas in objects and arrays to ensure valid JSON deserialization.
+- **Secret Redaction**: Masks high-entropy authorization tokens, Bearer headers, and API keys (e.g. matching `sk-`, `ghp_`, `AKIA`, or JWT patterns) when exporting configurations or printing diagnostics.
+
+### 9.3 Safe Fixer & Atomic Migration Engine (`fixer.py`)
+- **Native Schema Preservation**: Edits client configurations while retaining target-specific key structures (e.g. Zed's nested `command` map vs. standard `command`/`args` lists).
+- **Atomic Backup Creation**: Automatically generates timestamped backups (`<path>.bak.<timestamp>`) prior to modifying configuration files.
+- **Transactional Writes**: Writes updates to a temporary sibling file (`.<filename>.tmp`) and executes an atomic POSIX filesystem rename (`os.replace`).
+- **Write Failure Rollback**: Restores original state from backup if any I/O exception occurs during the update process.
+- **Monotonic SemVer Enforcement**: Prevents downgrades during automated patching, ensuring recommended versions are strictly greater than installed versions.
+
+---
+
+## 10. Supply Chain Tampering & Dynamic Schema Drift Prober
+
+To defend against supply chain hijacking and dynamic prompt injection attacks, `mcp-vulnerabilities` provides runtime inspection modules:
+
+### 10.1 Supply Chain Tamper Detector (`mcp_vulnerabilities.audit.tamper`)
+- **Runtime Signature Drift**: Compares tool signatures advertised at runtime against static baseline passports in `data/passports.json.gz`.
+- **Shadow Tool Injection Detection**: Flags any unadvertised tool dynamically registered by an MCP server as a `CRITICAL` severity vulnerability.
+- **Parameter & Docstring Hijacking**: Detects mutated descriptions, inserted hidden system prompt injections, or added parameters that deviate from upstream passports.
+- **Severity Scoring**: Computes aggregate tamper severity (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`) with detailed structural diffs.
+
+### 10.2 Behavioral Topology Prober (`mcp_vulnerabilities.audit.prober`)
+- **STDIO Noise Filtering**: Isolates JSON-RPC messages on standard I/O by parsing only newline-delimited JSON objects, ignoring unstructured pre-initialization stderr/stdout logs from runtimes (e.g. Python warnings, Node deprecations).
+- **Socket Disconnect Resilience**: Detects abrupt transport closes or socket timeouts during capability handshake and reports clean diagnostic errors without crashing.
+- **Child Process Lifecycle Protection**: Wraps launched subprocesses with strict timeout guards and signal escalation (`SIGTERM` followed by `SIGKILL` and process tree cleanup), preventing orphan zombie processes.
+
+---
+
+## 11. Interactive Terminal Security Hub (`mcp_vulnerabilities.audit.hub`)
+
+The Terminal Security Hub provides an interactive terminal interface (`mcp-vuln hub`) for reviewing multi-client security posture:
+- **Alternate Screen Buffer**: Uses ANSI alternate screen buffer mode to preserve shell history.
+- **Graceful SIGINT Handling**: Catches terminal interrupts (`Ctrl+C`) and cleanly restores cursor visibility and terminal modes.
+- **Unified Diff Preview**: Displays colorized unified diff previews before applying safe version patches to configuration files.
+- **CWE-150 ANSI Sanitization**: Strips escape sequences from external advisory text and repository names to prevent terminal injection attacks.
+- **Headless Fallback**: Automatically degrades to non-interactive batch reporting when standard input is not a TTY (e.g. in CI/CD pipelines).
+
+---
+
+## 12. Empirical Invariant Testing Framework & DAG Orchestration Engine
+
+To ensure verified reliability across all core components, the codebase includes empirical invariant test suites and DAG workflow automation:
+
+### 12.1 26 Empirical Invariant Test Matrix (`tests/audit/`)
+The suite validates system behavior across 8 critical subsystems:
+- `test_audit_task59.py`: OSV 1.6 range integrity, deduplicator range collapsing, and mid-batch recovery.
+- `test_audit_task60.py`: Universal 9-client discovery, BOM stripping, URL-safe comment removal, trailing comma tolerance, secret masking.
+- `test_audit_task61.py`: Runtime signature drift, shadow tool injection, docstring prompt injection, parameter schema tampering.
+- `test_audit_task62.py`: STDIO noise filtering, socket disconnect resilience, child process zombie cleanup.
+- `test_audit_task63.py`: Polyglot schema preservation, atomic backups, transactional rollback, monotonic SemVer resolution.
+- `test_audit_task64.py`: Headless fallback, unified diff preview, SIGINT terminal restoration, CWE-150 ANSI sanitization.
+- `test_audit_task65.py`: Bit-for-bit SHA-256 byte equality across worker counts (1, 2, 4, 8), non-fatal worker crash isolation, content-addressed caching.
+- `test_audit_task66.py`: "Only Servers with Tools" filter parity, zero-tool badge rendering, DOM XSS immunity, shard network retry button.
+
+### 12.2 DAG Workflow Orchestration (`docs/audit/audit_and_benchmark_dag.yml`)
+- Encodes the 14-task audit and benchmarking pipeline as a Directed Acyclic Graph.
+- Supports topological sorting, parallel wave execution, and conditional execution policies (`on_success`, `on_failure`, `always`).
+
+---
+
+## 13. Competitive Benchmarking & Cumulative Synthesis Pipeline
+
+The system incorporates rigorous competitive benchmarking against 10 leading industry solutions across four functional categories:
+1. **Runtime MCP Guardians**: Verity (MCP Database Guard/Oracle), Anthropic Inspector SDK, Cursor Sandbox.
+2. **Registry & Ecosystem Telemetry**: Smithery.ai, Glama.ai.
+3. **Vulnerability Scanners**: Snyk, Semgrep, Trivy, OSV.dev.
+4. **Supply Chain Security**: Sigstore/Cosign, SLSA Level 3, CycloneDX v1.6.
+
+### 13.1 Master Deliverables
+- **`docs/audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md`**: Synthesis of all 8 empirical audits, 26 invariant verifications, and catalog of resolved defects.
+- **`docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`**: Grand Unified Feature Matrix across 10 products, strategic gap analysis, and architectural blueprints for v1.2–v2.0 (Inline Reverse Proxy, AST Call-Graph Reachability, Sigstore Keyless Attestation, Composite Trust Scoring).
+
+
