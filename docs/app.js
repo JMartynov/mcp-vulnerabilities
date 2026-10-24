@@ -98,7 +98,7 @@
     renderDirectoryCards();
   };
 
-  function init() {
+  async function init() {
     setupEventListeners();
     await Promise.all([loadCatalogIndex(), loadAdvisories()]);
     
@@ -504,7 +504,12 @@
     } catch (err) {
       console.error("Failed to load shard details:", err);
       el.modalServerTitle.textContent = pkgName;
-      el.modalVersionPills.innerHTML = `<div class="error-msg">Failed to load detailed shard for ${escapeHtml(pkgName)}.</div>`;
+      el.modalVersionPills.innerHTML = `<div class="error-msg">Failed to load detailed shard for ${escapeHtml(pkgName)}.<br><br></div>`;
+      const retryBtn = document.createElement("button");
+      retryBtn.className = "btn btn-inspect";
+      retryBtn.textContent = "Retry Fetch";
+      retryBtn.onclick = () => openServerModal(pkgName, shardFile);
+      el.modalVersionPills.querySelector(".error-msg").appendChild(retryBtn);
     }
   }
 
