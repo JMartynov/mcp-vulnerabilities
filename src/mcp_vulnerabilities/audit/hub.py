@@ -101,6 +101,9 @@ def run_hub(args=None):
     if args and getattr(args, "batch", False):
         is_non_interactive = True
     if not sys.stdout.isatty():
+        if args is None:
+            print("Interactive hub requires an interactive TTY terminal. Use headless CLI commands in CI/CD.")
+            sys.exit(1)
         is_non_interactive = True
         
     if is_non_interactive:

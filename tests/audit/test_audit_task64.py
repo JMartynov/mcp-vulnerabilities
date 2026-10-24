@@ -5,20 +5,6 @@ import json
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-import pytest
-import sys
-import subprocess
-import json
-from pathlib import Path
-from unittest.mock import patch, MagicMock
-
-# Mock mcp_fingerprints before anything else is imported
-import sys
-sys.modules['mcp_fingerprints'] = MagicMock()
-sys.modules['mcp_fingerprints.models'] = MagicMock()
-sys.modules['mcp_fingerprints.config_scanner'] = MagicMock()
-sys.modules['mcp_fingerprints.models.ServerPackageSpec'] = MagicMock()
-
 import mcp_vulnerabilities.audit.hub
 from mcp_vulnerabilities.audit.hub import run_hub, sanitize_ansi
 
@@ -42,19 +28,10 @@ def test_invariant_1a_non_tty_fallback():
     assert "Interactive hub requires an interactive TTY terminal" not in result.stderr
 
 def test_invariant_1b_automated_flag_json():
-    # Because mcp_fingerprints is missing in this test env, mocking sys.argv 
-    # and running hub directly is more reliable than subprocess.
     with patch("sys.argv", ["mcp-vuln", "hub", "--json"]), \
          patch("sys.stdout.isatty", return_value=True), \
-         patch("mcp_vulnerabilities.audit.hub.sys.exit") as mock_exit:
+         patch("mcp_vulnerabilities.cli.main") as mock_cli_main:
          
-        # we mock mcp_vulnerabilities.cli.main manually without relying on patch
-        # which imports it eagerly.
-        mock_cli_main = MagicMock()
-        import sys
-        sys.modules["mcp_vulnerabilities.cli"] = MagicMock()
-        sys.modules["mcp_vulnerabilities.cli"].main = mock_cli_main
-        
         args_mock = MagicMock()
         args_mock.json = True
         args_mock.batch = False
