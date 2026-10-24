@@ -115,7 +115,7 @@ Private GitHub Project Board: [https://github.com/users/JMartynov/projects/4](ht
 
 ---
 
-### 9. Web Security Explorer, Version-Switching & Live Feed Deployment Wave (Wave 9 - Active Wave)
+### 9. Web Security Explorer, Version-Switching & Live Feed Deployment Wave (Wave 9 - 100% Tested & Merged)
 
 Master Plan: [IMPLEMENTATION_PLAN_SECURITY_EXPLORER.md](IMPLEMENTATION_PLAN_SECURITY_EXPLORER.md)
 
@@ -124,6 +124,21 @@ Master Plan: [IMPLEMENTATION_PLAN_SECURITY_EXPLORER.md](IMPLEMENTATION_PLAN_SECU
 | **47** | **GitHub Pages Deployment & Live Web Portal / Feed Reference Fix** | Web Hosting & Deployment | `Done` | Fix public live portal and updates feed links via `.github/workflows/pages.yml`, audit relative paths, and verify HTTP 200 uptime. | [task47_github_pages_live_portal_feed_fix.md](task47_github_pages_live_portal_feed_fix.md) |
 | **48** | **MCP Server Multi-Version Vulnerability & Remediation Metadata Pipeline** | Version Correlator & Data Engine | `Done` | Ingest complete version histories per MCP server, map version vulnerabilities, and compute target safe update versions and upgrade commands. | [task48_version_remediation_metadata_pipeline.md](task48_version_remediation_metadata_pipeline.md) |
 | **49** | **Searchable MCP Security Explorer with Interactive Version Switcher & Remediation UI** | Web Security Portal UI | `Done` | Searchable server directory, interactive version switcher, dynamic safe vs vulnerable posture, and copyable remediation upgrade commands. | [task49_security_explorer_version_switcher_remediation_ui.md](task49_security_explorer_version_switcher_remediation_ui.md) |
+
+---
+
+### 10. Next-Gen AI Runtime Security & Fingerprint Synergy Wave (Wave 10 - Active Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_WAVE_10_MCP_FINGERPRINTS_ENHANCEMENTS.md](IMPLEMENTATION_PLAN_WAVE_10_MCP_FINGERPRINTS_ENHANCEMENTS.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **50** | **PyPI Integration, Caching Loader & Core Model Deduplication** | Single Source of Truth & PyPI | `Ready` | Multi-tier cache loader in `mcp-fingerprints`, release v1.0.14, add PyPI dependency, eliminate redundant models/canonicalizer in `mcp-vulnerabilities`. | [task50_pypi_integration_caching_loader_and_model_deduplication.md](task50_pypi_integration_caching_loader_and_model_deduplication.md) |
+| **51** | **Universal 9-Client Audit & Global Package Discovery** | Universal Client Auditing | `Ready` | Wire `ConfigScanner` and `NpmGlobalScanner` into `mcp-vuln audit`, auditing 9 AI clients + global npm/npx packages with SARIF annotations. | [task51_universal_9client_audit_and_global_package_discovery.md](task51_universal_9client_audit_and_global_package_discovery.md) |
+| **52** | **Supply-Chain Tamper & Shadow Tool Drift Detection** | Zero-Day Supply Chain Security | `Ready` | Runtime tool signature verification against baseline passport hashes; detect unadvertised/injected shadow tools and unbumped tampering. | [task52_supply_chain_tamper_and_shadow_tool_drift_detector.md](task52_supply_chain_tamper_and_shadow_tool_drift_detector.md) |
+| **53** | **Behavioral Topology Prober & Unknown Server Identification** | Behavioral Identification | `Ready` | Probes custom/wrapped processes over stdio/SSE; matches runtime tools against 5,533 passports using topological similarity to unmask hidden CVEs. | [task53_behavioral_topology_prober_unknown_server_identification.md](task53_behavioral_topology_prober_unknown_server_identification.md) |
+| **54** | **Polyglot Vulnerability Correlation (Rust, Go, Maven, Docker)** | Multi-Ecosystem Coverage | `Ready` | Ingests Rust (Cargo), Go, Java/Kotlin (Maven), and Docker Hub passports; correlates `RUSTSEC`, `GO-*`, `GHSA-java`, and container CVEs. | [task54_polyglot_vulnerability_correlation_rust_go_maven_docker.md](task54_polyglot_vulnerability_correlation_rust_go_maven_docker.md) |
+| **55** | **Multi-Client Auto-Fix Exporters & Interactive Security Hub** | Remediation & Developer Experience | `Ready` | One-click auto-patching across all 9 clients in native formats; interactive emoji-driven terminal management hub (`mcp-vuln hub`). | [task55_multiclient_autofix_exporters_and_interactive_security_hub.md](task55_multiclient_autofix_exporters_and_interactive_security_hub.md) |
 
 ## Verification Test Results
 ```
