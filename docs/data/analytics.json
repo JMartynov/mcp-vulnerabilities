@@ -1,66 +1,19 @@
 {
-  "total_advisories": 682,
-  "total_servers": 6289,
-  "vulnerable_servers_count": 344,
-  "safe_servers_count": 5945,
-  "risk_tier_counts": {
-    "LOW": 6289,
-    "MEDIUM": 0,
-    "HIGH": 0,
-    "CRITICAL": 0
+  "capabilities": {
+    "fs_read_write": 524,
+    "mutating": 890,
+    "network_egress": 392,
+    "read_only": 1516,
+    "shell_exec": 322
   },
-  "top_tools": [
-    {
-      "tool": "connect",
-      "count": 17,
-      "avg_cvss": 7.2
-    },
-    {
-      "tool": "git_add",
-      "count": 4,
-      "avg_cvss": 7.0
-    },
-    {
-      "tool": "sparql_query",
-      "count": 4,
-      "avg_cvss": 5.5
-    },
-    {
-      "tool": "ckan_package_search",
-      "count": 4,
-      "avg_cvss": 5.5
-    },
-    {
-      "tool": "get_customer",
-      "count": 4,
-      "avg_cvss": 8.5
-    },
-    {
-      "tool": "git_init",
-      "count": 3,
-      "avg_cvss": 7.0
-    },
-    {
-      "tool": "git_diff",
-      "count": 3,
-      "avg_cvss": 5.8
-    },
-    {
-      "tool": "run_aggregation",
-      "count": 3,
-      "avg_cvss": 8.5
-    },
-    {
-      "tool": "search_customers",
-      "count": 3,
-      "avg_cvss": 8.5
-    },
-    {
-      "tool": "install_mcp_config",
-      "count": 2,
-      "avg_cvss": 7.1
-    }
-  ],
+  "ecosystems": {
+    "Go": 7,
+    "MCP": 616,
+    "PyPI": 69,
+    "go": 2,
+    "npm": 35,
+    "rust": 1
+  },
   "owasp_breakdown": [
     {
       "category": "Resource Exhaustion / DoS",
@@ -87,7 +40,7 @@
       }
     },
     {
-      "category": "MCP05 \u2014 Command Injection & Execution",
+      "category": "MCP05 — Command Injection & Execution",
       "count": 2,
       "percentage": 3.5,
       "severities": {
@@ -135,7 +88,7 @@
       }
     },
     {
-      "category": "MCP07 \u2014 Insufficient Authentication & Authorization",
+      "category": "MCP07 — Insufficient Authentication & Authorization",
       "count": 1,
       "percentage": 1.8,
       "severities": {
@@ -143,7 +96,7 @@
       }
     },
     {
-      "category": "MCP02 \u2014 Privilege Escalation via Scope Creep",
+      "category": "MCP02 — Privilege Escalation via Scope Creep",
       "count": 1,
       "percentage": 1.8,
       "severities": {
@@ -423,37 +376,112 @@
       }
     }
   ],
-  "ecosystems": {
-    "MCP": 616,
-    "PyPI": 69,
-    "npm": 35,
-    "Go": 7,
-    "rust": 1,
-    "go": 2
+  "patched_remediable_count": 110,
+  "risk_tier_counts": {
+    "CRITICAL": 0,
+    "HIGH": 0,
+    "LOW": 6289,
+    "MEDIUM": 0
   },
-  "patched_remediable_count": 100,
-  "zero_day_unpatched_count": 200,
-  "capabilities": {
-    "fs_read_write": 500,
-    "shell_exec": 300,
-    "network_egress": 400,
-    "mutating": 800,
-    "read_only": 1500
-  },
-  "top_secrets": [
-    {
-      "name": "OPENAI_API_KEY",
-      "count": 100
-    }
-  ],
-  "transports": {
-    "stdio": 500,
-    "sse": 50
-  },
+  "safe_servers_count": 5945,
   "tool_shadowing": [
     {
-      "tool": "search",
-      "entropy": 50
+      "entropy": 58,
+      "tool": "search"
+    },
+    {
+      "entropy": 19,
+      "tool": "raw_request"
+    },
+    {
+      "entropy": 18,
+      "tool": "send_message"
+    },
+    {
+      "entropy": 14,
+      "tool": "get_account"
+    },
+    {
+      "entropy": 14,
+      "tool": "fetch"
+    },
+    {
+      "entropy": 14,
+      "tool": "create_task"
+    },
+    {
+      "entropy": 13,
+      "tool": "list_projects"
+    },
+    {
+      "entropy": 13,
+      "tool": "query"
+    },
+    {
+      "entropy": 13,
+      "tool": "read_file"
+    },
+    {
+      "entropy": 12,
+      "tool": "list_tasks"
     }
-  ]
+  ],
+  "top_secrets": [],
+  "top_tools": [
+    {
+      "avg_cvss": 7.2,
+      "count": 17,
+      "tool": "connect"
+    },
+    {
+      "avg_cvss": 7.0,
+      "count": 4,
+      "tool": "git_add"
+    },
+    {
+      "avg_cvss": 5.5,
+      "count": 4,
+      "tool": "ckan_package_search"
+    },
+    {
+      "avg_cvss": 5.5,
+      "count": 4,
+      "tool": "sparql_query"
+    },
+    {
+      "avg_cvss": 8.5,
+      "count": 4,
+      "tool": "get_customer"
+    },
+    {
+      "avg_cvss": 7.0,
+      "count": 3,
+      "tool": "git_init"
+    },
+    {
+      "avg_cvss": 5.8,
+      "count": 3,
+      "tool": "git_diff"
+    },
+    {
+      "avg_cvss": 8.5,
+      "count": 3,
+      "tool": "run_aggregation"
+    },
+    {
+      "avg_cvss": 8.5,
+      "count": 3,
+      "tool": "search_customers"
+    },
+    {
+      "avg_cvss": 7.1,
+      "count": 2,
+      "tool": "get_client_ip"
+    }
+  ],
+  "total_advisories": 682,
+  "total_servers": 6289,
+  "transports": {},
+  "vulnerable_servers_count": 344,
+  "zero_day_unpatched_count": 234
 }
