@@ -204,9 +204,26 @@ class OsvDeduplicator:
             merged_ranges: list[RangeSpec] = []
             
             for (r_type, r_repo), pairs in range_groups.items():
+                # Remove redundant open ranges if a more specific one exists for the same intro
+                filtered_pairs = set()
+                intro_map = {}
+                for p in pairs:
+                    intro = p[0]
+                    if intro not in intro_map:
+                        intro_map[intro] = []
+                    intro_map[intro].append(p)
+                
+                for intro, intro_pairs in intro_map.items():
+                    # If we have both an open range (None, None, None) and a closed range, keep the closed range
+                    has_closed = any(p[1] is not None or p[2] is not None or p[3] is not None for p in intro_pairs)
+                    for p in intro_pairs:
+                        if has_closed and p[1] is None and p[2] is None and p[3] is None:
+                            continue
+                        filtered_pairs.add(p)
+
                 # For each valid pair, create a distinct RangeSpec to ensure OSV 1.6 sequence validity
                 # sorting by string values for deterministic output
-                for intro, fixed, last_aff, limit in sorted(pairs, key=lambda x: (x[0] or "", x[1] or "", x[2] or "", x[3] or "")):
+                for intro, fixed, last_aff, limit in sorted(filtered_pairs, key=lambda x: (x[0] or "", x[1] or "", x[2] or "", x[3] or "")):
                     evs = []
                     if intro is not None and intro != "0":
                         evs.append(EventSpec(introduced=intro))
