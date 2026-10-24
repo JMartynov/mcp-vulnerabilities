@@ -37,6 +37,16 @@ from mcp_vulnerabilities.cache import TwoTierVulnerabilityCache
 logger = logging.getLogger(__name__)
 
 
+def _select_representative_version(versions: list[dict[str, Any]]) -> dict[str, Any]:
+    """Return the latest version (versions[-1]), or the newest version with extracted tools."""
+    if not versions:
+        return {}
+    for v in reversed(versions):
+        if isinstance(v, dict) and v.get("tools"):
+            return v
+    return versions[-1] if isinstance(versions[-1], dict) else {}
+
+
 def _process_server_batch(
     servers: dict[str, Any],
     vulnerabilities_dir: str,
@@ -579,26 +589,19 @@ def build_site_parallel(
         shards[shard_id][pkg_name] = rec_dict
 
         versions = record.get("versions", [])
-        # Select latest version with non-empty tools, falling back to versions[-1]
-        latest_v = versions[-1] if versions else {}
-        if versions:
-            for v in reversed(versions):
-                if v.get("tools"):
-                    latest_v = v
-                    break
-
-        tools = latest_v.get("tools", []) if versions else []
+        rep_version = _select_representative_version(versions)
+        tools = rep_version.get("tools", [])
         tools_count = len(tools)
         tools_sample = [t.get("name") for t in tools[:5]]
 
         if not record.get("prompts_count"):
-            record["prompts_count"] = len(latest_v.get("prompts", []))
+            record["prompts_count"] = len(rep_version.get("prompts", []))
         if not record.get("resources_count"):
-            record["resources_count"] = len(latest_v.get("resources", []))
+            record["resources_count"] = len(rep_version.get("resources", []))
         if not record.get("toolset_canonical_hash"):
-            record["toolset_canonical_hash"] = latest_v.get("toolset_canonical_hash")
+            record["toolset_canonical_hash"] = rep_version.get("toolset_canonical_hash")
         if not record.get("required_env_vars"):
-            record["required_env_vars"] = latest_v.get("required_env_vars", [])
+            record["required_env_vars"] = rep_version.get("required_env_vars", [])
 
         vuln_versions_count = sum(1 for v in versions if v.get("is_vulnerable"))
 
@@ -744,14 +747,12 @@ def build_site_parallel(
             if not versions:
                 continue
 
-            # Select latest version with non-empty tools or required_env_vars, falling back to versions[-1]
-            v = versions[-1]
-            for version in reversed(versions):
-                if version.get("tools") or version.get("required_env_vars"):
-                    v = version
-                    break
+            v = _select_representative_version(versions)
             
-            req_envs = v.get("required_env_vars", [])
+            # Union of required_env_vars from rep_version and pkg_data
+            req_envs_set = set(v.get("required_env_vars") or []) | set(pkg_data.get("required_env_vars") or [])
+            req_envs = sorted(list(req_envs_set))
+            
             for env in req_envs:
                 env_vars[env] += 1
                 
