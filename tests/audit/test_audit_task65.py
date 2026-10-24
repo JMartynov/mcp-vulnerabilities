@@ -1,11 +1,11 @@
 import mcp_vulnerabilities.site_builder as site_builder
 original_process_batch = site_builder._process_server_batch
 
-def crashing_process_server_batch(servers, vuln_dir, use_cache):
+def crashing_process_server_batch(servers, vuln_dir, use_cache, *args, **kwargs):
     import sys
     if "crash-server" in servers:
         sys.exit(1)
-    return original_process_batch(servers, vuln_dir, use_cache)
+    return original_process_batch(servers, vuln_dir, use_cache, *args, **kwargs)
 
 import json
 import hashlib
@@ -141,28 +141,30 @@ def test_invariant_3_cache_invalidation(tmp_path):
     cache_dir = tmp_path / "cache"
     cache_dir.mkdir()
     os.environ["MCP_VULN_CACHE_DIR"] = str(cache_dir)
-    
-    # First build
-    build_site_parallel(passports_path=str(passports_file), vuln_path=str(vuln_dir), output_dir=str(out1), workers=1, use_cache=True)
-    
-    index_path = out1 / "mcp_catalog_index.json"
-    index_data = json.loads(index_path.read_text())
-    test_server = next(s for s in index_data if s["package_name"] == "test-server")
-    assert test_server["is_vulnerable"] is True
-    
-    # Mutate vulnerability record
-    adv_path = vuln_dir / "GHSA-1.json"
-    adv = json.loads(adv_path.read_text())
-    # Remove affected versions so it's not vulnerable anymore
-    adv["affected"][0]["ranges"][0]["events"] = [{"introduced": "0"}, {"fixed": "0.0.0"}] 
-    adv_path.write_text(json.dumps(adv))
-    
-    out2 = tmp_path / "out2"
-    out2.mkdir()
-    # Second build
-    build_site_parallel(passports_path=str(passports_file), vuln_path=str(vuln_dir), output_dir=str(out2), workers=1, use_cache=True)
-    
-    index_path2 = out2 / "mcp_catalog_index.json"
-    index_data2 = json.loads(index_path2.read_text())
-    test_server2 = next(s for s in index_data2 if s["package_name"] == "test-server")
-    assert test_server2["is_vulnerable"] is False, "Cache was not invalidated correctly"
+    try:
+        # First build
+        build_site_parallel(passports_path=str(passports_file), vuln_path=str(vuln_dir), output_dir=str(out1), workers=1, use_cache=True)
+        
+        index_path = out1 / "mcp_catalog_index.json"
+        index_data = json.loads(index_path.read_text())
+        test_server = next(s for s in index_data if s["package_name"] == "test-server")
+        assert test_server["is_vulnerable"] is True
+        
+        # Mutate vulnerability record
+        adv_path = vuln_dir / "GHSA-1.json"
+        adv = json.loads(adv_path.read_text())
+        # Remove affected versions so it's not vulnerable anymore
+        adv["affected"][0]["ranges"][0]["events"] = [{"introduced": "0"}, {"fixed": "0.0.0"}] 
+        adv_path.write_text(json.dumps(adv))
+        
+        out2 = tmp_path / "out2"
+        out2.mkdir()
+        # Second build
+        build_site_parallel(passports_path=str(passports_file), vuln_path=str(vuln_dir), output_dir=str(out2), workers=1, use_cache=True)
+        
+        index_path2 = out2 / "mcp_catalog_index.json"
+        index_data2 = json.loads(index_path2.read_text())
+        test_server2 = next(s for s in index_data2 if s["package_name"] == "test-server")
+        assert test_server2["is_vulnerable"] is False, "Cache was not invalidated correctly"
+    finally:
+        os.environ.pop("MCP_VULN_CACHE_DIR", None)

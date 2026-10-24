@@ -41,6 +41,7 @@ def _process_server_batch(
     servers: dict[str, Any],
     vulnerabilities_dir: str,
     use_cache: bool,
+    cache_dir: str | Path | None = None,
 ) -> dict[str, dict[str, Any]]:
     """
     Worker function to process a batch of servers and evaluate vulnerabilities.
@@ -52,7 +53,7 @@ def _process_server_batch(
         # Fallback if it's a snapshot or file
         matcher = VulnerabilityMatcher.from_snapshot(Path(vulnerabilities_dir))
         
-    cache = TwoTierVulnerabilityCache() if use_cache else None
+    cache = TwoTierVulnerabilityCache(cache_dir=cache_dir) if use_cache else None
 
     results = {}
     warnings = []
@@ -243,6 +244,7 @@ def build_site_parallel(
     use_cache: bool = True,
     num_shards: int = 32,
     benchmark: bool = False,
+    cache_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     """Parallel implementation of site builder."""
     t0 = time.time()
@@ -303,10 +305,13 @@ def build_site_parallel(
     
     catalog_dicts: dict[str, Any] = {}
     
+    main_cache = TwoTierVulnerabilityCache(cache_dir=cache_dir) if use_cache else None
+    resolved_cache_dir = str(main_cache.cache_dir) if main_cache else None
+
     all_warnings = []
     with ProcessPoolExecutor(max_workers=workers) as executor:
         futures = [
-            executor.submit(_process_server_batch, chunk, str(in_dir), use_cache)
+            executor.submit(_process_server_batch, chunk, str(in_dir), use_cache, resolved_cache_dir)
             for chunk in chunks
         ]
         for future in as_completed(futures):
@@ -776,6 +781,7 @@ def build_static_site_data(
     workers: int = 1,
     use_cache: bool = False,
     benchmark: bool = False,
+    cache_dir: str | Path | None = None,
 ) -> dict[str, Any]:
     """
     Compiles static data assets for the web explorer.
@@ -789,6 +795,7 @@ def build_static_site_data(
         use_cache=use_cache,
         num_shards=num_shards,
         benchmark=benchmark,
+        cache_dir=cache_dir,
     )
 
 

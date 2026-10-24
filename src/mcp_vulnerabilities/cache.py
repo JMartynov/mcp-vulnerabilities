@@ -7,10 +7,14 @@ from typing import Any, Dict, Optional, Tuple
 class TwoTierVulnerabilityCache:
     """Two-tier disk and memory cache for caching version vulnerability matrices."""
 
-    def __init__(self, cache_dir: Optional[str] = None):
+    def __init__(self, cache_dir: Optional[str | Path] = None):
         if cache_dir is None:
-            home = Path.home()
-            self.cache_dir = home / ".cache" / "mcp-vulnerabilities" / "vuln_matrix"
+            env_dir = os.environ.get("MCP_VULN_CACHE_DIR") or os.environ.get("MCP_CACHE_DIR")
+            if env_dir:
+                self.cache_dir = Path(env_dir)
+            else:
+                home = Path(os.environ.get("HOME", str(Path.home())))
+                self.cache_dir = home / ".cache" / "mcp-vulnerabilities" / "vuln_matrix"
         else:
             self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
