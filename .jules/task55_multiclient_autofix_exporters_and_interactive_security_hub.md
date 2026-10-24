@@ -98,3 +98,6 @@ When security audits discover vulnerable MCP servers across multiple AI clients,
    - Enhance `mcp-vuln fix` with `--all-clients`, `--client`, and `--dry-run` flags.
 4. Author comprehensive test suite in `tests/test_multiclient_autofix_and_hub.py`.
 5. Verify `pytest -q tests/test_multiclient_autofix_and_hub.py` passes 100%.
+
+## Non-Interactive Completion Directive
+Execute this task end-to-end without asking interactive questions. Implement `src/mcp_vulnerabilities/hub.py`, enhance `src/mcp_vulnerabilities/audit/fixer.py` and `src/mcp_vulnerabilities/cli.py`. Author the comprehensive test suite in `tests/test_multiclient_autofix_and_hub.py`, verify that all tests pass (`pytest -q`), and conclude directly with a complete patch so the remote environment cleanly transitions to `Completed`.
