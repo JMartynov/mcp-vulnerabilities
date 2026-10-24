@@ -92,7 +92,7 @@
     }, 500);
   };
 
-  function init() {
+  async function init() {
     setupEventListeners();
     await loadReleaseHistory();
   }
@@ -713,7 +713,6 @@
           ${removedTools.map(t => `<span style="color: var(--critical-color); background: var(--critical-bg); padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; border: 1px solid rgba(239, 68, 68, 0.3);">- ${escapeHtml(t)}</span>`).join("")}
         </div>
       </div>`;
-    }
     }
 
     if (tools.length === 0 && removedTools.length === 0) {
