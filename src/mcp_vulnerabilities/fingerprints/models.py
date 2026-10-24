@@ -83,12 +83,51 @@ class CorrelatedTimeline:
     package_name: str
     timeline: List[VersionVulnerabilityState] = field(default_factory=list)
     package_spec: Optional[ServerPackageSpec] = None
+    recommended_safe_version: Optional[str] = None
+    no_fix_available: bool = False
+
+    def get_remediation_for_version(self, current_version: str) -> Tuple[Optional[str], bool]:
+        """
+        Returns (recommended_safe_version, no_fix_available) for a specific current version,
+        ensuring monotonic upgrade (safe_version > current_version).
+        """
+        from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
+        
+        try:
+            curr_v = VulnerabilityMatcher._parse_version(current_version)
+        except Exception:
+            return self.recommended_safe_version, self.no_fix_available
+
+        # Find all safe versions strictly greater than current_version
+        safe_candidates = []
+        for state in self.timeline:
+            if not state.is_vulnerable:
+                try:
+                    if VulnerabilityMatcher._parse_version(state.version) > curr_v:
+                        safe_candidates.append(state)
+                except Exception:
+                    continue
+
+        if not safe_candidates:
+            # Check if it's currently vulnerable
+            current_state = next((s for s in self.timeline if s.version == current_version), None)
+            is_currently_vulnerable = current_state.is_vulnerable if current_state else True
+            if is_currently_vulnerable:
+                return None, True
+            else:
+                return None, False
+
+        # Return the lowest safe version that is > current_version
+        safe_candidates.sort(key=lambda s: VulnerabilityMatcher._parse_version(s.version))
+        return safe_candidates[0].version, False
 
     def to_dict(self) -> Dict[str, Any]:
         return {
             "package_name": self.package_name,
             "timeline": [item.to_dict() for item in self.timeline],
             "package_spec": self.package_spec.to_dict() if self.package_spec else None,
+            "recommended_safe_version": self.recommended_safe_version,
+            "no_fix_available": self.no_fix_available,
         }
 
     @classmethod
@@ -101,6 +140,8 @@ class CorrelatedTimeline:
             package_name=str(data.get("package_name", "")),
             timeline=timeline,
             package_spec=package_spec,
+            recommended_safe_version=data.get("recommended_safe_version"),
+            no_fix_available=bool(data.get("no_fix_available", False)),
         )
 
 

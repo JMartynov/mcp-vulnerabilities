@@ -138,14 +138,28 @@ class ClientConfigFixer:
                 "diff": diff_text
             }
 
+        import sys
+
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         backup_path = config_path.with_name(f"{config_path.name}.bak.{timestamp}")
+        
+        # Create atomic backup
         shutil.copy2(config_path, backup_path)
         
         # Atomically write
         tmp_path = config_path.with_name(f"{config_path.name}.tmp")
-        tmp_path.write_text(patched_text, encoding="utf-8")
-        os.replace(tmp_path, config_path)
+        
+        try:
+            tmp_path.write_text(patched_text, encoding="utf-8")
+            os.replace(tmp_path, config_path)
+        except Exception as e:
+            logger.error(f"Failed to write config file {config_path}: {e}")
+            if tmp_path.exists():
+                tmp_path.unlink()
+            # Restore from backup
+            if backup_path.exists():
+                shutil.copy2(backup_path, config_path)
+            sys.exit(1)
         
         return {
             "status": "success",
