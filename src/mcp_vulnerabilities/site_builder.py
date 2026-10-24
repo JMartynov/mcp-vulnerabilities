@@ -189,7 +189,15 @@ def _process_server_batch(
             archival_reason = raw_spec.get('archival_reason') if isinstance(raw_spec, dict) else getattr(raw_spec, 'archival_reason', None)
             transport = raw_spec.get('transport', 'stdio') if isinstance(raw_spec, dict) else getattr(raw_spec, 'transport', 'stdio')
             
-            latest_v_record = version_records[-1] if version_records else None
+            latest_v_record = None
+            if version_records:
+                for r in reversed(version_records):
+                    if r.tools or r.required_env_vars:
+                        latest_v_record = r
+                        break
+                if not latest_v_record:
+                    latest_v_record = version_records[-1]
+
             prompts_count = len(latest_v_record.prompts) if latest_v_record else 0
             resources_count = len(latest_v_record.resources) if latest_v_record else 0
             toolset_canonical_hash = latest_v_record.toolset_canonical_hash if latest_v_record else None
@@ -503,9 +511,26 @@ def build_site_parallel(
         shards[shard_id][pkg_name] = rec_dict
 
         versions = record.get("versions", [])
-        tools = versions[0].get("tools", []) if versions else []
+        # Select latest version with non-empty tools, falling back to versions[-1]
+        latest_v = versions[-1] if versions else {}
+        if versions:
+            for v in reversed(versions):
+                if v.get("tools"):
+                    latest_v = v
+                    break
+
+        tools = latest_v.get("tools", []) if versions else []
         tools_count = len(tools)
         tools_sample = [t.get("name") for t in tools[:5]]
+
+        if not record.get("prompts_count"):
+            record["prompts_count"] = len(latest_v.get("prompts", []))
+        if not record.get("resources_count"):
+            record["resources_count"] = len(latest_v.get("resources", []))
+        if not record.get("toolset_canonical_hash"):
+            record["toolset_canonical_hash"] = latest_v.get("toolset_canonical_hash")
+        if not record.get("required_env_vars"):
+            record["required_env_vars"] = latest_v.get("required_env_vars", [])
 
         vuln_versions_count = sum(1 for v in versions if v.get("is_vulnerable"))
 
@@ -648,7 +673,13 @@ def build_site_parallel(
             versions = pkg_data.get("versions", [])
             if not versions:
                 continue
-            v = versions[0]
+
+            # Select latest version with non-empty tools or required_env_vars, falling back to versions[-1]
+            v = versions[-1]
+            for version in reversed(versions):
+                if version.get("tools") or version.get("required_env_vars"):
+                    v = version
+                    break
             
             req_envs = v.get("required_env_vars", [])
             for env in req_envs:

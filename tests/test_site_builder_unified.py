@@ -115,3 +115,63 @@ def test_build_static_site_data_live_catalog():
         assert "advisories" in v
         assert "toolset_canonical_hash" in v
         assert "tools" in v
+
+
+def test_latest_version_analytics_and_catalog_ingestion(tmp_path: Path):
+    """Verify catalog_index and analytics.json ingest tools and env_vars from the latest version."""
+    vuln_dir = tmp_path / "vulnerabilities"
+    vuln_dir.mkdir()
+
+    mock_passports_path = tmp_path / "passports.json"
+    passports_data = {
+        "passports": {
+            "test-latest-pkg": {
+                "package_name": "test-latest-pkg",
+                "purl": "pkg:pypi/test-latest-pkg",
+                "ecosystem": "PyPI",
+                "versions": [
+                    {
+                        "version": "0.1.0",
+                        "toolset_canonical_hash": "set_hash_v010",
+                        "tool_signatures": [
+                            {"name": "read_file", "canonical_hash": "hash1"}
+                        ],
+                        "required_env_vars": [],
+                    },
+                    {
+                        "version": "1.0.0",
+                        "toolset_canonical_hash": "set_hash_v100",
+                        "tool_signatures": [
+                            {"name": "read_file", "canonical_hash": "hash1"},
+                            {"name": "write_file", "canonical_hash": "hash2"},
+                            {"name": "exec_cmd", "canonical_hash": "hash3"},
+                        ],
+                        "required_env_vars": ["API_KEY", "FOO"],
+                    },
+                ],
+            }
+        }
+    }
+    mock_passports_path.write_text(json.dumps(passports_data), encoding="utf-8")
+
+    out_dir = tmp_path / "docs_data"
+    result = build_static_site_data(
+        data_dir=vuln_dir,
+        output_dir=out_dir,
+        passports_path=mock_passports_path,
+        use_cache=False,
+        num_shards=4,
+    )
+
+    index_data = json.loads(result["mcp_catalog_index"].read_text(encoding="utf-8"))
+    entry = next(e for e in index_data if e["package_name"] == "test-latest-pkg")
+    assert entry["tools_count"] == 3
+    assert len(entry["tools_sample"]) == 3
+    assert "API_KEY" in entry["required_env_vars"]
+
+    analytics_data = json.loads(result["analytics"].read_text(encoding="utf-8"))
+    top_secrets = {s["name"]: s["count"] for s in analytics_data.get("top_secrets", [])}
+    assert top_secrets.get("API_KEY") == 1
+    assert top_secrets.get("FOO") == 1
+    assert analytics_data.get("capabilities", {}).get("shell_exec") == 1
+
