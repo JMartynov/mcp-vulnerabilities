@@ -1,10 +1,18 @@
 import logging
 from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, List, Dict, Set
+from typing import Any
 
-from mcp_fingerprints.canonicalizer import extract_tool_signature, compute_toolset_canonical_hash
+from mcp_fingerprints.canonicalizer import (
+    compute_toolset_canonical_hash,
+    extract_tool_signature,
+)
 from mcp_fingerprints.drift_detector import TamperIncident
+
+from mcp_vulnerabilities.compliance.models import (
+    ComplianceTier,
+    ComplianceViolation,
+    OwaspComplianceReport,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -17,7 +25,60 @@ class TamperReport:
     status: str
     baseline_hash: str | None = None
     live_hash: str | None = None
-    incidents: List[TamperIncident] = field(default_factory=list)
+    incidents: list[TamperIncident] = field(default_factory=list)
+
+
+    def to_compliance_report(self) -> OwaspComplianceReport:
+        
+        violations = []
+        for inc in self.incidents:
+            if inc.incident_type == "SHADOW_TOOL_INJECTED":
+                violations.append(ComplianceViolation(
+                    owasp_id='LLM01:2025',
+                    owasp_mcp_id='MCP002',
+                    category_name='Shadow Tool',
+                    severity=inc.severity,
+                    target=self.server_name,
+                    description=inc.details,
+                    remediation_guidance='Remove unadvertised tools or verify upstream integrity.',
+                    original_rule_id='MCP002'
+                ))
+            elif inc.incident_type == "SCHEMA_TAMPERING":
+                violations.append(ComplianceViolation(
+                    owasp_id='LLM01:2025',
+                    owasp_mcp_id='MCP001',
+                    category_name='Schema Tampering',
+                    severity=inc.severity,
+                    target=self.server_name,
+                    description=inc.details,
+                    remediation_guidance='Restore baseline tool schema.',
+                    original_rule_id='MCP001'
+                ))
+            elif inc.incident_type == "DESCRIPTION_TAMPERING":
+                violations.append(ComplianceViolation(
+                    owasp_id='LLM01:2025',
+                    owasp_mcp_id='MCP001',
+                    category_name='Description Tampering',
+                    severity=inc.severity,
+                    target=self.server_name,
+                    description=inc.details,
+                    remediation_guidance='Restore baseline tool description.',
+                    original_rule_id='MCP001'
+                ))
+            elif inc.incident_type == "MISSING_CRITICAL_TOOLS":
+                violations.append(ComplianceViolation(
+                    owasp_id='LLM01:2025',
+                    owasp_mcp_id='MCP001',
+                    category_name='Missing Tool',
+                    severity=inc.severity,
+                    target=self.server_name,
+                    description=inc.details,
+                    remediation_guidance='Restore missing critical tools.',
+                    original_rule_id='MCP001'
+                ))
+                
+        tier = ComplianceTier.COMPLIANT if not violations else ComplianceTier.NON_COMPLIANT
+        return OwaspComplianceReport(score=100 if not violations else 0, tier=tier, violations=violations)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -42,7 +103,7 @@ class SupplyChainTamperDetector:
     def __init__(self, matcher: Any):
         self.matcher = matcher
 
-    def verify_server_integrity(self, server_spec: Any, runtime_tools: List[Dict[str, Any]]) -> TamperReport:
+    def verify_server_integrity(self, server_spec: Any, runtime_tools: list[dict[str, Any]]) -> TamperReport:
         package_name = getattr(server_spec, "package_name", "")
         version = getattr(server_spec, "version", "")
         
@@ -88,7 +149,19 @@ class SupplyChainTamperDetector:
             )
             
         baseline_hash = baseline_ver.toolset_canonical_hash
-        if live_hash == baseline_hash:
+        
+        live_signatures = [extract_tool_signature(t) for t in runtime_tools]
+        
+        # Check for description tamper even if hash matches
+        baseline_tools_map = {t.name: t for t in baseline_ver.tool_signatures}
+        live_tools_map = {t.name: t for t in live_signatures}
+        
+        desc_tampered = []
+        for name, live_sig in live_tools_map.items():
+            if name in baseline_tools_map and live_sig.description_hash != baseline_tools_map[name].description_hash:
+                desc_tampered.append(name)
+        
+        if live_hash == baseline_hash and not desc_tampered:
             return TamperReport(
                 server_name=getattr(server_spec, "server_name", ""),
                 package_name=package_name,
@@ -148,7 +221,7 @@ class SupplyChainTamperDetector:
             elif inc.incident_type == "hash_tamper":
                 inc.incident_type = "SCHEMA_TAMPERING"
                 inc.severity = "HIGH"
-                inc.details = f"Tool schema was tampered with."
+                inc.details = "Tool schema was tampered with."
                 # We need to find affected tools
                 baseline_tools = {t.name: t for t in baseline_ver.tool_signatures}
                 live_tools_map = {t.name: t for t in live_signatures}
@@ -159,7 +232,21 @@ class SupplyChainTamperDetector:
                         affected.append(tool_name)
                 inc.affected_tools = affected
                 
+                # If no specific schema changes (e.g. just tool added/removed), drop this incident
+                if not affected:
+                    continue
+                
             incidents.append(inc)
+            
+        if desc_tampered:
+            incidents.append(TamperIncident(
+                package_name=package_name,
+                version=version,
+                incident_type="DESCRIPTION_TAMPERING",
+                severity="MEDIUM",
+                details=f"Tool description behavior drifted for tools: {', '.join(desc_tampered)}",
+                affected_tools=desc_tampered
+            ))
 
         return TamperReport(
             server_name=getattr(server_spec, "server_name", ""),
