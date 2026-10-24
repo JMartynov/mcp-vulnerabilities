@@ -411,12 +411,12 @@
             isVuln = true;
             safeVersion = matchedServer.recommended_safe_version;
             
-            if (parsed && parsed.version && safeVersion && parsed.version === safeVersion) {
+            if (parsed?.version && safeVersion && parsed.version === safeVersion) {
                isVuln = false;
             }
 
             if (isVuln) {
-                advisories = findMatchingAdvisoriesForPackage(parsed.packageName);
+                advisories = findMatchingAdvisoriesForPackage(matchedServer?.package_name || parsed?.packageName, parsed?.version, safeVersion);
             }
             
             // Generate remediation diff if safe version exists
@@ -443,53 +443,43 @@
   }
 
   function normalizePkgName(name) {
-    if (!name) return "";
-    return name.toLowerCase().replace(/_/g, '-');
+    return String(name || "").trim().toLowerCase().replace(/_/g, "-");
   }
 
-  function findMatchingAdvisoriesForPackage(pkgName) {
-    const normPkg = normalizePkgName(pkgName);
-    const matches = [];
+  function findMatchingAdvisoriesForPackage(pkgName, pinnedVersion, safeVersion) {
+    if (!pkgName || !Array.isArray(allAdvisories)) return [];
+    const target = normalizePkgName(pkgName);
+    const matched = [];
 
     for (const adv of allAdvisories) {
-      if (!adv.affected) continue;
-      
-      let isMatch = false;
-      for (const a of adv.affected) {
-        if (!a.package || !a.package.name) continue;
-        const advPkg = normalizePkgName(a.package.name);
-        
-        if (advPkg === normPkg || advPkg.endsWith("/" + normPkg)) {
-          isMatch = true;
+      const affectedList = Array.isArray(adv.affected) ? adv.affected : [];
+      let pkgMatch = false;
+      let dbSpec = adv.database_specific || {};
+
+      for (const aff of affectedList) {
+        const affName = normalizePkgName(aff.package?.name);
+        if (affName && (affName === target || affName.endsWith("/" + target) || target.endsWith("/" + affName))) {
+          pkgMatch = true;
+          if (aff.database_specific) dbSpec = { ...dbSpec, ...aff.database_specific };
           break;
         }
       }
+      if (!pkgMatch) continue;
 
-      if (isMatch) {
-        let displayId = adv.id;
-        if (!displayId.startsWith("CVE-") && adv.aliases) {
-          const cveAlias = adv.aliases.find(alias => alias.startsWith("CVE-"));
-          if (cveAlias) displayId = cveAlias;
-        }
+      const cveAlias = Array.isArray(adv.aliases) ? adv.aliases.find((a) => String(a).startsWith("CVE-")) : null;
+      const displayId = cveAlias && !String(adv.id).startsWith("CVE-") ? `${adv.id} (${cveAlias})` : (adv.id || "UNKNOWN-ADVISORY");
+      const severity = String(dbSpec.severity || getSeverity(adv) || "HIGH").toUpperCase();
+      const cvss = dbSpec.cvss_score !== undefined && dbSpec.cvss_score !== null ? Number(dbSpec.cvss_score) : null;
 
-        const sev = getSeverity(adv);
-        let cvssScore = null;
-        if (adv.database_specific && adv.database_specific.cvss_score !== undefined) {
-          cvssScore = Number(adv.database_specific.cvss_score).toFixed(1);
-        } else if (adv.affected && adv.affected[0] && adv.affected[0].database_specific && adv.affected[0].database_specific.cvss_score !== undefined) {
-          cvssScore = Number(adv.affected[0].database_specific.cvss_score).toFixed(1);
-        }
-
-        matches.push({
-          id: adv.id,
-          displayId: displayId,
-          summary: adv.summary || "No summary available.",
-          severity: sev,
-          cvss: cvssScore
-        });
-      }
+      matched.push({
+        id: adv.id || "UNKNOWN",
+        displayId,
+        severity,
+        cvssScore: !Number.isNaN(cvss) && cvss !== null ? cvss.toFixed(1) : null,
+        summary: adv.summary || "Known MCP vulnerability affecting this package."
+      });
     }
-    return matches;
+    return matched;
   }
 
   function extractPackageInfo(command, args) {
@@ -627,7 +617,7 @@
                   res.advisories.forEach(adv => {
                       const sev = adv.severity || "UNKNOWN";
                       const sevClass = `risk-${sev.toLowerCase()}`;
-                      const cvssText = adv.cvss ? `${sev} • CVSS ${adv.cvss}` : sev;
+                      const cvssText = adv.cvssScore ? `${sev} • CVSS ${adv.cvssScore}` : sev;
                       advListHtml += `
                           <div class="audit-cve-item">
                               <div class="cve-item-header">
