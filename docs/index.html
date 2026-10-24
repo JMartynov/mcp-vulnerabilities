@@ -58,6 +58,9 @@
       <button class="portal-tab" id="tab-advisories" role="tab" aria-selected="false" data-tab="advisories">
         🚨 Vulnerability Advisories Feed
       </button>
+      <button class="portal-tab" id="tab-audit" role="tab" aria-selected="false" data-tab="audit">
+        🛡️ Audit My MCP Setup
+      </button>
     </nav>
 
     <!-- TAB 1: Server Directory View -->
@@ -151,6 +154,57 @@
 
       <div class="advisories-list" id="advisories-container">
         <div class="loading-state">Loading canonical advisories database...</div>
+      </div>
+    </section>
+
+    <!-- TAB 3: Config Auditor Dropzone -->
+    <section id="audit-view" class="tab-content" role="tabpanel" style="display: none;">
+      <div class="audit-intro">
+        <h2>🛡️ Audit My MCP Setup</h2>
+        <p>Drag and drop your AI client configuration file (e.g. <code>claude_desktop_config.json</code>, <code>cline_mcp_settings.json</code>, <code>cursor_config.json</code>) or paste the JSON content directly. All parsing and auditing is done 100% locally in your browser—no telemetry is sent.</p>
+      </div>
+
+      <div id="config-audit-zone" class="audit-dropzone" tabindex="0">
+        <div class="dropzone-content">
+          <span class="dropzone-icon">📥</span>
+          <h3>Drag & Drop Config File Here</h3>
+          <p>or click to select, or just paste JSON</p>
+          <input type="file" id="audit-file-input" accept=".json,.jsonc,.yaml,.yml" style="display: none;">
+        </div>
+      </div>
+
+      <!-- Audit Results (Hidden initially) -->
+      <div id="audit-results-container" style="display: none;">
+        <div class="audit-summary-bar">
+          <div class="audit-stat">
+            <span class="audit-stat-value" id="audit-total-servers">0</span>
+            <span class="audit-stat-label">Servers Audited</span>
+          </div>
+          <div class="audit-stat">
+            <span class="audit-stat-value text-success" id="audit-safe-servers">0</span>
+            <span class="audit-stat-label">Clean / Safe</span>
+          </div>
+          <div class="audit-stat">
+            <span class="audit-stat-value text-danger" id="audit-vuln-servers">0</span>
+            <span class="audit-stat-label">Vulnerable</span>
+          </div>
+        </div>
+
+        <div class="audit-server-list" id="audit-server-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <div class="audit-remediation-panel" id="audit-remediation-panel" style="display: none;">
+          <div class="exporter-header">
+            <h4>⚙️ Safe Remediated Configuration</h4>
+            <span class="safe-pin-note">Vulnerable versions have been automatically pinned to known safe releases.</span>
+          </div>
+          <div class="exporter-buttons-row">
+            <button type="button" class="btn btn-export" id="btn-copy-remediated">📋 Copy Remediated Config</button>
+          </div>
+          <div id="audit-export-toast" class="export-toast" style="display: none;">Remediated config copied to clipboard!</div>
+          <pre id="audit-export-preview" class="export-preview"><code></code></pre>
+        </div>
       </div>
     </section>
   </main>
