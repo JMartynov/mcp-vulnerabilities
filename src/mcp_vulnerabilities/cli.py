@@ -290,6 +290,8 @@ def main() -> None:
     trans_p.add_argument("--manifest", required=True, help="Path to package.json or requirements.txt")
     trans_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
     trans_p.add_argument("--format", choices=["table", "json", "sarif"], default="table", help="Output format")
+    trans_p.add_argument("--source-dir", default=None, help="Source directory for reachability analysis")
+    trans_p.add_argument("--reachable-only", action="store_true", help="Filter for REACHABLE findings only")
 
     # Hub
     hub_p = subparsers.add_parser(
@@ -1097,6 +1099,10 @@ def main() -> None:
 
     elif args.command == "audit-transitive":
         res = TransitiveDependencyAuditor.audit_manifest_file(args.manifest)
+        if getattr(args, "source_dir", None):
+            from mcp_vulnerabilities.transitive import annotate_reachability
+            res = annotate_reachability(res, args.source_dir, reachable_only=getattr(args, "reachable_only", False))
+            
         if args.severity_threshold:
             severity_order = {"LOW": 1, "MEDIUM": 2, "MODERATE": 2, "HIGH": 3, "CRITICAL": 4}
             min_rank = severity_order.get(str(args.severity_threshold).upper(), 0)
@@ -1135,6 +1141,10 @@ def main() -> None:
                     )
                     if f.fixed_version:
                         print(f"  Remediation:   Upgrade to >= {f.fixed_version}")
+                    if getattr(f, "reachability", "UNKNOWN") != "UNKNOWN":
+                        print(f"  Reachability:  {f.reachability}")
+                    if getattr(f, "reachable_from_tools", None):
+                        print(f"                 From Tools: {', '.join(f.reachable_from_tools)}")
                     print(f"  Summary:       {f.summary}")
                 print("\n" + "-" * 70)
                 print(
