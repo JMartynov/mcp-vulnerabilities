@@ -192,11 +192,14 @@
   function renderSparkline(history) {
     if (!el.historicalSparkline || history.length < 2) return;
     
+    el.historicalSparkline.setAttribute("viewBox", "0 0 1000 80");
+    el.historicalSparkline.setAttribute("preserveAspectRatio", "none");
+    
     // Reverse history to show chronological order (oldest to newest)
     const reversedHistory = [...history].slice(0, 10).reverse();
     
-    const svgWidth = el.historicalSparkline.clientWidth || 1000;
-    const svgHeight = el.historicalSparkline.clientHeight || 80;
+    const svgWidth = 1000;
+    const svgHeight = 80;
     const padding = 10;
     
     // Extract points
@@ -413,7 +416,7 @@
       
       let fpBadge = "";
       if (s.toolset_canonical_hash) {
-          fpBadge = `<div class="fp-badge" style="cursor: pointer;" onclick="navigator.clipboard.writeText('${s.toolset_canonical_hash}'); const t = this.querySelector('.tooltip'); t.textContent = 'Copied!'; t.style.display = 'inline'; setTimeout(() => { t.textContent = 'Copy'; t.style.display = 'none'; }, 2000);">🔑 sha256:${s.toolset_canonical_hash.substring(0, 8)}...<span class="tooltip" style="display:none;">Copy</span></div>`;
+          fpBadge = `<div class="fp-badge" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" style="cursor: pointer;" onclick="navigator.clipboard.writeText('${s.toolset_canonical_hash}'); const t = this.querySelector('.tooltip'); t.textContent = 'Copied!'; t.style.display = 'inline'; setTimeout(() => { t.textContent = 'Copy'; t.style.display = 'none'; }, 2000);">🔑 sha256:${s.toolset_canonical_hash.substring(0, 8)}...<span class="tooltip" style="display:none;">Copy</span></div>`;
       }
 
       return `
@@ -588,6 +591,18 @@
   }
 
   function selectVersion(v) {
+    // Reset sub-tabs to tools
+    const toolsTabBtn = document.querySelector('.primitive-tab-btn:nth-child(1)');
+    if (toolsTabBtn) {
+        document.getElementById('modal-tools-container').style.display='block';
+        const promptsContainer = document.getElementById('modal-prompts-container');
+        if (promptsContainer) promptsContainer.style.display='none';
+        const resourcesContainer = document.getElementById('modal-resources-container');
+        if (resourcesContainer) resourcesContainer.style.display='none';
+        document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active'));
+        toolsTabBtn.classList.add('active');
+    }
+
     currentInspectedVersion = v;
     if (!v) {
       el.selectedVersionLabel.textContent = "N/A";
