@@ -14,6 +14,7 @@
   let activeRiskFilter = "ALL"; // "ALL" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
   let activeDirectoryEco = "ALL";
   let directorySearchQuery = "";
+  let expandedToolServers = new Set();
 
   // Advisory Filters
   let activeAdvisorySeverity = "ALL";
@@ -51,6 +52,7 @@
     advisorySearchInput: document.getElementById("advisory-search-input"),
     advisorySeverityChips: document.getElementById("advisory-severity-chips"),
     advisoryEcoChips: document.getElementById("advisory-eco-chips"),
+    filterToolsOnly: document.getElementById("filterToolsOnly"),
     advisoriesResultsCount: document.getElementById("advisories-results-count"),
     advisoriesContainer: document.getElementById("advisories-container"),
 
@@ -87,7 +89,16 @@
     modalExternalLink: document.getElementById("modal-external-link"),
   };
 
-  async function init() {
+  window.toggleToolsExpand = async function(serverName) {
+    if (expandedToolServers.has(serverName)) {
+      expandedToolServers.delete(serverName);
+    } else {
+      expandedToolServers.add(serverName);
+    }
+    renderDirectoryCards();
+  };
+
+  function init() {
     setupEventListeners();
     await Promise.all([loadCatalogIndex(), loadAdvisories()]);
     
@@ -160,6 +171,10 @@
     });
 
     // Advisory Search & Filters
+    el.filterToolsOnly.addEventListener("change", (e) => {
+      applyDirectoryFilters();
+    });
+
     el.advisorySearchInput.addEventListener("input", (e) => {
       advisorySearchQuery = e.target.value.trim().toLowerCase();
       applyAdvisoryFilters();
@@ -276,6 +291,11 @@
         if ((server.ecosystem || "").toLowerCase() !== activeDirectoryEco.toLowerCase()) return false;
       }
 
+      // Has Tools Only Filter
+      if (el.filterToolsOnly && el.filterToolsOnly.checked) {
+        if (!server.tools_count || server.tools_count === 0) return false;
+      }
+
       // Search Query
       if (directorySearchQuery) {
         const query = directorySearchQuery;
@@ -312,9 +332,33 @@
         ? `<span class="safe-rec-pill">Recommended: v${escapeHtml(s.recommended_safe_version)}</span>`
         : "";
 
-      const toolPills = (s.tools_sample || [])
-        .map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t)}">🔧 ${escapeHtml(t)}</span>`)
-        .join("");
+      let toolsHtml = "";
+      if (!s.tools_count || s.tools_count === 0) {
+        toolsHtml = `
+          <div class="tools-section">
+            <div class="no-tools-badge">No static tools declared (Remote Endpoint / Gateway)</div>
+          </div>
+        `;
+      } else {
+        const isExpanded = expandedToolServers.has(s.package_name);
+        const allTools = s.tools_sample || [];
+        const displayCount = isExpanded ? allTools.length : Math.min(5, allTools.length);
+        
+        let toolPillsHtml = allTools.slice(0, displayCount)
+          .map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t)}" onclick="openInspectorModal('${escapeHtml(s.package_name)}', '${escapeHtml(t)}')">🔧 ${escapeHtml(t)}</span>`)
+          .join("");
+          
+        let expandBtn = "";
+        if (s.tools_count > 5) {
+          if (isExpanded) {
+            expandBtn = `<span class="tool-tag-more" role="button" tabindex="0" onclick="toggleToolsExpand('${escapeHtml(s.package_name)}')" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleToolsExpand('${escapeHtml(s.package_name)}'); }">Show less ▴</span>`;
+          } else {
+            expandBtn = `<span class="tool-more" role="button" tabindex="0" onclick="toggleToolsExpand('${escapeHtml(s.package_name)}')" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleToolsExpand('${escapeHtml(s.package_name)}'); }">+${s.tools_count - 5} more</span>`;
+          }
+        }
+        
+        toolsHtml = toolPillsHtml + expandBtn;
+      }
 
       return `
         <article class="server-card">
@@ -341,8 +385,7 @@
           </div>
 
           <div class="server-tools-row">
-            ${toolPills}
-            ${(s.tools_count > (s.tools_sample || []).length) ? `<span class="tool-more">+${s.tools_count - s.tools_sample.length} more</span>` : ""}
+            ${toolsHtml}
           </div>
 
           <div class="server-card-footer">
@@ -367,6 +410,19 @@
   }
 
   // Deep-Dive Modal with On-Demand Sharding
+  window.openInspectorModal = function(pkgName, toolName) {
+    const s = catalogIndex.find(x => x.package_name === pkgName);
+    openServerModal(pkgName, s ? s.shard_file : null);
+    setTimeout(() => {
+      const toolHeader = Array.from(document.querySelectorAll(".tool-name")).find(el => el.textContent.includes(toolName));
+      if (toolHeader) {
+        toolHeader.scrollIntoView({ behavior: "smooth", block: "center" });
+        toolHeader.closest(".tool-signature-card").style.backgroundColor = "rgba(59, 130, 246, 0.1)";
+        setTimeout(() => toolHeader.closest(".tool-signature-card").style.backgroundColor = "", 2000);
+      }
+    }, 500);
+  };
+
   async function openServerModal(pkgName, shardFile) {
     el.modalServerTitle.textContent = "Loading server details...";
     el.modalServerPkg.textContent = pkgName;
@@ -562,7 +618,7 @@
               ${adv.vulnerable_tools && adv.vulnerable_tools.length > 0 ? `
                 <div class="vuln-tools-tag-row">
                   <strong>Affected Tools:</strong>
-                  ${adv.vulnerable_tools.map((t) => `<span class="tool-tag-danger">⚠️ ${escapeHtml(t)}</span>`).join("")}
+                  ${adv.vulnerable_tools.map((t) => `<span class="tool-tag tool-tag-danger" onclick="openInspectorModal('${escapeHtml(currentInspectedServer.package_name)}', '${escapeHtml(t)}')">⚠️ ${escapeHtml(t)}</span>`).join("")}
                 </div>
               ` : ""}
             </div>
@@ -759,6 +815,11 @@
       if (activeAdvisoryEco !== "ALL") {
         const ecosystems = getEcosystems(adv);
         if (!ecosystems.includes(activeAdvisoryEco)) return false;
+      }
+
+      // Has Tools Only Filter
+      if (el.filterToolsOnly && el.filterToolsOnly.checked) {
+        if (!server.tools_count || server.tools_count === 0) return false;
       }
 
       // Search Query
