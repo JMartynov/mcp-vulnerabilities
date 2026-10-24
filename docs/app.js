@@ -7,7 +7,7 @@
   let allAdvisories = [];
   let filteredAdvisories = [];
 
-  let activeTab = "directory"; // "directory" | "advisories"
+  let activeTab = "directory"; // "directory" | "advisories" | "audit"
 
   // Directory Filters
   let activeVulnFilter = "ALL"; // "ALL" | "VULNERABLE" | "SAFE"
@@ -37,8 +37,23 @@
     // Tabs
     tabDirectory: document.getElementById("tab-directory"),
     tabAdvisories: document.getElementById("tab-advisories"),
+    tabAudit: document.getElementById("tab-audit"),
     viewDirectory: document.getElementById("directory-view"),
     viewAdvisories: document.getElementById("advisories-view"),
+    viewAudit: document.getElementById("audit-view"),
+
+    // Audit Controls
+    auditZone: document.getElementById("config-audit-zone"),
+    auditFileInput: document.getElementById("audit-file-input"),
+    auditResultsContainer: document.getElementById("audit-results-container"),
+    auditTotalServers: document.getElementById("audit-total-servers"),
+    auditSafeServers: document.getElementById("audit-safe-servers"),
+    auditVulnServers: document.getElementById("audit-vuln-servers"),
+    auditServerList: document.getElementById("audit-server-list"),
+    auditRemediationPanel: document.getElementById("audit-remediation-panel"),
+    auditBtnCopyRemediated: document.getElementById("btn-copy-remediated"),
+    auditExportToast: document.getElementById("audit-export-toast"),
+    auditExportPreview: document.getElementById("audit-export-preview"),
 
     // Directory Controls
     directorySearchInput: document.getElementById("directory-search-input"),
@@ -136,6 +151,51 @@
     // Tab Switching
     el.tabDirectory.addEventListener("click", () => switchTab("directory"));
     el.tabAdvisories.addEventListener("click", () => switchTab("advisories"));
+    if (el.tabAudit) el.tabAudit.addEventListener("click", () => switchTab("audit"));
+
+    // Audit Zone
+    if (el.auditZone) {
+      el.auditZone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+        el.auditZone.classList.add("dragover");
+      });
+      el.auditZone.addEventListener("dragleave", () => {
+        el.auditZone.classList.remove("dragover");
+      });
+      el.auditZone.addEventListener("drop", (e) => {
+        e.preventDefault();
+        el.auditZone.classList.remove("dragover");
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+          handleAuditFile(e.dataTransfer.files[0]);
+        }
+      });
+      el.auditZone.addEventListener("click", () => {
+        el.auditFileInput.click();
+      });
+      el.auditFileInput.addEventListener("change", (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+          handleAuditFile(e.target.files[0]);
+        }
+      });
+      document.addEventListener("paste", (e) => {
+        if (activeTab === "audit" && e.clipboardData) {
+          const text = e.clipboardData.getData("text");
+          if (text) handleAuditText(text);
+        }
+      });
+    }
+
+    if (el.auditBtnCopyRemediated) {
+      el.auditBtnCopyRemediated.addEventListener("click", () => {
+        const code = el.auditExportPreview.querySelector("code").textContent;
+        navigator.clipboard.writeText(code).then(() => {
+          el.auditExportToast.style.display = "block";
+          setTimeout(() => {
+            el.auditExportToast.style.display = "none";
+          }, 2000);
+        });
+      });
+    }
 
     // Directory Search & Filters
     el.directorySearchInput.addEventListener("input", (e) => {
@@ -217,21 +277,327 @@
 
   function switchTab(tab) {
     activeTab = tab;
+    
+    // Reset all
+    [el.tabDirectory, el.tabAdvisories, el.tabAudit].forEach(t => {
+      if(t) {
+        t.classList.remove("active");
+        t.setAttribute("aria-selected", "false");
+      }
+    });
+    [el.viewDirectory, el.viewAdvisories, el.viewAudit].forEach(v => {
+      if(v) v.style.display = "none";
+    });
+
     if (tab === "directory") {
       el.tabDirectory.classList.add("active");
       el.tabDirectory.setAttribute("aria-selected", "true");
-      el.tabAdvisories.classList.remove("active");
-      el.tabAdvisories.setAttribute("aria-selected", "false");
       el.viewDirectory.style.display = "block";
-      el.viewAdvisories.style.display = "none";
-    } else {
+    } else if (tab === "advisories") {
       el.tabAdvisories.classList.add("active");
       el.tabAdvisories.setAttribute("aria-selected", "true");
-      el.tabDirectory.classList.remove("active");
-      el.tabDirectory.setAttribute("aria-selected", "false");
       el.viewAdvisories.style.display = "block";
-      el.viewDirectory.style.display = "none";
+    } else if (tab === "audit") {
+      if (el.tabAudit) {
+        el.tabAudit.classList.add("active");
+        el.tabAudit.setAttribute("aria-selected", "true");
+      }
+      if (el.viewAudit) el.viewAudit.style.display = "block";
     }
+  }
+
+  // Config Auditing Logic
+  function handleAuditFile(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      handleAuditText(e.target.result);
+    };
+    reader.readAsText(file);
+  }
+
+  function stripComments(text) {
+    // Strip /* */ comments
+    let clean = text.replace(/\/\*[\s\S]*?\*\//g, '');
+    
+    // Process character by character for safer JSONC stripping
+    let out = '';
+    let inString = false;
+    let i = 0;
+    while(i < clean.length) {
+      if(clean[i] === '"' && (i === 0 || clean[i-1] !== '\\')) {
+        inString = !inString;
+        out += clean[i];
+        i++;
+        continue;
+      }
+      if(!inString && clean[i] === '/' && clean[i+1] === '/') {
+        while(i < clean.length && clean[i] !== '\n') i++;
+        out += '\n';
+        continue;
+      }
+      out += clean[i];
+      i++;
+    }
+    // Remove trailing commas
+    out = out.replace(/,\s*([\]}])/g, '$1');
+    return out;
+  }
+
+  function handleAuditText(text) {
+    let configObj = null;
+    try {
+      const cleanText = stripComments(text);
+      configObj = JSON.parse(cleanText);
+    } catch (e) {
+      alert("Invalid JSON configuration pasted or dropped.");
+      return;
+    }
+
+    if (!configObj) return;
+
+    let serversObj = configObj.mcpServers || configObj.mcp_servers || configObj.context_servers || configObj.servers;
+    
+    // Check if root itself is a dictionary of server configs
+    if (!serversObj && typeof configObj === 'object' && !Array.isArray(configObj)) {
+        let isRoot = true;
+        for (let k in configObj) {
+            if (typeof configObj[k] !== 'object' || (!configObj[k].command && !configObj[k].args)) {
+                isRoot = false;
+                break;
+            }
+        }
+        if (isRoot) serversObj = configObj;
+    }
+
+    if (!serversObj) {
+      alert("No MCP servers found in the provided configuration.");
+      return;
+    }
+
+    const auditResults = [];
+    const remediatedServersObj = JSON.parse(JSON.stringify(serversObj));
+    let remediated = false;
+
+    for (const [name, conf] of Object.entries(serversObj)) {
+      if (typeof conf !== "object") continue;
+      
+      let command = conf.command;
+      let args = conf.args || [];
+      if (typeof command === "object") {
+         args = command.args || args;
+         command = command.path || command.command;
+      }
+
+      if (!command) continue;
+
+      const parsed = extractPackageInfo(command, args);
+      
+      let matchedServer = null;
+      let isVuln = false;
+      let safeVersion = null;
+
+      if (parsed && parsed.packageName) {
+         matchedServer = catalogIndex.find(s => s.package_name === parsed.packageName || s.display_name === parsed.packageName);
+      }
+
+      if (matchedServer) {
+         if (matchedServer.is_vulnerable) {
+            isVuln = true;
+            safeVersion = matchedServer.recommended_safe_version;
+            
+            // Generate remediation diff if safe version exists
+            if (safeVersion) {
+               remediated = true;
+               remediatedServersObj[name] = generateRemediatedConfig(conf, parsed, safeVersion);
+            }
+         }
+      }
+
+      auditResults.push({
+         name: name,
+         command: [command, ...args].join(" "),
+         parsedPackage: parsed ? parsed.packageName : "Unknown",
+         parsedVersion: parsed ? parsed.version : "Unknown",
+         isVulnerable: isVuln,
+         matchedServer: matchedServer,
+         safeVersion: safeVersion
+      });
+    }
+
+    renderAuditResults(auditResults, configObj, remediatedServersObj, remediated);
+  }
+
+  function extractPackageInfo(command, args) {
+      let eco = "generic";
+      let pkgName = null;
+      let version = null;
+      let p_args = Array.isArray(args) ? args.map(a => String(a)) : [];
+
+      if (command.includes("npx") || command.includes("npm")) {
+          eco = "npm";
+          for (let arg of p_args) {
+              if (arg.startsWith("-")) continue;
+              if (arg === "npm" || arg === "npx" || arg === "run" || arg === "exec") continue;
+              
+              let parts = arg.split("@");
+              if (arg.startsWith("@")) {
+                 if (parts.length > 2) {
+                     pkgName = "@" + parts[1];
+                     version = parts[2];
+                 } else {
+                     pkgName = arg;
+                 }
+              } else {
+                 pkgName = parts[0];
+                 if (parts.length > 1) version = parts[1];
+              }
+              break;
+          }
+      } else if (command.includes("uvx") || command.includes("pipx") || command.includes("python")) {
+          eco = "PyPI";
+          let idx = 0;
+          if (command.includes("python")) {
+             while (idx < p_args.length && (p_args[idx] === "-m" || p_args[idx] === "pip" || p_args[idx].startsWith("-"))) {
+                 idx++;
+             }
+          }
+          if (idx < p_args.length) {
+              let arg = p_args[idx];
+              // Handle uvx syntax like pkg==1.0.0
+              if (arg.includes("==")) {
+                  let parts = arg.split("==");
+                  pkgName = parts[0];
+                  version = parts[1];
+              } else if (arg.includes("@")) {
+                  let parts = arg.split("@");
+                  pkgName = parts[0];
+                  version = parts[1];
+              } else {
+                  pkgName = arg;
+              }
+          }
+      }
+
+      if (!pkgName) return null;
+      return { ecosystem: eco, packageName: pkgName, version: version };
+  }
+
+  function generateRemediatedConfig(originalConf, parsed, safeVersion) {
+      const newConf = JSON.parse(JSON.stringify(originalConf));
+      let args = Array.isArray(newConf.args) ? newConf.args : [];
+      let command = newConf.command;
+      
+      let p_args = args.slice();
+      let modified = false;
+
+      if (parsed.ecosystem === "npm") {
+          for (let i = 0; i < p_args.length; i++) {
+              let arg = p_args[i];
+              if (arg.startsWith("-")) continue;
+              if (arg === "npm" || arg === "npx" || arg === "run" || arg === "exec") continue;
+              
+              p_args[i] = `${parsed.packageName}@${safeVersion}`;
+              modified = true;
+              break;
+          }
+      } else if (parsed.ecosystem === "PyPI") {
+          let idx = 0;
+          if (command.includes("python")) {
+             while (idx < p_args.length && (p_args[idx] === "-m" || p_args[idx] === "pip" || p_args[idx].startsWith("-"))) {
+                 idx++;
+             }
+          }
+          if (idx < p_args.length) {
+              let arg = p_args[idx];
+              if (arg.includes("==")) {
+                  p_args[idx] = `${parsed.packageName}==${safeVersion}`;
+                  modified = true;
+              } else if (arg.includes("@")) {
+                  p_args[idx] = `${parsed.packageName}@${safeVersion}`;
+                  modified = true;
+              } else {
+                  // Not pinned before, pin it now
+                  if (command.includes("uvx") || command.includes("pipx")) {
+                      p_args[idx] = `${parsed.packageName}@${safeVersion}`;
+                  } else {
+                      p_args[idx] = `${parsed.packageName}==${safeVersion}`;
+                  }
+                  modified = true;
+              }
+          }
+      }
+
+      if (modified) {
+          newConf.args = p_args;
+      }
+      return newConf;
+  }
+
+  function renderAuditResults(results, originalConfig, remediatedServersObj, remediated) {
+      el.auditZone.style.display = "none";
+      el.auditResultsContainer.style.display = "block";
+
+      let safeCount = 0;
+      let vulnCount = 0;
+
+      let listHtml = "";
+
+      results.forEach(res => {
+          if (res.isVulnerable) vulnCount++;
+          else if (res.matchedServer) safeCount++;
+
+          let statusClass = res.isVulnerable ? "vulnerable" : (res.matchedServer ? "clean" : "unknown");
+          let statusBadge = "";
+          let vulnInfo = "";
+
+          if (res.isVulnerable) {
+              statusBadge = `<span class="badge badge-danger">🔴 Vulnerable</span>`;
+              vulnInfo = `
+                  <div class="audit-server-vuln-info">
+                      <p><strong>⚠️ Security Risk Detected</strong></p>
+                      <p>Found <strong>${escapeHtml(res.parsedPackage)}</strong> which has known vulnerabilities.</p>
+                      ${res.safeVersion ? `<p>Recommended Fix: Pin to <strong>v${escapeHtml(res.safeVersion)}</strong></p>` : `<p>No safe version known yet.</p>`}
+                  </div>
+              `;
+          } else if (res.matchedServer) {
+              statusBadge = `<span class="badge badge-success">🟢 Clean</span>`;
+          } else {
+              statusBadge = `<span class="badge">⚪ Unknown Package</span>`;
+          }
+
+          listHtml += `
+              <div class="audit-server-item ${statusClass}">
+                  <div class="audit-server-header">
+                      <div>
+                          <div class="audit-server-title">${escapeHtml(res.name)}</div>
+                          <div class="audit-server-cmd">${escapeHtml(res.command)}</div>
+                      </div>
+                      ${statusBadge}
+                  </div>
+                  ${vulnInfo}
+              </div>
+          `;
+      });
+
+      el.auditTotalServers.textContent = results.length;
+      el.auditSafeServers.textContent = safeCount;
+      el.auditVulnServers.textContent = vulnCount;
+      el.auditServerList.innerHTML = listHtml;
+
+      if (remediated) {
+          el.auditRemediationPanel.style.display = "block";
+          
+          let newConfigObj = JSON.parse(JSON.stringify(originalConfig));
+          if (newConfigObj.mcpServers) newConfigObj.mcpServers = remediatedServersObj;
+          else if (newConfigObj.mcp_servers) newConfigObj.mcp_servers = remediatedServersObj;
+          else if (newConfigObj.context_servers) newConfigObj.context_servers = remediatedServersObj;
+          else if (newConfigObj.servers) newConfigObj.servers = remediatedServersObj;
+          else newConfigObj = remediatedServersObj;
+
+          el.auditExportPreview.querySelector("code").textContent = JSON.stringify(newConfigObj, null, 2);
+      } else {
+          el.auditRemediationPanel.style.display = "none";
+      }
   }
 
   // Load Data
