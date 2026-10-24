@@ -50,6 +50,18 @@ def main() -> None:
     )
     subparsers = parser.add_subparsers(dest="command", required=True)
 
+
+    # Site Build
+    site_build_p = subparsers.add_parser(
+        "site-build", help="High-performance parallel site builder"
+    )
+    site_build_p.add_argument("--data-dir", default="data/vulnerabilities", help="Vulnerabilities directory")
+    site_build_p.add_argument("--output-dir", default="docs/data", help="Output directory")
+    site_build_p.add_argument("--passports", default=None, help="Passports file path")
+    site_build_p.add_argument("--workers", type=int, default=0, help="Worker concurrency (default: CPU count)")
+    site_build_p.add_argument("--no-cache", action="store_true", help="Force complete re-evaluation without cache")
+    site_build_p.add_argument("--benchmark", action="store_true", help="Print detailed timing breakdown")
+
     # Discover
     disc_p = subparsers.add_parser(
         "discover", help="Run multi-registry MCP server discovery"
@@ -612,7 +624,23 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    if args.command == "discover":
+    if args.command == "site-build":
+        import os
+        from mcp_vulnerabilities.site_builder import build_static_site_data
+        
+        workers = args.workers if args.workers > 0 else (os.cpu_count() or 4)
+        
+        build_static_site_data(
+            data_dir=args.data_dir,
+            output_dir=args.output_dir,
+            passports_path=args.passports,
+            workers=workers,
+            use_cache=not args.no_cache,
+            benchmark=args.benchmark,
+        )
+        sys.exit(0)
+
+    elif args.command == "discover":
         orchestrator = McpDiscoveryOrchestrator(catalog_file=args.catalog_file)
         servers = orchestrator.run_discovery(
             include_npm=not args.no_npm,
