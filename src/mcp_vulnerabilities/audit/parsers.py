@@ -53,10 +53,28 @@ class ClientConfigParser:
         if not path.exists():
             raise FileNotFoundError(f"Configuration file not found: {path}")
 
+        # Read text, strip BOM if present
         text = path.read_text(encoding="utf-8")
-        # Handle trailing commas or comments if needed
-        clean_text = re.sub(r"//.*", "", text)
-        clean_text = re.sub(r",\s*([\]}])", r"\1", clean_text)
+        if text.startswith('\ufeff'):
+            text = text[1:]
+
+        # Handle comments
+        # Strip /* */ comments
+        clean_text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
+        
+        # Strip // comments carefully avoiding strings
+        string_re = r'"(?:\\.|[^"\\])*"'
+        sl_comment_re = r'//.*?\n|//.*?$'
+        pattern = re.compile(f'({string_re})|({sl_comment_re})', re.MULTILINE)
+        
+        def repl(m):
+            if m.group(1): return m.group(1)
+            return "\n" if m.group(0).endswith('\n') else ""
+            
+        clean_text = pattern.sub(repl, clean_text)
+        
+        # Handle trailing commas
+        clean_text = re.sub(r',\s*([\]}])', r'\1', clean_text)
 
         data = None
         try:
@@ -64,7 +82,7 @@ class ClientConfigParser:
         except Exception:
             try:
                 import yaml
-                data = yaml.safe_load(text)
+                data = yaml.safe_load(clean_text)
             except Exception as e:
                 logger.warning(f"Could not parse config file {path}: {e}")
                 return []
@@ -114,6 +132,8 @@ class ClientConfigParser:
         source_file: Path | None = None,
         client_name: str | None = None,
     ) -> DiscoveredClientServer | None:
+        import os
+
         command_val = conf.get("command", "")
         if isinstance(command_val, dict):
             # Zed context_servers format: command: { path: "...", args: [...] }
@@ -131,6 +151,21 @@ class ClientConfigParser:
 
         if not command and not args:
             return None
+
+        # Cross-platform path normalization
+        command = command.replace("\\", "/")
+
+        # Environment variable expansion
+        args = [os.path.expandvars(a) for a in args]
+
+        # Secret Redaction
+        redacted_env = {}
+        for k, v in env.items():
+            if re.search(r"KEY|TOKEN|SECRET|PASSWORD", k, re.IGNORECASE):
+                redacted_env[k] = "***REDACTED***"
+            else:
+                redacted_env[k] = v
+        env = redacted_env
 
         cmd_lower = Path(command).name.lower()
         package_name = name
