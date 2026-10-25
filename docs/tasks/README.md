@@ -242,27 +242,27 @@ Master Plan: [IMPLEMENTATION_PLAN_WAVE17_CODE_REVIEW_DOCS_AND_RELEASE_V120.md](I
 
 ---
 
-### 18. Wave 18: Web View & Security Intelligence Portal Enhancements (Active Wave)
+### 18. Wave 18: Web View & Security Intelligence Portal Enhancements (Completed)
 
 Master Plan: [IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md](IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **89** | **Passports Pipeline Fix & Static Data Recompilation** | Pipeline & Data Engine (`src/mcp_vulnerabilities/site_builder.py`, `docs/data/`) | `Todo` | Default to `passports.json.gz`, extract connection config schemas (`x-api-key`, `client_secret`) and transports, and recompile `mcp_catalog_index.json` and `analytics.json`. | [task89_passports_pipeline_fix_and_data_recompilation.md](task89_passports_pipeline_fix_and_data_recompilation.md) |
-| **90** | **Directory Multi-Criteria Sorting & URL Deep-Linking** | Front-End Explorer (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Todo` | Multi-criteria sorting dropdown (Risk, Advisories, Tools, A-Z) and bidirectional URL query state synchronization (`?q=`, `?server=`, `?tab=`, `?sort=`). | [task90_directory_sorting_and_url_deep_linking.md](task90_directory_sorting_and_url_deep_linking.md) |
-| **91** | **Server Modal Remote Endpoints & Config Schema Panel** | Front-End Modal (`docs/index.html`, `docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Todo` | 4th sub-tab "🌐 Endpoints & Schema" rendering live deployment URLs, connection types (`streamable-http`, `sse`), and config property schemas with HTTP warnings. | [task91_server_modal_remote_endpoints_and_config_schema.md](task91_server_modal_remote_endpoints_and_config_schema.md) |
-| **92** | **In-Browser Config Auditor Sample Presets & Report Exporter** | Client-Side Auditing (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Todo` | 1-click sample vulnerable and clean preset buttons, plus "Download Fixed Config (.json)" and "Export Markdown Audit Report (.md)" buttons. | [task92_inbrowser_config_auditor_presets_and_exporter.md](task92_inbrowser_config_auditor_presets_and_exporter.md) |
-| **93** | **Interactive Click-to-Filter Drilldowns on Analytics Portal** | Analytics Web Portal (`docs/analytics.html`, `docs/app.js`) | `Todo` | Make tools, OWASP categories, shadowed tools, and Zero-Day gap cards clickable to navigate to `index.html` with active search and filter parameters. | [task93_interactive_click_to_filter_analytics_drilldowns.md](task93_interactive_click_to_filter_analytics_drilldowns.md) |
-| **94** | **Interactive Arbitrary Two-Version Diff Comparator in Modal** | Front-End Modal (`docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Todo` | Baseline version selector inside `#server-modal` computing cumulative tool additions, removals, parameter mutations, and resolved/introduced CVEs. | [task94_interactive_arbitrary_two_version_diff_comparator.md](task94_interactive_arbitrary_two_version_diff_comparator.md) |
+| **89** | **Passports Pipeline Fix & Static Data Recompilation** | Pipeline & Data Engine (`src/mcp_vulnerabilities/site_builder.py`, `docs/data/`) | `Done` | Defaulted to `passports.json.gz`, extracted connection config schemas (`x-api-key`, `client_secret`) and transports, and recompiled `mcp_catalog_index.json` (6,298 servers) and `analytics.json`. | [task89_passports_pipeline_fix_and_data_recompilation.md](task89_passports_pipeline_fix_and_data_recompilation.md) |
+| **90** | **Directory Multi-Criteria Sorting & URL Deep-Linking** | Front-End Explorer (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Done` | Added multi-criteria sorting dropdown (Risk, Advisories, Tools, A-Z) and bidirectional URL query state synchronization (`?q=`, `?server=`, `?tab=`, `?sort=`). | [task90_directory_sorting_and_url_deep_linking.md](task90_directory_sorting_and_url_deep_linking.md) |
+| **91** | **Server Modal Remote Endpoints & Config Schema Panel** | Front-End Modal (`docs/index.html`, `docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Done` | Added 4th sub-tab "🌐 Endpoints & Schema" rendering live deployment URLs, connection types (`streamable-http`, `sse`), and config property schemas with HTTP warnings. | [task91_server_modal_remote_endpoints_and_config_schema.md](task91_server_modal_remote_endpoints_and_config_schema.md) |
+| **92** | **In-Browser Config Auditor Sample Presets & Report Exporter** | Client-Side Auditing (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Done` | Added 1-click sample vulnerable and clean preset buttons, plus "Download Fixed Config (.json)" and "Export Markdown Audit Report (.md)" buttons. | [task92_inbrowser_config_auditor_presets_and_exporter.md](task92_inbrowser_config_auditor_presets_and_exporter.md) |
+| **93** | **Interactive Click-to-Filter Drilldowns on Analytics Portal** | Analytics Web Portal (`docs/analytics.html`, `docs/app.js`) | `Done` | Made tools, OWASP categories, shadowed tools, and Zero-Day gap cards clickable to navigate to `index.html` with active search and filter parameters. | [task93_interactive_click_to_filter_analytics_drilldowns.md](task93_interactive_click_to_filter_analytics_drilldowns.md) |
+| **94** | **Interactive Arbitrary Two-Version Diff Comparator in Modal** | Front-End Modal (`docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Done` | Added baseline version selector inside `#server-modal` computing cumulative tool additions, removals, parameter mutations, and resolved/introduced CVEs. | [task94_interactive_arbitrary_two_version_diff_comparator.md](task94_interactive_arbitrary_two_version_diff_comparator.md) |
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 370+ passed in 93.77s =============================
+============================= 373 passed, 2 skipped in 95.12s =============================
 ```
-- Total test count: **370+**
-- Passing: **370+ (100% of runnable)**
-- Skipped: **5**
+- Total test count: **375**
+- Passing: **373 (100% of runnable)**
+- Skipped: **2**
 - Failed: **0**
 - Empirical Invariant Suite (`tests/audit/`): **28 passed in 12.08s (100%)**
 - Code Review Scorecard: **100 / 100** (Full register in [`docs/reports/code_review_wave15_16_remediation_and_v12.md`](../reports/code_review_wave15_16_remediation_and_v12.md) and [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md))
