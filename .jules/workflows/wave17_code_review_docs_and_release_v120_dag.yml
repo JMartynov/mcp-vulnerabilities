@@ -1,0 +1,27 @@
+version: "1.0"
+name: wave17_code_review_docs_and_release_v120_dag
+description: "Wave 17: Full Code Review & Verification Audit of Tasks 78-85 (Task 86), v1.2.0 Documentation & Specification Sync (Task 87), and v1.2.0 Version Bump & CI Tracking (Task 88)"
+repo: JMartynov/mcp-vulnerabilities
+base_branch: main
+max_parallel: 2
+
+tasks:
+  - id: task-86
+    name: "Task 86: Full Code Review & Empirical Verification Audit of Tasks 78-85 (P0)"
+    prompt_file: .jules/task86_full_code_review_and_verification_waves15_16.md
+    depends_on: []
+    condition: on_success
+
+  - id: task-87
+    name: "Task 87: v1.2.0 Documentation & Specification Synchronization (P1)"
+    prompt_file: .jules/task87_v120_documentation_and_specification_sync.md
+    depends_on: []
+    condition: on_success
+
+  - id: task-88
+    name: "Task 88: Version Bump (v1.2.0), Portal Index Sync & CI/CD Pipeline Tracking (P0)"
+    prompt_file: .jules/task88_v120_version_bump_and_ci_pipeline_tracking.md
+    depends_on:
+      - task-86
+      - task-87
+    condition: on_success

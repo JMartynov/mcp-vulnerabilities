@@ -213,19 +213,32 @@ Source Review: [`code_review_wave14_portal_and_analytics.md`](../reports/code_re
 | **79** | **Precomputed `composite_risk_tier` & `highest_cve_severity` in Catalog Index** | Pipeline & UI (`site_builder.py`, `app.js`, `updates.js`) | `Done` | Resolved `DEFECT-W14-02` (`P0`, Session `9720365503164944261`, Commit `f55fca3`): Precomputed and stamped `highest_cve_severity` and `composite_risk_tier` in `mcp_catalog_index.json` and consumed in `getServerCompositeRisk()`. | [task79_precomputed_composite_risk_tier_catalog_index.md](task79_precomputed_composite_risk_tier_catalog_index.md) |
 | **80** | **In-Browser Config Auditor CVE IDs, CVSS Scores & Posture Report** | Client Auditor (`docs/app.js`, `style.css`) | `Done` | Resolved `DEFECT-W14-03` (`P0`, Session `7022561971720096517`, Commit `146cb83`): Cross-referenced `allAdvisories` via `findMatchingAdvisoriesForPackage()` to render CVE/GHSA IDs, severity badges, and CVSS scores. | [task80_config_auditor_cve_ids_and_cvss_scores.md](task80_config_auditor_cve_ids_and_cvss_scores.md) |
 | **81** | **Latest-Version (`versions[-1]`) Analytics & Catalog Tool Ingestion Fix** | Analytics Pipeline (`site_builder.py`) | `Done` | Resolved `DEFECT-W14-05` (`P1`, Session `15505509719293241829`, Commit `ef050c2`): Selected `versions[-1]` (latest version) instead of `versions[0]` when extracting catalog tools, capabilities, and required env vars. | [task81_latest_version_analytics_and_catalog_ingestion.md](task81_latest_version_analytics_and_catalog_ingestion.md) |
-| **82** | **Wave 14 Automated Test Coverage (`test_analytics.py` & `test_wave14_portal.py`)** | Automated Testing (`tests/`) | `Done` | Resolved `DEFECT-W14-04` (`P0`, Session `13159707752798282323`, Commit `5b5ba3e`): Authored `tests/test_analytics.py` and `tests/test_wave14_portal.py` covering analytics invariants, composite risk, and portal DOM/JS guards. | [task82_wave14_automated_test_coverage.md](task82_wave14_automated_test_coverage.md) |
+| **82** | **CSS Design Tokens, Sub-Tab Reset, Sparkline `viewBox` & UI Hygiene** | Front-End UI (`style.css`, `app.js`, `updates.html`, `updates.js`) | `Done` | Resolved `DEFECT-W14-06..10` (`P1`, Session `4479088576653143714`, Commit `3403466`): Added missing `:root` CSS tokens & `.badge-eco`, reset primitive sub-tabs on `selectVersion()`, added keyboard accessibility to `.fp-badge`, and added `rel="noopener"` + SVG `viewBox="0 0 1000 80"`. | [task82_css_variables_accessibility_and_ui_hygiene.md](task82_css_variables_accessibility_and_ui_hygiene.md) |
+| **83** | **Comprehensive Automated Test Suite for Analytics Engine & Wave 14/15 Web Portal** | Automated Testing (`tests/`) | `Done` | Resolved `DEFECT-W14-04` (`P0`, Session `3557886881961486832`, Commit `f6e6f7a`): Authored `tests/test_analytics.py` and `tests/test_wave14_portal.py` covering analytics invariants, composite risk, and portal DOM/JS guards. | [task83_wave14_automated_test_coverage.md](task83_wave14_automated_test_coverage.md) |
 
 ---
 
-### 16. Wave 16: v1.2 Runtime Reverse Proxy Interceptor & AST Call-Graph Reachability Engine (Active Wave)
+### 16. Wave 16: v1.2 Runtime Reverse Proxy Interceptor & AST Call-Graph Reachability Engine (Completed)
 
 Master Plan: [IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md](IMPLEMENTATION_PLAN_WAVE15_CODE_REVIEW_REMEDIATION.md)  
 Strategic Roadmap Source: [`CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`](../audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **84** | **v1.2 Inline MCP Reverse Proxy Interceptor (`mcp-vuln proxy`)** | Runtime Firewall (`src/mcp_vulnerabilities/proxy/`) | `Todo` | Implement Blueprint 1 (Task 67/72): Bidirectional STDIO JSON-RPC firewall intercepting `tools/list` and `tools/call` to block OSV `vulnerable_tools`, shadow tools, and injection payloads in real time. | [task84_inline_mcp_reverse_proxy_interceptor.md](task84_inline_mcp_reverse_proxy_interceptor.md) |
-| **85** | **v1.2 AST Interprocedural Call-Graph Reachability Engine** | Context-Aware SCA (`analyzers/reachability/`) | `Todo` | Implement Blueprint 2 (Task 69/72): Python & JS/TS AST call-graph analyzer tracing from `@mcp.tool` entrypoints into third-party dependencies to classify transitive findings as `REACHABLE`, `UNREACHABLE_IMPORT`, or `NOT_IMPORTED`. | [task85_ast_call_graph_reachability_engine.md](task85_ast_call_graph_reachability_engine.md) |
+| **84** | **v1.2 Inline MCP Reverse Proxy Interceptor (`mcp-vuln proxy`)** | Runtime Firewall (`src/mcp_vulnerabilities/proxy/`) | `Done` | Implemented Blueprint 1 (`P1`, Session `640701914058194099`, Commit `d6c5bd8`): Bidirectional STDIO JSON-RPC firewall intercepting `tools/list` and `tools/call` to block OSV `vulnerable_tools`, shadow tools, and injection payloads (`-32001`). | [task84_inline_mcp_reverse_proxy_interceptor.md](task84_inline_mcp_reverse_proxy_interceptor.md) |
+| **85** | **v1.2 AST Interprocedural Call-Graph Reachability Engine** | Context-Aware SCA (`analyzers/reachability/`) | `Done` | Implemented Blueprint 2 (`P1`, Session `18245934658405539778`, Commit `41cea8f`): Python & JS/TS AST call-graph analyzer tracing from `@mcp.tool` entrypoints into third-party dependencies (`REACHABLE_FROM_TOOL`, `IMPORTED_ONLY`, `UNREACHABLE`). | [task85_ast_call_graph_reachability_engine.md](task85_ast_call_graph_reachability_engine.md) |
+
+---
+
+### 17. Wave 17: Full Code Review & Verification Audit (Tasks 78–85), v1.2.0 Documentation Sync & Release Pipeline (Active Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_WAVE17_CODE_REVIEW_DOCS_AND_RELEASE_V120.md](IMPLEMENTATION_PLAN_WAVE17_CODE_REVIEW_DOCS_AND_RELEASE_V120.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **86** | **Full Code Review & Empirical Verification Audit of Tasks 78–85** | Quality & Code Review (`docs/reports/`) | `In Progress` | Line-by-line code review & empirical verification across Tasks 78–85; publish `docs/reports/code_review_wave15_16_remediation_and_v12.md` and upgrade Wave 14 scorecard to `100 / 100`. | [task86_full_code_review_and_verification_waves15_16.md](task86_full_code_review_and_verification_waves15_16.md) |
+| **87** | **v1.2.0 Documentation & Specification Synchronization** | Documentation (`README.md`, `SPECIFICATION.md`, `IMPLEMENTATION.md`, `CHANGELOG.md`) | `In Progress` | Document `mcp-vuln proxy`, `audit-transitive --source-dir --reachable-only`, Wave 15 portal/analytics enhancements, and `v1.2.0` release notes. | [task87_v120_documentation_and_specification_sync.md](task87_v120_documentation_and_specification_sync.md) |
+| **88** | **Version Bump (`v1.2.0`), Portal Index Sync & CI/CD Pipeline Tracking** | Release Engineering (`pyproject.toml`, `__init__.py`, `mcp_catalog_index.json`) | `Todo` | Bump package version to `1.2.0`, backfill `composite_risk_tier` in `docs/data/mcp_catalog_index.json`, trigger GitHub Actions CI, and track to 100% green completion. | [task88_v120_version_bump_and_ci_pipeline_tracking.md](task88_v120_version_bump_and_ci_pipeline_tracking.md) |
 
 ## Verification Test Results
 ```
