@@ -128,11 +128,12 @@
     renderDirectoryCards();
   };
 
+  window.handleAuditText = handleAuditText;
+
   function parseUrlParams() {
     const params = new URLSearchParams(window.location.search);
     if (!params.has('tab') && !params.has('q') && !params.has('status') && !params.has('risk') && !params.has('eco') && !params.has('tools_only') && !params.has('sort')) return;
 
-    
     // Tab
     const tabParam = params.get('tab');
     if (tabParam) switchTab(tabParam, false);
@@ -140,8 +141,8 @@
     // Search
     const qParam = params.get('q');
     if (qParam !== null) {
-      if (currentTab === 'directory') el.dirSearch.value = qParam;
-      else if (currentTab === 'advisories') el.advSearch.value = qParam;
+      if (activeTab === 'directory' && el.directorySearchInput) el.directorySearchInput.value = qParam;
+      else if (activeTab === 'advisories' && el.advisorySearchInput) el.advisorySearchInput.value = qParam;
     }
     
     // Filters
@@ -175,13 +176,15 @@
   function syncToUrl(push = false) {
     const url = new URL(window.location);
     
-    url.searchParams.set('tab', currentTab);
+    url.searchParams.set('tab', activeTab);
     
-    const query = currentTab === 'directory' ? el.dirSearch.value : el.advSearch.value;
+    const query = activeTab === 'directory' 
+      ? (el.directorySearchInput ? el.directorySearchInput.value : "") 
+      : (el.advisorySearchInput ? el.advisorySearchInput.value : "");
     if (query) url.searchParams.set('q', query);
     else url.searchParams.delete('q');
     
-    if (currentTab === 'directory') {
+    if (activeTab === 'directory') {
       if (activeVulnFilter !== 'ALL') url.searchParams.set('status', activeVulnFilter);
       else url.searchParams.delete('status');
       
@@ -208,8 +211,8 @@
   window.addEventListener('popstate', async () => {
     // Re-parse URL params on back/forward navigation
     parseUrlParams();
-    if (currentTab === "directory") applyDirectoryFilters();
-    else if (currentTab === "advisories") applyAdvisoryFilters();
+    if (activeTab === "directory") applyDirectoryFilters();
+    else if (activeTab === "advisories") applyAdvisoryFilters();
     
     const params = new URLSearchParams(window.location.search);
     const serverParam = params.get('server');
@@ -303,8 +306,8 @@
       }
     } else {
        // Just render normally if no server modal to open
-       if (currentTab === "directory") applyDirectoryFilters();
-       else if (currentTab === "advisories") applyAdvisoryFilters();
+       if (activeTab === "directory") applyDirectoryFilters();
+       else if (activeTab === "advisories") applyAdvisoryFilters();
     }
   }
 
@@ -1103,7 +1106,7 @@
 
     el.directoryResultsCount.textContent = `Showing ${filteredServers.length.toLocaleString()} of ${catalogIndex.length.toLocaleString()} servers`;
     renderDirectoryCards();
-    syncToUrl();
+    if (typeof syncToUrl === "function") syncToUrl();
   }
 
   function applySorting(servers, criteria) {

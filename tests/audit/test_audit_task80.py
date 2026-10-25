@@ -77,13 +77,10 @@ def test_task80_cve_rendering(server):
         # provide a text payload
         config_payload = '{"mcpServers": {"fs": {"command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem@1.0.0"]}}}'
         
-        # Since handleAuditText is defined inside the IIFE, we can trigger audit via file input or textarea or expose it if needed.
-        # Let's check how audit input is handled: el.auditFileInput change or textarea input / drop
+        # Since handleAuditText is defined inside the IIFE, we expose it on window or invoke it directly
         page.evaluate(f"""() => {{
-            const textarea = document.getElementById("config-audit-textarea");
-            if (textarea) {{
-                textarea.value = '{config_payload}';
-                textarea.dispatchEvent(new Event('input', {{ bubbles: true }}));
+            if (typeof window.handleAuditText === 'function') {{
+                window.handleAuditText('{config_payload}');
             }}
         }}""")
 
@@ -102,10 +99,8 @@ def test_task80_cve_rendering(server):
         # Try a safe version payload
         config_payload_safe = '{"mcpServers": {"fs": {"command": "npx", "args": ["-y", "@modelcontextprotocol/server-filesystem@1.2.3"]}}}'
         page.evaluate(f"""() => {{
-            const textarea = document.getElementById("config-audit-textarea");
-            if (textarea) {{
-                textarea.value = '{config_payload_safe}';
-                textarea.dispatchEvent(new Event('input', {{ bubbles: true }}));
+            if (typeof window.handleAuditText === 'function') {{
+                window.handleAuditText('{config_payload_safe}');
             }}
         }}""")
         
