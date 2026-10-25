@@ -103,6 +103,12 @@
     exporterPinnedVersion: document.getElementById("exporter-pinned-version"),
     exportToast: document.getElementById("export-toast"),
     exportPreview: document.getElementById("export-preview"),
+    
+    // Comparator Toolbar
+    versionComparatorToolbar: document.getElementById("version-comparator-toolbar"),
+    compareBaseSelect: document.getElementById("compare-base-select"),
+    currentCompareVersion: document.getElementById("current-compare-version"),
+    diffSummaryRow: document.getElementById("diff-summary-row"),
 
     // Advisory Modal
     advisoryModal: document.getElementById("advisory-modal"),
@@ -305,6 +311,13 @@
   // Event Listeners
   function setupEventListeners() {
     // Tab Switching
+    if (el.compareBaseSelect) {
+      el.compareBaseSelect.addEventListener("change", () => {
+        if (currentInspectedVersion) {
+          selectVersion(currentInspectedVersion);
+        }
+      });
+    }
     el.tabDirectory.addEventListener("click", () => {
       switchTab("directory", true);
       syncToUrl();
@@ -1423,7 +1436,50 @@
       url.searchParams.set('version', v.version);
       history.replaceState(null, '', url);
     }
+
+    // Setup comparator toolbar
+    if (currentInspectedServer && currentInspectedServer.versions && currentInspectedServer.versions.length > 1) {
+      el.versionComparatorToolbar.style.display = "flex";
+      el.currentCompareVersion.textContent = v ? `v${v.version}` : "v...";
+      
+      // Preserve currently selected baseline if it's still valid
+      let currentBase = el.compareBaseSelect.value;
+      
+      // Populate select
+      let optionsHtml = '';
+      let hasPrev = false;
+      const allVers = [...currentInspectedServer.versions].reverse(); // newest first
+      
+      for (let i = 0; i < allVers.length; i++) {
+        const ver = allVers[i];
+        if (v && ver.version === v.version) {
+          // If this is the currently selected target, the "previous" is i+1
+          if (i + 1 < allVers.length) {
+             optionsHtml = `<option value="prev">Previous Version (v${escapeHtml(allVers[i+1].version)})</option>` + optionsHtml;
+             hasPrev = true;
+          }
+          continue; 
+        }
+        optionsHtml += `<option value="${escapeHtml(ver.version)}">v${escapeHtml(ver.version)}</option>`;
+      }
+      
+      if (!hasPrev) {
+         optionsHtml = `<option value="prev" disabled>No Previous Version</option>` + optionsHtml;
+      }
+      
+      el.compareBaseSelect.innerHTML = optionsHtml;
+      
+      if (currentBase && Array.from(el.compareBaseSelect.options).some(o => o.value === currentBase)) {
+        el.compareBaseSelect.value = currentBase;
+      } else {
+        el.compareBaseSelect.value = "prev";
+      }
+      
+    } else {
+      el.versionComparatorToolbar.style.display = "none";
+    }
     // Reset sub-tabs to tools
+
     const toolsTabBtn = document.querySelector('.primitive-tab-btn:nth-child(1)');
     if (toolsTabBtn) {
         document.getElementById('modal-tools-container').style.display='block';
@@ -1565,6 +1621,87 @@
 
     // Tools & Parameters Table
     el.modalCanonicalHash.innerHTML = `<span class="verified-contract">🛡️ Verified Toolset Contract</span> <span style="cursor: pointer;" onclick="navigator.clipboard.writeText('${v.toolset_canonical_hash || ''}');">hash: ${v.toolset_canonical_hash || "none"}</span>`;
+
+    // Render diff summary if baseline is selected
+    if (el.versionComparatorToolbar.style.display !== "none" && el.compareBaseSelect.value) {
+      let baseVersionString = el.compareBaseSelect.value;
+      if (baseVersionString === "prev") {
+        const allVers = [...currentInspectedServer.versions].reverse();
+        const idx = allVers.findIndex(ver => ver.version === v.version);
+        if (idx >= 0 && idx + 1 < allVers.length) {
+          baseVersionString = allVers[idx + 1].version;
+        } else {
+          baseVersionString = null;
+        }
+      }
+
+      if (baseVersionString) {
+        const baseV = currentInspectedServer.versions.find(x => x.version === baseVersionString);
+        if (baseV) {
+          let addedTools = 0;
+          let removedTools = 0;
+          let modParams = 0;
+          let fixedCves = 0;
+          let newCves = 0;
+          let baseHash = baseV.toolset_canonical_hash || "none";
+          let targetHash = v.toolset_canonical_hash || "none";
+          
+          const targetTools = v.tools || [];
+          const baseTools = baseV.tools || [];
+          
+          const targetToolNames = new Set(targetTools.map(t => t.name));
+          const baseToolNames = new Set(baseTools.map(t => t.name));
+          
+          targetTools.forEach(t => {
+            if (!baseToolNames.has(t.name)) {
+              addedTools++;
+            } else {
+              const bTool = baseTools.find(bt => bt.name === t.name);
+              if (bTool) {
+                const tParams = JSON.stringify(t.parameters || []);
+                const bParams = JSON.stringify(bTool.parameters || []);
+                if (tParams !== bParams) modParams++;
+              }
+            }
+          });
+          
+          baseTools.forEach(t => {
+            if (!targetToolNames.has(t.name)) removedTools++;
+          });
+          
+          const targetCves = new Set((v.advisories || []).map(a => a.id));
+          const baseCves = new Set((baseV.advisories || []).map(a => a.id));
+          
+          baseCves.forEach(c => {
+            if (!targetCves.has(c)) fixedCves++;
+          });
+          
+          targetCves.forEach(c => {
+            if (!baseCves.has(c)) newCves++;
+          });
+          
+          el.diffSummaryRow.innerHTML = `
+            <div class="diff-pills">
+              <span class="diff-pill diff-added">+ ${addedTools} Added Tools</span>
+              <span class="diff-pill diff-removed">- ${removedTools} Removed Tools</span>
+              <span class="diff-pill diff-modified">Δ ${modParams} Modified Parameters</span>
+              <span class="diff-pill diff-fixed">🛡️ ${fixedCves} Fixed Vulnerabilities</span>
+              ${newCves > 0 ? `<span class="diff-pill diff-newcve">🔴 ${newCves} New CVEs</span>` : ''}
+            </div>
+            <div class="diff-hash">
+              <span class="hash-trans">${baseHash.replace('sha256:', '')} ➔ ${targetHash.replace('sha256:', '')}</span>
+            </div>
+          `;
+          el.diffSummaryRow.style.display = "flex";
+        } else {
+          el.diffSummaryRow.style.display = "none";
+        }
+      } else {
+        el.diffSummaryRow.style.display = "none";
+      }
+    } else {
+      el.diffSummaryRow.style.display = "none";
+    }
     
     // Tools
     const tools = v.tools || [];
