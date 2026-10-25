@@ -102,6 +102,14 @@ mcp-vuln validate --dir data/vulnerabilities
 
 # 7. High-Performance Multicore Parallel Site Builder (Bit-for-bit SHA-256 deterministic)
 mcp-vuln build-site --workers 8 --output-dir docs/data
+
+# 8. Inline MCP Reverse Proxy Interceptor (Runtime Firewall)
+# Intercepts stdio JSON-RPC to block vulnerable/shadow tools and redact secrets
+mcp-vuln proxy --package <pkg> --version <v> --block-severity HIGH --redact-secrets --audit-log proxy_log.jsonl -- npx @modelcontextprotocol/server-postgres
+
+# 9. AST Interprocedural Call-Graph Reachability Engine
+# Analyzes multi-hop call graphs from MCP tool entrypoints to flag vulnerable dependencies
+mcp-vuln audit-transitive --source-dir ./src --reachable-only
 ```
 
 ## Production Readiness Audit & Competitive Intelligence
@@ -139,6 +147,9 @@ mcp-vuln build-site --workers 8 --output-dir docs/data
 * **Protocol & Contract Linter**: Validates MCP tool definitions against protocol standards, schema invariants, and capability risk classifications.
 * **Headless REST API Daemon (`mcp-vuln serve`)**: Microservice daemon providing JSON endpoints for CI/CD gates, local scanners, and AI client configuration verifiers.
 
+* **Inline MCP Reverse Proxy Interceptor (`mcp_vulnerabilities.proxy`)**: Runtime bidirectional JSON-RPC firewall that intercepts `tools/list` and `tools/call`, blocking OSV `vulnerable_tools` and shadow tools with JSON-RPC error code `-32001`, and redacting secrets from responses.
+* **AST Interprocedural Call-Graph Reachability Engine (`mcp_vulnerabilities.analyzers.reachability`)**: Traces multi-hop call graphs from `@mcp.tool()` / `server.tool()` entrypoints to flag third-party dependencies as `REACHABLE_FROM_TOOL`, `IMPORTED_ONLY`, or `UNREACHABLE`.
+
 ## Version-Separated Vulnerability Tracking
 
 Unlike generic package databases, `mcp-vulnerabilities` maintains version-separated vulnerability tracking tailored to the MCP ecosystem:
@@ -158,7 +169,7 @@ The project provides interactive, client-side static web portals hosted directly
   - **🛡️ Audit My MCP Setup (Tab 3)**: Zero-install, 100% in-browser client configuration dropzone. Parses `claude_desktop_config.json`, `cline_mcp_settings.json`, and `cursor_config.json` locally in memory with zero telemetry, cross-matches installed tools against vulnerability records, and provides one-click copyable remediation diffs.
 
 * **[Release Updates & Advisory Delta Feed (`docs/updates.html`)](https://jmartynov.github.io/mcp-vulnerabilities/updates.html)**:
-  - **Historical Release Selector**: Timeline dropdown covering historical sync releases (v1.1.3 through v1.0.0).
+  - **Historical Release Selector**: Timeline dropdown covering historical sync releases (v1.2.0 through v1.0.0).
   - **Velocity Sparkline**: Dual-series responsive SVG trend chart tracking server growth and advisory volume over the past 10 releases.
   - **Dynamic Change-Type Filter Chips**: Instant filtering across *All Updates*, *🟢 Patched Versions Available*, *🔴 New Security Vulnerabilities*, and *🆕 Newly Tracked Servers* with live count indicators.
   - **Toolset Evolution**: Side-by-side delta visualization tracking added (`+`) and removed (`-`) tools, parameter changes, and SHA-256 fingerprint transitions (`sha256:old... ➔ sha256:new...`).
@@ -195,7 +206,7 @@ To keep downstream tools, scanners, and Python consumers immediately updated wit
 The test suite enforces 100% runnable pass rates across both regression suites and empirical invariant audits:
 
 ```bash
-# Run the entire test suite (346 passed, 5 skipped)
+# Run the entire test suite (370+ tests passed)
 pytest -q
 
 # Run the empirical subsystem invariant audit suite

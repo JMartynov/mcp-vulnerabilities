@@ -258,3 +258,29 @@ The system incorporates rigorous competitive benchmarking against 10 leading ind
 - **`docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`**: Grand Unified Feature Matrix across 10 products, strategic gap analysis, and architectural blueprints for v1.2–v2.0 (Inline Reverse Proxy, AST Call-Graph Reachability, Sigstore Keyless Attestation, Composite Trust Scoring).
 
 
+
+---
+
+## 14. Inline MCP Reverse Proxy Interceptor (`src/mcp_vulnerabilities/proxy/`)
+
+The inline proxy provides a runtime bidirectional JSON-RPC firewall over `stdio`. It intercepts `tools/list` and `tools/call` JSON-RPC messages and blocks requests matching OSV `vulnerable_tools` or shadow tool signatures.
+- **`policy.py` (`ProxyPolicyEngine`, `PolicyDecision`)**: Evaluates JSON-RPC requests against active blocklists (e.g. `--block-severity HIGH`).
+- **`interceptor.py` (`McpStdioProxy`)**: Transparently proxies `stdin`/`stdout` streams between the MCP host and child server, overriding blocked requests with `-32001` error codes and writing structured JSONL telemetry.
+- **Data Sanitization**: Automatically redacts environment variables or leaked credentials from JSON-RPC responses when `--redact-secrets` is enabled.
+
+---
+
+## 15. AST Interprocedural Call-Graph Reachability Engine (`src/mcp_vulnerabilities/analyzers/reachability/`)
+
+This engine performs static reachability analysis to reduce false positives in vulnerability scans by determining if a vulnerable dependency is actually used in the execution path of an MCP tool.
+- **`call_graph.py` (`AstReachabilityAnalyzer`, `DependencyReachability`, `ReachabilityReport`)**: Parses Python (`.py`) and JS/TS (`.js`/`.ts`) source trees using AST parsing to trace execution multi-hop call graphs starting from `@mcp.tool()` or `server.tool()` decorators.
+- **Classification Output**: Returns `REACHABLE_FROM_TOOL`, `IMPORTED_ONLY`, or `UNREACHABLE` which is consumed by the `TransitiveDependencyAuditor`.
+
+---
+
+## 16. Web Portal Analytics & Latest-Version Extraction Pipeline (Wave 15)
+
+The Wave 15 implementation introduced advanced preprocessing steps in the high-performance site builder (`src/mcp_vulnerabilities/site_builder.py`) and client-side logic (`docs/app.js`):
+- **Precomputed Risk Metrics**: The builder precomputes `highest_cve_severity` and `composite_risk_tier` and injects them into the root of each catalog item in `mcp_catalog_index.json`, reducing client-side compute overhead.
+- **Latest-Version Extraction**: Capability extraction, required environment variables, and `tools` lists are dynamically extracted from the latest representative version (`versions[-1]`) to ensure the portal displays up-to-date attack surfaces.
+- **In-Browser Config Auditor Enrichment**: Cross-references parsed configurations against preloaded `allAdvisories` to append CVE/GHSA IDs, severity badges, CVSS scores, and safe-version pin detection in the UI.

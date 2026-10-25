@@ -525,3 +525,63 @@ Embedded client-side auditing within `docs/index.html` enforcing zero-telemetry 
 
 
 
+
+---
+
+## 4. Inline MCP Reverse Proxy Interceptor (`mcp-vuln proxy`)
+
+The v1.2 specification introduces an inline JSON-RPC 2.0 firewall that intercepts traffic over `stdio` between MCP hosts and child servers.
+
+### 4.1 JSON-RPC 2.0 Interception Contract
+The proxy adheres strictly to the JSON-RPC 2.0 protocol. When a request matches a blocked pattern (e.g. calling an OSV `vulnerable_tools` or shadow tool), the proxy intercepts the request and responds with a standard error object, preventing the child server from executing the request.
+
+### 4.2 Error Code `-32001` Schema
+Blocked requests return the `MCP Security Policy Violation` error:
+```json
+{
+  "jsonrpc": "2.0",
+  "id": 1234,
+  "error": {
+    "code": -32001,
+    "message": "MCP Security Policy Violation: Tool execution blocked by active security policy."
+  }
+}
+```
+
+### 4.3 JSONL Audit Log Schema
+When running with `--audit-log <file>`, blocked and intercepted actions are recorded in structured JSON Lines format:
+```json
+{"timestamp": "2026-10-25T14:32:01Z", "action": "blocked", "reason": "vulnerable_tool", "tool": "execute_query", "severity": "HIGH"}
+```
+
+---
+
+## 5. AST Interprocedural Call-Graph Reachability Engine
+
+The v1.2 specification introduces a static reachability classification model to accurately filter vulnerabilities reported in `mcp-vuln audit-transitive`.
+
+### 5.1 Classification Model
+Dependencies are classified into one of three reachability statuses:
+- **`REACHABLE_FROM_TOOL`**: The dependency is imported and explicitly invoked downstream of an `@mcp.tool()` or `server.tool()` entrypoint.
+- **`IMPORTED_ONLY`**: The dependency is imported somewhere in the source tree but not traced back to an exposed MCP tool.
+- **`UNREACHABLE`**: The dependency is declared in a manifest but not imported in the source tree.
+
+### 5.2 Package-to-Import Alias Resolution
+The engine maps ecosystem package names to their canonical source imports (e.g. `PyYAML` → `yaml`, `beautifulsoup4` → `bs4`) before building the Abstract Syntax Tree (AST).
+
+---
+
+## 6. `mcp_catalog_index.json` Schema Extensions
+
+The `mcp_catalog_index.json` payload (which omits the `versions` array for payload compactness) has been enriched in v1.2 to include precomputed composite risk metrics at the root level for each catalog item:
+
+```json
+{
+  "package": "pkg:npm/%40modelcontextprotocol/server-postgres",
+  "name": "server-postgres",
+  "ecosystem": "npm",
+  "highest_cve_severity": "CRITICAL",
+  "composite_risk_tier": "CRITICAL",
+  "tools_count": 5
+}
+```
