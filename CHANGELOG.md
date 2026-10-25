@@ -6,6 +6,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.2.0] - 2026-10-25
+
+### 🚀 Wave 15, 16 & 17: Runtime Firewall, AST Reachability & Web Analytics Remediation
+
+This release introduces the v1.2 architectural enhancements including the runtime reverse proxy firewall, interprocedural AST call-graph reachability engine, and complete Wave 15 web portal remediations.
+
+#### Added
+- **v1.2 Inline MCP Reverse Proxy Interceptor (`mcp-vuln proxy`)** (Task 84):
+  - Added bidirectional `stdio` JSON-RPC 2.0 firewall intercepting `tools/list` and `tools/call`.
+  - Added JSON-RPC `-32001` error code responses for blocking OSV `vulnerable_tools` and shadow tool injection payloads.
+  - Added `--redact-secrets` flag to prevent credential leakage in responses.
+  - Added `--audit-log` structured JSONL telemetry tracking.
+- **v1.2 AST Interprocedural Call-Graph Reachability Engine** (Task 85):
+  - Added Python (`.py`) and JS/TS (`.js`/`.ts`) AST call-graph tracing from `@mcp.tool()` / `server.tool()` entrypoints.
+  - Added dependency reachability classification (`REACHABLE_FROM_TOOL`, `IMPORTED_ONLY`, `UNREACHABLE`).
+  - Integrated into `mcp-vuln audit-transitive` via the `--source-dir` and `--reachable-only` flags.
+
+
+#### Documentation & Audits (Wave 17)
+- **Full Code Review & Audit** (Task 86): Conducted line-by-line code review and empirical verification across Tasks 78-85.
+- **v1.2.0 Documentation Sync** (Task 87): Synchronized CLI examples, specification schemas, architectural implementations, and task completion trackers to reflect v1.2.0.
+- **Release Pipeline Tracking** (Task 88): Version bumped to `1.2.0`, backfilled `composite_risk_tier` in `mcp_catalog_index.json`, and triggered GitHub Actions CI.
+
+#### Fixed & Enhanced (Wave 15 Web Portal Remediation)
+- **Precomputed Composite Risk** (Task 79): Precomputed `highest_cve_severity` and `composite_risk_tier` inside `mcp_catalog_index.json` to prevent frontend default "LOW" risk evaluation.
+- **Latest-Version Analytics** (Task 81): Fixed a bug where `versions[0]` was used instead of `versions[-1]`, accurately aggregating latest-version capability surfaces, secrets perimeters, and tools.
+- **Config Auditor Enrichment** (Task 80): Upgraded the In-Browser Config Auditor to display CVE/GHSA IDs, severity badges, CVSS scores, and safe-version pin detection.
+- **Filter ReferenceError Fix** (Task 78): Resolved a `ReferenceError` during advisory filtering by replacing undefined `server.tools_count` with `advisoryHasVulnerableTools()`.
+- **CSS Hygiene & Sub-Tab Resets** (Task 82): Added complete `:root` CSS tokens, added accessible keyboard controls to `.fp-badge`, reset sub-tabs upon version selection, and normalized SVG sparkline `viewBox` coordinates.
+- **Automated Test Coverage** (Task 83): Authored invariant testing suite (`tests/test_wave14_portal.py` and `tests/test_analytics.py`) to guard DOM structures and analytics pipelines.
+
+
 ## [1.1.4] - 2026-10-24
 
 ### 🌐 Wave 14: Web Security Intelligence, Fingerprint Synergy & Enhanced Analytics
