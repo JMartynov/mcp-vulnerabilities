@@ -240,6 +240,21 @@ Master Plan: [IMPLEMENTATION_PLAN_WAVE17_CODE_REVIEW_DOCS_AND_RELEASE_V120.md](I
 | **87** | **v1.2.0 Documentation & Specification Synchronization** | Documentation (`README.md`, `SPECIFICATION.md`, `IMPLEMENTATION.md`, `CHANGELOG.md`) | `In Progress` | Document `mcp-vuln proxy`, `audit-transitive --source-dir --reachable-only`, Wave 15 portal/analytics enhancements, and `v1.2.0` release notes. | [task87_v120_documentation_and_specification_sync.md](task87_v120_documentation_and_specification_sync.md) |
 | **88** | **Version Bump (`v1.2.0`), Portal Index Sync & CI/CD Pipeline Tracking** | Release Engineering (`pyproject.toml`, `__init__.py`, `mcp_catalog_index.json`) | `Todo` | Bump package version to `1.2.0`, backfill `composite_risk_tier` in `docs/data/mcp_catalog_index.json`, trigger GitHub Actions CI, and track to 100% green completion. | [task88_v120_version_bump_and_ci_pipeline_tracking.md](task88_v120_version_bump_and_ci_pipeline_tracking.md) |
 
+---
+
+### 18. Wave 18: Web View & Security Intelligence Portal Enhancements (Active Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md](IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **89** | **Passports Pipeline Fix & Static Data Recompilation** | Pipeline & Data Engine (`src/mcp_vulnerabilities/site_builder.py`, `docs/data/`) | `Todo` | Default to `passports.json.gz`, extract connection config schemas (`x-api-key`, `client_secret`) and transports, and recompile `mcp_catalog_index.json` and `analytics.json`. | [task89_passports_pipeline_fix_and_data_recompilation.md](task89_passports_pipeline_fix_and_data_recompilation.md) |
+| **90** | **Directory Multi-Criteria Sorting & URL Deep-Linking** | Front-End Explorer (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Todo` | Multi-criteria sorting dropdown (Risk, Advisories, Tools, A-Z) and bidirectional URL query state synchronization (`?q=`, `?server=`, `?tab=`, `?sort=`). | [task90_directory_sorting_and_url_deep_linking.md](task90_directory_sorting_and_url_deep_linking.md) |
+| **91** | **Server Modal Remote Endpoints & Config Schema Panel** | Front-End Modal (`docs/index.html`, `docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Todo` | 4th sub-tab "🌐 Endpoints & Schema" rendering live deployment URLs, connection types (`streamable-http`, `sse`), and config property schemas with HTTP warnings. | [task91_server_modal_remote_endpoints_and_config_schema.md](task91_server_modal_remote_endpoints_and_config_schema.md) |
+| **92** | **In-Browser Config Auditor Sample Presets & Report Exporter** | Client-Side Auditing (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Todo` | 1-click sample vulnerable and clean preset buttons, plus "Download Fixed Config (.json)" and "Export Markdown Audit Report (.md)" buttons. | [task92_inbrowser_config_auditor_presets_and_exporter.md](task92_inbrowser_config_auditor_presets_and_exporter.md) |
+| **93** | **Interactive Click-to-Filter Drilldowns on Analytics Portal** | Analytics Web Portal (`docs/analytics.html`, `docs/app.js`) | `Todo` | Make tools, OWASP categories, shadowed tools, and Zero-Day gap cards clickable to navigate to `index.html` with active search and filter parameters. | [task93_interactive_click_to_filter_analytics_drilldowns.md](task93_interactive_click_to_filter_analytics_drilldowns.md) |
+| **94** | **Interactive Arbitrary Two-Version Diff Comparator in Modal** | Front-End Modal (`docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Todo` | Baseline version selector inside `#server-modal` computing cumulative tool additions, removals, parameter mutations, and resolved/introduced CVEs. | [task94_interactive_arbitrary_two_version_diff_comparator.md](task94_interactive_arbitrary_two_version_diff_comparator.md) |
+
 ## Verification Test Results
 ```
 .venv/bin/pytest
