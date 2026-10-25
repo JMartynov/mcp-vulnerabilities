@@ -56,3 +56,24 @@ def test_wave15_frontend_remediations():
     assert "findMatchingAdvisoriesForPackage" in app_js
     assert "audit-cve-list" in app_js
 
+def test_wave15_css_and_html_hygiene():
+    # Task 82 CSS
+    css_content = Path("docs/style.css").read_text(encoding="utf-8")
+    assert "--bg-tertiary" in css_content
+    assert "--primary-color" in css_content
+    assert "--bg-card" in css_content
+    assert "--bg-hover" in css_content
+    assert "--badge-bg" in css_content
+    assert ".badge-eco" in css_content
+
+    # Task 82 HTML Updates
+    updates_html = Path("docs/updates.html").read_text(encoding="utf-8")
+    import re
+    # Check that all target="_blank" links have rel="noopener"
+    blank_links = re.findall(r'<a[^>]+target=["\']_blank["\'][^>]*>', updates_html, re.IGNORECASE)
+    for link in blank_links:
+        assert 'rel="noopener"' in link or "rel='noopener'" in link
+
+    # Check SVG viewBox
+    assert 'viewBox="0 0 1000 80"' in updates_html
+    assert '<svg id="historical-sparkline"' in updates_html
