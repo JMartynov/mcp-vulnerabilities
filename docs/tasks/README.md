@@ -230,15 +230,15 @@ Strategic Roadmap Source: [`CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`]
 
 ---
 
-### 17. Wave 17: Full Code Review & Verification Audit (Tasks 78–85), v1.2.0 Documentation Sync & Release Pipeline (Active Wave)
+### 17. Wave 17: Full Code Review & Verification Audit (Tasks 78–85), v1.2.0 Documentation Sync & Release Pipeline (Completed)
 
 Master Plan: [IMPLEMENTATION_PLAN_WAVE17_CODE_REVIEW_DOCS_AND_RELEASE_V120.md](IMPLEMENTATION_PLAN_WAVE17_CODE_REVIEW_DOCS_AND_RELEASE_V120.md)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **86** | **Full Code Review & Empirical Verification Audit of Tasks 78–85** | Quality & Code Review (`docs/reports/`) | `In Progress` | Line-by-line code review & empirical verification across Tasks 78–85; publish `docs/reports/code_review_wave15_16_remediation_and_v12.md` and upgrade Wave 14 scorecard to `100 / 100`. | [task86_full_code_review_and_verification_waves15_16.md](task86_full_code_review_and_verification_waves15_16.md) |
+| **86** | **Full Code Review & Empirical Verification Audit of Tasks 78–85** | Quality & Code Review (`docs/reports/`) | `Done` | Line-by-line code review & empirical verification across Tasks 78–85; publish `docs/reports/code_review_wave15_16_remediation_and_v12.md` and upgrade Wave 14 scorecard to `100 / 100`. | [task86_full_code_review_and_verification_waves15_16.md](task86_full_code_review_and_verification_waves15_16.md) |
 | **87** | **v1.2.0 Documentation & Specification Synchronization** | Documentation (`README.md`, `SPECIFICATION.md`, `IMPLEMENTATION.md`, `CHANGELOG.md`) | `Done` | Document `mcp-vuln proxy`, `audit-transitive --source-dir --reachable-only`, Wave 15 portal/analytics enhancements, and `v1.2.0` release notes. | [task87_v120_documentation_and_specification_sync.md](task87_v120_documentation_and_specification_sync.md) |
-| **88** | **Version Bump (`v1.2.0`), Portal Index Sync & CI/CD Pipeline Tracking** | Release Engineering (`pyproject.toml`, `__init__.py`, `mcp_catalog_index.json`) | `Todo` | Bump package version to `1.2.0`, backfill `composite_risk_tier` in `docs/data/mcp_catalog_index.json`, trigger GitHub Actions CI, and track to 100% green completion. | [task88_v120_version_bump_and_ci_pipeline_tracking.md](task88_v120_version_bump_and_ci_pipeline_tracking.md) |
+| **88** | **Version Bump (`v1.2.0`), Portal Index Sync & CI/CD Pipeline Tracking** | Release Engineering (`pyproject.toml`, `__init__.py`, `mcp_catalog_index.json`) | `Done` | Bump package version to `1.2.0`, backfill `composite_risk_tier` in `docs/data/mcp_catalog_index.json`, trigger GitHub Actions CI, and track to 100% green completion. | [task88_v120_version_bump_and_ci_pipeline_tracking.md](task88_v120_version_bump_and_ci_pipeline_tracking.md) |
 
 ---
 
@@ -265,7 +265,7 @@ Master Plan: [IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md](IMPLEMENTATIO
 - Skipped: **5**
 - Failed: **0**
 - Empirical Invariant Suite (`tests/audit/`): **28 passed in 12.08s (100%)**
-- Code Review Scorecard: **68 / 100** (Full register in [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md))
+- Code Review Scorecard: **100 / 100** (Full register in [`docs/reports/code_review_wave15_16_remediation_and_v12.md`](../reports/code_review_wave15_16_remediation_and_v12.md) and [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md))
 
 
 
