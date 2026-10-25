@@ -295,6 +295,7 @@ class VersionSecurityRecord:
     resources: list[ResourceSignature] = field(default_factory=list)
     release_date: str | None = None
     required_env_vars: tuple[str, ...] = ()
+    connections: list[dict[str, Any]] = field(default_factory=list)
     recommended_update_version: str | None = None
     upgrade_command: str | None = None
     no_fix_available: bool = False
@@ -317,6 +318,7 @@ class VersionSecurityRecord:
             ],
             "release_date": self.release_date,
             "required_env_vars": list(self.required_env_vars),
+            "connections": self.connections,
         }
 
     @classmethod
@@ -351,6 +353,7 @@ class VersionSecurityRecord:
             resources=resources,
             release_date=data.get("release_date"),
             required_env_vars=tuple(data.get("required_env_vars", ())),
+            connections=data.get("connections", []),
             recommended_update_version=data.get("recommended_update_version"),
             upgrade_command=data.get("upgrade_command"),
             no_fix_available=bool(data.get("no_fix_available", False)),

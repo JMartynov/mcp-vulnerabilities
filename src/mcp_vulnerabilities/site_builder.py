@@ -157,6 +157,7 @@ def _process_server_batch(
                     resources=list(vf.resource_signatures),
                     release_date=vf.release_date,
                     required_env_vars=vf.required_env_vars,
+                    connections=getattr(vf, "connections", []),
                 )
                 version_records.append(v_record)
 
@@ -361,6 +362,9 @@ def build_site_parallel(
     t1 = time.time()
 
     # 2. Build Unified MCP Security Catalog in Parallel
+    if passports_path is None and Path("data/passports.json.gz").exists():
+        passports_path = Path("data/passports.json.gz")
+    
     if passports_path:
         p = Path(passports_path)
         if p.exists():
@@ -564,6 +568,8 @@ def build_site_parallel(
         )
 
         rec_dict = record
+        rec_dict["highest_cve_severity"] = highest_cve_sev
+        rec_dict["composite_risk_tier"] = composite_tier
         # Optimize version advisories for browser payload efficiency
         for v in rec_dict.get("versions", []):
             new_advs = []
@@ -751,6 +757,21 @@ def build_site_parallel(
             
             # Union of required_env_vars from rep_version and pkg_data
             req_envs_set = set(v.get("required_env_vars") or []) | set(pkg_data.get("required_env_vars") or [])
+            
+            headers_schema = v.get("headers_schema") or {}
+            if isinstance(headers_schema, dict):
+                props = headers_schema.get("properties", {})
+                if isinstance(props, dict):
+                    req_envs_set.update(props.keys())
+
+            connections = v.get("connections") or []
+            if isinstance(connections, list):
+                for conn in connections:
+                    if isinstance(conn, dict):
+                        c_props = conn.get("configSchema", {}).get("properties", {})
+                        if isinstance(c_props, dict):
+                            req_envs_set.update(c_props.keys())
+
             req_envs = sorted(list(req_envs_set))
             
             for env in req_envs:
@@ -788,6 +809,35 @@ def build_site_parallel(
             else:
                 zero_day_unpatched_count += 1
                 
+    def _extract_transports(p_data: Any) -> None:
+        if isinstance(p_data, dict):
+            items = p_data.values()
+        elif isinstance(p_data, list):
+            items = p_data
+        else:
+            return
+            
+        for v in items:
+            if not isinstance(v, dict) and not hasattr(v, "get"):
+                if hasattr(v, "transport"):
+                    transports_dist[v.transport] += 1
+                if hasattr(v, "versions"):
+                    for ver in v.versions:
+                        if hasattr(ver, "connections"):
+                            for c in ver.connections:
+                                if isinstance(c, dict) and c.get("type"):
+                                    transports_dist[c.get("type")] += 1
+                continue
+
+            transports_dist[v.get("transport", "unknown")] += 1
+            
+            for ver in v.get("versions", []):
+                if isinstance(ver, dict):
+                    conns = ver.get("connections", [])
+                    for c in conns:
+                        if isinstance(c, dict) and c.get("type"):
+                            transports_dist[c.get("type")] += 1
+
     if passports_path:
         p = Path(passports_path)
         if p.exists():
@@ -798,16 +848,13 @@ def build_site_parallel(
                 else:
                     data = json.loads(p.read_text(encoding="utf-8"))
                 passports_data = data.get("passports", data) if isinstance(data, dict) else data
-                if isinstance(passports_data, dict):
-                    for k, v in passports_data.items():
-                        transports_dist[v.get("transport", "unknown")] += 1
+                _extract_transports(passports_data)
             except Exception:
                 pass
     else:
         try:
             ps = _load_passports(None)
-            for k, v in ps.items():
-                transports_dist[v.get("transport", "unknown")] += 1
+            _extract_transports(ps)
         except Exception:
             pass
 
@@ -889,6 +936,9 @@ def build_static_site_data(
     Compiles static data assets for the web explorer.
     Delegates to build_site_parallel.
     """
+    if passports_path is None and Path("data/passports.json.gz").exists():
+        passports_path = Path("data/passports.json.gz")
+
     return build_site_parallel(
         passports_path=passports_path,
         vuln_path=data_dir,
@@ -928,10 +978,14 @@ if __name__ == "__main__":
     parser.add_argument("--benchmark", action="store_true", help="Print detailed timing breakdown")
     args = parser.parse_args()
     
+    passports = args.passports
+    if passports is None and Path("data/passports.json.gz").exists():
+        passports = Path("data/passports.json.gz")
+    
     build_static_site_data(
         data_dir=args.data_dir,
         output_dir=args.output_dir,
-        passports_path=args.passports,
+        passports_path=passports,
         workers=args.workers,
         use_cache=not args.no_cache,
         benchmark=args.benchmark,

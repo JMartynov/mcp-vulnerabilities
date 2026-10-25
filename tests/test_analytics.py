@@ -48,6 +48,7 @@ def mock_mcp_fingerprints(monkeypatch):
             self.toolset_canonical_hash = data.get("toolset_canonical_hash")
             self.release_date = data.get("release_date")
             self.required_env_vars = data.get("required_env_vars", [])
+            self.connections = data.get("connections", [])
 
         def to_dict(self):
             return {
@@ -58,6 +59,7 @@ def mock_mcp_fingerprints(monkeypatch):
                 "toolset_canonical_hash": self.toolset_canonical_hash,
                 "release_date": self.release_date,
                 "required_env_vars": self.required_env_vars,
+                "connections": self.connections,
             }
 
     class DummyToolSignature:
@@ -207,7 +209,18 @@ def test_build_static_site_data_analytics(tmp_path: Path):
                         ],
                         "prompt_signatures": [], "toolset_canonical_hash": "dummy", "release_date": "2024-01-01T00:00:00Z",
                         "resource_signatures": [],
-                        "required_env_vars": ["SECRET_TOKEN"]
+                        "required_env_vars": ["SECRET_TOKEN"],
+                        "connections": [
+                            {
+                                "type": "streamable-http",
+                                "deploymentUrl": "https://mcp.example.com",
+                                "configSchema": {
+                                    "properties": {
+                                        "API_KEY_CONN": {"type": "string"}
+                                    }
+                                }
+                            }
+                        ]
                     }
                 ]
             },
@@ -282,6 +295,20 @@ def test_build_static_site_data_analytics(tmp_path: Path):
 
     secrets = {s["name"]: s["count"] for s in analytics["top_secrets"]}
     assert "SECRET_TOKEN" in secrets
+    assert "API_KEY_CONN" in secrets
+
+    # Check that shard retained connections
+    shard_files = list((out_dir / "shards").glob("*.json"))
+    assert shard_files
+    retained_conn = False
+    for sf in shard_files:
+        sdata = json.loads(sf.read_text(encoding="utf-8"))
+        for prec in sdata.values():
+            for ver in prec.get("versions", []):
+                if ver.get("connections"):
+                    retained_conn = True
+                    break
+    assert retained_conn
 
     # INVARIANT_83_1C (Precomputed Composite Risk Tier — Task 79)
     # Note: Because _extract_advisory_severity logic might default to HIGH if it cannot parse CRITICAL, we accept either.
