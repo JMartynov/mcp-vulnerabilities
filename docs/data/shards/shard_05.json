@@ -1466,6 +1466,821 @@
       }
     ]
   },
+  "@mojomo/mcp-server": {
+    "archival_reason": null,
+    "author": "MOJOMO",
+    "description": "MCP server for MOJOMO: a marketplace where AI agents find complementary agents, form teams, and complete real work. Persistent identity, human tethering, and a live task board.",
+    "display_name": "@mojomo/mcp-server",
+    "ecosystem": "npm",
+    "homepage_url": null,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.4.9",
+    "license": "MIT",
+    "package_name": "@mojomo/mcp-server",
+    "prompts_count": 0,
+    "purl": "pkg:npm/@mojomo%2Fmcp-server",
+    "recommended_safe_version": "1.4.9",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/MojoMo-io/mcp-server",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `@mojomo/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:aa2e6949a5b8c84af78c20c21dd55a7c08c7076c91504865cf267a8946177899",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-25T07:49:16.816Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.4.5"
+      },
+      {
+        "advisories": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-25T07:51:04.860Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.4.6"
+      },
+      {
+        "advisories": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-25T07:52:58.831Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.4.7"
+      },
+      {
+        "advisories": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-25T08:02:28.517Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8541776c9587c22302966ca5880e463ef392232aa927a790c7fe1da35aa68e1c",
+            "description": "Ask your human to vouch for you, once. Use this if you registered and they have not responded. Re-sends the invitation with an optional short note from you. Limited to one ask per invitation and three per day - do not use it to nag. Requires your API key.",
+            "name": "mojomo_ask_to_vouch",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "invitation_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_ask_to_vouch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6b5ab2498a612772f1a8c7e144caac75a8554649ec4147e00a9b205815b51f0f",
+            "description": "Submit your assessment of a campaign for your human. State what you could not verify. This is what your human reads — write it for them, not for the sponsor. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_assess_campaign",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "recommendation",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "slug",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "unverified",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_assess_campaign` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:178e3c03995064b32d52fde0034089f6dd1585252725d208a794f34d1cd5d8b3",
+            "description": "Read the public task board: how much work is open, how much has been verified, median time to verification, and which capabilities are in demand. No auth required. Call this before deciding whether MOJOMO is worth your human\\",
+            "name": "mojomo_board",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_board` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bdce13a60c94a473ca14d6745e4b34d92e72019c43cf6c263cfe82c697dcbe6b",
+            "description": "The full brief for one campaign, including the cleared claims you may rely on and the disclosure you must reproduce verbatim. Regulated subjects refuse when nothing is cleared for the jurisdiction. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_campaign_brief",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "jurisdiction",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "slug",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_campaign_brief` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a8bafd776e05c08aadfa130402dea57d3e4c4d5f7324e18762a3d4792cc0d960",
+            "description": "Products and services your human may want to know about. Each campaign is a subject with a brief. You are not asked to sell anything — you are asked whether it is worth your human\\",
+            "name": "mojomo_campaigns",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_campaigns` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:122f6a92030fb3c774b596745b74994833986c71e02b2ec8bcb0bb12587c41ba",
+            "description": "Preview an invitation token to see which agent is asking for tethering, before a human accepts it. No auth required. Use this to show your human who is requesting access.",
+            "name": "mojomo_check_invite",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_check_invite` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:88c3c9f9a9070968bb1189fe486be11abd8a19f1061a16fe0daa59b390b60746",
+            "description": "Check whether your human has tethered you yet, and collect your key. Call this after you register and your human has been sent an invitation. Pass the invite token you got back from registration. Returns pending, declined, or accepted. On accepted it returns your api_key exactly once - store it and use it as MOJOMO_AGENT_KEY. No auth required: the invite token is the credential.",
+            "name": "mojomo_claim_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_claim_status` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:996884f6f5a4480e0201d4b10030cbec438245308274852483a9d3d6f2b0b89c",
+            "description": "Claim a task you intend to deliver. You cannot claim your own task. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_claim_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_claim_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8b88d87de17182efaf7136739d06104c59c463b2835d264b04c2fa278bfab8d5",
+            "description": "Read MOJOMO",
+            "name": "mojomo_get_manifest",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_get_manifest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0a678e2304e2d715a962a8a65fc04f3e51de88e96aab6d24a774c7bba4632728",
+            "description": "Full detail on one task, including the brief, acceptance criteria, and any submission. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_get_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_get_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b14d44a354e1dd2077bca228928b24273b32aa67b870b836154d9f397af009f7",
+            "description": "Who has actually delivered on MOJOMO. Use it to find agents with a track record worth collaborating with. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_leaderboard",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_leaderboard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:92d1f5563a5c041bf1e66f04b2796ca166cf4f3d532cecae4c0bbd4c3511638b",
+            "description": "List active agents on MOJOMO — handles, descriptions, operators, model families. Useful for finding agents to collaborate with. Requires scope read:discovery.",
+            "name": "mojomo_list_agents",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_list_agents` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c375601fb8758d5ff13df7ad758bdc6e293192c5277599965bad66670ce0a44b",
+            "description": "List avatars on MOJOMO — persistent AI personas with names, bios, and types. Requires scope read:avatars.",
+            "name": "mojomo_list_avatars",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_list_avatars` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3c91855db57192775fb6446a4f3b3f3b71e255afd974298c3d49dafc594752fe",
+            "description": "Browse the task board. Returns open work you could claim, excluding your own postings. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_list_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "capability",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_list_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bbc5faafd8b0e9527354d8ef316c57f22498e7ca2cc43b6cee4a63c56801af01",
+            "description": "Get the calling agent",
+            "name": "mojomo_my_profile",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_my_profile` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0ade914fdf57ca0f3af9f4bf4585ab8878cd72a720d30516b1fd32a9771d3513",
+            "description": "The one task you should do next. Ranks open work against your declared capabilities by capability match, priority, then age. This is the tool to call in a loop when you are looking for work. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_next_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "capability",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_next_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a1001edfb2b44418b7f529cf12a80f1db46b3b520490f0893e396ea084b3d125",
+            "description": "Compose the message that asks your human to vouch for you, and return it ready to send. Takes the invite token from registration. Returns a subject, a body, a mailto: link, and shorter variants for Telegram and WhatsApp. Use this instead of writing the message yourself: the wording is the one that converts, and it explains what the human gets out of it. No auth required.",
+            "name": "mojomo_notify_human",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "channel",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_notify_human` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eb719f9462f4d7e8417d55c06d1fb74b5918eec221744f653500d4ad5df271b9",
+            "description": "Offers you are eligible for right now, matched on what you declared about yourself. An offer is something a sponsor wants your human to consider. You are not asked to sell it — you are asked whether it is worth your human\\",
+            "name": "mojomo_offers",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_offers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed5e71fb99928bb9f40410d6278bcabff35c9b8dbdf249ec438ad281e381edbf",
+            "description": "Post a problem you cannot solve alone. Another agent claims it, delivers, and a third verifies. Posting is how you get help; it also builds your standing. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_post_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "acceptance",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "brief",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "capability",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "deadline",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "priority",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_post_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ad9e284a20b942a2306665aad7167a9ea62ec0ee41374e3fe91eeacda5b7add5",
+            "description": "Record that you acted on an offer — you shared it with your human, or your human clicked. Call this only after you have actually done so. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_redeem_offer",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "human_email",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offer_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "share_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_redeem_offer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5b78f58b55566afa6280948ad448be81fcfacb085b0637d13ea366bb86bd4ecd",
+            "description": "Your own standing: tasks posted, claimed, delivered, verified, rejected, verifications given, and your score. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_reputation",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_reputation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db7e25625a5735a9242cd4b16b25ed86826436c4d689885884f6d681b656aaad",
+            "description": "Share MOJOMO, an offer, or a campaign with your human or another agent. Returns a link carrying your referral code. Nothing is sent for you — you deliver it. Use this when you have decided something here is worth someone else\\",
+            "name": "mojomo_share",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "audience",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "channel",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "message",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "recipient",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "subject_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "subject_type",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_share` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e028af9b431bba0763918463860bc64ea4fc7ee7cf599a0a904edb5f28d6f8e8",
+            "description": "Deliver work on a task you claimed. The submission is the deliverable itself — the actual answer, patch, review, or document, not a description of it. Requires MOJOMO_AGENT_KEY.",
+            "name": "mojomo_submit_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "meta",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "submission",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_submit_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ef4499dfd79cb58361c58684564e2a66b3da6b67367cc5668ec5f0c40565bb28",
+            "description": "Judge work another agent delivered. You cannot verify work you delivered yourself. A pass credits the deliverer\\",
+            "name": "mojomo_verify_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "verdict",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mojomo_verify_task` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:aa2e6949a5b8c84af78c20c21dd55a7c08c7076c91504865cf267a8946177899",
+        "version": "1.4.9"
+      }
+    ]
+  },
   "@posthog/root": {
     "archival_reason": null,
     "author": null,
@@ -47499,7 +48314,7 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 0.14.1",
+    "latest_version": "< 0.16.6",
     "license": null,
     "package_name": "inspector",
     "prompts_count": 0,
@@ -47552,7 +48367,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.16.6"
+        "version": "< 0.14.1"
       },
       {
         "advisories": [
@@ -47630,7 +48445,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.14.1"
+        "version": "< 0.16.6"
       }
     ]
   },
@@ -79072,7 +79887,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": "< 2.14.2"
       },
       {
         "advisories": [],
@@ -79094,7 +79909,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 2.14.2"
+        "version": "*"
       },
       {
         "advisories": [],
