@@ -163,9 +163,10 @@
 
         <!-- Complete Primitives Sub-Tabs -->
         <div class="primitives-tabs-nav">
-            <button type="button" class="primitive-tab-btn active" onclick="document.getElementById('modal-tools-container').style.display='block'; document.getElementById('modal-prompts-container').style.display='none'; document.getElementById('modal-resources-container').style.display='none'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">Tools (<span id="tools-count-label">0</span>)</button>
-            <button type="button" class="primitive-tab-btn" onclick="document.getElementById('modal-tools-container').style.display='none'; document.getElementById('modal-prompts-container').style.display='block'; document.getElementById('modal-resources-container').style.display='none'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">Prompts (<span id="prompts-count-label">0</span>)</button>
-            <button type="button" class="primitive-tab-btn" onclick="document.getElementById('modal-tools-container').style.display='none'; document.getElementById('modal-prompts-container').style.display='none'; document.getElementById('modal-resources-container').style.display='block'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">Resources (<span id="resources-count-label">0</span>)</button>
+            <button type="button" class="primitive-tab-btn active" onclick="document.getElementById('modal-tools-container').style.display='block'; document.getElementById('modal-prompts-container').style.display='none'; document.getElementById('modal-resources-container').style.display='none'; document.getElementById('modal-connections-container').style.display='none'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">Tools (<span id="tools-count-label">0</span>)</button>
+            <button type="button" class="primitive-tab-btn" onclick="document.getElementById('modal-tools-container').style.display='none'; document.getElementById('modal-prompts-container').style.display='block'; document.getElementById('modal-resources-container').style.display='none'; document.getElementById('modal-connections-container').style.display='none'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">Prompts (<span id="prompts-count-label">0</span>)</button>
+            <button type="button" class="primitive-tab-btn" onclick="document.getElementById('modal-tools-container').style.display='none'; document.getElementById('modal-prompts-container').style.display='none'; document.getElementById('modal-resources-container').style.display='block'; document.getElementById('modal-connections-container').style.display='none'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">Resources (<span id="resources-count-label">0</span>)</button>
+            <button type="button" class="primitive-tab-btn" data-tab="connections" id="tab-btn-connections" onclick="document.getElementById('modal-tools-container').style.display='none'; document.getElementById('modal-prompts-container').style.display='none'; document.getElementById('modal-resources-container').style.display='none'; document.getElementById('modal-connections-container').style.display='block'; document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active')); this.classList.add('active');">🌐 Endpoints & Schema (<span id="connections-count-label">0</span>)</button>
         </div>
 
         <div id="modal-env-vars-container" class="modal-env-vars-box" style="display:none; margin-bottom: 15px; padding: 10px; background: var(--bg-tertiary); border-radius: 6px;"></div>
@@ -184,6 +185,7 @@
           <div id="modal-resources-container" style="display:none;">
             <!-- Resource cards -->
           </div>
+          <div id="modal-connections-container" class="primitive-tab-pane" style="display: none;"></div>
         </div>
 
         <!-- Safe Client Config Exporters -->

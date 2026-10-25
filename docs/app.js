@@ -1431,6 +1431,8 @@
         if (promptsContainer) promptsContainer.style.display='none';
         const resourcesContainer = document.getElementById('modal-resources-container');
         if (resourcesContainer) resourcesContainer.style.display='none';
+        const connsContainer = document.getElementById('modal-connections-container');
+        if (connsContainer) connsContainer.style.display='none';
         document.querySelectorAll('.primitive-tab-btn').forEach(b => b.classList.remove('active'));
         toolsTabBtn.classList.add('active');
     }
@@ -1617,6 +1619,64 @@
         }
     }
 
+
+    // Connections / Endpoints & Schema
+    const connections = (v && v.connections && v.connections.length > 0) ? v.connections : ((currentInspectedServer && currentInspectedServer.connections && currentInspectedServer.connections.length > 0) ? currentInspectedServer.connections : []);
+    
+    const connsCountLabel = document.getElementById('connections-count-label');
+    if (connsCountLabel) connsCountLabel.textContent = String(connections.length);
+    
+    const connsContainer = document.getElementById('modal-connections-container');
+    if (connsContainer) {
+      if (connections.length === 0) {
+        connsContainer.innerHTML = '<div class="connection-card"><div class="connection-header"><span class="badge badge-info">🖥️ Process Transport (stdio)</span></div><p class="connection-desc">This server operates via standard input/output (stdio) process execution.</p></div>';
+      } else {
+        connsContainer.innerHTML = connections.map(conn => {
+          let html = '<div class="connection-card">';
+          html += `<div class="connection-header"><span class="badge badge-info">🔗 ${escapeHtml(conn.type || 'stdio')}</span></div>`;
+          
+          if (conn.deploymentUrl) {
+            // Using a simple replace to avoid issues with single quotes in URLs breaking JS onclick handler
+            const safeUrlStr = conn.deploymentUrl.replace(/'/g, "\\'");
+            html += `<div class="connection-url-box">
+              <code>${escapeHtml(conn.deploymentUrl)}</code>
+              <button class="btn btn-sm" onclick="navigator.clipboard.writeText('${safeUrlStr}')">Copy</button>
+            </div>`;
+            if (conn.deploymentUrl.startsWith('http://')) {
+              html += '<div class="unencrypted-transport-warning">⚠️ Unencrypted HTTP Transport: Risk of credential and prompt interception in transit.</div>';
+            }
+          }
+          
+          const authType = conn.auth || conn.authentication || conn.authType;
+          if (authType) {
+            html += `<div class="connection-auth-badge"><span class="badge badge-warning">🔒 Auth: ${escapeHtml(authType)}</span></div>`;
+          }
+          
+          if (conn.configSchema && conn.configSchema.properties) {
+            const reqKeys = conn.configSchema.required || [];
+            html += `<table class="config-params-table">
+              <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+              <tbody>`;
+            
+            for (const [key, prop] of Object.entries(conn.configSchema.properties)) {
+              const isReq = reqKeys.includes(key);
+              html += `<tr>
+                <td><code>${escapeHtml(key)}</code></td>
+                <td>${escapeHtml(prop.type || 'string')}</td>
+                <td>${isReq ? 'Yes' : 'No'}</td>
+                <td>${escapeHtml(prop.description || '-')}</td>
+              </tr>`;
+            }
+            
+            html += `</tbody></table>`;
+          }
+          
+          html += '</div>';
+          return html;
+        }).join("");
+      }
+    }
+
     if (tools.length === 0) {
       el.modalToolsContainer.innerHTML = `<p class="empty-state">No extracted tool signatures for version ${escapeHtml(v.version)}.</p>`;
       return;
@@ -1673,6 +1733,7 @@
         </div>
       `;
     }).join("");
+
   }
 
   // Safe AI Client Config Exporter
