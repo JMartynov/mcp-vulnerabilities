@@ -101,3 +101,21 @@ def test_wave15_css_and_html_hygiene():
     # Check SVG viewBox
     assert 'viewBox="0 0 1000 80"' in updates_html
     assert '<svg id="historical-sparkline"' in updates_html
+
+def test_task93_analytics_drilldowns():
+    analytics_content = Path("docs/analytics.html").read_text(encoding="utf-8")
+    
+    assert "chart-clickable-row" in analytics_content
+    assert "index.html?q=" in analytics_content
+    assert "index.html?eco=" in analytics_content
+    assert "index.html?status=vulnerable&patch=available" in analytics_content
+    assert "index.html?status=vulnerable&patch=unpatched" in analytics_content
+    
+    app_js = Path("docs/app.js").read_text(encoding="utf-8")
+    assert 'const patchParam = params.get(\'patch\');' in app_js
+    assert 'activePatchFilter = patchParam;' in app_js
+    assert 'if (activePatchFilter === "available") {' in app_js
+    assert 'if (!server.is_vulnerable || !server.recommended_safe_version) return false;' in app_js
+    assert 'else if (activePatchFilter === "unpatched") {' in app_js
+    assert 'if (!server.is_vulnerable || server.recommended_safe_version) return false;' in app_js
+

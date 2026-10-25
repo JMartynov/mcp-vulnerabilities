@@ -13,6 +13,7 @@
   let activeVulnFilter = "ALL"; // "ALL" | "VULNERABLE" | "SAFE"
   let activeRiskFilter = "ALL"; // "ALL" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
   let activeDirectoryEco = "ALL";
+  let activePatchFilter = "ALL";
   let directorySearchQuery = "";
   let expandedToolServers = new Set();
 
@@ -128,6 +129,47 @@
     const params = new URLSearchParams(window.location.search);
     const serverParam = params.get('server');
     const versionParam = params.get('version');
+    
+    const qParam = params.get('q');
+    const statusParam = params.get('status');
+    const ecoParam = params.get('eco');
+    const patchParam = params.get('patch');
+
+    let filtersUpdated = false;
+
+    if (qParam) {
+      directorySearchQuery = qParam.toLowerCase();
+      if (el.directorySearchInput) el.directorySearchInput.value = qParam;
+      filtersUpdated = true;
+    }
+    if (statusParam) {
+      if (statusParam === 'vulnerable') activeVulnFilter = "VULNERABLE";
+      else if (statusParam === 'safe') activeVulnFilter = "SAFE";
+      if (el.vulnStatusChips) {
+        el.vulnStatusChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        const btn = el.vulnStatusChips.querySelector(`[data-vuln="${activeVulnFilter}"]`);
+        if (btn) btn.classList.add("active");
+      }
+      filtersUpdated = true;
+    }
+    if (ecoParam) {
+      activeDirectoryEco = ecoParam; // Might need exact casing matching chip data-eco, but chip handler does toLowerCase()
+      if (el.directoryEcoChips) {
+        el.directoryEcoChips.querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        const btn = Array.from(el.directoryEcoChips.querySelectorAll(".chip")).find(c => c.dataset.eco.toLowerCase() === ecoParam.toLowerCase());
+        if (btn) btn.classList.add("active");
+      }
+      filtersUpdated = true;
+    }
+    if (patchParam) {
+      activePatchFilter = patchParam;
+      filtersUpdated = true;
+    }
+
+    if (filtersUpdated) {
+      switchTab("directory");
+      applyDirectoryFilters();
+    }
     
     if (serverParam) {
       // Find the server in the catalog
@@ -888,6 +930,13 @@
       // Has Tools Only Filter
       if (el.filterToolsOnly && el.filterToolsOnly.checked) {
         if (!server.tools_count || server.tools_count === 0) return false;
+      }
+
+      // Patch filter logic
+      if (activePatchFilter === "available") {
+        if (!server.is_vulnerable || !server.recommended_safe_version) return false;
+      } else if (activePatchFilter === "unpatched") {
+        if (!server.is_vulnerable || server.recommended_safe_version) return false;
       }
 
       // Search Query
