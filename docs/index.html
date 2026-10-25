@@ -164,6 +164,13 @@
         <p>Drag and drop your AI client configuration file (e.g. <code>claude_desktop_config.json</code>, <code>cline_mcp_settings.json</code>, <code>cursor_config.json</code>) or paste the JSON content directly. All parsing and auditing is done 100% locally in your browser—no telemetry is sent.</p>
       </div>
 
+      <div class="audit-presets-container">
+        <span class="presets-label">⚡ Try an example config:</span>
+        <button type="button" class="btn-preset" data-preset="claude">Claude Desktop (Vulnerable Tools)</button>
+        <button type="button" class="btn-preset" data-preset="cursor">Cursor AI (Mixed Stdio & Remote)</button>
+        <button type="button" class="btn-preset" data-preset="clean">Clean / Secured Config</button>
+      </div>
+
       <div id="config-audit-zone" class="audit-dropzone" tabindex="0">
         <div class="dropzone-content">
           <span class="dropzone-icon">📥</span>
@@ -205,6 +212,8 @@
           </div>
           <div class="exporter-buttons-row">
             <button type="button" class="btn btn-export" id="btn-copy-remediated">📋 Copy Remediated Config</button>
+            <button type="button" id="btn-download-config" class="btn btn-secondary btn-export">💾 Download Fixed Config (.json)</button>
+            <button type="button" id="btn-export-report-md" class="btn btn-secondary btn-export">📄 Export Markdown Audit Report</button>
           </div>
           <div id="audit-export-toast" class="export-toast" style="display: none;">Remediated config copied to clipboard!</div>
           <pre id="audit-export-preview" class="export-preview"><code></code></pre>

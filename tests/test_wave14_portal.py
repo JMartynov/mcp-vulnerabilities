@@ -56,6 +56,30 @@ def test_wave15_frontend_remediations():
     assert "findMatchingAdvisoriesForPackage" in app_js
     assert "audit-cve-list" in app_js
 
+def test_wave18_config_auditor_presets_and_exporter():
+    # Test HTML for Task 92
+    html_content = Path("docs/index.html").read_text(encoding="utf-8")
+    assert "audit-presets-container" in html_content
+    assert "btn-preset" in html_content
+    assert 'id="btn-download-config"' in html_content
+    assert 'id="btn-export-report-md"' in html_content
+    
+    # Test JS for Task 92
+    app_js = Path("docs/app.js").read_text(encoding="utf-8")
+    assert "PRESETS = {" in app_js
+    assert "claude:" in app_js
+    assert "cursor:" in app_js
+    assert "clean:" in app_js
+    assert "URL.createObjectURL(blob)" in app_js
+    assert "mcp_config_fixed.json" in app_js
+    assert "mcp_security_audit_report.md" in app_js
+    
+    # Test CSS for Task 92
+    css_content = Path("docs/style.css").read_text(encoding="utf-8")
+    assert ".audit-presets-container" in css_content
+    assert ".btn-preset" in css_content
+
+
 def test_wave15_css_and_html_hygiene():
     # Task 82 CSS
     css_content = Path("docs/style.css").read_text(encoding="utf-8")

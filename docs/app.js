@@ -21,6 +21,11 @@
   let activeAdvisoryEco = "ALL";
   let advisorySearchQuery = "";
 
+  // Audit state
+  let lastAuditResults = [];
+  let lastRemediatedConfig = null;
+  let lastAuditStats = { total: 0, safe: 0, vuln: 0, advisories: 0 };
+
   // Shard Cache
   const shardCache = new Map();
   let currentInspectedServer = null;
@@ -52,6 +57,8 @@
     auditServerList: document.getElementById("audit-server-list"),
     auditRemediationPanel: document.getElementById("audit-remediation-panel"),
     auditBtnCopyRemediated: document.getElementById("btn-copy-remediated"),
+    auditBtnDownloadConfig: document.getElementById("btn-download-config"),
+    auditBtnExportReportMd: document.getElementById("btn-export-report-md"),
     auditExportToast: document.getElementById("audit-export-toast"),
     auditExportPreview: document.getElementById("audit-export-preview"),
 
@@ -153,6 +160,60 @@
     el.tabAdvisories.addEventListener("click", () => switchTab("advisories"));
     if (el.tabAudit) el.tabAudit.addEventListener("click", () => switchTab("audit"));
 
+    // Audit Presets
+    const PRESETS = {
+      claude: {
+        "mcpServers": {
+          "vulnerable-5ire": {
+            "command": "npx",
+            "args": ["-y", "5ire@1.0.0"]
+          },
+          "vulnerable-1panel": {
+            "command": "npx",
+            "args": ["-y", "1Panel@1.0.0"]
+          },
+          "vulnerable-ckan": {
+            "command": "npx",
+            "args": ["-y", "@aborruso/ckan-mcp-server@0.1.0"]
+          }
+        }
+      },
+      cursor: {
+        "mcpServers": {
+          "postgres": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-postgres", "postgresql://localhost/mydb"]
+          },
+          "brave-search": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-brave-search"]
+          }
+        }
+      },
+      clean: {
+        "mcpServers": {
+          "sqlite": {
+            "command": "uvx",
+            "args": ["mcp-server-sqlite", "--db-path", "~/test.db"]
+          },
+          "github": {
+            "command": "npx",
+            "args": ["-y", "@modelcontextprotocol/server-github"]
+          }
+        }
+      }
+    };
+
+    document.querySelectorAll('.btn-preset').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const presetKey = e.target.dataset.preset;
+        if (PRESETS[presetKey]) {
+          const configJson = JSON.stringify(PRESETS[presetKey], null, 2);
+          handleAuditText(configJson);
+        }
+      });
+    });
+
     // Audit Zone
     if (el.auditZone) {
       el.auditZone.addEventListener("dragover", (e) => {
@@ -194,6 +255,76 @@
             el.auditExportToast.style.display = "none";
           }, 2000);
         });
+      });
+    }
+
+    if (el.auditBtnDownloadConfig) {
+      el.auditBtnDownloadConfig.addEventListener("click", () => {
+        if (!lastRemediatedConfig) return;
+        const blob = new Blob([JSON.stringify(lastRemediatedConfig, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "mcp_config_fixed.json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
+
+    if (el.auditBtnExportReportMd) {
+      el.auditBtnExportReportMd.addEventListener("click", () => {
+        if (!lastAuditResults || lastAuditResults.length === 0) return;
+        
+        const timestamp = new Date().toISOString();
+        let md = `# MCP Security Audit Report\n\n`;
+        md += `Generated: ${timestamp}\n\n`;
+        md += `## Summary\n\n`;
+        md += `- **Total Servers Analyzed:** ${lastAuditStats.total}\n`;
+        md += `- **Clean / Safe Servers:** ${lastAuditStats.safe}\n`;
+        md += `- **Vulnerable Servers:** ${lastAuditStats.vuln}\n`;
+        md += `- **Total Advisories Detected:** ${lastAuditStats.advisories}\n\n`;
+        
+        md += `## Vulnerable Servers\n\n`;
+        
+        const vulnServers = lastAuditResults.filter(r => r.isVulnerable);
+        if (vulnServers.length === 0) {
+            md += `No vulnerabilities found.\n\n`;
+        } else {
+            vulnServers.forEach(res => {
+                md += `### ${res.name}\n\n`;
+                md += `- **Package:** \`${res.parsedPackage}\`\n`;
+                md += `- **Installed Version:** \`${res.version || 'Unknown'}\`\n`;
+                md += `- **Recommended Safe Version:** \`${res.safeVersion ? 'v' + res.safeVersion : 'Unknown'}\`\n\n`;
+                md += `**Advisories:**\n`;
+                if (res.advisories && res.advisories.length > 0) {
+                    res.advisories.forEach(adv => {
+                        md += `- [${adv.displayId}](https://osv.dev/vulnerability/${adv.id}) (${adv.severity} - CVSS ${adv.cvssScore || 'N/A'}): ${adv.summary}\n`;
+                    });
+                } else {
+                    md += `- None\n`;
+                }
+                md += `\n`;
+            });
+        }
+        
+        md += `## Remediated Configuration Snippet\n\n`;
+        if (lastRemediatedConfig) {
+            md += `\`\`\`json\n${JSON.stringify(lastRemediatedConfig, null, 2)}\n\`\`\`\n\n`;
+        } else {
+            md += `No remediation generated.\n\n`;
+        }
+        
+        const blob = new Blob([md], { type: "text/markdown;charset=utf-8" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "mcp_security_audit_report.md";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
       });
     }
 
@@ -676,6 +807,9 @@
       
       el.auditServerList.innerHTML = listHtml;
 
+      lastAuditResults = results;
+      lastAuditStats = { total: results.length, safe: safeCount, vuln: vulnCount, advisories: advisoriesCount };
+
       if (remediated) {
           el.auditRemediationPanel.style.display = "block";
           
@@ -686,8 +820,10 @@
           else if (newConfigObj.servers) newConfigObj.servers = remediatedServersObj;
           else newConfigObj = remediatedServersObj;
 
+          lastRemediatedConfig = newConfigObj;
           el.auditExportPreview.querySelector("code").textContent = JSON.stringify(newConfigObj, null, 2);
       } else {
+          lastRemediatedConfig = null;
           el.auditRemediationPanel.style.display = "none";
       }
   }
