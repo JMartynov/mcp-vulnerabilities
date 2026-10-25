@@ -119,3 +119,18 @@ def test_task93_analytics_drilldowns():
     assert 'else if (activePatchFilter === "unpatched") {' in app_js
     assert 'if (!server.is_vulnerable || server.recommended_safe_version) return false;' in app_js
 
+
+def test_wave18_sorting_and_deeplinking():
+    # 1. HTML Requirements
+    with open("docs/index.html", "r") as f:
+        html = f.read()
+    assert 'id="sort-select"' in html, "index.html missing sort-select dropdown"
+    assert 'aria-label="Sort MCP servers"' in html, "index.html missing accessibility invariant for sort-select"
+    assert '<option value="risk_desc">' in html, "index.html missing risk_desc option"
+    
+    # 2. JS Requirements
+    with open("docs/app.js", "r") as f:
+        js = f.read()
+    assert 'function applySorting(' in js, "app.js missing applySorting function"
+    assert 'history.pushState' in js or 'history.replaceState' in js, "app.js missing history state management for deep-linking"
+    assert 'URLSearchParams' in js, "app.js missing URLSearchParams parsing"

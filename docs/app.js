@@ -76,6 +76,7 @@
     advisorySeverityChips: document.getElementById("advisory-severity-chips"),
     advisoryEcoChips: document.getElementById("advisory-eco-chips"),
     filterToolsOnly: document.getElementById("filterToolsOnly"),
+    sortSelect: document.getElementById("sort-select"),
     advisoriesResultsCount: document.getElementById("advisories-results-count"),
     advisoriesContainer: document.getElementById("advisories-container"),
 
@@ -121,11 +122,113 @@
     renderDirectoryCards();
   };
 
+  function parseUrlParams() {
+    const params = new URLSearchParams(window.location.search);
+    if (!params.has('tab') && !params.has('q') && !params.has('status') && !params.has('risk') && !params.has('eco') && !params.has('tools_only') && !params.has('sort')) return;
+
+    
+    // Tab
+    const tabParam = params.get('tab');
+    if (tabParam) switchTab(tabParam, false);
+    
+    // Search
+    const qParam = params.get('q');
+    if (qParam !== null) {
+      if (currentTab === 'directory') el.dirSearch.value = qParam;
+      else if (currentTab === 'advisories') el.advSearch.value = qParam;
+    }
+    
+    // Filters
+    const statusParam = params.get('status');
+    if (statusParam) {
+      activeVulnFilter = statusParam;
+      updateChips(el.vulnChips, statusParam, "vuln");
+    }
+    const riskParam = params.get('risk');
+    if (riskParam) {
+      activeRiskFilter = riskParam;
+      updateChips(el.riskChips, riskParam, "risk");
+    }
+    const ecoParam = params.get('eco');
+    if (ecoParam) {
+      activeDirectoryEco = ecoParam;
+      updateChips(el.directoryEcoChips, ecoParam, "eco");
+    }
+    const toolsOnlyParam = params.get('tools_only');
+    if (toolsOnlyParam && el.filterToolsOnly) {
+      el.filterToolsOnly.checked = toolsOnlyParam === '1';
+    }
+    
+    // Sort
+    const sortParam = params.get('sort');
+    if (sortParam && el.sortSelect) {
+      el.sortSelect.value = sortParam;
+    }
+  }
+
+  function syncToUrl(push = false) {
+    const url = new URL(window.location);
+    
+    url.searchParams.set('tab', currentTab);
+    
+    const query = currentTab === 'directory' ? el.dirSearch.value : el.advSearch.value;
+    if (query) url.searchParams.set('q', query);
+    else url.searchParams.delete('q');
+    
+    if (currentTab === 'directory') {
+      if (activeVulnFilter !== 'ALL') url.searchParams.set('status', activeVulnFilter);
+      else url.searchParams.delete('status');
+      
+      if (activeRiskFilter !== 'ALL') url.searchParams.set('risk', activeRiskFilter);
+      else url.searchParams.delete('risk');
+      
+      if (activeDirectoryEco !== 'ALL') url.searchParams.set('eco', activeDirectoryEco);
+      else url.searchParams.delete('eco');
+      
+      if (el.filterToolsOnly && el.filterToolsOnly.checked) url.searchParams.set('tools_only', '1');
+      else url.searchParams.delete('tools_only');
+      
+      if (el.sortSelect && el.sortSelect.value !== 'risk_desc') url.searchParams.set('sort', el.sortSelect.value);
+      else url.searchParams.delete('sort');
+    }
+    
+    if (push) {
+      history.pushState(null, '', url);
+    } else {
+      history.replaceState(null, '', url);
+    }
+  }
+
+  window.addEventListener('popstate', async () => {
+    // Re-parse URL params on back/forward navigation
+    parseUrlParams();
+    if (currentTab === "directory") applyDirectoryFilters();
+    else if (currentTab === "advisories") applyAdvisoryFilters();
+    
+    const params = new URLSearchParams(window.location.search);
+    const serverParam = params.get('server');
+    const versionParam = params.get('version');
+    
+    if (serverParam) {
+      const serverEntry = catalogIndex.find(s => s.package_name === serverParam || s.display_name === serverParam);
+      if (serverEntry && !el.serverModal.open) {
+        await openServerModal(serverEntry.package_name, serverEntry.shard_file, false);
+        if (versionParam && currentInspectedServer && currentInspectedServer.versions) {
+          const targetVer = currentInspectedServer.versions.find(v => v.version === versionParam);
+          if (targetVer) selectVersion(targetVer, false);
+        }
+      }
+    } else if (el.serverModal.open) {
+      el.serverModal.close();
+    }
+  });
+
   async function init() {
     setupEventListeners();
     await Promise.all([loadCatalogIndex(), loadAdvisories()]);
     
     // Handle deep linking from URL query params
+    parseUrlParams();
     const params = new URLSearchParams(window.location.search);
     const serverParam = params.get('server');
     const versionParam = params.get('version');
@@ -175,9 +278,9 @@
       // Find the server in the catalog
       const serverEntry = catalogIndex.find(s => s.package_name === serverParam || s.display_name === serverParam);
       if (serverEntry) {
-        switchTab("directory");
+        switchTab("directory", false);
         // Open modal
-        await openServerModal(serverEntry.package_name, serverEntry.shard_file);
+        await openServerModal(serverEntry.package_name, serverEntry.shard_file, false);
         
         // If version param provided, select it after modal opens
         if (versionParam && currentInspectedServer && currentInspectedServer.versions) {
@@ -188,19 +291,32 @@
             const pill = el.modalVersionPills.querySelector(`.version-pill[data-ver="${versionParam}"]`);
             if (pill) pill.classList.add("active");
             
-            selectVersion(targetVer);
+            selectVersion(targetVer, false);
           }
         }
       }
+    } else {
+       // Just render normally if no server modal to open
+       if (currentTab === "directory") applyDirectoryFilters();
+       else if (currentTab === "advisories") applyAdvisoryFilters();
     }
   }
 
   // Event Listeners
   function setupEventListeners() {
     // Tab Switching
-    el.tabDirectory.addEventListener("click", () => switchTab("directory"));
-    el.tabAdvisories.addEventListener("click", () => switchTab("advisories"));
-    if (el.tabAudit) el.tabAudit.addEventListener("click", () => switchTab("audit"));
+    el.tabDirectory.addEventListener("click", () => {
+      switchTab("directory", true);
+      syncToUrl();
+    });
+    el.tabAdvisories.addEventListener("click", () => {
+      switchTab("advisories", true);
+      syncToUrl();
+    });
+    if (el.tabAudit) el.tabAudit.addEventListener("click", () => {
+      switchTab("audit", true);
+      syncToUrl();
+    });
 
     // Audit Presets
     const PRESETS = {
@@ -408,6 +524,10 @@
       applyDirectoryFilters();
       if (allAdvisories.length > 0) applyAdvisoryFilters();
     });
+    
+    if (el.sortSelect) {
+      el.sortSelect.addEventListener("change", applyDirectoryFilters);
+    }
 
     el.advisorySearchInput.addEventListener("input", (e) => {
       advisorySearchQuery = e.target.value.trim().toLowerCase();
@@ -433,9 +553,21 @@
     });
 
     // Modal Close buttons
-    el.serverModalClose.addEventListener("click", () => el.serverModal.close());
+    el.serverModalClose.addEventListener("click", () => {
+      el.serverModal.close();
+      const url = new URL(window.location);
+      url.searchParams.delete('server');
+      url.searchParams.delete('version');
+      history.pushState(null, '', url);
+    });
     el.serverModal.addEventListener("click", (e) => {
-      if (e.target === el.serverModal) el.serverModal.close();
+      if (e.target === el.serverModal) {
+        el.serverModal.close();
+        const url = new URL(window.location);
+        url.searchParams.delete('server');
+        url.searchParams.delete('version');
+        history.pushState(null, '', url);
+      }
     });
 
     el.advisoryModalClose.addEventListener("click", () => el.advisoryModal.close());
@@ -449,7 +581,7 @@
     });
   }
 
-  function switchTab(tab) {
+  function switchTab(tab, push = true) {
     activeTab = tab;
     
     // Reset all
@@ -953,8 +1085,44 @@
       return true;
     });
 
+    const sortCriteria = el.sortSelect ? el.sortSelect.value : "risk_desc";
+    filteredServers = applySorting(filteredServers, sortCriteria);
+
     el.directoryResultsCount.textContent = `Showing ${filteredServers.length.toLocaleString()} of ${catalogIndex.length.toLocaleString()} servers`;
     renderDirectoryCards();
+    syncToUrl();
+  }
+
+  function applySorting(servers, criteria) {
+    const riskWeights = { "CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "MODERATE": 2, "LOW": 1 };
+    
+    return [...servers].sort((a, b) => {
+      if (criteria === "risk_desc") {
+        const riskA = riskWeights[getServerCompositeRisk(a).toUpperCase()] || 0;
+        const riskB = riskWeights[getServerCompositeRisk(b).toUpperCase()] || 0;
+        if (riskA !== riskB) return riskB - riskA;
+        return (a.package_name || "").localeCompare(b.package_name || "");
+      }
+      if (criteria === "advisories_desc") {
+        const advA = a.vulnerable_versions_count || 0;
+        const advB = b.vulnerable_versions_count || 0;
+        if (advA !== advB) return advB - advA;
+        return (a.package_name || "").localeCompare(b.package_name || "");
+      }
+      if (criteria === "tools_desc") {
+        const toolsA = a.tools_count || 0;
+        const toolsB = b.tools_count || 0;
+        if (toolsA !== toolsB) return toolsB - toolsA;
+        return (a.package_name || "").localeCompare(b.package_name || "");
+      }
+      if (criteria === "name_asc") {
+        return (a.package_name || "").localeCompare(b.package_name || "");
+      }
+      if (criteria === "name_desc") {
+        return (b.package_name || "").localeCompare(a.package_name || "");
+      }
+      return 0; // fallback
+    });
   }
 
   function getServerCompositeRisk(server) {
@@ -1135,7 +1303,7 @@
     }, 500);
   };
 
-  async function openServerModal(pkgName, shardFile) {
+  async function openServerModal(pkgName, shardFile, push = true) {
     el.modalServerTitle.textContent = "Loading server details...";
     el.modalServerPkg.textContent = pkgName;
     el.modalVersionPills.innerHTML = '<span class="loading-inline">Fetching shard data...</span>';
@@ -1249,7 +1417,12 @@
     exportConfig("claude", true); // preview only
   }
 
-  function selectVersion(v) {
+  function selectVersion(v, push = true) {
+    if (push && el.serverModal.open) {
+      const url = new URL(window.location);
+      url.searchParams.set('version', v.version);
+      history.replaceState(null, '', url);
+    }
     // Reset sub-tabs to tools
     const toolsTabBtn = document.querySelector('.primitive-tab-btn:nth-child(1)');
     if (toolsTabBtn) {
@@ -1630,6 +1803,7 @@
 
     el.advisoriesResultsCount.textContent = `Showing ${filteredAdvisories.length} of ${allAdvisories.length} advisories`;
     renderAdvisoryCards();
+    syncToUrl();
   }
 
   function getSeverity(adv) {
