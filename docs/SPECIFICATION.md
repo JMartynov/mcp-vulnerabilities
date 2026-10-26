@@ -285,6 +285,57 @@ This advisory represents **CVE-2025-6514 / GHSA-6xpm-ggf7-wc3p**, an OS command 
 
 ---
 
+## 17. Sigstore Keyless Attestation & Verifiable Feed Pipeline (Wave 19)
+
+### 17.1 Attestation Workflow
+Vulnerability feeds and build artifacts are cryptographically signed using Sigstore Cosign in a keyless OIDC workflow via `.github/workflows/sign_release.yml`. This establishes SLSA Level 3 provenance for the `vulnerabilities.json.gz` dataset.
+
+### 17.2 Verification Protocol
+Consumers can verify the integrity of the downloaded data using:
+```bash
+mcp-vuln verify-feed --feed docs/data/vulnerabilities.json.gz [--manifest CATALOG_MANIFEST.json] [--bundle bundle.sigstore]
+```
+The verifier checks the OIDC issuer URL (e.g., `https://token.actions.githubusercontent.com`) and identity (e.g., `https://github.com/JMartynov/mcp-vulnerabilities/...`) against the offline certificate bundle.
+
+---
+
+## 18. Typosquatting & LLM Hallucinated Package Detector (Wave 19)
+
+### 18.1 Detection Heuristics
+The analyzer (`src/mcp_vulnerabilities/analyzers/typosquat/`) compares target dependencies against an authentic catalog corpus to identify malicious impersonations:
+- **Damerau-Levenshtein Distance**: Measures string permutations, insertions, deletions, and substitutions (e.g., `mcp-postgres` vs `mcp-postgress`).
+- **Homoglyph Character Tables**: Detects Cyrillic or similar-looking Unicode characters intended to visually impersonate authentic characters (e.g., Latin `a` vs Cyrillic `а`).
+- **Prefix/Suffix Analysis**: Detects common malicious affixes (`-server`, `-core`, `official-`).
+
+### 18.2 Risk Tiers
+Detected anomalies are assigned risk tiers (`CRITICAL`, `HIGH`, `SUSPICIOUS`, `CLEAN`), allowing CI/CD pipelines to fail builds automatically.
+
+---
+
+## 19. Automated GitHub PR Remediation Bot (Wave 19)
+
+### 19.1 Auto-Remediation Workflow
+The bot (`src/mcp_vulnerabilities/bot/`) provides continuous, idempotent configuration remediation:
+- **Discovery**: Automatically scans local repository trees, ignoring `.git` and `node_modules`, for configured AI agent IDE settings (Claude Desktop, Cursor, Zed).
+- **Safe Version Pinning**: Invokes the `ClientConfigFixer` to compute safe semantic versions that resolve identified OSV advisories.
+- **Pull Request Generation**: Branches (`mcp-vuln/fix-<server>`), commits the patched JSON config, and opens a GitHub PR.
+- **Markdown Body Specification**: Generates an actionable PR description rendering a side-by-side diff preview and a rich markdown table detailing the mitigated CVEs and their CVSS severities.
+
+---
+
+## 20. Wave 18 Portal Schema Extensions
+
+### 20.1 Endpoints & Connection Schema
+The server modal schema (`#server-modal`) includes detailed connection attributes mapping deployment URLs, connection types (`streamable-http`, `sse`), and plain-text risk warnings when unencrypted HTTP connections are specified for secrets transmission.
+
+### 20.2 Two-Version Arbitrary Diff Comparator
+The UI data model supports dynamic client-side delta computation between any two semantic versions, identifying:
+- Net new and removed capabilities (tools/prompts/resources).
+- Mutated JSON-Schema parameters.
+- Introduced and resolved vulnerability advisories specific to the version delta.
+
+---
+
 ## 4. Live Advisory Ingestion & Checkpoint Protocol
 
 The synchronization pipeline fetches advisories directly from remote sources, managing state via checkpoint protocols:

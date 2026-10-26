@@ -284,3 +284,38 @@ The Wave 15 implementation introduced advanced preprocessing steps in the high-p
 - **Precomputed Risk Metrics**: The builder precomputes `highest_cve_severity` and `composite_risk_tier` and injects them into the root of each catalog item in `mcp_catalog_index.json`, reducing client-side compute overhead.
 - **Latest-Version Extraction**: Capability extraction, required environment variables, and `tools` lists are dynamically extracted from the latest representative version (`versions[-1]`) to ensure the portal displays up-to-date attack surfaces.
 - **In-Browser Config Auditor Enrichment**: Cross-references parsed configurations against preloaded `allAdvisories` to append CVE/GHSA IDs, severity badges, CVSS scores, and safe-version pin detection in the UI.
+
+---
+
+## 17. Attestation Subsystem (Wave 19)
+
+The Attestation Subsystem (`src/mcp_vulnerabilities/attestation/`) secures the supply chain pipeline by generating and verifying cryptographic guarantees for distributed databases.
+- **`manifest.py`**: Computes deterministic SHA-256 hashes of the `vulnerabilities.json.gz` catalog and builds the `CATALOG_MANIFEST.json`.
+- **`verifier.py`**: Interacts with the Sigstore ecosystem, loading Cosign verification bundles to attest that the payload signature matches the GitHub Actions OIDC identity representing the authoritative repository.
+
+---
+
+## 18. Typosquatting Analyzer Subsystem (Wave 19)
+
+The Typosquatting Analyzer (`src/mcp_vulnerabilities/analyzers/typosquat/`) detects active supply chain threats attempting to spoof authentic MCP servers.
+- **`detector.py`**: Implements specialized string distance algorithms (Damerau-Levenshtein) and evaluates semantic affixes.
+- **`corpus.py`**: Generates the authentic baseline from `mcp_catalog_index.json`, building lookup tries for rapid distance matching.
+- **Remediation**: Recommends fixes and allows in-place client configuration correction when invoked with `--fix`.
+
+---
+
+## 19. PR Remediation Bot Subsystem (Wave 19)
+
+The Automated PR Remediation Bot (`src/mcp_vulnerabilities/bot/`) enables continuous configuration security in GitOps workflows.
+- **`scanner.py`**: Traverses project repositories while respecting `.gitignore` rules, locating `claude_desktop_config.json`, `cline_mcp_settings.json`, and other supported AI configurations.
+- **`pr_builder.py`**: Orchestrates the automated creation of branches (e.g., `mcp-vuln/fix-server-postgres`), constructs side-by-side config patch diffs, and synthesizes Markdown pull request bodies summarizing the mitigated CVEs.
+
+---
+
+## 20. Wave 18 Web View & Portal Intelligence Implementation
+
+The Wave 18 UI/UX and data engine architectural enhancements improved vulnerability insights and client-side remediation:
+- **`site_builder.py` / `docs/data/`**: Enhanced generation of `passports.json.gz`, extracting runtime transport schemas (`streamable-http`, `sse`) and API keys directly into `mcp_catalog_index.json` and `analytics.json`.
+- **`docs/index.html` / `docs/style.css`**: Upgraded UI frameworks with interactive modal panels for **Endpoints & Schema** and arbitrary two-version semantic diffs.
+- **`docs/app.js`**: Introduced deep-linking via query parameters (`?q=`, `?server=`, `?tab=`), interactive drill-down filter state propagation from the analytics dashboard, and "Download Fixed Config" logic.
+- **`updates_builder.py` / `docs/updates.js`**: Refined chronological semantic version array sorting and absolute release-over-release delta calculation for accurate historical sparklines.
