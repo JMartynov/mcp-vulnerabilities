@@ -170,23 +170,48 @@
     }
   }
 
+  function compareSemVer(vA, vB) {
+    const pA = vA.replace(/^v/i, "").split('.').map(x => parseInt(x, 10) || 0);
+    const pB = vB.replace(/^v/i, "").split('.').map(x => parseInt(x, 10) || 0);
+    const maxLen = Math.max(pA.length, pB.length);
+    for (let i = 0; i < maxLen; i++) {
+      const partA = pA[i] || 0;
+      const partB = pB[i] || 0;
+      if (partA > partB) return 1;
+      if (partA < partB) return -1;
+    }
+    return 0;
+  }
+
   async function loadReleaseHistory() {
     try {
       const res = await fetch("data/updates/updates_history.json");
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      releaseHistory = await res.json();
+      let rawHistory = await res.json();
 
-      if (releaseHistory.length === 0) {
+      if (rawHistory.length === 0) {
         el.releaseSelect.innerHTML = '<option value="">No release history available</option>';
         return;
       }
+      
+      // Sort strictly in descending SemVer order
+      releaseHistory = rawHistory.sort((a, b) => compareSemVer(b.release_version, a.release_version));
 
       el.releaseSelect.innerHTML = releaseHistory.map((r, idx) => {
         const counts = r.summary_counts || {};
         const dateStr = r.timestamp_utc ? new Date(r.timestamp_utc).toLocaleDateString() : "";
+        const srvCount = counts.new_mcp_servers || 0;
+        const advCount = counts.new_advisories || 0;
+        
+        // If it's a delta update (new_mcp_servers/new_advisories > 0 but not thousands typically),
+        // we can format with '+'. To be safe, if we determine it's the very first release 
+        // (last in descending history), we just show the raw count.
+        const srvText = idx === releaseHistory.length - 1 ? `${srvCount}` : `+${srvCount}`;
+        const advText = idx === releaseHistory.length - 1 ? `${advCount}` : `+${advCount}`;
+        
         return `
           <option value="${escapeHtml(r.data_file || "latest_update.json")}" ${idx === 0 ? "selected" : ""}>
-            v${escapeHtml(r.release_version)} (${dateStr}) — ${counts.new_mcp_servers || 0} updated servers, ${counts.new_advisories || 0} CVEs
+            v${escapeHtml(r.release_version)} (${dateStr}) — ${srvText} servers, ${advText} CVEs
           </option>
         `;
       }).join("");

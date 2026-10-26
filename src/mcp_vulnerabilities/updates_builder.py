@@ -118,16 +118,52 @@ def build_updates_data(
     # Sort updated servers deterministically
     updated_servers.sort(key=lambda s: (not s.get("is_vulnerable", False), s.get("package_name", "").lower()))
 
-    # Summary counts
-    total_new_advs = len(advisories)
-    total_updated_servers = len(updated_servers)
-    total_versions_tracked = sum(len(s.get("versions", [])) for s in updated_servers)
+    history_file = out_dir / "updates_history.json"
+    history: list[dict[str, Any]] = []
+    if history_file.exists():
+        try:
+            history = json.loads(history_file.read_text(encoding="utf-8"))
+        except Exception:
+            history = []
+
+    prev_history = [h for h in history if h.get("release_version") != rel_version]
+    
+    current_total_advs = len(advisories)
+    current_total_servers = len(catalog)
+    current_total_versions = sum(len(s.versions) for s in catalog.values())
+    
+    new_advisories = current_total_advs
+    updated_advisories = 0
+    new_mcp_servers = current_total_servers
+    updated_mcp_versions = current_total_versions
+    
+    if prev_history:
+        prev_entry = prev_history[0]
+        if "cumulative_totals" in prev_entry:
+            prev_total_advs = prev_entry["cumulative_totals"].get("total_advisories", 0)
+            prev_total_servers = prev_entry["cumulative_totals"].get("total_servers", 0)
+            prev_total_versions = prev_entry["cumulative_totals"].get("total_versions", 0)
+        else:
+            prev_counts = prev_entry.get("summary_counts", {})
+            prev_total_advs = prev_counts.get("new_advisories", 0)
+            prev_total_servers = prev_counts.get("new_mcp_servers", 0)
+            prev_total_versions = prev_counts.get("updated_mcp_versions", 0)
+        
+        new_advisories = max(0, current_total_advs - prev_total_advs)
+        new_mcp_servers = max(0, current_total_servers - prev_total_servers)
+        updated_mcp_versions = max(0, current_total_versions - prev_total_versions)
 
     summary_counts = {
-        "new_advisories": total_new_advs,
-        "updated_advisories": total_new_advs,
-        "new_mcp_servers": total_updated_servers,
-        "updated_mcp_versions": total_versions_tracked,
+        "new_advisories": new_advisories,
+        "updated_advisories": updated_advisories,
+        "new_mcp_servers": new_mcp_servers,
+        "updated_mcp_versions": updated_mcp_versions,
+    }
+    
+    cumulative_totals = {
+        "total_advisories": current_total_advs,
+        "total_servers": current_total_servers,
+        "total_versions": current_total_versions,
     }
 
     # Format release bundle
@@ -153,21 +189,13 @@ def build_updates_data(
     )
     logger.info("Exported versioned release update -> %s", version_file)
 
-    # Update updates_history.json
-    history_file = out_dir / "updates_history.json"
-    history: list[dict[str, Any]] = []
-    if history_file.exists():
-        try:
-            history = json.loads(history_file.read_text(encoding="utf-8"))
-        except Exception:
-            history = []
-
     # Update or prepend current release in history
     history = [h for h in history if h.get("release_version") != rel_version]
     history.insert(0, {
         "release_version": rel_version,
         "timestamp_utc": now_iso,
         "summary_counts": summary_counts,
+        "cumulative_totals": cumulative_totals,
         "data_file": f"v{rel_version}.json",
     })
 
