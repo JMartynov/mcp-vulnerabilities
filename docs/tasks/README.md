@@ -254,17 +254,30 @@ Master Plan: [IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md](IMPLEMENTATIO
 | **92** | **In-Browser Config Auditor Sample Presets & Report Exporter** | Client-Side Auditing (`docs/index.html`, `docs/app.js`, `docs/style.css`) | `Done` | Added 1-click sample vulnerable and clean preset buttons, plus "Download Fixed Config (.json)" and "Export Markdown Audit Report (.md)" buttons. | [task92_inbrowser_config_auditor_presets_and_exporter.md](task92_inbrowser_config_auditor_presets_and_exporter.md) |
 | **93** | **Interactive Click-to-Filter Drilldowns on Analytics Portal** | Analytics Web Portal (`docs/analytics.html`, `docs/app.js`) | `Done` | Made tools, OWASP categories, shadowed tools, and Zero-Day gap cards clickable to navigate to `index.html` with active search and filter parameters. | [task93_interactive_click_to_filter_analytics_drilldowns.md](task93_interactive_click_to_filter_analytics_drilldowns.md) |
 | **94** | **Interactive Arbitrary Two-Version Diff Comparator in Modal** | Front-End Modal (`docs/app.js`, `docs/updates.js`, `docs/style.css`) | `Done` | Added baseline version selector inside `#server-modal` computing cumulative tool additions, removals, parameter mutations, and resolved/introduced CVEs. | [task94_interactive_arbitrary_two_version_diff_comparator.md](task94_interactive_arbitrary_two_version_diff_comparator.md) |
+| **95** | **Release History Delta Calculation & Semantic Version Ordering** | Updates Portal Pipeline (`updates_builder.py`, `docs/updates.js`) | `Done` | Implemented true release-over-release delta calculation for new/updated advisories and servers, plus client-side numerical SemVer sorting. | [task95_release_history_delta_and_version_ordering_fix.md](task95_release_history_delta_and_version_ordering_fix.md) |
+
+---
+
+### 19. Wave 19: Supply Chain Integrity, Attestation & Automated Remediation (Planned Wave)
+
+Master Plan: [IMPLEMENTATION_PLAN_WAVE19_SUPPLY_CHAIN_INTEGRITY_AND_REMEDIATION.md](IMPLEMENTATION_PLAN_WAVE19_SUPPLY_CHAIN_INTEGRITY_AND_REMEDIATION.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **96** | **Sigstore Cosign Keyless Attestation & Verifiable Feed Pipeline** | Supply Chain Attestation (`attestation/`, `cli.py`) | `Todo` | OIDC keyless signing of daily vulnerability feeds (`docs/data/vulnerabilities.json.gz`), wheels, and manifest; CLI verification `mcp-vuln verify-feed`. | [task96_sigstore_keyless_attestation_pipeline.md](task96_sigstore_keyless_attestation_pipeline.md) |
+| **97** | **Typosquatting & LLM Hallucinated Package Detector (`audit-typosquat`)** | Supply Chain Threat Defense (`analyzers/typosquat/`, `cli.py`) | `Todo` | Detect misspelled or hallucinated MCP packages using Levenshtein distance, homoglyph analysis, and authentic catalog corpus matching with `--fix`. | [task97_typosquatting_and_hallucination_detector.md](task97_typosquatting_and_hallucination_detector.md) |
+| **98** | **Automated GitHub PR Remediation Bot (`remediate-pr`)** | Automated Remediation (`bot/`, `cli.py`) | `Todo` | Automated bot discovering client configurations in repositories, computing safe version pins, and generating PRs with side-by-side diff previews and CVE tables. | [task98_automated_github_pr_remediation_bot.md](task98_automated_github_pr_remediation_bot.md) |
 
 ## Verification Test Results
 ```
 .venv/bin/pytest
-============================= 373 passed, 2 skipped in 95.12s =============================
+============================= 370 passed, 5 skipped in 93.47s =============================
 ```
 - Total test count: **375**
-- Passing: **373 (100% of runnable)**
-- Skipped: **2**
+- Passing: **370 (100% of runnable)**
+- Skipped: **5**
 - Failed: **0**
-- Empirical Invariant Suite (`tests/audit/`): **28 passed in 12.08s (100%)**
+- Empirical Invariant Suite (`tests/audit/`): **29 passed in 14.12s (100%)**
 - Code Review Scorecard: **100 / 100** (Full register in [`docs/reports/code_review_wave15_16_remediation_and_v12.md`](../reports/code_review_wave15_16_remediation_and_v12.md) and [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md))
 
 

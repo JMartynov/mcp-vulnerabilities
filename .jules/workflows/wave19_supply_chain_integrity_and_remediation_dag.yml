@@ -1,0 +1,22 @@
+name: Wave 19 - Supply Chain Integrity, Attestation & Automated Remediation
+version: "1.0.0"
+description: "DAG orchestration for Sigstore keyless attestation (Task 96), typosquatting detector (Task 97), and automated GitHub PR remediation bot (Task 98)."
+
+tasks:
+  - id: task96
+    name: "Task 96: Sigstore Cosign Keyless Attestation & Verifiable Feed Pipeline"
+    prompt_file: ".jules/task96_sigstore_keyless_attestation_pipeline.md"
+    depends_on: []
+    policy: on_success
+
+  - id: task97
+    name: "Task 97: Typosquatting & LLM Hallucinated Package Detector"
+    prompt_file: ".jules/task97_typosquatting_and_hallucination_detector.md"
+    depends_on: []
+    policy: on_success
+
+  - id: task98
+    name: "Task 98: Automated GitHub PR Remediation Bot"
+    prompt_file: ".jules/task98_automated_github_pr_remediation_bot.md"
+    depends_on: ["task96", "task97"]
+    policy: on_success
