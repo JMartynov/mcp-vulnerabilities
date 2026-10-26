@@ -1138,7 +1138,6 @@ def main() -> None:
     elif args.command == "audit-typosquat":
         import json
         import os
-        from pathlib import Path
         from mcp_vulnerabilities.analyzers.typosquat import TyposquatDetector, RiskTier, load_authentic_corpus
         
         # Load corpus
@@ -2157,7 +2156,6 @@ def main() -> None:
 
     elif args.command == "verify-feed":
         import json
-        from pathlib import Path
         from mcp_vulnerabilities.attestation.manifest import verify_catalog_manifest, ChecksumMismatchError
         from mcp_vulnerabilities.attestation.verifier import verify_sigstore_bundle
         

@@ -258,26 +258,26 @@ Master Plan: [IMPLEMENTATION_PLAN_WAVE18_WEB_VIEW_ENHANCEMENTS.md](IMPLEMENTATIO
 
 ---
 
-### 19. Wave 19: Supply Chain Integrity, Attestation & Automated Remediation (Planned Wave)
+### 19. Wave 19: Supply Chain Integrity, Attestation & Automated Remediation (Completed)
 
 Master Plan: [IMPLEMENTATION_PLAN_WAVE19_SUPPLY_CHAIN_INTEGRITY_AND_REMEDIATION.md](IMPLEMENTATION_PLAN_WAVE19_SUPPLY_CHAIN_INTEGRITY_AND_REMEDIATION.md)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
-| **96** | **Sigstore Cosign Keyless Attestation & Verifiable Feed Pipeline** | Supply Chain Attestation (`attestation/`, `cli.py`) | `Todo` | OIDC keyless signing of daily vulnerability feeds (`docs/data/vulnerabilities.json.gz`), wheels, and manifest; CLI verification `mcp-vuln verify-feed`. | [task96_sigstore_keyless_attestation_pipeline.md](task96_sigstore_keyless_attestation_pipeline.md) |
-| **97** | **Typosquatting & LLM Hallucinated Package Detector (`audit-typosquat`)** | Supply Chain Threat Defense (`analyzers/typosquat/`, `cli.py`) | `Todo` | Detect misspelled or hallucinated MCP packages using Levenshtein distance, homoglyph analysis, and authentic catalog corpus matching with `--fix`. | [task97_typosquatting_and_hallucination_detector.md](task97_typosquatting_and_hallucination_detector.md) |
-| **98** | **Automated GitHub PR Remediation Bot (`remediate-pr`)** | Automated Remediation (`bot/`, `cli.py`) | `Todo` | Automated bot discovering client configurations in repositories, computing safe version pins, and generating PRs with side-by-side diff previews and CVE tables. | [task98_automated_github_pr_remediation_bot.md](task98_automated_github_pr_remediation_bot.md) |
+| **96** | **Sigstore Cosign Keyless Attestation & Verifiable Feed Pipeline** | Supply Chain Attestation (`attestation/`, `cli.py`) | `Done` | OIDC keyless signing of daily vulnerability feeds (`docs/data/vulnerabilities.json.gz`), wheels, and manifest; CLI verification `mcp-vuln verify-feed`. | [task96_sigstore_keyless_attestation_pipeline.md](task96_sigstore_keyless_attestation_pipeline.md) |
+| **97** | **Typosquatting & LLM Hallucinated Package Detector (`audit-typosquat`)** | Supply Chain Threat Defense (`analyzers/typosquat/`, `cli.py`) | `Done` | Detect misspelled or hallucinated MCP packages using Levenshtein distance, homoglyph analysis, and authentic catalog corpus matching with `--fix`. | [task97_typosquatting_and_hallucination_detector.md](task97_typosquatting_and_hallucination_detector.md) |
+| **98** | **Automated GitHub PR Remediation Bot (`remediate-pr`)** | Automated Remediation (`bot/`, `cli.py`) | `Done` | Automated bot discovering client configurations in repositories, computing safe version pins, and generating PRs with side-by-side diff previews and CVE tables. | [task98_automated_github_pr_remediation_bot.md](task98_automated_github_pr_remediation_bot.md) |
 
 ## Verification Test Results
 ```
-.venv/bin/pytest
-============================= 370 passed, 5 skipped in 93.47s =============================
+.venv/bin/pytest -q
+============================= 390 passed in 120.16s =============================
 ```
-- Total test count: **375**
-- Passing: **370 (100% of runnable)**
-- Skipped: **5**
+- Total test count: **390**
+- Passing: **390 (100% of runnable)**
+- Skipped: **0**
 - Failed: **0**
-- Empirical Invariant Suite (`tests/audit/`): **29 passed in 14.12s (100%)**
+- Empirical Invariant Suite (`tests/audit/`): **29 passed in 17.03s (100%)**
 - Code Review Scorecard: **100 / 100** (Full register in [`docs/reports/code_review_wave15_16_remediation_and_v12.md`](../reports/code_review_wave15_16_remediation_and_v12.md) and [`docs/reports/code_review_wave14_portal_and_analytics.md`](../reports/code_review_wave14_portal_and_analytics.md))
 
 

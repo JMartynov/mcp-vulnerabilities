@@ -3,10 +3,6 @@ from pathlib import Path
 import sys
 from unittest import mock
 
-sys.modules["mcp_fingerprints"] = mock.MagicMock()
-sys.modules["mcp_fingerprints.config_scanner"] = mock.MagicMock()
-sys.modules["mcp_fingerprints.models"] = mock.MagicMock()
-
 from mcp_vulnerabilities.updates_builder import build_updates_data
 from unittest.mock import patch, MagicMock
 
