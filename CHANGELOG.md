@@ -6,6 +6,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.3.0] - 2026-10-26
+
+### 🚀 Wave 18 & Wave 19: Web Portal Intelligence & Supply Chain Attestation
+
+This release brings substantial user-facing web portal enhancements (Wave 18) and comprehensive supply chain integrity defenses including Sigstore Keyless Attestation, Typosquatting detection, and an automated GitHub PR Remediation bot (Wave 19).
+
+#### Added
+- **Sigstore Keyless Attestation (`mcp-vuln verify-feed`)** (Task 96):
+  - Implemented OIDC keyless signing of daily vulnerability feeds (`docs/data/vulnerabilities.json.gz`), wheels, and manifest via Sigstore Cosign in `.github/workflows/sign_release.yml`.
+  - Added CLI command for cryptographically verifying data feed integrity using offline certificate bundles.
+- **Typosquatting & LLM Hallucinated Package Detector (`mcp-vuln audit-typosquat`)** (Task 97):
+  - Added Damerau-Levenshtein distance, permutation, and Unicode homoglyph analysis to detect hallucinated or typosquatted MCP packages.
+  - Implemented risk tier classification (`CRITICAL`, `HIGH`, `SUSPICIOUS`, `CLEAN`) and in-place auto-remediation via the `--fix` flag.
+- **Automated GitHub PR Remediation Bot (`mcp-vuln remediate-pr`)** (Task 98):
+  - Added repository scanner to discover client configurations (ignoring `.git`, `node_modules`).
+  - Added automated PR generation computing safe version pins with side-by-side diff previews and CVE markdown tables.
+  - Integrated GitHub Action workflow `.github/workflows/remediate_action.yml`.
+- **Directory Multi-Criteria Sorting & URL Deep-Linking** (Task 90):
+  - Added sorting dropdown (Risk, Advisories, Tools, A-Z) to `docs/index.html`.
+  - Added bidirectional URL query state synchronization (`?q=`, `?server=`, `?tab=`, `?sort=`) for pre-initializing search and filter states.
+- **Server Modal Remote Endpoints & Config Schema Panel** (Task 91):
+  - Added 4th sub-tab "🌐 Endpoints & Schema" in `#server-modal` to render live deployment URLs, transport connections, and configuration schemas with plaintext HTTP warnings.
+- **In-Browser Config Auditor Exporters & Presets** (Task 92):
+  - Added 1-click sample vulnerable and clean preset buttons.
+  - Added "Download Fixed Config (.json)" and "Export Markdown Audit Report (.md)" buttons to the auditor panel.
+- **Interactive Arbitrary Two-Version Diff Comparator** (Task 94):
+  - Added a baseline version selector within `#server-modal` to dynamically compute cumulative tool additions/removals, parameter mutations, and resolved/introduced CVEs.
+- **Interactive Click-to-Filter Drilldowns** (Task 93):
+  - Made tools, OWASP categories, shadowed tools, and Zero-Day gap cards in `docs/analytics.html` clickable to navigate to `index.html` with active search and filter parameters.
+
+#### Fixed & Enhanced
+- **Passports Pipeline & Static Data Recompilation** (Task 89): Defaulted extraction logic to `passports.json.gz`, properly surfacing connection schemas (`x-api-key`, `client_secret`) and recompiled `mcp_catalog_index.json` (6,298 servers).
+- **Release History Delta Calculation & Semantic Version Ordering** (Task 95): Fixed release-over-release delta calculations for the updates feed and implemented client-side numerical SemVer sorting for the historical dropdown.
+- **Documentation & Metrics Sync** (Task 99): Synchronized specifications, implementations, and expanded automated test metrics to 390 passing tests.
+
 ## [1.2.0] - 2026-10-25
 
 ### 🚀 Wave 15, 16 & 17: Runtime Firewall, AST Reachability & Web Analytics Remediation

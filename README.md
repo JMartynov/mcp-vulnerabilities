@@ -80,34 +80,46 @@ The `mcp-vulnerabilities` toolkit provides comprehensive commands for scanning c
 # Scans Claude Desktop, Cursor, Zed, Windsurf, Cline, Continue, Roo Code, LibreChat, and OpenWebUI
 mcp-vuln audit --all-clients --verify-signatures
 
-# 2. Interactive Terminal Security Hub (with unified diff preview & non-TTY fallback)
+# 2. Typosquatting & LLM Hallucinated Package Detector
+# Analyzes configurations using Damerau-Levenshtein distance and homoglyph matching
+mcp-vuln audit-typosquat --config .claude/claude_desktop_config.json --fix
+
+# 3. Sigstore Keyless Attestation & Feed Verification
+# Verifies the cryptographic integrity of vulnerability feeds via OIDC signatures
+mcp-vuln verify-feed --feed docs/data/vulnerabilities.json.gz
+
+# 4. Automated GitHub PR Remediation Bot
+# Discovers client configs, computes safe versions, and idempotently creates PRs
+mcp-vuln remediate-pr --repo-dir ./ --auto-merge
+
+# 5. Interactive Terminal Security Hub (with unified diff preview & non-TTY fallback)
 mcp-vuln hub
 # Headless batch / JSON automation mode:
 mcp-vuln hub --json
 
-# 3. Dynamic Behavioral Server Identification & Handshake Probing
+# 6. Dynamic Behavioral Server Identification & Handshake Probing
 # Probes custom or wrapped server processes over stdio / SSE to uncover hidden CVEs
 mcp-vuln identify --stdio "node /path/to/server.js"
 
-# 4. Multi-Client Configuration Auto-Fixer
+# 7. Multi-Client Configuration Auto-Fixer
 # Upgrades vulnerable configurations with atomic backups (<config>.bak.<timestamp>)
 mcp-vuln fix --client claude --dry-run
 mcp-vuln fix --all-clients
 
-# 5. Ingest latest advisories from live APIs
+# 8. Ingest latest advisories from live APIs
 mcp-vuln sync --live-api
 
-# 6. Validate OSV 1.6 schema compliance
+# 9. Validate OSV 1.6 schema compliance
 mcp-vuln validate --dir data/vulnerabilities
 
-# 7. High-Performance Multicore Parallel Site Builder (Bit-for-bit SHA-256 deterministic)
+# 10. High-Performance Multicore Parallel Site Builder (Bit-for-bit SHA-256 deterministic)
 mcp-vuln build-site --workers 8 --output-dir docs/data
 
-# 8. Inline MCP Reverse Proxy Interceptor (Runtime Firewall)
+# 11. Inline MCP Reverse Proxy Interceptor (Runtime Firewall)
 # Intercepts stdio JSON-RPC to block vulnerable/shadow tools and redact secrets
 mcp-vuln proxy --package <pkg> --version <v> --block-severity HIGH --redact-secrets --audit-log proxy_log.jsonl -- npx @modelcontextprotocol/server-postgres
 
-# 9. AST Interprocedural Call-Graph Reachability Engine
+# 12. AST Interprocedural Call-Graph Reachability Engine
 # Analyzes multi-hop call graphs from MCP tool entrypoints to flag vulnerable dependencies
 mcp-vuln audit-transitive --source-dir ./src --reachable-only
 ```
@@ -162,11 +174,10 @@ Unlike generic package databases, `mcp-vulnerabilities` maintains version-separa
 The project provides interactive, client-side static web portals hosted directly from GitHub Pages:
 
 * **[Unified MCP Security Explorer (`docs/index.html`)](https://jmartynov.github.io/mcp-vulnerabilities/)**:
-  - **Directory Explorer**: Search and filter 5,000+ indexed MCP servers with de-duplicated titles, composite risk tiers ($\max(\text{AST}, \text{CVE})$), and ecosystem indicators (npm, PyPI, GitHub, Generic).
-  - **MCP Primitives & Passports**: Surfaces live counts for `🔧 Tools`, `📄 Prompts`, and `📦 Resources`, one-click copyable cryptographic toolset hashes (`toolset_canonical_hash`), transport tags (`🖥️ Local Stdio` vs. `🌐 Remote SSE Gateway`), and required environment variables (`modal-env-vars-container`).
-  - **Advisories Feed**: Full-text search across all published OSV/CVE advisories with severity filters (CRITICAL, HIGH, MEDIUM, LOW) and OWASP MCP categories.
-  - **Interactive Server Modal**: Version switcher, parameter schema tables (`Name`, `Type`, `Required`, `Default`, `Enum`, `Description`), security commentary, and 1-click configuration exporters for 5 AI clients.
-  - **🛡️ Audit My MCP Setup (Tab 3)**: Zero-install, 100% in-browser client configuration dropzone. Parses `claude_desktop_config.json`, `cline_mcp_settings.json`, and `cursor_config.json` locally in memory with zero telemetry, cross-matches installed tools against vulnerability records, and provides one-click copyable remediation diffs.
+  - **Directory Explorer**: Multi-criteria sorting (Risk, Advisories, Tools, A-Z), bidirectional URL deep-linking (`?q=`, `?server=`, `?tab=`), and composite risk tiers.
+  - **MCP Primitives & Passports**: Surfaces live counts for `🔧 Tools`, `📄 Prompts`, and `📦 Resources`, transport tags (`🖥️ Local Stdio`), and required environment variables.
+  - **Interactive Server Modal**: Version switcher, arbitrary two-version diff comparator computing tool mutations/CVE deltas, and 4th sub-tab "🌐 Endpoints & Schema" mapping live deployment URLs and plaintext warnings.
+  - **🛡️ Audit My MCP Setup (Tab 3)**: In-browser client config dropzone featuring 1-click sample presets, "Download Fixed Config (.json)", and "Export Markdown Audit Report (.md)" exporters.
 
 * **[Release Updates & Advisory Delta Feed (`docs/updates.html`)](https://jmartynov.github.io/mcp-vulnerabilities/updates.html)**:
   - **Historical Release Selector**: Timeline dropdown covering historical sync releases (v1.2.0 through v1.0.0).
@@ -176,10 +187,9 @@ The project provides interactive, client-side static web portals hosted directly
   - **Syndication Feeds**: One-click subscription via [Atom Feed (`docs/data/feed.atom`)](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.atom) and [JSON Feed (`docs/data/feed.json`)](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.json).
 
 * **[Multi-Dimensional Analytics Dashboard (`docs/analytics.html`)](https://jmartynov.github.io/mcp-vulnerabilities/analytics.html)**:
-  - **Zero-Day & Remediation Gap**: Quantifies patched vs. unpatched vulnerable servers (32.0% safe patches vs. 68.0% active zero-days with no upstream fix) with actionable containment guidance.
-  - **Static Capability Surface**: Aggregates high-risk permissions across the catalog, including Filesystem Access, Shell / Process Execution, Network Egress, and Mutating vs. Read-Only tool balances.
-  - **Tool Shadowing Risk**: Identifies collision-prone generic tool names (e.g., `search`, `raw_request`, `send_message`) with multiple divergent canonical implementations.
-  - **OWASP MCP Category Breakdown**: Frequency distribution across prompt injection, unauthorized data access, and unsafe tool execution.
+  - **Interactive Click-to-Filter Drilldowns**: Clickable tool chips, OWASP category tiles, and zero-day gap cards navigating directly to `index.html` with active filter parameters.
+  - **Zero-Day & Remediation Gap**: Quantifies patched vs. unpatched vulnerable servers (32.0% safe patches vs. 68.0% active zero-days with no upstream fix).
+  - **Static Capability Surface**: Aggregates high-risk permissions across the catalog, including Filesystem Access, Shell/Process Execution, and Network Egress.
 
 ## Automated PyPI Release Pipeline on Data Updates
 
@@ -206,7 +216,7 @@ To keep downstream tools, scanners, and Python consumers immediately updated wit
 The test suite enforces 100% runnable pass rates across both regression suites and empirical invariant audits:
 
 ```bash
-# Run the entire test suite (370+ tests passed)
+# Run the entire test suite (390 passed tests)
 pytest -q
 
 # Run the empirical subsystem invariant audit suite
