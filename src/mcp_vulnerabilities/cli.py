@@ -312,6 +312,19 @@ def main() -> None:
     hub_p.add_argument("--json", action="store_true", help="Output machine-readable JSON (Non-interactive)")
     hub_p.add_argument("--batch", action="store_true", help="Run in non-interactive batch mode")
 
+    # Bot Remediate PR
+    bot_p = subparsers.add_parser(
+        "remediate-pr",
+        help="Automated GitHub PR Remediation Bot for MCP configurations.",
+    )
+    bot_p.add_argument("--repo-dir", default=".", help="Repository root directory to scan")
+    bot_p.add_argument("--dry-run", action="store_true", help="Print planned branches and PR bodies to stdout without git writes")
+    bot_p.add_argument("--auto-merge", action="store_true", help="Enable auto-merge on created PRs")
+    bot_p.add_argument("--assignee", default=None, help="GitHub username to assign PRs to")
+    bot_p.add_argument("--json", dest="output_json", action="store_true", help="Output machine-readable JSON summary")
+    bot_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
+    bot_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
+
     # Fix Config
     fix_p = subparsers.add_parser(
         "fix",
@@ -1281,6 +1294,46 @@ def main() -> None:
     elif args.command == "hub":
         from .audit.hub import run_hub
         run_hub(args)
+    elif args.command == "remediate-pr":
+        from mcp_vulnerabilities.bot.scanner import RepositoryScanner
+        from mcp_vulnerabilities.bot.pr_builder import PRBuilder
+
+        snap_p = Path(args.snapshot)
+        data_p = Path(args.data_dir)
+        if snap_p.exists():
+            matcher = VulnerabilityMatcher.from_snapshot(snap_p)
+        elif data_p.exists():
+            matcher = VulnerabilityMatcher.from_directory(data_p)
+        else:
+            logger.error("No vulnerability database found at %s or %s", snap_p, data_p)
+            sys.exit(2)
+
+        scanner = RepositoryScanner(Path(args.repo_dir), matcher)
+        plans = scanner.generate_plans()
+
+        if not plans:
+            if args.output_json:
+                import json
+                print(json.dumps({"status": "clean", "plans_created": 0}))
+            else:
+                print("No vulnerable MCP servers detected. Repository is clean.")
+            sys.exit(0)
+
+        pr_builder = PRBuilder(
+            repo_root=Path(args.repo_dir),
+            dry_run=args.dry_run,
+            assignee=args.assignee,
+            auto_merge=args.auto_merge
+        )
+
+        for plan in plans:
+            pr_builder.create_or_update_pr(plan)
+
+        if args.output_json:
+            import json
+            print(json.dumps({"status": "success", "plans_created": len(plans)}))
+        sys.exit(0)
+
     elif args.command in ("fix", "fix-config"):
         snap_p = Path(args.snapshot)
         data_p = Path(args.data_dir)

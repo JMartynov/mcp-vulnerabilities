@@ -1,0 +1,30 @@
+name: MCP Security PR Remediation Bot
+
+on:
+  schedule:
+    - cron: '0 4 * * *' # Run at 04:00 daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  remediate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install mcp-vulnerabilities
+
+      - name: Run MCP Vulnerability PR Bot
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: mcp-vuln remediate-pr --repo-dir . --auto-merge
