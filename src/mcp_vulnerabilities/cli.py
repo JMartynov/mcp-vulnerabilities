@@ -286,6 +286,17 @@ def main() -> None:
     aud_p.add_argument("--format", choices=["table", "json", "sarif", "cyclonedx", "sbom"], default="table", help="Output format")
 
     # Audit Transitive
+    
+    # Audit Typosquat
+    typo_p = subparsers.add_parser(
+        "audit-typosquat", help="Detect AI hallucinated and typosquatted MCP packages"
+    )
+    typo_p.add_argument("--config", required=True, help="Path to AI client configuration file")
+    typo_p.add_argument("--fix", action="store_true", help="Auto-fix typosquats in configuration file")
+    typo_p.add_argument("--threshold", type=int, default=2, help="Levenshtein distance threshold")
+    typo_p.add_argument("--json", dest="output_json", action="store_true", help="Output results in JSON format")
+    typo_p.add_argument("--strict", action="store_true", help="Strict mode for typosquat detection")
+
     trans_p = subparsers.add_parser("audit-transitive", help="Audit third-party dependencies of MCP servers")
     trans_p.add_argument("--manifest", required=True, help="Path to package.json or requirements.txt")
     trans_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
@@ -1096,6 +1107,106 @@ def main() -> None:
         if getattr(args, "strict_integrity", False) and has_strict_failure:
             sys.exit(2)
         sys.exit(1 if report.has_critical_or_high else 0)
+
+    
+    elif args.command == "audit-typosquat":
+        import json
+        import os
+        from pathlib import Path
+        from mcp_vulnerabilities.analyzers.typosquat import TyposquatDetector, RiskTier, load_authentic_corpus
+        
+        # Load corpus
+        # Note: In a real environment, we'd load the actual catalog. Here we load defaults + any existing data/mcp_catalog_index.json
+        corpus_path = Path("docs/data/mcp_catalog_index.json") if Path("docs/data/mcp_catalog_index.json").exists() else None
+        corpus = load_authentic_corpus(corpus_path)
+        detector = TyposquatDetector(corpus)
+
+        config_path = Path(args.config)
+        if not config_path.exists():
+            logger.error(f"Config file not found: {config_path}")
+            sys.exit(1)
+
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                config_data = json.load(f)
+        except Exception as e:
+            logger.error(f"Failed to parse config file: {e}")
+            sys.exit(1)
+            
+        mcp_servers = config_data.get("mcpServers", {})
+        
+        results = []
+        typosquats_detected = []
+        highest_risk = 0 # 0=Auth, 1=Susp, 2=High, 3=Crit
+        risk_levels = {RiskTier.AUTHENTIC: 0, RiskTier.SUSPICIOUS: 1, RiskTier.HIGH: 2, RiskTier.CRITICAL: 3}
+        
+        has_fixes = False
+        
+        for server_name, server_config in mcp_servers.items():
+            command = server_config.get("command", "")
+            args_list = server_config.get("args", [])
+            
+            # Very basic package name extraction heuristic for this task
+            # E.g. command = "npx", args = ["-y", "@modelcontextprotocol/server-filesystem"]
+            package_name = None
+            if command == "npx" or command == "uvx" or command == "docker":
+                for arg in args_list:
+                    if not arg.startswith("-") and not arg.startswith("/") and not arg == "run":
+                        package_name = arg
+                        break
+            
+            if not package_name:
+                continue
+                
+            res = detector.analyze(package_name)
+            
+            res_dict = {
+                "server_name": server_name,
+                "package_name": res.package_name,
+                "canonical_name": res.canonical_name,
+                "risk_tier": res.risk_tier.value,
+                "reason": res.reason,
+                "distance": res.distance
+            }
+            results.append(res_dict)
+            
+            if res.risk_tier != RiskTier.AUTHENTIC:
+                typosquats_detected.append(res_dict)
+                highest_risk = max(highest_risk, risk_levels[res.risk_tier])
+                
+                if args.fix and res.canonical_name:
+                    # Update config
+                    new_args = []
+                    for arg in args_list:
+                        if arg == package_name:
+                            new_args.append(res.canonical_name)
+                        else:
+                            new_args.append(arg)
+                    server_config["args"] = new_args
+                    has_fixes = True
+
+        if args.fix and has_fixes:
+            with open(config_path, "w", encoding="utf-8") as f:
+                json.dump(config_data, f, indent=2)
+            if not args.output_json:
+                logger.info(f"Fixed {len(typosquats_detected)} typosquatting packages in {config_path}")
+
+        if args.output_json:
+            print(json.dumps({
+                "analyzed_packages": results,
+                "typosquats_detected": typosquats_detected,
+                "risk_summary": {
+                    "has_critical": highest_risk == 3,
+                    "has_high": highest_risk >= 2
+                }
+            }, indent=2))
+        else:
+            for r in typosquats_detected:
+                logger.warning(f"Detected {r['risk_tier']} typosquat in server '{r['server_name']}': {r['package_name']} -> {r['canonical_name']} ({r['reason']})")
+                
+        if highest_risk >= 2: # HIGH or CRITICAL
+            sys.exit(1)
+        sys.exit(0)
 
     elif args.command == "audit-transitive":
         res = TransitiveDependencyAuditor.audit_manifest_file(args.manifest)
