@@ -648,6 +648,32 @@ def main() -> None:
         "--output", help="Optional output file path"
     )
 
+
+    # Verify Feed
+    verify_feed_p = subparsers.add_parser(
+        "verify-feed", help="Verify cryptographic attestation for the vulnerability feed"
+    )
+    verify_feed_p.add_argument("--feed", required=True, help="Path or URL to the feed file")
+    verify_feed_p.add_argument("--manifest", help="Path to manifest.json")
+    verify_feed_p.add_argument("--bundle", help="Path to the sigstore bundle")
+    verify_feed_p.add_argument("--expected-identity", default="https://github.com/JMartynov/mcp-vulnerabilities/.github/workflows/sign_release.yml@refs/heads/main", help="Expected OIDC identity")
+    verify_feed_p.add_argument("--expected-issuer", default="https://token.actions.githubusercontent.com", help="Expected OIDC issuer")
+    verify_feed_p.add_argument("--offline", action="store_true", help="Perform verification offline")
+    verify_feed_p.add_argument("--json", action="store_true", help="Output JSON structured results")
+
+
+    # Verify Feed
+    verify_feed_p = subparsers.add_parser(
+        "verify-feed", help="Verify cryptographic attestation for the vulnerability feed"
+    )
+    verify_feed_p.add_argument("--feed", required=True, help="Path or URL to the feed file")
+    verify_feed_p.add_argument("--manifest", help="Path to manifest.json")
+    verify_feed_p.add_argument("--bundle", help="Path to the sigstore bundle")
+    verify_feed_p.add_argument("--expected-identity", default="https://github.com/JMartynov/mcp-vulnerabilities/.github/workflows/sign_release.yml@refs/heads/main", help="Expected OIDC identity")
+    verify_feed_p.add_argument("--expected-issuer", default="https://token.actions.githubusercontent.com", help="Expected OIDC issuer")
+    verify_feed_p.add_argument("--offline", action="store_true", help="Perform verification offline")
+    verify_feed_p.add_argument("--json", action="store_true", help="Output JSON structured results")
+
     args = parser.parse_args()
 
     if args.command == "proxy":
@@ -2088,6 +2114,102 @@ def main() -> None:
         
         console.print("")
 
+
+    elif args.command == "verify-feed":
+        import json
+        from pathlib import Path
+        from mcp_vulnerabilities.attestation.manifest import verify_catalog_manifest, ChecksumMismatchError
+        from mcp_vulnerabilities.attestation.verifier import verify_sigstore_bundle
+        
+        feed_path = Path(args.feed)
+        if not feed_path.exists():
+            print(f"Error: Feed file not found: {feed_path}")
+            sys.exit(3)
+            
+        if args.manifest:
+            try:
+                verify_catalog_manifest(Path(args.manifest).parent)
+            except ChecksumMismatchError as e:
+                print(f"Checksum mismatch error: {e}")
+                sys.exit(1)
+            except Exception as e:
+                print(f"Manifest verification failed: {e}")
+                sys.exit(3)
+                
+        if args.bundle:
+            bundle_path = Path(args.bundle)
+            if not bundle_path.exists():
+                print(f"Error: Bundle file not found: {bundle_path}")
+                sys.exit(3)
+                
+            try:
+                result = verify_sigstore_bundle(
+                    target_path=feed_path,
+                    bundle_path=bundle_path,
+                    expected_identity=args.expected_identity,
+                    expected_issuer=args.expected_issuer,
+                    offline=args.offline
+                )
+                
+                if args.json:
+                    print(json.dumps(result))
+                else:
+                    print(f"Verification successful: {result['signer']} at {result['timestamp']}")
+                sys.exit(0)
+            except Exception as e:
+                print(f"Signature verification failed: {e}")
+                sys.exit(2)
+        else:
+            print("Verified successfully (no bundle provided).")
+            sys.exit(0)
+
+    elif args.command == "verify-feed":
+        import json
+        from pathlib import Path
+        from mcp_vulnerabilities.attestation.manifest import verify_catalog_manifest, ChecksumMismatchError
+        from mcp_vulnerabilities.attestation.verifier import verify_sigstore_bundle
+        
+        feed_path = Path(args.feed)
+        if not feed_path.exists():
+            print(f"Error: Feed file not found: {feed_path}")
+            sys.exit(3)
+            
+        if args.manifest:
+            try:
+                verify_catalog_manifest(Path(args.manifest).parent)
+            except ChecksumMismatchError as e:
+                print(f"Checksum mismatch error: {e}")
+                sys.exit(1)
+            except Exception as e:
+                print(f"Manifest verification failed: {e}")
+                sys.exit(3)
+                
+        if args.bundle:
+            bundle_path = Path(args.bundle)
+            if not bundle_path.exists():
+                print(f"Error: Bundle file not found: {bundle_path}")
+                sys.exit(3)
+                
+            try:
+                result = verify_sigstore_bundle(
+                    target_path=feed_path,
+                    bundle_path=bundle_path,
+                    expected_identity=args.expected_identity,
+                    expected_issuer=args.expected_issuer,
+                    offline=args.offline
+                )
+                
+                if args.json:
+                    print(json.dumps(result))
+                else:
+                    print(f"Verification successful: {result['signer']} at {result['timestamp']}")
+                sys.exit(0)
+            except Exception as e:
+                print(f"Signature verification failed: {e}")
+                sys.exit(2)
+        else:
+            print("Verified successfully (no bundle provided).")
+            sys.exit(0)
     elif args.command == "correlate":
         from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
         data_p = Path(args.data_dir)

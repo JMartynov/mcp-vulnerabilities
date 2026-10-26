@@ -1,0 +1,30 @@
+name: Sign Release
+on:
+  release:
+    types: [published]
+
+jobs:
+  sign:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate Manifest
+        run: |
+          # Generate manifest for docs/data
+          # (Normally this would build the site first or fetch artifacts)
+          python3 -c "import sys; sys.path.insert(0, 'src'); from mcp_vulnerabilities.attestation.manifest import generate_catalog_manifest; generate_catalog_manifest('docs/data')"
+      - uses: sigstore/gh-action-sigstore-python@v2.1.1
+        with:
+          inputs: >-
+            dist/*.whl
+            dist/*.tar.gz
+            docs/data/vulnerabilities.json.gz
+            docs/data/mcp_catalog_index.json
+            docs/data/manifest.json
