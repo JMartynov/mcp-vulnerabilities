@@ -738,7 +738,7 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 0.9.43",
+    "latest_version": "< 0.5.71",
     "license": null,
     "package_name": "@agenticmail/core",
     "prompts_count": 0,
@@ -774,7 +774,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.5.71"
+        "version": "< 0.9.43"
       },
       {
         "advisories": [
@@ -840,7 +840,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.9.43"
+        "version": "< 0.5.71"
       }
     ]
   },
@@ -6589,7 +6589,7 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 4.6.34",
+    "latest_version": "< 4.5.97",
     "license": null,
     "package_name": "PraisonAI",
     "prompts_count": 0,
@@ -6683,7 +6683,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 4.5.97"
+        "version": "< 4.6.34"
       },
       {
         "advisories": [
@@ -6723,7 +6723,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 4.6.34"
+        "version": "< 4.5.97"
       }
     ]
   },
@@ -31209,7 +31209,7 @@
     "security_summary": "Server `eslint-plugin-mcp-sdk-security` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 16 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:7da82cc85ec0bd5e7a046e3255f2df976e43d35975de422db4cc977970fe151c",
+    "toolset_canonical_hash": "sha256:4c8c5c03e2b52a1840e73cfe411d357d3c3b686b227971e0d2f098bf1a26d00a",
     "transport": "stdio",
     "versions": [
       {
@@ -32008,9 +32008,277 @@
             "risk_score": 3.0,
             "risk_tier": "medium",
             "security_comment": "Tool `require-tool-input-schema` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0603013927e30e01c108faa8871d6d1e61a1dc62980357400c7e771004efe35b",
+            "description": "Read a file from the workspace",
+            "name": "read_file",
+            "parameters": [
+              {
+                "default": "utf8",
+                "description": null,
+                "enum": [
+                  "utf8",
+                  "base64"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "encoding",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `read_file` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9990dc5ad9eae0582186e875d43d422e2fb042aaaa8a0f9beb6e30f9b0a124e5",
+            "description": "Current server time in ISO-8601",
+            "name": "server_time",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `server_time` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ecd1d237f3c95ac3171551f50b1cc9ecfdf583c99a0a99c5c8765b8b260f1a68",
+            "description": "Read one of the published documents",
+            "name": "read_doc",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_doc` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6f8c01139e317b0f3a876f4a02d6dc50385b8ee70f8778c3a226f0614c36be72",
+            "description": "Find a user by name",
+            "name": "find_user",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_user` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2d4d9f24473c10f415a9fc269ae43ba8a5061e52b5f78296e9993f0af0dfe4f8",
+            "description": "Apply one arithmetic operation to two numbers",
+            "name": "calculate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "a",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "b",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "add",
+                  "subtract",
+                  "multiply"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "operation",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `calculate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0b476b7d3984a12c12705e1fe3ea43fcd5ba6494d93935a53ab94c17a26671d9",
+            "description": "Describe the authenticated client",
+            "name": "whoami",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `whoami` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3a6065eb962e1e3524f173bf0b9d4a6953d16d5d2fcd31fdb8a0938b2843baa0",
+            "description": "List the caller repositories",
+            "name": "list_repos",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_repos` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:672f0aadf39d7e0311308bed496d8ab967329b655e276ca924b1fbb5fd73c35c",
+            "description": "Status of a build",
+            "name": "build_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "build",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `build_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2582e0367908971232905506aac125a1a8d2f9bcecdee7db9518f0a22f7b7ab1",
+            "description": "Deploy an approved build",
+            "name": "deploy",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "approvalId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "build",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `deploy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:519d224781065429c701c30934bc2e87ebc39bde19dc08ce97b0bdc0dfda3ced",
+            "description": "Read public metadata for a GitHub repository",
+            "name": "get_repo",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "owner",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "repo",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_repo` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:98770ad0acfdcc056386fe4c08fec6abde99c83a69e3e313e2f44eafdfd0bec6",
+            "description": "Fetch a web page and return its text",
+            "name": "fetch_page",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `fetch_page` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
           }
         ],
-        "toolset_canonical_hash": "sha256:7da82cc85ec0bd5e7a046e3255f2df976e43d35975de422db4cc977970fe151c",
+        "toolset_canonical_hash": "sha256:4c8c5c03e2b52a1840e73cfe411d357d3c3b686b227971e0d2f098bf1a26d00a",
         "version": "1.1.0"
       }
     ]
@@ -53533,7 +53801,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": "< 1.4.0"
       },
       {
         "advisories": [],
@@ -53545,7 +53813,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 1.4.0"
+        "version": "*"
       },
       {
         "advisories": [],
@@ -53584,17 +53852,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.7.33.0",
+    "latest_version": "0.7.34.1",
     "license": null,
     "package_name": "pandaone-guard",
     "prompts_count": 0,
     "purl": "pkg:pypi/pandaone-guard",
-    "recommended_safe_version": "0.7.33.0",
+    "recommended_safe_version": "0.7.34.1",
     "repo_http_status": 200,
     "repository_url": "https://pypi.org/project/pandaone-guard/",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `pandaone-guard` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 19 safe version(s).",
+    "security_summary": "Server `pandaone-guard` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 20 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -53827,6 +54095,18 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.7.33.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-28T19:09:25.738946Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.7.34.1"
       }
     ]
   },

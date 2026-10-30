@@ -237,7 +237,7 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 0.9.43",
+    "latest_version": "< 0.5.71",
     "license": null,
     "package_name": "@agenticmail/claudecode",
     "prompts_count": 0,
@@ -273,7 +273,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.5.71"
+        "version": "< 0.9.43"
       },
       {
         "advisories": [
@@ -339,7 +339,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.9.43"
+        "version": "< 0.5.71"
       }
     ]
   },
@@ -11490,6 +11490,28 @@
         "advisories": [
           {
             "cvss_score": null,
+            "id": "CVE-2025-53107",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 2.1.5"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
             "id": "CVE-2026-4496",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -11516,28 +11538,6 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "785aa159f262a02d5791a5d8a8e13c507ac42880"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-53107",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.1.5"
       },
       {
         "advisories": [
@@ -43857,17 +43857,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.2",
+    "latest_version": "1.1.0",
     "license": null,
     "package_name": "kagimcp",
     "prompts_count": 0,
     "purl": "pkg:pypi/kagimcp",
-    "recommended_safe_version": "1.0.2",
+    "recommended_safe_version": "1.1.0",
     "repo_http_status": 200,
-    "repository_url": null,
+    "repository_url": "https://smithery.ai/servers/kagimcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `kagimcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 13 safe version(s).",
+    "security_summary": "Server `kagimcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 14 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:c7545b716cfd985eba314540fa87b99d679d81d882c22e86e6dd5424429ab637",
@@ -44183,6 +44183,173 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-28T13:40:52.861041Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7d7622327a4343585fa75a58630e3de48473af635d96ddc057b9a09cab4dfb96",
+            "description": "Extract the content of a web page as markdown using the Kagi Extract API. Use this to read the full content of a page when needed.",
+            "name": "kagi_extract",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `kagi_extract` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4ddcd700a38a72f4d1ba24bdc44d3153d4c1755c71f76936b1a9e9b87e1e35ed",
+            "description": "Fetch web results for a query using the Kagi Search API. Use for general search and when the user explicitly tells you to 'fetch' results/information. Results are numbered so that a user may refer to a result by a specific number.",
+            "name": "kagi_search_fetch",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "workflow",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "extract_count",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_domains",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "exclude_domains",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "time_relative",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "after",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "before",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "file_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "lens_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `kagi_search_fetch` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:c7545b716cfd985eba314540fa87b99d679d81d882c22e86e6dd5424429ab637",
+        "version": "1.1.0"
       }
     ]
   },
@@ -44847,29 +45014,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 1.10.3"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": ">= 1.5.0, < 1.10.3"
+        "version": ">= 0.1.2, < 0.10.3"
       },
       {
         "advisories": [
@@ -44913,7 +45058,29 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": ">= 0.1.2, < 0.10.3"
+        "version": "< 1.10.3"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "id": "GHSA-4hmc-cfm3-w43c",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": ">= 1.5.0, < 1.10.3"
       },
       {
         "advisories": [
@@ -57662,17 +57829,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.1.20",
+    "latest_version": "0.1.21",
     "license": null,
     "package_name": "naja-scope",
     "prompts_count": 0,
     "purl": "pkg:pypi/naja-scope",
-    "recommended_safe_version": "0.1.20",
+    "recommended_safe_version": "0.1.21",
     "repo_http_status": 200,
     "repository_url": "https://github.com/keplertech/naja-scope",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `naja-scope` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 20 safe version(s).",
+    "security_summary": "Server `naja-scope` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 21 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -57917,6 +58084,18 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.1.20"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-28T11:35:51.533293Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.21"
       }
     ]
   },
@@ -73812,17 +73991,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.1.2",
+    "latest_version": "0.1.3",
     "license": "Apache-2.0",
     "package_name": "thingery",
     "prompts_count": 0,
     "purl": "pkg:npm/thingery",
-    "recommended_safe_version": "0.1.2",
+    "recommended_safe_version": "0.1.3",
     "repo_http_status": 200,
     "repository_url": "https://github.com/thingery/thingery",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `thingery` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
+    "security_summary": "Server `thingery` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 5 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:d6dd9852aa75e70d48af228872628979f1cb07ec61aff507c89647aa70e78417",
@@ -74495,6 +74674,638 @@
         ],
         "toolset_canonical_hash": "sha256:d6dd9852aa75e70d48af228872628979f1cb07ec61aff507c89647aa70e78417",
         "version": "0.1.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-27T19:35:56.911Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:20dd536d3ee58bbb80fdc18f0dc1fec0e06f360763b4c3b19546ce7c60878669",
+            "description": "Attach a photo to one of your listings. Pass the image as base64 (a data-URL prefix is ",
+            "name": "add_item_image",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Base64-encoded image bytes (data-URL prefix allowed)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "image_base64",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "item_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "image/jpeg",
+                  "image/png",
+                  "image/webp",
+                  "image/gif"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "media_type",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `add_item_image` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:53214ade351a1abe1022e042b46ac3e2df079220ef7f01f81fe7bc0d55d7f078",
+            "description": "Cancel one of your orders (buyer or seller) while it is still cancellable ",
+            "name": "cancel_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a647582e58fd46ba53ef818bf1c0c5620342c01ec9a0411f29a803750470a40c",
+            "description": "Seller confirms receiving an OFF-PLATFORM payment (cash, bank transfer, …): the order ",
+            "name": "confirm_payment",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `confirm_payment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:31afa2f4e7069476139ede078e294b40f5243c1083e848a759ad9ac5d3a523e0",
+            "description": "Buyer confirms receiving the item: the order moves to delivered and the dispute window ",
+            "name": "confirm_receipt",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `confirm_receipt` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b8693960ab8afc9eaea032de09d53d683395ba31dde7f79dca0afe9d7683fbc2",
+            "description": "Create a listing for a second-hand item. Requires seller authentication (Bearer API key). ",
+            "name": "create_listing",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_listing` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bb6d8ce8aa3abac5844acc56c3142cae79c23ef7928d279614e0c4492c5b178e",
+            "description": "Order an item. Default payment_mode is ",
+            "name": "create_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Item to order",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "item_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Leave unset for the best available path",
+                "enum": [
+                  "stripe",
+                  "off_platform"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "payment_mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Required for shippable items",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "shipping_address",
+                "nested_properties": {
+                  "city": {
+                    "type": "string"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "line1": {
+                    "type": "string"
+                  },
+                  "line2": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "postal_code": {
+                    "type": "string"
+                  }
+                },
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `create_order` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d8f5e575e4287b387baea79bcfb38856648481d1efc8435d522bddd91c4fb886",
+            "description": "Discover a category",
+            "name": "describe_category",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "category",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_category` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b5b3f7a68b67162b0d85ad560b49c7f153b6e211df12fe283085a53a2370d667",
+            "description": "Fetch a single listing by its item id. Public. ",
+            "name": "get_item",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6feb50f41ef040597139ada113d5c0d2cf1183ce62be1afcdab24abb07ce6bed",
+            "description": "Fetch one of your orders (as buyer or seller): status, price breakdown, ",
+            "name": "get_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6f9ed82a135a90bbc4f0567f20619c3e2ebf90b58bb28ca3c92cf0e886f191c1",
+            "description": "Get this seller",
+            "name": "get_payout_setup",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_payout_setup` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5ad6878d45ae2e90c6d9e6ae2c9c58b1ead348270b042c91646b9384b4fb019a",
+            "description": "List the authenticated seller",
+            "name": "my_listings",
+            "parameters": [
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `my_listings` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1208112b5e24c509b218da61b10137fa6ae6e361966c224d4f8f7c7269aa71e5",
+            "description": "Buyer opens a dispute on a delivered order (within the dispute window). Payout is held ",
+            "name": "open_dispute",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What went wrong (required)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `open_dispute` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:97eadd080ae5dcf4ba3e78c8051badcd23ae30f3c01c9e1e9d240ad0e7f9fdc2",
+            "description": "Seller records the shipment",
+            "name": "record_tracking",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "carrier",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "https-only shipping label URL, if you generated one",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "label_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tracking_code",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `record_tracking` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b074c72253a1a757d511498c9a9cc65ca52f44b5252376b0bd5d9b2009d31340",
+            "description": "Buyer waives the remaining dispute window and releases the seller",
+            "name": "release_funds",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `release_funds` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d18f525635a862aa5448c8adf896428cfb161381da93d362a33b8f5205c214a8",
+            "description": "Search active second-hand listings. Public (no API key needed). ",
+            "name": "search_items",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "attributes",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Category slug; see describe_category",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "category",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "condition",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "EUR",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "currency",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 10,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_price_cents",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_price_cents",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "q",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "shipping_tier",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_items` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:64b4be8190f13e3d3ec0b0cc06da5d137f53cebae3e6893297458cfc55550c8f",
+            "description": "Update one of your own listings: change status (active/reserved/sold/deleted), ",
+            "name": "update_listing",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Replaces the whole attributes object (read-modify-write)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "attributes",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "price_cents",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_listing` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:d6dd9852aa75e70d48af228872628979f1cb07ec61aff507c89647aa70e78417",
+        "version": "0.1.3"
       }
     ]
   },
@@ -80181,17 +80992,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.3.0",
+    "latest_version": "0.3.1",
     "license": "AGPL-3.0-only",
     "package_name": "wigolo",
     "prompts_count": 0,
     "purl": "pkg:npm/wigolo",
-    "recommended_safe_version": "0.3.0",
+    "recommended_safe_version": "0.3.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/KnockOutEZ/wigolo",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `wigolo` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 12 safe version(s).",
+    "security_summary": "Server `wigolo` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 13 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:f21cf94b82bff9cdf7ba735493f132ddb4cf9e8df8094e2c8d3d18893720230d",
@@ -80451,6 +81262,129 @@
         ],
         "toolset_canonical_hash": "sha256:f21cf94b82bff9cdf7ba735493f132ddb4cf9e8df8094e2c8d3d18893720230d",
         "version": "0.3.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-26T13:04:21.109Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5053162ca72e8b9f2a14cca17d37803fc1712e78b966aee3d92dff2f7dd4f7bf",
+            "description": "Execute agent",
+            "name": "agent",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2a19b0847d80ac6b4ee4a4205dee1c3429c1db5e85ab7d53e1c22f5fe6f95c91",
+            "description": "Execute cache",
+            "name": "cache",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cache` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bbe88a8ea0b134f94d3fe0d7f30cde6bf1edfc0b02cd4403b07cf273b18eab67",
+            "description": "Execute crawl",
+            "name": "crawl",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `crawl` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:de396559c8dbbc348c9572ea3a193f017b5b8e90ec7c3504745ef08cfd29bce3",
+            "description": "Execute diff",
+            "name": "diff",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `diff` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:03c21bb21f18a07a87e92cfcf8336e5fd7bd3d23dfffc7d6e1ed25e5ca663772",
+            "description": "Execute extract",
+            "name": "extract",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `extract` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a9dc930ccc30a55beb81e676f292320acf74a37a3d818588a2943f1660f527e5",
+            "description": "Execute fetch",
+            "name": "fetch",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fetch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d9971addac946383df10170569560591ee1a94bc21887fd3ae8e77838d9828cc",
+            "description": "Execute find_similar",
+            "name": "find_similar",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_similar` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:50ae809e9da3d1e65b0c3862015f552df62895cc24e18e4890a6ca0bee9d35ac",
+            "description": "Execute research",
+            "name": "research",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `research` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:605eb99a9e1f48886fc9b2ebe4ab99602d3b204e70696055df9236ff6cce51ac",
+            "description": "Execute search",
+            "name": "search",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a9c77548632b45ac4ef60dbe9e6c74f3eeb2aa97e3a65db9bcd2fe1319796913",
+            "description": "Execute searxng",
+            "name": "searxng",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `searxng` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:414ce84ee575edd5684fcd8e5df3936c4df153e165c354d5960a93df1d5bc8fa",
+            "description": "Execute watch",
+            "name": "watch",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `watch` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f21cf94b82bff9cdf7ba735493f132ddb4cf9e8df8094e2c8d3d18893720230d",
+        "version": "0.3.1"
       }
     ]
   },

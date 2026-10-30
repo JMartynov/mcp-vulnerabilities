@@ -2900,7 +2900,7 @@
     "security_summary": "Server `@fodx/codelens` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 18 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:074568e7184f1e25422088c995edf2ce341343052c760d6a8c1e03180d49f384",
+    "toolset_canonical_hash": "sha256:4d8871c0c904b86869fd8e4400bdc612e0f559d70803af0dfcc53ed8e122beba",
     "transport": "stdio",
     "versions": [
       {
@@ -3416,9 +3416,49 @@
             "risk_score": 0.0,
             "risk_tier": "low",
             "security_comment": "Tool `cl_usage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:26ef8192a095b6df2e7f0b1ce2324ea5c48206b8a79f64a50ccdf7137ebf4dc7",
+            "description": "Analyze base-commit changes against the current working tree, including untracked files. Maps changed current lines to verified indexed symbols and returns callers, dependencies, tests, documents, fileFallback, and coverage gaps. Removed code has unknown historical impact. Not staged-only and not a safety verdict. Check freshness, gaps, and truncation.\\n\\nEXAMPLE: cl_diff(base: \\",
+            "name": "cl_diff",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cl_diff` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:71becdb03aecb0ebd785ed422a536f95848db1d5380516a7f0daa1be2df19fe4",
+            "description": "Find a bounded shortest static relationship chain between two indexed file paths or two symbols (path#Scope.name, or an unambiguous name). Returns evidence, direction, minimum chain confidence, freshness, and truncation. Not a runtime trace. Default direction is out; both allows reverse traversal. Mixed file/symbol targets are rejected.\\n\\nEXAMPLE: cl_path(from: \\",
+            "name": "cl_path",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `cl_path` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3965a368ec4dec92fa379295f266744472f1d7408d87591c79935d532d022407",
+            "description": "Summarize architecture from the current branch",
+            "name": "cl_overview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cl_overview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:909b190294951c52bedda2f2ed187cddee7dbebbb02f33cff1524ae93593c84b",
+            "description": "Build a bounded evidence-backed reading tour from the current branch index. Optional start is an indexed code file. Returns ordered stops with source locations, selection reasons, anchored static relationship chains, and linked tests/documents. Roots are separate reading sections, not inferred execution entrypoints. Check freshness and truncation. No LLM required.\\n\\nEXAMPLE: cl_tour(start: \\",
+            "name": "cl_tour",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cl_tour` operates with safe parameters and poses minimal static capability risk."
           }
         ],
-        "toolset_canonical_hash": "sha256:074568e7184f1e25422088c995edf2ce341343052c760d6a8c1e03180d49f384",
+        "toolset_canonical_hash": "sha256:4d8871c0c904b86869fd8e4400bdc612e0f559d70803af0dfcc53ed8e122beba",
         "version": "2.7.0"
       }
     ]
@@ -16890,6 +16930,53 @@
       }
     ]
   },
+  "ai.aiphotoanimator/photo-animator": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_tier": "LOW",
+    "description": "Animate photos into AI videos: viral effects, old photo restoration, text to video, AI images.",
+    "display_name": "ai.aiphotoanimator/photo-animator",
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "package_name": "ai.aiphotoanimator/photo-animator",
+    "prompts_count": 0,
+    "purl": "pkg:generic/ai.aiphotoanimator%2Fphoto-animator",
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://aiphotoanimator.ai/mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `ai.aiphotoanimator/photo-animator` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://aiphotoanimator.ai/api/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
   "ai.alpic.mcp/alpic-mcp": {
     "archival_reason": null,
     "author": null,
@@ -25653,24 +25740,24 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "LOW",
-    "description": "Model Context Protocol (MCP) server providing 70 tools including add_comment_api_v1_assessments__task_id__comments_post, add_evidence_api_v1_projects__project_id__controls__control_id__evidence_post, add_requirement_evidence_api_v1_requirement_rows__row_id__evidence_post, config_llm_config_llm_get, and 66 more.",
+    "description": "Deterministic-first documentation inventory and future QA framework",
     "display_name": "docsentinel",
     "ecosystem": "pypi",
     "highest_cve_severity": null,
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.0",
+    "latest_version": "1.1.0",
     "license": null,
     "package_name": "docsentinel",
     "prompts_count": 0,
     "purl": "pkg:pypi/docsentinel",
-    "recommended_safe_version": "1.0.0",
+    "recommended_safe_version": "1.1.0",
     "repo_http_status": 200,
-    "repository_url": null,
+    "repository_url": "https://smithery.ai/servers/docsentinel",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `docsentinel` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "security_summary": "Server `docsentinel` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e7469ab04c53533a435fb73563c7aa1dacc1c7123df11b39aaeff86cc2b8f7e6",
@@ -27202,6 +27289,1533 @@
         ],
         "toolset_canonical_hash": "sha256:e7469ab04c53533a435fb73563c7aa1dacc1c7123df11b39aaeff86cc2b8f7e6",
         "version": "1.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-26T13:38:54.565649Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:723de62b0c8dccb7dc5c1822fb80babff452a756a9941684654508efc3106432",
+            "description": "Add Comment",
+            "name": "add_comment_api_v1_assessments__task_id__comments_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_comment_api_v1_assessments__task_id__comments_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:10fd09fc18513a533b9475ce3216a493e6c69f340262ded71f5cfa07debf0fba",
+            "description": "Add Evidence",
+            "name": "add_evidence_api_v1_projects__project_id__controls__control_id__evidence_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "control_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_evidence_api_v1_projects__project_id__controls__control_id__evidence_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:06769736dd961cc58a92c9a05b627483b2c111c34c93931c6a1014748a5987de",
+            "description": "Add Requirement Evidence",
+            "name": "add_requirement_evidence_api_v1_requirement_rows__row_id__evidence_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_requirement_evidence_api_v1_requirement_rows__row_id__evidence_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dee0043cb2e78faba2e3bc46266976451c56bead9c9620c81ff143ed727963d5",
+            "description": "Current LLM config with secrets masked.",
+            "name": "config_llm_config_llm_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `config_llm_config_llm_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:64be55fa30a3320902f2c43da628ae212affd52cd1256ea1a7ad75ce1157e8a8",
+            "description": "Create Project",
+            "name": "create_project_api_v1_projects_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_project_api_v1_projects_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:16d824aa40da957a7f618d567172d107c5bbddeb9c1179b0f629d414dcab0563",
+            "description": "Create a new custom skill.",
+            "name": "create_skill_api_v1_skills__post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_skill_api_v1_skills__post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dbf91777846f8a4999cbd50c61a503f256759b294d4c6b1682856fd00919bd8e",
+            "description": "Delete a custom skill.",
+            "name": "delete_skill_api_v1_skills__skill_id__delete",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skill_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_skill_api_v1_skills__skill_id__delete` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fa58d7ad5436390ce54e351f158e594f7de981d5e5f6e9501875d666165821b3",
+            "description": "Evaluate Legacy S2O",
+            "name": "evaluate_legacy_s2o_api_v1_s2o_evaluate_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `evaluate_legacy_s2o_api_v1_s2o_evaluate_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ac8d2cd589c87e9cb0a3306335eeff18d6196a219fa8f047329199668d74aa23",
+            "description": "Evaluate Risk Assessment",
+            "name": "evaluate_risk_assessment_api_v1_risk_assessment_evaluate_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `evaluate_risk_assessment_api_v1_risk_assessment_evaluate_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:04625ac2b78ab79a8aa177ebd30d70a4d50d6f89e2df83e746b8fd15ab249de4",
+            "description": "Export resolved policy-pack controls in an OSCAL catalog-like shape.",
+            "name": "export_oscal_catalog_api_v1_oscal_catalog_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "framework_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `export_oscal_catalog_api_v1_oscal_catalog_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ee0981b40f70abe1229a86d5c764fb3a667d89744dd14a53698abbd4097bd581",
+            "description": "Export project controls, evidence, and findings as OSCAL assessment results.",
+            "name": "export_project_oscal_assessment_results_api_v1_projects__project_id__oscal_assessment_results_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `export_project_oscal_assessment_results_api_v1_projects__project_id__oscal_assessment_results_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6fd07d2155e36008d3dbc31b86f50032e5177008d459d174bb64a95f33252f93",
+            "description": "Generate Controls",
+            "name": "generate_controls_api_v1_projects__project_id__generate_controls_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_controls_api_v1_projects__project_id__generate_controls_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:48a605b897b88e8696b7ae315438685c7cceebb5ef000466d13abded5eade188",
+            "description": "Get Agent Integration Status",
+            "name": "get_agent_integration_status_api_v1_integrations_agents_status_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_agent_integration_status_api_v1_integrations_agents_status_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4dc402a08ea850e3fee877bf11a2d6cc59c6e619fb8bf24fcf7a085a6d2c2a3c",
+            "description": "Get Assessment Result",
+            "name": "get_assessment_result_api_v1_assessments__task_id__get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_assessment_result_api_v1_assessments__task_id__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f086b8d2fb52bb159b48b48fb6f3b7e6243c889936bfc87a10ccd28e9750e4d5",
+            "description": "Get Audit Log",
+            "name": "get_audit_log_api_v1_audit_log_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skip",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_audit_log_api_v1_audit_log_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d861281782c018aad90ff7c9c3e4807f5d63eadc722df84d17ab0c618195064f",
+            "description": "Get Controls Summary",
+            "name": "get_controls_summary_api_v1_projects__project_id__controls_summary_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_controls_summary_api_v1_projects__project_id__controls_summary_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5a2e231da60241bf49393859a92cec105b28ba68ead5b92e3f741402b9b9ce1c",
+            "description": "Get Framework Questionnaire",
+            "name": "get_framework_questionnaire_api_v1_framework_questionnaire_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "framework_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_framework_questionnaire_api_v1_framework_questionnaire_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c714912ab2a6265075fc1ac98ffaaacb1ecd8042322a3639f6c6f6457cd521fe",
+            "description": "Get Gate Submission",
+            "name": "get_gate_submission_api_v1_projects__project_id__gates__gate_number__submission_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate_number",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_gate_submission_api_v1_projects__project_id__gates__gate_number__submission_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3cbaaa2a2ae5e256504dde6110432e5f2d5d4e6bf510f7c300627bce6d8d5690",
+            "description": "Get Node Schema",
+            "name": "get_node_schema_api_v1_schemas__node_key__get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "node_key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_node_schema_api_v1_schemas__node_key__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:790c7e6faea1dd5e896e8a566c48e0e9796a8fad5944784fbf65e77a37daad78",
+            "description": "Get Ontology Graph",
+            "name": "get_ontology_graph_api_v1_ontology_graph_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_ontology_graph_api_v1_ontology_graph_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2ac4a212f31a8de7e697cad3c69ada55108b3ca46757c8e2c8aa02ea8e1f8a51",
+            "description": "Get Org Framework Config",
+            "name": "get_org_framework_config_api_v1_admin_org_config_frameworks_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_org_framework_config_api_v1_admin_org_config_frameworks_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bdd73cb829ce344a3ec59f596180ffa967bdc8548517f9ca7ccfe3fbe988a991",
+            "description": "Get Pallas Lens",
+            "name": "get_pallas_lens_api_v1_projects__project_id__pallas_lens_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pallas_lens_api_v1_projects__project_id__pallas_lens_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1271cfd0841623dc5f75ae44cde1d25269310a45986fc09324112d3f9f9a8636",
+            "description": "Get Policy Document Graph",
+            "name": "get_policy_document_graph_api_v1_knowledge_documents__doc_id__graph_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "doc_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_policy_document_graph_api_v1_knowledge_documents__doc_id__graph_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:952454e79f3f4b57423478f06ddd56996b2fdb78d3c15e2953bfcf4b52f8aef8",
+            "description": "Get Project",
+            "name": "get_project_api_v1_projects__project_id__get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_project_api_v1_projects__project_id__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ca638c8c338b8d69c8656b6eef3197876195eae6b1bb16af482512980405625e",
+            "description": "Get Prompt Audit Log",
+            "name": "get_prompt_audit_log_api_v1_prompt_audit_log_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skip",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_prompt_audit_log_api_v1_prompt_audit_log_get` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:00a7bc1ab4519b04bedec9d6b323eadd1891b6b0257fbf1a347cc6f40cb62ade",
+            "description": "Get Questionnaire",
+            "name": "get_questionnaire_api_v1_projects__project_id__questionnaire_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_questionnaire_api_v1_projects__project_id__questionnaire_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7bdcacae0ceb72b37e40b962fc995a9213a60374f159f299bcd1476e29668912",
+            "description": "Get Questionnaire Progress",
+            "name": "get_questionnaire_progress_api_v1_projects__project_id__questionnaire_progress_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_questionnaire_progress_api_v1_projects__project_id__questionnaire_progress_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:27c891d09cdd86aae24d7939508b1cdf652d55316f3d91c83b3f703440d2b280",
+            "description": "Get Reuse Candidates",
+            "name": "get_reuse_candidates_api_v1_assessments__task_id__reuse_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top_k",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_reuse_candidates_api_v1_assessments__task_id__reuse_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a48cd72cac2be80bf4945803c346082cc13963c452d816d34cece413e4bf6741",
+            "description": "Get Review History",
+            "name": "get_review_history_api_v1_projects__project_id__controls__control_id__review_history_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "control_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_review_history_api_v1_projects__project_id__controls__control_id__review_history_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f3de93d18d1a6c19dd0a1403234a09ae0c4dd42fc16a64aef5745f2ac71f4a9",
+            "description": "Get a specific skill definition.",
+            "name": "get_skill_api_v1_skills__skill_id__get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skill_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_skill_api_v1_skills__skill_id__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6cba6c2d7737283ee52662f5801dcbb2b9ce9b379d24008606f31c0925d350fa",
+            "description": "Get Sub Agent Run",
+            "name": "get_sub_agent_run_api_v1_projects__project_id__sub_agents__gate___key__get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_sub_agent_run_api_v1_projects__project_id__sub_agents__gate___key__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a89d2f9e5eb5e5de7eb6e568ca692dcfd4574df0315604bd912f339df728dac3",
+            "description": "Get Task Activity",
+            "name": "get_task_activity_api_v1_assessments__task_id__activity_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_task_activity_api_v1_assessments__task_id__activity_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f66fd2a498410b930a9aef9bc86b952d2815a1a7da6bcb132f775328131c5eae",
+            "description": "Health",
+            "name": "health_health_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `health_health_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9ca1b16c20f6966e293fe4daf49c1439d1faf7f41d93b574e8d0c4babc327f00",
+            "description": "List Admin Frameworks",
+            "name": "list_admin_frameworks_api_v1_admin_frameworks_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_admin_frameworks_api_v1_admin_frameworks_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c1c652d3e71064abbb21c90a50e390d1bed1bdebc05f7beb27bfd8715a8b3b72",
+            "description": "List Assessments",
+            "name": "list_assessments_api_v1_assessments_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "assignee",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_assessments_api_v1_assessments_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:72859189ce0eae11ebb52d4b3c63a9eef41af99484adaa588056d0f8df691df1",
+            "description": "List Available Policy Packs",
+            "name": "list_available_policy_packs_api_v1_policy_packs_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_available_policy_packs_api_v1_policy_packs_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9bb396f56f2a3ac073d423082057b46ce6860663f547386d617316add233a74b",
+            "description": "List Compliance Frameworks",
+            "name": "list_compliance_frameworks_api_v1_projects_frameworks_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_compliance_frameworks_api_v1_projects_frameworks_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:439bbfc348fbe0f3cf0c0b180f2bbfaab48f1c0c2260cc856c62b527de8aa2bf",
+            "description": "List Controls",
+            "name": "list_controls_api_v1_projects__project_id__controls_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "applicable_only",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "framework_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_controls_api_v1_projects__project_id__controls_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ac3e9c0b39d797e76e06cc062d10f67f58928abbbc90dc20e7dff2deec60bf5a",
+            "description": "List Evidence",
+            "name": "list_evidence_api_v1_projects__project_id__controls__control_id__evidence_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "control_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_evidence_api_v1_projects__project_id__controls__control_id__evidence_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:08967f2d9649dee9bbbcfb2ad96d79f0cdec1b43939b272143ced7cfadd242a1",
+            "description": "List Gates",
+            "name": "list_gates_api_v1_projects__project_id__gates_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_gates_api_v1_projects__project_id__gates_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c412645221022557f9b77e6acf5b9e88561ce71fbb32649dd1ba515089531bec",
+            "description": "List Node Schemas",
+            "name": "list_node_schemas_api_v1_schemas_get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_node_schemas_api_v1_schemas_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:353c202f76f6a5aa9433ebe6b3d9b6af7ebd846894be29eab7de60f5e586eb29",
+            "description": "List Policy Documents",
+            "name": "list_policy_documents_api_v1_knowledge_documents_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skip",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_policy_documents_api_v1_knowledge_documents_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0202b604c12170c68e168b79c48df289039bdce162d0b78b4f88d6f8b5eb0987",
+            "description": "List Projects",
+            "name": "list_projects_api_v1_projects_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skip",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_projects_api_v1_projects_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:12824dbc6ecfd79202889d0903ad91d3f09b16d7850a5ea969696b6c107c7331",
+            "description": "List all available skills (built-in + custom).",
+            "name": "list_skills_api_v1_skills__get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_skills_api_v1_skills__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0b6c6ab1b2c09903f5650e6216460f3878336b9ac3a4f0d45e01e1eb93ff9137",
+            "description": "List Sub Agent Runs",
+            "name": "list_sub_agent_runs_api_v1_projects__project_id__sub_agents_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sub_agent_runs_api_v1_projects__project_id__sub_agents_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0bd8a6a4ea51c9fd9b2fd949172c10a3cf077158a5ed771ee6f46439166e8f3",
+            "description": "List Tracked Remediations",
+            "name": "list_tracked_remediations_api_v1_assessments__task_id__remediations_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tracked_remediations_api_v1_assessments__task_id__remediations_get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d871716fc2ab27d7cc29021bf30f89726b49dff78debc16208a11567aef93afd",
+            "description": "Login",
+            "name": "login_api_v1_auth_login_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `login_api_v1_auth_login_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:df2ad8b9ad39d7c9056ad56041c4a61bae6770cfd40c568cafd1a5a3b144e741",
+            "description": "Me",
+            "name": "me_api_v1_auth_me_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `me_api_v1_auth_me_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6f6a9cd80312020f2d9ff5de56ed1a2a07414b118e04ab10c84f670e26104e5e",
+            "description": "Preview Controls For Frameworks",
+            "name": "preview_controls_for_frameworks_api_v1_admin_org_config_preview_controls_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `preview_controls_for_frameworks_api_v1_admin_org_config_preview_controls_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5723a9376c53f18aed18d375310d5a966b77aee8eca28dde38d6751baf797aa3",
+            "description": "Hybrid RAG query: vector similarity + graph retrieval.",
+            "name": "query_kb_api_v1_kb_query_post",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `query_kb_api_v1_kb_query_post` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b238da5c8de106c92218d5c0d9a2de3ee2d318fc9f03175cdc4cadd21ec26c96",
+            "description": "Reindex Kb",
+            "name": "reindex_kb_api_v1_kb_reindex_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reindex_kb_api_v1_kb_reindex_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f14d1e713bff9dd9d5023196eb2378fea27aced35be3a0da00a3a056ff74d6b9",
+            "description": "Reload Risk Ontology",
+            "name": "reload_risk_ontology_api_v1_risk_assessment_reload_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reload_risk_ontology_api_v1_risk_assessment_reload_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cb6fad52687cde071b1538fa650e3fd10c60c89b583e2d65345d2ee5d1b8b96f",
+            "description": "Review Assessment",
+            "name": "review_assessment_api_v1_assessments__task_id__review_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `review_assessment_api_v1_assessments__task_id__review_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d15f6aee2c80feb3aa5f0b3b1f522887ed6971e138ecb47a5bc61a442e83619f",
+            "description": "Review Gate",
+            "name": "review_gate_api_v1_projects__project_id__gates__gate_number__review_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate_number",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `review_gate_api_v1_projects__project_id__gates__gate_number__review_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1cf8513a43c311a387bd4e0c613e1e5201cb783f4a30e1302ca066b7436c4a03",
+            "description": "Root",
+            "name": "root__get",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `root__get` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:92ab83061456617ab8bfbbf80dd7e902d8e2af090fe7233889f3c3dfeef12ba8",
+            "description": "Save Sub Agent Output",
+            "name": "save_sub_agent_output_api_v1_projects__project_id__sub_agents__gate___key__output_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save_sub_agent_output_api_v1_projects__project_id__sub_agents__gate___key__output_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8fe0acb513e577ef6634a339cf317f0b7f93b0b9f83dfec59493d67b869dcecd",
+            "description": "Submit Answers",
+            "name": "submit_answers_api_v1_projects__project_id__questionnaire_answers_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `submit_answers_api_v1_projects__project_id__questionnaire_answers_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:70f834af84b11abd6a57497af32f820b4d0304a09eac614379bf03cd94c1ad79",
+            "description": "Submit an assessment task; returns task_id immediately for polling.",
+            "name": "submit_assessment_api_v1_assessments_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `submit_assessment_api_v1_assessments_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bb676461e83ad22b670d5d72e4b0905aed75d3c377f10fb7fe9bcbc5546a5cd8",
+            "description": "Submit Gate",
+            "name": "submit_gate_api_v1_projects__project_id__gates__gate_number__submit_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate_number",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `submit_gate_api_v1_projects__project_id__gates__gate_number__submit_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b0ac590349c21674f0926e31fd9594a574c738ced050b89af249209329f6d4f2",
+            "description": "Submit Human Review",
+            "name": "submit_human_review_api_v1_projects__project_id__controls__control_id__human_review_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "control_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `submit_human_review_api_v1_projects__project_id__controls__control_id__human_review_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fb78266d3eaeea0b3ebb88fce094672201d089123c80b987ecb397d100717a5b",
+            "description": "Update runtime LLM config for the current FastAPI process.",
+            "name": "update_llm_config_config_llm_put",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_llm_config_config_llm_put` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:acb2906544926b6d306c5ed4b9b1baf75f1d20a160c777573fa1c6b4cad4266f",
+            "description": "Update Org Framework Config",
+            "name": "update_org_framework_config_api_v1_admin_org_config_frameworks_put",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_org_framework_config_api_v1_admin_org_config_frameworks_put` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc7af44be38581ae146f87c323d1bad34cf4f35ad78bb88a6566caf9eba9b2ed",
+            "description": "Update Project",
+            "name": "update_project_api_v1_projects__project_id__put",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_project_api_v1_projects__project_id__put` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c0f0aeff3293117db3af1ea327eaf21fb08a6b76b688da67ac3aa7b96b56cd0e",
+            "description": "Update Remediation Tracking",
+            "name": "update_remediation_tracking_api_v1_assessments__task_id__remediations__remediation_id__post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "remediation_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_remediation_tracking_api_v1_assessments__task_id__remediations__remediation_id__post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:99e11cc49f7f9835580591a047b26e934bab6f9c2cc03dadcb59ced83916fbd6",
+            "description": "Update Requirement Row",
+            "name": "update_requirement_row_api_v1_requirement_rows__row_id__put",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_requirement_row_api_v1_requirement_rows__row_id__put` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a22dd0012296f733cf830e13ca960ec109eb37f7b861e05eeb3ad4d19557d04",
+            "description": "Update an existing custom skill.",
+            "name": "update_skill_api_v1_skills__skill_id__put",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skill_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_skill_api_v1_skills__skill_id__put` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d1ca037f36e53bb411a93f86236383bf2cf47e3408877a9fb03c6bff8d1e87c",
+            "description": "Update Sub Agent Status",
+            "name": "update_sub_agent_status_api_v1_projects__project_id__sub_agents__gate___key__status_patch",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_sub_agent_status_api_v1_projects__project_id__sub_agents__gate___key__status_patch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6febbda7bc03395c5501c2c147ce75edb5cde290c2ca80b9eb6f6324ceae30a3",
+            "description": "Upload a document to the knowledge base (vector + graph RAG).",
+            "name": "upload_document_api_v1_kb_documents_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `upload_document_api_v1_kb_documents_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:73a8699fa476b3c44080eb0094033f486ee5fe2e1dcb36c19e031c35bfcc861d",
+            "description": "Upload Policy Document",
+            "name": "upload_policy_document_api_v1_knowledge_upload_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `upload_policy_document_api_v1_knowledge_upload_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:41d82e3249b76371130fa2759d86a327679c6240afec28a07c93463368c1e402",
+            "description": "Upsert Gate Submission",
+            "name": "upsert_gate_submission_api_v1_projects__project_id__gates__gate_number__submission_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gate_number",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `upsert_gate_submission_api_v1_projects__project_id__gates__gate_number__submission_post` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:e7469ab04c53533a435fb73563c7aa1dacc1c7123df11b39aaeff86cc2b8f7e6",
+        "version": "1.1.0"
       }
     ]
   },
@@ -36615,7 +38229,7 @@
     "repository_url": "https://github.com/Keesan12/martin-loop",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `martin-loop` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 75 safe version(s).",
+    "security_summary": "Server `martin-loop` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 76 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -37508,6 +39122,18 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.8.9"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-26T16:32:19.833Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.8.10"
       },
       {
         "advisories": [],

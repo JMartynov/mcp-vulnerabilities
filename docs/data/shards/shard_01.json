@@ -186,7 +186,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.4.85"
+        "version": "< 0.4.112"
       },
       {
         "advisories": [
@@ -549,7 +549,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.4.112"
+        "version": "< 0.4.85"
       },
       {
         "advisories": [
@@ -17247,7 +17247,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 2.10.0-lts"
+        "version": "< 2.8.0"
       },
       {
         "advisories": [
@@ -17278,7 +17278,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 2.8.0"
+        "version": "< 2.10.0-lts"
       },
       {
         "advisories": [
@@ -18169,7 +18169,7 @@
     "security_summary": "Server `PhilipAD/health-export-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:3478670da2e8284e0c63c46c6f996696aede12a57aaafac8b7e13df5c2be171f",
     "transport": "stdio",
     "versions": [
       {
@@ -18180,8 +18180,824 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c81a12cc43bba3b5fb308f7773c7051d4dc10017f0aaaccad81a7bc409823c54",
+            "description": "Health check: data source, how many metrics/workouts are available, which optional context files exist, the most recent data date, and a",
+            "name": "get_mcp_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_mcp_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:383335d0238439c83d079e9e18793bf326dfd31c32a948323ddf50b4324b1936",
+            "description": "How current the exported files are, so you can decide whether to trust what you read or ask the user to refresh. Returns \\",
+            "name": "get_freshness",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_freshness` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0e147f13b8dcf16b6dce70be3e65f3aaf1e116a0a35ba8791f2eac1a002697a6",
+            "description": "List every available Apple Health metric with its unit, day count, and date range. Use this to discover metric names before querying.",
+            "name": "list_metrics",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_metrics` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:483856835541aa0107f41c520daba71083654aede0db8996181d02d1d48e4a52",
+            "description": "Get values for a metric (or all metrics) over an optional date range, with an aggregate (avg/sum/min/max/latest). The core data-retrieval tool. Every result carries a",
+            "name": "get_health_metrics",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "aggregation",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "eventTag",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "eventType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metric",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "negate",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_health_metrics` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c030f2178632305d7f2b370fcc9370762666a984383a8e6196188b608a5b00d",
+            "description": "Compare the most recent N-day window against the prior N days for a metric: change, percent change and direction (up/down/flat). Also returns",
+            "name": "get_trends",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metric",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "window",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_trends` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f0dd4162c326da5dc3964c38341bfaedc20bfc4a6549a2cc30132bb3cf3f1ab0",
+            "description": "Compare a metric between two arbitrary date periods (A vs B): each aggregate plus the change and percent change. Pass periodA/periodB explicitly, or pass anchor {eventId, days} to build both periods around a logged event (the before/after question, with the event day excluded from both sides).",
+            "name": "compare_periods",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "eventId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metric",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_periods` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:71367a0df3a67d4545c9e913447a12bf711e879b241e7ec6410ebb78c460b8fd",
+            "description": "Return clean structured JSON for the chosen metrics/date range. Paginated: the result carries",
+            "name": "get_structured_export",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cursor",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_structured_export` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a699ecf78c0a93bfa22d08cb1cb4aa778791344870844b8bbdcaf5d6f8277823",
+            "description": "The current hour-by-hour window from the iOS app",
+            "name": "get_intraday",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metric",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_intraday` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7d4b01040a71d5ce9373132b712e5e68958ea9a66d54e8b07d08564ef5239f4c",
+            "description": "Natural-language convenience: pass a question and get routed structured results. Prefer the specific tools above when you can, and call list_metrics first to see how much history exists, since this tool answers over whatever the file holds.",
+            "name": "query_health_data",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "question",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `query_health_data` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:522199d07438ed9a7b5899a13d72764168d79c94f1d90e7dac7eae9b12f4dde1",
+            "description": "Logged context events from health-events.json: medication starts, habit changes, doctor visits, life events, shift blocks, episodes, travel, and any type a newer app adds. Optional {type, tag, start, end} filters; a range event matches a window it overlaps. Sorted ascending by date. Returns available:false when the file was never exported; absence means nothing was exported, not that nothing happened.",
+            "name": "list_events",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tag",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_events` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2f6e0d963f63777b9da93fd97622b596c2f09bf0c6f7e53fb64157bef2b8a030",
+            "description": "The context fields the user explicitly opted in to sharing (health-profile.json): conditions, medications, goals, allergies, notes. Returns the fields plus a presentFields list. An absent field was withheld by the user or never enabled; absence must never be read as",
+            "name": "get_profile",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_profile` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e7af022cdc0d91d9fb1c461ca437adcfb305a5402de6d327e0cb4d3ba0dacf77",
+            "description": "Query the workouts cache with {activityType (a name like Running, or a raw HealthKit id like 37), start, end} filters and pagination ({limit} default 50 max 200, {cursor} from a previous nextCursor). Records are returned exactly as stored, including the newer optional keys (avgHeartRate, maxHeartRate, running dynamics, cycling power, intervals, hasRoute) when the app exported them; older caches simply lack those keys and nothing is fabricated. Also returns summary {count, byActivityType} over everything that matched.",
+            "name": "get_workouts",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "activityType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cursor",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_workouts` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5ed5fdb38ba1a4696bee35c6417b3f85a8fb0c65f8f149e8b712075d43dccee5",
+            "description": "Clustered sleep sessions from health-sessions.json with {start, end, day} filters. Sessions are attributed to the WAKING day, matching the daily cache",
+            "name": "get_sleep_sessions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_sleep_sessions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:83a25537a763f464e77a17d6a994a732d37e6a432ba8159018c6b75f8a73c545",
+            "description": "Cycle context derived from user-logged period starts (health-cycles.json): day-in-cycle and a coarse phase label (follicular from day 1 to the observed midpoint of that cycle, luteal for the remainder). Derived from logged periods only, never predictive, and no ovulation estimate is made. Optional {date} for a single day; default returns per-day context for the last cycle.",
+            "name": "get_cycle_context",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_cycle_context` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:77b4e1b4f19ef86169dab18d2bb1b4391a1cf23fa3aa47a6434c9356672fcd0b",
+            "description": "Pearson correlation between two metrics",
+            "name": "correlate_metrics",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "lag",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metricA",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metricB",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `correlate_metrics` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:09ad6ba874abbfe5949308c272b868ce369601e869e6d0cbdfc0bcbf824f6617",
+            "description": "Look a metric name up in the canonical naming and unit table. Accepts the export",
+            "name": "resolve_metric",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "unit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "value",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `resolve_metric` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:725c129c415948e8f269e92bd100c1f0c25ceb2ec5e31764621c6952ae14114b",
+            "description": "Execute year",
+            "name": "year",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `year` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1719097b787f6ab627e8129e539b3399155e15724cd891aa12ba05c9694c8b08",
+            "description": "Execute quarter",
+            "name": "quarter",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `quarter` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7cc93ba758c38287f5de1e360e47f5445c40014c4471dbb35a9afd352fb013a8",
+            "description": "Execute month",
+            "name": "month",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `month` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8bec1bf16274e3a7e4a9af81cde3e54fd431edd10402d6fff22794dcd9d809a6",
+            "description": "Execute week",
+            "name": "week",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `week` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3b4c10ef2a87dba34ac34e648a0839a992daa5f6dea74eba556ef9e1261382b1",
+            "description": "Execute sum",
+            "name": "sum",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sum` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:856e489f30d6a66949333ad5bb97624ee3e05c4a34b4214fb590d4b0cddf6321",
+            "description": "Execute min",
+            "name": "min",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `min` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c2fcdea3793fbb0a9911890592cf4e0b6f0dfa34739459dd7b53fa6cb41f8764",
+            "description": "Execute max",
+            "name": "max",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `max` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:90c4c06b4a82b63bc5093306db2cd48f38331116281eb9af8023c5c79d656352",
+            "description": "Execute avg",
+            "name": "avg",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `avg` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:18bf324ef450eb1a297e08df2cb609d2fb23317a9e0a344e5262bf06cafddbaa",
+            "description": "Execute latest",
+            "name": "latest",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `latest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:05e55079425b11956ee09fce4bdea47e1a72bd5fce7be58fbb98accc3630b847",
+            "description": "Execute string",
+            "name": "string",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `string` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9d182d43e6085d591233545543ea96928870a3ae90a4e9fd91c1f6ff08cb85c5",
+            "description": "A short morning readout of the most recent day against its trailing week.",
+            "name": "daily_brief",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `daily_brief` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:21423bc20cce1b2035daa317fab064854e189db606e8c879708d58c6505606fc",
+            "description": "This week against last week across sleep, heart and activity.",
+            "name": "weekly_review",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `weekly_review` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd4cafea19ad4896d488811e3a6526267eb6b7f5b9ccdc28a95a7d997e2f85ed",
+            "description": "A one-page data brief to bring to an upcoming appointment.",
+            "name": "doctor_visit_prep",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `doctor_visit_prep` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4ed8febdb78da4bea19d3e69b1b1a0ede4ea55ed6a278d3ff09a894d47906ef2",
+            "description": "The appointment date, YYYY-MM-DD.",
+            "name": "visitDate",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `visitDate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f21cff17164c3b62371717eb09abe57616ced98c88f18d881a20b73d8e98a6d",
+            "description": "Changes in the data since the most recent logged doctor visit.",
+            "name": "what_changed_since_last_visit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `what_changed_since_last_visit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f84963ab6741bf066c56be46ba665ec49cc62751012794652f4ecb4ba04171f",
+            "description": "A descriptive read of recent sleep: duration, stages, split nights.",
+            "name": "sleep_quality",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sleep_quality` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a6b551a77ea6b59e9c796c0827765d18bb0fda6f4f0b1448ef34e2143f39ff53",
+            "description": "How consistent sleep and wake times are, in minutes, with the sessions cited.",
+            "name": "sleep_regularity",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sleep_regularity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:94247382fb710f62fbd23dd4d8c614f1912099c2662cd65892f4361a670a9a00",
+            "description": "Heart rate variability over the last month, segment-honest.",
+            "name": "hrv_trend",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `hrv_trend` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:311ef9196acc89d5023ff750480ed21c319a2071ce2a778139d941670e7e55f9",
+            "description": "The last 7 days of workouts with intensity and structure.",
+            "name": "training_week_in_review",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `training_week_in_review` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e9d8182d660633a5277d53ae7cd0c290c33b5d518451362a34b64c2cd7e18d88",
+            "description": "The training block a coach would want to see before race week.",
+            "name": "race_week_prep",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `race_week_prep` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a252c8edd7372b117ffb8621b8a2b8f588cb99f21853a6fe62354f63375e1bd3",
+            "description": "Time by heart rate band across recent workouts, relative to this file.",
+            "name": "zone_minutes_summary",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `zone_minutes_summary` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6e384b2a3efba09fbca51096c00e7498769db65dc4e9250a0c7b44693113403b",
+            "description": "Run an n-of-1 before/after read around a logged intervention event.",
+            "name": "experiment",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `experiment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0401b40e6e9afe101c4047edabac0930b5dc37009c6914c68a981463c8595156",
+            "description": "What was changed, e.g. magnesium at night.",
+            "name": "intervention",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `intervention` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c7cf4c5b1ccf8858b49a8355d15bd2c245f3409e15f98425ab55df27eca6a6de",
+            "description": "Before/after read around a logged medication start.",
+            "name": "medication_before_after",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `medication_before_after` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d33d9f12ffab3d7c314ea99b5e6760afaf5bb6b6521d37d7390b5d5c527f44e2",
+            "description": "The medication name or event tag.",
+            "name": "medication",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `medication` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5a20a8efc48083003b59129f39cf56d8c5f05aae9e9e8ec9272aa3ec9e2695d9",
+            "description": "Per-dose-step segments for weight and related metrics, honestly bounded.",
+            "name": "glp1_dose_step_compare",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `glp1_dose_step_compare` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e1e4436f0442a6234d0a49000809c005bbf1745b3fb5aeca498899393563ed8f",
+            "description": "The data story since a logged quit date, with the early window reported separately.",
+            "name": "sobriety_milestone",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sobriety_milestone` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7b3f58119e53de4c91ca5b44dabe840d5f74840f55c5b2745d069704c6e7f13b",
+            "description": "On-shift days against off days using the day filter.",
+            "name": "shift_block_compare",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `shift_block_compare` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3c02635d47af6d5c8b6634ec920099d36672553d21bba87445f60aa288fda32e",
+            "description": "A monthly review with timezone-change days excluded and accounted for.",
+            "name": "travel_honest_monthly_review",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `travel_honest_monthly_review` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:20c7edc32e247013c645b3af04e808edb8328c7abf55562e6de81036216a043e",
+            "description": "Read a metric trend against cycle phase, comparing like phase with like phase.",
+            "name": "cycle_aware_trend_read",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cycle_aware_trend_read` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8f65a9a833ee87457c67c4f5687461c99bab7d5c592d6f7a13ba30b5a1f47f1a",
+            "description": "The metric to read, e.g. heart_rate_variability.",
+            "name": "metric",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `metric` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc160ba362f6a540a3f76b2766d85fa20f81c680a86887cdd6b5d2f8043c2849",
+            "description": "A calm daily check-in that separates data gaps from changes in the numbers.",
+            "name": "caregiver_daily_checkin",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `caregiver_daily_checkin` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b47820d61a880ae2b2313054c6ac1b4e53add5c2dff079e24052d79b2576df8f",
+            "description": "One day of glucose in the consensus reporting metrics, no advice.",
+            "name": "glucose_day_summary",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `glucose_day_summary` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9be18d318a5cbbeca9dee41ec2deae0eb03ad095a10971d830b35fbc91e8c539",
+            "description": "The day to summarize, YYYY-MM-DD.",
+            "name": "date",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `date` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:009743c7b6f1b9934f7b851e1467a70c4b92dba83e0b1c70d94579a215c096cf",
+            "description": "The multi-year activity story at monthly resolution.",
+            "name": "long_term_activity_narrative",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `long_term_activity_narrative` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d0bdcfafa98ff6f2fecee614075309ddddf815b09d7ad6244473ddfa2cc4bf4",
+            "description": "What this export actually contains: surfaces, ranges, gaps.",
+            "name": "data_coverage_audit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `data_coverage_audit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e563e1c2899d3b0007fc8cac5cf6c5daaea154c5aef1b47f6f661178c606482",
+            "description": "Open a session with the user\\",
+            "name": "profile_aware_context_bootstrap",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `profile_aware_context_bootstrap` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:3478670da2e8284e0c63c46c6f996696aede12a57aaafac8b7e13df5c2be171f",
         "version": "1.4.3"
       }
     ]
@@ -55507,18 +56323,6 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 3.2.0"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
         "version": "*"
       },
       {
@@ -55532,6 +56336,18 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 2.14.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 3.2.0"
       },
       {
         "advisories": [],
