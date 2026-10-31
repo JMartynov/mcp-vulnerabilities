@@ -56,7 +56,22 @@ class NpmDiscoveryProvider:
                         repo = pkg.get("links", {}).get("repository")
                         version = pkg.get("version", "1.0.0")
 
+                        
+                        # Normalize repository URL
+                        if repo:
+                            if repo.startswith("git://"):
+                                repo = repo.replace("git://", "https://")
+                            elif repo.startswith("git+ssh://"):
+                                repo = repo.replace("git+ssh://", "https://")
+                            elif repo.startswith("ssh://"):
+                                repo = repo.replace("ssh://", "https://")
+                            if repo.startswith("git+https://"):
+                                repo = repo.replace("git+https://", "https://")
+                            if repo.endswith(".git"):
+                                repo = repo[:-4]
+
                         is_rel, reasons = McpRelevanceFilter.is_relevant(
+
                             package_name=name,
                             summary=desc,
                             details=desc,

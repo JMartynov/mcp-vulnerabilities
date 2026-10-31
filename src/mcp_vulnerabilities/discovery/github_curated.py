@@ -85,6 +85,11 @@ class GitHubCuratedDiscoveryProvider:
                         summary=desc,
                         repo_url=html_url,
                     )
+                    
+                    archived = it.get("archived", False)
+                    disabled = it.get("disabled", False)
+                    if archived or disabled:
+                        continue
                     if is_rel:
                         discovered[full_name] = {
                             "name": full_name,

@@ -158,6 +158,16 @@ class OsvDeduplicator:
         for aff_list in pkg_map.values():
             base_aff = aff_list[0]
             pkg_spec = base_aff.package
+            
+            # Normalize PURL for output consistency
+            if pkg_spec.purl:
+                # Ensure PURL uses standard ecosystem prefixes
+                eco_map = {"mcp": "mcp", "npm": "npm", "pypi": "pypi", "golang": "golang", "cargo": "cargo", "docker": "docker", "github": "github"}
+                for k, v in eco_map.items():
+                    if pkg_spec.ecosystem.lower() == k:
+                        if not pkg_spec.purl.startswith(f"pkg:{v}/"):
+                            pkg_spec = pkg_spec.__class__(ecosystem=pkg_spec.ecosystem, name=pkg_spec.name, purl=f"pkg:{v}/{pkg_spec.name}")
+                        break
 
             # Merge ranges
             # Group events into valid OSV 1.6 pairs or distinct RangeSpec entries
