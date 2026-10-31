@@ -620,6 +620,71 @@
     document.querySelectorAll(".btn-export").forEach((btn) => {
       btn.addEventListener("click", () => exportConfig(btn.dataset.client));
     });
+
+    // Directory Card Tool Drawer Delegation
+    el.serversContainer.addEventListener("click", (e) => {
+      if (e.target.classList.contains("btn-tool-drawer-toggle")) {
+        const pkg = e.target.dataset.pkg;
+        const total = e.target.dataset.total;
+        const drawer = e.target.nextElementSibling;
+        if (!drawer || !drawer.classList.contains("inline-tool-drawer")) return;
+
+        const isExpanded = expandedToolServers.has(pkg);
+        if (isExpanded) {
+          expandedToolServers.delete(pkg);
+          drawer.style.display = "none";
+          e.target.textContent = `Explore Tools ▾ (${total})`;
+        } else {
+          expandedToolServers.add(pkg);
+          drawer.style.display = "block";
+          e.target.textContent = `Hide Tools ▴`;
+          const input = drawer.querySelector(".tool-microsearch-input");
+          if (input) input.focus();
+        }
+      }
+    });
+
+    el.serversContainer.addEventListener("input", (e) => {
+      if (e.target.classList.contains("tool-microsearch-input")) {
+        const query = e.target.value.toLowerCase();
+        const drawer = e.target.closest(".inline-tool-drawer");
+        if (!drawer) return;
+        
+        const pills = drawer.querySelectorAll(".drawer-tool-pills .tool-pill");
+        let matchCount = 0;
+        
+        pills.forEach(pill => {
+          // extract only the text, strip "🔧 " emoji
+          const toolName = pill.textContent.replace("🔧 ", "").toLowerCase();
+          if (toolName.includes(query)) {
+            pill.style.display = "inline-flex";
+            matchCount++;
+          } else {
+            pill.style.display = "none";
+          }
+        });
+        
+        const badge = drawer.querySelector(".tool-match-badge");
+        if (badge) {
+          badge.textContent = `[ ${matchCount} / ${pills.length} ]`;
+        }
+        
+        let noMatchMsg = drawer.querySelector(".no-tool-matches");
+        if (matchCount === 0) {
+          if (!noMatchMsg) {
+            noMatchMsg = document.createElement("div");
+            noMatchMsg.className = "no-tool-matches";
+            drawer.querySelector(".drawer-tool-pills").appendChild(noMatchMsg);
+          }
+          noMatchMsg.textContent = `No tools match "${e.target.value}"`;
+          noMatchMsg.style.display = "block";
+        } else {
+          if (noMatchMsg) {
+            noMatchMsg.style.display = "none";
+          }
+        }
+      }
+    });
   }
 
   function switchTab(tab, push = true) {
@@ -1237,22 +1302,38 @@
       } else {
         const isExpanded = expandedToolServers.has(s.package_name);
         const allTools = s.tools_sample || [];
-        const displayCount = isExpanded ? allTools.length : Math.min(5, allTools.length);
+        const displayCount = Math.min(5, allTools.length);
         
-        let toolPillsHtml = allTools.slice(0, displayCount)
+        let initialPillsHtml = allTools.slice(0, displayCount)
           .map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t)}" onclick="openInspectorModal('${escapeHtml(s.package_name)}', '${escapeHtml(t)}')">🔧 ${escapeHtml(t)}</span>`)
           .join("");
           
-        let expandBtn = "";
-        if (s.tools_count > 5) {
-          if (isExpanded) {
-            expandBtn = `<span class="tool-tag-more" role="button" tabindex="0" onclick="toggleToolsExpand('${escapeHtml(s.package_name)}')" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleToolsExpand('${escapeHtml(s.package_name)}'); }">Show less ▴</span>`;
-          } else {
-            expandBtn = `<span class="tool-more" role="button" tabindex="0" onclick="toggleToolsExpand('${escapeHtml(s.package_name)}')" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleToolsExpand('${escapeHtml(s.package_name)}'); }">+${s.tools_count - 5} more</span>`;
-          }
+        let toggleBtnHtml = "";
+        let drawerHtml = "";
+        
+        if (s.tools_count > 0) {
+            const btnText = isExpanded ? "Hide Tools ▴" : `Explore Tools ▾ (${allTools.length})`;
+            toggleBtnHtml = `<span class="btn-tool-drawer-toggle" role="button" tabindex="0" onkeypress="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); this.click(); }" data-pkg="${escapeHtml(s.package_name)}" data-total="${allTools.length}">${btnText}</span>`;
+            
+            const displayStyle = isExpanded ? "block" : "none";
+            const allPillsHtml = allTools.map((t) => `<span class="tool-pill" title="Tool: ${escapeHtml(t)}" onclick="openInspectorModal('${escapeHtml(s.package_name)}', '${escapeHtml(t)}')">🔧 ${escapeHtml(t)}</span>`).join("");
+
+            const safeTitle = escapeHtml(s.display_name || s.package_name);
+
+            drawerHtml = `
+              <div class="inline-tool-drawer" style="display: ${displayStyle};">
+                <div class="microsearch-wrap">
+                  <input type="text" class="tool-microsearch-input" data-pkg="${escapeHtml(s.package_name)}" placeholder="Filter tools in ${safeTitle}...">
+                  <span class="tool-match-badge" id="matchBadge_${escapeHtml(s.package_name)}">[ ${allTools.length} / ${allTools.length} ]</span>
+                </div>
+                <div id="toolPills_${escapeHtml(s.package_name)}" class="drawer-tool-pills">
+                  ${allPillsHtml}
+                </div>
+              </div>
+            `;
         }
         
-        toolsHtml = toolPillsHtml + expandBtn;
+        toolsHtml = initialPillsHtml + toggleBtnHtml + drawerHtml;
       }
 
       const title = s.display_name || s.package_name;
