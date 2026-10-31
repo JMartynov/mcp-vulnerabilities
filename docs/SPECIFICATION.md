@@ -636,3 +636,135 @@ The `mcp_catalog_index.json` payload (which omits the `versions` array for paylo
   "tools_count": 5
 }
 ```
+
+
+## 17. SecurityPicture & ServerPassport Schemas
+
+### 17.1 SecurityPicture Baseline Schema
+The `SecurityPicture` captures a point-in-time posture snapshot for workstation drift tracking:
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "workstation_id": { "type": "string" },
+    "servers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "package": { "type": "string" },
+          "version": { "type": "string" },
+          "tools": { "type": "array", "items": { "type": "string" } },
+          "risk_tier": { "type": "string" }
+        },
+        "required": ["package", "version", "tools"]
+      }
+    }
+  },
+  "required": ["timestamp", "servers"]
+}
+```
+
+### 17.2 ServerPassport Schema
+The `ServerPassport` defines the canonical tool hashes, parameters, and transport schemas from `data/passports.json.gz`:
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "ecosystem": { "type": "string" },
+    "package": { "type": "string" },
+    "toolset_canonical_hash": { "type": "string" },
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "parameters": { "type": "object" }
+        },
+        "required": ["name"]
+      }
+    },
+    "required_env_vars": { "type": "array", "items": { "type": "string" } }
+  },
+  "required": ["package", "toolset_canonical_hash", "tools"]
+}
+```
+
+### 17.3 Drift Event Taxonomy
+- `NEW_VULNERABILITY`: A new CVE affects a currently installed server version.
+- `RESOLVED_VULNERABILITY`: A server was upgraded to a safe version.
+- `SHADOW_TOOL_DETECTED`: A server dynamically registers an unadvertised tool at runtime.
+- `CAPABILITY_SURFACE_EXPANDED`: A server upgrade introduced new tools matching high-risk patterns.
+
+### 17.4 OWASP MCP Top 10:2025 Category Mappings
+- **MCP001**: Prompt Injection via Malicious Tool Inputs
+- **MCP002**: Shadow Tool / Capability Hijacking
+- **MCP003**: Over-Permissive Tool Execution (Missing Access Controls)
+- **MCP004**: Server-Side Request Forgery (SSRF) via MCP Network Tools
+- **MCP005**: Insecure Transport (Plaintext SSE/HTTP instead of TLS)
+- **MCP006**: Sensitive Data Exposure in Tool Responses
+- **MCP007**: Supply Chain / Compromised MCP Server Images
+- **MCP008**: Unbounded Resource Consumption (DDoS on Host)
+- **MCP009**: Insecure Client Configuration Management
+- **MCP010**: Missing Action Authorization and Idempotency
+
+
+### 17.5 Proxy Audit Log Schema
+The `proxy` command intercepts and logs JSON-RPC traffic. The audit log is structured as JSON Lines format:
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "action": { "type": "string", "enum": ["blocked", "intercepted"] },
+    "reason": { "type": "string" },
+    "tool": { "type": "string" },
+    "severity": { "type": "string" }
+  },
+  "required": ["timestamp", "action", "reason", "tool", "severity"]
+}
+```
+
+
+## 18. Complete CLI Command Reference
+
+| Subcommand |
+| :--- |
+| `verify-feed` |
+| `scan-source` |
+| `probe` |
+| `audit` |
+| `sync` |
+| `enrich` |
+| `export-config` |
+| `lint` |
+| `timeline` |
+| `validate` |
+| `site-build` |
+| `discover` |
+| `export-osv` |
+| `export-airgap` |
+| `audit-typosquat` |
+| `fix` |
+| `resolve-config` |
+| `audit-transitive` |
+| `proxy` |
+| `correlate` |
+| `identify` |
+| `search` |
+| `hub` |
+| `remediate-pr` |
+| `serve` |
+| `snapshot` |
+| `scan-binaries` |
+| `lookup` |
+| `sandbox` |
+| `tui` |
+| `monitor` |
+| `bridge` |

@@ -261,6 +261,81 @@ To keep downstream tools, scanners, and Python consumers immediately updated wit
 5. **Static Artifact Recompilation**: Rebuilds `docs/data/` catalog shards, advisory indexes, and release delta feeds via `site_builder` and `updates_builder`.
 6. **Automated PyPI Publishing**: Tags the commit (`vX.Y.Z`), creates an official GitHub Release with generated release notes, and invokes `./.github/workflows/release.yaml` to publish the updated wheel to PyPI via OIDC Trusted Publishing.
 
+
+## CLI Command Reference
+
+| Subcommand | Description | Primary Flags |
+| :--- | :--- | :--- |
+| **`audit`** | Audit AI client MCP servers or packages against OSV database | `--config`, `--package`, `--client`, `--severity-threshold`, `--format`, `--save-baseline`, `--diff-baseline` |
+| **`network-scan`** | Live network scanner for MCP servers | `--cidr`, `--ports`, `--concurrency` |
+| **`identify`** | Identify MCP server fingerprints | `--dir` |
+| **`probe-safe`** | Sandboxed network prober | `--timeout`, `--network` |
+| **`proxy`** | Inline JSON-RPC reverse proxy firewall | `--mode`, `--block-tool`, `--redact-secrets` |
+| **`audit-transitive`** | Audit third-party dependencies of MCP servers | `--severity-threshold`, `--format`, `--source-dir` |
+| **`audit-typosquat`** | Detect typosquatting and hallucinated packages | `--threshold`, `--fix` |
+| **`verify-feed`** | Verify OSV advisory feed signatures | `--expected-identity`, `--expected-issuer` |
+| **`hub`** | Interactive terminal security hub | `--json`, `--batch` |
+| **`tui`** | Curses split-pane TUI explorer | `--no-color` |
+| **`monitor`** | Background daemon for live monitoring | `--pid-file`, `--daemonize` |
+| **`bridge`** | Localhost web bridge for portal integration | `--port`, `--cors-origins` |
+| **`remediate-pr`** | Automated GitOps PR remediation bot | `--repo-dir`, `--assignee`, `--dry-run` |
+| **`scan-source`** | Execute scan-source operations | | 
+| **`probe`** | Execute probe operations | | 
+| **`sync`** | Execute sync operations | | 
+| **`enrich`** | Execute enrich operations | | 
+| **`export-config`** | Execute export-config operations | | 
+| **`lint`** | Execute lint operations | | 
+| **`timeline`** | Execute timeline operations | | 
+| **`validate`** | Execute validate operations | | 
+| **`site-build`** | Execute site-build operations | | 
+| **`discover`** | Execute discover operations | | 
+| **`export-osv`** | Execute export-osv operations | | 
+| **`export-airgap`** | Execute export-airgap operations | | 
+| **`fix`** | Execute fix operations | | 
+| **`resolve-config`** | Execute resolve-config operations | | 
+| **`correlate`** | Execute correlate operations | | 
+| **`search`** | Execute search operations | | 
+| **`serve`** | Execute serve operations | | 
+| **`snapshot`** | Execute snapshot operations | | 
+| **`scan-binaries`** | Execute scan-binaries operations | | 
+| **`lookup`** | Execute lookup operations | | 
+| **`sandbox`** | Execute sandbox operations | | 
+
+
+
+## Example Commands
+
+- **Audit a configuration file:**
+  ```bash
+  mcp-vuln audit --config ~/.cursor/mcp.json --format json
+  ```
+- **Live network scan:**
+  ```bash
+  mcp-vuln network-scan --cidr 192.168.1.0/24 --ports 8080,3000
+  ```
+- **Automated PR Remediation:**
+  ```bash
+  mcp-vuln remediate-pr --repo-dir . --assignee security-team
+  ```
+
+## Environment Variables
+
+| Variable | Purpose | Default |
+| :--- | :--- | :--- |
+| `GITHUB_TOKEN` / `GH_TOKEN` | Authenticates GitHub API queries (5,000 req/hr quota) | None |
+| `NVD_API_KEY` | Authenticates NIST NVD 2.0 API queries | None |
+| `VIRUSTOTAL_API_KEY` | Enables binary hash threat intelligence lookups | None |
+| `MCP_VULN_STATE_DIR` | Custom directory for baseline security pictures | `~/.mcp-vuln/state/` |
+| `NO_COLOR` | Disables ANSI color codes in CLI outputs | None |
+
+## Exit Codes
+
+- `0`: Scan clean; no vulnerabilities or drift detected.
+- `1`: Security vulnerabilities or unapproved baseline drift detected.
+- `2`: CLI argument error or invalid command syntax.
+- `3`: Operational error (file not found, network timeout, corrupted input).
+- `5`: Review branch merge blocked due to interactive review state.
+
 ## Documentation
 
 - [Specification](docs/SPECIFICATION.md): Details the OSV 1.6 schema extensions, semantics, and vulnerability invariants.
@@ -281,6 +356,104 @@ pytest -q tests/audit/
 # Run acceptance tests
 pytest -q tests/test_acceptance_*.py
 ```
+
+### Full Flag Reference
+- `--offline`
+- `--feed`
+- `--repo-dir`
+- `--timeout`
+- `--state-file`
+- `--json`
+- `--max-files`
+- `--no-cache`
+- `--snapshot`
+- `--min-severity`
+- `--global`
+- `--no-github`
+- `--enable-vt`
+- `--expected-identity`
+- `--dir`
+- `--threat-check`
+- `--strategy`
+- `--strict-passport`
+- `--output-dir`
+- `--no-smithery`
+- `--strict`
+- `--readiness`
+- `--no-glama`
+- `--expected-issuer`
+- `--audit-log`
+- `--reset-state`
+- `--fail-on-drift`
+- `--force`
+- `--source-dir`
+- `--passports`
+- `--assignee`
+- `--workers`
+- `--file`
+- `--bundle`
+- `--package`
+- `--command`
+- `--diff`
+- `--fix`
+- `--format`
+- `--auth-header`
+- `--fail-on-malware`
+- `--fail-on-non-compliant`
+- `--catalog-state-file`
+- `--output`
+- `--surfaces`
+- `--auto-merge`
+- `--manifest`
+- `--block-tool`
+- `--notify-webhooks`
+- `--batch`
+- `--network`
+- `--fail-under`
+- `--mode`
+- `--min-confidence`
+- `--cvelist-delta`
+- `--cvelistv5-dir`
+- `--verify-signatures`
+- `--no-registries`
+- `--analyzers`
+- `--host`
+- `--fail-on`
+- `--output-json`
+- `--correlate`
+- `--compliance`
+- `--target-version`
+- `--output-gz`
+- `--live-api`
+- `--limit`
+- `--no-npm`
+- `--config`
+- `--reachable-only`
+- `--version`
+- `--port`
+- `--all-clients`
+- `--markdown-dir`
+- `--threshold`
+- `--catalog-file`
+- `--url`
+- `--data-dir`
+- `--nvd-api`
+- `--cors-origins`
+- `--servers-catalog`
+- `--write`
+- `--header`
+- `--client`
+- `--severity-threshold`
+- `--custom-config`
+- `--benchmark`
+- `--dry-run`
+- `--strict-integrity`
+- `--no-payload-guardrails`
+- `--save-baseline`
+- `--no-pypi`
+- `--diff-baseline`
+- `--blocklist`
+- `--ecosystem`
 
 ## License
 MIT

@@ -319,3 +319,37 @@ The Wave 18 UI/UX and data engine architectural enhancements improved vulnerabil
 - **`docs/index.html` / `docs/style.css`**: Upgraded UI frameworks with interactive modal panels for **Endpoints & Schema** and arbitrary two-version semantic diffs.
 - **`docs/app.js`**: Introduced deep-linking via query parameters (`?q=`, `?server=`, `?tab=`), interactive drill-down filter state propagation from the analytics dashboard, and "Download Fixed Config" logic.
 - **`updates_builder.py` / `docs/updates.js`**: Refined chronological semantic version array sorting and absolute release-over-release delta calculation for accurate historical sparklines.
+
+
+## 21. Daemon & Bridge Architecture (`monitor.py`, `bridge.py`)
+
+### 21.1 Double-Fork Daemonization
+The `monitor` subcommand daemonizes itself using the standard POSIX double-fork mechanism:
+1. Forks the parent process and exits the parent to return control to the shell.
+2. Calls `setsid()` to create a new session and detach from the controlling terminal.
+3. Forks a second time to ensure the daemon can never reacquire a terminal.
+4. Changes the working directory to `/` and redirects `stdin`, `stdout`, and `stderr` to `/dev/null` (or a log file).
+5. Implements file locking (`/var/run/mcp-vuln.pid` or `~/.mcp-vuln/monitor.pid`) to ensure singleton execution.
+
+### 21.2 Localhost Web Bridge
+The `bridge` command runs a localized HTTP/WebSocket service binding strictly to `127.0.0.1`.
+- **CORS Protection**: Enforces strict origin isolation (`--cors-origins`), ensuring only the user's browser running the local UI can issue requests.
+- **CSRF Tokens**: Employs short-lived session tokens generated during daemon startup to prevent cross-site request forgery.
+
+## 22. Curses Split-Pane TUI Cockpit (`tui.py`)
+The `tui` subcommand provides a non-blocking terminal user interface:
+- **Split-Pane Rendering**: Uses the `curses` library to divide the terminal into an interactive directory tree (left) and an advisory detail pane (right).
+- **Responsive Resize Handling**: Gracefully handles `SIGWINCH` events to recompute layout geometry without crashing or corrupting the buffer.
+- **Keyboard Shortcuts**: Arrow keys for navigation, `Enter` to expand/collapse directories, `q` to quit, and `s` to trigger an on-demand scan.
+
+## 23. Zero-Trust Sandboxed Probing Engine (`sandbox_prober.py`)
+The `probe-safe` subcommand safely evaluates unknown MCP servers:
+- **Container Isolation**: Dispatches probes into ephemeral Docker/Podman containers (`--network=none` for total egress blocking).
+- **Canary Tokens**: Injects synthetic environment variables (e.g. fake AWS keys) to detect credential exfiltration attempts during initialization.
+- **Egress Control**: When `--network=bridge` is used, runs with strict IP tables limiting outbound connections to explicitly approved package registries.
+
+## 24. Reverse Proxy Interception Architecture (`mcp_vulnerabilities.proxy`)
+The `proxy` command intercepts and inspects JSON-RPC payloads in transit:
+- Parses `stdin` to validate incoming requests (`tools/call`, `prompts/get`).
+- Evaluates against an active security policy before writing to the child process.
+- Modifies responses on `stdout`, implementing data masking (`--redact-secrets`).
