@@ -1,0 +1,38 @@
+name: Daily Web Card Audit
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'docs/data/**'
+      - 'src/mcp_vulnerabilities/site_builder.py'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          
+      - name: Run Web Card Audit
+        run: |
+          python scripts/audit_web_cards.py --strict --report-dir docs/reports/daily_audits/
+          
+      - name: Upload Report Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-web-audit-reports
+          path: docs/reports/daily_audits/
