@@ -34,7 +34,13 @@ class PypiDiscoveryProvider:
         try:
             with urllib.request.urlopen(req, timeout=timeout, context=_get_ssl_context()) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
-                return data.get("info", {}).get("version", "")
+                info = data.get("info", {})
+                
+                version = info.get("version", "")
+                project_urls = info.get("project_urls", {}) or {}
+                repo = project_urls.get("Source Code") or project_urls.get("Repository") or project_urls.get("Code") or project_urls.get("Homepage", "")
+                
+                return version
         except Exception as exc:
             logger.warning("Failed to resolve version for %s: %s", name, exc)
             return ""
