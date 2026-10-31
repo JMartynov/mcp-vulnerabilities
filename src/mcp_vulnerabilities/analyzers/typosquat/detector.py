@@ -2,30 +2,7 @@ import re
 import unicodedata
 from dataclasses import dataclass
 
-def damerau_levenshtein_distance(s1: str, s2: str) -> int:
-    d = {}
-    lenstr1 = len(s1)
-    lenstr2 = len(s2)
-    for i in range(-1, lenstr1 + 1):
-        d[(i, -1)] = i + 1
-    for j in range(-1, lenstr2 + 1):
-        d[(-1, j)] = j + 1
-        
-    for i in range(lenstr1):
-        for j in range(lenstr2):
-            if s1[i] == s2[j]:
-                cost = 0
-            else:
-                cost = 1
-            d[(i, j)] = min(
-                d[(i - 1, j)] + 1, # deletion
-                d[(i, j - 1)] + 1, # insertion
-                d[(i - 1, j - 1)] + cost, # substitution
-            )
-            if i > 0 and j > 0 and s1[i] == s2[j - 1] and s1[i - 1] == s2[j]:
-                d[(i, j)] = min(d[(i, j)], d[(i - 2, j - 2)] + cost) # transposition
-
-    return d[(lenstr1 - 1, lenstr2 - 1)]
+from .bktree import damerau_levenshtein_distance, BKTree
 
 def check_keyboard_proximity(s1: str, s2: str) -> bool:
     # A simplified QWERTY adjacency map
@@ -113,6 +90,7 @@ def normalize_confusables(text: str) -> str:
 class TyposquatDetector:
     def __init__(self, corpus: Set[str]):
         self.corpus = corpus
+        self.bktree = BKTree.build(self.corpus)
 
     def analyze(self, package_name: str) -> TyposquatResult:
         if package_name in self.corpus:
@@ -125,10 +103,10 @@ class TyposquatDetector:
                 return TyposquatResult(package_name, normalized_name, RiskTier.CRITICAL, "CRITICAL_HOMOGLYPH_ATTACK", 0)
             
             # Check distance against normalized
-            for canon in self.corpus:
-                dist = damerau_levenshtein_distance(normalized_name, canon)
-                if dist <= 2:
-                    return TyposquatResult(package_name, canon, RiskTier.CRITICAL, "CRITICAL_HOMOGLYPH_ATTACK", dist)
+            matches = self.bktree.search(normalized_name, max_distance=2)
+            if matches:
+                best_match, min_dist = matches[0]
+                return TyposquatResult(package_name, best_match, RiskTier.CRITICAL, "CRITICAL_HOMOGLYPH_ATTACK", min_dist)
                     
         # 2. Permutation/Transposition Detection
         parts = re.split(r'[-/]', package_name)
@@ -145,17 +123,10 @@ class TyposquatDetector:
                 return TyposquatResult(package_name, canon, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT (Keyboard Proximity)", 1)
 
         # 3. Levenshtein Distance (Typosquatting)
-        best_match = None
-        min_dist = float('inf')
-        
-        for canon in self.corpus:
-            dist = damerau_levenshtein_distance(package_name, canon)
-            if dist < min_dist:
-                min_dist = dist
-                best_match = canon
-
-        if min_dist == 1 or min_dist == 2:
+        matches = self.bktree.search(package_name, max_distance=2)
+        if matches:
+            best_match, min_dist = matches[0]
             return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", min_dist)
             
-        return TyposquatResult(package_name, None, RiskTier.AUTHENTIC, "No typosquat detected", min_dist)
+        return TyposquatResult(package_name, None, RiskTier.AUTHENTIC, "No typosquat detected", 0)
 
