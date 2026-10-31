@@ -27,6 +27,8 @@ class DiscoveredClientServer:
     client_name: str | None = None
     env: dict[str, str] = field(default_factory=dict)
     declared_tools: list[dict[str, Any]] = field(default_factory=list)
+    url: str | None = None
+    transport: str | None = None
 
 
 class ClientConfigParser:
@@ -106,11 +108,26 @@ class ClientConfigParser:
             or data.get("mcp_servers")
             or data.get("context_servers")
             or data.get("servers")
+            or data.get("extensions") # Goose
+            or data.get("mcp", {}).get("servers") # OpenHands
         )
+
+        if not raw_servers and "experimental" in data and "modelContextProtocolServers" in data["experimental"]:
+            raw_servers = data["experimental"]["modelContextProtocolServers"] # Continue
+
+        if isinstance(raw_servers, list):
+            for srv_conf in raw_servers:
+                if not isinstance(srv_conf, dict):
+                    continue
+                name = srv_conf.get("name", "unknown")
+                parsed = cls._parse_server_entry(name, srv_conf, source_file, client_name=client_name)
+                if parsed:
+                    servers.append(parsed)
+            return servers
 
         if not isinstance(raw_servers, dict):
             # Check if root itself is a dictionary of server configs
-            if all(isinstance(v, dict) and ("command" in v or "args" in v) for v in data.values()):
+            if all(isinstance(v, dict) and ("command" in v or "args" in v or "cmd" in v or "url" in v) for v in data.values()):
                 raw_servers = data
             else:
                 return servers
@@ -134,10 +151,17 @@ class ClientConfigParser:
     ) -> DiscoveredClientServer | None:
         import os
 
-        command_val = conf.get("command", "")
+        # Continue nested transport
+        if "transport" in conf and isinstance(conf["transport"], dict):
+            transport_conf = conf["transport"]
+            conf = {**conf, **transport_conf}
+
+        command_val = conf.get("command", conf.get("cmd", ""))
+        url_val = conf.get("url", "")
+        
         if isinstance(command_val, dict):
             # Zed context_servers format: command: { path: "...", args: [...] }
-            cmd_path = command_val.get("path") or command_val.get("command", "")
+            cmd_path = command_val.get("path") or command_val.get("command", command_val.get("cmd", ""))
             command = str(cmd_path).strip()
             args = [str(a) for a in command_val.get("args", conf.get("args", []))]
             env = command_val.get("env", conf.get("env", {}))
@@ -149,11 +173,22 @@ class ClientConfigParser:
         if not isinstance(env, dict):
             env = {}
 
-        if not command and not args:
+        if not command and not args and not url_val:
             return None
 
+        transport = None
+        url = None
+        if url_val and not command:
+            # SSE or HTTP transport
+            url = str(url_val).strip()
+            if "sse" in url.lower():
+                transport = "sse"
+            else:
+                transport = "streamable-http"
+
         # Cross-platform path normalization
-        command = command.replace("\\", "/")
+        if command:
+            command = command.replace("\\", "/")
 
         # Environment variable expansion
         args = [os.path.expandvars(a) for a in args]
@@ -161,13 +196,13 @@ class ClientConfigParser:
         # Secret Redaction
         redacted_env = {}
         for k, v in env.items():
-            if re.search(r"KEY|TOKEN|SECRET|PASSWORD", k, re.IGNORECASE):
+            if re.search(r"KEY|TOKEN|SECRET|PASSWORD|URL", k, re.IGNORECASE):
                 redacted_env[k] = "***REDACTED***"
             else:
                 redacted_env[k] = v
         env = redacted_env
 
-        cmd_lower = Path(command).name.lower()
+        cmd_lower = Path(command).name.lower() if command else ""
         package_name = name
         version: str | None = None
         ecosystem: str | None = None
@@ -234,6 +269,8 @@ class ClientConfigParser:
             client_name=client_name,
             env=env,
             declared_tools=declared_tools,
+            url=url,
+            transport=transport,
         )
 
     @staticmethod
@@ -289,10 +326,13 @@ class UniversalClientConfigScanner:
 
     def get_client_paths(self, client_name: str) -> list[Path]:
         c = client_name.lower()
-        if c == "claude":
+        if c in ("claude", "claude_desktop"):
             return [
                 self.root / "Library/Application Support/Claude/claude_desktop_config.json",
                 self.root / ".config/Claude/claude_desktop_config.json",
+            ]
+        elif c == "claude_code":
+            return [
                 self.root / ".claude.json",
                 self.root / ".claude/config.json",
             ]
@@ -301,11 +341,9 @@ class UniversalClientConfigScanner:
                 self.root / ".cursor/mcp.json",
                 self.root / ".cursorrules",
             ]
-        elif c == "vscode":
+        elif c == "windsurf":
             return [
-                self.root / "Library/Application Support/Code/User/settings.json",
-                self.root / ".config/Code/User/settings.json",
-                self.root / ".vscode/mcp.json",
+                self.root / ".codeium/windsurf/mcp_config.json",
             ]
         elif c == "zed":
             return [
@@ -317,22 +355,54 @@ class UniversalClientConfigScanner:
                 self.root / "Library/Application Support/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json",
                 self.root / ".config/Code/User/globalStorage/saoudrizwan.claude-dev/settings/cline_mcp_settings.json",
             ]
-        elif c == "windsurf":
+        elif c == "roo_code":
             return [
-                self.root / ".codeium/windsurf/mcp_config.json",
+                self.root / "Library/Application Support/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings/cline_mcp_settings.json",
+            ]
+        elif c == "goose":
+            return [
+                self.root / ".config/goose/config.yaml",
             ]
         elif c == "continue":
             return [
                 self.root / ".continue/config.json",
                 self.root / ".continue/config.yaml",
             ]
+        elif c == "jetbrains_junie":
+            return [
+                self.root / "Library/Application Support/JetBrains/Junie/mcp.json",
+            ]
+        elif c == "vscode":
+            return [
+                self.root / ".vscode/mcp.json",
+                self.root / "Library/Application Support/Code/User/settings.json",
+                self.root / ".config/Code/User/settings.json",
+            ]
+        elif c == "antigravity":
+            return [
+                self.root / ".gemini/antigravity/mcp_config.json",
+            ]
+        elif c == "openhands":
+            return [
+                self.root / ".openhands/mcp.json",
+                self.root / ".openhands/config.toml",
+            ]
+        elif c == "trae":
+            return [
+                self.root / ".trae/mcp.json",
+            ]
+        elif c == "lm_studio":
+            return [
+                self.root / ".cache/lm-studio/mcp/config.json",
+            ]
         elif c == "librechat":
             return [
-                self.root / ".librechat/librechat.yaml",
                 self.root / "librechat.yaml",
+                self.root / ".librechat/librechat.yaml",
             ]
         elif c == "openwebui":
             return [
+                self.root / "openwebui_mcp.json",
                 self.root / ".openwebui/config.json",
             ]
         return []
