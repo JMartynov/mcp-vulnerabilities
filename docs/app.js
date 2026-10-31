@@ -15,6 +15,17 @@
   let activeDirectoryEco = "ALL";
   let activePatchFilter = "ALL";
   let directorySearchQuery = "";
+
+  let visibleCardsCount = 0;
+  const BATCH_SIZE = 48;
+  let intersectionObserver = null;
+
+
+  let visibleCardsCount = 0;
+  const BATCH_SIZE = 48;
+  let intersectionObserver = null;
+
+  let selectedServers = new Set();
   let expandedToolServers = new Set();
 
   // Advisory Filters
@@ -1274,15 +1285,26 @@
     return currentScore > severities[(server.static_risk_tier || "LOW").toUpperCase()] ? highest : (server.static_risk_tier || "LOW");
   }
 
-  function renderDirectoryCards() {
+
+  function renderDirectoryCards(append = false) {
     if (filteredServers.length === 0) {
       el.serversContainer.innerHTML = `<div class="empty-state">No MCP servers match the current filters.</div>`;
       return;
     }
 
-    // Render first 100 for DOM performance with scroll
-    const toRender = filteredServers.slice(0, 100);
+    if (!append) {
+      visibleCardsCount = BATCH_SIZE;
+      el.serversContainer.innerHTML = "";
+    } else {
+      visibleCardsCount += BATCH_SIZE;
+    }
+
+    const toRender = filteredServers.slice(append ? visibleCardsCount - BATCH_SIZE : 0, visibleCardsCount);
+    
+    if (!append && toRender.length === 0) return;
+
     const html = toRender.map((s) => {
+
       const compRisk = getServerCompositeRisk(s);
       const riskClass = `risk-${compRisk.toLowerCase()}`;
       const vulnStatusBadge = s.is_vulnerable
@@ -1294,6 +1316,10 @@
         : "";
 
       let toolsHtml = "";
+      const inBasket = selectedServers.has(s.package_name);
+      const basketBtnClass = inBasket ? 'btn-add-basket active' : 'btn-add-basket';
+      const basketBtnText = inBasket ? '✓ In Basket' : '+ Add to Basket';
+
       if (!s.tools_count || s.tools_count === 0) {
         toolsHtml = `
           <div class="tools-section">
@@ -1397,7 +1423,10 @@
               ${s.homepage_url ? `<a href="${escapeHtml(s.homepage_url)}" target="_blank" rel="noopener" class="card-link">🌐 Home</a>` : ""}
             </div>
             <div class="quick-copy-group">
+              <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
+              <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
               <button type="button" class="btn btn-quick-copy" data-client="claude" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Claude ]</button>
+              <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
               <button type="button" class="btn btn-quick-copy" data-client="cursor" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Cursor ]</button>
               <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
                 🔍 Inspect Server & Versions
@@ -1408,12 +1437,37 @@
       `;
     }).join("");
 
-    el.serversContainer.innerHTML = html;
+    if (append) {
+        el.serversContainer.insertAdjacentHTML("beforeend", html);
+    } else {
+        el.serversContainer.innerHTML = html;
+    }
 
     // Attach click handlers to Inspect buttons
     el.serversContainer.querySelectorAll(".btn-inspect").forEach((btn) => {
       btn.addEventListener("click", () => openServerModal(btn.dataset.pkg, btn.dataset.shard));
     });
+
+    if (visibleCardsCount < filteredServers.length) {
+       setupIntersectionObserver();
+    }
+  }
+
+  function setupIntersectionObserver() {
+    if (intersectionObserver) {
+      intersectionObserver.disconnect();
+    }
+    const sentinel = document.getElementById("scroll-sentinel");
+    if (!sentinel) return;
+    sentinel.style.display = "block";
+    
+    intersectionObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        renderDirectoryCards(true);
+      }
+    }, { rootMargin: '200px' });
+    
+    intersectionObserver.observe(sentinel);
     
     // Quick copy delegate
     el.serversContainer.querySelectorAll(".btn-quick-copy").forEach((btn) => {
@@ -2234,7 +2288,7 @@
       return;
     }
 
-    const toRender = filteredAdvisories.slice(0, 100);
+    const toRender = filteredAdvisories.slice(0, 500);
     el.advisoriesContainer.innerHTML = toRender.map((adv) => {
       const sev = getSeverity(adv);
       const sevClass = `risk-${sev.toLowerCase()}`;
@@ -2287,11 +2341,7 @@
       .replace(/'/g, "&#039;");
   }
 
-  // Initialize
-  init();
-})();
-
-  window.detectCollisions = function() {
+window.detectCollisions = function() {
     const banner = document.getElementById("collisionWarning");
     if (!banner) return;
     
@@ -2327,6 +2377,145 @@
     }
   };
 
+
+  // Multi-Client config generation
+  window.generateMultiClientConfig = function(clientType) {
+    if (selectedServers.size === 0) return "";
+    
+    let configObj = {};
+    if (clientType === "claude" || clientType === "cursor" || clientType === "windsurf" || clientType === "cline") {
+      configObj = { mcpServers: {} };
+    } else if (clientType === "zed") {
+      configObj = { context_servers: {} };
+    } else if (clientType === "continue") {
+      configObj = { mcpServers: [] };
+    }
+    
+    Array.from(selectedServers).forEach(pkg => {
+      const s = catalogIndex.find(x => x.package_name === pkg);
+      if (!s) return;
+      
+      const serverName = s.package_name.replace(/[^a-zA-Z0-9_-]/g, "_").replace(/^_+|_+$/g, "");
+      const command = s.transport === "sse" ? "" : (s.ecosystem === "npm" ? "npx" : (s.ecosystem === "python" ? "uvx" : "mcp-server"));
+      const args = s.transport === "sse" ? [] : ["-y", s.package_name];
+      const env = s.required_env_vars ? Object.fromEntries(s.required_env_vars.map(e => [e, `<YOUR_${e}>`])) : {};
+      
+      if (clientType === "claude" || clientType === "cursor" || clientType === "windsurf" || clientType === "cline") {
+        configObj.mcpServers[serverName] = { command, args, env };
+      } else if (clientType === "zed") {
+        configObj.context_servers[serverName] = { command, args, env };
+      } else if (clientType === "continue") {
+        configObj.mcpServers.push({ name: serverName, command, args, env });
+      }
+    });
+    
+    return JSON.stringify(configObj, null, 2);
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".basket-client-tab").forEach(tab => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".basket-client-tab").forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        const client = tab.dataset.client;
+        document.getElementById("basketConfigOutput").value = window.generateMultiClientConfig(client);
+      });
+    });
+    
+    document.getElementById("copyBasketConfig")?.addEventListener("click", () => {
+      const text = document.getElementById("basketConfigOutput").value;
+      navigator.clipboard.writeText(text).then(() => {
+        alert("Copied to clipboard!");
+      });
+    });
+  });
+
+
+  window.compareVersions = function() {
+    const verA = document.getElementById("diff-version-a")?.value;
+    const verB = document.getElementById("diff-version-b")?.value;
+    const diffResult = document.getElementById("diff-result");
+    
+    if (!verA || !verB || !currentInspectedServer || !diffResult) return;
+    
+    const sA = currentInspectedServer.versions.find(v => v.version === verA);
+    const sB = currentInspectedServer.versions.find(v => v.version === verB);
+    
+    if (!sA || !sB) return;
+    
+    const toolsA = sA.tools || [];
+    const toolsB = sB.tools || [];
+    const toolsA_names = toolsA.map(t => t.name);
+    const toolsB_names = toolsB.map(t => t.name);
+    
+    const added = toolsB_names.filter(t => !toolsA_names.includes(t));
+    const removed = toolsA_names.filter(t => !toolsB_names.includes(t));
+    
+    let html = `<h4>Diff: v${escapeHtml(verA)} → v${escapeHtml(verB)}</h4>`;
+    
+    if (added.length === 0 && removed.length === 0) {
+      html += `<p>No tool changes detected.</p>`;
+    } else {
+      if (added.length > 0) {
+        html += `<div style="color: green; margin-bottom: 0.5rem;"><strong>Newly Added Tools:</strong><ul>${added.map(t => `<li>+ ${escapeHtml(t)}</li>`).join("")}</ul></div>`;
+      }
+      if (removed.length > 0) {
+        html += `<div style="color: red; margin-bottom: 0.5rem;"><strong>Removed Tools:</strong><ul>${removed.map(t => `<li>- ${escapeHtml(t)}</li>`).join("")}</ul></div>`;
+      }
+    }
+    
+    // Security Deltas (CVEs)
+    const advA = sA.advisories || [];
+    const advB = sB.advisories || [];
+    const cvesA = advA.map(a => a.id);
+    const cvesB = advB.map(a => a.id);
+    
+    const cvesIntroduced = cvesB.filter(c => !cvesA.includes(c));
+    const cvesResolved = cvesA.filter(c => !cvesB.includes(c));
+    
+    if (cvesIntroduced.length > 0) {
+      html += `<div style="color: #d9534f; margin-bottom: 0.5rem;"><strong>🚨 New CVEs Introduced:</strong><ul>${cvesIntroduced.map(c => `<li>${escapeHtml(c)}</li>`).join("")}</ul></div>`;
+    }
+    if (cvesResolved.length > 0) {
+      html += `<div style="color: #5cb85c; margin-bottom: 0.5rem;"><strong>✅ CVEs Resolved:</strong><ul>${cvesResolved.map(c => `<li>${escapeHtml(c)}</li>`).join("")}</ul></div>`;
+    }
+    
+    diffResult.innerHTML = html;
+  };
+
+
+  // Offline Toast
+  window.addEventListener('online', updateOnlineStatus);
+  window.addEventListener('offline', updateOnlineStatus);
+
+  function updateOnlineStatus() {
+    let offlineBanner = document.getElementById("offline-banner");
+    if (!navigator.onLine) {
+      if (!offlineBanner) {
+        offlineBanner = document.createElement("div");
+        offlineBanner.id = "offline-banner";
+        offlineBanner.style.cssText = "position: fixed; bottom: 10px; right: 10px; background: #d9534f; color: white; padding: 10px 20px; border-radius: 4px; z-index: 9999; box-shadow: 0 2px 8px rgba(0,0,0,0.2);";
+        offlineBanner.innerHTML = "You are currently offline. Viewing cached data.";
+        document.body.appendChild(offlineBanner);
+      }
+      offlineBanner.style.display = "block";
+    } else {
+      if (offlineBanner) {
+        offlineBanner.style.display = "none";
+      }
+    }
+  }
+
+  // Check initial state
+  if (!navigator.onLine) {
+    updateOnlineStatus();
+  }
+
+  // Initialize
+  init();
+})();
+
+  
 
 if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
   window.addEventListener("load", () => {
