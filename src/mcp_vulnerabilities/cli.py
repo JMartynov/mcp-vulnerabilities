@@ -284,6 +284,9 @@ def main() -> None:
     aud_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
     aud_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
     aud_p.add_argument("--format", choices=["table", "json", "sarif", "cyclonedx", "sbom"], default="table", help="Output format")
+    aud_p.add_argument("--save-baseline", default=None, help="Save scanned client server inventory as an approved baseline snapshot file")
+    aud_p.add_argument("--diff", "--diff-baseline", dest="diff_baseline", default=None, help="Path to approved baseline snapshot JSON file to compare against current state")
+    aud_p.add_argument("--fail-on-drift", action="store_true", help="Exit with exit code 2 if baseline drift is detected")
 
     # Audit Transitive
     
@@ -1027,6 +1030,35 @@ def main() -> None:
                 logger.info("Found client config: %s", path)
                 servers.extend(ClientConfigParser.parse_file(path))
 
+        drift_result = None
+        has_drift_failure = False
+        
+        if getattr(args, "save_baseline", None) or getattr(args, "diff_baseline", None):
+            from mcp_vulnerabilities.audit.drift import (
+                build_inventory_snapshot_from_scan,
+                save_baseline_snapshot,
+                load_baseline_snapshot,
+                compare_snapshots
+            )
+            
+            current_snapshot = build_inventory_snapshot_from_scan(servers)
+            
+            if getattr(args, "save_baseline", None):
+                save_baseline_snapshot(current_snapshot, args.save_baseline)
+                if not getattr(args, "diff_baseline", None):
+                    print(f"Baseline saved to {args.save_baseline}")
+                    sys.exit(0)
+                    
+            if getattr(args, "diff_baseline", None):
+                try:
+                    baseline_snapshot = load_baseline_snapshot(args.diff_baseline)
+                    drift_result = compare_snapshots(baseline_snapshot, current_snapshot)
+                    if drift_result.has_drift and getattr(args, "fail_on_drift", False):
+                        has_drift_failure = True
+                except Exception as e:
+                    logger.error(f"Failed to load baseline or compare drift: {e}")
+                    sys.exit(1)
+
         if getattr(args, "detect_collisions", False):
             detector = ConflictDetector()
             cfg_data = {}
@@ -1062,6 +1094,17 @@ def main() -> None:
             out = report.to_dict()
             if tamper_reports:
                 out["tamper_reports"] = [r.to_dict() for r in tamper_reports]
+            if drift_result:
+                out["drift_report"] = {
+                    "has_drift": drift_result.has_drift,
+                    "details": [
+                        {
+                            "server_name": d.server_name,
+                            "status": d.status,
+                            "diff": d.diff
+                        } for d in drift_result.details
+                    ]
+                }
             print(json.dumps(out, indent=2))
         elif args.format == "sarif":
             import json
@@ -1130,7 +1173,22 @@ def main() -> None:
                 )
                 print("-" * 70)
 
+            if drift_result:
+                print("\n" + "=" * 70)
+                print(" MCP WORKSTATION BASELINE DRIFT REPORT")
+                print("=" * 70)
+                if not drift_result.has_drift:
+                    print("✓ No drift detected. Current inventory matches baseline.")
+                else:
+                    for d in drift_result.details:
+                        status_badge = f"[{d.status}]"
+                        print(f"\n{status_badge} Server: {d.server_name}")
+                        print(f"  Diff: {d.diff}")
+                print("\n" + "=" * 70)
+
         if getattr(args, "strict_integrity", False) and has_strict_failure:
+            sys.exit(2)
+        if has_drift_failure:
             sys.exit(2)
         sys.exit(1 if report.has_critical_or_high else 0)
 
@@ -1414,7 +1472,6 @@ def main() -> None:
 
                 builder = CycloneDxBomBuilder()
                 for m in matches:
-                    from mcp_vulnerabilities.audit.matcher import DiscoveredClientServer
                     builder._add_server_component(DiscoveredClientServer(
                         server_name=m.package_name,
                         package_name=m.package_name,
@@ -1500,7 +1557,6 @@ def main() -> None:
 
                 builder = CycloneDxBomBuilder()
                 if res.is_identified and res.package_name:
-                    from mcp_vulnerabilities.audit.matcher import DiscoveredClientServer
                     builder._add_server_component(DiscoveredClientServer(
                         server_name=res.package_name,
                         package_name=res.package_name,
@@ -1647,7 +1703,6 @@ def main() -> None:
         has_strict_failure = False
         if getattr(args, "verify_signatures", False):
             from mcp_vulnerabilities.audit.tamper_detector import SupplyChainTamperDetector
-            from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer
             
             # Use matcher's fingerprint_matcher or fallback appropriately
             # But wait, probe usually initializes VulnerabilityMatcher, which may not have fingerprint_matcher initialized unless called?
