@@ -76,52 +76,98 @@ You can easily prevent vulnerable MCP server dependencies from entering your pro
 The `mcp-vulnerabilities` toolkit provides comprehensive commands for scanning client environments, probing unknown servers, running interactive remediation hubs, and building static web portals:
 
 ```bash
-# 1. Universal 9-Client Security Audit & Supply Chain Tamper Check
-# Scans Claude Desktop, Cursor, Zed, Windsurf, Cline, Continue, Roo Code, LibreChat, and OpenWebUI
-mcp-vuln audit --all-clients --verify-signatures
-
-# 2. Typosquatting & LLM Hallucinated Package Detector
-# Analyzes configurations using Damerau-Levenshtein distance and homoglyph matching
-mcp-vuln audit-typosquat --config .claude/claude_desktop_config.json --fix
-
-# 3. Sigstore Keyless Attestation & Feed Verification
-# Verifies the cryptographic integrity of vulnerability feeds via OIDC signatures
-mcp-vuln verify-feed --feed docs/data/vulnerabilities.json.gz
-
-# 4. Automated GitHub PR Remediation Bot
-# Discovers client configs, computes safe versions, and idempotently creates PRs
-mcp-vuln remediate-pr --repo-dir ./ --auto-merge
-
-# 5. Interactive Terminal Security Hub (with unified diff preview & non-TTY fallback)
+# 1. Interactive Terminal CLI GUI Hub (Zero-arg launch or explicit subcommand)
+# Launches emoji-anchored interactive dashboard with real-time status telemetry
+mcp-vuln
 mcp-vuln hub
 # Headless batch / JSON automation mode:
 mcp-vuln hub --json
 
-# 6. Dynamic Behavioral Server Identification & Handshake Probing
+# 2. Universal 17-Client Local AI Discovery & Supply Chain Tamper Check
+# Scans Claude Desktop, Claude Code, Cursor, Windsurf, Zed, Cline, Roo Code, Goose,
+# Continue, JetBrains Junie, VS Code, Antigravity, OpenHands, Trae, LM Studio,
+# LibreChat, and OpenWebUI + global npm/npx cache with automatic token redaction (***REDACTED***)
+mcp-vuln audit --all-clients --verify-signatures
+
+# 3. Network & Port MCP Scanner (Concurrent TCP & JSON-RPC 2.0 Handshake)
+# Probes candidate paths (/, /sse, /mcp, /v1/mcp) across ports or CIDR subnets
+mcp-vuln network-scan --target localhost --ports 3000-8800
+mcp-vuln network-scan --cidr 192.168.1.0/24 --concurrency 64
+# Unified local and network audit:
+mcp-vuln audit --network --network-ports 3000,8000,8080
+
+# 4. Stateful Security Picture & Comparative Drift Tracking
+# Snapshot point-in-time security picture posture:
+mcp-vuln audit --save-picture ~/.mcp-vuln/state/security_picture.json
+# Snapshot approved inventory baseline:
+mcp-vuln audit --save-baseline baseline.json
+# Compare live scan against baseline picture and fail CI pipeline on drift (exit code 2):
+mcp-vuln audit --compare-picture ~/.mcp-vuln/state/security_picture.json --fail-on-drift
+mcp-vuln audit --diff baseline.json --fail-on-drift
+
+# 5. Typosquatting & LLM Hallucinated Package Detector
+# Analyzes configurations using Damerau-Levenshtein distance and homoglyph matching
+mcp-vuln audit-typosquat --config .claude/claude_desktop_config.json --fix
+
+# 6. Sigstore Keyless Attestation & Feed Verification
+# Verifies the cryptographic integrity of vulnerability feeds via OIDC signatures
+mcp-vuln verify-feed --feed docs/data/vulnerabilities.json.gz
+
+# 7. Automated GitHub PR Remediation Bot
+# Discovers client configs, computes safe versions, and idempotently creates PRs
+mcp-vuln remediate-pr --repo-dir ./ --auto-merge
+
+# 8. Dynamic Behavioral Server Identification & Handshake Probing
 # Probes custom or wrapped server processes over stdio / SSE to uncover hidden CVEs
 mcp-vuln identify --stdio "node /path/to/server.js"
 
-# 7. Multi-Client Configuration Auto-Fixer
+# 9. Multi-Client Configuration Auto-Fixer
 # Upgrades vulnerable configurations with atomic backups (<config>.bak.<timestamp>)
 mcp-vuln fix --client claude --dry-run
 mcp-vuln fix --all-clients
 
-# 8. Ingest latest advisories from live APIs
+# 10. Ingest latest advisories from live APIs
 mcp-vuln sync --live-api
 
-# 9. Validate OSV 1.6 schema compliance
+# 11. Validate OSV 1.6 schema compliance
 mcp-vuln validate --dir data/vulnerabilities
 
-# 10. High-Performance Multicore Parallel Site Builder (Bit-for-bit SHA-256 deterministic)
+# 12. High-Performance Multicore Parallel Site Builder (Bit-for-bit SHA-256 deterministic)
 mcp-vuln build-site --workers 8 --output-dir docs/data
 
-# 11. Inline MCP Reverse Proxy Interceptor (Runtime Firewall)
+# 13. Inline MCP Reverse Proxy Interceptor (Runtime Firewall)
 # Intercepts stdio JSON-RPC to block vulnerable/shadow tools and redact secrets
 mcp-vuln proxy --package <pkg> --version <v> --block-severity HIGH --redact-secrets --audit-log proxy_log.jsonl -- npx @modelcontextprotocol/server-postgres
 
-# 12. AST Interprocedural Call-Graph Reachability Engine
+# 14. AST Interprocedural Call-Graph Reachability Engine
 # Analyzes multi-hop call graphs from MCP tool entrypoints to flag vulnerable dependencies
 mcp-vuln audit-transitive --source-dir ./src --reachable-only
+```
+
+### Interactive Terminal Command Hub (`mcp-vuln` / `mcp-vuln hub`)
+
+Launching `mcp-vuln` with zero arguments or running `mcp-vuln hub` opens an interactive, emoji-anchored terminal control center featuring real-time telemetry and categorized workflow menus:
+
+```text
+================================================================================
+                     🛡️  MCP SECURITY COMMAND HUB  🛡️
+================================================================================
+ OS: macOS 15.3 (arm64)
+ Local Clients Scanned: 14 / 17 detected
+ Network Hosts Probed: localhost (12 ports active)
+ Total Discovered Servers: 28 (22 Local Stdio, 6 Network SSE/HTTP)
+ Baseline Picture Status: Saved (2026-10-31 10:00:15)
+ Security Posture: ⚠️ WARNING (2 High CVEs, 1 Shadow Server)
+================================================================================
+
+  [1] 🖥️  Local Workstation Audit & Shadow MCP Discovery
+  [2] 🌐 Network & Port MCP Scanner
+  [3] 📸 Baseline Picture & Security Drift Analysis
+  [4] 🛡️  Vulnerability Audit, Fingerprinting & Remediation
+  [5] 📦 Export Reports & Compliance (SARIF / CycloneDX / JSON)
+  [0] 🚪 Exit
+
+================================================================================
 ```
 
 ## Production Readiness Audit & Competitive Intelligence
@@ -154,11 +200,14 @@ mcp-vuln audit-transitive --source-dir ./src --reachable-only
 
 `mcp-vulnerabilities` is the authoritative home for Model Context Protocol security analysis, vulnerability intelligence, and advisory correlation. All security-specific mechanisms migrated from `mcp-fingerprints` are unified here:
 
+* **Concurrent Network & Port MCP Scanner (`mcp_vulnerabilities.probe.network_scanner`)**: Asynchronous TCP port pre-check and JSON-RPC 2.0 handshake (`initialize`, `tools/list`, `prompts/list`, `resources/list`) across candidate paths (`/`, `/sse`, `/mcp`, `/v1/mcp`) supporting host targets, port ranges, and CIDR blocks (`192.168.1.0/24`).
+* **Universal 17-Client Local AI Discovery Engine (`mcp_vulnerabilities.audit.parsers`)**: Deep discovery and permissive JSONC parsing across 17 AI clients (Claude Desktop, Claude Code CLI, Cursor, Windsurf, Zed, Cline, Roo Code, Goose, Continue, JetBrains Junie, VS Code / Copilot, Antigravity, OpenHands, Trae, LM Studio, LibreChat, OpenWebUI) + global npm/npx cache with automated secret token redaction (`***REDACTED***`).
+* **Stateful Security Picture & Comparative Drift Engine (`mcp_vulnerabilities.audit.picture`, `picture_diff`, `drift`)**: Captures point-in-time posture snapshots (`~/.mcp-vuln/state/security_picture.json` or custom baseline) and tracks fine-grained drift across newly introduced CVEs, resolved vulnerabilities, supply chain tamper incidents, new high-risk tools, and shadow servers.
+* **Interactive Terminal CLI GUI Hub (`mcp_vulnerabilities.audit.hub`)**: Zero-argument launch (`mcp-vuln`) or `mcp-vuln hub` presenting an emoji-anchored interactive dashboard with status header telemetry, 6-category workflow menus, and ANSI-safe fallback.
 * **Cross-Repository Passport Correlation (`mcp_vulnerabilities.sync_manager`)**: Ingests `passports.json.gz` from `mcp-fingerprints` to map OSV advisories directly against 5,000+ structural server passports and tool contract signatures.
 * **Multi-Engine Heuristic Threat Analyzer (`mcp_vulnerabilities.analyzer`)**: Scans MCP servers for unsafe execution patterns, command injection vectors, and missing parameter bounds.
 * **Protocol & Contract Linter**: Validates MCP tool definitions against protocol standards, schema invariants, and capability risk classifications.
 * **Headless REST API Daemon (`mcp-vuln serve`)**: Microservice daemon providing JSON endpoints for CI/CD gates, local scanners, and AI client configuration verifiers.
-
 * **Inline MCP Reverse Proxy Interceptor (`mcp_vulnerabilities.proxy`)**: Runtime bidirectional JSON-RPC firewall that intercepts `tools/list` and `tools/call`, blocking OSV `vulnerable_tools` and shadow tools with JSON-RPC error code `-32001`, and redacting secrets from responses.
 * **AST Interprocedural Call-Graph Reachability Engine (`mcp_vulnerabilities.analyzers.reachability`)**: Traces multi-hop call graphs from `@mcp.tool()` / `server.tool()` entrypoints to flag third-party dependencies as `REACHABLE_FROM_TOOL`, `IMPORTED_ONLY`, or `UNREACHABLE`.
 
@@ -174,6 +223,13 @@ Unlike generic package databases, `mcp-vulnerabilities` maintains version-separa
 The project provides interactive, client-side static web portals hosted directly from GitHub Pages:
 
 * **[Unified MCP Security Explorer (`docs/index.html`)](https://jmartynov.github.io/mcp-vulnerabilities/)**:
+  - **Directory Infinite Scroll & DOM Virtualization**: Sentinel-based `IntersectionObserver` progressive batching (48 cards/chunk) rendering all 6,280+ indexed MCP servers at 60 FPS without layout jank or memory leaks.
+  - **Multi-Server Safe Config Basket & Floating Bottom Drawer**: Persistent selection basket across searches with slide-up floating drawer and 6-client unified JSON exporter (**Claude Desktop**, **Cursor**, **Zed**, **Windsurf**, **Cline**, **Continue**).
+  - **Web Cross-Server Tool Collision Warnings**: Real-time safety detector analyzing selected basket servers to flag identical tool names (`tools/list` collision) before configuration export, mitigating runtime tool shadowing and prompt hijacking.
+  - **In-Card Tool Drawer with Real-Time Microsearch**: Expandable inline tool drawer embedded within directory cards with instant keyword microsearch and live match counters across server tools.
+  - **AST Protocol Behavior Badges**: Color-coded badges rendering static capability invariants (`readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`) extracted directly from server passports.
+  - **PWA Offline Support & Cache-First Routing**: Progressive Web App manifest (`docs/manifest.json`) and service worker (`docs/sw.js`) enabling zero-network offline discovery and cached advisory navigation.
+  - **Card Footer Quick Client Copy & In-Modal Search**: 1-click client configuration copy buttons in card footers, plus interactive in-modal search input for servers with 40+ tools.
   - **Directory Explorer**: Multi-criteria sorting (Risk, Advisories, Tools, A-Z), bidirectional URL deep-linking (`?q=`, `?server=`, `?tab=`), and composite risk tiers.
   - **MCP Primitives & Passports**: Surfaces live counts for `🔧 Tools`, `📄 Prompts`, and `📦 Resources`, transport tags (`🖥️ Local Stdio`), and required environment variables.
   - **Interactive Server Modal**: Version switcher, arbitrary two-version diff comparator computing tool mutations/CVE deltas, and 4th sub-tab "🌐 Endpoints & Schema" mapping live deployment URLs and plaintext warnings.
@@ -216,7 +272,7 @@ To keep downstream tools, scanners, and Python consumers immediately updated wit
 The test suite enforces 100% runnable pass rates across both regression suites and empirical invariant audits:
 
 ```bash
-# Run the entire test suite (390 passed tests)
+# Run the entire test suite (400+ passed tests)
 pytest -q
 
 # Run the empirical subsystem invariant audit suite

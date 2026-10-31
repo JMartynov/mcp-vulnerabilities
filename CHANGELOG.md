@@ -6,6 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [1.4.0] - 2026-10-31
+
+### 🚀 Wave 20 & Wave 21: Enterprise Web Experience, Network Inspection, Stateful Security Pictures & Interactive CLI Hub
+
+This major release adopts core `mcp-fingerprints` web capabilities (Wave 20) and expands the platform into full local & network MCP discovery, stateful posture snapshotting, baseline drift tracking, and a visual interactive terminal command hub (Wave 21).
+
+#### Added
+- **🚀 Wave 20: Capability Adoption from mcp-fingerprints**
+  - **Directory Infinite Scroll & DOM Virtualization** (Task 100): Sentinel-based `IntersectionObserver` progressive batching (48 cards/batch) providing smooth 60 FPS scrolling across 6,280+ indexed MCP servers without DOM bloat or memory leaks.
+  - **Multi-Server Safe Config Basket & Floating Bottom Drawer** (Task 101): Persistent selection basket across navigation and filtering with a slide-up floating drawer supporting 6-client unified JSON export (Claude, Cursor, Zed, Windsurf, Cline, Continue).
+  - **Web Cross-Server Tool Collision Warning Banner** (Task 102): Real-time analysis of selected basket servers detecting identical tool names (`tools/list` collision) to protect against runtime tool shadowing and prompt hijacking.
+  - **PWA Offline Service Worker & Cache-First Strategy** (Task 103): Service worker (`docs/sw.js`) and Web App Manifest (`docs/manifest.json`) delivering instant offline search and cached advisory navigation.
+  - **In-Card Tool Drawer with Real-Time Microsearch** (Task 104): Expandable tools drawer embedded within directory cards with instant client-side keyword filtering and live match counter.
+  - **AST Protocol Behavior Annotations & Safety Badges** (Task 105): Surfaced static tool behavior hints (`readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`) extracted directly from server passports as visual safety badges.
+  - **Card Footer 1-Click Client Copy & In-Modal Search** (Task 106): Quick copy shortcuts for Claude, Cursor, and Zed in card footers, plus an interactive in-modal search input for servers with 40+ tools.
+  - **Automated Daily Web Card & Advisory Parity Auditor** (Task 107): CI/CD quality assurance script (`scripts/audit_web_cards.py`) and workflow (`.github/workflows/daily_web_audit.yml`) asserting consistency between catalog cards, individual shard files, and OSV security advisories.
+  - **Workstation Baseline Drift Tracking & CI Enforcement** (Task 108): Integrated `--save-baseline` and `--diff / --fail-on-drift` flags into `mcp-vuln audit` via `mcp_vulnerabilities.audit.drift` to prevent stealth tool mutations on developer workstations.
+
+- **🚀 Wave 21: Local & Network MCP Inspection, Stateful Security Picture & Interactive CLI GUI Hub**
+  - **Concurrent Network & Port MCP Scanner (`mcp-vuln network-scan`)** (Task 109): Asynchronous TCP pre-check and JSON-RPC 2.0 handshake (`initialize`, `tools/list`, `prompts/list`, `resources/list`) across candidate paths (`/`, `/sse`, `/mcp`, `/v1/mcp`) supporting targets, port ranges (e.g. `3000-8800`), and CIDR blocks (`192.168.1.0/24`).
+  - **Universal 17-Client Local AI Discovery Parity** (Task 110): Comprehensive discovery and permissive JSONC parsing across 17 AI clients (Claude Desktop, Claude Code CLI, Cursor, Windsurf, Zed, Cline, Roo Code, Goose, Continue, JetBrains Junie, VS Code / Copilot, Antigravity, OpenHands, Trae, LM Studio, LibreChat, OpenWebUI) + global npm/npx cache with automatic secret token redaction (`***REDACTED***`).
+  - **Stateful Security Picture Baseline Engine** (Task 111): Persistent point-in-time security posture records (`~/.mcp-vuln/state/security_picture.json`) capturing confirmed CVEs, CVSS scores, tamper status, canonical toolset hashes, and safe upgrade recommendations.
+  - **Comparative Security Drift Engine** (Task 112): Differential posture analyzer (`SecurityPictureDiffer`) categorizing drift into newly introduced vulnerabilities, resolved CVEs, supply chain tamper incidents, new high-risk tools, added/removed shadow servers, and tool schema mutations.
+  - **Interactive Terminal CLI GUI Hub (`mcp-vuln` zero-arg or `mcp-vuln hub`)** (Task 113): Visual terminal hub featuring system status header telemetry (OS, clients detected, ports active, posture status), 6-category emoji-anchored interactive menus, and ANSI-safe fallback.
+  - **Headless CLI Flags & CI/CD Pipeline Integration** (Task 114): Non-interactive scriptable arguments (`--save-picture <path>`, `--compare-picture <path>`, `--fail-on-drift`, `--network`, `--cidr`, `--ports`) with standardized exit codes (0: clean, 1: vulns, 2: drift, 3: tamper).
+  - **Testing Suite & Documentation Sync** (Task 115): Comprehensive automated test suites (`test_network_scanner.py`, `test_security_picture_diff.py`, `test_drift_tracker.py`, `test_audit_web_cards.py`) expanding test suite coverage to 400+ tests and full documentation synchronization.
+
 ## [1.3.0] - 2026-10-26
 
 ### 🚀 Wave 18 & Wave 19: Web Portal Intelligence & Supply Chain Attestation
