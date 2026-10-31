@@ -356,6 +356,16 @@ Master Plan: [master_plan_wave24_empirical_remediation_and_feature_hardening.md]
 | **139** | **BK-Tree Metric Tree Search for High-Speed Typosquat Auditing** | Typosquat Engine (`src/mcp_vulnerabilities/analyzers/typosquat/bktree.py`, `detector.py`) | `Ready` | Replace linear Damerau-Levenshtein iteration across 6,321 items with length-partitioned BK-Tree indexing for sub-millisecond lookups. | [task139_bktree_typosquat_distance_indexing.md](task139_bktree_typosquat_distance_indexing.md) |
 | **140** | **Live WebSocket & SSE Protocol Bridge Simulator** | Localhost Daemon (`src/mcp_vulnerabilities/daemon/bridge.py`, `tests/daemon/test_bridge_stream.py`) | `Ready` | Implement lightweight simulated local bridge server supporting WebSocket and SSE progress streams with loopback and CORS origin validation. | [task140_live_websocket_sse_protocol_bridge_simulator.md](task140_live_websocket_sse_protocol_bridge_simulator.md) |
 
+---
+
+### 25. Wave 25: Authoritative Upstream Traceability & Source Provenance (Planned / Active)
+
+Master Plan: [master_plan_wave25_cve_source_provenance_and_evidence_traceability.md](master_plan_wave25_cve_source_provenance_and_evidence_traceability.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **141** | **CVE Source Provenance URLs in Web Portal and CLI** | Web Portal & Security CLI (`docs/app.js`, `docs/updates.js`, `docs/index.html`, `docs/updates.html`, `src/mcp_vulnerabilities/`) | `Ready` | Provide authoritative direct source provenance URLs (CVE.org, NVD, GHSA, OSV) and upstream reference links across all web portal modals, dropzones, update feeds, and CLI reports. | [task141_cve_source_provenance_urls_web_and_cli.md](task141_cve_source_provenance_urls_web_and_cli.md) |
+
 ## Verification Test Results
 ```
 .venv/bin/pytest -q
