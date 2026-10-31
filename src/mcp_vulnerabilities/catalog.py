@@ -157,6 +157,12 @@ class McpCatalogState:
                 )
         except Exception as exc:
             logger.warning("Failed to load catalog state from %s: %s", self.state_file, exc)
+            import shutil
+            bak_file = self.state_file.with_name(self.state_file.name + ".corrupt.bak")
+            try:
+                shutil.move(self.state_file, bak_file)
+            except Exception:
+                pass
 
     def save(self) -> None:
         """Atomically persist state to disk via temporary file."""
@@ -167,9 +173,14 @@ class McpCatalogState:
             "total_servers": len(self.records),
             "servers": {k: asdict(v) for k, v in sorted(self.records.items())},
         }
-        tmp_file = self.state_file.with_suffix(".tmp")
-        tmp_file.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
-        os.replace(tmp_file, self.state_file)
+        import uuid
+        tmp_file = self.state_file.with_suffix(f".{uuid.uuid4().hex}.tmp")
+        try:
+            tmp_file.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+            os.replace(tmp_file, self.state_file)
+        except Exception:
+            if tmp_file.exists():
+                tmp_file.unlink()
 
     def should_query(self, ecosystem: str, name: str, current_version: str | None = None) -> bool:
         """Check whether a package requires re-querying based on version change or TTL."""
