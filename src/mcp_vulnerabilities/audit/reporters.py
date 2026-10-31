@@ -1,3 +1,4 @@
+from ..provenance import resolve_provenance_urls
 from typing import Optional, Dict, Any
 from .matcher import AuditReport
 from ..transitive import TransitiveAuditResult
@@ -52,6 +53,8 @@ class SarifReporter:
             level = cls._map_severity_to_level(finding.severity_level)
 
             if rule_id not in rules_dict:
+                prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
+                help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
                 rules_dict[rule_id] = {
                     "id": rule_id,
                     "name": "VulnerableMCPServerDependency",
@@ -60,9 +63,10 @@ class SarifReporter:
                         "text": f"{finding.summary}\nAffected range: {finding.affected_range}\nRemediation: Upgrade to >= {finding.fixed_version or 'N/A'}"
                     },
                     "defaultConfiguration": {"level": level},
+                    "helpUri": help_uri,
                     "help": {
                         "text": f"Remediation: Upgrade to >= {finding.fixed_version or 'N/A'}.\n\nReferences:\n" + "\n".join(finding.references),
-                        "markdown": f"**Remediation:** Upgrade to `>= {finding.fixed_version or 'N/A'}`.\n\n**References:**\n" + "\n".join([f"- {ref}" for ref in finding.references])
+                        "markdown": f'**Remediation:** Upgrade to `>= {finding.fixed_version or "N/A"}`.\n\n**Authoritative Sources:**\n- [OSV]({help_uri})\n\n**Upstream References:**\n' + "\n".join([f"- {ref}" for ref in finding.references])
                     },
                     "properties": {
                         "tags": ["security", "mcp", "supply-chain"],
@@ -109,6 +113,8 @@ class SarifReporter:
             level = cls._map_severity_to_level(finding.severity)
 
             if rule_id not in rules_dict:
+                prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
+                help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
                 rules_dict[rule_id] = {
                     "id": rule_id,
                     "name": "VulnerableTransitiveDependency",
@@ -117,6 +123,7 @@ class SarifReporter:
                         "text": f"{finding.summary}\nRemediation: Upgrade to >= {finding.fixed_version or 'N/A'}"
                     },
                     "defaultConfiguration": {"level": level},
+                    "helpUri": help_uri,
                     "help": {
                         "text": f"Remediation: Upgrade to >= {finding.fixed_version or 'N/A'}.",
                         "markdown": f"**Remediation:** Upgrade to `>= {finding.fixed_version or 'N/A'}`."
@@ -164,6 +171,8 @@ class SarifReporter:
             level = cls._map_severity_to_level(finding.severity)
 
             if rule_id not in rules_dict:
+                prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
+                help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
                 rules_dict[rule_id] = {
                     "id": rule_id,
                     "name": rule_id.title().replace("_", ""),
@@ -172,6 +181,7 @@ class SarifReporter:
                         "text": f"Unsanitized input may reach a dangerous sink.\nRemediation: {finding.remediation}"
                     },
                     "defaultConfiguration": {"level": level},
+                    "helpUri": help_uri,
                     "help": {
                         "text": f"Remediation: {finding.remediation}",
                         "markdown": f"**Remediation:** {finding.remediation}"
@@ -235,12 +245,15 @@ class SarifReporter:
                 level = cls._map_severity_to_level(inc.severity)
 
                 if rule_id not in rules_dict:
-                    rules_dict[rule_id] = {
+                    prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
+                help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
+                rules_dict[rule_id] = {
                         "id": rule_id,
                         "name": name,
                         "shortDescription": {"text": desc},
                         "fullDescription": {"text": f"{desc} Detects unauthorized tool modifications."},
                         "defaultConfiguration": {"level": level},
+                    "helpUri": help_uri,
                         "help": {"text": "Review tool configuration for unexpected shadow tools or tampered schemas."},
                     }
 
@@ -281,6 +294,8 @@ class SarifReporter:
             level = "error" if risk_tier in ("CRITICAL", "HIGH") else "warning"
 
             if rule_id not in rules_dict:
+                prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
+                help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
                 rules_dict[rule_id] = {
                     "id": rule_id,
                     "name": "McpToolCollisionShadowing",
@@ -291,6 +306,7 @@ class SarifReporter:
                         "text": f"Multiple MCP servers expose the same tool name, leading to potential tool shadowing or prompt injection hijacking. Risk tier: {risk_tier}."
                     },
                     "defaultConfiguration": {"level": level},
+                    "helpUri": help_uri,
                     "help": {
                         "text": "Review duplicate tool names to ensure your LLM client routes calls to the intended backend. Prefix or rename tools to prevent conflicts."
                     },

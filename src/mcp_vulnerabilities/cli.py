@@ -1,6 +1,7 @@
 """CLI for MCP Vulnerability Ingestion Pipeline & Advisory Database."""
 
 from __future__ import annotations
+from .provenance import resolve_provenance_urls
 
 import argparse
 import logging
@@ -879,6 +880,13 @@ def main() -> None:
                     print(f"\nID:         {adv.id}")
                     if adv.aliases:
                         print(f"Aliases:    {', '.join(adv.aliases)}")
+                    
+                    prov_urls = resolve_provenance_urls(adv.id, adv.aliases)
+                    print("Provenance:")
+                    if "cve" in prov_urls: print(f"  * CVE:  {prov_urls['cve']}")
+                    if "nvd" in prov_urls: print(f"  * NVD:  {prov_urls['nvd']}")
+                    if "ghsa" in prov_urls: print(f"  * GHSA: {prov_urls['ghsa']}")
+                    print(f"  * OSV:  {prov_urls['osv']}")
                     print(f"Severity:   {sev_str}")
                     print(f"Matched On: {r.matched_on}")
 
@@ -1165,8 +1173,21 @@ def main() -> None:
                     if f.fixed_version:
                         print(f"  Remediation:     Upgrade to >= {f.fixed_version}")
                     print(f"  Summary:         {f.summary}")
+                    
+                    prov_urls = resolve_provenance_urls(f.advisory_id, f.aliases)
+                    print("  Authoritative Sources:")
+                    if "cve" in prov_urls:
+                        print(f"    * Official CVE: {prov_urls['cve']}")
+                    if "nvd" in prov_urls:
+                        print(f"    * NIST NVD:     {prov_urls['nvd']}")
+                    if "ghsa" in prov_urls:
+                        print(f"    * GitHub Adv:   {prov_urls['ghsa']}")
+                    print(f"    * OSV Record:   {prov_urls['osv']}")
+                    
                     if f.references:
-                        print(f"  References:      {f.references[0]}")
+                        print("  Upstream References:")
+                        for ref in f.references:
+                            print(f"    - {ref}")
                 print("\n" + "-" * 70)
                 print(
                     f"SUMMARY: {len(report.findings)} vulnerability findings ({'CRITICAL/HIGH issues detected!' if report.has_critical_or_high else 'No critical issues'})."

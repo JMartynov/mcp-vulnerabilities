@@ -4,6 +4,7 @@ import gzip
 import json
 import logging
 import re
+from ..provenance import resolve_provenance_urls
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any

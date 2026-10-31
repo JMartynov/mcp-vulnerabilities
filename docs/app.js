@@ -20,11 +20,6 @@
   const BATCH_SIZE = 48;
   let intersectionObserver = null;
 
-
-  let visibleCardsCount = 0;
-  const BATCH_SIZE = 48;
-  let intersectionObserver = null;
-
   let selectedServers = new Set();
   let expandedToolServers = new Set();
 
@@ -1047,6 +1042,15 @@
                                   <span class="badge ${sevClass}">${escapeHtml(cvssText)}</span>
                                   <a href="https://osv.dev/vulnerability/${escapeHtml(adv.id)}" target="_blank" class="cve-id-link">${escapeHtml(adv.displayId)}</a>
                               </div>
+                              ${(() => {
+                                 const urls = resolveAdvisorySourceUrls(adv.id, adv.aliases);
+                                 let badges = "";
+                                 if (urls.cve) badges += `<a href="${escapeHtml(urls.cve)}" target="_blank" rel="noopener noreferrer" class="badge badge-primary">CVE.org</a> `;
+                                 if (urls.nvd) badges += `<a href="${escapeHtml(urls.nvd)}" target="_blank" rel="noopener noreferrer" class="badge badge-primary">NVD</a> `;
+                                 if (urls.ghsa) badges += `<a href="${escapeHtml(urls.ghsa)}" target="_blank" rel="noopener noreferrer" class="badge badge-primary">GHSA</a> `;
+                                 badges += `<a href="${escapeHtml(urls.osv)}" target="_blank" rel="noopener noreferrer" class="badge badge-secondary">OSV.dev</a>`;
+                                 return `<div class="provenance-badges" style="margin-bottom: 5px;">${badges}</div>`;
+                              })()}
                               <div class="cve-item-summary">${escapeHtml(adv.summary)}</div>
                           </div>
                       `;
@@ -2341,6 +2345,25 @@
       .replace(/'/g, "&#039;");
   }
 
+  function resolveAdvisorySourceUrls(advisoryId, aliases = []) {
+    const allIds = [advisoryId, ...(aliases || [])];
+    const urls = {};
+    urls.osv = `https://osv.dev/vulnerability/${advisoryId}`;
+    let cveId = null;
+    let ghsaId = null;
+    for (const aid of allIds) {
+      if (aid.startsWith("CVE-") && !cveId) cveId = aid;
+      else if (aid.startsWith("GHSA-") && !ghsaId) ghsaId = aid;
+    }
+    if (cveId) {
+      urls.cve = `https://www.cve.org/CVERecord?id=${cveId}`;
+      urls.nvd = `https://nvd.nist.gov/vuln/detail/${cveId}`;
+    }
+    if (ghsaId) urls.ghsa = `https://github.com/advisories/${ghsaId}`;
+    return urls;
+  }
+
+
 window.detectCollisions = function() {
     const banner = document.getElementById("collisionWarning");
     if (!banner) return;
@@ -2513,7 +2536,10 @@ window.detectCollisions = function() {
 
   // Initialize
   init();
-})();
+}
+
+
+)();
 
   
 
