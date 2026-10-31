@@ -230,14 +230,14 @@
   function renderSparkline(history) {
     if (!el.historicalSparkline || history.length < 2) return;
     
-    el.historicalSparkline.setAttribute("viewBox", "0 0 1000 80");
+    el.historicalSparkline.setAttribute("viewBox", "0 0 120 24");
     el.historicalSparkline.setAttribute("preserveAspectRatio", "none");
     
     // Reverse history to show chronological order (oldest to newest)
     const reversedHistory = [...history].slice(0, 10).reverse();
     
-    const svgWidth = 1000;
-    const svgHeight = 80;
+    const svgWidth = 120;
+    const svgHeight = 24;
     const padding = 10;
     
     // Extract points

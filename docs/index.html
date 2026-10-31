@@ -123,6 +123,8 @@
       </div>
 
       <div class="servers-grid" id="servers-container">
+      </div>
+      <div id="scroll-sentinel" class="scroll-sentinel" style="height: 50px; display: none;"></div>
         <div class="loading-state">Loading MCP catalog index...</div>
       </div>
     </section>
@@ -367,5 +369,28 @@
   </dialog>
 
   <script src="app.js"></script>
+
+    <!-- Config Basket Drawer -->
+    <div id="config-basket-drawer" style="display: none;">
+      <div class="basket-header">
+        <h3>🛒 Multi-Server Configuration Basket (<span id="basket-count">0</span>)</h3>
+      </div>
+      <div id="collisionWarning" class="alert alert-danger" style="display: none;"></div>
+      
+      <div class="basket-client-tabs">
+        <button class="basket-client-tab active" data-client="claude">Claude Desktop</button>
+        <button class="basket-client-tab" data-client="cursor">Cursor</button>
+        <button class="basket-client-tab" data-client="zed">Zed</button>
+        <button class="basket-client-tab" data-client="windsurf">Windsurf</button>
+        <button class="basket-client-tab" data-client="cline">Cline</button>
+        <button class="basket-client-tab" data-client="continue">Continue</button>
+      </div>
+      
+      <div class="basket-config-preview">
+        <textarea id="basketConfigOutput" readonly></textarea>
+        <button id="copyBasketConfig" class="btn btn-primary">📋 Copy JSON</button>
+      </div>
+    </div>
+
 </body>
 </html>
