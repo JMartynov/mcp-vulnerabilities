@@ -1116,30 +1116,26 @@
       .replace(/'/g, "&#039;");
   }
 
+  function resolveAdvisorySourceUrls(advisoryId, aliases = []) {
+    const allIds = [advisoryId, ...(aliases || [])];
+    const urls = {};
+    urls.osv = `https://osv.dev/vulnerability/${advisoryId}`;
+    let cveId = null;
+    let ghsaId = null;
+    for (const aid of allIds) {
+      if (aid.startsWith("CVE-") && !cveId) cveId = aid;
+      else if (aid.startsWith("GHSA-") && !ghsaId) ghsaId = aid;
+    }
+    if (cveId) {
+      urls.cve = `https://www.cve.org/CVERecord?id=${cveId}`;
+      urls.nvd = `https://nvd.nist.gov/vuln/detail/${cveId}`;
+    }
+    if (ghsaId) urls.ghsa = `https://github.com/advisories/${ghsaId}`;
+    return urls;
+  }
+
   init();
-}
-
-function resolveAdvisorySourceUrls(advisoryId, aliases = []) {
-  const allIds = [advisoryId, ...(aliases || [])];
-  const urls = {};
-  urls.osv = `https://osv.dev/vulnerability/${advisoryId}`;
-  let cveId = null;
-  let ghsaId = null;
-  for (const aid of allIds) {
-    if (aid.startsWith("CVE-") && !cveId) cveId = aid;
-    else if (aid.startsWith("GHSA-") && !ghsaId) ghsaId = aid;
-  }
-  if (cveId) {
-    urls.cve = `https://www.cve.org/CVERecord?id=${cveId}`;
-    urls.nvd = `https://nvd.nist.gov/vuln/detail/${cveId}`;
-  }
-  if (ghsaId) urls.ghsa = `https://github.com/advisories/${ghsaId}`;
-  return urls;
-}
-
-
-
-)();
+})();
 
   window.detectCollisions = function() {
     const banner = document.getElementById("collisionWarning");
