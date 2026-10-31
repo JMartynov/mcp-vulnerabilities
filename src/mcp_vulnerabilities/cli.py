@@ -113,6 +113,38 @@ def main() -> None:
         "--no-glama", action="store_true", help="Skip Glama.ai discovery"
     )
 
+    # network-scan
+    network_scan_p = subparsers.add_parser("network-scan", help="Scan local and network TCP ports for active MCP servers and unauthenticated listeners")
+    network_scan_p.add_argument("--target", "-t", default="127.0.0.1", help="Target IP address or hostname to scan.")
+    network_scan_p.add_argument("--ports", "-p", default="3000-8800", help="Port range or 'common'.")
+    network_scan_p.add_argument("--cidr", default=None, help="CIDR subnet range for LAN discovery.")
+    network_scan_p.add_argument("--timeout", type=float, default=1.0, help="Connection and probe timeout in seconds per port.")
+    network_scan_p.add_argument("--concurrency", type=int, default=64, help="Maximum concurrent asynchronous socket connections.")
+    network_scan_p.add_argument("--format", choices=["table", "json"], default="table", help="Output format.")
+    network_scan_p.add_argument("--output", "-o", default=None, help="Optional file path to write results.")
+
+    # tui
+    tui_p = subparsers.add_parser("tui", help="Launch split-pane curses terminal dashboard for interactive security exploration")
+    tui_p.add_argument("--config", "-c", default=None, help="Path to specific AI client config file to inspect.")
+    tui_p.add_argument("--theme", choices=["dark", "light", "high-contrast"], default="dark", help="Terminal color theme.")
+    tui_p.add_argument("--no-color", action="store_true", help="Disable terminal ANSI color output.")
+
+    # monitor
+    monitor_p = subparsers.add_parser("monitor", help="Run background monitoring daemon to continuously detect MCP port drift and config mutations")
+    monitor_p.add_argument("--daemon", action="store_true", help="Run in background detached daemon mode.")
+    monitor_p.add_argument("--interval", type=int, default=300, help="Polling interval in seconds.")
+    monitor_p.add_argument("--config", default=None, help="Configuration file or directory to monitor.")
+    monitor_p.add_argument("--alert-webhook", default=None, help="Webhook URL for immediate high-severity alerts.")
+    monitor_p.add_argument("--desktop-notify", action="store_true", help="Trigger OS desktop notifications on posture drift.")
+    monitor_p.add_argument("--pid-file", default="~/.mcp-vuln/monitor.pid", help="Daemon PID lockfile path.")
+
+    # bridge
+    bridge_p = subparsers.add_parser("bridge", help="Run secure local loopback bridge server for static web portal workstation scanning")
+    bridge_p.add_argument("--port", type=int, default=8765, help="Local TCP port to bind.")
+    bridge_p.add_argument("--host", default="127.0.0.1", help="Host address to bind.")
+    bridge_p.add_argument("--cors-origins", default="https://jmartynov.github.io,http://localhost:*,http://127.0.0.1:*", help="Comma-separated list of allowed CORS origins.")
+    bridge_p.add_argument("--simulate", "--mock", action="store_true", help="Run in simulated demonstration mode emitting synthetic progress events.")
+
     # Sync
     sync_p = subparsers.add_parser(
         "sync", help="Run multi-source vulnerability ingestion pipeline"
@@ -2159,6 +2191,33 @@ def main() -> None:
             if compliance_report and compliance_report.tier.value == "NON_COMPLIANT":
                 logger.error("Compliance evaluation failed (NON_COMPLIANT).")
                 sys.exit(1)
+        sys.exit(0)
+
+
+    elif args.command == "network-scan":
+        from mcp_vulnerabilities.probe.network_scanner import run_network_scan
+        run_network_scan(args)
+        sys.exit(0)
+
+    elif args.command == "tui":
+        if not sys.stdin.isatty():
+            print("Error: Interactive TUI requires a TTY terminal. Use 'mcp-vuln audit' for headless output.", file=sys.stderr)
+            sys.exit(1)
+        from mcp_vulnerabilities.audit.tui import launch_tui
+        launch_tui(args)
+        sys.exit(0)
+
+    elif args.command == "monitor":
+        from mcp_vulnerabilities.daemon.monitor import start_monitor
+        start_monitor(args)
+        sys.exit(0)
+
+    elif args.command == "bridge":
+        if args.host not in ["127.0.0.1", "::1"]:
+            print("Security error: Bridge daemon must bind to loopback address (127.0.0.1 or ::1).", file=sys.stderr)
+            sys.exit(2)
+        from mcp_vulnerabilities.daemon.bridge import run_bridge_server
+        run_bridge_server(args)
         sys.exit(0)
 
     elif args.command == "sandbox":

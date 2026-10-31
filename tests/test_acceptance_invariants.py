@@ -14,10 +14,6 @@ def test_cli_subcommand_help_invariants(subcmd):
     """Every CLI subcommand must support --help with exit code 0."""
     result = subprocess.run([sys.executable, "-m", "mcp_vulnerabilities.cli", subcmd, "--help"], capture_output=True, text=True)
     
-    # Skip if subcmd isn't implemented and fails correctly
-    if result.returncode != 0:
-        if "invalid choice" in result.stderr:
-            pytest.skip(f"Subcommand {subcmd} is not registered in CLI parser yet.")
 
     assert result.returncode == 0, f"mcp-vuln {subcmd} --help failed: {result.stderr}"
     assert "usage:" in result.stdout or "Usage:" in result.stdout
