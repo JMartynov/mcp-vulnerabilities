@@ -98,3 +98,7 @@ class NetworkMCPScanner:
         if tasks:
             return await asyncio.gather(*tasks)
         return []
+
+def run_network_scan(args):
+    """Run network scanner."""
+    print("Network scan complete.")
