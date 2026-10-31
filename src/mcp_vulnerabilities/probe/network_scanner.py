@@ -15,36 +15,42 @@ DEFAULT_CANDIDATE_PATHS = ["/", "/sse", "/mcp", "/v1/mcp"]
 DEFAULT_PORTS = [3000, 3001, 8000, 8080, 5000, 8765]
 
 class NetworkMCPScanner:
-    def __init__(self, timeout_ms: int = 200, candidate_paths: Optional[List[str]] = None):
+    def __init__(self, timeout_ms: int = 200, candidate_paths: Optional[List[str]] = None, max_concurrency: int = 64):
         self.timeout = timeout_ms / 1000.0
         self.candidate_paths = candidate_paths or DEFAULT_CANDIDATE_PATHS
+        self.semaphore = asyncio.Semaphore(max_concurrency)
 
     async def check_tcp_port(self, host: str, port: int) -> bool:
-        """Fast concurrent TCP port pre-check."""
-        try:
-            fut = asyncio.open_connection(host, port)
-            _, writer = await asyncio.wait_for(fut, timeout=self.timeout)
-            writer.close()
-            await writer.wait_closed()
-            return True
-        except Exception:
-            return False
+        """Fast concurrent TCP port pre-check with bounded concurrency."""
+        async with self.semaphore:
+            try:
+                fut = asyncio.open_connection(host, port)
+                _, writer = await asyncio.wait_for(fut, timeout=self.timeout)
+                try:
+                    writer.close()
+                    await writer.wait_closed()
+                except Exception:
+                    pass
+                return True
+            except Exception:
+                return False
 
     async def probe_endpoint(self, host: str, port: int, path: str) -> Dict[str, Any]:
         """Perform JSON-RPC 2.0 handshake across candidate paths."""
-        url = f"http://{host}:{port}{path}"
-        result = {
-            "url": url,
-            "host": host,
-            "port": port,
-            "path": path,
-            "reachable": False,
-            "mcp_handshake": False,
-            "capabilities": {},
-            "tools": [],
-            "prompts": [],
-            "resources": []
-        }
+        async with self.semaphore:
+            url = f"http://{host}:{port}{path}"
+            result = {
+                "url": url,
+                "host": host,
+                "port": port,
+                "path": path,
+                "reachable": False,
+                "mcp_handshake": False,
+                "capabilities": {},
+                "tools": [],
+                "prompts": [],
+                "resources": []
+            }
         
         try:
             import httpx

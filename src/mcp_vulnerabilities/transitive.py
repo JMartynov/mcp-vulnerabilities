@@ -228,6 +228,16 @@ class TransitiveDependencyAuditor:
         if not dependencies:
             return []
 
+        # Deduplicate and guard against circular/repeated dependency trees
+        seen: set[tuple[str, str, str]] = set()
+        deduped: list[tuple[str, str | None, str]] = []
+        for name, ver, eco in dependencies:
+            key = (name.lower(), ver or "", eco.lower())
+            if key not in seen:
+                seen.add(key)
+                deduped.append((name, ver, eco))
+        dependencies = deduped
+
         queries = []
         for name, ver, eco in dependencies:
             q: dict[str, Any] = {"package": {"name": name, "ecosystem": eco}}

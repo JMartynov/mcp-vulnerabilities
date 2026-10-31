@@ -96,11 +96,17 @@ class McpStdioProxy:
         )
 
         def server_reader():
-            for line in proc.stdout:
-                processed = self.process_server_line(line.strip())
-                if processed is not None:
-                    stdout.write(processed + "\n")
-                    stdout.flush()
+            try:
+                for line in proc.stdout:
+                    processed = self.process_server_line(line.strip())
+                    if processed is not None:
+                        try:
+                            stdout.write(processed + "\n")
+                            stdout.flush()
+                        except (BrokenPipeError, IOError):
+                            break
+            except Exception:
+                pass
         
         t = threading.Thread(target=server_reader, daemon=True)
         t.start()
@@ -108,22 +114,36 @@ class McpStdioProxy:
         try:
             for line in stdin:
                 to_server, to_client = self.process_client_line(line.strip())
-                if to_server:
-                    proc.stdin.write(to_server + "\n")
-                    proc.stdin.flush()
+                if to_server and proc.stdin:
+                    try:
+                        proc.stdin.write(to_server + "\n")
+                        proc.stdin.flush()
+                    except (BrokenPipeError, IOError):
+                        break
                 if to_client:
-                    stdout.write(to_client + "\n")
-                    stdout.flush()
+                    try:
+                        stdout.write(to_client + "\n")
+                        stdout.flush()
+                    except (BrokenPipeError, IOError):
+                        break
                     
-            # Wait for thread to finish reading before tearing down
-            time.sleep(1)
-        except EOFError:
+            # Wait briefly for thread to finish reading before tearing down
+            time.sleep(0.5)
+        except (EOFError, KeyboardInterrupt):
             pass
         finally:
-            proc.terminate()
+            if proc.stdin and not proc.stdin.closed:
+                try:
+                    proc.stdin.close()
+                except Exception:
+                    pass
             try:
+                proc.terminate()
                 proc.wait(timeout=2)
-            except subprocess.TimeoutExpired:
-                proc.kill()
+            except (subprocess.TimeoutExpired, ProcessLookupError, Exception):
+                try:
+                    proc.kill()
+                except Exception:
+                    pass
             
         return proc.returncode
