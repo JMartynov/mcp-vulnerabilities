@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased] - 2026-10-31
+
+### 🛡️ Wave 23: Full-Surface Documentation Parity & Harmonization
+
+This release standardizes CLI documentation and ensures 100% specification parity across README, IMPLEMENTATION, and SPECIFICATION documentation surfaces.
+
+#### Added
+- **README.md Parity**: Documented 13 primary CLI subcommands (`audit`, `network-scan`, `identify`, `probe-safe`, `proxy`, `audit-transitive`, `audit-typosquat`, `verify-feed`, `hub`, `tui`, `monitor`, `bridge`, `remediate-pr`), required environment variables (`GITHUB_TOKEN`, `NVD_API_KEY`, etc.), and CLI exit codes (`0`, `1`, `2`, `3`, `5`).
+- **SPECIFICATION.md Harmonization**: Added formal JSON schemas for `SecurityPicture` baselines, `ServerPassport` canonical hashes, Drift Event Taxonomy, OWASP MCP Top 10:2025 mappings, and proxy audit logs.
+- **IMPLEMENTATION.md Details**: Documented runtime architecture for Double-Fork Daemonization (`monitor`), Localhost Web Bridge (`bridge`), Curses Split-Pane TUI (`tui`), and the Zero-Trust Sandboxed Probing Engine (`probe-safe`).
+- **Automated Verification**: Introduced `tests/test_documentation_parity.py` to programmatically extract CLI subcommands via AST and verify complete documentation parity coverage.
+
 ## [1.4.0] - 2026-10-31
 
 ### 🚀 Wave 20 & Wave 21: Enterprise Web Experience, Network Inspection, Stateful Security Pictures & Interactive CLI Hub
