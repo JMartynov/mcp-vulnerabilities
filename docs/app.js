@@ -313,6 +313,31 @@
 
   // Event Listeners
   function setupEventListeners() {
+    // Modal Toolset Search Handler
+    const modalToolSearch = document.getElementById("modalToolSearch");
+    if (modalToolSearch) {
+      modalToolSearch.addEventListener("input", (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        const toolCards = document.querySelectorAll("#modal-tools-container .tool-signature-card");
+        let visibleCount = 0;
+        
+        toolCards.forEach(card => {
+          const textContent = card.textContent.toLowerCase();
+          if (textContent.includes(query)) {
+            card.style.display = "";
+            visibleCount++;
+          } else {
+            card.style.display = "none";
+          }
+        });
+        
+        const countSpan = document.getElementById("modalToolSearchCount");
+        if (countSpan) {
+          countSpan.textContent = query ? `Showing ${visibleCount} of ${toolCards.length} tools` : "";
+        }
+      });
+    }
+
     // Tab Switching
     if (el.compareBaseSelect) {
       el.compareBaseSelect.addEventListener("change", () => {
@@ -1289,9 +1314,13 @@
               ${s.repository_url ? `<a href="${escapeHtml(s.repository_url)}" target="_blank" rel="noopener" class="card-link">📁 Repo</a>` : ""}
               ${s.homepage_url ? `<a href="${escapeHtml(s.homepage_url)}" target="_blank" rel="noopener" class="card-link">🌐 Home</a>` : ""}
             </div>
-            <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
-              🔍 Inspect Server & Versions
-            </button>
+            <div class="quick-copy-group">
+              <button type="button" class="btn btn-quick-copy" data-client="claude" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Claude ]</button>
+              <button type="button" class="btn btn-quick-copy" data-client="cursor" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Cursor ]</button>
+              <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
+                🔍 Inspect Server & Versions
+              </button>
+            </div>
           </div>
         </article>
       `;
@@ -1302,6 +1331,50 @@
     // Attach click handlers to Inspect buttons
     el.serversContainer.querySelectorAll(".btn-inspect").forEach((btn) => {
       btn.addEventListener("click", () => openServerModal(btn.dataset.pkg, btn.dataset.shard));
+    });
+    
+    // Quick copy delegate
+    el.serversContainer.querySelectorAll(".btn-quick-copy").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        const client = e.target.dataset.client;
+        const pkgName = e.target.dataset.pkg;
+        const s = catalogIndex.find(x => x.package_name === pkgName);
+        if (!s) return;
+        
+        const pinVer = s.recommended_safe_version || s.latest_version || "latest";
+        const eco = (s.ecosystem || "").toLowerCase();
+        let cmd = pkgName;
+        let args = [];
+
+        if (eco === "npm") {
+          cmd = "npx";
+          args = ["-y", `${pkgName}@${pinVer}`];
+        } else if (eco === "pypi") {
+          cmd = "uvx";
+          args = [`${pkgName}==${pinVer}`];
+        }
+
+        let configObj = {};
+        if (client === "claude" || client === "cursor") {
+          configObj = {
+            mcpServers: {
+              [pkgName]: {
+                command: cmd,
+                args: args,
+              }
+            }
+          };
+        }
+        
+        const jsonStr = JSON.stringify(configObj, null, 2);
+        navigator.clipboard.writeText(jsonStr).then(() => {
+          const origText = e.target.textContent;
+          e.target.textContent = "✅ Copied!";
+          setTimeout(() => {
+            e.target.textContent = origText;
+          }, 1800);
+        });
+      });
     });
   }
 
@@ -1323,6 +1396,17 @@
     el.modalServerTitle.textContent = "Loading server details...";
     el.modalServerPkg.textContent = pkgName;
     el.modalVersionPills.innerHTML = '<span class="loading-inline">Fetching shard data...</span>';
+    
+    // Reset modal tool search when opening the modal
+    const modalToolSearch = document.getElementById("modalToolSearch");
+    if (modalToolSearch) {
+      modalToolSearch.value = "";
+    }
+    const countSpan = document.getElementById("modalToolSearchCount");
+    if (countSpan) {
+      countSpan.textContent = "";
+    }
+    
     el.serverModal.showModal();
 
     try {
@@ -1438,6 +1522,16 @@
       const url = new URL(window.location);
       url.searchParams.set('version', v.version);
       history.replaceState(null, '', url);
+    }
+    
+    // Reset modal tool search when selecting a new version
+    const modalToolSearch = document.getElementById("modalToolSearch");
+    if (modalToolSearch) {
+      modalToolSearch.value = "";
+    }
+    const countSpan = document.getElementById("modalToolSearchCount");
+    if (countSpan) {
+      countSpan.textContent = "";
     }
 
     // Setup comparator toolbar
