@@ -87,6 +87,7 @@
     modalServerPkg: document.getElementById("modal-server-pkg"),
     modalServerRisk: document.getElementById("modal-server-risk"),
     modalServerStatus: document.getElementById("modal-server-status"),
+    modalServerDestructive: document.getElementById("modal-server-destructive"),
     modalServerEco: document.getElementById("modal-server-eco"),
     modalServerLicense: document.getElementById("modal-server-license"),
     modalServerAuthor: document.getElementById("modal-server-author"),
@@ -1536,6 +1537,16 @@
       el.modalServerStatus.className = "badge badge-success";
     }
 
+    // Identify if catalogIndex server info indicates destructive tools
+    const catalogEntry = catalogIndex.find(s => s.package_name === server.package_name);
+    if (catalogEntry && catalogEntry.protocol_hints && catalogEntry.protocol_hints.has_destructive) {
+      el.modalServerDestructive.innerHTML = `<span class="badge badge-warning" title="Server exports tools with destructive capabilities">⚠️ Contains Destructive Tools</span>`;
+      el.modalServerDestructive.style.display = "inline-flex";
+    } else {
+      el.modalServerDestructive.innerHTML = "";
+      el.modalServerDestructive.style.display = "none";
+    }
+
     el.modalServerEco.textContent = `Ecosystem: ${server.ecosystem}`;
     el.modalServerLicense.textContent = `License: ${server.license || "None specified"}`;
     el.modalServerAuthor.textContent = `Author: ${server.author || "Unknown"}`;
@@ -2001,6 +2012,22 @@
       const riskClass = `risk-${(tool.risk_tier || "low").toLowerCase()}`;
       const params = tool.parameters || [];
 
+      // Protocol Hint Badges
+      const hints = tool.annotations || {};
+      let hintBadges = [];
+      if (hints.readOnlyHint) {
+        hintBadges.push(`<span class="badge badge-hint badge-readonly" title="Declared safe read-only operation">🛡️ Read-Only</span>`);
+      }
+      if (hints.destructiveHint) {
+        hintBadges.push(`<span class="badge badge-hint badge-destructive" title="Declared destructive operation (modifies/deletes state)">⚠️ Destructive</span>`);
+      }
+      if (hints.idempotentHint) {
+        hintBadges.push(`<span class="badge badge-hint badge-idempotent" title="Declared idempotent operation (safe to repeat)">🔄 Idempotent</span>`);
+      }
+      if (hints.openWorldHint) {
+        hintBadges.push(`<span class="badge badge-hint badge-openworld" title="Declared open-world interaction (fetches external network data)">🌍 Open World</span>`);
+      }
+
       // Parameter Schema Table
       const paramTableRows = params.map((p) => `
         <tr>
@@ -2017,7 +2044,10 @@
         <div class="tool-signature-card">
           <div class="tool-card-top">
             <h5 class="tool-name">🔧 ${escapeHtml(tool.name)}</h5>
-            <span class="badge ${riskClass}">Risk: ${escapeHtml(tool.risk_tier || "LOW")} (${tool.risk_score || 0})</span>
+            <div class="tool-badges">
+              ${hintBadges.join("")}
+              <span class="badge ${riskClass}">Risk: ${escapeHtml(tool.risk_tier || "LOW")} (${tool.risk_score || 0})</span>
+            </div>
           </div>
 
           <p class="tool-desc">${escapeHtml(tool.description || "No tool description available.")}</p>

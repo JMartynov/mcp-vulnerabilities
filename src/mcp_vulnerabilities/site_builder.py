@@ -611,6 +611,12 @@ def build_site_parallel(
 
         vuln_versions_count = sum(1 for v in versions if v.get("is_vulnerable"))
 
+        protocol_hints = {
+            "has_destructive": any(t.get("annotations", {}).get("destructiveHint") for t in tools),
+            "destructive_count": sum(1 for t in tools if t.get("annotations", {}).get("destructiveHint")),
+            "read_only_count": sum(1 for t in tools if t.get("annotations", {}).get("readOnlyHint")),
+        }
+
         catalog_index.append({
             "id": f"{ecosystem}:{pkg_name}",
             "package_name": pkg_name,
@@ -642,6 +648,7 @@ def build_site_parallel(
             "resources_count": record.get("resources_count", 0),
             "toolset_canonical_hash": record.get("toolset_canonical_hash"),
             "required_env_vars": record.get("required_env_vars", []),
+            "protocol_hints": protocol_hints,
             "shard_id": shard_id,
             "shard_file": shard_file,
         })
