@@ -260,16 +260,24 @@ class ClientConfigParser:
 
 
 class UniversalClientConfigScanner:
-    """Discovers and parses MCP configurations across 9 AI clients + global npm/npx packages."""
+    """Discovers and parses MCP configurations across 17 AI clients + global npm/npx packages."""
 
     SUPPORTED_CLIENTS = (
-        "claude",
+        "claude_desktop",
+        "claude_code",
         "cursor",
-        "vscode",
+        "windsurf",
         "zed",
         "cline",
-        "windsurf",
+        "roo_code",
+        "goose",
         "continue",
+        "jetbrains_junie",
+        "vscode",
+        "antigravity",
+        "openhands",
+        "trae",
+        "lm_studio",
         "librechat",
         "openwebui",
     )
