@@ -1156,3 +1156,14 @@
       banner.style.display = "none";
     }
   };
+
+
+if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost")) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").then((reg) => {
+      console.debug("[SW] Registered with scope:", reg.scope);
+    }).catch((err) => {
+      console.warn("[SW] Registration failed:", err);
+    });
+  });
+}
