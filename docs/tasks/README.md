@@ -303,6 +303,20 @@ Master Plan: [master_plan_wave21_network_inspection_security_picture_and_cli_hub
 | **114** | **Headless CLI Flags & CI/CD Integration** | Headless Automation CLI (`src/mcp_vulnerabilities/cli.py`, `tests/test_cli_flags.py`) | `Done` | Scriptable automation flags (`mcp-vuln network-scan`, `--save-picture`, `--compare-picture`, `--fail-on-drift`, `--save-baseline`, `--diff`) with standardized exit codes for CI/CD pipeline enforcement. | [task114_cli_flags_subcommands_integration.md](task114_cli_flags_subcommands_integration.md) |
 | **115** | **Testing Suite & Documentation Sync** | Quality Assurance & Documentation (`README.md`, `tests/`) | `Done` | Authoring comprehensive test coverage for network probing, drift tracking, security pictures, and interactive terminal hub; full documentation synchronization. | [task115_network_picture_hub_testing_and_docs.md](task115_network_picture_hub_testing_and_docs.md) |
 
+---
+
+### 22. Wave 22: Daemon Monitoring, Sandboxed Probing, Split-Pane TUI Explorer, and Web Bridge (Planned / In Progress)
+
+Master Plan: [master_plan_wave22_daemon_sandbox_tui_and_web_bridge.md](master_plan_wave22_daemon_sandbox_tui_and_web_bridge.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **116** | **Live Port & Network Daemon Mode** | Background Daemon & Alerts (`src/mcp_vulnerabilities/daemon/monitor.py`, `src/mcp_vulnerabilities/cli.py`, `tests/daemon/test_monitor.py`) | `Ready` | Scheduled background daemon (`mcp-vuln monitor --daemon`) periodically scanning ports, evaluating drift against `SecurityPicture` baseline, and dispatching desktop notifications (`osascript`/`notify-send`) and webhooks (Slack/Discord). | [task116_live_port_and_network_daemon_mode.md](task116_live_port_and_network_daemon_mode.md) |
+| **117** | **Pre-Execution Sandboxed Network Prober** | Isolated Dynamic Probing (`src/mcp_vulnerabilities/probe/sandbox_prober.py`, `src/mcp_vulnerabilities/cli.py`, `tests/probe/test_sandbox_prober.py`) | `Ready` | Zero-trust isolated evaluation (`mcp-vuln probe-safe --url <endpoint>`) using Docker or scrubbed subprocess sandboxing with canary honeytoken injection to detect credential leakage and arbitrary code execution before host configuration. | [task117_preexecution_sandboxed_network_prober.md](task117_preexecution_sandboxed_network_prober.md) |
+| **118** | **Interactive Terminal Split-Pane TUI Explorer** | Interactive Terminal Experience (`src/mcp_vulnerabilities/audit/tui.py`, `src/mcp_vulnerabilities/cli.py`, `tests/audit/test_tui.py`) | `Ready` | Dual-pane curses TUI dashboard (`mcp-vuln tui`) featuring real-time severity badges, comprehensive vulnerability introspection, tool schema analysis, and 1-key remediation hotkeys (`f`, `c`, `p`, `r`, `q`). | [task118_interactive_terminal_split_pane_tui_explorer.md](task118_interactive_terminal_split_pane_tui_explorer.md) |
+| **119** | **Web Portal Live Workstation Scanner Bridge** | Localhost Web Bridge Daemon (`src/mcp_vulnerabilities/daemon/bridge.py`, `docs/index.html`, `docs/app.js`, `tests/daemon/test_bridge.py`) | `Ready` | Secure loopback bridge daemon (`mcp-vuln bridge --port 8765`) enabling 1-click "Audit My Machine" in browser portal (`docs/index.html`), streaming live client inventory and baseline drift with strict CORS and token controls. | [task119_web_portal_live_workstation_scanner_bridge.md](task119_web_portal_live_workstation_scanner_bridge.md) |
+| **120** | **Wave 22 Verification & Documentation Sync** | Quality Assurance, Verification & Documentation Sync (`tests/`, `README.md`, `CHANGELOG.md`, `docs/tasks/README.md`) | `Ready` | Comprehensive test coverage across daemon, sandbox, TUI, and web bridge subsystems; strict typing & lint compliance; global documentation synchronization. | [task120_wave22_verification_and_documentation_sync.md](task120_wave22_verification_and_documentation_sync.md)
+
 ## Verification Test Results
 ```
 .venv/bin/pytest -q
