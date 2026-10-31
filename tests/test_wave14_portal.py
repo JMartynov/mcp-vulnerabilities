@@ -103,7 +103,7 @@ def test_wave15_css_and_html_hygiene():
     assert '<svg id="historical-sparkline"' in updates_html
 
 def test_task93_analytics_drilldowns():
-    analytics_content = Path("docs/analytics.html").read_text(encoding="utf-8")
+    analytics_content = Path("docs/analytics.js").read_text(encoding="utf-8")
     
     assert "chart-clickable-row" in analytics_content
     assert "index.html?q=" in analytics_content
