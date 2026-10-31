@@ -30,8 +30,16 @@ class VulnerabilityCorrelator:
             open_func = gzip.open if passports_path.name.endswith(".gz") else open
             with open_func(passports_path, "rt", encoding="utf-8") as f:
                 data = json.load(f)
-                for key, pkg_data in data.items():
-                    passports[key] = ServerPackageSpec.from_dict(pkg_data)
+                pkg_dict = data.get("passports", data) if isinstance(data, dict) else data
+                if isinstance(pkg_dict, dict):
+                    items = pkg_dict.items()
+                elif isinstance(pkg_dict, list):
+                    items = [(item.get("package_name"), item) for item in pkg_dict if isinstance(item, dict) and "package_name" in item]
+                else:
+                    items = []
+                for key, pkg_data in items:
+                    if key:
+                        passports[key] = ServerPackageSpec.from_dict(pkg_data)
 
         return cls(matcher=matcher, passports=passports)
 
