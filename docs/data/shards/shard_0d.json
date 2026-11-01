@@ -21144,6 +21144,53 @@
       }
     ]
   },
+  "agency.thirdhemisphere/ai-authority-index": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_tier": "LOW",
+    "description": "Read-only CRISP scores and AI visibility data from Third Hemisphere's AI Authority Index.",
+    "display_name": "agency.thirdhemisphere/ai-authority-index",
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "package_name": "agency.thirdhemisphere/ai-authority-index",
+    "prompts_count": 0,
+    "purl": "pkg:generic/agency.thirdhemisphere%2Fai-authority-index",
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://thirdhemisphere.agency/ai-authority-index/data",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `agency.thirdhemisphere/ai-authority-index` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://thirdhemisphere.agency/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
   "agentlux/agentlux-mcp": {
     "archival_reason": null,
     "author": null,
@@ -21719,12 +21766,193 @@
     "repository_url": "https://github.com/asms-ai/asms-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `ai.asms/asms` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "security_summary": "Server `ai.asms/asms` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:de6877532e89be8d8556ad9f4019a8ce27badc3a707050b604141cd65321d5f7",
     "transport": "stdio",
     "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1edb0912e315f389e002871e67a7520052361f30ab5d35d26fea61b26ca3776b",
+            "description": "Cancel an order (rarely needed: unfilled orders refund themselves)",
+            "name": "cancel_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "yes",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:294edfef83897d2e109583904dbd6bb4f12ec72c2bcb8ca5431cbf82074d46c7",
+            "description": "Cancel a rental for a refund (5 to 120 minutes after renting, before any SMS)",
+            "name": "cancel_rental",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "yes",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_rental` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ddf347b0175feb232f47ea3d3b9e8ce1a92290ebc8dccf5c6651ad9031e428d6",
+            "description": "Order a number for one verification code",
+            "name": "create_otp_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "yes",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_otp_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:af072c43c840854eae836b51b8de45d6878890e61cd36aabca0d80b18c8eaf7b",
+            "description": "Wallet balance",
+            "name": "get_balance",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_balance` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4fdee4a6e86da57f664d7bb70d0c85d4fbcf0b4d94410bc4a2b16c9e17565662",
+            "description": "Numbers in stock by country and service",
+            "name": "get_inventory",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_inventory` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a5dc2558f593129224a2aa1d5266f31c462baec9c6d5a82631a2fbe54fa4ae8",
+            "description": "Verification code prices by country and service",
+            "name": "get_pricing",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pricing` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8062f7ec045fb1bda9e0021db0b5c92a4e1a942984b88005c46f65003e35d649",
+            "description": "Rental countries, periods and prices",
+            "name": "get_rental_offers",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_rental_offers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1b6540ed25018f3297d81069eae71a6cae56cb82c9d6d6820c42fbef1fbe70e3",
+            "description": "Orders waiting for a code or already received",
+            "name": "list_active_orders",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_active_orders` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b0d048ef75b68b52a1d2af95d6b3f6d7ff2cf6b298b35357586f3c79029a0735",
+            "description": "Your rented numbers and their end dates",
+            "name": "list_rentals",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_rentals` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e8dc1727fc9a175466dd6c2a001996b7ac7b3bbb896cb562710c9457a0de2c06",
+            "description": "Check for the code on an order",
+            "name": "poll_sms",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `poll_sms` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fbe162642849d6e65b8553980400115b7e2d422627c12622125e458c77ba4d62",
+            "description": "SMS received by a rented number",
+            "name": "read_rental_sms",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_rental_sms` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:854be14bf7ca7cb2c58a1a3a06ae9736ec6ef020a9770293c930cb746a42e2dd",
+            "description": "Rent a number for a period",
+            "name": "rent_number",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "yes",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rent_number` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:de6877532e89be8d8556ad9f4019a8ce27badc3a707050b604141cd65321d5f7",
+        "version": "1.0.0"
+      },
       {
         "advisories": [],
         "connections": [
@@ -39106,14 +39334,14 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
+    "description": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
     "display_name": "cursor",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": ">= 1.17, < 1.3",
+    "latest_version": "< 1.7",
     "license": null,
     "package_name": "cursor",
     "prompts_count": 0,
@@ -39133,38 +39361,11 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2025-54133",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2025-64106",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61591",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61590",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
             "vulnerable_tools": []
           },
           {
@@ -39178,26 +39379,22 @@
           },
           {
             "cvss_score": null,
+            "id": "CVE-2025-61591",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
             "id": "CVE-2025-54136",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
             "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.0"
-      },
-      {
-        "advisories": [
+          },
           {
             "cvss_score": null,
             "id": "CVE-2025-54133",
@@ -39209,248 +39406,11 @@
           },
           {
             "cvss_score": null,
-            "id": "CVE-2025-64106",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61591",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2025-61590",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64109",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54136",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.7"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54133",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64106",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61591",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61590",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64109",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54136",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "<= 1.7"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54133",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64106",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61591",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61590",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64109",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54136",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.3"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54133",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64106",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61591",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61590",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-64109",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-54136",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
             "vulnerable_tools": []
           }
         ],
@@ -39468,38 +39428,11 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2025-54133",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2025-64106",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61591",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2025-61590",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
             "vulnerable_tools": []
           },
           {
@@ -39513,11 +39446,172 @@
           },
           {
             "cvss_score": null,
+            "id": "CVE-2025-61591",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
             "id": "CVE-2025-54136",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54133",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61590",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 1.3"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64106",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64109",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61591",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54136",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54133",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61590",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 2.0"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64106",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64109",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61591",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54136",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54133",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61590",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
             "vulnerable_tools": []
           }
         ],
@@ -39530,6 +39624,140 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": ">= 1.17, < 1.3"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64106",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64109",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61591",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54136",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54133",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61590",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "<= 1.7"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64106",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7.28 and below, an input validation flaw in Cursor'",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64109",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions and below, a vulnerability in the Cursor CLI Beta all",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61591",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.7 and below, when MCP uses OAuth authentication wit",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54136",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.2.4 and below, attackers can achieve remote and per",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-54133",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. In versions 1.17 through 1.2, there is a UI information disclosur",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-61590",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Cursor is a code editor built for programming with AI. Versions 1.6 and below are vulnerable to Remote Code Execution (R",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 1.7"
       }
     ]
   },
@@ -50880,14 +51108,14 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 2.3.0, the mcp-from-openapi libr",
+    "description": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 1.5.7, the sandboxed codecall:ex",
     "display_name": "frontmcp",
     "ecosystem": "MCP",
     "highest_cve_severity": "CRITICAL",
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "<  2.3.0",
+    "latest_version": "< 1.5.7",
     "license": null,
     "package_name": "frontmcp",
     "prompts_count": 0,
@@ -50907,35 +51135,13 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-39885",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 2.3.0, the mcp-from-openapi libr",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-67531",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 1.5.7, the sandboxed codecall:ex",
             "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.5.7"
-      },
-      {
-        "advisories": [
+          },
           {
             "cvss_score": null,
             "id": "CVE-2026-39885",
@@ -50943,15 +51149,6 @@
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 2.3.0, the mcp-from-openapi libr",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-67531",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 1.5.7, the sandboxed codecall:ex",
             "vulnerable_tools": []
           }
         ],
@@ -50969,20 +51166,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-39885",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 2.3.0, the mcp-from-openapi libr",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-67531",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 1.5.7, the sandboxed codecall:ex",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-39885",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 2.3.0, the mcp-from-openapi libr",
             "vulnerable_tools": []
           }
         ],
@@ -50995,6 +51192,37 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "<  2.3.0"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-67531",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 1.5.7, the sandboxed codecall:ex",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-39885",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "FrontMCP is a TypeScript-first framework for the Model Context Protocol (MCP). Prior to 2.3.0, the mcp-from-openapi libr",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 1.5.7"
       }
     ]
   },
@@ -67373,7 +67601,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)",
+    "description": "NoSQL Query Operator Injection in MongoDB Search Target (mongo-search)",
     "display_name": "mongo-search",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -67412,20 +67640,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "VERITY-MONGO-VOLUME-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "VERITY-MONGO-QUERY-001",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "NoSQL Query Operator Injection in MongoDB Search Target (mongo-search)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "VERITY-MONGO-VOLUME-001",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)",
             "vulnerable_tools": []
           }
         ],
@@ -67630,7 +67858,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 1.4.0"
+        "version": "*"
       },
       {
         "advisories": [],
@@ -67642,7 +67870,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": "< 1.4.0"
       },
       {
         "advisories": [],
@@ -73838,17 +74066,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.9.2",
+    "latest_version": "0.9.3",
     "license": "MIT",
     "package_name": "seleniumboot-mcp",
     "prompts_count": 0,
     "purl": "pkg:pypi/seleniumboot-mcp",
-    "recommended_safe_version": "0.9.2",
+    "recommended_safe_version": "0.9.3",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/seleniumboot-mcp",
+    "repository_url": "https://github.com/seleniumboot/selenium-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `seleniumboot-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
+    "security_summary": "Server `seleniumboot-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 26 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e8ca79aedefa5d976f88b28f721959043d51fe2e625c695d4ae2250a8fbf93ae",
@@ -76268,6 +76496,2133 @@
         ],
         "toolset_canonical_hash": "sha256:e8ca79aedefa5d976f88b28f721959043d51fe2e625c695d4ae2250a8fbf93ae",
         "version": "0.9.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-31T09:29:03.998326Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b769b513e2e1051f8ca22c78bf7f3ee45ad130718cdb90465e53ac398445a263",
+            "description": "Accept (OK) a JavaScript alert, confirm, or prompt dialog.",
+            "name": "accept_alert",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `accept_alert` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4c70fcbaa42382f30353145e2a3b62cef726f8ba0e29dd698c66c1187ee2329b",
+            "description": "Assert an element attribute has the expected value.",
+            "name": "assert_attribute",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "attribute",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "exact",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_attribute` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aa93dc7de5046aff331d4e052b656fe431307f61a556c53d7c63ed4e90adbe01",
+            "description": "Assert number of elements matching selector equals expected count.",
+            "name": "assert_element_count",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected_count",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_element_count` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b86d4266236eb8b7ed5abb3c142123a677666bd6a2748f91366c9cb28ef1d5b1",
+            "description": "Assert an element is NOT visible (hidden or absent).",
+            "name": "assert_element_not_visible",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_element_not_visible` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e19de267ce2d17d90aa026a62ff4aa41b5502c9fed5199c8040ef9b1b44af3c8",
+            "description": "Assert an element is visible on the page.",
+            "name": "assert_element_visible",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_element_visible` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dcada8d8a868472411eaef511e57e45db3d2b316fc7561325d1c47c990ed1279",
+            "description": "Assert the full page source or visible text contains a string.",
+            "name": "assert_page_contains",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source_only",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_page_contains` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a16abdaf9b7d0cd32958041e184b545a1d469ae6b0690d4645667b4bc75cc869",
+            "description": "Assert element text equals or contains expected value.",
+            "name": "assert_text",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "exact",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_text` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fd2e1c84480820617551a5d0e012e9800cb524ec3cc95663899d8d8e4650ec5a",
+            "description": "Assert the page title equals or contains expected text.",
+            "name": "assert_title",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "exact",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `assert_title` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6c39ba49bcdb0dee436ebdf94d19b01826c4921fcdf62de8bb80a8ea61eae3e0",
+            "description": "Assert the current URL equals or contains expected value.",
+            "name": "assert_url",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "exact",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `assert_url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c4231e83f58dade31d4fbbde56426085442d65d776bba5bd009eb813358caf5d",
+            "description": "Run a built-in accessibility audit on the current page. Checks for missing alt text, unlabelled inputs, empty buttons/links, missing page title, HTML lang, heading structure, and keyboard accessibility.",
+            "name": "check_accessibility",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "level",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_accessibility` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:521fbb943a7a9a261298394499d2a4acb3680d8994732939b5b4686e8f77d75d",
+            "description": "Clear the text in an input field.",
+            "name": "clear_field",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear_field` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:30c06b868ee8140bc28e56edcca3651d572ac8a5688ff5ed6a058061f380b09b",
+            "description": "Clear the self-healing locator cache so all selectors are re-evaluated from scratch.",
+            "name": "clear_healed_locators",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear_healed_locators` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aa0decd270c6745fc6051c2a09331a08d12aecb73db05beb5dec0a9bea193b10",
+            "description": "Remove all active mock response rules injected by mock_response.",
+            "name": "clear_mock_responses",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear_mock_responses` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e64571791d4aaaca9ef63ebc4f35620f412bb5b79f74beb043ac6e029bb19b77",
+            "description": "Clear the recorded action log and start fresh.",
+            "name": "clear_session_log",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear_session_log` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dc5fe54f99705e7b6801387256897a9ae8e50606eb693670608c757fb99370df",
+            "description": "Click on an element.",
+            "name": "click",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `click` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2c381aa3423c6b8f8f3e1c16b1365fb30431c00ff78d40d09cbf86069df2ce27",
+            "description": "Close and quit the browser session.",
+            "name": "close_browser",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `close_browser` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a97aaeda45c198dcee6ba42802acade89dd156102b6ea5d34934872137658ba2",
+            "description": "Close the currently active tab and switch to the previous one.",
+            "name": "close_current_tab",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `close_current_tab` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e80ce8f29046caa6af2e63de9ff9bc1729bdabc91a44f66c11a173d3a4b7e9c9",
+            "description": "Compare the current page screenshot against a saved baseline. On first run (or with update_baseline=true) saves the baseline. Returns the pixel diff percentage. Install Pillow for accurate pixel comparison.",
+            "name": "compare_screenshot",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "update_baseline",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "threshold",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_screenshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9f2402c22dbaf16c2c01df8d7463b6df3bfdcea1fbdf32ec5c4095a2984d335f",
+            "description": "Delete all cookies for the current session.",
+            "name": "delete_all_cookies",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_all_cookies` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8acd4e85d9b42ded3c0e1e77a837bd02a812883069c8c9520bca95ee1eb81a35",
+            "description": "Delete a specific cookie by name.",
+            "name": "delete_cookie",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_cookie` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c9642dec6d5444cb7381bda1ad58a9215eafb98d721edc3565d315767f5b4291",
+            "description": "Detect whether the working directory is a Selenium Boot project. Call BEFORE generating Java; if detected=true use framework='selenium_boot'.",
+            "name": "detect_selenium_boot",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_dir",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `detect_selenium_boot` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b02494f168c1d46287c58510a2daf3a36b30dcc893536c99e677dfbc34932b98",
+            "description": "Dismiss (Cancel) a JavaScript confirm or prompt dialog.",
+            "name": "dismiss_alert",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `dismiss_alert` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c28d4bad99befb6be2d421fead823eb3f1fc56ff289c45c5c78b17708c202c5d",
+            "description": "Double-click on an element.",
+            "name": "double_click",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `double_click` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c56858b87dd7882c8da1126a61e957f367375d9a123f497dc822e1f1321efb9f",
+            "description": "Drag one element and drop it onto another.",
+            "name": "drag_and_drop",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source_selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target_selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `drag_and_drop` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f513f4dbb01772c4ef29a5b0ddc25b1391d93237a678eb9f34a6ee87efa527d9",
+            "description": "Emulate a mobile device using Chrome DevTools Protocol. Adjusts viewport, pixel ratio, and touch.",
+            "name": "emulate_device",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "device",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "width",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "height",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mobile",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pixel_ratio",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `emulate_device` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e2602d401aa4f160e03e75e0244b10e6807e3acda8bdd32b8322db50c57f5a8e",
+            "description": "Execute JavaScript in the browser.",
+            "name": "execute_script",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "script",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "args",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `execute_script` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f3d91246520142997dcef197172ef190b3133841b0d6a091b0941a236f56c56",
+            "description": "Fill multiple form fields in a single call. Pass a map of CSS selector → value. Automatically handles text inputs, textareas, checkboxes (true/false), radio buttons, and <select> dropdowns. Optionally clicks a submit button at the end.",
+            "name": "fill_form",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fields",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "submit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fill_form` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b9e60516dc287b7698dd9323b56a421187a231ea3d4e881b82233105c7bc8aa5",
+            "description": "Find an element and return its text, tag, and attributes.",
+            "name": "find_element",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_element` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0b3d781d04d097344e5c8b8106e0092b2013a1b238a5a0087f5b77b1392e2934",
+            "description": "Find all matching elements and return their texts.",
+            "name": "find_elements",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_elements` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:22c0a41a0a503ca013762ad9312a272e200a565751f3476303457626f03abc75",
+            "description": "Find an element inside a shadow DOM. Provide the host element selector and then the selector for the element inside the shadow root.",
+            "name": "find_shadow_element",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "host_selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "shadow_selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_shadow_element` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ac02234996b27df0180be758a5cd98eb7afd7d61cc4ec183f6d04c97a92bbe07",
+            "description": "Generate test code or CI config from the recorded session. language: python (pytest) | java | csharp (NUnit) | gherkin (.feature + Java steps) | playwright (TS hints) | github_actions | jenkins | gitlab_ci. In a Selenium Boot project (see detect_selenium_boot) use language=java|gherkin, framework=selenium_boot.",
+            "name": "generate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "language",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "framework",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runner",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "test_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "class_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "package_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "page_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "feature_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "scenario_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "build",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "java_version",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ecbc432c624fa617ed7ca77a6a284923e42b2fa58f88508a4333e99fafa02a29",
+            "description": "Return the text message of a currently open JavaScript alert/confirm/prompt.",
+            "name": "get_alert_text",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_alert_text` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6decf43aca2551d384e309920ceab0cad0ae8e9214a8328b463d0d5c399de433",
+            "description": "Get an attribute value from an element.",
+            "name": "get_attribute",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "attribute",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_attribute` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:040e5067e2993e785369f5c3f21a90f7c453ef42f29792f59aa15c5eb70d7162",
+            "description": "Return browser console logs (errors, warnings, info). Chrome only.",
+            "name": "get_console_logs",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "level",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_console_logs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:005e2e9f2657769a32f2fb0a59c6f26f6b6ed791c0e110233b3d431d3c607e77",
+            "description": "Return all cookies for the current page, or a single cookie by name.",
+            "name": "get_cookies",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_cookies` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fe504f77dc6031fa25fdebc2b5ec6e077e3bb67f7a5337ef71949ec479cb2185",
+            "description": "Return the current URL.",
+            "name": "get_current_url",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_current_url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bc3d36962c5dfc59cf17df3a5931cf84eb8c615f981d3b531e3da26e950e0909",
+            "description": "Return all self-healed locator mappings from this session. Shows which selectors were automatically repaired and what they were replaced with.",
+            "name": "get_healed_locators",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_healed_locators` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cf1b0f83748f837d0b455645bb2fdbe434be7ca8d2f8ca61810a8d1dad4c8198",
+            "description": "Get a value from localStorage, or return all keys if no key is given.",
+            "name": "get_local_storage",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_local_storage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:30654f6bfa17b5ce46dc9587ed6f42f748accfbed4fdddd0b55f69ab7455877d",
+            "description": "Return captured XHR/fetch network requests (method, URL, status, timing). Chrome only.",
+            "name": "get_network_logs",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url_filter",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "method",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_network_logs` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:abf6ea89b5c10f0e6aec4aaaaf8196e12cab15faceb28d124e399dfb84d950de",
+            "description": "Return the current page HTML source.",
+            "name": "get_page_source",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_page_source` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1399b48b5ed5ceffed288ec9178515ac6a3ed4dc9c5a3488427296e80f134053",
+            "description": "Return the current page title.",
+            "name": "get_page_title",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_page_title` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a955b8edcdddecc147f4b1fd114d69a6c9d00691156b3414dc3fa26aeaf54ae",
+            "description": "Return the raw list of recorded actions in the current session.",
+            "name": "get_session_log",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_session_log` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6c41c6af883ece83cda0d0bb3ff6e57971a0277f989b3c06af149d3d21f516bc",
+            "description": "Get a value from sessionStorage, or return all keys if no key is given.",
+            "name": "get_session_storage",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_session_storage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f5ec934166d82f42b13e693de4f1f82af14e587d913744ebb35ffa6aa34962a",
+            "description": "Extract data from an HTML table as a formatted text grid.",
+            "name": "get_table_data",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_table_data` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:523fd80c7f3fc9e8bc295e334bf49229e959dd24af1abab60b85e8ea080f630b",
+            "description": "Get the visible text content of an element.",
+            "name": "get_text",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_text` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5cb6ddbc9a601a103fc15961a665bb5d97f89145dac3b19b1092b1f784285091",
+            "description": "Navigate back in browser history.",
+            "name": "go_back",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `go_back` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2f4602220207a484a912f905a4c19693a797a01e5ea07d68c267d474181e637d",
+            "description": "Navigate forward in browser history.",
+            "name": "go_forward",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `go_forward` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:68a33705a295c3a8fc22c9c8d287f37f8194798bf071229e4816f52c8308101a",
+            "description": "Hover the mouse over an element.",
+            "name": "hover",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `hover` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f5d22ad6e2f8b19a4ee930c57820ba999153155b318bccbd688ecd0304081cf9",
+            "description": "Discover all interactive elements on the current page — inputs, buttons, selects, checkboxes, textareas, and links — with their best CSS selectors and labels. Use this before writing locators so the AI knows exactly what's on the page.",
+            "name": "inspect_page",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `inspect_page` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c82969d2d242c9606dc509a0a76cddaf6bb83412a7ad17af13bf448e0524efe8",
+            "description": "Check if an element is visible on the page.",
+            "name": "is_displayed",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `is_displayed` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:09e1b9e8af4896227bcc2d6c88ed9f217e7489b52b56a9c94a73e18d9f26fea9",
+            "description": "Check if an element is enabled (not disabled).",
+            "name": "is_enabled",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `is_enabled` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:41dbe0ce6ccb4651fdeda0fb82d898650894d5bc86e3327426a093632162b36e",
+            "description": "List all open browser tabs/windows with their index, title, and URL.",
+            "name": "list_windows",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_windows` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:de8b78f618b9249b14989ce3f94ae1e23fd4951f0d666e299c687f24f422f5a7",
+            "description": "Analyze an existing Selenium Java project for migration to Selenium Boot (read-only, via selenium-boot-migrator). Returns the JSON report: what maps cleanly and what needs manual work.",
+            "name": "migrate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_dir",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `migrate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:10ee615d20667b5b41d720a8d951c2f8a33754da0e9bd7a909ddd4a8e8e65033",
+            "description": "Intercept fetch/XHR requests matching a URL pattern and return a canned response. Useful for testing without a real backend. Injection survives until the page is reloaded.",
+            "name": "mock_response",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url_pattern",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `mock_response` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:be5f3a8ef306db474b906e27c7212d0e06632433fee639c540f9cd57ab96607a",
+            "description": "Navigate the browser to a URL.",
+            "name": "navigate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `navigate` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c0225d4e160e337fa614ce5ac95310b91942c04e3d28fd7f9ffc482de2b8e344",
+            "description": "Open a new browser tab, optionally navigating to a URL.",
+            "name": "open_new_tab",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `open_new_tab` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5eb66113e0698336226f1d2207efd01a8035dc983183fdefa33cee0f9b39e56f",
+            "description": "Refresh the current page.",
+            "name": "refresh",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `refresh` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:047c753efe3fc94186b096a42de57b82581ee26691d70e4f3c8f10a4b94b2247",
+            "description": "Right-click (context menu) on an element.",
+            "name": "right_click",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `right_click` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:85d95cb7783f3335d503896f617ebb327e8debe2f7a34890c0b91bf35dc1008f",
+            "description": "Scroll the page by a given number of pixels (positive = down/right).",
+            "name": "scroll_by",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "x",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "y",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scroll_by` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:54b99c84fec98877cc784381245e61ed16344173ac1ab36aaeb07150f121914b",
+            "description": "Scroll the page to the very bottom.",
+            "name": "scroll_to_bottom",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scroll_to_bottom` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:76d2d660e4e3606858fbd24b59026685478c0473c3669d3f68d1e9c9ca7ae7c3",
+            "description": "Scroll the page to bring an element into view.",
+            "name": "scroll_to_element",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scroll_to_element` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfcd52d09051eab14653398046d9f5983bbea229958387a04da2aca56884d748",
+            "description": "Scroll the page to the very top.",
+            "name": "scroll_to_top",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scroll_to_top` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:73f5453f85694a7d3e5c1bac4c691d0d95a90d1e7b95208b4b5547aea9281f6f",
+            "description": "Select an option from a <select> dropdown by visible text, value, or index.",
+            "name": "select_option",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by_text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by_value",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by_index",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `select_option` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b2bbd11c296c330d9881c3adfba6becf9f634b2f4290b29f43bd63b817c6b06c",
+            "description": "Send a key or key combination to the focused element (or a specific element if selector is given). Use key names like 'tab', 'enter', 'escape', 'up', 'down', 'f5', or combos like 'ctrl+a', 'shift+tab'.",
+            "name": "send_keys",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `send_keys` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cc1722bb8d4e94166212cc521fe206ab6233139bcb374bde4715a999127c64a3",
+            "description": "Set a cookie on the current page.",
+            "name": "set_cookie",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "value",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `set_cookie` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4343a2d8e8941a7514de2393b92fdff3794aa4c2ac1633339f0d63151f308480",
+            "description": "Set a localStorage key-value pair.",
+            "name": "set_local_storage",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "value",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_local_storage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dee0f76a031aae0a4274b6aab0811dcf072be49b98c9b158bfd96b5f86e544d2",
+            "description": "Set a sessionStorage key-value pair.",
+            "name": "set_session_storage",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "value",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_session_storage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f9d1c66af694fcc12f5ade1b63509cbd8ce57502872156c85a030feb917fdf5",
+            "description": "Start a browser session. Optional — any tool will auto-start Chrome if no browser is open. Use this to choose Firefox, enable headless mode, or set a custom window size.",
+            "name": "start_browser",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "browser",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "headless",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "window_size",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `start_browser` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a0e0617b415b93e7a2cbdc7f25b7d10075bd56af61fd0aad7769fa8819be7aaf",
+            "description": "Switch back to the main page content from inside a frame.",
+            "name": "switch_to_default_content",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `switch_to_default_content` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a881c021e20aed3e7097f7ca8c9ae6412eba4bb202d2c03517a8f35cb597de03",
+            "description": "Switch focus into an iframe. Provide index (integer), name/id (string), or a CSS/XPath selector.",
+            "name": "switch_to_frame",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "index",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "selector",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `switch_to_frame` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:63cc9c8dc98d8df750eff475b2d7c2bf72372380f566981d4fbb78b238f7ce64",
+            "description": "Switch to a browser window/tab by index.",
+            "name": "switch_to_window",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "index",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `switch_to_window` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:20013cbdba6ac23c2951776f04978892d2eeedd4a9c52f23eb9468bff8159301",
+            "description": "Take a screenshot and return it as base64.",
+            "name": "take_screenshot",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `take_screenshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fe07b8512908b30dd31e30562ea1a63ed652fb28ccf0bce5f1f6827f1106101e",
+            "description": "Type text into a JavaScript prompt dialog, then accept it.",
+            "name": "type_in_alert",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `type_in_alert` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:836999409fdc3bd6d0ed1dcff5a0fe0b38110b453cd1f4c3ae4d18de0892e74e",
+            "description": "Clear and type text into an input field.",
+            "name": "type_text",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "clear_first",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `type_text` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3326b0ed17463a3f4960b6990b517654c397f6d35bc90958dd92c1b1f193d69e",
+            "description": "Upload a file by sending its absolute path to an <input type='file'> element.",
+            "name": "upload_file",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "file_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_file` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f8aa8bd539ad8b487f1cd7bd5061a018e6b3f036cab6455c761436da2f19e63",
+            "description": "Wait until an element is visible on the page.",
+            "name": "wait_for_element",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "condition",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wait_for_element` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dccb6fe6d11cc8feebc2b84716e78959598bf458dbf072fff5627420ba6559c2",
+            "description": "Wait until there are no active XHR/fetch requests for a quiet period. Essential for SPAs and pages that load data asynchronously. Also waits for document.readyState to be 'complete'.",
+            "name": "wait_for_network_idle",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idle_time_ms",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_inflight",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wait_for_network_idle` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:e8ca79aedefa5d976f88b28f721959043d51fe2e625c695d4ae2250a8fbf93ae",
+        "version": "0.9.3"
       }
     ]
   },

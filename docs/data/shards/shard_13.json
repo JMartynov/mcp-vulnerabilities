@@ -3111,7 +3111,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "@cyanheads/git-mcp-server vulnerable to command injection in several tools",
+    "description": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
     "display_name": "@cyanheads/git-mcp-server",
     "ecosystem": "npm",
     "highest_cve_severity": "HIGH",
@@ -3138,20 +3138,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "GHSA-3q26-f695-pp76",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "@cyanheads/git-mcp-server vulnerable to command injection in several tools",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2025-53107",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-3q26-f695-pp76",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "@cyanheads/git-mcp-server vulnerable to command injection in several tools",
             "vulnerable_tools": []
           }
         ],
@@ -7188,7 +7188,7 @@
     "security_summary": "Server `A1-x-Tech/mcp-google-drive` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:52e150061cb2d634715cb6d1cceb02a6a9355b2463121247658517b25a7b7558",
+    "toolset_canonical_hash": "sha256:6166d0ecff7ff25afba1414d13857fd47b9c936495b9f4e6ea1ac774dc01e4bd",
     "transport": "stdio",
     "versions": [
       {
@@ -8298,9 +8298,89 @@
             "risk_score": 3.0,
             "risk_tier": "medium",
             "security_comment": "Tool `upload_file` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bc44aac154d5db884a80aa92e6e9fecc10f32db8858cac85e2fb8141ad9e15f1",
+            "description": "every file call sends supportsAllDrives=true; listings opt in via",
+            "name": "Shared drives",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Shared drives` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0e9255f767e19c5f40d45108d7514a23b46a7667286054a7ac0b71fcb4538003",
+            "description": "absolute only, .. resolved, NUL bytes rejected; downloads never",
+            "name": "Local paths",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Local paths` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:abe94aca55509ced1a59ece0f006113a84bcbb6957d7bde924517f175993ef52",
+            "description": "Enables",
+            "name": "Scope",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Scope` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd8d552198c4398b457413b33e233bd77165003edaba70999f10c98da256f7bf",
+            "description": "Only files created/opened by this app — enough for upload/organize flows of app-owned files.",
+            "name": "https://www.googleapis.com/auth/drive.file",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `https://www.googleapis.com/auth/drive.file` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:46f3de44c8098a471327e9972ff2a30ef2eb70e30a4c4d0a6684789e42f5089e",
+            "description": "Read-only tools (search_files, get_file, download_file, export_file, list_shared_drives).",
+            "name": "https://www.googleapis.com/auth/drive.readonly",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `https://www.googleapis.com/auth/drive.readonly` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec15c528a62c394f5cd1189ffc6eb91300c0701ae9ffa24ea136d662d5ab7c44",
+            "description": "The full tool surface (sharing, trash, deletion, comments on arbitrary files).",
+            "name": "https://www.googleapis.com/auth/drive",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `https://www.googleapis.com/auth/drive` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:87f9f10d493660b635a330270ea229090dbd1d932389334f7de6d6c8bee95bd7",
+            "description": "content (plus optional quoted_text / anchor); reply: comment_id + content; resolve/reopen: comment_id (optional closing content); get/delete: comment_id.",
+            "name": "create",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:967af382887007de5332ed6e95bf8d76f94ae9ad42fe53edefe7ab29feaa0712",
+            "description": "optional page_size, page_token, include_deleted.",
+            "name": "list",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list` operates with safe parameters and poses minimal static capability risk."
           }
         ],
-        "toolset_canonical_hash": "sha256:52e150061cb2d634715cb6d1cceb02a6a9355b2463121247658517b25a7b7558",
+        "toolset_canonical_hash": "sha256:6166d0ecff7ff25afba1414d13857fd47b9c936495b9f4e6ea1ac774dc01e4bd",
         "version": "1.0.0"
       }
     ]
@@ -34204,8 +34284,19 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7fbc6655a81e8b4d97f5518b5230f354fb1ac0bfde9be7dc7dcdbd18fc1eb00e",
+            "description": "Control Figma from the command line. Supports JSX rendering with components and variants — see `figma-use render --examples`",
+            "name": "figma-use",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `figma-use` [HIGH] executes arbitrary host system commands or shell scripts."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:0af7faff171608484f550a5a7101b970dc8193b83601a6ebf03a31414e4b1d3e",
         "version": "0.9.2"
       },
       {
@@ -34464,7 +34555,7 @@
     "security_summary": "Server `friendlygeorge/docker-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:52be4a76b37b631fc3d6a54d8caba60048e25f513c193989935c0eeabade5d66",
+    "toolset_canonical_hash": "sha256:2ea9be616785f3cf38458b934a692462913a8f91d49ac587e141db96b2a22f3c",
     "transport": "stdio",
     "versions": [
       {
@@ -34490,57 +34581,7 @@
         "tools": [
           {
             "annotations": {},
-            "canonical_hash": "sha256:4a9ec1a7a851b8e4ccdad790bd6e20503b88103e4d286781542cbcdf589f9690",
-            "description": "check_health",
-            "name": "check_health",
-            "parameters": [],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `check_health` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:acd35ba533f813d98db28e370f88932b758375207c30db198a1202b54529892b",
-            "description": "Tear down Docker Compose services defined by docker-compose.yml at path. Stops and removes containers, networks created by compose_up. Use volumes=true to also remove named volumes (destructive — data is lost). Returns a confirmation string listing stopped services. Use compose_ps to verify teardown. Returns an error string if the Compose file is missing.",
-            "name": "compose_down",
-            "parameters": [],
-            "risk_score": 3.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `compose_down` [MEDIUM] reads, writes, or modifies host filesystem paths."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:5a0a306a821d61cde04ba89cde54c28ee67d005810b8dc3d649f26a2d6f441e8",
-            "description": "compose_logs",
-            "name": "compose_logs",
-            "parameters": [],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `compose_logs` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:f6902532c67ffcee6586e0426b198abe924327ce14c1f5781b04f97389b0ea3e",
-            "description": "List service states across a Docker Compose stack defined by docker-compose.yml at path. Returns an array of services with name, state (running, exited, etc.), health status, and port mappings. Use compose_up to start services; use compose_logs to inspect output. Read-only and safe to call repeatedly. Returns an error string if the Compose file is missing.",
-            "name": "compose_ps",
-            "parameters": [],
-            "risk_score": 3.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `compose_ps` [MEDIUM] reads, writes, or modifies host filesystem paths."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:d8a151f1f9e11815805a168b8ad64978bb75acdfb07e40e4da8aba8e7437a206",
-            "description": "Restart Docker Compose services defined by docker-compose.yml at path. Restart specific services or the entire stack. Unlike stop+start, this preserves container configuration. The timeout parameter controls how long to wait before force-killing (default 10s). Returns a confirmation string. Use compose_ps to verify state after restart. Returns an error string if the Compose file is missing.",
-            "name": "compose_restart",
-            "parameters": [],
-            "risk_score": 3.0,
-            "risk_tier": "medium",
-            "security_comment": "Tool `compose_restart` [MEDIUM] reads, writes, or modifies host filesystem paths."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:306dcddb8fa0d5baa7e4e3fc71e087572e7cf454aeae91dc5fde113adf21a5e8",
+            "canonical_hash": "sha256:5f519caa024ef5a17afe0d0da7ce7a1d97927e97639b551006dbb1614bf4f97e",
             "description": "Bring up Docker Compose services from a docker-compose.yml file at path. Use compose_ps to check service states after bringing them up; use compose_logs to inspect output. Optionally rebuild images before starting (build=true). Returns a confirmation string listing which services were started. Idempotent: already-running services are left untouched. Returns an error string if the Compose file is missing or invalid.",
             "name": "compose_up",
             "parameters": [],
@@ -34550,37 +34591,47 @@
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:5242a8e71d9924a286592afa186e13b36fce339e0b12949da9deecf1c6e6e554",
-            "description": "exec_in_container",
-            "name": "exec_in_container",
+            "canonical_hash": "sha256:09802c5364fb34ca0854ec7089627033b6e837b76c00f99dc3f758f0d6b933d2",
+            "description": "Tear down Docker Compose services defined by docker-compose.yml at path. Stops and removes containers, networks created by compose_up. Use volumes=true to also remove named volumes (destructive — data is lost). Returns a confirmation string listing stopped services. Use compose_ps to verify teardown. Returns an error string if the Compose file is missing.",
+            "name": "compose_down",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `compose_down` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:21cf90c672daf0661b12b09349e8c458039febde5cfffa44dff9c2b01045bbb0",
+            "description": "List service states across a Docker Compose stack defined by docker-compose.yml at path. Returns an array of services with name, state (running, exited, etc.), health status, and port mappings. Use compose_up to start services; use compose_logs to inspect output. Read-only and safe to call repeatedly. Returns an error string if the Compose file is missing.",
+            "name": "compose_ps",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `compose_ps` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dc50d02b6564222094b58404d30313cb6aa7d150324f70d1ab3cd5200d5d1aac",
+            "description": "compose_logs",
+            "name": "compose_logs",
             "parameters": [],
             "risk_score": 0.0,
             "risk_tier": "low",
-            "security_comment": "Tool `exec_in_container` operates with safe parameters and poses minimal static capability risk."
+            "security_comment": "Tool `compose_logs` operates with safe parameters and poses minimal static capability risk."
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:8ec301557cf8e62000b28b27396d02c7bdc430e6247b7a8c81f24f511116ea56",
-            "description": "Get detailed configuration and state of a Docker container by ID or name. Returns full JSON including image, command, environment variables, network settings, mount points, restart policy, and health status. Use list_containers to find container IDs; use container_stats for resource usage. Returns an error string if the container does not exist.",
-            "name": "inspect_container",
+            "canonical_hash": "sha256:99637adf4de99ee51804abc282d75e1431ec1f81af7e9860f155a7ed6a5ff17f",
+            "description": "Restart Docker Compose services defined by docker-compose.yml at path. Restart specific services or the entire stack. Unlike stop+start, this preserves container configuration. The timeout parameter controls how long to wait before force-killing (default 10s). Returns a confirmation string. Use compose_ps to verify state after restart. Returns an error string if the Compose file is missing.",
+            "name": "compose_restart",
             "parameters": [],
-            "risk_score": 7.0,
-            "risk_tier": "critical",
-            "security_comment": "Tool `inspect_container` [CRITICAL] executes arbitrary host system commands or shell scripts; inspects or modifies host environment variables."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:033b3e4456003cea016d151ea61f2d9e32b422d65f439833235fc748fb8101be",
-            "description": "Get detailed configuration for a Docker context including endpoint type (unix, tcp, ssh), host address, default orchestrator, and any TLS settings. Use this to verify context configuration before switching or to troubleshoot connection issues.",
-            "name": "inspect_context",
-            "parameters": [],
-            "risk_score": 2.5,
+            "risk_score": 3.0,
             "risk_tier": "medium",
-            "security_comment": "Tool `inspect_context` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+            "security_comment": "Tool `compose_restart` [MEDIUM] reads, writes, or modifies host filesystem paths."
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:15cd0fd67bad2de200f736ef1c662ac8cfcdaac5426b60b5668e6fce3f082d97",
+            "canonical_hash": "sha256:755fe9f58db81c74dace814338f02bb3f7947da3d6deee07f99abe1bf1baa2d1",
             "description": "List Docker containers with optional filters (state, name, label). Returns an array of objects with ID, name, image, state (running/exited/etc.), ports, and labels. Use all=true to include stopped containers (default shows only running). Use inspect_container for full configuration of a single container. Read-only and safe to call repeatedly.",
             "name": "list_containers",
             "parameters": [],
@@ -34590,77 +34641,17 @@
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:03df6f29d226d6760a64eb6195fc3999536853d577f8806ce4571a711218373e",
-            "description": "List all Docker contexts on the host. Docker contexts allow switching between multiple Docker daemon endpoints (local, remote via SSH, remote via TCP, cloud providers). Each context has a name, description, and endpoint configuration. Use use_context to switch the active context.",
-            "name": "list_contexts",
+            "canonical_hash": "sha256:ec23221d0d93e9bfaf9fff12b866071ca39b62da3037d2260e87dfeaafe3f2a5",
+            "description": "Get detailed configuration and state of a Docker container by ID or name. Returns full JSON including image, command, environment variables, network settings, mount points, restart policy, and health status. Use list_containers to find container IDs; use container_stats for resource usage. Returns an error string if the container does not exist.",
+            "name": "inspect_container",
             "parameters": [],
-            "risk_score": 2.5,
-            "risk_tier": "medium",
-            "security_comment": "Tool `list_contexts` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:fdafd3438312a392b7f1a363a5ff95ae09345ec117ff196a583671baae765cdc",
-            "description": "Remove all stopped Docker containers. Returns the number of containers removed and reclaimed disk space. This is a destructive operation — stopped containers and their non-persisted data will be deleted. Use list_containers first to see what will be removed. Useful for cleanup after deployments or when disk space is low.",
-            "name": "prune_containers",
-            "parameters": [],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `prune_containers` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:82724c1170a6fc21c9df4dae7a287aa6fb4b5e7a0528c495278f1d6c3e7cbc6d",
-            "description": "Recreate a Docker container with the same configuration (stop, remove, re-create). Useful for applying config changes without手动编写 run commands. Preserves image, env, ports, volumes, and labels from the original. Returns a confirmation string with the new container ID. Returns an error string if the original container does not exist.",
-            "name": "recreate_container",
-            "parameters": [],
-            "risk_score": 2.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `recreate_container` [LOW] inspects or modifies host environment variables."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:eff07eba967fd830de39748350f98103ff0071b1e014c65d54377d4f3ca7387f",
-            "description": "Remove a Docker container by ID or name. Requires the container to be stopped first unless force=true is set (which stops and removes in one step). Use stop_container for graceful shutdown; use restart_container to restart. Returns a confirmation string. Returns an error string if the container does not exist or is running without force.",
-            "name": "remove_container",
-            "parameters": [],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `remove_container` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:52bf64acce6325bd000722242c11e39337155e210bab4098d62dd4b720a50c61",
-            "description": "Restart a Docker container by ID or name with optional timeout. This tears down the running process and starts a new one — use stop_container for a graceful shutdown or remove_container to delete entirely. The timeout parameter (default 10s) controls how long to wait before force-killing. Returns a confirmation string on success. Idempotent: restarting an already-stopped container starts it again. Returns an error string if the container does not exist or is not running.",
-            "name": "restart_container",
-            "parameters": [],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `restart_container` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:44f08101227019c0faf996e9c406b6c207972789cc9591d28db170664ffabcf9",
-            "description": "Create and start a new Docker container with one command. Supports image, env, ports, volumes, restart policy, and command override. Auto-pulls missing images.",
-            "name": "run_container",
-            "parameters": [],
-            "risk_score": 8.5,
+            "risk_score": 7.0,
             "risk_tier": "critical",
-            "security_comment": "Tool `run_container` [CRITICAL] executes arbitrary host system commands or shell scripts; inspects or modifies host environment variables; processes unstructured prompts susceptible to injection overrides."
+            "security_comment": "Tool `inspect_container` [CRITICAL] executes arbitrary host system commands or shell scripts; inspects or modifies host environment variables."
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:5f1002ec460507c6a7967cc8f84aab5d6f14bd03788b7e90a383fc59f584aed6",
-            "description": "Change the restart policy of a running container without recreating it. Use restart_container for an immediate restart; use this tool to change the policy (always, unless-stopped, on-failure, no) for future restarts. Returns a confirmation string on success. Idempotent: setting the same policy is a no-op. Returns an error string if the container does not exist.",
-            "name": "set_restart_policy",
-            "parameters": [],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `set_restart_policy` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:9d4d0b205df7cee5e2042a33672768584121480df255a92c26d60f2e061baab9",
+            "canonical_hash": "sha256:9c95d1acacd37dc9a9dbefd8c52e6ea6e4b28495e1b72f5995cb46c468fc2208",
             "description": "Start a stopped Docker container by ID or name. Use list_containers to find stopped containers (state=exited). Returns a confirmation string on success. Idempotent: starting an already-running container is a no-op. Returns an error string if the container does not exist.",
             "name": "start_container",
             "parameters": [],
@@ -34670,7 +34661,7 @@
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:aa2f65423b3410ea3b04d157aad24f1e116f3547e0fb6e74e879a1ed32a03335",
+            "canonical_hash": "sha256:7bb370c1f9f8d7d64da41a4a2b4864b808c456a13069b83ec24906beff53c232",
             "description": "Stop a running Docker container by ID or name with optional timeout. Sends SIGTERM, then SIGKILL after timeout seconds (default 10s). Use restart_container to restart without stopping; use remove_container to delete entirely. Returns a confirmation string. Handles the 304 already-stopped case gracefully. Returns an error string if the container does not exist.",
             "name": "stop_container",
             "parameters": [],
@@ -34680,7 +34671,57 @@
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:e7c9384d088902786c49685c6ea9597cf7fde668e9a36abed25d19fcf28c870f",
+            "canonical_hash": "sha256:fefaf13eab07ab8c776006ff557ca2bcb94f0176c9afc9e9ce1bc7b26e1183c0",
+            "description": "Restart a Docker container by ID or name with optional timeout. This tears down the running process and starts a new one — use stop_container for a graceful shutdown or remove_container to delete entirely. The timeout parameter (default 10s) controls how long to wait before force-killing. Returns a confirmation string on success. Idempotent: restarting an already-stopped container starts it again. Returns an error string if the container does not exist or is not running.",
+            "name": "restart_container",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `restart_container` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:38aea7e3e7c8732482616026d48ad47bbb4e5d86d569aaa48852ada913929d68",
+            "description": "Remove a Docker container by ID or name. Requires the container to be stopped first unless force=true is set (which stops and removes in one step). Use stop_container for graceful shutdown; use restart_container to restart. Returns a confirmation string. Returns an error string if the container does not exist or is running without force.",
+            "name": "remove_container",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_container` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed7b2729026732cf01615cad8ff3d0c0e0818c0006f1c822bc79461c4f446aad",
+            "description": "Recreate a Docker container with the same configuration (stop, remove, re-create). Useful for applying config changes without手动编写 run commands. Preserves image, env, ports, volumes, and labels from the original. Returns a confirmation string with the new container ID. Returns an error string if the original container does not exist.",
+            "name": "recreate_container",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `recreate_container` [LOW] inspects or modifies host environment variables."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e3dfadc21d4f9e412e21d9c31238f81f2efe4d2e8fca3cfa0704611e877b13ab",
+            "description": "Create and start a new Docker container with one command. Supports image, env, ports, volumes, restart policy, and command override. Auto-pulls missing images.",
+            "name": "run_container",
+            "parameters": [],
+            "risk_score": 8.5,
+            "risk_tier": "critical",
+            "security_comment": "Tool `run_container` [CRITICAL] executes arbitrary host system commands or shell scripts; inspects or modifies host environment variables; processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2fbf295e83b699c5fff01374fe3809db44b221f225dabe41deb37114c2137543",
+            "description": "Remove all stopped Docker containers. Returns the number of containers removed and reclaimed disk space. This is a destructive operation — stopped containers and their non-persisted data will be deleted. Use list_containers first to see what will be removed. Useful for cleanup after deployments or when disk space is low.",
+            "name": "prune_containers",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `prune_containers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8f544a8eeb19f11812c03b21c2e1b2225586f668f51c279ed6a450fcb3445e71",
             "description": "update_container",
             "name": "update_container",
             "parameters": [],
@@ -34690,7 +34731,17 @@
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:70d5136f5a2d45927eb16ce5605d29ef3db3ff7f9030b6020e47b09fd7d79cee",
+            "canonical_hash": "sha256:0746c73ab5e8afe33903da7678b6e804159b0a5f1540cdad37aaa0b6f3c03773",
+            "description": "List all Docker contexts on the host. Docker contexts allow switching between multiple Docker daemon endpoints (local, remote via SSH, remote via TCP, cloud providers). Each context has a name, description, and endpoint configuration. Use use_context to switch the active context.",
+            "name": "list_contexts",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_contexts` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:31f93bb09a44f3d198c566254456e9a1728c3fc77af5276ca61d95687adb29a8",
             "description": "Switch the active Docker context to a different endpoint. This changes which Docker daemon subsequent commands target (local, remote SSH, remote TCP, or cloud). Use list_contexts to see available contexts. Changing context affects all subsequent Docker operations in this session.",
             "name": "use_context",
             "parameters": [],
@@ -34700,16 +34751,446 @@
           },
           {
             "annotations": {},
-            "canonical_hash": "sha256:133ae81d5131c9ec4357f3eaae42b91ecc05a3f3f7b43c1db859b3e9058ea844",
+            "canonical_hash": "sha256:8fed919015dc27076d50003824fdc3ef4c45c635ba4bc9cff67461ee445edfea",
+            "description": "Get detailed configuration for a Docker context including endpoint type (unix, tcp, ssh), host address, default orchestrator, and any TLS settings. Use this to verify context configuration before switching or to troubleshoot connection issues.",
+            "name": "inspect_context",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `inspect_context` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:01a156688c6d870246b96935cc1116b93d939d3587e9cbecd84f8f35b20c7348",
+            "description": "exec_in_container",
+            "name": "exec_in_container",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `exec_in_container` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5e08f742dd32a80654537cbc0ab4929274048a472fc922ab67576c8b911604a7",
+            "description": "check_health",
+            "name": "check_health",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_health` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:269d768ecdf835a1e22aad62233e5f9b7b661290055281b5377cdd6fd69e9ebc",
             "description": "Poll a container health status until it becomes healthy or times out. Use check_health for a single probe; use watch_health to wait for readiness. The interval parameter controls polling frequency (default 5s); timeout controls max wait (default 60s). Returns the final health status. Returns an error string if the container has no health check.",
             "name": "watch_health",
             "parameters": [],
             "risk_score": 0.0,
             "risk_tier": "low",
             "security_comment": "Tool `watch_health` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e7a16ad4eb3adfae106fe42564beeb7baaf69af47be7ffda3dad9aa8ee1daac5",
+            "description": "Change the restart policy of a running container without recreating it. Use restart_container for an immediate restart; use this tool to change the policy (always, unless-stopped, on-failure, no) for future restarts. Returns a confirmation string on success. Idempotent: setting the same policy is a no-op. Returns an error string if the container does not exist.",
+            "name": "set_restart_policy",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_restart_policy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:362400d2f12e58e385df5b17c9a99a8058dd8e73cfa39001ccf69fb6b7944c8a",
+            "description": "List Docker images on the local host with optional filters. Returns an array of objects with ID, tags, size (bytes), and creation date. Use inspect_image (via docker inspect) for full metadata. Read-only and safe to call repeatedly. Returns an empty array if no images match the filter.",
+            "name": "list_images",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_images` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8ac1d1d604966a179cd952b26ec87f7a6594cc97ae068f8b4cf242d899e9c656",
+            "description": "Pull a Docker image from a registry by image name (e.g. nginx:latest). Use list_images to see locally available images after pulling. Returns pull progress events as text. Idempotent: pulling an already-up-to-date image is a no-op. Returns an error string if the image does not exist on the registry or the pull fails.",
+            "name": "pull_image",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `pull_image` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cbe18a2d836a9cd6726dfb3d116aacf63954e392b380ee0f41bacd217fa9cb53",
+            "description": "Build a Docker image from a Dockerfile or build context directory. The path should contain a Dockerfile or point to a directory with one. Use tag to name the resulting image (e.g., myapp:latest). Returns build output log. Use list_images to verify the build succeeded. Returns an error string if the Dockerfile is missing or the build fails.",
+            "name": "build_image",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `build_image` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82f8f20f3ca09c4580bf544c970ef9122c3dc715f7e20a59c80ff7906e992c77",
+            "description": "Remove a Docker image by name or ID. Use force=true to remove even if tagged or referenced by stopped containers. Use list_images to find image IDs; use prune_images to remove all unused images. Returns a confirmation string. Returns an error string if the image does not exist or is in use without force.",
+            "name": "remove_image",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_image` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4c55586e330766fb44e111d61d2f654d2f56c555a462b2b7cd3c0fe4dc942b24",
+            "description": "Remove unused Docker images (dangling and unreferenced). Returns the number of images deleted and reclaimed disk space. Only removes images not used by any container. Use list_images first to see what will be removed. Useful for reclaiming disk space after builds or when switching base images frequently.",
+            "name": "prune_images",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `prune_images` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0f304c4cf878d601f59015d26b09773a7f5c5c8e87d58fc4c02c3ed1f3a275cc",
+            "description": "stream_logs",
+            "name": "stream_logs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `stream_logs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6d7df514ee1dca5c94229ee0da14dbf88d4c97078d547752133bcb72d4df4f0a",
+            "description": "Get real-time resource usage statistics for a Docker container by ID or name. Use container_stats for one container; use container_resource_usage (monitoring tools) for fleet-wide stats. Returns JSON with CPU percent, memory usage/limit/percent, network I/O bytes, and block I/O bytes. Read-only and safe to call repeatedly. Returns an error string if the container does not exist or is not running.",
+            "name": "container_stats",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `container_stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:49d8a89f6296de507d19b3ff4aee54b1f1b18d719119ef632c5c90972bd375ad",
+            "description": "Check health status, uptime, and restart count for all running Docker containers. Returns JSON with container name, state, health probe status (healthy/unhealthy/no-healthcheck), and restart count. Use this for a quick fleet health overview; for resource metrics use container_resource_usage instead. Returns an array of objects with name, id, state, status, health, uptime, restartCount, and image fields. Read-only and safe to call repeatedly.",
+            "name": "container_health_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `container_health_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1b750174d8eed5c4aa4926badf0b1625603f6c7c0e0375ebdb29d3bc4d848886",
+            "description": "Monitor CPU, memory, and network I/O across all running Docker containers. Returns sorted resource usage metrics with percentage breakdowns for each container. Use container_health_status for health probes; use resource_alert_check for threshold violations. Supports sort by cpu, memory, or network. Returns array of objects with name, id, cpu_percent, memory_usage_mb, memory_percent, network_rx_mb, network_tx_mb. Read-only and safe to call repeatedly.",
+            "name": "container_resource_usage",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `container_resource_usage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:496c99a61ade8e94ac4a04ccb55fb3871a77e28631abec43712768b35d371b59",
+            "description": "watch_events",
+            "name": "watch_events",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `watch_events` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e48797068fb65a5036462c5c7f6eb1c142cdee2eb9fd520513067328ebed5784",
+            "description": "search_logs",
+            "name": "search_logs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_logs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b824cb69010cef279f6a745e86b13245368bf31066670acbbfa54a7d4d225b46",
+            "description": "resource_alert_check",
+            "name": "resource_alert_check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `resource_alert_check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:83acdb7030615e6788e3beb6eb53c5f748d42d74eb6e75f85dff56e1c53e1aef",
+            "description": "Comprehensive Docker fleet dashboard in a single API call. Aggregates health status of all containers, top 5 CPU consumers, recent events (last 5 minutes), and threshold violations into one response. Use individual tools (container_health_status, container_resource_usage, watch_events) for targeted queries; use this for a complete fleet overview. Returns object with summary (total, running, healthy, unhealthy), top_consumers, recent_events, and violations. Read-only and safe to call repeatedly.",
+            "name": "monitor_dashboard",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `monitor_dashboard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2ebd075a0bfdc16bead154fd76aec4f75a195c71e3151b75c2c79544cb26d811",
+            "description": "List Docker networks on the local host with optional filter. Returns an array of objects with ID, name, driver (bridge/overlay/host), and scope (local/swarm). Use inspect_network (via docker inspect) for full configuration. Read-only and safe to call repeatedly.",
+            "name": "list_networks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_networks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:473fef25b374041a891d156fc7e7bc356bb680aa5ff69728da568c6bc213f4d9",
+            "description": "List Docker volumes on the local host with optional filter. Returns an array of objects with name, driver, mountpoint, labels, and scope. Use inspect_volume for full configuration of a single volume; use create_volume to add new ones. Read-only and safe to call repeatedly.",
+            "name": "list_volumes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_volumes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:18f1db81bf9bd6b540b076fff646a7baadc9d76e52e07742db71bb6760b8e8ac",
+            "description": "Authenticate with a Docker registry (Docker Hub, ECR, ACR, GCR, or private). Stores credentials in Docker config for subsequent push/pull operations. Use registry_search to find images before pushing. Returns login confirmation with the registry server address.",
+            "name": "registry_login",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `registry_login` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6ebabaf2482fb6746122236e3311f2fc3b1a1beb91c7fba602deda906e7053b6",
+            "description": "Search Docker Hub for available images by keyword. Returns image names, short descriptions, star counts, and official/premium status. Useful for discovering base images or checking if an image exists before pulling.",
+            "name": "registry_search",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `registry_search` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f49fd3d58c825add3f1221612401c92628cade14b6a4cfbae2f23a09c005f2fb",
+            "description": "Push a local Docker image to a registry. The image must be tagged with the registry address first (e.g., myregistry.com/myimage:tag). Use registry_login to authenticate before pushing. Use build_image to create the image, then tag it with docker CLI or the Docker API before pushing.",
+            "name": "registry_push",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `registry_push` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6d1448c055b6b1e62cacfea10cac74282e046b9a26ed8b662616c219c2455ae4",
+            "description": "Scan a Docker image for known vulnerabilities using Trivy. Runs Trivy inside a temporary container to scan the specified image. Returns a summary of critical/high/medium/low vulnerabilities with package names and fix availability. Requires Trivy to be available on the Docker host or uses the aquasec/trivy image automatically.",
+            "name": "scan_image",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scan_image` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:18947ef739752b52544dd55c9dc4b73b9828a04179824ab20281be2f68e65248",
+            "description": "Generate a detailed vulnerability report for a Docker image, including all severities. Returns a structured report with remediation recommendations (which packages to upgrade). More detailed than scan_image — includes full descriptions and fix versions for all vulnerabilities.",
+            "name": "vulnerability_report",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `vulnerability_report` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:592f868f71b9605a307b4abc073bd440a83241b2244110da77f799af469ba86a",
+            "description": "Get Docker daemon system information: server version, OS, kernel, CPU count, memory total, storage driver, and runtime. Returns a JSON object with all daemon metadata. Use disk_usage for space breakdown. Read-only and safe to call repeatedly.",
+            "name": "docker_info",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `docker_info` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:964161cf4cf03a922be8665cee0a872f3062d95fb82c8f22f2923b51ccaf8bbf",
+            "description": "Get Docker disk usage breakdown: space used by images, containers, volumes, and build cache. Shows total and per-item sizes with reclaimable space. Use docker_info for daemon metadata; use list_images/list_containers for item details. Read-only and safe to call repeatedly.",
+            "name": "disk_usage",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `disk_usage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:04560975ac9d3d909c2baa453390d455a30f39f2d8894ba82f11f86e72207045",
+            "description": "Copy a file from a Docker container to read its contents. Returns the file content as text along with metadata (size, permissions). Useful for inspecting config files, logs, or application state inside running containers.",
+            "name": "copy_from_container",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `copy_from_container` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bfce828c6b453e11632db2d624e1a6bb2bcf2e8366112ab2be15ed824e459406",
+            "description": "Write file content into a Docker container at the specified path. Overwrites existing files. Useful for injecting configuration files, scripts, or environment files into running or stopped containers.",
+            "name": "copy_to_container",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `copy_to_container` [HIGH] reads, writes, or modifies host filesystem paths; inspects or modifies host environment variables."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:028bb64ceae245692567ea7aec973e1b23c64c1bca4461d4d1ebf9e8b39d0ad7",
+            "description": "Create a Docker volume with optional driver, labels, and options. Returns volume name, driver, and mount point. Use inspect_volume to verify creation; use list_volumes to see all volumes. Returns an error string if the volume name is already in use.",
+            "name": "create_volume",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_volume` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:35a0b6c452882533c7b9fff462ed29502171858cf41ec8b2f73f7d26a0ff92dc",
+            "description": "Inspect a Docker volume by name. Returns detailed info including name, driver, mountpoint, labels, scope, and options. Use list_volumes to find volume names; use remove_volume to delete. Returns an error string if the volume does not exist.",
+            "name": "inspect_volume",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `inspect_volume` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:65ab68e59561b2dd95d7e75277b0b397addca7c82a3f40ec21ecb007833f30b6",
+            "description": "Remove a Docker volume by name. Requires the volume to be unused unless force=true is set (which removes even if mounted). Use prune_volumes to remove all unused volumes at once. Returns a confirmation string. Returns an error string if the volume does not exist.",
+            "name": "remove_volume",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_volume` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:26b43d75dc0a7923b48f848b8484e5c3e8ac8cda10ffe7e22d7300620cf6f634",
+            "description": "Remove all unused Docker volumes (not mounted by any container). Returns the number of volumes removed and reclaimed disk space. Use list_volumes to see what exists before pruning. Safe to call repeatedly — no-op when no unused volumes exist.",
+            "name": "prune_volumes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `prune_volumes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:99b28f5ccf4ec680823b5f1868599eac9e655016d0a9ff0b73255d67fc481cc8",
+            "description": "Create a new Docker container from an image",
+            "name": "create_container",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "env",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "image",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "ports",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "volumes",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_container` [LOW] inspects or modifies host environment variables."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f043afb47d9d771d99fc784b49eab18b353e7c6bfc70ba2a5b09d8e8319c7102",
+            "description": "Get status overview of all Docker containers",
+            "name": "fleet_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tail",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `fleet_status` [MEDIUM] issues raw database queries that could lead to SQL injection."
           }
         ],
-        "toolset_canonical_hash": "sha256:52be4a76b37b631fc3d6a54d8caba60048e25f513c193989935c0eeabade5d66",
+        "toolset_canonical_hash": "sha256:2ea9be616785f3cf38458b934a692462913a8f91d49ac587e141db96b2a22f3c",
         "version": "1.0.0"
       }
     ]
@@ -52410,7 +52891,7 @@
     "purl": "pkg:pypi/knowledge-rag",
     "recommended_safe_version": "4.11.1",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/knowledge-rag",
+    "repository_url": "https://github.com/lyonzin/knowledge-rag",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `knowledge-rag` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 49 safe version(s).",
@@ -55356,7 +55837,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
+    "description": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
     "display_name": "mcp-auth-rbac",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -55395,6 +55876,15 @@
         "advisories": [
           {
             "cvss_score": null,
+            "id": "VERITY-LITE-MONGO-HIJACK-001",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
             "id": "VERITY-LITE-MONGO-CRED-001",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -55409,15 +55899,6 @@
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "VERITY-LITE-MONGO-HIJACK-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
             "vulnerable_tools": []
           }
         ],
@@ -65504,7 +65985,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "FastMCP is the standard framework for building MCP applications. Prior to version 2.14.2, the server does not properly r",
+    "description": "FastMCP is a Pythonic way to build MCP servers and clients. Prior to version 3.2.0, the OpenAPIProvider in FastMCP expos",
     "display_name": "rhoai/odh-pipeline-runtime-tensorflow-cuda-py312-rhel9",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -65537,6 +66018,18 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
+        "version": "< 2.14.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
         "version": "*"
       },
       {
@@ -65550,18 +66043,6 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 3.2.0"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.14.2"
       },
       {
         "advisories": [],
@@ -67520,17 +68001,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.25",
+    "latest_version": "1.0.29",
     "license": "MIT",
     "package_name": "scrapercity",
     "prompts_count": 0,
     "purl": "pkg:npm/scrapercity",
-    "recommended_safe_version": "1.0.25",
+    "recommended_safe_version": "1.0.29",
     "repo_http_status": 200,
     "repository_url": "https://github.com/scrapercity/scrapercity-cli",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `scrapercity` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
+    "security_summary": "Server `scrapercity` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 29 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:7cc53e8c223ebf3b7d04df93171f91214742eab78ca5b9e090afaf4af5ca67fe",
@@ -69452,6 +69933,285 @@
         ],
         "toolset_canonical_hash": "sha256:7cc53e8c223ebf3b7d04df93171f91214742eab78ca5b9e090afaf4af5ca67fe",
         "version": "1.0.25"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-30T16:17:32.492Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.26"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-30T17:54:02.221Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.27"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-31T04:15:43.793Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.28"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-31T05:31:24.108Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d48acd66bc78294e6f1f288622037be1ab4c3e425f377474eb4c0af833f7549e",
+            "description": "Cancel a running scraper job.",
+            "name": "cancel_run",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_run` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:06ffdc1dcfa242a3511696a7b458909bfc94f84b3855bc2d536007490065d620",
+            "description": "Check the status of a scraper run. Returns status (RUNNING/SUCCEEDED/FAILED/CANCELLED), lead count, and download URL when complete.",
+            "name": "check_run_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `check_run_status` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b647b5df031ffdc1eeebbc711bedd09bc7f089a21fd31fc0604a53b1dc0ae39e",
+            "description": "Check account balance, plan, and billing info. Call this FIRST to verify credits before running any scrape.",
+            "name": "check_wallet",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_wallet` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dd219bbc6dae591772643a1c6f592eee6cad79b3cea921907b80758956c9f027",
+            "description": "Download the CSV results of a completed scraper run. Only works when status is SUCCEEDED.",
+            "name": "download_results",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `download_results` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ade82f0b43a63e8ee23014a78671e438d748ab2e650c666a5b5b8b48b288ce20",
+            "description": "List recent scraper runs with status, lead counts, and costs.",
+            "name": "list_runs",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hours",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_runs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3726425b1c8889be080e1537d2d8c479aff6fb3751caa23a79e6d826c1879b78",
+            "description": "Query the B2B lead database directly. Returns contacts with names, emails, phones, titles, companies (plus company website, revenue, HQ location and keywords). Up to 100 per request. Included with the $149/mo plan (100,000 new leads a day; leads you already have do not count again). For a daily pull of only new leads set excludeDelivered=true. For big pulls page with after: send after=",
+            "name": "query_lead_database",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "city",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "companyName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "companyDomain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minEmployees",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxEmployees",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "revenueMin",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "revenueMax",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 6.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `query_lead_database` [HIGH] issues raw database queries that could lead to SQL injection; initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:7cc53e8c223ebf3b7d04df93171f91214742eab78ca5b9e090afaf4af5ca67fe",
+        "version": "1.0.29"
       }
     ]
   },

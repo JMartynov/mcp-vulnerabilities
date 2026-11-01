@@ -5650,7 +5650,7 @@
     "purl": "pkg:npm/@f4ww4z%2Fmcp-mysql-server",
     "recommended_safe_version": "1.0.0",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/@f4ww4z/mcp-mysql-server",
+    "repository_url": "https://github.com/f4ww4z/mcp-mysql-server",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `@f4ww4z/mcp-mysql-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
@@ -7548,17 +7548,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.0.24",
-    "license": "MIT",
+    "latest_version": "0.0.25",
+    "license": "FSL-1.1-MIT",
     "package_name": "@rankcli/mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/@rankcli%2Fmcp-server",
-    "recommended_safe_version": "0.0.24",
+    "recommended_safe_version": "0.0.25",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/integrallis/rankcli.dev",
+    "repository_url": "https://github.com/integrallis/rankcli",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@rankcli/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 24 safe version(s).",
+    "security_summary": "Server `@rankcli/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:4c0ef303f23afbee9b971fc2b7adf1d9fc8c503994a3dfb61f8ee4eb900a03cf",
@@ -8300,6 +8300,467 @@
         ],
         "toolset_canonical_hash": "sha256:4c0ef303f23afbee9b971fc2b7adf1d9fc8c503994a3dfb61f8ee4eb900a03cf",
         "version": "0.0.24"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-30T20:13:03.299Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d0c911cae344fb1b44d0a64e5bc9d60e88ac038a85f423d40af3f2f698edccb1",
+            "description": "Link this AI assistant to a RankCLI account (rankcli.dev). This is the only tool in this server that contacts rankcli.dev, and only when you call it - every other tool runs fully locally. Connecting unlocks GitHub auto-fix PRs, scheduled monitoring, and a dashboard with history across audits; it does not change how the other tools work. Opens a browser tab for the user to approve (or reuses an existing session if already logged in). Safe to call anytime - if already connected, it just reports who",
+            "name": "rankcli_connect",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rankcli_connect` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9a525c28ec7d249cfdbedd29efa2348cc823948abddf5e6effb88505dd8c9ef5",
+            "description": "Unlink this AI assistant from its RankCLI account. Only affects this local connection - does not delete the RankCLI account or revoke other API keys.",
+            "name": "rankcli_disconnect",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rankcli_disconnect` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db7f2a983e8a985a8897a5334bb5a763eba29e429a6a73e191faf703e8480b13",
+            "description": "Get information about all known AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.) including their user agents and purposes.",
+            "name": "seo_ai_crawlers",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seo_ai_crawlers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ef3d2cde9651cd4c646745fb6e86e1f95cb34bff69d60ffa3954191a049d306e",
+            "description": "Run comprehensive SEO analysis on a webpage. Returns scores and issues for: - GEO (AI Search Optimization) - Is the site visible to ChatGPT, Perplexity, Claude? - Core Web Vitals (LCP, CLS, INP) - Performance estimates - Structured Data - Schema.org validation - Security Headers - HTTPS, HSTS, CSP - Mobile SEO - Responsive design, touch targets - Images - Alt text, formats, dimensions - Internal Linking - Anchor text, orphan detection Use this for a complete SEO audit.",
+            "name": "seo_analyze",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "robotsTxt",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_analyze` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8ae9cb1c75d679a5dde0099a655285a51191e45f22b02118e2ed57f6630bb212",
+            "description": "Estimate Core Web Vitals (LCP, CLS, INP, TTFB) from HTML analysis. Identifies issues like: - Render-blocking resources - Images without dimensions - Large JavaScript bundles - Missing preload hints",
+            "name": "seo_core_web_vitals",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_core_web_vitals` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c5287f521662404339d6d332e73d0c28949bc62fda7e6f772a3361e89a5c4f2e",
+            "description": "Generate an AI-friendly robots.txt that allows all major AI crawlers (GPTBot, ClaudeBot, PerplexityBot, Google-Extended, etc.)",
+            "name": "seo_generate_robots",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "siteUrl",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seo_generate_robots` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82626a16c60b3c4e7c306fa8069bf7f99bb52ffdbbc42b5b5487fac957b5e45c",
+            "description": "Generate JSON-LD structured data template for a page type (article, product, faq, local-business, website).",
+            "name": "seo_generate_schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "authorName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "organizationName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pageType",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "siteName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "siteUrl",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seo_generate_schema` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:37e5bc53e61e6ae641d5bdf6bd54afd3ae36e59ad591034347302e582f8cbc9d",
+            "description": "Generate recommended security headers configuration for a site.",
+            "name": "seo_generate_security_headers",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "siteUrl",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seo_generate_security_headers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:abcea347069a660636741d4c37c7a5b2476291c98794600bffa276be938c6117",
+            "description": "Check if a website is optimized for AI search engines (GEO - Generative Engine Optimization). Analyzes: - AI crawler access (GPTBot, ClaudeBot, PerplexityBot, etc.) - robots.txt rules for AI crawlers - JS rendering requirements (can AI crawlers see content?) - Content structure for LLM consumption - Citation readiness (trust signals) - FAQ/entity extraction capability Critical for visibility in ChatGPT, Perplexity, Claude, and Gemini responses.",
+            "name": "seo_geo_check",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "robotsTxt",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_geo_check` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:96fc7300e3cac2071e4f361c3df2cb2122c10f6a4d0d98b40df0919db8020ed0",
+            "description": "Analyze images for SEO and performance. Checks alt text, dimensions, formats (WebP/AVIF), lazy loading, and responsive images.",
+            "name": "seo_images",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_images` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c7c4abdf0a1834fc1c4567ca16170cb753434f67b2d27cb20b6c17ed60dc336",
+            "description": "Analyze internal linking structure. Checks anchor text quality, orphan page risk, link distribution, and suggests linking opportunities.",
+            "name": "seo_internal_links",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_internal_links` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1bb8d701c9b93a1fbf374ee187828ed1c29f2f5093af474caffe160436714249",
+            "description": "Analyze mobile SEO. Checks viewport, touch targets, font sizes, content width, PWA readiness.",
+            "name": "seo_mobile",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_mobile` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a012311e24af69e12d13f832623f500f8f99f99a109db261017c563b358dfd5c",
+            "description": "Analyze robots.txt for AI crawler permissions. Shows which AI crawlers (GPTBot, ClaudeBot, PerplexityBot, etc.) are allowed or blocked.",
+            "name": "seo_robots_ai",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "robotsTxt",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seo_robots_ai` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a32d823ce3d0e0c9dbe447f9d6af1cb3c5bd8fe194a589dd99529eb7750e771a",
+            "description": "Analyze security headers (HTTPS, HSTS, CSP, X-Frame-Options, etc.). Returns a security grade A+ through F.",
+            "name": "seo_security_headers",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "additionalProperties",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_security_headers` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bf4e8de3a1cfd96209197387ccd2502b87874998f70cd74bad423d1bea85702d",
+            "description": "Validate JSON-LD structured data (Schema.org). Checks for: - Required properties per schema type - Article, Product, FAQ, HowTo, LocalBusiness schemas - Rich result eligibility - Common mistakes",
+            "name": "seo_structured_data",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "html",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `seo_structured_data` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:4c0ef303f23afbee9b971fc2b7adf1d9fc8c503994a3dfb61f8ee4eb900a03cf",
+        "version": "0.0.25"
       }
     ]
   },
@@ -10241,7 +10702,7 @@
     "security_summary": "Server `A1-x-Tech/mcp-google-contacts` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:13d7bdab10fe01f7216a7e20445a207fdea7a0091ccf3384de5741a6fdd0e092",
+    "toolset_canonical_hash": "sha256:34071614044ff7ed9894872f24b60b702231f65d6f36d5f26cec332d5c2cbbf8",
     "transport": "stdio",
     "versions": [
       {
@@ -11448,9 +11909,19 @@
             "risk_score": 0.0,
             "risk_tier": "low",
             "security_comment": "Tool `update_contact_group` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8d56629c6ce97782d4d6dec1010dc553ec3668e9cc93cc79bf54a5949a41cc7a",
+            "description": "contacts (read/write), contacts.readonly (reads only),",
+            "name": "Scopes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Scopes` operates with safe parameters and poses minimal static capability risk."
           }
         ],
-        "toolset_canonical_hash": "sha256:13d7bdab10fe01f7216a7e20445a207fdea7a0091ccf3384de5741a6fdd0e092",
+        "toolset_canonical_hash": "sha256:34071614044ff7ed9894872f24b60b702231f65d6f36d5f26cec332d5c2cbbf8",
         "version": "1.0.0"
       }
     ]
@@ -13958,7 +14429,7 @@
     "security_summary": "Server `HasData/google-flights-deals-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:ecca4b0f2093e1a6aacf6dc9345bd1d4587b4313c5267646786115e1dca8094d",
+    "toolset_canonical_hash": "sha256:cc93c11fa48a6bc5cb21dec8697bcaaf3ed1d42408656a5d42445aa7962b91a2",
     "transport": "stdio",
     "versions": [
       {
@@ -14305,9 +14776,175 @@
             "risk_score": 7.0,
             "risk_tier": "critical",
             "security_comment": "Tool `hasdata_google_travel_flights_deals_getGoogleFlightsDeals` [CRITICAL] issues raw database queries that could lead to SQL injection; reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db7055888a9b0ee15f47318fba4382854037122bb0da50a5561be134c12c71bc",
+            "description": "Type",
+            "name": "Parameter",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Required",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Parameter` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:28cd2d384f15b3c87360bdf5eec1ed82c23a339ad0aa022d07403b7b583b0b50",
+            "description": "string",
+            "name": "q",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "yes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `q` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec5d4353d4728ec06836443740e0d1cc4ca2ea38c6787936c3b93cbb5eab5341",
+            "description": "string",
+            "name": "departureId",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "yes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `departureId` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1e2737c27ce82a9a56db34e28848cc475724456a3836cc998b144006aea46b27",
+            "description": "string",
+            "name": "arrivalId",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `arrivalId` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:423ee9c0fba2826a6ad358e26ad569b8661290a307d54921324723c0e521369a",
+            "description": "string",
+            "name": "type",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `type` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:730a799cb32c2880f5e91ec2ce7c0e402d97e7fdb261a7610f99d4060e2fab8e",
+            "description": "string",
+            "name": "travelClass",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `travelClass` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d886b2cc748c9ea54988207c604db662339e3f334959a920088f30c30beed5e",
+            "description": "string",
+            "name": "outboundDate",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `outboundDate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6c2eab9429cb6b75d9d6aa770b80df0cca11ede4a84616f8257f1d6f504c193f",
+            "description": "string",
+            "name": "returnDate",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `returnDate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9ea704e0885eb8bf8be99174ffd7a9ce5001ee17b89c27f076230d0e7bc0bc47",
+            "description": "string",
+            "name": "travelDuration",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `travelDuration` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:06077e12cac14acfdb4765cb56578757082cebb1b1d0d9b90f4ecc3c8acf748a",
+            "description": "string",
+            "name": "tripLength",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tripLength` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:368bc59401ff68143c2de5e353b1a054d61552f9a8e639700cee22eae72ba73e",
+            "description": "string",
+            "name": "stops",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `stops` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:869a3170135b4387116c5f348a544fba53e7c05771ccbede64ab97f8a8505c2a",
+            "description": "number",
+            "name": "maxDuration",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `maxDuration` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:995ca07bf5390c7a302f06bd88a60c3da55a03c5169324d54dccdbb872eac5b0",
+            "description": "number",
+            "name": "maxPrice",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `maxPrice` operates with safe parameters and poses minimal static capability risk."
           }
         ],
-        "toolset_canonical_hash": "sha256:ecca4b0f2093e1a6aacf6dc9345bd1d4587b4313c5267646786115e1dca8094d",
+        "toolset_canonical_hash": "sha256:cc93c11fa48a6bc5cb21dec8697bcaaf3ed1d42408656a5d42445aa7962b91a2",
         "version": "1.0.0"
       }
     ]
@@ -14316,14 +14953,14 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "Jenkins MCP Server Plugin 0.84.v50ca_24ef83f2 and earlier does not perform permission checks in multiple MCP tools, allo",
+    "description": "A missing permission check in Jenkins MCP Server Plugin 0.177.v629fdb_2557fe and earlier allows attackers with Item/Read",
     "display_name": "Jenkins MCP Server Plugin",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "0.178.vffe5a_e770f3b_",
+    "latest_version": "0.172.174.v9f72da_90a_710",
     "license": null,
     "package_name": "Jenkins MCP Server Plugin",
     "prompts_count": 0,
@@ -14343,20 +14980,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2025-64132",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Jenkins MCP Server Plugin 0.84.v50ca_24ef83f2 and earlier does not perform permission checks in multiple MCP tools, allo",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-57300",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A missing permission check in Jenkins MCP Server Plugin 0.177.v629fdb_2557fe and earlier allows attackers with Item/Read",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-64132",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Jenkins MCP Server Plugin 0.84.v50ca_24ef83f2 and earlier does not perform permission checks in multiple MCP tools, allo",
             "vulnerable_tools": []
           }
         ],
@@ -14390,7 +15027,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "0.172.174.v9f72da_90a_710"
+        "version": "0.178.vffe5a_e770f3b_"
       },
       {
         "advisories": [
@@ -14412,7 +15049,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "0.178.vffe5a_e770f3b_"
+        "version": "0.172.174.v9f72da_90a_710"
       }
     ]
   },
@@ -14573,7 +15210,7 @@
     "security_summary": "Server `MAG-Cie/mcp-microsoft-todo` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:569a43eec3bf3cad28fa604b5d513b3d2dfa4a1d63e50401180fb1bb84e97156",
+    "toolset_canonical_hash": "sha256:6a4babf7ab85c39db8b3e138b2d8520979724e191ca929e0eaae8e0fb01e94ad",
     "transport": "stdio",
     "versions": [
       {
@@ -15740,8 +16377,1152 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:665c0e176fab4f336b5a57d9d3035597e93556d554b60121395e03a5343045b1",
+            "description": "List all the user",
+            "name": "list_task_lists",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_task_lists` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:afc12994608e975c87d7616a80f771ab52b934fd13638bbac5dba8fea11ff0fc",
+            "description": "List the tasks of a To Do list. Supports OData filter, $orderby, $top, and pagination.",
+            "name": "list_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filter",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "orderby",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e7182d4cd7b4683a1555bb90364ad568dafb7fadc22e9c6f3b62af1e3b86d6aa",
+            "description": "Fetch a task",
+            "name": "get_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fb78b69aa14da4f545d63a5afe30dad7b7c8413e5f34b722da4d1dc31c2973b9",
+            "description": "Create a new task in a To Do list. Supports recurrence and reminder.",
+            "name": "create_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ede2d8542c6788383440a7b6231a4f5f9fcb379235c04ab8a27ddde5871162e8",
+            "description": "Update an existing task (title, status, recurrence, reminder, etc.).",
+            "name": "update_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:56b65419a88d8f5b095e7ec6084883c00ea75e279de392b84aa047d2c3d541fe",
+            "description": "Shortcut to mark a task as completed.",
+            "name": "complete_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `complete_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:44e618b0eecb855b8c900e9d63183fec2a2cd02e3479cc7de59155ce1be86649",
+            "description": "Delete a task permanently.",
+            "name": "delete_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ae4b39d371ba2b118ec141e07600273d7d1445cdc46c172e518cfc4571474392",
+            "description": "Move a task from one list to another. Recreates the task in the target list (title, body, due, recurrence, reminder, categories preserved) then deletes the original. Note: checklistItems and linkedResources are NOT moved (Graph limitation). The task ID changes.",
+            "name": "move_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source_list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target_list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `move_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c1ae65afd88e836d096d0b5a03e1db7b08e5f1bc6a64aeaada2cc99528822788",
+            "description": "Search a term in the titles of tasks across ALL lists (case-sensitive). By default excludes completed tasks.",
+            "name": "search_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_completed",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top_per_list",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_tasks` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6fca413bfdeec5fcb6df299f75cd49466ed461f96868e761ea786a57f904652b",
+            "description": "Summary of tasks due today and overdue, aggregated per list. Useful for the question \\",
+            "name": "summarize_today",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "time_zone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `summarize_today` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f4cd44b1a4f40dbaeb6ebcde97685281b7af98bea3746869268e792fabd6d577",
+            "description": "Fetch every active task across every list in a single round-trip (uses Graph $batch internally). Use this for the question \\",
+            "name": "list_all_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filter",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_completed",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top_per_list",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_all_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8e136043b4ea3676d3dab8d11fab6b0295e142cf31911b585624eb95d846ee2c",
+            "description": "List the sub-items (checklist) of a task.",
+            "name": "list_checklist_items",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_checklist_items` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a66836f3533ad4cf019b65ade8e01108c319c1d02527e7b3a92f047d41f1f9e",
+            "description": "Add a sub-item (checklist) to a task.",
+            "name": "create_checklist_item",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "display_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "is_checked",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_checklist_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eee77affd1f10efaa5c5f478c9ae0d2ea49fb188fac46e7d2aeea73257dbf100",
+            "description": "Update a sub-item (rename or check/uncheck).",
+            "name": "update_checklist_item",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "display_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "is_checked",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "item_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_checklist_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3b7efcd92c4e86f0b8e78723a47ba1ba692232da0f1dac5942b56bf5c831b1ab",
+            "description": "Delete a sub-item.",
+            "name": "delete_checklist_item",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "item_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_checklist_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f93b85aecabb7ee13b072cc87c37539c552d0d3ae3a9184763f70b38569cf9a5",
+            "description": "List the linked resources (external URLs, third-party app refs) of a task.",
+            "name": "list_linked_resources",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_linked_resources` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1680fa741f261cb95d8aa94f0c9d94dae59d8edd316937bf1bd6a124f92315ea",
+            "description": "Attach a linked resource (URL or external ref) to a task.",
+            "name": "create_linked_resource",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "application_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "display_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "external_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "web_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `create_linked_resource` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0aff92cf7377ae66c5e8502f33d2810f16b29fc69d5c7d4e32bc809e5db4e276",
+            "description": "Delete a linked resource from a task.",
+            "name": "delete_linked_resource",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "resource_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_linked_resource` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:52938820269571464d21542119f0e0b4852ee0522e1fe44efdfbf83c10629160",
+            "description": "Create several tasks in a single HTTP call via Microsoft Graph $batch (up to 100 items, auto-chunked by 20). Returns: status + result OR error per item, in order. More efficient than N create_task calls.",
+            "name": "batch_create_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `batch_create_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ee3682bd8ece20380c0bd2d6fb673727017a58b3bb9bd8e8644fc79d7f5f5cc8",
+            "description": "Mark several tasks as completed in a single $batch HTTP call (up to 100 items).",
+            "name": "batch_complete_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `batch_complete_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c7e874bafa46358c3c20e6d2d21b82507df1e29f4ba057111943609638afcc17",
+            "description": "Delete several tasks in a single $batch HTTP call (up to 100 items).",
+            "name": "batch_delete_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `batch_delete_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:98eabde2b378dac05806dc0e8b20c75becd2c7cf05a43757ed564a58079df6b2",
+            "description": "List the open extensions (custom JSON metadata) attached to a task.",
+            "name": "list_extensions",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_extensions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d1df147cf7c2d6391b5316e54a3d126666e4d7db388187a99e30835fd55edaee",
+            "description": "Create or update (upsert) an open extension on a task. Lets you attach arbitrary JSON metadata (project_id, external_ref, custom flags...) that persist in Microsoft Graph.",
+            "name": "set_extension",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "data",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "extension_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_extension` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8922b4274893aab965b5cf318bf386742915d98a6ab6437996dbbed6438ad474",
+            "description": "Delete an open extension from a task.",
+            "name": "delete_extension",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "extension_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_extension` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b889816baeaa12aeec99eceaac69a4ec16deb4dd2e220a462601f1f793653a2b",
+            "description": "List ALL overdue tasks (status ne completed and dueDateTime < today) across every list. Aggregated via Promise.all.",
+            "name": "list_overdue_tasks",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top_per_list",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_overdue_tasks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4ae8aa61f4f81c7e630935c5105157704955b300fedf5b4d02ab2b4649ca04c2",
+            "description": "List ALL tasks containing a given category, across every list. OData filter: categories/any(c: c eq",
+            "name": "list_tasks_by_category",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "category",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_completed",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top_per_list",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tasks_by_category` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d63b7ace16d870f07a34b294b2cf2ea620d4186b5552ab0fc4fae9c7c3bff0ae",
+            "description": "Add/remove categories on several tasks in one operation. 2-phase batch: GET to read existing categories, then PATCH with the updated set. Per-item errors, no global fail.",
+            "name": "bulk_update_categories",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "list_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `bulk_update_categories` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f18f807429e92e412ccb81835293751eac3a2f2660dc32dc34706c41295ad4e4",
+            "description": "Export tasks to iCalendar format (text/calendar VTODO) for import into Google Calendar, Apple Calendar, Outlook, Thunderbird, etc. Recurrence converted to RRULE when possible. Reminder converted to VALARM.",
+            "name": "export_tasks_ics",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_completed",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "top_per_list",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `export_tasks_ics` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:6a4babf7ab85c39db8b3e138b2d8520979724e191ca929e0eaae8e0fb01e94ad",
         "version": "1.2.2"
       }
     ]
@@ -84028,7 +85809,7 @@
     "purl": "pkg:pypi/notion_mcp",
     "recommended_safe_version": "0.2.2",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/notion_mcp",
+    "repository_url": "https://github.com/snickery/notion-mcp",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `notion_mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
@@ -86056,7 +87837,7 @@
     "purl": "pkg:pypi/openproject-ce-mcp",
     "recommended_safe_version": "0.4.4",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/openproject-ce-mcp",
+    "repository_url": "https://github.com/jtauschl/openproject-ce-mcp",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `openproject-ce-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 18 safe version(s).",
@@ -98786,7 +100567,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "FastMCP is the standard framework for building MCP applications. Prior to version 2.14.2, the server does not properly r",
+    "description": "FastMCP is a Pythonic way to build MCP servers and clients. Prior to version 3.2.0, the OpenAPIProvider in FastMCP expos",
     "display_name": "rhoai/odh-pipeline-runtime-pytorch-llmcompressor-cuda-py312-rhel9",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -98819,6 +100600,18 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
+        "version": "< 2.14.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
         "version": "*"
       },
       {
@@ -98832,18 +100625,6 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 3.2.0"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.14.2"
       },
       {
         "advisories": [],
@@ -98887,7 +100668,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "FastMCP is the standard framework for building MCP applications. Prior to version 2.14.2, the server does not properly r",
+    "description": "FastMCP is a Pythonic way to build MCP servers and clients. Prior to version 3.2.0, the OpenAPIProvider in FastMCP expos",
     "display_name": "rhoai/odh-workbench-jupyter-tensorflow-cuda-py312-rhel9",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -98920,6 +100701,18 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
+        "version": "< 2.14.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
         "version": "*"
       },
       {
@@ -98933,18 +100726,6 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 3.2.0"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.14.2"
       },
       {
         "advisories": [],
@@ -107152,17 +108933,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "5.1.2",
+    "latest_version": "5.1.6",
     "license": "MIT License\n        \n        Copyright (c) 2026 robbyczgw-cla\n        \n        Permission is hereby granted, free of charge, to any person obtaining a copy\n        of this software and associated documentation files (the \"Software\"), to deal\n        in the Software without restriction, including without limitation the rights\n        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n        copies of the Software, and to permit persons to whom the Software is\n        furnished to do so, subject to the following conditions:\n        \n        The above copyright notice and this permission notice shall be included in all\n        copies or substantial portions of the Software.\n        \n        THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n        SOFTWARE.",
     "package_name": "web-search-plus-mcp",
     "prompts_count": 0,
     "purl": "pkg:pypi/web-search-plus-mcp",
-    "recommended_safe_version": "5.1.2",
+    "recommended_safe_version": "5.1.6",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/web-search-plus-mcp",
+    "repository_url": "https://github.com/robbyczgw-cla/web-search-plus-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `web-search-plus-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 45 safe version(s).",
+    "security_summary": "Server `web-search-plus-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 48 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:4788c884fe5b2fc8b66cd007e0f9ed5ca0caf67ab4832e1dac0762b8b782593e",
@@ -107791,6 +109572,63 @@
         ],
         "toolset_canonical_hash": "sha256:4788c884fe5b2fc8b66cd007e0f9ed5ca0caf67ab4832e1dac0762b8b782593e",
         "version": "5.1.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-30T14:01:26.654250Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "5.1.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-30T21:47:04.975786Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "5.1.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-31T09:33:37.677390Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bb8fd1c02aa5f1776f7b33f8e55c54fde3bee2b1afdafed9cd0a51a2eab87c47",
+            "description": "Source-only URL extraction through 9 Web Search Plus v3 providers. Responses preserve bounded-context limits, truncation warnings, evidence, and page-on-demand stored-content references.",
+            "name": "web_extract",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `web_extract` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a50450fb6c9a4f956d76624d49089fdea2c161b62c83c0e24fa3194af5dbb959",
+            "description": "Source-only web search through the Web Search Plus v3 runtime. Routes across configured source-result providers and returns additive v3 evidence, routing receipts, provider attempts, cache provenance, and typed errors.",
+            "name": "web_search",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `web_search` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:4788c884fe5b2fc8b66cd007e0f9ed5ca0caf67ab4832e1dac0762b8b782593e",
+        "version": "5.1.6"
       }
     ]
   },

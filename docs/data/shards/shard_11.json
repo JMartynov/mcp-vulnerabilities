@@ -1162,7 +1162,7 @@
     "purl": "pkg:npm/@i4ctime%2Fq-ring",
     "recommended_safe_version": "1.0.0",
     "repo_http_status": 200,
-    "repository_url": "https://smithery.ai/servers/@i4ctime/q-ring",
+    "repository_url": "https://github.com/I4cTime/q-ring",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `@i4ctime/q-ring` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 40 safe version(s).",
@@ -4459,17 +4459,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.0.0",
+    "latest_version": "2.0.1",
     "license": "(Apache-2.0 OR MIT)",
     "package_name": "@influxdata/influxdb3-mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/@influxdata%2Finfluxdb3-mcp-server",
-    "recommended_safe_version": "2.0.0",
+    "recommended_safe_version": "2.0.1",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/@influxdata/influxdb3-mcp-server",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@influxdata/influxdb3-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
+    "security_summary": "Server `@influxdata/influxdb3-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:9abf2cff495f064997a2cee36bc9d121ba005b37f9d6c9c9217ebe7ff1d5fe6a",
@@ -5979,6 +5979,1451 @@
         ],
         "toolset_canonical_hash": "sha256:9abf2cff495f064997a2cee36bc9d121ba005b37f9d6c9c9217ebe7ff1d5fe6a",
         "version": "2.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-10-30T14:44:14.722Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e2cc508a547f3a50a2dd48d5e0ca3d5a0ec9e00269b4301ea9e33ca0e166aee4",
+            "description": "Generate a prompt to check InfluxDB health status",
+            "name": "check-health",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `check-health` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b073a733519e20dd830a47076226d447dc1687aae2eb44ad9eee864ceaf437aa",
+            "description": "Create a new database token for InfluxDB Cloud-Dedicated/Clustered cluster. Specify exact permissions per database or create a no-access token.\\n\\nPermissions format: [{",
+            "name": "cloud_create_database_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "database",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cloud_create_database_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82fbe3166312242df0c672b48ea2a78db974705549b8ea256ee994dafc7d2630",
+            "description": "Delete a database token from InfluxDB Cloud-Dedicated/Clustered cluster. This action cannot be undone.",
+            "name": "cloud_delete_database_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cloud_delete_database_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:01b4e4153ce683c6f3a2258f85a4b6d189a4107f9c84ba373a450161a5c23bad",
+            "description": "Get details of a specific database token by ID for InfluxDB Cloud-Dedicated/Clustered cluster.",
+            "name": "cloud_get_database_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cloud_get_database_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:52e161e1d08f54c5af5d695012aa7bfd67986dad972aeeae202ec5bba5039bff",
+            "description": "List all database tokens for InfluxDB Cloud-Dedicated/Clustered cluster. Returns token information including permissions and creation dates.",
+            "name": "cloud_list_database_tokens",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cloud_list_database_tokens` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:79658bcd14b4b10228510c0e04439fa055b366707a12bf33535da075cc92d5d1",
+            "description": "Update an existing database token for InfluxDB Cloud-Dedicated/Clustered cluster. Can update description and/or permissions with precise control.\\n\\nPermissions format: [{",
+            "name": "cloud_update_database_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "database",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cloud_update_database_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b1549e255638965d17d69da0cd3e2a3f9136b8ad641e291a9dcd6e8bbc474d67",
+            "description": "Custom context file with user-defined database descriptions or documentation",
+            "name": "context-file",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `context-file` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:03cb523f9a275b6a2aa59fef2f84408d6c5f44c424d90891eedcba555e1a5506",
+            "description": "Create a new InfluxDB named admin token with full administrative permissions (Core/Enterprise only). Named admin tokens can manage databases, users, and resource tokens, but cannot manage other admin tokens.",
+            "name": "create_admin_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expiry_secs",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_admin_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:194949ad4bbd844cd52c08734863b3544e0bc4a2579499700453cba3350dbd30",
+            "description": "Create a new database in InfluxDB. Database names must follow InfluxDB naming rules: alphanumeric characters, dashes (-), underscores (_), and forward slashes (/) are allowed. Must start with a letter or number. Maximum 64 characters. For Cloud Dedicated/Clustered: maxTables, maxColumnsPerTable, retentionPeriod. For Cloud Serverless: description, retentionPeriod.",
+            "name": "create_database",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxColumnsPerTable",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxTables",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "retentionPeriod",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_database` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:561d3ca2d229ae30fea7a36b88b2b1f1400f39a7709eb9c54debcbbc4ef7c2b5",
+            "description": "Create a new InfluxDB Enterprise resource token with specific database permissions. Example: databases=[",
+            "name": "create_resource_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expiry_secs",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_resource_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7e0603639213f604c36198eabb7a22787593c025a04864522dbcd6ee1ce393cf",
+            "description": "Delete a database from InfluxDB. Use the exact database name as returned by the list_databases tool.",
+            "name": "delete_database",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_database` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:de5635d008c89a60f922055a6a9e8bb752043a3879fc5c799c6faaaca2f0560f",
+            "description": "Delete an InfluxDB token by name (Core/Enterprise only).",
+            "name": "delete_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "token_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1952b838057ceea517edf281d849c12c2fb89f42099087a1bb86c1f374928ac1",
+            "description": "Describe table schema using InfluxDB metadata. Unknown tag/field roles are returned as category=unknown instead of guessed. Use this before retrying SQL queries that fail on quoted wildcard or unknown-field selectors; expand matching fields explicitly and run one bounded query_sql.",
+            "name": "describe_table",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "db",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "table",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `describe_table` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bbb59c3a22a78d9395ff4a67547acd6b048282397cec958caa0f6bf402a5ccef",
+            "description": "Execute a SQL query against an InfluxDB database (all versions). Returns results in the specified format (defaults to JSON). On Cloud Dedicated, Cloud Serverless, and Clustered, this tool supports only JSON output. Large Dataset Warning: InfluxDB might contain massive time-series data. Always use COUNT(*) first to check size, then LIMIT/OFFSET for large results (>1000 rows). Cloud Dedicated/Clustered & Cloud Serverless (v3) Requirements: - GROUP BY: Include all group columns in SELECT (e.g., SELECT place, COUNT(*) ... GROUP BY place) - Aggregations: Cast and alias COUNT (e.g., CAST(COUNT(*) AS DOUBLE) AS count) - Note: Both products require CAST for all aggregation functions (COUNT, SUM, AVG, MIN, MAX) to ensure results appear properly in response",
+            "name": "execute_query",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "database",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `execute_query` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e8b30171907c9501699fbffe8c28c3a2974044ba9dbb3f9024d03358e7aaf791",
+            "description": "Get help and troubleshooting guidance for InfluxDB operations. Supports specific categories or keyword search.",
+            "name": "get_help",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_help` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0db9ed8682a4dfcb92c862e2dde57e0dd629ee7c618517fac11c4b34efb2c7ce",
+            "description": "Get the schema (column information) for a specific measurement/table (all versions). Shows column names, types, and categories (time/tag/field).",
+            "name": "get_measurement_schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "database",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "measurement",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_measurement_schema` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c977ea48ec24a8a1e9406b733c0f3c246267896d6f637546aebd858c3fa364ed",
+            "description": "Get a list of all measurements (tables) in a database/bucket (all versions). Uses the InfluxDB information_schema.columns to discover tables.",
+            "name": "get_measurements",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "database",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_measurements` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e42cd2befb3ebef491f82a0a4e1872a452091f7577dfabe134131f84d0564da8",
+            "description": "Check current connection status to the InfluxDB instance. Returns connection status, configuration, and available endpoint results. Health assessment is flexible - if any check passes (client initialization, /health endpoint, or /ping), the instance is considered healthy. Available checks depend on the InfluxDB product type and token configuration.",
+            "name": "health_check",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 4.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `health_check` [MEDIUM] initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:74ba37a43c97b91fe4171d60b445577fe8257b6973514754f0803e93772902e6",
+            "description": "InfluxDB configuration and connection status",
+            "name": "influx-config",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `influx-config` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1aafc523fa2a27b784c5715978ccc03c96b2576608a55c4f34c94d0ff6950baa",
+            "description": "List of all databases in the InfluxDB instance",
+            "name": "influx-databases",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `influx-databases` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:269bd02cc0532817c0eae6c507cca775a64f664a11ae5f192b25d75dfa17bdac",
+            "description": "Comprehensive status of the InfluxDB connection including ping and health check results",
+            "name": "influx-status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `influx-status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5ad6e217b5a64876885c945952c98e7dc1023d06d794226cd7441f2c09183897",
+            "description": "Discover tables and schemas in a database, optionally sampling recent rows from each table with bounded reads.",
+            "name": "investigate_database",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "db",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includeCardinality",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includeSamples",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxTables",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sampleRowsPerTable",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `investigate_database` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:384e719055b12e2df799a555c1a01245e98fb19acde5a5dc2db25504eb58e51c",
+            "description": "Generate a prompt to list all available databases",
+            "name": "list-databases",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `list-databases` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:472bbf559fdbf5e98b442f8d2e12902378a53a72326faf1290c0a6926e82b71d",
+            "description": "List all admin tokens (operator and named admin tokens) with optional filtering by token name (Core/Enterprise only). Named admin tokens have full administrative access including resource token management.",
+            "name": "list_admin_tokens",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tokenName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_admin_tokens` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d70848588bdb121fd7342fe500c6290e36b8089804a81584090d09aeb87bda03",
+            "description": "List all databases in the InfluxDB instance (all versions). Returns database names, count, and status information.",
+            "name": "list_databases",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_databases` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c7091838b7715e2582974b6862f11b34af3575b8fdefad5137e2452b27e80e38",
+            "description": "List all Enterprise resource tokens with optional filtering by database name and/or token name, and ordering.",
+            "name": "list_resource_tokens",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "databaseName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "orderBy",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "orderDirection",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tokenName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_resource_tokens` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5f66545af727be0bbd588a2b0d49c57b5f874af1b03bdd00a93a0f746c15c209",
+            "description": "List tables, also called measurements, in an InfluxDB database.",
+            "name": "list_tables",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "db",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tables` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7742c6094fcd1226fcfff179f604c2b75d8e3836825b1d8f11e6835f3f6a964d",
+            "description": "Load custom database context and documentation",
+            "name": "load-context",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `load-context` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5efcba32577ad399e6e496214df997108961f5bbfb2e68f99ac0e0f64f075269",
+            "description": "Check for and load custom database context if available. Always check this first as it can significantly speed up analysis and clarify data nuances. User-provided context is optional but when present, it contains valuable information about database structure, business context, or personal notes that can guide more accurate analysis.",
+            "name": "load_database_context",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `load_database_context` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2efe41bcec0b20354c96bedb4c8bd02264eba5da49ff878be94bda80531560a2",
+            "description": "Run one bounded, read-only InfluxQL query against an InfluxDB 3 database. Rejects SELECT INTO and destructive statements. Prefer query_sql for SQL prompts; use InfluxQL regex field selection only when the user explicitly asks for InfluxQL or regex field matching.",
+            "name": "query_influxql",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `query_influxql` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5952a3f1d6beafda274618a328f4ac053176f921c1bdfce6087a0709fcf69759",
+            "description": "Run one bounded, read-only SQL query against an InfluxDB 3 database. Defaults to JSON output and returns structured rows, warnings, and query metadata. On Cloud Dedicated, Cloud Serverless, and Clustered, this tool supports only JSON output. In SQL, quoted identifiers are exact column names; if a quoted selector contains *, treat it as wildcard intent, call describe_table, expand matching fields explicitly, then retry one bounded query_sql. Use query_influxql regex only when the user explicitly asks for InfluxQL or regex field selection.",
+            "name": "query_sql",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `query_sql` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e5743d5ab9c2eec880a8bbcac9f98e71a2048b1bebc47f34e6d0a1670de6dcc9",
+            "description": "Regenerate the InfluxDB operator token (Core/Enterprise only). Returns the new token value. ⚠️ This action invalidates current operator token and is irreversible. Receive the explicit user confirmation before proceeding.",
+            "name": "regenerate_operator_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `regenerate_operator_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e330fb3be0cb7ee863860d7e521bebcd1aa5bbfb853420ba8556222f32788384",
+            "description": "Create a new measurement schema in a Cloud Serverless bucket with explicit schema type. Define columns with their types (tag, field, timestamp) and data types.",
+            "name": "serverless_create_schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "bucketName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dataType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "schemaName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `serverless_create_schema` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:19733511c8d4cc7b5bbca15a7b3e5a4035e1c978e61b7e612d0246be5ff109ec",
+            "description": "Get detailed information about a specific measurement schema in a Cloud Serverless bucket. Shows column definitions, data types, and schema metadata.",
+            "name": "serverless_get_schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "bucketName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "schemaName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `serverless_get_schema` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:21232d925064de8b03c94e91fc9c51bd0afc7e88cb20244b13b437cd51146a9f",
+            "description": "List all measurement schemas in a Cloud Serverless bucket. Only available for buckets with explicit schema type. Shows schema names, column definitions, and metadata.",
+            "name": "serverless_list_schemas",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "bucketName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `serverless_list_schemas` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:843de8e83e2e42e9c0bd3986e8bdc8dfd793c5b19de3f7f98f8a2703083a593b",
+            "description": "Add new columns to an existing measurement schema in a Cloud Serverless bucket. IMPORTANT: You can only ADD new columns, not modify existing ones. The endpoint requires ALL columns (existing + new) to be sent. Use get_schema first to retrieve current columns, then include them along with new columns in this update.",
+            "name": "serverless_update_schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "bucketName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dataType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "schemaName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `serverless_update_schema` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:342b2a0e80aaeb45809f7e5747082f27a6de21c76be23ddd89d8427be73ce0a4",
+            "description": "Update database configuration for InfluxDB. For Cloud Dedicated/Clustered: modify maxTables, maxColumnsPerTable, and retentionPeriod. For Cloud Serverless: modify bucket name, description, and retentionPeriod. For Core/Enterprise: modify retentionPeriod only (Core requires v3.2.0+).",
+            "name": "update_database",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxColumnsPerTable",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxTables",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "newName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "retentionPeriod",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_database` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b1a3b41b6b2b579b6b010d4b6e2ba5eaf41f7d221e4f4847120b562655375238",
+            "description": "Write data to InfluxDB using line protocol format (all versions). Supports single records or batches. Line Protocol Syntax: measurement,tag1=value1,tag2=value2 field1=value1,field2=value2 timestamp Components: - measurement: table/measurement name (required) - tags: indexed metadata (optional) - comma-separated key=value pairs - fields: actual data (required) - space-separated from tags, comma-separated key=value pairs - timestamp: optional timestamp (precision must be specified in tool parameters) Field Value Types: - Strings:",
+            "name": "write_line_protocol",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "acceptPartial",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "data",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "database",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "noSync",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "precision",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "zodSchema",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `write_line_protocol` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:9abf2cff495f064997a2cee36bc9d121ba005b37f9d6c9c9217ebe7ff1d5fe6a",
+        "version": "2.0.1"
       }
     ]
   },
@@ -29346,7 +30791,7 @@
     "security_summary": "Server `acamolese/google-search-console-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:0e02d3fa607f39d5f6a6d153b5ef45ddd44a822ab3d1e7b0c086cefc635306ba",
+    "toolset_canonical_hash": "sha256:13b15648b6a9a2bb7f8d149acb57b7312658031744a698f099284d45c5d87d10",
     "transport": "stdio",
     "versions": [
       {
@@ -29963,8 +31408,1625 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:07960712c055b4b7303da26c26fcbcd37dce84b39bd9dc9217d22f027aa51c94",
+            "description": "Query the Search Analytics report: clicks, impressions, CTR, position.",
+            "name": "gsc_query",
+            "parameters": [
+              {
+                "default": "auto",
+                "description": "auto, byPage or byProperty.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "aggregation_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "data_state",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "query",
+                "description": "Comma-separated dimensions: query, page, country, device, date, searchAppearance, hour. `hour` covers only the last 10 days.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dimensions",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "and",
+                "description": "Only `and` is supported by the API within one group.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filter_group_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "List of {dimension, operator, expression}. Operators: equals, notEquals, contains, notContains, includingRegex, excludingRegex.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filters",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 100,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 0,
+                "description": "Zero-based pagination offset.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "start_row",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "web",
+                "description": "web, image, video, news, discover or googleNews.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `gsc_query` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:85a3618603e1e6f2b9bbc9d6911bb447d65cebcb9e88322e94487a235ef59526",
+            "description": "Site totals for a period, compared with the preceding one by default.",
+            "name": "gsc_performance_overview",
+            "parameters": [
+              {
+                "default": true,
+                "description": "Also fetch the equally long preceding period.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compare_previous",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "data_state",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "web",
+                "description": "web, image, video, news, discover or googleNews.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_performance_overview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6c033b617271369f917b033057f2d13df7ffc02000324a948ddc2e9573faebfb",
+            "description": "Join two periods on one dimension and rank the rows by click delta.",
+            "name": "gsc_compare_periods",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "query",
+                "description": "One of query, page, country, device, searchAppearance.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dimension",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 0,
+                "description": "Drop rows below this impression count in both periods.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_impressions",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Baseline start YYYY-MM-DD. Defaults to the equally long period ending the day before date_from.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "prev_date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Baseline end YYYY-MM-DD.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "prev_date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 100,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `gsc_compare_periods` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1beb5d7ef0ef92c6d1b6dbc3cddee301cfe85b4db13faa6d57d07cc4f694c92a",
+            "description": "Build a complete, self-contained HTML SEO audit for one property.",
+            "name": "gsc_audit",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Words that mark a query as branded. Without them the first label of the domain is used, which is often wrong.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "brand_terms",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Path to a branding.json overriding colours, logo, name and thresholds.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "branding_path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 10,
+                "description": "How many top pages to run through URL Inspection. 0 disables it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "inspect_top_pages",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "language",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "auto",
+                "description": "`file` writes the report and returns its path, `inline` returns the HTML as an embedded resource, `both` does both, `auto` picks by transport.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Where to write the report. Defaults to ~/gsc-reports/.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_dir",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sections",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Override the adaptive thresholds: min_impressions, min_clicks, high_visibility_impressions, ctr_curve.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 10.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `gsc_audit` [CRITICAL] issues raw database queries that could lead to SQL injection; reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk); processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2fa1487dfff528794ae39f605e7c1a78e063d686766ba772e7dde2bfa5f436ea",
+            "description": "Report the server's configuration and whether Search Console answers.",
+            "name": "gsc_doctor",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_doctor` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eaf10c561687cdf67bb8e97fe2a81db00f8df55be01a411ca8c0e73c37712920",
+            "description": "Queries close enough to the top that a push would pay off.",
+            "name": "gsc_quick_wins",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 20.0,
+                "description": "Ignore queries below this position.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_position",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": 4.0,
+                "description": "Ignore queries above this position.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_position",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 3,
+                "description": "Position to size the opportunity against.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target_position",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_quick_wins` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:17ee31ad5c020bc300fbe584682b620cf0cf930ebb7bbd90ec59fdbf1c1bd41f",
+            "description": "Rows that rank well but are clicked far less than their position implies.",
+            "name": "gsc_ctr_gaps",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "page",
+                "description": "Analyse by `page` (default) or by `query`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 0.6,
+                "description": "Flag rows whose CTR is below this fraction of the expected CTR.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "gap_ratio",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": 10.0,
+                "description": "Only consider rows at or above this position.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_position",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `gsc_ctr_gaps` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5639cd5a2ff78e74f9267768de8b1cf1f37e1cb8e7f8d237e9670a5dc2aab68b",
+            "description": "Queries where several pages of the site compete for the same result.",
+            "name": "gsc_cannibalization",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 2,
+                "description": "Minimum competing pages per query.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_pages",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 0.1,
+                "description": "A page must hold this share of the query's impressions to count.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_share",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `gsc_cannibalization` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:77fe7fdd1ec638260ae865c100fd7f8ae45663ec406cb3601542f450412ed774",
+            "description": "Pages that lost clicks against the baseline, each with a likely cause.",
+            "name": "gsc_traffic_drops",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 20.0,
+                "description": "Minimum click loss, in percent.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_drop_pct",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_traffic_drops` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:981ef9abc51eee8b5d1876c1315fbdcc592e267dfda227743ecfcdc0f0a6c295",
+            "description": "Pages sliding down month after month.",
+            "name": "gsc_content_decay",
+            "parameters": [
+              {
+                "default": 3,
+                "description": "Months of uninterrupted decline required.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "consecutive_months",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 30,
+                "description": "Ignore pages that never reached this many clicks in a month.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_peak_clicks",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 6,
+                "description": "How many months of history to read (2-16).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "months",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_content_decay` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:331ba725ce6524ba8bdf12fb51578b7ee512ffebd313fdfefde8d6416263c661",
+            "description": "What changed sharply enough to be worth a message today.",
+            "name": "gsc_alerts",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thresholds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 7,
+                "description": "Length of the window to compare.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "window_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_alerts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5c8e5b11080dee2f4e3b3b77380e051b9ab7747b83e4b1bf6c89f53979afccb4",
+            "description": "Every accessible property at a glance, ranked worst first.",
+            "name": "gsc_portfolio",
+            "parameters": [
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 28,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 30,
+                "description": "How many properties to check.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_portfolio` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:38f92fdaf6f3be0b39c380c2030c138e285bbae10c226cd85456fb729665e7c0",
+            "description": "Check whether a batch of URLs is indexed, and why not when they are not.",
+            "name": "gsc_indexing_issues",
+            "parameters": [
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Fully qualified URLs under site_url. At most 100 per call.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pages",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_indexing_issues` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9acf6f229d3d270ec4df26e1b5076b1938f8d2e4a5945b30536ef68badd96c76",
+            "description": "Full URL Inspection for one page: index, mobile, rich results and AMP.",
+            "name": "gsc_inspect_url",
+            "parameters": [
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Fully qualified URL under site_url.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "page_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `gsc_inspect_url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:66a6b4bd72997a85c0a87c3c99a42a854545a643a1789b2465b03936d1fbdf56",
+            "description": "List the sitemaps Google knows about for a property, with errors and warnings.",
+            "name": "gsc_sitemaps",
+            "parameters": [
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_sitemaps` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5c64cb773aac31b5d7d66967882d22ead62ff04378dceec9f623534bf3a0bc73",
+            "description": "List every property the authenticated account can read.",
+            "name": "gsc_sites",
+            "parameters": [
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_sites` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:05dc66e9ca58d19e93d6477f78c518e2ee028980259a973af106e7d94e3fc37f",
+            "description": "Permission level and property type for one property.",
+            "name": "gsc_site_details",
+            "parameters": [
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "no_cache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "tsv",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "response_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gsc_site_details` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:13b15648b6a9a2bb7f8d149acb57b7312658031744a698f099284d45c5d87d10",
         "version": "3.0.1"
       }
     ]
@@ -43095,8 +46157,149 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b50851590ea941aa3fb0620b9880f48e29782263d71d8eff5bbf0ce63ce1b730",
+            "description": "Add one or more tracks to an EXISTING playlist -- this edits that playlist",
+            "name": "add_tracks_to_playlist",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_tracks_to_playlist` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f99a22e52cd3c2576f0bb14abef82987aa8e46ec3ff9caaca216cdaa4e208316",
+            "description": "audit_library",
+            "name": "audit_library",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit_library` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:170b30f61dea7acdfc3580cfdbaa66668ae3a54d9fb653ee7bba905b0874355a",
+            "description": "Create a new playlist in this Engine DJ library from track ids returned by ",
+            "name": "create_playlist",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_playlist` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:863734c24397a11ad9a2453224205c69368ab7a1c9c9b3b87e122ed0771cc953",
+            "description": "The tracks of one playlist, in playlist order -- from the PlaylistEntity.nextEntityId ",
+            "name": "get_playlist_tracks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_playlist_tracks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e589de3aeda0a867ca1a83756f314eb54a7fb1f85eceec7264b19006992b956",
+            "description": "The library",
+            "name": "get_playlists",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_playlists` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:06eba90de8a6515dafeb828fd7957a789f0392620726c0d8a7a6f73013b5784d",
+            "description": "Decode PerformanceData for one track: hot cues, the main cue, saved loops, the ",
+            "name": "get_track_performance",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_track_performance` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bbf0f7ce0c39943201278d3770e190cf557a5c2e99df605cb5c95f4fee849aff",
+            "description": "Fetch full metadata for specific track ids, in the order requested. ",
+            "name": "get_tracks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_tracks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5b568acd4f20eae205ed723b59b8e01c5161212881c4175fdbb292746e7b65e0",
+            "description": "List every discovered library, including ones whose schema is unsupported. ",
+            "name": "list_libraries",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_libraries` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4d9f1a469ca096dd1c94109e1f812eed76cd62bc01604dc2dd3beaee7b5ef081",
+            "description": "Rebuild the search index if the library has changed. ",
+            "name": "refresh_index",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `refresh_index` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7d0e6612dd6c8c26493062ac3887ad43a2e73917af90b9fe67b5dc77a282c521",
+            "description": "Remove one or more tracks from an EXISTING playlist by position -- this edits that ",
+            "name": "remove_tracks_from_playlist",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_tracks_from_playlist` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:de6ded7cacd679c69f134763a8d19f0a896d24e03b2ec10769cc898e64a1517f",
+            "description": "Reorder an EXISTING playlist",
+            "name": "reorder_playlist",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reorder_playlist` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:86ee9d73fcc7d5c6fceaa1ba35b091bcd498b91e1fd7ecbdb03af72e88be0def",
+            "description": "Escape hatch for questions the other tools do not cover. Read-only is enforced by the ",
+            "name": "run_sql",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run_sql` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:27a618fcc232df1f813936af100ed5bcb172686bd8746332efad0e18542cd9c8",
+            "description": "Search the Engine DJ library by text, tempo, key, rating, play history and analysis ",
+            "name": "search_tracks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_tracks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:427127113e9be31fbb1d3517fd94648854a7312aaea64ba6513e187e360987e4",
+            "description": "Change genre, comment, label, year or rating on tracks in this Engine DJ library -- the ",
+            "name": "update_track_metadata",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_track_metadata` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:6c9f0bad5d41de4904cdba281b6d054eace6ec78d0e3d9de2f920f7359bca80c",
         "version": "0.9.2"
       },
       {
@@ -71710,7 +74913,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "MEDIUM",
-    "description": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
+    "description": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
     "display_name": "mcp-api",
     "ecosystem": "MCP",
     "highest_cve_severity": "MEDIUM",
@@ -71737,20 +74940,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71768,20 +74971,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71799,20 +75002,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71830,20 +75033,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71861,20 +75064,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71892,20 +75095,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71923,20 +75126,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71954,20 +75157,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -71985,20 +75188,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -72016,20 +75219,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-19040",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "CVE-2026-19041",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "A vulnerability has been found in MissionSquad mcp-api up to 1.11.8. The impacted element is the function this.packageSe",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-19040",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "A flaw has been found in MissionSquad mcp-api up to 1.11.9. The affected element is an unknown function of the file src/",
             "vulnerable_tools": []
           }
         ],
@@ -72056,7 +75259,7 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "c630b8ab0f970614d42da8e566e9c0d15a16414c",
+    "latest_version": "357ca19c7a49a9b9cb2ef639b366f03aba8bea39",
     "license": null,
     "package_name": "mcp-bases",
     "prompts_count": 0,
@@ -72092,7 +75295,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "357ca19c7a49a9b9cb2ef639b366f03aba8bea39"
+        "version": "c630b8ab0f970614d42da8e566e9c0d15a16414c"
       },
       {
         "advisories": [
@@ -72114,7 +75317,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "c630b8ab0f970614d42da8e566e9c0d15a16414c"
+        "version": "357ca19c7a49a9b9cb2ef639b366f03aba8bea39"
       }
     ]
   },
@@ -73284,7 +76487,7 @@
     "purl": "pkg:pypi/mcp-simple-timeserver",
     "recommended_safe_version": "3.3.2",
     "repo_http_status": 200,
-    "repository_url": null,
+    "repository_url": "https://github.com/andybrandt/mcp-simple-timeserver",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `mcp-simple-timeserver` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 14 safe version(s).",
@@ -84535,12 +87738,12 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.0",
+    "latest_version": "0.3.5",
     "license": "MIT",
     "package_name": "projectmem",
     "prompts_count": 0,
     "purl": "pkg:pypi/projectmem",
-    "recommended_safe_version": "1.0.0",
+    "recommended_safe_version": "0.3.5",
     "repo_http_status": 200,
     "repository_url": "https://github.com/riponcm/projectmem",
     "required_env_vars": [],
@@ -84712,7 +87915,7 @@
         "connections": [],
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-10-31T02:21:08.868242Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [
@@ -85311,7 +88514,7 @@
           }
         ],
         "toolset_canonical_hash": "sha256:1a500bc5703367175f6cb815810760f738887e0b6df3b970df3500e835c4f1ff",
-        "version": "1.0.0"
+        "version": "0.3.5"
       }
     ]
   },
