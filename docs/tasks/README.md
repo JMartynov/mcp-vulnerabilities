@@ -366,6 +366,14 @@ Master Plan: [master_plan_wave25_cve_source_provenance_and_evidence_traceability
 | :---: | :--- | :--- | :---: | :--- | :--- |
 | **141** | **CVE Source Provenance URLs in Web Portal and CLI** | Web Portal & Security CLI (`docs/app.js`, `docs/updates.js`, `docs/index.html`, `docs/updates.html`, `src/mcp_vulnerabilities/`) | `Ready` | Provide authoritative direct source provenance URLs (CVE.org, NVD, GHSA, OSV) and upstream reference links across all web portal modals, dropzones, update feeds, and CLI reports. | [task141_cve_source_provenance_urls_web_and_cli.md](task141_cve_source_provenance_urls_web_and_cli.md) |
 
+---
+
+### 26. Wave 26: Card Footer Button Deduplication, 1-Click Card Inspection, and Universal Clickable CVE Provenance Links (Planned / Active)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **142** | **Card Footer Button Deduplication, 1-Click Card Inspection, and Universal Clickable CVE Provenance Links** | Web Portal UI & Modal UX (`docs/app.js`, `docs/updates.js`, `docs/style.css`, `tests/test_web_card_footer_ux.py`) | `Ready` | Deduplicate triple "+ Add to Basket" buttons in server card footer, enable 1-click modal inspection from card surface, make "Inspect Server & Versions" primary action, enable `.quick-copy-group` flex wrapping, and render clickable CVE badges with provenance source link groups. | [task142_card_footer_ux_and_clickable_cve_urls.md](task142_card_footer_ux_and_clickable_cve_urls.md) |
+
 ## Verification Test Results
 ```
 .venv/bin/pytest -q
