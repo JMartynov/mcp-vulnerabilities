@@ -7,7 +7,7 @@ import pytest
 import aiohttp
 import struct
 import websockets
-from src.mcp_vulnerabilities.daemon.bridge import BridgeDaemon
+from mcp_vulnerabilities.daemon.bridge import BridgeDaemon
 
 import pytest_asyncio
 
