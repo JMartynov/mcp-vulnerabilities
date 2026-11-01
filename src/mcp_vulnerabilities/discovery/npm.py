@@ -78,6 +78,28 @@ class NpmDiscoveryProvider:
                             repo_url=repo,
                         )
                         if is_rel:
+                            # Fetch package metadata to check for deprecation
+                            is_deprecated = False
+                            deprecation_reason = ""
+                            meta_url = f"https://registry.npmjs.org/{urllib.parse.quote(name)}"
+                            meta_req = urllib.request.Request(
+                                meta_url,
+                                headers={"User-Agent": "McpVulnerabilities/1.0", "Accept": "application/json"},
+                            )
+                            try:
+                                with urllib.request.urlopen(meta_req, timeout=5.0, context=_get_ssl_context()) as meta_resp:
+                                    meta_data = json.loads(meta_resp.read().decode("utf-8"))
+                                    # check latest version or overall package
+                                    versions = meta_data.get("versions", {})
+                                    latest_ver = meta_data.get("dist-tags", {}).get("latest")
+                                    if latest_ver and latest_ver in versions:
+                                        depr = versions[latest_ver].get("deprecated")
+                                        if depr:
+                                            is_deprecated = True
+                                            deprecation_reason = str(depr)
+                            except Exception as meta_exc:
+                                logger.debug("Failed to fetch metadata for %s: %s", name, meta_exc)
+                                
                             discovered[name] = {
                                 "name": name,
                                 "ecosystem": "npm",
@@ -85,6 +107,8 @@ class NpmDiscoveryProvider:
                                 "description": desc,
                                 "repository": repo,
                                 "reasons": list(reasons),
+                                "is_deprecated": is_deprecated,
+                                "deprecation_reason": deprecation_reason,
                             }
             except Exception as exc:
                 logger.warning("npm discovery query '%s' failed: %s", q, exc)

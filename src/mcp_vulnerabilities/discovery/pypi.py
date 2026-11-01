@@ -35,8 +35,29 @@ class PypiDiscoveryProvider:
             with urllib.request.urlopen(req, timeout=timeout, context=_get_ssl_context()) as resp:
                 data = json.loads(resp.read().decode("utf-8"))
                 info = data.get("info", {})
+                releases = data.get("releases", {})
                 
+                # Check for yanked releases
                 version = info.get("version", "")
+                
+                if version and version in releases:
+                    # check if yanked
+                    is_yanked = any(r.get("yanked", False) for r in releases[version])
+                    if is_yanked:
+                        # Find latest non-yanked release
+                        from packaging.version import parse as parse_version, InvalidVersion
+                        valid_versions = []
+                        for v, files in releases.items():
+                            if not any(f.get("yanked", False) for f in files):
+                                try:
+                                    valid_versions.append(parse_version(v))
+                                except InvalidVersion:
+                                    pass
+                        if valid_versions:
+                            version = str(max(valid_versions))
+                        else:
+                            version = "" # All yanked or none valid
+                            
                 project_urls = info.get("project_urls", {}) or {}
                 repo = project_urls.get("Source Code") or project_urls.get("Repository") or project_urls.get("Code") or project_urls.get("Homepage", "")
                 

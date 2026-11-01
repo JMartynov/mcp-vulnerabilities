@@ -36,10 +36,17 @@ class McpDiscoveryOrchestrator:
         logger.info("Starting multi-registry MCP server discovery...")
         aggregated: dict[str, dict[str, Any]] = {}
 
+        # Load catalog state to record deprecations
+        from mcp_vulnerabilities.catalog import McpCatalogState
+        catalog_state = McpCatalogState()
+
         # 1. npm
         if include_npm:
             logger.info("Discovering from npm Registry...")
             for pkg in NpmDiscoveryProvider.discover():
+                if pkg.get("is_deprecated"):
+                    catalog_state.record_deprecation("npm", pkg["name"], "deprecated", pkg.get("deprecation_reason", ""))
+                    continue
                 key = f"npm:{pkg['name'].lower()}"
                 aggregated[key] = pkg
 
@@ -47,6 +54,10 @@ class McpDiscoveryOrchestrator:
         if include_pypi:
             logger.info("Discovering from PyPI PEP 691 index...")
             for pkg in PypiDiscoveryProvider.discover():
+                # For PyPI, PypiDiscoveryProvider resolves the version. If it's fully yanked, version might be empty.
+                if not pkg.get("version"):
+                    catalog_state.record_deprecation("PyPI", pkg["name"], "yanked")
+                    continue
                 key = f"pypi:{pkg['name'].lower()}"
                 if key not in aggregated:
                     aggregated[key] = pkg
@@ -55,6 +66,12 @@ class McpDiscoveryOrchestrator:
         if include_github:
             logger.info("Discovering from GitHub Curated Lists & Topics...")
             for repo in GitHubCuratedDiscoveryProvider.discover():
+                if repo.get("is_deleted"):
+                    catalog_state.record_deprecation("GitHub", repo["name"], "deleted_404")
+                    continue
+                if repo.get("is_archived"):
+                    catalog_state.record_deprecation("GitHub", repo["name"], "archived")
+                    continue
                 key = f"github:{repo['name'].lower()}"
                 if key not in aggregated:
                     aggregated[key] = repo
@@ -87,6 +104,7 @@ class McpDiscoveryOrchestrator:
 
         # Persist updated catalog to disk
         self.catalog_file.parent.mkdir(parents=True, exist_ok=True)
+        catalog_state.save()
         catalog_data = {
             "version": "1.0.0",
             "total_servers": len(aggregated),
