@@ -1389,7 +1389,7 @@
       }
 
       return `
-        <article class="server-card">
+        <article class="server-card" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}" tabindex="0">
           <div class="server-card-header">
             <div>
               <h3 class="server-title">${escapeHtml(title)}</h3>
@@ -1428,9 +1428,7 @@
             </div>
             <div class="quick-copy-group">
               <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
-              <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
               <button type="button" class="btn btn-quick-copy" data-client="claude" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Claude ]</button>
-              <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
               <button type="button" class="btn btn-quick-copy" data-client="cursor" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Cursor ]</button>
               <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
                 🔍 Inspect Server & Versions
@@ -1450,6 +1448,25 @@
     // Attach click handlers to Inspect buttons
     el.serversContainer.querySelectorAll(".btn-inspect").forEach((btn) => {
       btn.addEventListener("click", () => openServerModal(btn.dataset.pkg, btn.dataset.shard));
+    });
+
+    // 1-Click Card Surface Inspection Event Delegation
+    el.serversContainer.querySelectorAll(".server-card").forEach((card) => {
+      card.addEventListener("click", (e) => {
+        // Ignore clicks on nested interactive elements
+        if (e.target.closest("button, a, input, [role='button'], .drawer-toggle-btn, .fp-badge, .tool-pill")) {
+          return;
+        }
+        openServerModal(card.dataset.pkg, card.dataset.shard);
+      });
+      card.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          if (e.target === card) {
+            openServerModal(card.dataset.pkg, card.dataset.shard);
+          }
+        }
+      });
     });
 
     if (visibleCardsCount < filteredServers.length) {
@@ -1815,15 +1832,31 @@
     if (advs.length > 0) {
       el.selectedVersionVulnContainer.innerHTML = `
         <div class="version-vuln-matrix">
-          ${advs.map((adv) => `
+          ${advs.map((adv) => {
+            const urls = typeof resolveAdvisorySourceUrls === "function" ? resolveAdvisorySourceUrls(adv.id, adv.aliases) : {};
+            const primaryUrl = urls.cve || urls.ghsa || urls.osv || `https://osv.dev/vulnerability/${encodeURIComponent(adv.id || "")}`;
+            
+            let sourceLinksHtml = "";
+            if (urls.cve) sourceLinksHtml += `<a href="${urls.cve}" target="_blank" rel="noopener" class="source-link-pill">CVE.org ↗</a>`;
+            if (urls.nvd) sourceLinksHtml += `<a href="${urls.nvd}" target="_blank" rel="noopener" class="source-link-pill">NIST NVD ↗</a>`;
+            if (urls.ghsa) sourceLinksHtml += `<a href="${urls.ghsa}" target="_blank" rel="noopener" class="source-link-pill">GitHub GHSA ↗</a>`;
+            if (urls.osv) sourceLinksHtml += `<a href="${urls.osv}" target="_blank" rel="noopener" class="source-link-pill">OSV.dev ↗</a>`;
+
+            return `
             <div class="vuln-matrix-item">
               <div class="vuln-matrix-header">
-                <span class="badge badge-danger">${escapeHtml(adv.id || "CVE")}</span>
+                <a href="${primaryUrl}" target="_blank" rel="noopener" class="badge badge-danger cve-link-badge" title="View official advisory source">🔗 ${escapeHtml(adv.id || "CVE")} ↗</a>
                 <span class="badge risk-high">Severity: ${escapeHtml(adv.severity || "UNKNOWN")}</span>
                 ${adv.cvss_score ? `<span class="badge">CVSS: ${escapeHtml(String(adv.cvss_score))}</span>` : ""}
                 ${adv.owasp_mcp_category ? `<span class="badge badge-eco">${escapeHtml(adv.owasp_mcp_category)}</span>` : ""}
               </div>
               <p class="vuln-summary">${escapeHtml(adv.summary || "Security vulnerability affects this version release.")}</p>
+              ${sourceLinksHtml ? `
+                <div class="vuln-source-provenance">
+                  <span class="source-provenance-label">🔗 Advisory Sources:</span>
+                  ${sourceLinksHtml}
+                </div>
+              ` : ""}
               ${adv.vulnerable_tools && adv.vulnerable_tools.length > 0 ? `
                 <div class="vuln-tools-tag-row">
                   <strong>Affected Tools:</strong>
@@ -1831,7 +1864,8 @@
                 </div>
               ` : ""}
             </div>
-          `).join("")}
+            `;
+          }).join("")}
         </div>
         ${remediationHtml}
       `;

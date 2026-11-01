@@ -651,12 +651,20 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
 }
 
 .server-card:hover {
   transform: translateY(-2px);
   border-color: var(--accent-color);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.server-card button,
+.server-card a,
+.server-card input {
+  cursor: default;
 }
 
 .server-card-header {
@@ -1643,6 +1651,57 @@ body {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.cve-link-badge {
+  text-decoration: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.15s, opacity 0.15s;
+}
+
+.cve-link-badge:hover {
+  opacity: 0.85;
+  transform: scale(1.04);
+}
+
+.vuln-source-provenance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 10px 0;
+  font-size: 0.8rem;
+}
+
+.source-provenance-label {
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.source-link-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-color);
+  color: var(--accent-color);
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-family: monospace;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.source-link-pill:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent-color);
 }
 
 .btn-quick-copy {

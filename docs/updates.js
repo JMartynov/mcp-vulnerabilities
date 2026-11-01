@@ -712,15 +712,31 @@
     if (advs.length > 0) {
       el.selectedVersionVulnContainer.innerHTML = `
         <div class="version-vuln-matrix">
-          ${advs.map((adv) => `
+          ${advs.map((adv) => {
+            const urls = typeof resolveAdvisorySourceUrls === "function" ? resolveAdvisorySourceUrls(adv.id, adv.aliases) : {};
+            const primaryUrl = urls.cve || urls.ghsa || urls.osv || `https://osv.dev/vulnerability/${encodeURIComponent(adv.id || "")}`;
+            
+            let sourceLinksHtml = "";
+            if (urls.cve) sourceLinksHtml += `<a href="${urls.cve}" target="_blank" rel="noopener" class="source-link-pill">CVE.org ↗</a>`;
+            if (urls.nvd) sourceLinksHtml += `<a href="${urls.nvd}" target="_blank" rel="noopener" class="source-link-pill">NIST NVD ↗</a>`;
+            if (urls.ghsa) sourceLinksHtml += `<a href="${urls.ghsa}" target="_blank" rel="noopener" class="source-link-pill">GitHub GHSA ↗</a>`;
+            if (urls.osv) sourceLinksHtml += `<a href="${urls.osv}" target="_blank" rel="noopener" class="source-link-pill">OSV.dev ↗</a>`;
+
+            return `
             <div class="vuln-matrix-item">
               <div class="vuln-matrix-header">
-                <span class="badge badge-danger">${escapeHtml(adv.id || "CVE")}</span>
+                <a href="${primaryUrl}" target="_blank" rel="noopener" class="badge badge-danger cve-link-badge" title="View official advisory source">🔗 ${escapeHtml(adv.id || "CVE")} ↗</a>
                 <span class="badge risk-high">Severity: ${escapeHtml(adv.severity || "UNKNOWN")}</span>
                 ${adv.cvss_score ? `<span class="badge">CVSS: ${escapeHtml(String(adv.cvss_score))}</span>` : ""}
                 ${adv.owasp_mcp_category ? `<span class="badge badge-eco">${escapeHtml(adv.owasp_mcp_category)}</span>` : ""}
               </div>
               <p class="vuln-summary">${escapeHtml(adv.summary || "Security vulnerability affects this version release.")}</p>
+              ${sourceLinksHtml ? `
+                <div class="vuln-source-provenance">
+                  <span class="source-provenance-label">🔗 Advisory Sources:</span>
+                  ${sourceLinksHtml}
+                </div>
+              ` : ""}
               ${adv.vulnerable_tools && adv.vulnerable_tools.length > 0 ? `
                 <div class="vuln-tools-tag-row">
                   <strong>Affected Tools:</strong>
@@ -729,7 +745,8 @@
               ` : ""}
               ${adv.remediation_guidance ? `<div class="remediation-box">💡 <strong>Remediation:</strong> ${escapeHtml(adv.remediation_guidance)}</div>` : ""}
             </div>
-          `).join("")}
+            `;
+          }).join("")}
         </div>
       `;
     } else {
