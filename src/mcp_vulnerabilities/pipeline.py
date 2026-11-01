@@ -616,7 +616,7 @@ class McpVulnerabilityPipeline:
             candidates_to_query = [
                 {"ecosystem": eco, "name": name, "version": ver}
                 for (eco, name), ver in candidate_map.items()
-                if self.catalog_state.should_query(eco, name, ver or None)
+                if self.catalog_state.should_query(eco, name, ver or None) and self.catalog_state.package_key(eco, name) not in self.catalog_state.tombstones
             ]
             skipped_count = len(candidate_map) - len(candidates_to_query)
             logger.info(

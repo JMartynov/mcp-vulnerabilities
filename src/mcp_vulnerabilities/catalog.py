@@ -114,6 +114,15 @@ def _parse_sort_version(ver_str: str) -> Version:
         return Version("0.0.0")
 
 
+
+@dataclass
+class TombstoneRecord:
+    name: str
+    ecosystem: str
+    reason: str  # "deprecated", "yanked", "archived", "deleted_404"
+    tombstoned_at_utc: str
+    details: str = ""
+
 @dataclass
 class ServerRecord:
     """State record for a single audited MCP server package."""
@@ -133,6 +142,7 @@ class McpCatalogState:
         self.state_file = Path(state_file)
         self.ttl_days = ttl_days
         self.records: dict[str, ServerRecord] = {}
+        self.tombstones: dict[str, TombstoneRecord] = {}
         self.load()
 
     @staticmethod
@@ -155,6 +165,14 @@ class McpCatalogState:
                     known_vulnerabilities=v.get("known_vulnerabilities", []),
                     metadata=v.get("metadata", {}),
                 )
+            for k, v in raw.get("tombstones", {}).items():
+                self.tombstones[k] = TombstoneRecord(
+                    name=v["name"],
+                    ecosystem=v["ecosystem"],
+                    reason=v["reason"],
+                    tombstoned_at_utc=v["tombstoned_at_utc"],
+                    details=v.get("details", ""),
+                )
         except Exception as exc:
             logger.warning("Failed to load catalog state from %s: %s", self.state_file, exc)
             import shutil
@@ -172,6 +190,7 @@ class McpCatalogState:
             "updated_at": datetime.now(UTC).isoformat().replace("+00:00", "Z"),
             "total_servers": len(self.records),
             "servers": {k: asdict(v) for k, v in sorted(self.records.items())},
+            "tombstones": {k: asdict(v) for k, v in sorted(self.tombstones.items())},
         }
         import uuid
         tmp_file = self.state_file.with_suffix(f".{uuid.uuid4().hex}.tmp")
@@ -182,9 +201,27 @@ class McpCatalogState:
             if tmp_file.exists():
                 tmp_file.unlink()
 
-    def should_query(self, ecosystem: str, name: str, current_version: str | None = None) -> bool:
+    def is_expired(self, key: str, ttl_days: int = 30) -> bool:
+        """Check if a package's TTL has expired."""
+        record = self.records.get(key)
+        if not record:
+            return True
+        if not record.last_checked_utc:
+            return True
+        try:
+            checked_dt = datetime.fromisoformat(record.last_checked_utc.replace("Z", "+00:00"))
+            age_days = (datetime.now(UTC) - checked_dt).total_seconds() / 86400.0
+            return age_days > ttl_days
+        except Exception:
+            return True
+
+    def should_query(self, ecosystem: str, name: str, current_version: str | None = None, ttl_days: int = 30) -> bool:
         """Check whether a package requires re-querying based on version change or TTL."""
         key = self.package_key(ecosystem, name)
+        
+        if hasattr(self, "tombstones") and key in self.tombstones:
+            return False
+            
         record = self.records.get(key)
         if not record:
             return True  # Never audited before
@@ -196,17 +233,21 @@ class McpCatalogState:
             if norm_curr != norm_last or not record.last_version_seen:
                 return True
 
-        # Check TTL staleness (if last checked > ttl_days ago)
-        if record.last_checked_utc:
-            try:
-                checked_dt = datetime.fromisoformat(record.last_checked_utc.replace("Z", "+00:00"))
-                age_days = (datetime.now(UTC) - checked_dt).total_seconds() / 86400.0
-                if age_days > self.ttl_days:
-                    return True
-            except Exception:
-                return True
+        # Check TTL staleness
+        return self.is_expired(key, ttl_days)
 
-        return False
+    def record_deprecation(self, ecosystem: str, name: str, reason: str, details: str = "") -> None:
+        """Records a tombstone and removes the package from active records."""
+        key = self.package_key(ecosystem, name)
+        if key in self.records:
+            del self.records[key]
+        self.tombstones[key] = TombstoneRecord(
+            name=name,
+            ecosystem=ecosystem,
+            reason=reason,
+            tombstoned_at_utc=datetime.now(UTC).isoformat().replace("+00:00", "Z"),
+            details=details,
+        )
 
     def mark_stale(self, ecosystem: str, name: str) -> None:
         """Force a package to be re-queried on next pass (e.g. when an external advisory names it)."""

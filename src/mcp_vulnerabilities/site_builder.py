@@ -361,6 +361,10 @@ def build_site_parallel(
     )
     t1 = time.time()
 
+    # Load Catalog State to filter tombstones
+    from mcp_vulnerabilities.catalog import McpCatalogState
+    catalog_state = McpCatalogState()
+
     # 2. Build Unified MCP Security Catalog in Parallel
     if passports_path is None and Path("data/passports.json.gz").exists():
         passports_path = Path("data/passports.json.gz")
@@ -383,6 +387,16 @@ def build_site_parallel(
             passports = _load_passports(passports_path)
     else:
         passports = _load_passports(passports_path)
+        
+    # Filter out tombstones
+    if isinstance(passports, dict):
+        filtered_passports = {}
+        for k, p_dict in passports.items():
+            eco = p_dict.get("ecosystem", "")
+            name = p_dict.get("package_name", "")
+            if catalog_state.package_key(eco, name) not in catalog_state.tombstones:
+                filtered_passports[k] = p_dict
+        passports = filtered_passports
     
     # Split passports into chunks
     items = list(passports.items())
