@@ -368,11 +368,28 @@ Master Plan: [master_plan_wave25_cve_source_provenance_and_evidence_traceability
 
 ---
 
-### 26. Wave 26: Card Footer Button Deduplication, 1-Click Card Inspection, and Universal Clickable CVE Provenance Links (Planned / Active)
+### 26. Wave 26: Front-End Hygiene, Basket Drawer & CI Resilience (Planned / Active)
 
 | # | Task | Subsystem | Status | Strategic Purpose | Contract File |
 | :---: | :--- | :--- | :---: | :--- | :--- |
 | **142** | **Card Footer Button Deduplication, 1-Click Card Inspection, and Universal Clickable CVE Provenance Links** | Web Portal UI & Modal UX (`docs/app.js`, `docs/updates.js`, `docs/style.css`, `tests/test_web_card_footer_ux.py`) | `Ready` | Deduplicate triple "+ Add to Basket" buttons in server card footer, enable 1-click modal inspection from card surface, make "Inspect Server & Versions" primary action, enable `.quick-copy-group` flex wrapping, and render clickable CVE badges with provenance source link groups. | [task142_card_footer_ux_and_clickable_cve_urls.md](task142_card_footer_ux_and_clickable_cve_urls.md) |
+| **143** | **Multi-Server Configuration Basket Drawer & Client Export Engine** | Web Portal UI (`docs/app.js`, `docs/index.html`, `docs/style.css`) | `Ready` | Implement the interactive multi-server configuration basket drawer, client JSON configuration exporter across 6 AI clients, and collision warnings. | [task143_multi_server_config_basket_drawer.md](task143_multi_server_config_basket_drawer.md) |
+| **144** | **CI Pipeline Resilience & Consistency Hardening** | CI/CD Infrastructure (`pyproject.toml`, `scripts/audit_web_cards.py`, `.github/workflows/`) | `Ready` | Resolve CI pipeline failures, add missing `rich` runtime dependency, and align daily web card audit parity with canonical composite risk engine. | [task144_ci_pipeline_resilience_and_consistency.md](task144_ci_pipeline_resilience_and_consistency.md) |
+
+---
+
+### 27. Wave 27: Threat Intelligence, Exploit Prediction & Multi-Source Deduplication (Planned / Active)
+
+Master Plan: [master_plan_wave27_threat_intel_exploit_prediction_and_deduplication.md](master_plan_wave27_threat_intel_exploit_prediction_and_deduplication.md)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **145** | **CISA KEV Active Exploitation Ingestion & UI Enrichment** | Threat Intel (`threat_intel/cisa_kev.py`, `pipeline.py`, `docs/app.js`, `cli.py`) | `Ready` | Ingest CISA Known Exploited Vulnerabilities catalog, flag active in-the-wild exploitation, elevate composite risk to CRITICAL, and render terminal/portal badges. | [task145_cisa_kev_active_exploitation_enrichment.md](task145_cisa_kev_active_exploitation_enrichment.md) |
+| **146** | **FIRST.org EPSS Exploit Prediction Integration & Risk Boosting** | Risk Scoring (`threat_intel/epss.py`, `scoring.py`, `site_builder.py`, `cli.py`) | `Ready` | Bulk query FIRST.org EPSS API, cache scores, dynamic priority boosting for high-probability CVEs, CLI filtering (`--min-epss`), and visual EPSS gauges. | [task146_epss_exploit_prediction_scoring_integration.md](task146_epss_exploit_prediction_scoring_integration.md) |
+| **147** | **OpenSSF Malicious Packages Ingestion, Backdoor Detection & Quarantine** | Supply Chain Defense (`threat_intel/openssf_malicious.py`, `converters/openssf.py`) | `Ready` | Synchronize OpenSSF Malicious Packages (`MAL-*`), detect npm/PyPI backdoors and credential stealers, enforce absolute catalog quarantine, and exit code 2 on malware. | [task147_openssf_malicious_packages_ingestion.md](task147_openssf_malicious_packages_ingestion.md) |
+| **148** | **PyPA Advisory Database Synchronization & PEP 440 Normalization** | Python Ecosystem Ingestion (`discovery/pypa.py`, `converters/pypa.py`, `pipeline.py`) | `Ready` | Synchronize PyPA Advisory Database (`PYSEC-*` YAML), decompose complex PEP 440 version clauses into OSV 1.6 events, and link Python MCP server advisories. | [task148_pypa_advisory_database_sync.md](task148_pypa_advisory_database_sync.md) |
+| **149** | **GitLab Advisory Database Synchronization & Multi-Ecosystem Ingestion** | Multi-Ecosystem Ingestion (`discovery/gitlab.py`, `converters/gitlab.py`, `pipeline.py`) | `Ready` | Ingest GitLab Community Advisory Database across npm, PyPI, and Go ecosystems, normalize range syntax and disjunctions, and extract CVSS v3.1 vectors. | [task149_gitlab_advisory_database_sync.md](task149_gitlab_advisory_database_sync.md) |
+| **150** | **Smart Cross-Source Advisory Deduplicator & Canonical Alias Graph Engine** | Graph & Ingestion Core (`dedup/`, `graph/alias_graph.py`, `pipeline.py`) | `Ready` | Build bidirectional canonical alias graph (DSU connected components) fusing records across 8 sources, resolving CVSS/range conflicts, and retaining full provenance. | [task150_smart_cross_source_deduplicator.md](task150_smart_cross_source_deduplicator.md) |
 
 ## Verification Test Results
 ```
