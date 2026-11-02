@@ -43,11 +43,11 @@
   "@aborruso/ckan-mcp-server": {
     "archival_reason": null,
     "author": null,
-    "composite_risk_tier": "MEDIUM",
+    "composite_risk_tier": "CRITICAL",
     "description": "@aborruso/ckan-mcp-server: SSRF via base_url allows access to internal networks (Potential fix bypass of CVE-2026-33060)",
     "display_name": "@aborruso/ckan-mcp-server",
     "ecosystem": "npm",
-    "highest_cve_severity": "MEDIUM",
+    "highest_cve_severity": "CRITICAL",
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
@@ -80,47 +80,11 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-3xm7-qw7j-qc8v",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-61612",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "GHSA-798p-78g2-v556",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-33060",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -134,38 +98,93 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "GHSA-3xm7-qw7j-qc8v",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
-            "vulnerable_tools": []
+            "severity": "MODERATE",
+            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-61612",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-798p-78g2-v556",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MODERATE",
+            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": 5.7,
+            "id": "CVE-2026-53509",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-33060",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-53509",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
             "vulnerable_tools": []
           },
           {
@@ -175,7 +194,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -201,47 +223,11 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-3xm7-qw7j-qc8v",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-61612",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "GHSA-798p-78g2-v556",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-33060",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -255,38 +241,93 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "GHSA-3xm7-qw7j-qc8v",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
-            "vulnerable_tools": []
+            "severity": "MODERATE",
+            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-61612",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-798p-78g2-v556",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MODERATE",
+            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": 5.7,
+            "id": "CVE-2026-53509",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-33060",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-53509",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
             "vulnerable_tools": []
           },
           {
@@ -296,7 +337,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -322,47 +366,11 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-3xm7-qw7j-qc8v",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-61612",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "GHSA-798p-78g2-v556",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-33060",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -376,38 +384,93 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "GHSA-3xm7-qw7j-qc8v",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
-            "vulnerable_tools": []
+            "severity": "MODERATE",
+            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-61612",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-798p-78g2-v556",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MODERATE",
+            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": 5.7,
+            "id": "CVE-2026-53509",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-33060",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-53509",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
             "vulnerable_tools": []
           },
           {
@@ -417,7 +480,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -443,47 +509,11 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-3xm7-qw7j-qc8v",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-61612",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "GHSA-798p-78g2-v556",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-33060",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -497,38 +527,93 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "GHSA-3xm7-qw7j-qc8v",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
-            "vulnerable_tools": []
+            "severity": "MODERATE",
+            "summary": "SSRF in @aborruso/ckan-mcp-server via base_url allows access to internal networks",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-61612",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-798p-78g2-v556",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MODERATE",
+            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": 5.7,
+            "id": "CVE-2026-53509",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-33060",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-53509",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
             "vulnerable_tools": []
           },
           {
@@ -538,7 +623,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -564,29 +652,11 @@
           },
           {
             "cvss_score": null,
-            "id": "CVE-2026-61612",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "GHSA-798p-78g2-v556",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -600,38 +670,67 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "CVE-2026-61612",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
-            "vulnerable_tools": []
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-798p-78g2-v556",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MODERATE",
+            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": 5.7,
+            "id": "CVE-2026-53509",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-53509",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
             "vulnerable_tools": []
           },
           {
@@ -641,7 +740,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -658,29 +760,11 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-61612",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "GHSA-798p-78g2-v556",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MODERATE",
-            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -694,28 +778,55 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "CVE-2026-61612",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
-            "vulnerable_tools": []
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to version 0.4.108, the SSRF guard `validateServerU",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "GHSA-798p-78g2-v556",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MODERATE",
+            "summary": "@aborruso/ckan-mcp-server has SSRF via DNS-name → internal IP — incomplete fix of CVE-2026-53509",
+            "vulnerable_tools": [
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
             "vulnerable_tools": []
           },
@@ -726,7 +837,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -743,11 +857,11 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2026-73845",
+            "id": "GHSA-6f9w-9hf2-5rg3",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "severity": "LOW",
+            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
             "vulnerable_tools": []
           },
           {
@@ -761,28 +875,31 @@
           },
           {
             "cvss_score": null,
-            "id": "GHSA-6f9w-9hf2-5rg3",
+            "id": "CVE-2026-73844",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "LOW",
-            "summary": "CKAN MCP Server: Information disclosure via verbose error reflection",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
-            "id": "CVE-2026-73844",
+            "id": "CVE-2026-73845",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
-            "vulnerable_tools": []
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           },
           {
             "cvss_score": null,
             "id": "CVE-2026-73846",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
             "vulnerable_tools": []
           },
@@ -793,7 +910,10 @@
             "remediation_guidance": "",
             "severity": "MODERATE",
             "summary": "CKAN MCP Server: MQA server allowlist bypass via unanchored regex (`isValidMqaServer`)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
           }
         ],
         "connections": [],
@@ -10708,11 +10828,11 @@
   "AI Copilot": {
     "archival_reason": null,
     "author": null,
-    "composite_risk_tier": "HIGH",
+    "composite_risk_tier": "CRITICAL",
     "description": "The AI Copilot  WordPress plugin before 1.5.4 does not bind OAuth access tokens to a WordPress user, and accepts any val",
     "display_name": "AI Copilot",
     "ecosystem": "MCP",
-    "highest_cve_severity": "HIGH",
+    "highest_cve_severity": "CRITICAL",
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
@@ -10739,7 +10859,7 @@
             "id": "CVE-2026-9810",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "The AI Copilot  WordPress plugin before 1.5.4 does not bind OAuth access tokens to a WordPress user, and accepts any val",
             "vulnerable_tools": []
           }
@@ -17195,7 +17315,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
+    "description": "A vulnerability was found in 1Panel-dev MaxKB up to 2.6.1. The affected element is the function execute of the file apps",
     "display_name": "MaxKB",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -17221,51 +17341,20 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 4.6,
             "id": "CVE-2026-39417",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": null,
+            "cvss_score": 8.8,
             "id": "CVE-2026-54149",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "MaxKB is an open-source AI assistant for enterprise. Prior to 2.10.0-lts, MaxKB tool import functionality in apps/tools/",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.10.0-lts"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-39417",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "CVE-2026-54149",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "HIGH",
             "summary": "MaxKB is an open-source AI assistant for enterprise. Prior to 2.10.0-lts, MaxKB tool import functionality in apps/tools/",
             "vulnerable_tools": []
           }
@@ -17283,29 +17372,60 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 4.6,
             "id": "CVE-2026-39417",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": null,
+            "cvss_score": 8.8,
+            "id": "CVE-2026-54149",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "MaxKB is an open-source AI assistant for enterprise. Prior to 2.10.0-lts, MaxKB tool import functionality in apps/tools/",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 2.10.0-lts"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": 6.3,
             "id": "CVE-2026-6108",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A vulnerability was found in 1Panel-dev MaxKB up to 2.6.1. The affected element is the function execute of the file apps",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": null,
+            "cvss_score": 4.6,
+            "id": "CVE-2026-39417",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 8.8,
             "id": "CVE-2026-54149",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "HIGH",
             "summary": "MaxKB is an open-source AI assistant for enterprise. Prior to 2.10.0-lts, MaxKB tool import functionality in apps/tools/",
             "vulnerable_tools": []
           }
@@ -17323,29 +17443,29 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
-            "id": "CVE-2026-39417",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
+            "cvss_score": 6.3,
             "id": "CVE-2026-6108",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A vulnerability was found in 1Panel-dev MaxKB up to 2.6.1. The affected element is the function execute of the file apps",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": null,
+            "cvss_score": 4.6,
+            "id": "CVE-2026-39417",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "MaxKB is an open-source AI assistant for enterprise. Versions 2.7.1 and below contain an incomplete fix for CVE-2025-539",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 8.8,
             "id": "CVE-2026-54149",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "HIGH",
             "summary": "MaxKB is an open-source AI assistant for enterprise. Prior to 2.10.0-lts, MaxKB tool import functionality in apps/tools/",
             "vulnerable_tools": []
           }
@@ -22678,11 +22798,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 6.3,
             "id": "CVE-2026-10274",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A vulnerability was determined in indrasishbanerjee aem-mcp-server up to b5f833aef9b5dfd17a5991b3b18a8a11edbdc583. This ",
             "vulnerable_tools": []
           }
@@ -37650,11 +37770,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 4.3,
             "id": "CVE-2026-49856",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "@jshookmcp/jshook is an MCP server that gives AI agents tools for JavaScript analysis and security research. In version ",
             "vulnerable_tools": []
           }
@@ -44708,11 +44828,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 7.3,
             "id": "CVE-2026-19263",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "HIGH",
             "summary": "A vulnerability was found in INQUIRELAB mcp-bridge-api up to b30a82aa1d1d1139e0de846c41c8aadee6e06114. The impacted elem",
             "vulnerable_tools": []
           }
@@ -46082,13 +46202,15 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 8.5,
             "id": "VERITY-MCP-TOKEN-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "owasp_mcp_category": "Access Control Bypass",
+            "remediation_guidance": "Enforces strict audience validation and scope attenuation.",
+            "severity": "HIGH",
             "summary": "Over-Broad Synthetic Token Scope & Replay in Token Scope & Attenuation Target (mcp-token-scope)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "exchange_token"
+            ]
           }
         ],
         "connections": [],
@@ -50240,22 +50362,26 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 8.5,
             "id": "VERITY-MONGO-TENANT-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "owasp_mcp_category": "Cross-Tenant Authorization",
+            "remediation_guidance": "Enforces compound query filter {customer_id, tenant_id}.",
+            "severity": "HIGH",
             "summary": "Broken Object Level Authorization (BOLA) in MongoDB Basic Target (mongo-basic)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "get_customer"
+            ]
           },
           {
-            "cvss_score": null,
+            "cvss_score": 8.5,
             "id": "VERITY-MONGO-EXPOSURE-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "owasp_mcp_category": "Data Minimization / Serialization",
+            "remediation_guidance": "Applies explicit safe projection allowlist.",
+            "severity": "HIGH",
             "summary": "Excessive Sensitive Data Exposure in MongoDB Basic Target (mongo-basic)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "get_customer"
+            ]
           }
         ],
         "connections": [],
@@ -56605,18 +56731,6 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
         "version": "< 3.2.0"
       },
       {
@@ -56630,6 +56744,18 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 2.14.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "*"
       },
       {
         "advisories": [],
@@ -56897,11 +57023,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 5.3,
             "id": "CVE-2026-19325",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A security vulnerability has been detected in IncomeStreamSurfer roo-code-memory-bank-mcp-server up to 9dcb2fb5e6b65a35a",
             "vulnerable_tools": []
           }

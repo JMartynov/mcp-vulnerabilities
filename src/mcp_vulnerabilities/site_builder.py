@@ -256,23 +256,118 @@ def _process_server_batch(
 
 
 def _extract_advisory_severity(adv: Any) -> str:
-    """Extracts severity string from OSV advisory."""
+    """Extracts severity string from OSV advisory, defaulting to CRITICAL if unclassified."""
+    info = _resolve_advisory_details(adv)
+    return info["severity"]
+
+
+def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
+    """Robustly extracts severity, cvss_score, and metadata from an advisory."""
     if hasattr(adv, "to_dict"):
         adv = adv.to_dict()
     if not isinstance(adv, dict):
-        return "UNKNOWN"
-    sev = adv.get("database_specific", {}).get("severity")
-    if sev:
-        return str(sev).upper()
+        return {
+            "severity": "CRITICAL",
+            "cvss_score": None,
+            "owasp_mcp_category": None,
+            "vulnerable_tools": [],
+            "remediation_guidance": "",
+        }
+
+    cvss_score: float | None = None
+    sev: str | None = None
+    owasp: str | None = None
+    vulnerable_tools: list[str] = []
+    remediation_guidance: str = ""
+
+    # 1. Inspect affected[0].database_specific
     affected = adv.get("affected", [])
     if affected and isinstance(affected, list) and isinstance(affected[0], dict):
-        sev = affected[0].get("database_specific", {}).get("severity")
-        if sev:
-            return str(sev).upper()
-    sev = adv.get("severity")
-    if sev:
-        return str(sev).upper()
-    return "UNKNOWN"
+        aff_db = affected[0].get("database_specific", {})
+        if aff_db.get("severity"):
+            sev = str(aff_db["severity"]).upper()
+        if aff_db.get("cvss_score") is not None:
+            try:
+                cvss_score = float(aff_db["cvss_score"])
+            except (ValueError, TypeError):
+                pass
+        if aff_db.get("owasp_mcp_category"):
+            owasp = str(aff_db["owasp_mcp_category"])
+        if aff_db.get("vulnerable_tools"):
+            vulnerable_tools = list(aff_db["vulnerable_tools"])
+        if aff_db.get("remediation_guidance"):
+            remediation_guidance = str(aff_db["remediation_guidance"])
+
+    # 2. Inspect top-level database_specific
+    top_db = adv.get("database_specific", {})
+    if isinstance(top_db, dict):
+        if not sev and top_db.get("severity"):
+            sev = str(top_db["severity"]).upper()
+        if cvss_score is None and top_db.get("cvss_score") is not None:
+            try:
+                cvss_score = float(top_db["cvss_score"])
+            except (ValueError, TypeError):
+                pass
+        if not owasp and top_db.get("owasp_mcp_category"):
+            owasp = str(top_db["owasp_mcp_category"])
+        if not vulnerable_tools and top_db.get("vulnerable_tools"):
+            vulnerable_tools = list(top_db["vulnerable_tools"])
+        if not remediation_guidance and top_db.get("remediation_guidance"):
+            remediation_guidance = str(top_db["remediation_guidance"])
+
+        # Check raw_cve_json5 metrics if present
+        raw = top_db.get("raw_cve_json5", {})
+        if isinstance(raw, dict):
+            for m in raw.get("metrics", []):
+                for v_key in ("cvssV3_1", "cvssV3_0", "cvssV4_0", "cvssV2_0"):
+                    if v_key in m:
+                        metric = m[v_key]
+                        if not sev and metric.get("baseSeverity"):
+                            sev = str(metric["baseSeverity"]).upper()
+                        if cvss_score is None and metric.get("baseScore") is not None:
+                            try:
+                                cvss_score = float(metric["baseScore"])
+                            except (ValueError, TypeError):
+                                pass
+
+    # 3. Inspect top-level severity (string or list of CVSS vectors)
+    raw_sev = adv.get("severity")
+    if isinstance(raw_sev, str) and not sev:
+        sev = raw_sev.upper()
+    elif isinstance(raw_sev, list):
+        for item in raw_sev:
+            if isinstance(item, dict) and cvss_score is None:
+                score_str = item.get("score")
+                if isinstance(score_str, (int, float)):
+                    cvss_score = float(score_str)
+                elif isinstance(score_str, str):
+                    try:
+                        cvss_score = float(score_str)
+                    except (ValueError, TypeError):
+                        pass
+
+    # 4. Map CVSS score to severity tier if severity not explicitly provided
+    if (not sev or sev == "UNKNOWN") and cvss_score is not None:
+        if cvss_score >= 9.0:
+            sev = "CRITICAL"
+        elif cvss_score >= 7.0:
+            sev = "HIGH"
+        elif cvss_score >= 4.0:
+            sev = "MEDIUM"
+        else:
+            sev = "LOW"
+
+    # 5. Default unclassified or missing severities to CRITICAL
+    if not sev or sev in ("UNKNOWN", "NONE"):
+        sev = "CRITICAL"
+
+    return {
+        "severity": sev,
+        "cvss_score": cvss_score,
+        "owasp_mcp_category": owasp,
+        "vulnerable_tools": vulnerable_tools,
+        "remediation_guidance": remediation_guidance,
+    }
 
 
 def _compute_composite_risk(
@@ -589,21 +684,18 @@ def build_site_parallel(
             new_advs = []
             for adv in v.get("advisories", []):
                 if isinstance(adv, dict):
-                    if "database_specific" in adv:
-                        db_spec = adv.get("database_specific", {})
-                    else:
-                        db_spec = adv
+                    resolved = _resolve_advisory_details(adv)
                     new_advs.append({
                         "id": adv.get("id"),
                         "summary": adv.get("summary", ""),
-                        "severity": db_spec.get("severity", "UNKNOWN"),
-                        "cvss_score": db_spec.get("cvss_score"),
-                        "owasp_mcp_category": db_spec.get("owasp_mcp_category"),
-                        "vulnerable_tools": db_spec.get("vulnerable_tools", []),
-                        "remediation_guidance": db_spec.get("remediation_guidance", ""),
+                        "severity": resolved["severity"],
+                        "cvss_score": resolved["cvss_score"],
+                        "owasp_mcp_category": resolved["owasp_mcp_category"],
+                        "vulnerable_tools": resolved["vulnerable_tools"],
+                        "remediation_guidance": resolved["remediation_guidance"],
                     })
                 else:
-                    new_advs.append({"id": str(adv)})
+                    new_advs.append({"id": str(adv), "severity": "CRITICAL"})
             v["advisories"] = new_advs
 
         shards[shard_id][pkg_name] = rec_dict

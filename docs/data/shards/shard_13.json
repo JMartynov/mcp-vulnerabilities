@@ -29,11 +29,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 10.0,
             "id": "CVE-2026-46339",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "CRITICAL",
             "summary": "9Router is an AI router & token saver. From 0.4.30 until 0.4.37, 9Router's src/proxy.js middleware did not protect /api/",
             "vulnerable_tools": []
           }
@@ -3110,11 +3110,11 @@
   "@cyanheads/git-mcp-server": {
     "archival_reason": null,
     "author": null,
-    "composite_risk_tier": "HIGH",
-    "description": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
+    "composite_risk_tier": "CRITICAL",
+    "description": "@cyanheads/git-mcp-server vulnerable to command injection in several tools",
     "display_name": "@cyanheads/git-mcp-server",
     "ecosystem": "npm",
-    "highest_cve_severity": "HIGH",
+    "highest_cve_severity": "CRITICAL",
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": true,
@@ -3138,21 +3138,27 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "CVE-2025-53107",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "GHSA-3q26-f695-pp76",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "@cyanheads/git-mcp-server vulnerable to command injection in several tools",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "git_add",
+              "git_init"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "id": "CVE-2025-53107",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "@cyanheads/git-mcp-server is an MCP server designed to interact with Git repositories. Prior to version 2.1.5, there is ",
+            "vulnerable_tools": [
+              "git_add",
+              "git_init"
+            ]
           }
         ],
         "connections": [],
@@ -22499,11 +22505,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 5.3,
             "id": "CVE-2026-19978",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A flaw has been found in jiantao88 android-mcp-server up to cfb872b2446794193b58edd63f4dbf6af48a6292. The impacted eleme",
             "vulnerable_tools": []
           }
@@ -34590,11 +34596,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 5.3,
             "id": "CVE-2026-19770",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A vulnerability was identified in feedmob fm-mcp-servers 0.0.3. Affected by this vulnerability is the function downloadR",
             "vulnerable_tools": []
           }
@@ -56745,7 +56751,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
+    "description": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)",
     "display_name": "mcp-auth-rbac",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -56783,31 +56789,37 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
-            "id": "VERITY-LITE-MONGO-HIJACK-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "id": "VERITY-LITE-MONGO-CRED-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
+            "cvss_score": 8.5,
             "id": "VERITY-LITE-MONGO-RBAC-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "owasp_mcp_category": "Improper Access Control",
+            "remediation_guidance": "Restricts role modifications to authorized admin callers only.",
+            "severity": "HIGH",
             "summary": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": []
+            "vulnerable_tools": [
+              "update_user_roles"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "id": "VERITY-LITE-MONGO-HIJACK-001",
+            "owasp_mcp_category": "Improper Multi-Tenancy",
+            "remediation_guidance": "Enforces immutability on org_id and tenant_id fields.",
+            "severity": "HIGH",
+            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "update_user_roles"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "id": "VERITY-LITE-MONGO-CRED-001",
+            "owasp_mcp_category": "Information Disclosure",
+            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
+            "severity": "HIGH",
+            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "get_user_profile"
+            ]
           }
         ],
         "connections": [],
@@ -58398,20 +58410,20 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 5.8,
             "id": "CVE-2026-25904",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "The Pydantic-AI MCP Run Python tool configures the Deno sandbox with an overly permissive configuration that allows the ",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": null,
+            "cvss_score": 5.8,
             "id": "CVE-2026-25905",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "The Python code being run by 'runPython' or 'runPythonAsync' is not isolated from the rest of the JS code, allowing any ",
             "vulnerable_tools": []
           }
@@ -66926,18 +66938,6 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
         "version": "< 3.2.0"
       },
       {
@@ -66951,6 +66951,18 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 2.14.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "*"
       },
       {
         "advisories": [],
@@ -67020,11 +67032,11 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 5.3,
             "id": "CVE-2026-19288",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
-            "severity": "UNKNOWN",
+            "severity": "MEDIUM",
             "summary": "A vulnerability has been found in astralisone rive-mcp-server-core up to db1d0cc4cd52589116360428b7504fd0ca748b3e. This ",
             "vulnerable_tools": []
           }

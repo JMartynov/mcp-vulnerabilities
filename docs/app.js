@@ -1842,11 +1842,14 @@
             if (urls.ghsa) sourceLinksHtml += `<a href="${urls.ghsa}" target="_blank" rel="noopener" class="source-link-pill">GitHub GHSA ↗</a>`;
             if (urls.osv) sourceLinksHtml += `<a href="${urls.osv}" target="_blank" rel="noopener" class="source-link-pill">OSV.dev ↗</a>`;
 
+            const rawSev = (adv.severity && adv.severity !== "UNKNOWN") ? adv.severity : "CRITICAL";
+            const sevBadgeClass = rawSev.toLowerCase() === "critical" ? "badge badge-critical" : `badge risk-${rawSev.toLowerCase()}`;
+
             return `
             <div class="vuln-matrix-item">
               <div class="vuln-matrix-header">
                 <a href="${primaryUrl}" target="_blank" rel="noopener" class="badge badge-danger cve-link-badge" title="View official advisory source">🔗 ${escapeHtml(adv.id || "CVE")} ↗</a>
-                <span class="badge risk-high">Severity: ${escapeHtml(adv.severity || "UNKNOWN")}</span>
+                <span class="${sevBadgeClass}">Severity: ${escapeHtml(rawSev)}</span>
                 ${adv.cvss_score ? `<span class="badge">CVSS: ${escapeHtml(String(adv.cvss_score))}</span>` : ""}
                 ${adv.owasp_mcp_category ? `<span class="badge badge-eco">${escapeHtml(adv.owasp_mcp_category)}</span>` : ""}
               </div>
