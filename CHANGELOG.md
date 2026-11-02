@@ -6,17 +6,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased] - 2026-10-31
+## [1.5.0] - 2026-11-02
 
-### 🛡️ Wave 23: Full-Surface Documentation Parity & Harmonization
+### 🚀 Wave 22 & 23: Live Workstation Scanner Bridge, Sandboxed Prober, Split-Pane TUI & CI Hardening
 
-This release standardizes CLI documentation and ensures 100% specification parity across README, IMPLEMENTATION, and SPECIFICATION documentation surfaces.
+This release introduces the local workstation bridge daemon, multi-server configuration basket, pre-execution sandboxed network prober, and comprehensive CI pipeline resilience.
 
 #### Added
-- **README.md Parity**: Documented 13 primary CLI subcommands (`audit`, `network-scan`, `identify`, `probe-safe`, `proxy`, `audit-transitive`, `audit-typosquat`, `verify-feed`, `hub`, `tui`, `monitor`, `bridge`, `remediate-pr`), required environment variables (`GITHUB_TOKEN`, `NVD_API_KEY`, etc.), and CLI exit codes (`0`, `1`, `2`, `3`, `5`).
-- **SPECIFICATION.md Harmonization**: Added formal JSON schemas for `SecurityPicture` baselines, `ServerPassport` canonical hashes, Drift Event Taxonomy, OWASP MCP Top 10:2025 mappings, and proxy audit logs.
-- **IMPLEMENTATION.md Details**: Documented runtime architecture for Double-Fork Daemonization (`monitor`), Localhost Web Bridge (`bridge`), Curses Split-Pane TUI (`tui`), and the Zero-Trust Sandboxed Probing Engine (`probe-safe`).
-- **Automated Verification**: Introduced `tests/test_documentation_parity.py` to programmatically extract CLI subcommands via AST and verify complete documentation parity coverage.
+- **Multi-Server Configuration Basket (Task 143)**: Batch select MCP servers and export configuration JSON for all 6 supported AI clients (Claude Desktop, Cursor, Windsurf, Cline, Continue.dev, Zed) with cross-server tool collision detection.
+- **Web Portal Live Workstation Bridge (Task 119)**: Secure loopback bridge server (`/api/v1/scan`, `/api/v1/drift`, `/api/v1/fix`) for live local scans and 1-click client remediation directly from the Audit tab.
+- **Pre-Execution Sandboxed Network Prober (Task 117)**: Isolated container and subprocess probing of untrusted MCP servers before local execution.
+- **Interactive Terminal Split-Pane TUI Explorer (Task 118)**: Curses-based split-pane terminal UI for browsing servers, tools, and vulnerability matrices.
+- **Live Port & Network Daemon Mode (Task 116)**: Continuous monitoring of MCP ports and drift detection with real-time alerts and native OS notifications.
+- **Universal Clickable CVE Provenance**: Direct links to CVE.org, NIST NVD, GitHub GHSA, and OSV.dev across modal cards.
+- **CI Pipeline Hardening (Task 144)**: Added `rich>=13.0.0` dependency, graceful fallback console, synchronized web card severity calculation, and optimized in-memory shard caching.
 
 ## [1.4.0] - 2026-10-31
 
