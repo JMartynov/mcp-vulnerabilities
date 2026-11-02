@@ -38,6 +38,8 @@ from mcp_vulnerabilities.api.server import McpSecurityApiServer
 from mcp_vulnerabilities.sandbox.engine import ContainerEngine
 from mcp_vulnerabilities.sandbox.runner import EphemeralSandbox, TimeoutExpired
 from mcp_vulnerabilities.validator import OsvValidator
+from rich.console import Console
+console = Console()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
@@ -125,6 +127,8 @@ def main() -> None:
 
     # tui
     tui_p = subparsers.add_parser("tui", help="Launch split-pane curses terminal dashboard for interactive security exploration")
+    tui_p.add_argument("--target", default="localhost", help="Network target to probe.")
+    tui_p.add_argument("--ports", default="*", help="Ports to probe.")
     tui_p.add_argument("--config", "-c", default=None, help="Path to specific AI client config file to inspect.")
     tui_p.add_argument("--theme", choices=["dark", "light", "high-contrast"], default="dark", help="Terminal color theme.")
     tui_p.add_argument("--no-color", action="store_true", help="Disable terminal ANSI color output.")
@@ -132,11 +136,16 @@ def main() -> None:
     # monitor
     monitor_p = subparsers.add_parser("monitor", help="Run background monitoring daemon to continuously detect MCP port drift and config mutations")
     monitor_p.add_argument("--daemon", action="store_true", help="Run in background detached daemon mode.")
-    monitor_p.add_argument("--interval", type=int, default=300, help="Polling interval in seconds.")
-    monitor_p.add_argument("--config", default=None, help="Configuration file or directory to monitor.")
-    monitor_p.add_argument("--alert-webhook", default=None, help="Webhook URL for immediate high-severity alerts.")
-    monitor_p.add_argument("--desktop-notify", action="store_true", help="Trigger OS desktop notifications on posture drift.")
-    monitor_p.add_argument("--pid-file", default="~/.mcp-vuln/monitor.pid", help="Daemon PID lockfile path.")
+    monitor_p.add_argument("--interval", type=int, default=300, help="Monitoring interval in seconds (default: 300).")
+    monitor_p.add_argument("--targets", default="localhost", help="Target host specification (default: localhost).")
+    monitor_p.add_argument("--ports", default="3000-8800", help="Port range or list to scan (default: 3000-8800).")
+    monitor_p.add_argument("--notify", action="store_true", help="Enable native desktop notifications (macOS / Linux).")
+    monitor_p.add_argument("--webhook", default=None, help="Webhook URL for real-time alerts (Slack / Discord).")
+    monitor_p.add_argument("--status", action="store_true", help="Check status of running monitor daemon.")
+    monitor_p.add_argument("--stop", action="store_true", help="Stop running monitor daemon.")
+    monitor_p.add_argument("--install-service", action="store_true", help="Generate and install OS service (launchd / systemd).")
+    monitor_p.add_argument("--log-file", default="~/.mcp-vuln/logs/monitor.log", help="Path to monitor daemon log file.")
+    monitor_p.add_argument("--pid-file", default="~/.mcp-vuln/run/monitor.pid", help="Path to monitor daemon PID file.")
 
     # bridge
     bridge_p = subparsers.add_parser("bridge", help="Run secure local loopback bridge server for static web portal workstation scanning")
@@ -144,6 +153,9 @@ def main() -> None:
     bridge_p.add_argument("--host", default="127.0.0.1", help="Host address to bind.")
     bridge_p.add_argument("--cors-origins", default="https://jmartynov.github.io,http://localhost:*,http://127.0.0.1:*", help="Comma-separated list of allowed CORS origins.")
     bridge_p.add_argument("--simulate", "--mock", action="store_true", help="Run in simulated demonstration mode emitting synthetic progress events.")
+    bridge_p.add_argument("--allowed-origin", dest="cors_origins", help="Additional CORS allowed origin URL.")
+    bridge_p.add_argument("--no-auth", action="store_true", help="Disable session token requirement (for local testing).")
+    bridge_p.add_argument("--open-browser", action="store_true", help="Automatically open docs/index.html in default browser on launch.")
 
     # Sync
     sync_p = subparsers.add_parser(
@@ -401,8 +413,20 @@ def main() -> None:
         help="Path to consolidated snapshot file",
     )
 
+    # Probe Safe
+    probe_safe_p = subparsers.add_parser(
+        "probe-safe", help="Pre-Execution Sandboxed Network Prober"
+    )
+    probe_safe_p.add_argument("--url", required=True, help="Target MCP endpoint URL (http/sse) or command string (stdio).")
+    probe_safe_p.add_argument("--sandbox-type", choices=["docker", "subprocess"], default="docker", help="Sandbox isolation engine: docker | subprocess (default: docker).")
+    probe_safe_p.add_argument("--timeout", type=int, default=30, help="Execution timeout in seconds (default: 30).")
+    probe_safe_p.add_argument("--no-canary-detection", dest="canary_detection", action="store_false", help="Disable synthetic honeytoken exfiltration analysis.")
+    probe_safe_p.add_argument("--allow-outbound", action="store_true", help="Allow outbound network access beyond target host (default: false).")
+    probe_safe_p.add_argument("--json", dest="output_json", action="store_true", help="Output raw JSON verdict for automation/scripts.")
+
     # Probe
     identify_p = subparsers.add_parser(
+
         "identify", help="Probe and identify an MCP server using fingerprints"
     )
     identify_p.add_argument(
@@ -915,9 +939,12 @@ def main() -> None:
                     
                     prov_urls = resolve_provenance_urls(adv.id, adv.aliases)
                     print("Provenance:")
-                    if "cve" in prov_urls: print(f"  * CVE:  {prov_urls['cve']}")
-                    if "nvd" in prov_urls: print(f"  * NVD:  {prov_urls['nvd']}")
-                    if "ghsa" in prov_urls: print(f"  * GHSA: {prov_urls['ghsa']}")
+                    if "cve" in prov_urls:
+                        print(f"  * CVE:  {prov_urls['cve']}")
+                    if "nvd" in prov_urls:
+                        print(f"  * NVD:  {prov_urls['nvd']}")
+                    if "ghsa" in prov_urls:
+                        print(f"  * GHSA: {prov_urls['ghsa']}")
                     print(f"  * OSV:  {prov_urls['osv']}")
                     print(f"Severity:   {sev_str}")
                     print(f"Matched On: {r.matched_on}")
@@ -1962,6 +1989,56 @@ def main() -> None:
                 logger.error("Compliance evaluation failed (NON_COMPLIANT).")
                 sys.exit(1)
         sys.exit(exit_code)
+
+    elif args.command == "probe-safe":
+        from mcp_vulnerabilities.probe.sandbox_prober import SandboxProber, ThreatLevel
+        import json
+        import dataclasses
+        
+        prober = SandboxProber(
+            sandbox_type=args.sandbox_type,
+            timeout=args.timeout,
+            canary_detection=args.canary_detection,
+            allow_outbound=args.allow_outbound
+        )
+        
+        try:
+            verdict = prober.execute_probe(args.url)
+            
+            if args.output_json:
+                print(json.dumps(dataclasses.asdict(verdict), indent=2))
+            else:
+                print("\n" + "=" * 70)
+                print(f" SANDBOX PROBE VERDICT: {verdict.endpoint_url}")
+                print("=" * 70)
+                
+                color = "\033[92m" if verdict.threat_level == ThreatLevel.CLEAN else "\033[93m" if verdict.threat_level == ThreatLevel.SUSPICIOUS else "\033[91m"
+                reset = "\033[0m"
+                
+                print(f"Threat Level: {color}{verdict.threat_level}{reset}")
+                print(f"Driver Used:  {verdict.driver}")
+                print(f"Duration:     {verdict.duration_sec:.2f}s")
+                print(f"Canary Leaked:{' YES' if verdict.canary_leaked else ' NO'}")
+                if verdict.canary_details:
+                    print(f"  Details: {', '.join(verdict.canary_details)}")
+                    
+                if verdict.dangerous_tools_found:
+                    print(f"Dangerous Tools Found: {', '.join(verdict.dangerous_tools_found)}")
+                else:
+                    print("Dangerous Tools: None")
+                    
+                print(f"\nRecommendation:\n  {verdict.remediation_recommendation}")
+                print("=" * 70)
+                
+            if verdict.threat_level == ThreatLevel.MALICIOUS:
+                sys.exit(2)
+            elif verdict.threat_level == ThreatLevel.SUSPICIOUS:
+                sys.exit(1)
+            sys.exit(0)
+            
+        finally:
+            prober.cleanup()
+
 
     elif args.command == "scan-source":
         from mcp_vulnerabilities.analyzers.ast_taint.scanner import McpSourceScanner

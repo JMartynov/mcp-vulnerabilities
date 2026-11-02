@@ -2586,3 +2586,142 @@ if ("serviceWorker" in navigator && (window.location.protocol === "https:" || wi
     });
   });
 }
+
+
+// ---------------------------------------------------------
+// Live Bridge Handlers
+// ---------------------------------------------------------
+
+let bridgeToken = null;
+
+async function checkBridgeConnection() {
+  try {
+    const res = await fetch("http://127.0.0.1:8765/health");
+    if (!res.ok) throw new Error("Bridge not healthy");
+    const data = await res.json();
+    const statusPill = document.getElementById("bridge-status-pill");
+    if (statusPill) {
+        statusPill.className = "status-pill connected";
+        statusPill.textContent = `🟢 Local Bridge Connected (v${data.version || '1.22.0'})`;
+    }
+    const infoText = document.getElementById("bridge-info-text");
+    if (infoText) infoText.style.display = "none";
+    const actions = document.getElementById("bridge-actions");
+    if (actions) actions.style.display = "flex";
+    
+    // Auth handshake
+    const authRes = await fetch("http://127.0.0.1:8765/api/v1/auth/challenge");
+    if (authRes.ok) {
+        const authData = await authRes.json();
+        bridgeToken = authData.token;
+    }
+  } catch (err) {
+    const statusPill = document.getElementById("bridge-status-pill");
+    if (statusPill) {
+        statusPill.className = "status-pill disconnected";
+        statusPill.textContent = "⚪ Bridge Disconnected";
+    }
+    const infoText = document.getElementById("bridge-info-text");
+    if (infoText) infoText.style.display = "inline";
+    const actions = document.getElementById("bridge-actions");
+    if (actions) actions.style.display = "none";
+  }
+}
+
+async function runLiveScan() {
+  try {
+    const btn = document.getElementById("btn-live-scan");
+    const origText = btn.innerHTML;
+    btn.innerHTML = "⏳ Scanning...";
+    btn.disabled = true;
+    
+    const res = await fetch("http://127.0.0.1:8765/api/v1/scan");
+    if (!res.ok) throw new Error("Scan failed");
+    const data = await res.json();
+    
+    const resultsContainer = document.getElementById("bridge-results-container");
+    let html = `<h3>Found ${data.servers.length} Servers</h3><ul class="audit-list">`;
+    
+    for (const server of data.servers) {
+        // Find matching advisory if any
+        let matchedAdvisory = null;
+        for (const cve of allAdvisories) {
+            if (cve.affected && cve.affected.some(a => a.package.name === server.package_name)) {
+                // simple check
+                matchedAdvisory = cve;
+                break;
+            }
+        }
+        
+        if (matchedAdvisory) {
+            html += `<li class="vuln-server">
+                <strong>${server.server_name}</strong> (${server.package_name})
+                <span class="badge risk-high">VULNERABLE</span>
+                <button class="btn-sm btn-primary" onclick="autoFixServer('${server.client_name}', '${server.server_name}', 'latest')">🛠️ Auto-Fix in Client</button>
+            </li>`;
+        } else {
+            html += `<li class="safe-server">
+                <strong>${server.server_name}</strong> (${server.package_name})
+                <span class="badge risk-low">SAFE</span>
+            </li>`;
+        }
+    }
+    html += "</ul>";
+    resultsContainer.innerHTML = html;
+    
+    btn.innerHTML = origText;
+    btn.disabled = false;
+  } catch (err) {
+    console.error(err);
+    alert("Live scan failed. Is bridge running?");
+  }
+}
+
+async function checkLiveDrift() {
+    try {
+        const res = await fetch("http://127.0.0.1:8765/api/v1/drift");
+        if (!res.ok) throw new Error("Drift fetch failed");
+        const data = await res.json();
+        
+        const resultsContainer = document.getElementById("bridge-results-container");
+        let html = `<h3>Baseline Drift</h3>`;
+        html += `<p>New Vulnerabilities: ${data.new_vulnerabilities.length}</p>`;
+        html += `<p>Resolved Vulnerabilities: ${data.resolved_vulnerabilities.length}</p>`;
+        html += `<p>Shadow Servers: ${data.shadow_servers.length}</p>`;
+        
+        resultsContainer.innerHTML = html;
+    } catch (err) {
+        console.error(err);
+        alert("Drift check failed.");
+    }
+}
+
+window.autoFixServer = async function(client, serverName, targetVersion) {
+    if (!bridgeToken) {
+        alert("Not authenticated with bridge.");
+        return;
+    }
+    
+    try {
+        const res = await fetch("http://127.0.0.1:8765/api/v1/fix", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-MCP-Bridge-Token": bridgeToken
+            },
+            body: JSON.stringify({
+                client: client,
+                server_name: serverName,
+                target_version: targetVersion
+            })
+        });
+        
+        if (!res.ok) throw new Error("Fix failed");
+        const data = await res.json();
+        alert(data.message || "Successfully auto-fixed!");
+        runLiveScan(); // refresh
+    } catch (err) {
+        console.error(err);
+        alert("Auto-fix failed.");
+    }
+};

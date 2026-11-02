@@ -178,6 +178,18 @@
         <p>Drag and drop your AI client configuration file (e.g. <code>claude_desktop_config.json</code>, <code>cline_mcp_settings.json</code>, <code>cursor_config.json</code>) or paste the JSON content directly. All parsing and auditing is done 100% locally in your browser—no telemetry is sent.</p>
       </div>
 
+      <div id="live-bridge-container" class="live-bridge-panel">
+        <div class="bridge-status-bar">
+          <span id="bridge-status-pill" class="status-pill disconnected">⚪ Bridge Disconnected</span>
+          <span id="bridge-info-text">Run <code>mcp-vuln bridge</code> in your terminal to enable 1-click live scanning</span>
+        </div>
+        <div id="bridge-actions" class="bridge-actions-row" style="display: none;">
+          <button id="btn-live-scan" class="btn-primary">⚡ Scan My Live Workstation</button>
+          <button id="btn-live-drift" class="btn-secondary">📸 Check Baseline Drift</button>
+        </div>
+        <div id="bridge-results-container" class="bridge-results-area"></div>
+      </div>
+
       <div class="audit-presets-container">
         <span class="presets-label">⚡ Try an example config:</span>
         <button type="button" class="btn-preset" data-preset="claude">Claude Desktop (Vulnerable Tools)</button>

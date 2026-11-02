@@ -73,10 +73,11 @@ class InteractiveTerminalHub:
             print("  [3] 📸 Create / Snapshot Security Picture Baseline (Task 111)")
             print("  [4] 📈 Compare Security Drift against Baseline (Task 112)")
             print("  [5] 🚀 Launch Web Explorer & Dashboard")
+            print("  [6] 🎛️ Launch Split-Pane TUI Explorer")
             print("  [q] 🚪 Quit Hub")
             
             try:
-                choice = input("\n👉 Enter selection [1-5, q]: ").strip().lower()
+                choice = input("\n👉 Enter selection [1-6, q]: ").strip().lower()
             except (EOFError, KeyboardInterrupt):
                 break
             
@@ -101,6 +102,12 @@ class InteractiveTerminalHub:
                 print("\n[+] Launching local Web Explorer portal at http://localhost:8080...")
                 time.sleep(1)
                 print("✅ Portal ready.")
+            elif choice == "6":
+                print("\n[+] Launching Split-Pane TUI Explorer...")
+                from mcp_vulnerabilities.audit.tui import launch_tui
+                import argparse
+                args = argparse.Namespace(config=None, theme="dark", no_color=False)
+                launch_tui(args)
             elif choice == "q":
                 print("\n👋 Exiting MCP Vulnerabilities Hub. Stay secure!\n")
                 break

@@ -1,3 +1,23 @@
+
+import sys
+import types
+from unittest.mock import MagicMock
+
+if 'mcp_fingerprints' not in sys.modules:
+    mcp_fingerprints = types.ModuleType('mcp_fingerprints')
+    sys.modules['mcp_fingerprints'] = mcp_fingerprints
+
+    # Mock models using MagicMock to handle ANY import
+    sys.modules['mcp_fingerprints.models'] = MagicMock()
+
+    # Mock config_scanner
+    sys.modules['mcp_fingerprints.config_scanner'] = MagicMock()
+
+
+
+
+
+
 import asyncio
 import json
 import base64
@@ -64,7 +84,8 @@ async def test_bridge_csrf_token_handshake(bridge_daemon):
 
         # Attempt POST with correct token
         headers = {"X-MCP-Bridge-Token": token}
-        async with session.post(f"http://127.0.0.1:{bridge_daemon.port}/api/v1/fix", headers=headers) as resp:
+        payload = {"client": "cursor", "server_name": "test-server", "target_version": "1.0.0"}
+        async with session.post(f"http://127.0.0.1:{bridge_daemon.port}/api/v1/fix", headers=headers, json=payload) as resp:
             assert resp.status == 200
 
 @pytest.mark.asyncio
@@ -161,3 +182,20 @@ async def test_bridge_websocket_stream(bridge_daemon):
     assert frames[0]["percent"] == 25
     assert frames[3]["step"] == "done"
     assert frames[3]["percent"] == 100
+
+
+@pytest.mark.asyncio
+async def test_bridge_scan_endpoint(bridge_daemon):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"http://127.0.0.1:{bridge_daemon.port}/api/v1/scan") as resp:
+            assert resp.status == 200
+            data = await resp.json()
+            assert "servers" in data
+
+@pytest.mark.asyncio
+async def test_bridge_drift_endpoint(bridge_daemon):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(f"http://127.0.0.1:{bridge_daemon.port}/api/v1/drift") as resp:
+            assert resp.status == 200
+            data = await resp.json()
+            assert "new_vulnerabilities" in data
