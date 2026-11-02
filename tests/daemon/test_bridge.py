@@ -24,8 +24,11 @@ import base64
 import hashlib
 import os
 import pytest
-import aiohttp
 import struct
+
+pytest.importorskip("aiohttp")
+pytest.importorskip("websockets")
+import aiohttp
 import websockets
 from mcp_vulnerabilities.daemon.bridge import BridgeDaemon
 

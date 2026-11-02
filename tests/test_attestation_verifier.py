@@ -4,6 +4,8 @@ import pytest
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
+pytest.importorskip("sigstore")
+
 from mcp_vulnerabilities.attestation.manifest import (
     generate_catalog_manifest,
     verify_catalog_manifest,
