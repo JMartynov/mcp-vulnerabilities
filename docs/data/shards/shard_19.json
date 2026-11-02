@@ -32014,17 +32014,17 @@
     "homepage_url": null,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.3.0",
+    "latest_version": "0.3.1",
     "license": "MIT",
     "package_name": "gft-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/gft-mcp",
-    "recommended_safe_version": "0.3.0",
+    "recommended_safe_version": "0.3.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/CoralLips/gft-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `gft-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
+    "security_summary": "Server `gft-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 8 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:f0386f9be0b973059a82f96fe7108a0e3c93f4716448fd449fcce760be8d696c",
@@ -32262,6 +32262,167 @@
         ],
         "toolset_canonical_hash": "sha256:f0386f9be0b973059a82f96fe7108a0e3c93f4716448fd449fcce760be8d696c",
         "version": "0.3.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-01T17:03:14.652Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4355a1031dada09fd08d037255ede3d5fdc7df9db5fd0573e5cf5a0c9776cf84",
+            "description": "把当前对话链接到一张思维脉络（认领 + 注入一步完成）",
+            "name": "link",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `link` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:df8066506cdc7a958b0c25c497c90d01d69748af3166f201137726bf0415f20e",
+            "description": "列出 GFT 思维脉络（名字·条数·各线新鲜度·本场链接状态）",
+            "name": "list",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:43d9315895ae7695a64ab02d4ce26b18c60204001109b9c1a5cf869aadf1a86e",
+            "description": "列出用户在 GFT 的全部思维脉络：图名、判断条数、各线新鲜度（哪条线最后什么时候喂过图）。\\n什么时候调用：本场还没链接任何脉络、需要帮用户选图时；或用户问",
+            "name": "list_thinking_maps",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_thinking_maps` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:035dcdc7f05fb451008b71891160a741cae30c08de2e4183a8347f4995ae3ce7",
+            "description": "GFT 登录/修复——发起网页授权,浏览器点一下完成",
+            "name": "login",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `login` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:875ed121ffe8c6efc1a65472df00ba17def3d65609b19098b027964c6d5cc8e8",
+            "description": "图名(可模糊匹配);不传则先列名单让用户挑",
+            "name": "map",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `map` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c4bec526315b01036d5c8a00e4da34714c43e72d303ac92fff4278478b66572",
+            "description": "读取用户在 GFT（gitforthought.com）里逐条确认过的思考资产——他的「思维脉络」：已经想通的判断、还悬着的问题、已经否决的方向。\\n什么时候调用：用户提到他之前的判断/想法/正在纠结的问题时；或你要给出建议、而这个建议应该建立在他已有的思考之上时；或他直接说「读一下我的脉络」时。\\n一场会话拉一次即可——内容不会在对话中途改变，反复调用只是浪费用户的 token。\\n选图：本场聊过哪张就继续用哪张；语境不明且用户没指名时，把返回里列出的可选项目报给用户挑，**不要赌",
+            "name": "read_thinking_map",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "for_update",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_thinking_map` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:45fbc56e2c46399487f524089e9b5a9f035c1683551eb4fc6fcf9bd8f5a0a2d8",
+            "description": "把本场对话的新内容存回已链接的思维脉络（生成由平台完成）",
+            "name": "save",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfda0606618c1e139e0a92d0ef5a42447a7bef753603a283b7c2039a7632db7e",
+            "description": "把这场对话的新内容存进用户的思维脉络。你**不需要抽取判断、不需要遵守任何格式规则**——把水位之后的对话原文传进来，生成（判断＋白盒文档＋锚）由 GFT 平台完成，与网页端同一条管道、同一份规则。\\n先调 read_thinking_map(for_update=true) 看自己那条线的水位，只传水位之后的增量；用户的原话务必完整保留，你的回答保留要点即可。平台返回知情回执，原样转告用户。",
+            "name": "submit_map_update",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "agent_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cursor",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "raw_text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `submit_map_update` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f0386f9be0b973059a82f96fe7108a0e3c93f4716448fd449fcce760be8d696c",
+        "version": "0.3.1"
       }
     ]
   },
@@ -41381,6 +41542,102 @@
           }
         ],
         "toolset_canonical_hash": "sha256:2b5de6915e5d3435825923922f977581d43c762a10d3a7f10e8d2217cc11c717",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "mcp-shield": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_tier": "LOW",
+    "description": "Model Context Protocol (MCP) server providing 2 tools including list_rules, scan_path_tool.",
+    "display_name": "mcp-shield",
+    "ecosystem": "pypi",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "package_name": "mcp-shield",
+    "prompts_count": 0,
+    "purl": "pkg:pypi/mcp-shield",
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": null,
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `mcp-shield` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:d4092bc729e0b7df3962e3286ee50f01fc3354c39a0feccdb8fd748b64249977",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e58c43f15e91de86c2958c5a41733adacefc6c417867562c4ac16c4a04ec5115",
+            "description": "List MCP Shield rule IDs and descriptions.",
+            "name": "list_rules",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_rules` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d4525456479ab59d21f4541621875933993d8b58349482af5260335ad4c8162c",
+            "description": "Scan a local MCP server or agent project for security risks.",
+            "name": "scan_path_tool",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fail_on",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `scan_path_tool` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:d4092bc729e0b7df3962e3286ee50f01fc3354c39a0feccdb8fd748b64249977",
         "version": "1.0.0"
       }
     ]
@@ -52978,7 +53235,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": ">= 1.74.2, < 1.83.7"
+        "version": "*"
       },
       {
         "advisories": [],
@@ -52990,7 +53247,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": ">= 1.74.2, < 1.83.7"
       },
       {
         "advisories": [],

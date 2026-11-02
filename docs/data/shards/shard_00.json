@@ -37462,7 +37462,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": ">= 1.74.2, < 1.83.7"
+        "version": "*"
       },
       {
         "advisories": [],
@@ -37474,7 +37474,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": ">= 1.74.2, < 1.83.7"
       },
       {
         "advisories": [],
@@ -83013,7 +83013,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 3.2.0"
+        "version": "*"
       },
       {
         "advisories": [],
@@ -83025,7 +83025,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": "< 3.2.0"
       },
       {
         "advisories": [],
@@ -86231,7 +86231,7 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_tier": "HIGH",
-    "description": "Snowflake Secure Share Boundary Smuggling in Snowflake Clinical Trial Target (snowflake-clinical)",
+    "description": "Snowflake Non-Secure View Optimizer Filter Side-Channel Leakage in Snowflake Clinical Trial Target (snowflake-clinical)",
     "display_name": "snowflake-clinical",
     "ecosystem": "MCP",
     "highest_cve_severity": "HIGH",
@@ -86270,20 +86270,20 @@
         "advisories": [
           {
             "cvss_score": null,
-            "id": "VERITY-SNOWFLAKE-SHARE-LEAK-001",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "UNKNOWN",
-            "summary": "Snowflake Secure Share Boundary Smuggling in Snowflake Clinical Trial Target (snowflake-clinical)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
             "id": "VERITY-SNOWFLAKE-SECURE-VIEW-001",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "UNKNOWN",
             "summary": "Snowflake Non-Secure View Optimizer Filter Side-Channel Leakage in Snowflake Clinical Trial Target (snowflake-clinical)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "id": "VERITY-SNOWFLAKE-SHARE-LEAK-001",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "UNKNOWN",
+            "summary": "Snowflake Secure Share Boundary Smuggling in Snowflake Clinical Trial Target (snowflake-clinical)",
             "vulnerable_tools": []
           }
         ],
@@ -92644,7 +92644,7 @@
     "security_summary": "Server `vinayvobbili/jobwatch` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:11a39d7dad1d22b316ae0c20e18a23181ebe52100a2ae0ccc65192cfe90a1895",
     "transport": "stdio",
     "versions": [
       {
@@ -92655,8 +92655,1358 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ef3b2e28955ad8db784b11d007c730a81a7bff13f8a3adb3185e3d5f3f5a4dce",
+            "description": "Find a company's job board by name or by a job/careers link. Returns entries for the watchlist.",
+            "name": "find_board",
+            "parameters": [
+              {
+                "default": null,
+                "description": "A company name (\"Stripe\"), or a link to one of its job postings or its careers page.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_board` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:35db457ea6067f0c8c18af98c695f88418362b3fb21aae8c5cb9db6e086cafdd",
+            "description": "The boards on the watchlist (entry, display name, careers: the board's own page, careers_link: the",
+            "name": "list_boards",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_boards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ad88a2e617b63cbccd7e230c6e5ce83d3ebbb17ad78438f9d48e297bc37586f3",
+            "description": "Add a company's board to the watchlist, so fetch_jobs checks it from now on. Find the entry with",
+            "name": "add_board",
+            "parameters": [
+              {
+                "default": "",
+                "description": "The company's own careers site (https://...), for a board whose hosted job pages are offline (fetch_jobs warns about those): its jobs then link there.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "careers",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entry",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "The company's name as it should show, when the board's own name isn't it (e.g. a Workday tenant id).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_board` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8100cd886c47cb7f1a2d3e031dac0732915580bbc3f5d2b6aed8c9f59ecb5f2a",
+            "description": "Take a board off the watchlist, so fetch_jobs stops checking it. Jobs and applications already recorded",
+            "name": "remove_board",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entry",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_board` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:df94041943066946c57480717e69ed6a9709b0d78b661be71640387f18fc28ae",
+            "description": "Companies to watch: those whose jobs came in from job-alert emails (import_job_alerts), add_application or",
+            "name": "list_suggested_boards",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The most companies to return, best first. Omit for the watchlist's suggestions.limit (10 unless set).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": true,
+                "description": "Look for the board of each listed company that hasn't been looked for yet, the way find_board does (once per company; what's found is kept). False makes no requests.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "look_up_boards",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": "First note the companies of the HN posts already kept (still open) that pass the filters: after the filters change, or for posts fetched before they were noted. Reads nothing from the web; safe to repeat.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rescan",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_suggested_boards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f991ebd13dd31a6894e6d5bde9c323f3c82cde7610051f495aed4efcfca36a8e",
+            "description": "Stop suggesting a company in list_suggested_boards, when the person doesn't want to watch it. Its jobs",
+            "name": "dismiss_suggested_board",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The company as list_suggested_boards names it (any case; Inc, LLC and the like aside), or its board.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `dismiss_suggested_board` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:07a974aa7d92953c969b1fc82dc6dcdf901ab934660cc6cfe88bf24e7d7433e6",
+            "description": "Check every board in the watchlist and record new roles. Returns counts, each board that failed to load",
+            "name": "fetch_jobs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fetch_jobs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e04140fa8b2777cbbd2eedc523a4e070b93961ba05a256990e18c1300d94b715",
+            "description": "New jobs that pass the watchlist's filters, best first (fit score when scored, then keyword relevance),",
+            "name": "get_digest",
+            "parameters": [
+              {
+                "default": "",
+                "description": "Only this company's jobs (its name or board), best first: to pick among one company's roles, e.g. when it limits how many you can apply to. Empty: every company.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Also include jobs already shown in an earlier digest, not just new ones.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_seen",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "The most jobs to return, best first. Default: the watchlist's display.today (10 unless set; 25 when it's 0, for every match).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": true,
+                "description": "Mark the returned jobs as shown, so the next digest leaves them out. False to peek without changing anything.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mark_shown",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": 0,
+                "description": "How many of the most relevant unscored jobs to fit-score against the resume with shortlist-ai first. 0 (the default) skips scoring; each job takes minutes on the local backend, so keep it small.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "score_top",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_digest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:03ee5aa874436ce098205e2522ef54ab1d59a34b393c4de31fc8b4aa64f39314",
+            "description": "Everything about one job, by key or posting id: the full posting text, pay, tracking (status, note, next",
+            "name": "get_job",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_job` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3c616ee0ed297f4a5abd832990e5c59a3885126782c87286593bacd1c3204ab9",
+            "description": "Record a job's status: new, shown, queued (to apply to next), applied, screening, interviewing, offer,",
+            "name": "mark_job",
+            "parameters": [
+              {
+                "default": null,
+                "description": "A line to add to the note, dated today, keeping what's there (\"recruiter replied: onsite only\").",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "add_note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The day applied (YYYY-MM-DD), if not today.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "applied_on",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "follow_up",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What happens next (\"recruiter screen Tuesday\"). An empty string clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "next_step",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Replaces the whole note. Prefer add_note for news.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which interview the next step is: recruiter_screen, hiring_manager, technical, system_design, panel (onsite or loop), executive (VP, director, CXO), hr, informal (coffee, in-person talk, referral chat) or offer_call. Set it with a next step that has a date and time: it makes the step a meeting on the Interviews tab and in the calendar feed, whatever its words. An empty string clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "round",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The new status; omit to keep it and only update the rest. applied only after the person has submitted the application themselves.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The posting's text, pasted (found later, or a copy once the posting is gone), so it can be scored and prepped.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The link of a job added by hand: its posting, or the company's careers site once the posting is gone.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `mark_job` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:716c4c06ffbb535e8e290f1564960cc674ff682629258a0399cabab75b40e466",
+            "description": "Add a job jobwatch didn't find (a referral, a recruiter, LinkedIn...), so everything is in one place: an",
+            "name": "add_application",
+            "parameters": [
+              {
+                "default": "",
+                "description": "The day applied (YYYY-MM-DD), if not today.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "applied_on",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "The company; may be left out when url is a job link it can read.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "follow_up",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What happens next (\"hiring manager call Friday\").",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "next_step",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A note: who referred them, how they found it...",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "applied",
+                "description": "applied (the default; only once the person has applied themselves), queued for one they're considering, or a later stage such as interviewing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "The posting's text, pasted, when the link can't be read, so it can be scored and prepped.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "The job title; may be left out when url is a job link it can read.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "A link to the job: Greenhouse, Lever, Ashby, Workable, Workday, Rippling, Google Careers, amazon.jobs, Oracle Recruiting Cloud, SmartRecruiters, Avature, iCIMS, Jobvite or LinkedIn are read in full; any other link is just kept.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `add_application` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e074dcdaa28abc4332f266fade96ff7c21e87fd8988691b61777d1a7bc271bc3",
+            "description": "Track the jobs in job-alert emails (LinkedIn, Built In, Indeed; other senders with a generic reader).",
+            "name": "import_job_alerts",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Say what would be tracked, and record nothing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dry_run",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "The alert emails, one string each: the raw message (RFC822, as a mail connector's raw format gives it, base64url-encoded as from Gmail's API is fine too; best, since it names the sender) or just its HTML or plain-text body.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "emails",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": true,
+                "description": "Look for each job that passes the filters on the company's own board, and read links robots.txt allows. False tracks each job as the email has it, with no requests.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "follow_links",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `import_job_alerts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd68ae10fab8b9c4d92efa130c8455a615d9a029b204a7ed4cab8fd623f49229",
+            "description": "Read emails about the person's applications (a \"thank you for applying\" confirmation, a rejection, an",
+            "name": "read_status_emails",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The emails about applications, one string each: the raw message (RFC822, as a mail connector's raw format gives it, base64url-encoded as from Gmail's API is fine too; best, since it names the sender and date) or just its HTML or plain-text body.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "emails",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_status_emails` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8885dce039f8d7633c4e6e8caad3f70f976cbbbfc61d14b1f5582c13d664dffc",
+            "description": "Every application (applied or a later stage) and where it stands, follow-ups due soonest first;",
+            "name": "list_applications",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Only those whose follow-up day has come.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "due_only",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_applications` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a4a50971848c62471d67a135ee43e64a4da1956d71666ad1bf584af78959cba9",
+            "description": "Open applications side by side, to compare offers and processes: for each, its stage, applied day, next",
+            "name": "get_comps",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Add these companies' health as columns of their own, even ones with no job tracked (Levels.fyi-style company comparison). Overrides stages.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "companies",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Compare just these jobs (each as in get_job's key), whatever their stage. Overrides stages.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "keys",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which stages to compare; default screening, interviewing and offer. Add applied for the ones still waiting.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stages",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_comps` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:618e67cd8e89afa56f3d6f19c0353ed4d80b89210df067cc4a71866c5d162cc8",
+            "description": "Keep what a recruiter told the person about pay for a job, so get_comps can put it next to the others, and",
+            "name": "set_comp",
+            "parameters": [
+              {
+                "default": null,
+                "description": "What the person asked for (\"210-230K\"). Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "asked",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The base salary (range) the recruiter gave, as said: \"165-195K\". An empty string clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "base",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bonus, as said (\"10% target\"). Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "bonus",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A few words on its career value (\"observability product, staff IC\"). Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "career_note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Equity, as said (\"40K RSUs over 4 years\"). Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "equity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The pay Glassdoor shows for this job, as the person read it there (\"170-210K\"). Only a figure they typed in: jobwatch never fetches Glassdoor. Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "glassdoor",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A few words (\"195K most likely their max\"). Replaces the old note. Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What they offered. Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offered",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What the job is, for its career value: product (builds the company's own product), customer (forward-deployed, solutions, customer-facing engineering) or internal (builds internal tools or platforms for the business). Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "role",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Sign-on bonus, as said. Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "signon",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_comp` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:00ef0570b38fbe42430fcf944b4abd282d26a1cbbbe09fe1d3174cf2b1755f02",
+            "description": "Keep what is known of a company's health, per company, for get_comps to show and weigh. Search the web",
+            "name": "set_company_health",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The day the facts were read, YYYY-MM-DD; today when left out. Older than 90 days shows as stale.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "as_of",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The company's name, or the key of one of its jobs.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Headcount trend (\"growing\", \"shrinking\").",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "headcount",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What kind of company: tech (software, security or AI product company), consulting, or enterprise (a non-tech business whose IT builds for itself: bank, insurer, real-estate finance). The career part of get_comps reads it. Empty clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Recent layoffs, with when (\"10% in March 2026\"), or \"none\" when you found none.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "layoffs",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "public or private. An empty string clears it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "listing",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Total raised (\"$80M\"). Under $20M for a private company counts as thin funding.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "raised",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Employee rating (\"4.1 Glassdoor\").",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rating",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Revenue or growth, if known.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "revenue",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A short risk note; any text counts against the company.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "risk",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The links these came from, separated by spaces.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sources",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Stage and last round, as found (\"Series B, $50M, 2025\").",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stage",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_company_health` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a9ee727888ebdb1a54b866669732093be13340d70eca29db9854350f6ece33e6",
+            "description": "Jobs queued to apply to, oldest first, with fit scores, notes, people the user knows there (ask them for",
+            "name": "list_queued_jobs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_queued_jobs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a1436f8096978686d29079de64322402100005c7904031b686e8b29b643e8b68",
+            "description": "Check that the postings of queued jobs and open applications still take applications, and record the",
+            "name": "check_postings",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_postings` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:009ea0c97cdb1b330a10299965f6efefaa27a8c9d4563136fd16983197c50bbe",
+            "description": "Tracked jobs with their tracking fields, newest first, including closed postings. A plain list by status",
+            "name": "list_jobs",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Only jobs with this status; omit for all.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_jobs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d6c4d68b7a6b42d1b47a72022aa566612c7d0038e577fe12761a135554468502",
+            "description": "Jobs tracked twice: pairs of tracked jobs, open or closed, where the person queued, applied to or skipped",
+            "name": "find_duplicates",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Only pairs that share a req or posting id (the same opening), not the same title alone.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "strong_only",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_duplicates` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0ca4369a01bf3ace9e98c50087932a2ca2c49aa68578a090c01e09e6d1a436b1",
+            "description": "Who an interviewer or contact is: their roles, from the text of their LinkedIn experience page, for",
+            "name": "read_profile",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The page text of someone's LinkedIn experience page (linkedin.com/in/<name>/details/experience/), as the person's own browser shows it: copied, or from a browser tool's page text. Not a link.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_profile` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ebbf8b4ab3fad42a0d66c93fc275f4e9c3c86177a82e715e11816318dd579963",
+            "description": "Everything tracked at one company, whatever the status of its jobs (new, queued, applied, screening,",
+            "name": "get_company",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Also list the open roles the filters leave out (other cities, low pay...). Default: the watchlist's display.company setting (matches: only the roles Today's filters pass).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "every_role",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "A company's name (\"Acme Robotics\"), part of it (\"acme\"), or its domain (\"acme.com\"); case, punctuation and suffixes such as Inc don't matter.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_company` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c12aa6a7418cc058406293bc7f0bc373f263b3a55abc804e0d99f6902892841c",
+            "description": "Record what the person says about someone they know at a company: use (a good person to ask for a",
+            "name": "rate_contact",
+            "parameters": [
+              {
+                "default": null,
+                "description": "A few words to show beside their name, e.g. \"doesn't check LinkedIn; reach on WhatsApp\".",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "use: ask them first; skip: never suggest them; clear: back to the usual order.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "verdict",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The connection's full name (\"Ana Li\") or LinkedIn profile link (linkedin.com/in/...).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "who",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rate_contact` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed916c906b912dc35844b9c041c02499d7eff1fadf64f5fb95b785a35439310f",
+            "description": "Keep what was sent with an application, as copies: files (local paths to the resume PDF, cover letter...",
+            "name": "save_application_package",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The form's questions and the answers given, as [{\"question\": ..., \"answer\": ...}]. Replaces any saved before.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "answers",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Local paths to the files exactly as uploaded (resume PDF, cover letter...). Copies are kept.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "files",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A cover letter or message pasted into the form.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save_application_package` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bbe886132ffc847cd07f592d80bcf26f4ac7cfbfee69142f3144907d4958c8a6",
+            "description": "What was sent with an application: files kept (with their folder), form answers, note, and the day the",
+            "name": "get_application_package",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_application_package` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1e18897f9373bef51b0c5d3f23c9cfe46a5b83fcacec0f528a8818aed263f967",
+            "description": "Tailor a resume to one job with resume-kit and keep the PDF as that job's resume, which the browser",
+            "name": "tailor_resume",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tailor_resume` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:68f1aad49131618e51f44fa4e72002e5f19b863c5510667140efd818f83a829a",
+            "description": "Form answers the person gave on earlier applications (kept by save_application_package), newest",
+            "name": "find_past_answers",
+            "parameters": [
+              {
+                "default": 50,
+                "description": "At most this many, newest first; hundreds of distinct questions pile up across applications, so search with a query rather than raising it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "",
+                "description": "Words of the question to look for (\"notice period\", \"reason leaving\"): every word must be in the question, any case. Empty lists each distinct question once, with the start of its latest answer.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `find_past_answers` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b70a7ebe8f80ddb61a18dbc14aac7a643b0af97c2830185b6fa0f64f1336df2a",
+            "description": "A prep sheet for a recruiter call or interview: stage and next step, each requirement and responsibility",
+            "name": "get_interview_prep",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Also have jobwatch's own model (the chat's backend) draft 6-10 questions likely for this role, each with the ask it probes and an answer outline built only from the person's story file and resume, citing the story ids used; one with no story says so (no_story) with an honest angle. Invented story ids and numbers are taken out before they're returned. Slow the first time, then kept. With the claude backend the posting, resume and stories go to Anthropic. False is rule-based and instant.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "draft_answers",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Also have jobwatch's own model (the chat's backend) write questions for this role from the posting's asks (role_questions), without answers. Only the posting goes to the model, and to Anthropic with the claude backend. Slow the first time, then kept; questions saved earlier are always returned.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "role_questions",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_interview_prep` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e76ced9e11ba4b548ffdd42c4184476eb045fff7a0b0bd180c8a4513c481586a",
+            "description": "Add a story to the person's story file (the watchlist's stories:, or stories.yaml beside it, which the",
+            "name": "save_story",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Details that came up but the person didn't confirm, or asked to keep out (a tool they weren't sure of, a place). Drafted answers and mock answers that say one are taken out.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "avoid",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "did",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hard",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A short name drafted answers cite it by: lowercase letters, digits and dashes (alert-dedupe). A taken one gets -2, -3...",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "result",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Tools and skills it shows, as the person named them.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skills",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A few words: what it was.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save_story` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0e2679f9edd90003480863e4c69a62021ca412ae8dc036854d009765a5556122",
+            "description": "Skills today's matching jobs and the person's applications ask for, most in demand first, each with",
+            "name": "list_skill_gaps",
+            "parameters": [
+              {
+                "default": null,
+                "description": "How soon the person wants to close a gap: week, month, quarter or any. Omit for the watchlist's learning.timeline.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeline",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_skill_gaps` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:11a39d7dad1d22b316ae0c20e18a23181ebe52100a2ae0ccc65192cfe90a1895",
         "version": "0.5.0"
       }
     ]
