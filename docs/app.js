@@ -2401,6 +2401,89 @@
   }
 
 
+window.toggleBasket = function(packageName) {
+  if (selectedServers.has(packageName)) {
+    selectedServers.delete(packageName);
+  } else {
+    selectedServers.add(packageName);
+  }
+  
+  // Update button visual states
+  document.querySelectorAll(`.btn-add-basket`).forEach(btn => {
+    // Check if the onclick attribute matches the package name to identify the correct buttons
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').includes(`window.toggleBasket('${escapeHtml(packageName)}')`)) {
+      if (selectedServers.has(packageName)) {
+        btn.classList.add('active');
+        btn.textContent = '✓ In Basket';
+      } else {
+        btn.classList.remove('active');
+        btn.textContent = '+ Add to Basket';
+      }
+    }
+  });
+
+  // Update drawer count and visibility
+  const drawer = document.getElementById('config-basket-drawer');
+  const countSpan = document.getElementById('basket-count');
+  
+  if (drawer && countSpan) {
+    countSpan.textContent = selectedServers.size;
+    if (selectedServers.size > 0) {
+      drawer.style.display = 'block';
+    } else {
+      drawer.style.display = 'none';
+    }
+  }
+
+  // Trigger collision detection
+  if (typeof window.detectCollisions === 'function') {
+    window.detectCollisions();
+  }
+
+  // Update active client tab preview textarea
+  const activeTab = document.querySelector('.basket-client-tab.active');
+  if (activeTab) {
+    const client = activeTab.dataset.client;
+    const outputArea = document.getElementById('basketConfigOutput');
+    if (outputArea && typeof window.generateMultiClientConfig === 'function') {
+      outputArea.value = window.generateMultiClientConfig(client);
+    }
+  }
+};
+
+window.generateMultiClientConfig = function(clientType) {
+  if (selectedServers.size === 0) return "";
+  
+  let configObj = {};
+  if (["claude", "cursor", "windsurf", "cline"].includes(clientType)) {
+    configObj = { mcpServers: {} };
+  } else if (clientType === "zed") {
+    configObj = { context_servers: {} };
+  } else if (clientType === "continue") {
+    configObj = { mcpServers: [] };
+  }
+  
+  Array.from(selectedServers).forEach(pkg => {
+    const s = catalogIndex.find(x => x.package_name === pkg);
+    if (!s) return;
+    
+    const serverName = s.package_name.replace(/[^a-zA-Z0-9_-]/g, "_").replace(/^_+|_+$/g, "");
+    const command = s.transport === "sse" ? "" : (s.ecosystem === "npm" ? "npx" : (s.ecosystem === "python" ? "uvx" : "mcp-server"));
+    const args = s.transport === "sse" ? [] : ["-y", s.package_name];
+    const env = s.required_env_vars ? Object.fromEntries(s.required_env_vars.map(e => [e, `<YOUR_${e}>`])) : {};
+    
+    if (["claude", "cursor", "windsurf", "cline"].includes(clientType)) {
+      configObj.mcpServers[serverName] = { command, args, env };
+    } else if (clientType === "zed") {
+      configObj.context_servers[serverName] = { command, args, env };
+    } else if (clientType === "continue") {
+      configObj.mcpServers.push({ name: serverName, command, args, env });
+    }
+  });
+  
+  return JSON.stringify(configObj, null, 2);
+};
+
 window.detectCollisions = function() {
     const banner = document.getElementById("collisionWarning");
     if (!banner) return;
@@ -2482,10 +2565,36 @@ window.detectCollisions = function() {
       });
     });
     
-    document.getElementById("copyBasketConfig")?.addEventListener("click", () => {
+    document.getElementById("clearBasketBtn")?.addEventListener("click", () => {
+      selectedServers.clear();
+      
+      document.querySelectorAll('.btn-add-basket').forEach(btn => {
+        btn.classList.remove('active');
+        btn.textContent = '+ Add to Basket';
+      });
+      
+      document.getElementById('basket-count').textContent = '0';
+      document.getElementById('config-basket-drawer').style.display = 'none';
+      
+      if (typeof window.detectCollisions === 'function') {
+        window.detectCollisions();
+      }
+    });
+    
+    document.getElementById("closeBasketBtn")?.addEventListener("click", () => {
+      document.getElementById('config-basket-drawer').style.display = 'none';
+    });
+
+    document.getElementById("copyBasketConfig")?.addEventListener("click", (e) => {
       const text = document.getElementById("basketConfigOutput").value;
+      const btn = e.target;
+      const originalText = btn.textContent;
+      
       navigator.clipboard.writeText(text).then(() => {
-        alert("Copied to clipboard!");
+        btn.textContent = "📋 Copied!";
+        setTimeout(() => {
+          btn.textContent = originalText;
+        }, 2000);
       });
     });
   });
