@@ -294,7 +294,7 @@ class SarifReporter:
             level = "error" if risk_tier in ("CRITICAL", "HIGH") else "warning"
 
             if rule_id not in rules_dict:
-                prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
+                prov_urls = resolve_provenance_urls(rule_id, [])
                 help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
                 rules_dict[rule_id] = {
                     "id": rule_id,

@@ -454,6 +454,25 @@ pytest -q tests/test_acceptance_*.py
 - `--diff-baseline`
 - `--blocklist`
 - `--ecosystem`
+- `--allow-outbound`
+- `--allowed-origin`
+- `--daemon`
+- `--install-service`
+- `--interval`
+- `--log-file`
+- `--mock`
+- `--no-auth`
+- `--no-canary-detection`
+- `--notify`
+- `--open-browser`
+- `--sandbox-type`
+- `--simulate`
+- `--status`
+- `--stop`
+- `--target`
+- `--targets`
+- `--theme`
+- `--webhook`
 
 ## License
 MIT

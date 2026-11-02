@@ -768,3 +768,5 @@ The `proxy` command intercepts and logs JSON-RPC traffic. The audit log is struc
 | `tui` |
 | `monitor` |
 | `bridge` |
+| `network-scan` |
+| `probe-safe` |
