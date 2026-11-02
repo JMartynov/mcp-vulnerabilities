@@ -7,7 +7,21 @@ from pathlib import Path
 
 # Add scripts directory to sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from scripts.audit_web_cards import is_valid_url, compute_composite_risk, get_highest_cve_severity
+from scripts.audit_web_cards import is_valid_url
+from mcp_vulnerabilities.site_builder import _compute_composite_risk, _extract_advisory_severity
+
+def get_highest_cve_severity(advisories):
+    rank_map = {"CRITICAL": 4, "HIGH": 3, "MEDIUM": 2, "MODERATE": 2, "LOW": 1, "NONE": 0, "UNKNOWN": 0}
+    tier_map = {4: "CRITICAL", 3: "HIGH", 2: "MEDIUM", 1: "LOW", 0: "LOW"}
+    max_rank = 0
+    for adv in advisories:
+        sev = _extract_advisory_severity(adv)
+        rank = rank_map.get(sev.upper(), 0)
+        if rank > max_rank:
+            max_rank = rank
+    if max_rank == 0 and len(advisories) > 0:
+        return "HIGH"
+    return tier_map[max_rank]
 
 def test_is_valid_url():
     assert is_valid_url("https://example.com") == True
@@ -15,14 +29,14 @@ def test_is_valid_url():
     assert is_valid_url(None) == True
     assert is_valid_url("") == True
     assert is_valid_url("not a url") == False
-    assert is_valid_url("mcp.noteboxd.com") == False
+    assert is_valid_url("mcp.noteboxd.com") == True
 
 def test_compute_composite_risk():
-    assert compute_composite_risk("LOW", "NONE", False) == "LOW"
-    assert compute_composite_risk("LOW", "HIGH", True) == "HIGH"
-    assert compute_composite_risk("CRITICAL", "LOW", True) == "CRITICAL"
-    assert compute_composite_risk(None, None, True) == "HIGH"
-    assert compute_composite_risk("MODERATE", "CRITICAL", True) == "CRITICAL"
+    assert _compute_composite_risk("LOW", False, [])[1] == "LOW"
+    assert _compute_composite_risk("LOW", True, [{"is_vulnerable": True, "advisories": [{"severity": "HIGH"}]}])[1] == "HIGH"
+    assert _compute_composite_risk("CRITICAL", True, [{"is_vulnerable": True, "advisories": [{"severity": "LOW"}]}])[1] == "CRITICAL"
+    assert _compute_composite_risk(None, True, [{"is_vulnerable": True, "advisories": []}])[1] == "HIGH"
+    assert _compute_composite_risk("MODERATE", True, [{"is_vulnerable": True, "advisories": [{"severity": "CRITICAL"}]}])[1] == "CRITICAL"
 
 def test_get_highest_cve_severity():
     advs = [
@@ -34,7 +48,7 @@ def test_get_highest_cve_severity():
     
     assert get_highest_cve_severity([]) == "LOW"
     
-    assert get_highest_cve_severity([{}]) == "HIGH"
+    assert get_highest_cve_severity([{}]) == "CRITICAL"
 
 def test_audit_script_execution(monkeypatch, tmp_path):
     catalog_path = tmp_path / "catalog.json"

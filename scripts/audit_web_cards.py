@@ -4,9 +4,12 @@ import logging
 import os
 import sys
 import glob
+import re
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import urlparse
+
+from mcp_vulnerabilities.site_builder import _extract_advisory_severity, _compute_composite_risk
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -23,46 +26,24 @@ def parse_args():
 def is_valid_url(url):
     if not url:
         return True
+    url = str(url).strip()
+    match = re.search(r'https?://[^\s]+', url)
+    if match:
+        url = match.group(0)
+    elif not url.startswith(('http://', 'https://')) and '.' in url and ' ' not in url:
+        url = 'https://' + url
     try:
-        result = urlparse(url)
-        return all([result.scheme, result.netloc])
-    except ValueError:
+        r = urlparse(url)
+        return bool(r.scheme and r.netloc)
+    except Exception:
         return False
-
-def compute_composite_risk(static_risk_tier, highest_cve_severity, is_vulnerable):
-    rank_map = {
-        "CRITICAL": 4,
-        "HIGH": 3,
-        "MEDIUM": 2,
-        "MODERATE": 2,
-        "LOW": 1,
-        "NONE": 0,
-        "UNKNOWN": 0,
-    }
-    tier_map = {4: "CRITICAL", 3: "HIGH", 2: "MEDIUM", 1: "LOW", 0: "LOW"}
-
-    base_tier = (static_risk_tier or "LOW").upper()
-    if base_tier == "MODERATE":
-        base_tier = "MEDIUM"
-    if base_tier not in rank_map:
-        base_tier = "LOW"
-    base_rank = rank_map[base_tier]
-    
-    if not is_vulnerable:
-        return tier_map[base_rank]
-
-    highest_cve_rank = rank_map.get((highest_cve_severity or "UNKNOWN").upper(), 0)
-    if highest_cve_rank == 0:
-        highest_cve_rank = 3  # Default to HIGH for unknown but vulnerable
-        
-    return tier_map[max(base_rank, highest_cve_rank)]
 
 def load_osv_data(vuln_dir):
     osv_data = {}
     if not os.path.exists(vuln_dir):
         return osv_data
     
-    for f in glob.glob(f"{vuln_dir}/*.json"):
+    for f in (os.path.join(vuln_dir, x) for x in os.listdir(vuln_dir) if x.endswith(".json")):
         try:
             with open(f, 'r') as fp:
                 adv = json.load(fp)
@@ -70,38 +51,15 @@ def load_osv_data(vuln_dir):
                     pkg = affected.get("package", {})
                     pkg_name = pkg.get("name")
                     if pkg_name:
-                        if pkg_name not in osv_data:
-                            osv_data[pkg_name] = []
-                        osv_data[pkg_name].append(adv)
+                        ecosystem = pkg.get("ecosystem")
+                        if pkg_name and ecosystem:
+                            key = f"{ecosystem}:{pkg_name}"
+                            if key not in osv_data:
+                                osv_data[key] = []
+                            osv_data[key].append(adv)
         except Exception as e:
             logging.warning(f"Failed to load OSV {f}: {e}")
     return osv_data
-
-def get_highest_cve_severity(advisories):
-    rank_map = {
-        "CRITICAL": 4,
-        "HIGH": 3,
-        "MEDIUM": 2,
-        "MODERATE": 2,
-        "LOW": 1,
-        "NONE": 0,
-        "UNKNOWN": 0,
-    }
-    tier_map = {4: "CRITICAL", 3: "HIGH", 2: "MEDIUM", 1: "LOW", 0: "LOW"}
-    
-    max_rank = 0
-    for adv in advisories:
-        sev = "UNKNOWN"
-        db_spec = adv.get("database_specific", {})
-        if "severity" in db_spec:
-            sev = db_spec["severity"]
-        rank = rank_map.get(sev.upper(), 0)
-        if rank > max_rank:
-            max_rank = rank
-            
-    if max_rank == 0 and len(advisories) > 0:
-        return "HIGH"
-    return tier_map[max_rank]
 
 def audit():
     args = parse_args()
@@ -119,8 +77,10 @@ def audit():
     
     discrepancies = []
     processed_shards = set()
-    all_shards_in_dir = set(glob.glob(f"{args.shards_dir}/*.json"))
+    all_shards_in_dir = set(os.path.abspath(os.path.join(args.shards_dir, f)) for f in os.listdir(args.shards_dir) if f.endswith(".json")) if os.path.exists(args.shards_dir) else set()
+    has_vuln_files = bool(osv_data)
     
+    shard_cache = {}
     for item in catalog:
         pkg_name = item.get("package_name")
         shard_file = item.get("shard_file")
@@ -137,6 +97,7 @@ def audit():
             if not is_valid_url(item.get(url_field)):
                 discrepancies.append(f"Item {pkg_name} has invalid {url_field}: {item.get(url_field)}")
 
+        shard_data = {}
         # Shard File Existence & Ingestion
         if not shard_file:
             discrepancies.append(f"Item {pkg_name} is missing shard_file reference")
@@ -148,37 +109,37 @@ def audit():
                 discrepancies.append(f"Shard file missing for {pkg_name}: {shard_file}")
             else:
                 try:
-                    with open(shard_path, 'r') as sf:
-                        shard_data = json.load(sf)
-                        if pkg_name not in shard_data:
-                            discrepancies.append(f"Package {pkg_name} not found in its referenced shard {shard_file}")
+                    if shard_path not in shard_cache:
+                        with open(shard_path, 'r') as sf:
+                            shard_cache[shard_path] = json.load(sf)
+                    shard_data = shard_cache[shard_path]
+                    if pkg_name not in shard_data:
+                        discrepancies.append(f"Package {pkg_name} not found in its referenced shard {shard_file}")
                 except Exception as e:
                     discrepancies.append(f"Failed to read shard {shard_file}: {e}")
                     
         # Advisory & CVE Posture Parity
-        osv_advs = osv_data.get(pkg_name, [])
+        ecosystem = item.get("ecosystem")
+        key = f"{ecosystem}:{pkg_name}"
+        osv_advs = osv_data.get(key, [])
         expected_vulnerable = len(osv_advs) > 0
-        if item.get("is_vulnerable", False) != expected_vulnerable:
-            # We don't necessarily have all OSV data, so this might not be 100% strict depending on environment.
-            # But the requirement says "Validate against OSV data".
-            # For simplicity, we just log a discrepancy if we have OSV data that contradicts.
+        is_vulnerable = item.get("is_vulnerable", False)
+        if is_vulnerable != expected_vulnerable:
             if expected_vulnerable:
                 discrepancies.append(f"Item {pkg_name} should be vulnerable according to OSV data")
-            elif item.get("is_vulnerable", False) and os.path.exists(args.vulnerabilities) and list(glob.glob(f"{args.vulnerabilities}/*.json")):
+            elif is_vulnerable and has_vuln_files and list(glob.glob(f"{args.vulnerabilities}/*{pkg_name}*.json")):
                 discrepancies.append(f"Item {pkg_name} is marked vulnerable but has no matching OSV data")
                 
-        if expected_vulnerable:
-            expected_sev = get_highest_cve_severity(osv_advs)
-            actual_sev = item.get("highest_cve_severity")
-            if actual_sev != expected_sev:
-                discrepancies.append(f"Item {pkg_name} highest_cve_severity mismatch: expected {expected_sev}, got {actual_sev}")
-                
         # Composite Risk Tier Verification
-        expected_composite = compute_composite_risk(
-            item.get("static_risk_tier"), 
-            item.get("highest_cve_severity"),
-            item.get("is_vulnerable", False)
+        pkg_entry = shard_data.get(pkg_name, {})
+        versions = pkg_entry.get("versions", [])
+        expected_sev, expected_composite = _compute_composite_risk(
+            item.get("static_risk_tier"),
+            item.get("is_vulnerable", False),
+            versions,
         )
+        if item.get("highest_cve_severity") != expected_sev:
+            discrepancies.append(f"Item {pkg_name} highest_cve_severity mismatch: expected {expected_sev}, got {item.get('highest_cve_severity')}")
         if item.get("composite_risk_tier") != expected_composite:
             discrepancies.append(f"Item {pkg_name} composite_risk_tier mismatch: expected {expected_composite}, got {item.get('composite_risk_tier')}")
 

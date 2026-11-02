@@ -38,8 +38,27 @@ from mcp_vulnerabilities.api.server import McpSecurityApiServer
 from mcp_vulnerabilities.sandbox.engine import ContainerEngine
 from mcp_vulnerabilities.sandbox.runner import EphemeralSandbox, TimeoutExpired
 from mcp_vulnerabilities.validator import OsvValidator
-from rich.console import Console
-console = Console()
+try:
+    from rich.console import Console
+    console = Console()
+except ImportError:
+    import contextlib
+
+    class FallbackConsole:
+        def print(self, *args, **kwargs):
+            clean_args = []
+            for a in args:
+                if isinstance(a, str):
+                    clean_args.append(re.sub(r'\[/?[a-zA-Z0-9_ ]+\]', '', a))
+                else:
+                    clean_args.append(a)
+            print(*clean_args)
+
+        @contextlib.contextmanager
+        def status(self, *args, **kwargs):
+            yield
+
+    console = FallbackConsole()
 
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s"
