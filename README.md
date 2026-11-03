@@ -14,6 +14,7 @@ An open-source, automated **Open Source Vulnerability (OSV 1.6)** compliant secu
 - **GitHub Security Advisories (GHSA)**: Live GraphQL/REST security alerts.
 - **OSV.dev**: Unified open-source vulnerability database.
 - **National Vulnerability Database (NVD)**: CVE 2.0 vulnerability metrics and CVSS scores.
+- **GitLab Advisory Database**: High-fidelity open vulnerability feed curated by GitLab's Vulnerability Research Team.
 
 ## Snapshot Downloads & Mirrors
 
@@ -414,6 +415,8 @@ pytest -q tests/test_acceptance_*.py
 - `--min-confidence`
 - `--cvelist-delta`
 - `--cvelistv5-dir`
+- `--gitlab-dir`
+- `--include-gitlab`
 - `--verify-signatures`
 - `--no-registries`
 - `--analyzers`

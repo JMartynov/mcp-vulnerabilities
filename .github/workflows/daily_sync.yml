@@ -60,7 +60,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         run: |
-          python -m mcp_vulnerabilities.cli sync --live-api
+          python -m mcp_vulnerabilities.cli sync --live-api --include-gitlab
 
       - name: Validate OSV Dataset Integrity & Schemas
         run: |
