@@ -1337,6 +1337,14 @@ def main() -> None:
                     print(
                         f"\n{status_badge} Server: {f.server_name} ({f.package_name})"
                     )
+                    if getattr(f, "is_cisa_kev", False):
+                        print("  [🚨 CISA KEV: ACTIVELY EXPLOITED IN THE WILD]")
+                        added = f.cisa_kev_date_added or 'N/A'
+                        due = f.cisa_kev_due_date or 'N/A'
+                        rw = f.cisa_kev_ransomware_campaign_use or 'Unknown'
+                        print(f"    Date Added: {added} | Due Date: {due} | Ransomware: {rw}")
+                        if f.cisa_kev_required_action:
+                            print(f"    Required Action: {f.cisa_kev_required_action}")
                     print(
                         f"  Vulnerability:   {f.vulnerability_id} [Severity: {f.severity_level}]"
                     )
@@ -1360,7 +1368,9 @@ def main() -> None:
                         print(f"  Remediation:     Upgrade to >= {f.fixed_version}")
                     print(f"  Summary:         {f.summary}")
                     
-                    prov_urls = resolve_provenance_urls(f.advisory_id, f.aliases)
+                    adv_id = getattr(f, "advisory_id", None) or f.vulnerability_id
+                    aliases = getattr(f, "aliases", [])
+                    prov_urls = resolve_provenance_urls(adv_id, aliases)
                     print("  Authoritative Sources:")
                     if "cve" in prov_urls:
                         print(f"    * Official CVE: {prov_urls['cve']}")

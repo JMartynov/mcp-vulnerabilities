@@ -37,6 +37,11 @@ class AuditFinding:
     affected_range: str
     references: list[str]
     is_confirmed: bool  # True if version specifically in range, False if warning on unpinned package
+    is_cisa_kev: bool = False
+    cisa_kev_date_added: str | None = None
+    cisa_kev_due_date: str | None = None
+    cisa_kev_ransomware_campaign_use: str | None = None
+    cisa_kev_required_action: str | None = None
 
 
 @dataclass

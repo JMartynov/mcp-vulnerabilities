@@ -157,6 +157,7 @@ class OsvVulnerability:
     references: tuple[ReferenceSpec, ...] = field(default_factory=tuple)
     credits: tuple[CreditSpec, ...] = field(default_factory=tuple)
     database_specific: dict[str, Any] = field(default_factory=dict)
+    threat_intelligence: dict[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not self.id:
@@ -300,6 +301,7 @@ class OsvVulnerability:
             references=tuple(references_list),
             credits=tuple(credits_list),
             database_specific=data.get("database_specific", {}),
+            threat_intelligence=data.get("threat_intelligence", {}),
         )
 
 

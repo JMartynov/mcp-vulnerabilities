@@ -79,6 +79,22 @@ class SarifReporter:
                     rules_dict[rule_id]["properties"]["epssPercentile"] = getattr(finding, "epss_percentile", 0.0)
                     rules_dict[rule_id]["properties"]["epssHighRisk"] = getattr(finding, "epss_high_risk", False)
 
+                if getattr(finding, "is_cisa_kev", False):
+                    rules_dict[rule_id]["properties"]["cisaKev"] = True
+                    if getattr(finding, "cisa_kev_date_added", None):
+                        rules_dict[rule_id]["properties"]["cisaDateAdded"] = finding.cisa_kev_date_added
+                    if getattr(finding, "cisa_kev_due_date", None):
+                        rules_dict[rule_id]["properties"]["cisaDueDate"] = finding.cisa_kev_due_date
+                    if getattr(finding, "cisa_kev_ransomware_campaign_use", None):
+                        rules_dict[rule_id]["properties"]["cisaRansomwareCampaignUse"] = finding.cisa_kev_ransomware_campaign_use
+                    if "tags" in rules_dict[rule_id]["properties"]:
+                        for t in ("cisa-kev", "actively-exploited"):
+                            if t not in rules_dict[rule_id]["properties"]["tags"]:
+                                rules_dict[rule_id]["properties"]["tags"].append(t)
+
+            if getattr(finding, "is_cisa_kev", False):
+                level = "error"
+
             result = {
                 "ruleId": rule_id,
                 "level": level,

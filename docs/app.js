@@ -1311,8 +1311,11 @@
 
       const compRisk = getServerCompositeRisk(s);
       const riskClass = `risk-${compRisk.toLowerCase()}`;
+      const kevBadge = s.has_active_kev_exploit
+        ? `<span class="badge badge-cisa-kev" title="CISA Known Exploited Vulnerability">🚨 CISA KEV Exploit</span>`
+        : "";
       const vulnStatusBadge = s.is_vulnerable
-        ? `<span class="badge badge-danger">🔴 ${s.vulnerable_versions_count || 1} Vulnerable Release${s.vulnerable_versions_count > 1 ? "s" : ""}</span>`
+        ? `${kevBadge}<span class="badge badge-danger">🔴 ${s.vulnerable_versions_count || 1} Vulnerable Release${s.vulnerable_versions_count > 1 ? "s" : ""}</span>`
         : `<span class="badge badge-success">🟢 Clean Release</span>`;
 
       const safeVerBadge = s.recommended_safe_version
