@@ -6,6 +6,8 @@ from mcp_vulnerabilities.converters.nvd import NvdConverter
 from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.converters.verity import VerityCatalogConverter
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
+from mcp_vulnerabilities.graph import CanonicalAliasGraph
+from mcp_vulnerabilities.dedup import AdvisoryFusionEngine
 from mcp_vulnerabilities.models import (
     AffectedPackage,
     DatabaseSpecificMcp,
@@ -36,6 +38,8 @@ __all__ = [
     "McpVulnerabilityPipeline",
     "NvdConverter",
     "OsvDeduplicator",
+    "CanonicalAliasGraph",
+    "AdvisoryFusionEngine",
     "OsvDevConverter",
     "OsvValidationError",
     "OsvValidator",
