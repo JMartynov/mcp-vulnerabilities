@@ -83,7 +83,8 @@ def test_scoring_composite_epss_boost():
 
 def test_cli_min_epss_filter():
     import subprocess
-    result = subprocess.run(["uv", "run", "mcp-vuln", "audit", "--help"], capture_output=True, text=True)
+    import sys
+    result = subprocess.run([sys.executable, "-m", "mcp_vulnerabilities.cli", "audit", "--help"], capture_output=True, text=True)
     assert "--min-epss" in result.stdout
 
 def test_sarif_epss_properties():

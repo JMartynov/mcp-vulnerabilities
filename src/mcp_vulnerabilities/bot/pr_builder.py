@@ -146,15 +146,16 @@ class PRBuilder:
             if self.assignee:
                 gh_cmd.extend(["--assignee", self.assignee])
                 
-            res = self._run_cmd(gh_cmd)
+            res = self._run_cmd(gh_cmd, check=False)
             if res.returncode == 0:
                 pr_url = res.stdout.decode("utf-8").strip()
                 logger.info(f"Successfully created PR: {pr_url}")
                 
                 if self.auto_merge:
-                    self._run_cmd(["gh", "pr", "merge", pr_url, "--auto", "--squash"])
+                    self._run_cmd(["gh", "pr", "merge", pr_url, "--auto", "--squash"], check=False)
             else:
-                logger.error(f"Failed to create PR: {res.stderr.decode('utf-8')}")
+                stderr_msg = res.stderr.decode("utf-8", errors="replace")
+                logger.error(f"Failed to create PR: {stderr_msg}")
 
         # Checkout previous branch
         self._run_cmd(["git", "checkout", "-"])
