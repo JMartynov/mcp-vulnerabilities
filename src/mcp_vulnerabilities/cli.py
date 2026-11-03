@@ -4,6 +4,9 @@ from __future__ import annotations
 from .provenance import resolve_provenance_urls
 
 import argparse
+from rich.console import Console
+from rich.text import Text
+from mcp_vulnerabilities.threat_intel.epss import EpssClient, EpssScore
 import logging
 import sys
 from pathlib import Path
@@ -278,6 +281,9 @@ def main() -> None:
         "--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories"
     )
     lookup_p.add_argument(
+        "--min-epss", type=float, default=0.0, help="Minimum EPSS score (0.0 to 1.0) to display findings"
+    )
+    lookup_p.add_argument(
         "--snapshot",
         default="vulnerabilities.json.gz",
         help="Path to consolidated snapshot file",
@@ -353,6 +359,7 @@ def main() -> None:
     aud_p.add_argument("--data-dir", default="data/vulnerabilities", help="Directory of OSV advisories")
     aud_p.add_argument("--snapshot", default="vulnerabilities.json.gz", help="Path to consolidated snapshot file")
     aud_p.add_argument("--severity-threshold", choices=["LOW", "MEDIUM", "HIGH", "CRITICAL"], default=None, help="Minimum severity threshold")
+    aud_p.add_argument("--min-epss", type=float, default=0.0, help="Minimum EPSS score (0.0 to 1.0) to display findings")
     aud_p.add_argument("--format", choices=["table", "json", "sarif", "cyclonedx", "sbom"], default="table", help="Output format")
     aud_p.add_argument("--save-baseline", default=None, help="Save scanned client server inventory as an approved baseline snapshot file")
     aud_p.add_argument("--diff", "--diff-baseline", dest="diff_baseline", default=None, help="Path to approved baseline snapshot JSON file to compare against current state")
@@ -1013,6 +1020,23 @@ def main() -> None:
             print(f"Vulnerability '{args.id_or_alias}' not found.")
             sys.exit(1)
 
+        # Check EPSS
+        cve_id = adv.id
+        if not cve_id.startswith("CVE-"):
+            for alias in adv.aliases:
+                if alias.startswith("CVE-"):
+                    cve_id = alias
+                    break
+        epss_client = EpssClient()
+        epss_scores = epss_client.get_scores([cve_id]) if cve_id.startswith("CVE-") else {}
+        epss = epss_scores.get(cve_id)
+
+        if args.min_epss > 0.0:
+            if not epss or epss.score < args.min_epss:
+                print(f"Filtered out {adv.id}: EPSS score ({epss.score if epss else 0.0}) is below minimum {args.min_epss}.")
+                sys.exit(0)
+
+
         if args.format == "json":
             import json
 
@@ -1027,6 +1051,15 @@ def main() -> None:
             print(f"Severity:   {sev_str}")
             print(f"Published:  {adv.published}")
             print(f"Modified:   {adv.modified}")
+            if epss:
+                console = Console()
+                pct = epss.percentile * 100.0
+                score_pct = epss.score * 100.0
+                epss_color = "red" if epss.score >= 0.35 else "yellow" if epss.score >= 0.10 else "cyan"
+                high_prob = " ⚠️ High Probability" if epss.is_high_risk else ""
+                t = Text(f"EPSS:       {score_pct:.1f}% ({pct:.1f}th percentile{high_prob})", style=epss_color)
+                console.print(t)
+
 
             print(f"\nSummary:\n  {adv.summary}")
             print(
@@ -1182,6 +1215,41 @@ def main() -> None:
             servers, severity_threshold=args.severity_threshold
         )
 
+        # Inject EPSS into findings
+        epss_client = EpssClient()
+        cves_to_fetch = []
+        for f in report.findings:
+            cve_id = f.vulnerability_id
+            if not cve_id.startswith("CVE-") and getattr(f, "aliases", None):
+                for alias in f.aliases:
+                    if alias.startswith("CVE-"):
+                        cve_id = alias
+                        break
+            if cve_id.startswith("CVE-"):
+                cves_to_fetch.append(cve_id)
+
+        epss_scores = epss_client.get_scores(cves_to_fetch)
+
+        for f in report.findings:
+            cve_id = f.vulnerability_id
+            if not cve_id.startswith("CVE-") and getattr(f, "aliases", None):
+                for alias in f.aliases:
+                    if alias.startswith("CVE-"):
+                        cve_id = alias
+                        break
+            if cve_id in epss_scores:
+                f.epss_score = epss_scores[cve_id].score
+                f.epss_percentile = epss_scores[cve_id].percentile
+                f.epss_high_risk = epss_scores[cve_id].is_high_risk
+            else:
+                f.epss_score = None
+                f.epss_percentile = None
+                f.epss_high_risk = False
+
+        if getattr(args, "min_epss", 0.0) > 0.0:
+            report.findings = [f for f in report.findings if f.epss_score is not None and f.epss_score >= args.min_epss]
+
+
         if args.format == "json":
             import json
             out = report.to_dict()
@@ -1251,6 +1319,16 @@ def main() -> None:
                     )
                     if f.cvss_score:
                         print(f"  CVSS Score:      {f.cvss_score}")
+
+                    if getattr(f, "epss_score", None) is not None:
+                        console = Console()
+                        pct = f.epss_percentile * 100.0
+                        score_pct = f.epss_score * 100.0
+                        epss_color = "red" if f.epss_score >= 0.35 else "yellow" if f.epss_score >= 0.10 else "cyan"
+                        high_prob = " ⚠️ High Probability" if f.epss_high_risk else ""
+                        t = Text(f"  EPSS:            {score_pct:.1f}% ({pct:.1f}th percentile{high_prob})", style=epss_color)
+                        console.print(t)
+
                     print(
                         f"  Installed:       {f.installed_version or 'Unpinned (latest)'}"
                     )

@@ -1126,6 +1126,19 @@
     el.advisoryModal.showModal();
   }
 
+
+  function renderEpssPill(epssScore, epssPercentile) {
+      if (epssScore == null) return "";
+      const pct = (epssPercentile * 100).toFixed(1);
+      const scorePct = (epssScore * 100).toFixed(1);
+      let cls = "epss-low";
+      if (epssScore >= 0.35) cls = "epss-danger";
+      else if (epssScore >= 0.10) cls = "epss-warning";
+
+      const tooltip = `EPSS: ${scorePct}% probability of exploit in wild within 30 days (${pct}th percentile)`;
+      return `<span class="epss-pill ${cls}" title="${tooltip}">📊 EPSS: ${scorePct}% (${pct}%)</span>`;
+  }
+
   function escapeHtml(str) {
     if (str === null || str === undefined) return "";
     return String(str)

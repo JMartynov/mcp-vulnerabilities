@@ -6,7 +6,11 @@ import argparse
 import gzip
 import hashlib
 import json
+
 import logging
+from mcp_vulnerabilities.threat_intel.epss import EpssClient
+from mcp_vulnerabilities.scoring import CompositeRiskScorer
+
 import os
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -274,8 +278,12 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
             "remediation_guidance": "",
         }
 
+
     cvss_score: float | None = None
+    epss_score: float | None = None
+    epss_percentile: float | None = None
     sev: str | None = None
+
     owasp: str | None = None
     vulnerable_tools: list[str] = []
     remediation_guidance: str = ""
@@ -295,8 +303,20 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
             owasp = str(aff_db["owasp_mcp_category"])
         if aff_db.get("vulnerable_tools"):
             vulnerable_tools = list(aff_db["vulnerable_tools"])
+
         if aff_db.get("remediation_guidance"):
             remediation_guidance = str(aff_db["remediation_guidance"])
+        if aff_db.get("epss_score") is not None:
+            try:
+                epss_score = float(aff_db["epss_score"])
+            except (ValueError, TypeError):
+                pass
+        if aff_db.get("epss_percentile") is not None:
+            try:
+                epss_percentile = float(aff_db["epss_percentile"])
+            except (ValueError, TypeError):
+                pass
+
 
     # 2. Inspect top-level database_specific
     top_db = adv.get("database_specific", {})
@@ -397,19 +417,44 @@ def _compute_composite_risk(
         return None, normalized_base_tier
 
     highest_cve_rank = 0
+    highest_composite_score = 0.0
+    epss_elevated = False
+
     for v in versions:
         if v.get("is_vulnerable"):
             for adv in v.get("advisories", []):
-                sev_str = _extract_advisory_severity(adv)
+                resolved = _resolve_advisory_details(adv)
+                sev_str = resolved["severity"]
                 rank = rank_map.get(sev_str, 0)
                 if rank > highest_cve_rank:
                     highest_cve_rank = rank
+
+                # check EPSS & Composite Score
+                epss_obj = None
+                cvss_val = resolved.get("cvss_score") or 0.0
+                if resolved.get("epss_score") is not None:
+                    from mcp_vulnerabilities.threat_intel.epss import EpssScore
+                    cve_id = adv.get("id", "UNKNOWN") if isinstance(adv, dict) else str(adv)
+                    epss_obj = EpssScore(cve_id, resolved["epss_score"], resolved.get("epss_percentile", 0.0), "")
+                    if epss_obj.is_high_risk:
+                        epss_elevated = True
+
+                from mcp_vulnerabilities.scoring import CompositeRiskScorer
+                c_score = CompositeRiskScorer.calculate_composite_score(cvss_val, epss_obj)
+                if c_score > highest_composite_score:
+                    highest_composite_score = c_score
 
     if highest_cve_rank == 0:
         highest_cve_rank = 3  # default HIGH
 
     highest_cve_severity = tier_map[highest_cve_rank]
     composite_risk_tier = tier_map[max(base_rank, highest_cve_rank)]
+
+    if epss_elevated:
+        from mcp_vulnerabilities.scoring import CompositeRiskScorer
+        from mcp_vulnerabilities.threat_intel.epss import EpssScore
+        # We can elevate it based on the boolean logic without dummy, or with dummy
+        composite_risk_tier = CompositeRiskScorer.calculate_elevated_tier(composite_risk_tier, EpssScore("DUMMY", 1.0, 1.0, ""))
 
     return highest_cve_severity, composite_risk_tier
 
@@ -690,6 +735,8 @@ def build_site_parallel(
                         "summary": adv.get("summary", ""),
                         "severity": resolved["severity"],
                         "cvss_score": resolved["cvss_score"],
+                        "epss_score": resolved.get("epss_score"),
+                        "epss_percentile": resolved.get("epss_percentile"),
                         "owasp_mcp_category": resolved["owasp_mcp_category"],
                         "vulnerable_tools": resolved["vulnerable_tools"],
                         "remediation_guidance": resolved["remediation_guidance"],

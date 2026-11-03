@@ -74,6 +74,11 @@ class SarifReporter:
                     }
                 }
 
+                if getattr(finding, "epss_score", None) is not None:
+                    rules_dict[rule_id]["properties"]["epssScore"] = finding.epss_score
+                    rules_dict[rule_id]["properties"]["epssPercentile"] = getattr(finding, "epss_percentile", 0.0)
+                    rules_dict[rule_id]["properties"]["epssHighRisk"] = getattr(finding, "epss_high_risk", False)
+
             result = {
                 "ruleId": rule_id,
                 "level": level,

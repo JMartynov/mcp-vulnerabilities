@@ -2335,12 +2335,18 @@
       const sevClass = `risk-${sev.toLowerCase()}`;
       const pkgs = getPackages(adv);
 
+let epssHtml = "";
+      if (adv.epss_score != null) {
+          epssHtml = renderEpssPill(adv.epss_score, adv.epss_percentile);
+      }
+
       return `
         <article class="advisory-card" data-id="${escapeHtml(adv.id)}">
           <div class="advisory-card-header">
             <div>
               <span class="badge ${sevClass}">${escapeHtml(sev)}</span>
               <span class="advisory-id">${escapeHtml(adv.id)}</span>
+              ${epssHtml}
             </div>
           </div>
           <h4 class="advisory-summary">${escapeHtml(adv.summary || "No summary available.")}</h4>
@@ -2370,6 +2376,19 @@
     `;
     el.modalExternalLink.href = `https://osv.dev/vulnerability/${adv.id}`;
     el.advisoryModal.showModal();
+  }
+
+
+  function renderEpssPill(epssScore, epssPercentile) {
+      if (epssScore == null) return "";
+      const pct = (epssPercentile * 100).toFixed(1);
+      const scorePct = (epssScore * 100).toFixed(1);
+      let cls = "epss-low";
+      if (epssScore >= 0.35) cls = "epss-danger";
+      else if (epssScore >= 0.10) cls = "epss-warning";
+
+      const tooltip = `EPSS: ${scorePct}% probability of exploit in wild within 30 days (${pct}th percentile)`;
+      return `<span class="epss-pill ${cls}" title="${tooltip}">📊 EPSS: ${scorePct}% (${pct}%)</span>`;
   }
 
   function escapeHtml(str) {

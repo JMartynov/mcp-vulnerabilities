@@ -476,6 +476,7 @@ pytest -q tests/test_acceptance_*.py
 - `--target`
 - `--targets`
 - `--theme`
+- `--min-epss`
 - `--webhook`
 
 ## License
