@@ -218,6 +218,24 @@ def _process_server_batch(
             toolset_canonical_hash = latest_v_record.toolset_canonical_hash if latest_v_record else None
             required_env_vars = latest_v_record.required_env_vars if latest_v_record else ()
 
+            # OpenSSF Malicious Check
+            from mcp_vulnerabilities.threat_intel.openssf_malicious import OpenSsfMaliciousSync
+            malicious_sync = OpenSsfMaliciousSync()
+            malicious_record = malicious_sync.get_malicious_record(spec.ecosystem, spec.package_name)
+
+            is_malicious = False
+            quarantine_tier = None
+            malicious_advisory_id = None
+            comp_risk_score = None
+
+            if malicious_record:
+                is_malicious = True
+                quarantine_tier = "MALICIOUS"
+                malicious_advisory_id = malicious_record.id
+                comp_risk_score = 10.0
+                sec_summary = f"MALICIOUS PACKAGE DETECTED: {malicious_record.id} - {malicious_record.summary}"
+                overall_vuln = True
+
             record = UnifiedMcpSecurityRecord(
                 package_name=spec.package_name,
                 ecosystem=spec.ecosystem,
@@ -243,6 +261,10 @@ def _process_server_batch(
                 toolset_canonical_hash=toolset_canonical_hash,
                 required_env_vars=required_env_vars,
                 versions=version_records,
+                is_malicious=is_malicious,
+                quarantine_tier=quarantine_tier,
+                malicious_advisory_id=malicious_advisory_id,
+                composite_risk_score=comp_risk_score,
             )
             
             record_dict = record.to_dict()
@@ -506,6 +528,19 @@ def build_site_parallel(
     catalog_state = McpCatalogState()
 
     # 2. Build Unified MCP Security Catalog in Parallel
+    quarantined_malicious = {}
+    q_file = Path("data/quarantined_malicious_servers.json")
+    if q_file.exists():
+        try:
+            q_data = json.loads(q_file.read_text(encoding="utf-8"))
+            for q in q_data:
+                eco = q.get("ecosystem", "")
+                name = q.get("name", "")
+                if eco and name:
+                    quarantined_malicious[f"{eco.lower()}:{name.lower()}"] = q
+        except Exception:
+            pass
+
     if passports_path is None and Path("data/passports.json.gz").exists():
         passports_path = Path("data/passports.json.gz")
     
@@ -678,6 +713,10 @@ def build_site_parallel(
             is_vulnerable=True,
             security_summary=f"Package `{pkg_name}` has {len(advs)} security advisories.",
             versions=syn_version_records,
+            is_malicious=is_malicious,
+            quarantine_tier=quarantine_tier,
+            malicious_advisory_id=malicious_advisory_id,
+            composite_risk_score=comp_risk_score,
         )
         catalog_dicts[pkg_name] = record.to_dict()
 

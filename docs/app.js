@@ -1321,8 +1321,11 @@
 
       let toolsHtml = "";
       const inBasket = selectedServers.has(s.package_name);
-      const basketBtnClass = inBasket ? 'btn-add-basket active' : 'btn-add-basket';
-      const basketBtnText = inBasket ? '✓ In Basket' : '+ Add to Basket';
+      const isMalicious = s.is_malicious === true || s.composite_risk_tier === 'MALICIOUS';
+      const basketBtnClass = isMalicious ? 'btn btn-quarantined' : (inBasket ? 'btn-add-basket active' : 'btn-add-basket');
+      const basketBtnText = isMalicious ? '☠️ Malicious (Quarantined)' : (inBasket ? '✓ In Basket' : '+ Add to Basket');
+      const basketBtnAttr = isMalicious ? 'disabled' : `onclick="window.toggleBasket('${escapeHtml(s.package_name)}')"`;
+
 
       if (!s.tools_count || s.tools_count === 0) {
         toolsHtml = `
@@ -1427,7 +1430,7 @@
               ${s.homepage_url ? `<a href="${escapeHtml(s.homepage_url)}" target="_blank" rel="noopener" class="card-link">🌐 Home</a>` : ""}
             </div>
             <div class="quick-copy-group">
-              <button type="button" class="${basketBtnClass}" onclick="window.toggleBasket('${escapeHtml(s.package_name)}')">${basketBtnText}</button>
+              <button type="button" class="${basketBtnClass}" ${basketBtnAttr}>${basketBtnText}</button>
               <button type="button" class="btn btn-quick-copy" data-client="claude" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Claude ]</button>
               <button type="button" class="btn btn-quick-copy" data-client="cursor" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Cursor ]</button>
               <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
@@ -1604,12 +1607,28 @@
     el.modalServerRisk.textContent = `Risk: ${compRisk}`;
     el.modalServerRisk.className = `badge risk-${compRisk.toLowerCase()}`;
 
-    if (server.is_vulnerable) {
+    if (server.is_malicious || server.composite_risk_tier === "MALICIOUS") {
+      el.modalServerStatus.textContent = "☠️ MALICIOUS / BACKDOORED";
+      el.modalServerStatus.className = "badge badge-danger";
+    } else if (server.is_vulnerable) {
       el.modalServerStatus.textContent = "🔴 Contains Vulnerable Versions";
       el.modalServerStatus.className = "badge badge-danger";
     } else {
       el.modalServerStatus.textContent = "🟢 100% Clean Releases";
       el.modalServerStatus.className = "badge badge-success";
+    }
+
+    // Insert malicious callout if applicable
+    const existingCallout = document.getElementById("malicious-callout-container");
+    if (existingCallout) existingCallout.remove();
+
+    if (server.is_malicious || server.composite_risk_tier === "MALICIOUS") {
+       const calloutHtml = `<div id="malicious-callout-container" class="malicious-callout">
+         <strong>☠️ CRITICAL ALERT: MALICIOUS SUPPLY CHAIN PACKAGE DETECTED</strong><br/>
+         Advisory: ${escapeHtml(server.malicious_advisory_id || 'Unknown')}<br/>
+         The OpenSSF has flagged this package as deliberate MALWARE. Do not execute or add to configuration basket.
+       </div>`;
+       el.modalServerTitle.insertAdjacentHTML('afterend', calloutHtml);
     }
 
     // Identify if catalogIndex server info indicates destructive tools

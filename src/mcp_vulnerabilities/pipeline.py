@@ -620,9 +620,54 @@ class McpVulnerabilityPipeline:
                 if (eco, pkg) not in candidate_map:
                     candidate_map[(eco, pkg)] = ""
 
+            from mcp_vulnerabilities.threat_intel.openssf_malicious import OpenSsfMaliciousSync
+            malicious_sync = OpenSsfMaliciousSync()
+            quarantined_servers = []
+
+            safe_candidates = []
+            for (eco, name), ver in candidate_map.items():
+                record = malicious_sync.get_malicious_record(eco, name, ver or None)
+                if record:
+                    self.catalog_state.record_deprecation(
+                        ecosystem=eco,
+                        name=name,
+                        reason="malicious_package",
+                        details=f"Quarantined: {record.id} - {record.summary}"
+                    )
+                    quarantined_servers.append({
+                        "ecosystem": eco,
+                        "name": name,
+                        "version": ver,
+                        "advisory_id": record.id,
+                        "summary": record.summary,
+                        "details": record.details,
+                        "origin": record.source_origin
+                    })
+                else:
+                    safe_candidates.append((eco, name, ver))
+
+            if quarantined_servers:
+                quarantine_file = Path("data/quarantined_malicious_servers.json")
+                quarantine_file.parent.mkdir(parents=True, exist_ok=True)
+                existing_quarantined = []
+                if quarantine_file.exists():
+                    try:
+                        import json
+                        existing_quarantined = json.loads(quarantine_file.read_text(encoding="utf-8"))
+                    except Exception:
+                        pass
+                # Merge logic
+                existing_keys = {(q.get("ecosystem"), q.get("name")) for q in existing_quarantined}
+                for new_q in quarantined_servers:
+                    if (new_q["ecosystem"], new_q["name"]) not in existing_keys:
+                        existing_quarantined.append(new_q)
+
+                import json
+                quarantine_file.write_text(json.dumps(existing_quarantined, indent=2, ensure_ascii=False), encoding="utf-8")
+
             candidates_to_query = [
                 {"ecosystem": eco, "name": name, "version": ver}
-                for (eco, name), ver in candidate_map.items()
+                for (eco, name, ver) in safe_candidates
                 if self.catalog_state.should_query(eco, name, ver or None) and self.catalog_state.package_key(eco, name) not in self.catalog_state.tombstones
             ]
             skipped_count = len(candidate_map) - len(candidates_to_query)

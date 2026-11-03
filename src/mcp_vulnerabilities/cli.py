@@ -1200,6 +1200,29 @@ def main() -> None:
                 for c in conflicts:
                     print(f"✗ {c['warning']}")
                 print("!" * 70 + "\n")
+        # Check for malicious packages
+        from mcp_vulnerabilities.threat_intel.openssf_malicious import OpenSsfMaliciousSync
+        malicious_sync = OpenSsfMaliciousSync()
+        malicious_found = False
+
+        for srv in servers:
+            mal_record = malicious_sync.get_malicious_record(srv.ecosystem, srv.package_name, srv.version)
+            if mal_record:
+                print("=" * 80)
+                print("☠️ CRITICAL ALERT: MALICIOUS SUPPLY CHAIN PACKAGE DETECTED")
+                print("=" * 80)
+                print("The following installed package is flagged as deliberate MALWARE by OpenSSF:")
+                print(f"  Package:   {mal_record.package_name} ({mal_record.ecosystem})")
+                print(f"  Advisory:  {mal_record.id}")
+                print(f"  Origin:    {mal_record.source_origin}")
+                print(f"  Details:   {mal_record.details}")
+                print("ACTION REQUIRED: Immediately terminate all processes and revoke credentials!")
+                print("=" * 80)
+                malicious_found = True
+
+        if malicious_found:
+            sys.exit(2)
+
         tamper_reports = []
         has_strict_failure = False
         if getattr(args, "verify_signatures", False):

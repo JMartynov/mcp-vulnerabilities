@@ -432,6 +432,10 @@ class UnifiedMcpSecurityRecord:
     static_risk_score: float = 0.0
     static_risk_tier: str = "LOW"
     is_unpublished: bool = False
+    is_malicious: bool = False
+    quarantine_tier: str | None = None
+    malicious_advisory_id: str | None = None
+    composite_risk_score: float | None = None
     repo_http_status: int = 200
     archival_reason: str | None = None
     transport: str | None = None
@@ -461,6 +465,10 @@ class UnifiedMcpSecurityRecord:
             "is_unpublished": self.is_unpublished,
             "repo_http_status": self.repo_http_status,
             "archival_reason": self.archival_reason,
+            "is_malicious": self.is_malicious,
+            "quarantine_tier": self.quarantine_tier,
+            "malicious_advisory_id": self.malicious_advisory_id,
+            "composite_risk_score": self.composite_risk_score,
             "transport": self.transport,
             "prompts_count": self.prompts_count,
             "resources_count": self.resources_count,

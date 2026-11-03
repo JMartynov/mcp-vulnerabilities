@@ -65,8 +65,28 @@ class ClientConfigFixer:
             findings_by_server.setdefault(f.server_name, []).append(f)
 
         changes_made = []
+        from mcp_vulnerabilities.threat_intel.openssf_malicious import OpenSsfMaliciousSync
+        malicious_sync = OpenSsfMaliciousSync()
 
         for server in servers:
+            mal_record = malicious_sync.get_malicious_record(server.ecosystem, server.package_name, server.version)
+            if mal_record:
+                logger.warning(f"Quarantining malicious server {server.server_name} from config.")
+                pkg_esc = re.escape(server.package_name)
+                # Attempt to remove or comment out the server configuration in the json
+                # Just replacing package name with `# QUARANTINED: MALICIOUS PACKAGE`
+                pattern = rf'"{pkg_esc}(?:[@:=][^"]*)?"'
+                patched_text = re.sub(pattern, f'"# QUARANTINED: MALICIOUS PACKAGE {server.package_name}"', patched_text)
+                if patched_text != original_text:
+                    changes_made.append({
+                        "server_name": server.server_name,
+                        "package_name": server.package_name,
+                        "old_version": server.version or "unpinned",
+                        "new_version": "QUARANTINED"
+                    })
+                    original_text = patched_text
+                continue
+
             findings = findings_by_server.get(server.server_name)
             if not findings:
                 continue

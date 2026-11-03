@@ -7,6 +7,7 @@ from mcp_vulnerabilities.converters.markdown_cve import MarkdownAdvisoryConverte
 from mcp_vulnerabilities.converters.nvd import NvdConverter
 from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.converters.verity import VerityCatalogConverter
+from mcp_vulnerabilities.converters.openssf_malware import OpenSsfMalwareConverter
 
 __all__ = [
     "CveJson5Converter",
@@ -17,4 +18,5 @@ __all__ = [
     "NvdConverter",
     "OsvDevConverter",
     "VerityCatalogConverter",
+    "OpenSsfMalwareConverter",
 ]

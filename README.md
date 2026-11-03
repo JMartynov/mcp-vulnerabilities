@@ -482,3 +482,6 @@ pytest -q tests/test_acceptance_*.py
 ## License
 MIT
 
+
+### OpenSSF Malicious Packages Integration
+The `mcp-vulnerabilities` toolchain includes robust supply chain defense by ingesting threat feeds from the OpenSSF Malicious Packages repository. Backdoors, credential stealers, and typosquatted servers are identified. Malicious servers receive a composite risk score of 10.0 (CRITICAL/MALICIOUS) and are strictly quarantined. They cannot be exported to AI client configurations and trigger an immediate CLI exit code of 2 when detected during an audit.
