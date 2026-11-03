@@ -4,12 +4,15 @@ import os
 import builtins
 from unittest.mock import MagicMock
 
-# Mock mcp_fingerprints
-sys.modules['mcp_fingerprints'] = MagicMock()
-sys.modules['mcp_fingerprints.config_scanner'] = MagicMock()
-sys.modules['mcp_fingerprints.models'] = MagicMock()
-sys.modules['mcp_fingerprints.inspector'] = MagicMock()
-sys.modules['mcp_fingerprints.utils'] = MagicMock()
+if 'mcp_fingerprints' not in sys.modules:
+    try:
+        import mcp_fingerprints
+    except ImportError:
+        sys.modules['mcp_fingerprints'] = MagicMock()
+        sys.modules['mcp_fingerprints.config_scanner'] = MagicMock()
+        sys.modules['mcp_fingerprints.models'] = MagicMock()
+        sys.modules['mcp_fingerprints.inspector'] = MagicMock()
+        sys.modules['mcp_fingerprints.utils'] = MagicMock()
 
 sys.path.insert(0, os.path.abspath('src'))
 from mcp_vulnerabilities.provenance import resolve_provenance_urls

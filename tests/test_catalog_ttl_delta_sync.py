@@ -6,10 +6,13 @@ from unittest.mock import patch, MagicMock
 
 import sys
 import unittest.mock
-# Mock mcp_fingerprints
-sys.modules['mcp_fingerprints'] = unittest.mock.MagicMock()
-sys.modules['mcp_fingerprints.config_scanner'] = unittest.mock.MagicMock()
-sys.modules['mcp_fingerprints.models'] = unittest.mock.MagicMock()
+if 'mcp_fingerprints' not in sys.modules:
+    try:
+        import mcp_fingerprints
+    except ImportError:
+        sys.modules['mcp_fingerprints'] = unittest.mock.MagicMock()
+        sys.modules['mcp_fingerprints.config_scanner'] = unittest.mock.MagicMock()
+        sys.modules['mcp_fingerprints.models'] = unittest.mock.MagicMock()
 
 from mcp_vulnerabilities.catalog import McpCatalogState, ServerRecord, TombstoneRecord
 from mcp_vulnerabilities.discovery.npm import NpmDiscoveryProvider

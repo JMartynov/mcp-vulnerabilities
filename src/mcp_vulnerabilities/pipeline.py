@@ -285,6 +285,7 @@ class McpVulnerabilityPipeline:
         include_osv_api: bool = False,
         include_nvd_api: bool = False,
         include_gitlab_sync: bool = False,
+        include_cisa_kev: bool = False,
         include_verity_catalog: bool = True,
         pypa_data_dir: str | Path | None = "data/sources/pypa",
         offline_fallback_fixtures: str | Path | None = None,
@@ -652,7 +653,6 @@ class McpVulnerabilityPipeline:
                 existing_quarantined = []
                 if quarantine_file.exists():
                     try:
-                        import json
                         existing_quarantined = json.loads(quarantine_file.read_text(encoding="utf-8"))
                     except Exception:
                         pass
@@ -662,7 +662,6 @@ class McpVulnerabilityPipeline:
                     if (new_q["ecosystem"], new_q["name"]) not in existing_keys:
                         existing_quarantined.append(new_q)
 
-                import json
                 quarantine_file.write_text(json.dumps(existing_quarantined, indent=2, ensure_ascii=False), encoding="utf-8")
 
             candidates_to_query = [
@@ -890,39 +889,40 @@ class McpVulnerabilityPipeline:
         merged = OsvDeduplicator.deduplicate_and_merge(collected)
 
         # 6.5 Threat Intelligence Enrichment (CISA KEV)
-        try:
-            from mcp_vulnerabilities.threat_intel.cisa_kev import CisaKevClient
-            kev_client = CisaKevClient()
-            kev_client.sync()
+        if include_cisa_kev:
+            try:
+                from mcp_vulnerabilities.threat_intel.cisa_kev import CisaKevClient
+                kev_client = CisaKevClient()
+                kev_client.sync()
 
-            for adv in merged:
-                # Check if advisory ID or aliases are in KEV
-                kev_record = kev_client.get_record(adv.id)
-                if not kev_record:
-                    for alias in adv.aliases:
-                        kev_record = kev_client.get_record(alias)
-                        if kev_record:
-                            break
+                for adv in merged:
+                    # Check if advisory ID or aliases are in KEV
+                    kev_record = kev_client.get_record(adv.id)
+                    if not kev_record:
+                        for alias in adv.aliases:
+                            kev_record = kev_client.get_record(alias)
+                            if kev_record:
+                                break
 
-                if kev_record:
-                    # Stamping CISA KEV data
-                    if "cisa_kev" not in adv.database_specific:
-                        adv.database_specific["is_cisa_kev"] = True
-                        adv.database_specific["cisa_kev_date_added"] = kev_record.date_added
-                        adv.database_specific["cisa_kev_due_date"] = kev_record.due_date
+                    if kev_record:
+                        # Stamping CISA KEV data
+                        if "cisa_kev" not in adv.database_specific:
+                            adv.database_specific["is_cisa_kev"] = True
+                            adv.database_specific["cisa_kev_date_added"] = kev_record.date_added
+                            adv.database_specific["cisa_kev_due_date"] = kev_record.due_date
 
-                    if adv.threat_intelligence is None:
-                        object.__setattr__(adv, "threat_intelligence", {})
+                        if adv.threat_intelligence is None:
+                            object.__setattr__(adv, "threat_intelligence", {})
 
-                    adv.threat_intelligence["cisa_kev"] = {
-                        "known_exploited": True,
-                        "date_added": kev_record.date_added,
-                        "due_date": kev_record.due_date,
-                        "ransomware_use": kev_record.known_ransomware_campaign_use,
-                        "required_action": kev_record.required_action,
-                    }
-        except Exception as exc:
-            errors.append(f"CISA KEV enrichment error: {exc}")
+                        adv.threat_intelligence["cisa_kev"] = {
+                            "known_exploited": True,
+                            "date_added": kev_record.date_added,
+                            "due_date": kev_record.due_date,
+                            "ransomware_use": kev_record.known_ransomware_campaign_use,
+                            "required_action": kev_record.required_action,
+                        }
+            except Exception as exc:
+                errors.append(f"CISA KEV enrichment error: {exc}")
 
         # 7. Validate each record and persist
         self.output_dir.mkdir(parents=True, exist_ok=True)

@@ -87,7 +87,7 @@ class TestDiscoveryProviders(unittest.TestCase):
 
             # Mock individual discovery methods
             with patch.object(NpmDiscoveryProvider, "discover", return_value=[{"name": "mcp-npm", "ecosystem": "npm"}]), \
-                 patch.object(PypiDiscoveryProvider, "discover", return_value=[{"name": "mcp-pypi", "ecosystem": "PyPI"}]), \
+                 patch.object(PypiDiscoveryProvider, "discover", return_value=[{"name": "mcp-pypi", "ecosystem": "PyPI", "version": "1.0.0"}]), \
                  patch.object(GitHubCuratedDiscoveryProvider, "discover", return_value=[{"name": "org/mcp-gh", "ecosystem": "GitHub"}]), \
                  patch.object(SmitheryDiscoveryProvider, "discover", return_value=[]), \
                  patch.object(GlamaDiscoveryProvider, "discover", return_value=[]), \

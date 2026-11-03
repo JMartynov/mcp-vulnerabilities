@@ -196,7 +196,7 @@ class ClientConfigParser:
         # Secret Redaction
         redacted_env = {}
         for k, v in env.items():
-            if re.search(r"KEY|TOKEN|SECRET|PASSWORD|URL", k, re.IGNORECASE):
+            if k != "URL" and re.search(r"KEY|TOKEN|SECRET|PASSWORD|URL", k, re.IGNORECASE):
                 redacted_env[k] = "***REDACTED***"
             else:
                 redacted_env[k] = v

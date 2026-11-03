@@ -21,6 +21,7 @@ class CanonicalAliasGraph:
 
     def add_aliases(self, primary_id: str, aliases: Iterable[str]) -> None:
         """Add alias relationships between a primary ID and a list of aliases."""
+        self._ensure(primary_id)
         for alias in aliases:
             self.union(primary_id, alias)
 

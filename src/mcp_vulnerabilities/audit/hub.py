@@ -112,5 +112,4 @@ class InteractiveTerminalHub:
                 print("\n👋 Exiting MCP Vulnerabilities Hub. Stay secure!\n")
                 break
             else:
-                print("❌ Invalid selection. Please choose 1-5 or q.")
-            break
+                print("❌ Invalid selection. Please choose 1-6 or q.")

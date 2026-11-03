@@ -25,8 +25,11 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          
+          pip install -e .
+
       - name: Run Web Card Audit
+        env:
+          PYTHONPATH: src
         run: |
           python scripts/audit_web_cards.py --strict --report-dir docs/reports/daily_audits/
           

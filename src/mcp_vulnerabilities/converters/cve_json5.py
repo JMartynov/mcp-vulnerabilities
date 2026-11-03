@@ -30,7 +30,17 @@ class CveJson5Converter:
         cve_meta = data.get("cveMetadata", {})
         cve_id = str(cve_meta.get("cveId") or "CVE-UNKNOWN")
         published = cls._normalize_rfc3339(cve_meta.get("datePublished"))
-        modified = cls._normalize_rfc3339(cve_meta.get("dateUpdated") or published)
+        # If dateUpdated is present, normalize it; otherwise fall back to published
+        date_updated = cve_meta.get("dateUpdated")
+        if date_updated:
+            modified = cls._normalize_rfc3339(date_updated)
+        else:
+            modified = published
+
+        # Ensure modified >= published to prevent timestamp chronological anomalies
+        # when published timestamp defaults or is newer than a malformed dateUpdated
+        if published and modified and published > modified:
+            published = modified
 
         containers = data.get("containers", {})
         cna = containers.get("cna", {})

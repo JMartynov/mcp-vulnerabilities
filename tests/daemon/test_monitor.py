@@ -4,31 +4,20 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-# Monkey patch sys.modules to mock mcp_fingerprints for test isolation
-@pytest.fixture(autouse=True, scope="session")
-def mock_mcp_fingerprints_module():
-    mock_mcp = MagicMock()
-    mock_mcp.config_scanner = MagicMock()
-    mock_mcp.config_scanner.ConfigScanner = MagicMock
-    mock_mcp.config_scanner.NpmGlobalScanner = MagicMock
-    mock_mcp.models = MagicMock()
-    mock_mcp.snapshot_diff = MagicMock()
-    sys.modules['mcp_fingerprints'] = mock_mcp
-    sys.modules['mcp_fingerprints.config_scanner'] = mock_mcp.config_scanner
-    sys.modules['mcp_fingerprints.models'] = mock_mcp.models
-    sys.modules['mcp_fingerprints.snapshot_diff'] = mock_mcp.snapshot_diff
-
-# DO it immediately as well to avoid collection time error
-mock_mcp = MagicMock()
-mock_mcp.config_scanner = MagicMock()
-mock_mcp.config_scanner.ConfigScanner = MagicMock
-mock_mcp.config_scanner.NpmGlobalScanner = MagicMock
-mock_mcp.models = MagicMock()
-mock_mcp.snapshot_diff = MagicMock()
-sys.modules['mcp_fingerprints'] = mock_mcp
-sys.modules['mcp_fingerprints.config_scanner'] = mock_mcp.config_scanner
-sys.modules['mcp_fingerprints.models'] = mock_mcp.models
-sys.modules['mcp_fingerprints.snapshot_diff'] = mock_mcp.snapshot_diff
+if 'mcp_fingerprints' not in sys.modules:
+    try:
+        import mcp_fingerprints
+    except ImportError:
+        mock_mcp = MagicMock()
+        mock_mcp.config_scanner = MagicMock()
+        mock_mcp.config_scanner.ConfigScanner = MagicMock
+        mock_mcp.config_scanner.NpmGlobalScanner = MagicMock
+        mock_mcp.models = MagicMock()
+        mock_mcp.snapshot_diff = MagicMock()
+        sys.modules['mcp_fingerprints'] = mock_mcp
+        sys.modules['mcp_fingerprints.config_scanner'] = mock_mcp.config_scanner
+        sys.modules['mcp_fingerprints.models'] = mock_mcp.models
+        sys.modules['mcp_fingerprints.snapshot_diff'] = mock_mcp.snapshot_diff
 
 
 from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer

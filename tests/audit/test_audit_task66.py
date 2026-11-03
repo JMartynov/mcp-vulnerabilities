@@ -93,7 +93,8 @@ def test_all_scenarios(server):
             browser = p.chromium.launch()
         except Exception as e:
             pytest.skip(f"Playwright chromium browser not available: {e}")
-        page = browser.new_page()
+        context = browser.new_context(service_workers="block")
+        page = context.new_page()
         
         # Intercept network requests for the synthetic data
         def intercept_data(route, request):

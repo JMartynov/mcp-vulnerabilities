@@ -702,6 +702,14 @@ def build_site_parallel(
                 rec_safe = r.version
                 break
 
+        # Check quarantined malicious
+        q_key = f"{eco.lower()}:{pkg_name.lower()}"
+        mal_info = quarantined_malicious.get(q_key)
+        is_malicious = bool(mal_info)
+        quarantine_tier = "MALICIOUS" if is_malicious else None
+        malicious_advisory_id = mal_info.get("advisory_id") if mal_info else None
+        comp_risk_score = 10.0 if is_malicious else None
+
         record = UnifiedMcpSecurityRecord(
             package_name=pkg_name,
             ecosystem=eco,

@@ -24,6 +24,11 @@ jobs:
       - name: Install dependencies
         run: pip install -e .
 
+      - name: Configure Git Author
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Run MCP Vulnerability PR Bot
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

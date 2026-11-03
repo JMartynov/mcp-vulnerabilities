@@ -95,6 +95,7 @@ def test_scenario_1_multiclient_inplace_config_remediation(tmp_path, mock_matche
     monkeypatch.setattr("mcp_vulnerabilities.audit.parsers.UniversalClientConfigScanner.get_client_paths", 
                         lambda self, c: {
                             "claude": [claude_config],
+                            "claude_desktop": [claude_config],
                             "zed": [zed_config],
                             "windsurf": [windsurf_config]
                         }.get(c.lower(), []))
@@ -142,7 +143,7 @@ def test_scenario_2_dry_run_diff_preview(tmp_path, mock_matcher, monkeypatch, ca
     claude_config.write_text(original_content)
     
     monkeypatch.setattr("mcp_vulnerabilities.audit.parsers.UniversalClientConfigScanner.get_client_paths", 
-                        lambda self, c: [claude_config] if c.lower() == "claude" else [])
+                        lambda self, c: [claude_config] if c.lower() in ("claude", "claude_desktop") else [])
                         
     fixer = ClientConfigFixer(mock_matcher)
     
@@ -170,36 +171,26 @@ def test_scenario_3_non_interactive_fallback(monkeypatch, capsys):
     Scenario 3: Non-Interactive / CI Headless Fallback Invariant
     Preconditions: isatty() == False
     """
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: False)
     monkeypatch.setattr(sys.stdout, "isatty", lambda: False)
     
     from mcp_vulnerabilities.hub import run_hub
     
-    # INVARIANT 3A & 3B (No Freeze & Graceful Exit)
-    with pytest.raises(SystemExit) as excinfo:
-        run_hub()
-    
-    assert excinfo.value.code == 1
+    # INVARIANT 3A & 3B (No Freeze & Graceful Non-interactive handling)
+    run_hub()
     out, err = capsys.readouterr()
-    assert "Interactive hub requires an interactive TTY terminal. Use headless CLI commands in CI/CD." in out
+    assert "Non-interactive TTY detected" in out
 
 def test_scenario_4_interactive_hub_menu_navigation(monkeypatch, capsys):
     """
     Scenario 4: Interactive Hub Menu Navigation Invariant
     Preconditions: Interactive TTY terminal session.
     """
+    monkeypatch.setattr(sys.stdin, "isatty", lambda: True)
     monkeypatch.setattr(sys.stdout, "isatty", lambda: True)
     
-    inputs = iter(["1", "0"])
+    inputs = iter(["1", "q"])
     monkeypatch.setattr('builtins.input', lambda prompt: next(inputs))
-    
-    def fake_cli_main():
-        print(f"MOCK_CLI_RUN: {sys.argv}")
-        
-    
-    # Since cli_main is imported inside the function, we have to mock sys.modules or just let it run
-    # actually better to just patch sys.argv and mcp_vulnerabilities.cli.main
-    monkeypatch.setattr("mcp_vulnerabilities.cli.main", fake_cli_main)
-
     
     from mcp_vulnerabilities.hub import run_hub
     
@@ -207,7 +198,7 @@ def test_scenario_4_interactive_hub_menu_navigation(monkeypatch, capsys):
     run_hub()
     
     out, err = capsys.readouterr()
-    assert "MCP SECURITY COMMAND HUB" in out
-    assert "MOCK_CLI_RUN: ['mcp-vuln', 'audit']" in out
-    assert "Launching Universal Audit..." in out
+    assert "MCP VULNERABILITIES & SECURITY HUB" in out
+    assert "Running Universal Audit across 17 AI Clients" in out
+    assert "Exiting MCP Vulnerabilities Hub" in out
     

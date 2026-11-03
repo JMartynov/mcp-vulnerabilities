@@ -856,6 +856,7 @@ def main() -> None:
             include_osv_api=args.live_api,
             include_nvd_api=args.live_api or args.nvd_api,
             include_gitlab_sync=args.include_gitlab,
+            include_cisa_kev=True,
             include_verity_catalog=True,
             offline_fallback_fixtures="tests/fixtures/osv"
             if not args.live_api
