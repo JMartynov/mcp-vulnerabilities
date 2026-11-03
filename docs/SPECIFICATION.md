@@ -342,6 +342,7 @@ The synchronization pipeline fetches advisories directly from remote sources, ma
 
 - **GitHub Security Advisories (GHSA)**: Iterates over the REST API using `Link` header pagination for robust traversal. To ensure incremental updates, queries use the `since=<ISO_TIMESTAMP>` parameter dynamically loaded from `data/mcp_catalog_state.json`.
 - **CVE List V5 (CVEListV5)**: Maintains synchronization by traversing Git commit SHAs, identifying modified files (JSON records) delta compared to the previously recorded commit hash.
+- **PyPA Advisory Database**: Fetches Python specific vulnerability advisories directly from PyPA with deep PEP 440 OSV v1.6.0 normalization for compliant bounds decomposition.
 
 > [!NOTE]
 > All incremental fetches persist the latest checkpoint (`last_sync_timestamp`, `last_commit_sha`) in `data/mcp_catalog_state.json` upon successful execution.

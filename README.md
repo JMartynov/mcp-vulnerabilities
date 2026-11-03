@@ -15,6 +15,7 @@ An open-source, automated **Open Source Vulnerability (OSV 1.6)** compliant secu
 - **OSV.dev**: Unified open-source vulnerability database.
 - **National Vulnerability Database (NVD)**: CVE 2.0 vulnerability metrics and CVSS scores.
 - **GitLab Advisory Database**: High-fidelity open vulnerability feed curated by GitLab's Vulnerability Research Team.
+- **PyPA Advisory Database**: Python Packaging Authority curated advisories with complete PEP 440 OSV normalization.
 
 ## Snapshot Downloads & Mirrors
 
