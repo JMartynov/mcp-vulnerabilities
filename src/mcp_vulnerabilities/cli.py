@@ -204,6 +204,12 @@ def main() -> None:
         help="CVEListV5 repository directories",
     )
     sync_p.add_argument(
+        "--gitlab-dir", nargs="*", default=None, help="GitLab advisory directories"
+    )
+    sync_p.add_argument(
+        "--include-gitlab", action="store_true", help="Sync GitLab Advisory Database"
+    )
+    sync_p.add_argument(
         "--live-api", action="store_true", help="Query live GHSA and OSV.dev APIs"
     )
     sync_p.add_argument(
@@ -837,11 +843,12 @@ def main() -> None:
         res = pipeline.run(
             include_markdown_dirs=md_dirs,
             include_cvelistv5_dirs=cve5_dirs,
+            include_gitlab_dirs=args.gitlab_dir,
             include_cvelist_delta=args.live_api or args.cvelist_delta,
             include_ghsa_api=args.live_api,
-
             include_osv_api=args.live_api,
             include_nvd_api=args.live_api or args.nvd_api,
+            include_gitlab_sync=args.include_gitlab,
             include_verity_catalog=True,
             offline_fallback_fixtures="tests/fixtures/osv"
             if not args.live_api

@@ -770,3 +770,13 @@ The `proxy` command intercepts and logs JSON-RPC traffic. The audit log is struc
 | `bridge` |
 | `network-scan` |
 | `probe-safe` |
+
+## 20. Multi-Ecosystem GitLab Advisory Integration (Wave 20)
+
+### 20.1 GitLab Database Scope
+The database ingests multi-ecosystem (npm, PyPI, Go) advisories from the `gitlab-org/advisories-community` repository, mapped to OSV schema.
+
+### 20.2 Translation Invariants
+- SemVer range strings (`>=1.0.0 <2.0.0 || >=3.0.0`) are losslessly normalized to OSV `EventSpec` objects without boundary drift.
+- Remediation solutions from `solution` fields are preserved into the `database_specific.remediation_guidance` block.
+- Identifiers are deduped effectively with GHSA and CVE IDs.

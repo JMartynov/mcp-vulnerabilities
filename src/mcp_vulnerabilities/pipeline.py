@@ -18,10 +18,12 @@ from packaging.version import parse as parse_version
 from mcp_vulnerabilities.catalog import McpCatalogState
 from mcp_vulnerabilities.converters.cve_json5 import CveJson5Converter
 from mcp_vulnerabilities.converters.ghsa import GhsaConverter
+from mcp_vulnerabilities.converters.gitlab import GitLabAdvisoryConverter
 from mcp_vulnerabilities.converters.markdown_cve import MarkdownAdvisoryConverter
 from mcp_vulnerabilities.converters.nvd import NvdConverter
 from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.converters.verity import VerityCatalogConverter
+from mcp_vulnerabilities.discovery.gitlab import GitLabAdvisorySync
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
 from mcp_vulnerabilities.filter import McpRelevanceFilter
 from mcp_vulnerabilities.models import OsvVulnerability, RangeSpec, RangeType
@@ -275,10 +277,12 @@ class McpVulnerabilityPipeline:
         self,
         include_markdown_dirs: list[str | Path] | None = None,
         include_cvelistv5_dirs: list[str | Path] | None = None,
+        include_gitlab_dirs: list[str | Path] | None = None,
         include_cvelist_delta: bool = False,
         include_ghsa_api: bool = False,
         include_osv_api: bool = False,
         include_nvd_api: bool = False,
+        include_gitlab_sync: bool = False,
         include_verity_catalog: bool = True,
         offline_fallback_fixtures: str | Path | None = None,
         reset_checkpoints: bool = False,
@@ -672,6 +676,52 @@ class McpVulnerabilityPipeline:
             except Exception as exc:
                 errors.append(f"NVD API error: {exc}")
 
+        if include_gitlab_dirs:
+            for p in include_gitlab_dirs:
+                path = Path(p)
+                if path.is_dir():
+                    syncer = GitLabAdvisorySync(storage_dir=str(path))
+                    scanned = syncer.scan_advisories(target_dir=path)
+                    for v in scanned:
+                        is_rel, _ = McpRelevanceFilter.is_relevant(
+                            package_name=v.affected[0].package.name if v.affected else None,
+                            summary=v.summary,
+                            details=v.details,
+                        )
+                        if is_rel:
+                            collected.append(v)
+
+        if include_gitlab_sync:
+            gitlab_chk = self.state_manager.get_checkpoint("gitlab_advisories")
+            gitlab_scanned = 0
+            gitlab_synced = 0
+            
+            try:
+                syncer = GitLabAdvisorySync()
+                repo_path = syncer.sync_repository()
+                scanned_vulns = syncer.scan_advisories(target_dir=repo_path)
+                
+                gitlab_scanned = len(scanned_vulns)
+                
+                for v in scanned_vulns:
+                    is_rel, _ = McpRelevanceFilter.is_relevant(
+                        package_name=v.affected[0].package.name if v.affected else None,
+                        summary=v.summary,
+                        details=v.details,
+                    )
+                    if is_rel:
+                        collected.append(v)
+                        gitlab_synced += 1
+                        
+                self.state_manager.update_checkpoint(
+                    "gitlab_advisories",
+                    records_scanned=gitlab_chk.records_scanned + gitlab_scanned,
+                    records_synced=gitlab_chk.records_synced + gitlab_synced,
+                )
+                logger.info("GitLab Advisory ingestion: scanned=%d, synced=%d", gitlab_scanned, gitlab_synced)
+            except Exception as exc:
+                errors.append(f"GitLab Advisory sync error: {exc}")
+
         # 5. Ingest from offline fallback fixtures if specified
         if offline_fallback_fixtures:
             f_dir = Path(offline_fallback_fixtures)
@@ -755,6 +805,19 @@ class McpVulnerabilityPipeline:
                             collected.append(CveJson5Converter.from_dict(data))
                     except Exception as exc:
                         errors.append(f"Fixture CVE JSON 5 error: {exc}")
+
+                for gitlab_path in list((f_dir / "gitlab").glob("*.yml")) + list((f_dir / "gitlab").glob("*.yaml")):
+                    try:
+                        v = GitLabAdvisoryConverter.from_file(gitlab_path)
+                        is_rel, _ = McpRelevanceFilter.is_relevant(
+                            package_name=v.affected[0].package.name if v.affected else None,
+                            summary=v.summary,
+                            details=v.details,
+                        )
+                        if is_rel:
+                            collected.append(v)
+                    except Exception as exc:
+                        errors.append(f"Fixture GitLab Advisory error: {exc}")
 
         # 6. Deduplicate and merge
         merged = OsvDeduplicator.deduplicate_and_merge(collected)
