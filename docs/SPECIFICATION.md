@@ -772,6 +772,11 @@ The `proxy` command intercepts and logs JSON-RPC traffic. The audit log is struc
 | `network-scan` |
 | `probe-safe` |
 
+## 19. Smart Cross-Source Advisory Deduplicator & Alias Graph
+- **Canonical Alias Graph**: Utilizes Disjoint-Set Union (DSU) to connect fragmented identifiers (`CVE-`, `GHSA-`, `PYSEC-`) into interconnected component clusters. Selects canonical IDs deterministically following `CVE-* > GHSA-* > MAL-* > PYSEC-* > GLAD-*`.
+- **URL Normalizer**: Removes HTTP tracking tags (`utm_*`, `gclid`) and enforces standardized schemas to optimally deduplicate threat intelligence links.
+- **Fusion Engine**: Mathematically calculates the union of disjoint semantic version intervals for affected packages, resolves CVSS score conflicts, and accurately inherits overarching Threat Intel context like KEV and EPSS.
+
 ## 20. Multi-Ecosystem GitLab Advisory Integration (Wave 20)
 
 ### 20.1 GitLab Database Scope

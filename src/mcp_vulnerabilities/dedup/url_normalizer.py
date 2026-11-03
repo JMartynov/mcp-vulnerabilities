@@ -56,4 +56,5 @@ def deduplicate_references(references: Iterable[ReferenceSpec]) -> tuple[Referen
             # Store the normalized url to avoid keeping the version with tracking queries
             deduped.append(ReferenceSpec(url=norm_url, type=ref.type))
 
+    deduped.sort(key=lambda r: (r.url, str(r.type)))
     return tuple(deduped)
