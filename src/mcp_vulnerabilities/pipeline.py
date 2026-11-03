@@ -24,6 +24,8 @@ from mcp_vulnerabilities.converters.nvd import NvdConverter
 from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.converters.verity import VerityCatalogConverter
 from mcp_vulnerabilities.discovery.gitlab import GitLabAdvisorySync
+from mcp_vulnerabilities.converters.pypa import PyPaAdvisoryConverter
+from mcp_vulnerabilities.discovery.pypa import PyPaAdvisorySync
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
 from mcp_vulnerabilities.filter import McpRelevanceFilter
 from mcp_vulnerabilities.models import OsvVulnerability, RangeSpec, RangeType
@@ -284,6 +286,7 @@ class McpVulnerabilityPipeline:
         include_nvd_api: bool = False,
         include_gitlab_sync: bool = False,
         include_verity_catalog: bool = True,
+        pypa_data_dir: str | Path | None = "data/sources/pypa",
         offline_fallback_fixtures: str | Path | None = None,
         reset_checkpoints: bool = False,
     ) -> PipelineResult:
@@ -721,6 +724,25 @@ class McpVulnerabilityPipeline:
                 logger.info("GitLab Advisory ingestion: scanned=%d, synced=%d", gitlab_scanned, gitlab_synced)
             except Exception as exc:
                 errors.append(f"GitLab Advisory sync error: {exc}")
+
+        # 7b. Ingest from PyPA Advisory Database
+        if pypa_data_dir:
+            try:
+                target_packages = set()
+                if self.catalog_state and self.catalog_state.records:
+                    for k in self.catalog_state.records.keys():
+                        if k.startswith("pypi:"):
+                            target_packages.add(k.split(":", 1)[1])
+                
+                # We always fall back to common tools if catalog is empty
+                if not target_packages:
+                    target_packages = {"fastmcp", "mcp", "langchain-core", "langchain-community", "llama-index-core", "uvicorn"}
+                
+                pypa_records = PyPaAdvisorySync.sync_local(pypa_data_dir, target_packages=target_packages)
+                collected.extend(pypa_records)
+                logger.info("Ingested %d records from PyPA database.", len(pypa_records))
+            except Exception as exc:
+                errors.append(f"PyPA Sync error: {exc}")
 
         # 5. Ingest from offline fallback fixtures if specified
         if offline_fallback_fixtures:
