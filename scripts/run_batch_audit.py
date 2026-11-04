@@ -3,6 +3,7 @@ import sys
 import os
 import json
 import tempfile
+import subprocess
 import argparse
 from pathlib import Path
 
@@ -32,11 +33,29 @@ def scan_batch(batch_file: str, output_file: str):
         findings_summary = []
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            # If dependencies exist, create manifest
             if deps and eco == "npm":
                 manifest = os.path.join(tmpdir, "package.json")
                 with open(manifest, "w") as mf:
-                    json.dump({"name": "test-pkg", "dependencies": deps}, mf)
+                    json.dump({"name": name or "test-pkg", "dependencies": deps}, mf)
+                
+                try:
+                    subprocess.run(
+                        ["npm", "install", "--package-lock-only", "--ignore-scripts"],
+                        cwd=tmpdir,
+                        check=True,
+                        capture_output=True
+                    )
+                except subprocess.CalledProcessError:
+                    try:
+                        subprocess.run(
+                            ["npm", "install", "--ignore-scripts"],
+                            cwd=tmpdir,
+                            check=True,
+                            capture_output=True
+                        )
+                    except subprocess.CalledProcessError:
+                        pass
+
                 res = scanner.scan_fs(tmpdir)
                 findings_count = len(res.findings)
                 findings_summary = [f.cve_id for f in res.findings[:5]]
@@ -50,7 +69,6 @@ def scan_batch(batch_file: str, output_file: str):
                 findings_count = len(res.findings)
                 findings_summary = [f.cve_id for f in res.findings[:5]]
             else:
-                # Minimal mock check
                 findings_count = 0
                 findings_summary = []
 
