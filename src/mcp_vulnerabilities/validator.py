@@ -7,11 +7,73 @@ import re
 from pathlib import Path
 from typing import Any
 
+from mcp_vulnerabilities.analyzers.models import DualAxisSecurityAssessment
 from mcp_vulnerabilities.models import OsvVulnerability
 
 
 class OsvValidationError(Exception):
     """Raised when an OSV vulnerability record fails schema validation."""
+
+
+class DualAxisValidationError(Exception):
+    """Raised when a DualAxisSecurityAssessment fails structural validation."""
+
+
+class DualAxisValidator:
+    """Validates structural integrity of DualAxisSecurityAssessment payloads."""
+
+    @classmethod
+    def validate(cls, payload: DualAxisSecurityAssessment | dict[str, Any]) -> list[str]:
+        if isinstance(payload, dict):
+            try:
+                model = DualAxisSecurityAssessment.from_dict(payload)
+            except Exception as exc:
+                return [f"Failed to parse DualAxis dict: {exc}"]
+        else:
+            model = payload
+
+        errors: list[str] = []
+
+        # Validate ProtocolTrustAssessment
+        pt = model.protocol_trust
+        if pt.status.value not in ["VERIFIED", "RESTRICTED", "ELEVATED_RISK", "SUSPICIOUS"]:
+            errors.append(f"Invalid ProtocolTrustStatus: '{pt.status.value}'")
+        
+        if pt.prompt_injection_guard not in ["SHIELDED", "UNGUARDED", "PARTIAL"]:
+            errors.append(f"Invalid prompt_injection_guard: '{pt.prompt_injection_guard}'")
+
+        if not isinstance(pt.parameter_sanitization, bool):
+            errors.append(f"parameter_sanitization must be a bool, got '{type(pt.parameter_sanitization).__name__}'")
+
+        # Validate SupplyChainHygieneAssessment
+        sc = model.supply_chain_hygiene
+        if sc.status.value not in ["CLEAN", "OUTDATED", "VULNERABLE", "CRITICAL_ATTACK_SURFACE"]:
+            errors.append(f"Invalid SupplyChainStatus: '{sc.status.value}'")
+
+        if not isinstance(sc.trivy_scanned, bool):
+            errors.append(f"trivy_scanned must be a bool, got '{type(sc.trivy_scanned).__name__}'")
+
+        if sc.reachability.value not in ["REACHABLE", "UNREACHABLE_TRANSITIVE", "UNKNOWN"]:
+            errors.append(f"Invalid ReachabilityStatus: '{sc.reachability.value}'")
+
+        req_keys = {"critical", "high", "medium", "low", "total"}
+        actual_keys = set(sc.vulnerability_counts.keys())
+        if not req_keys.issubset(actual_keys):
+            missing = req_keys - actual_keys
+            errors.append(f"vulnerability_counts missing required keys: {missing}")
+
+        for k in req_keys:
+            if k in sc.vulnerability_counts and not isinstance(sc.vulnerability_counts[k], int):
+                errors.append(f"vulnerability_counts['{k}'] must be an int")
+                
+        return errors
+
+    @classmethod
+    def assert_valid(cls, payload: DualAxisSecurityAssessment | dict[str, Any]) -> None:
+        errors = cls.validate(payload)
+        if errors:
+            formatted = "\n".join(f"- {e}" for e in errors)
+            raise DualAxisValidationError(f"DualAxis validation failed ({len(errors)} errors):\n{formatted}")
 
 
 class OsvValidator:

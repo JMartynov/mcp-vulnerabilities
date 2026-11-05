@@ -19,6 +19,7 @@ from mcp_vulnerabilities.analyzers.capability_classifier import (
     generate_server_security_summary,
     generate_tool_security_comment,
 )
+from mcp_vulnerabilities.analyzers.models import DualAxisSecurityAssessment
 from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
 from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
 from mcp_vulnerabilities.fingerprints.models import (
@@ -351,6 +352,7 @@ class VersionSecurityRecord:
     recommended_update_version: str | None = None
     upgrade_command: str | None = None
     no_fix_available: bool = False
+    dual_axis_security: DualAxisSecurityAssessment | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -371,6 +373,7 @@ class VersionSecurityRecord:
             "release_date": self.release_date,
             "required_env_vars": list(self.required_env_vars),
             "connections": self.connections,
+            "dual_axis_security": self.dual_axis_security.to_dict() if self.dual_axis_security else None,
         }
 
     @classmethod
@@ -395,6 +398,11 @@ class VersionSecurityRecord:
             ResourceSignature.from_dict(r) if isinstance(r, dict) else r
             for r in raw_resources
         ]
+        
+        dual_axis_security = None
+        if "dual_axis_security" in data and data["dual_axis_security"] is not None:
+            dual_axis_security = DualAxisSecurityAssessment.from_dict(data["dual_axis_security"])
+
         return cls(
             version=data["version"],
             is_vulnerable=bool(data.get("is_vulnerable", False)),
@@ -409,6 +417,7 @@ class VersionSecurityRecord:
             recommended_update_version=data.get("recommended_update_version"),
             upgrade_command=data.get("upgrade_command"),
             no_fix_available=bool(data.get("no_fix_available", False)),
+            dual_axis_security=dual_axis_security,
         )
 
 
@@ -444,6 +453,12 @@ class UnifiedMcpSecurityRecord:
     toolset_canonical_hash: str | None = None
     required_env_vars: tuple[str, ...] = field(default_factory=tuple)
     versions: list[VersionSecurityRecord] = field(default_factory=list)
+    dual_axis_security: DualAxisSecurityAssessment | None = None
+
+    @property
+    def mcp_trust_score(self) -> float:
+        """Legacy fallback property for backward compatibility."""
+        return self.static_risk_score
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -475,6 +490,7 @@ class UnifiedMcpSecurityRecord:
             "toolset_canonical_hash": self.toolset_canonical_hash,
             "required_env_vars": list(self.required_env_vars),
             "versions": [v.to_dict() for v in self.versions],
+            "dual_axis_security": self.dual_axis_security.to_dict() if self.dual_axis_security else None,
         }
 
     @classmethod
@@ -484,6 +500,11 @@ class UnifiedMcpSecurityRecord:
             VersionSecurityRecord.from_dict(v) if isinstance(v, dict) else v
             for v in raw_versions
         ]
+
+        dual_axis_security = None
+        if "dual_axis_security" in data and data["dual_axis_security"] is not None:
+            dual_axis_security = DualAxisSecurityAssessment.from_dict(data["dual_axis_security"])
+
         return cls(
             package_name=data["package_name"],
             ecosystem=data.get("ecosystem", "generic"),
@@ -512,6 +533,7 @@ class UnifiedMcpSecurityRecord:
             toolset_canonical_hash=data.get("toolset_canonical_hash"),
             required_env_vars=tuple(data.get("required_env_vars", ())),
             versions=versions,
+            dual_axis_security=dual_axis_security,
         )
 
 
