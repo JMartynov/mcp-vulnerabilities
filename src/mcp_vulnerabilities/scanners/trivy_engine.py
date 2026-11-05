@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import sys
 import shutil
 import subprocess
 import tarfile
@@ -113,10 +114,11 @@ class TrivyScanner:
 
     def scan_pypi_package(self, package_name: str, version: str | None = None) -> TrivyScanResult:
         pkg = f"{package_name}=={version}" if version else package_name
+        pip_cmd = [sys.executable, "-m", "pip"] if "sys" in globals() else ["pip3"]
         with tempfile.TemporaryDirectory() as tmpdir:
             try:
                 subprocess.run(
-                    ["pip", "download", "--no-deps", "-d", tmpdir, pkg],
+                    pip_cmd + ["download", "--no-deps", "-d", tmpdir, pkg],
                     check=True,
                     capture_output=True
                 )
