@@ -12,19 +12,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.1.4",
+    "latest_version": "2.2.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "2dai-mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/2dai-mcp-server",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.1.4",
+    "recommended_safe_version": "2.2.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/2DAICommunity/2dai-mcp-server",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `2dai-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 38 safe version(s).",
+    "security_summary": "Server `2dai-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 39 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e9ee18ae87c0d4673bc4b4b7daf46b54987ed96ba6c9c36dd82c4176f84f4b1a",
@@ -3356,6 +3356,975 @@
         ],
         "toolset_canonical_hash": "sha256:e9ee18ae87c0d4673bc4b4b7daf46b54987ed96ba6c9c36dd82c4176f84f4b1a",
         "version": "2.1.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-03T12:46:54.352Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d6036490b1488f794f636d00e8fe4ffccf54f9d5836f2c5c552737fb6b49edc",
+            "description": "Page through the 2DAI public feed — what creators across the platform have published, ",
+            "name": "browse_feed",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Include NSFW-flagged rows (off by default).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includeNsfw",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Rows per page (default 12, max 24).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "1-based page, newest published first.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "page",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browse_feed` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0b52da1a6c50ecd0f364c8a72dfa3f0f4150f2fc6e15851662fce5b0d987de70",
+            "description": "Cancel a generation that is still WAITING in the queue — its charge is refunded and the ",
+            "name": "cancel_generation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The queueId from a previous generate_* call.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "queueId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_generation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9cd0e72bf9a52a003e0d7309d18966ce76c7dc4e671c1b821c0fc327f0965db7",
+            "description": "Look up one generation by its queueId — the one returned when a generate_* call outlived its wait budget — ",
+            "name": "check_generation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The queueId from a previous generate_* call.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "queueId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Several queueIds to poll in one call (max 25) — for a batch of shots.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "queueIds",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_generation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0bbae49232125650ad901af8fa4c3ae2f4fbdb167e8015949696bd4559d9a898",
+            "description": "download_creation",
+            "name": "download_creation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Direct CDN asset id — alternative when no creationId is at hand.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cdnId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The creation to download (preferred).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "creationId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "savePath",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Overlay the 2DAI watermark on the downloaded bytes (default true). The account may need Holder tier or above to turn it off — server ignores the flag for below-gate accounts and stamps anyway. Applies to images and video frames alike.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "watermark",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `download_creation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:13d5a714d78d57597377561e38e880d4603b8e3dad1a52adef242814b491687c",
+            "description": "Generate an image on the 2DAI account from a text prompt. This SPENDS the account\\",
+            "name": "generate_image",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_image` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d1b4173df22719ed485aae97536fd0f332c0721c86e0a8c0978a6065df62dee1",
+            "description": "Artist Painter: render the prompt as a NEW work in a curated artistic style. This SPENDS the ",
+            "name": "generate_in_artistic_style",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Permit adult content, if the account allows it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "allowNSFW",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "artisticStyleId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Shape of the output. Defaults to 1:1.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "aspectRatio",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Your subject. Optional when refCreationIds is given. Lower below Founder: see get_account → recommendation.promptMaxChars.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "prompt",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "auto",
+                  "fast",
+                  "normal",
+                  "high",
+                  "max",
+                  "ultra",
+                  "ultimate"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "quality",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Up to 6 subject images (creation ids) to place into the artistic style.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "refCreationIds",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Block until ready (default true). Set false to get a queueId immediately.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "wait",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_in_artistic_style` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:45a551941db97e42c5e77729a04f7d1443d585368e0d2226ca4f54fbbb3886ca",
+            "description": "Re-run an existing creation — the SERVER re-derives the original tool\\",
+            "name": "generate_similar",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The creation to re-run — from an earlier generation or list_creations.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "creationId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Block until ready (default true). Set false to get a queueId immediately.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "wait",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_similar` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:94d52dfbeb9738dec7c289d572c7ee5c7facbc92c4b1417730eeb8613e701edf",
+            "description": "Animate an existing still creation into a short clip. This SPENDS the account\\",
+            "name": "generate_video",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_video` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ee87a25b5348b4e3397a22a74f4ccae672a4b20d8b037ab33140c317b37e6082",
+            "description": "Expand an existing creation into a wallpaper format — the original content is preserved and ",
+            "name": "generate_wallpaper",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Permit adult content, if the account allows it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "allowNSFW",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dimension",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The creation to expand — from an earlier generation, upload_image or list_creations.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "inputCreationId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional guidance for what the newly painted areas should contain. Lower below Founder: see get_account → recommendation.promptMaxChars.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "prompt",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Up to 3 extra reference creations to steer the expanded areas.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "refCreationIds",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Block until ready (default true). Set false to get a queueId immediately.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "wait",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_wallpaper` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0f1a729e46baad6d68a3be1cc92d0909241c059038ff530d657b96086a378d86",
+            "description": "Generate an image conditioned on existing creations. This SPENDS the account\\",
+            "name": "generate_with_refs",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Permit adult content, if the account allows it.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "allowNSFW",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Shape of the output. Defaults to 1:1.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "aspectRatio",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "extractionDirective",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The scene to generate. Optional for style-transfer (the refs carry the style). For smart-edit this is the edit instruction and is required. Lower below Founder: see get_account → recommendation.promptMaxChars.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "prompt",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "auto",
+                  "fast",
+                  "normal",
+                  "high",
+                  "max",
+                  "ultra",
+                  "ultimate"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "quality",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Creation ids to condition on. character-ref: 1-6 shots of the same character (face photos lock the face). style-transfer: 1-6 style sources. smart-edit: refs[0] = the image to EDIT, plus up to 5 support refs.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "refCreationIds",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Which reference tool to run.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tool",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Block until ready (default true). Set false to get a queueId immediately.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "wait",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_with_refs` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:28b9841d33d3d3697d6f7cbce5454af4687ee9ca2e9bd3221263cffec7aa3a44",
+            "description": "Show the connected 2DAI account: available credit, tier, the API key\\",
+            "name": "get_account",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_account` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a88a6d2e319b564383b8bc753d25b8be504742b8ef04df69dd62cff411c2cbbf",
+            "description": "Fetch one creation row by its id. Same shape as list_creations rows but with the FULL prompt and ",
+            "name": "get_creation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The creation to look up.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "creationId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_creation` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2f508cc6b17ea95f850c7a5b5f340759f849555cc876b9d535d12a2cc45d2fdd",
+            "description": "Read-only view of the account\\",
+            "name": "get_lock",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_lock` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4b401cc612afad8638edd9be8c410716b6f6e20f355b4a7e022436e8077c94f6",
+            "description": "One consolidated read of the account\\",
+            "name": "get_stats",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Window for the generation numbers: 30 (default) or 90 days.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:33623f534c1f0c3a99a3a47495dbdc98889491291bd6a5880639978b1093f5b6",
+            "description": "The cached $2DAI/USD quote. Works with the ordinary ",
+            "name": "get_token_price",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_token_price` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f1bed3cf94ed7a69885255064e7c12b34113e8ff24df6ac7eb875c9ade65111",
+            "description": "Read-only money history for the account. kind = ",
+            "name": "get_wallet_history",
+            "parameters": [
+              {
+                "default": null,
+                "description": "sources only — window in days (default 30).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Which history to read.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "transactions: rows per page (5-50, default 20). balance/credit: window in DAYS (7-365, default 90).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "transactions only — 0-based page.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "page",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_wallet_history` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4746389a0292a18172de3072bf3e26e973296b7d7cb7e7a01612cb73f22ecc87",
+            "description": "Read-only wallet snapshot: $2DAI token balance, USD credit, and the account\\",
+            "name": "get_wallet_status",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_wallet_status` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eb1b577caed5bd01001ae9ba68d3cfff45840c3571a0aad259906a076722b18f",
+            "description": "The curated artistic styles available to generate_in_artistic_style, each with an artisticStyleId, a title, a short public blurb and a ",
+            "name": "list_artistic_styles",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_artistic_styles` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3390cfd2fa8fda86a897341652ad03e0525682b57040da46172d849e44d38b8d",
+            "description": "Page through the account\\",
+            "name": "list_creations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_creations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3a90821b58d7a37f6a3b8b8d70c2ee995ad47345caf9d7645eda0e3baaa18e81",
+            "description": "Page through the account\\",
+            "name": "list_folders",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_folders` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc188c9a9015913457057c3293e7e54a585b15cbb7972480148d01c81a8c32eb",
+            "description": "Folder CRUD plus sidebar organisation on the account\\",
+            "name": "manage_folder",
+            "parameters": [
+              {
+                "default": null,
+                "description": "What to do.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Folder description (create/rename).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The folder to act on (from list_folders). Not used by the *-group actions.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "folderId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Title — required for create/create-group/rename-group, optional for rename.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "set-favorite only — true to star the folder, false to unstar.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "trashContents",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `manage_folder` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec88e435dfeadeb7d780a5e700f03f831bb770cfa9f4c7a5d7deb7b4268e5d63",
+            "description": "Organise creations on the cloud drive (needs the ",
+            "name": "organise_creation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "What to do.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The creation to act on (every action except batch-*).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "creationId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "folderId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "batch-trash / batch-restore only — up to 100 creation ids.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `organise_creation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2df793d8d013aaf0ba6fad3de1c14d8f52f14818196d4ea7070d82792ddf2067",
+            "description": "Flip ONE creation\\",
+            "name": "publish_creation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "What to do.",
+                "enum": [
+                  "publish",
+                  "unpublish"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The creation to act on.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "creationId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `publish_creation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2a22285d13a10afa43c354f89304ff48d71c1eece98d82466a7b585d640e1191",
+            "description": "Upload a local MP3 (or base64 bytes) to the 2DAI cloud drive so it can be the AUDIO REFERENCE of a ",
+            "name": "upload_audio",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Raw base64 MP3 bytes — alternative to path.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "base64",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Filename to store (defaults to the source name; it labels the audio in the drive).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "File the upload directly into this folder (must be a folder you can write to); omit to land at the drive root.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "targetFolderId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_audio` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:81f259b6862d9c3f37695c8fc435d5c2d141787173b8cb7e2f5fc8a6dc7acd21",
+            "description": "Upload a local image (or base64 bytes) to the 2DAI cloud drive so it can be used as a ",
+            "name": "upload_image",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Raw base64 image bytes — alternative to path.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "base64",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "MIME type when sending base64 (e.g. image/png).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "contentType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Record this upload as a CROP edit of an existing creation you own — description and moderation verdict are inherited.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "croppedFromCreationId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Record this upload as an ERASE (alpha) edit of an existing creation you own. Mutually exclusive with croppedFromCreationId.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "erasedFromCreationId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Filename to store (defaults to the source name).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "File the upload directly into this folder (must be a folder you can write to); omit to land at the drive root.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "targetFolderId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_image` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:e9ee18ae87c0d4673bc4b4b7daf46b54987ed96ba6c9c36dd82c4176f84f4b1a",
+        "version": "2.2.0"
       }
     ]
   },
@@ -64372,83 +65341,6 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.4.106"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-33060",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
-            "vulnerable_tools": [
-              "ckan_datastore_search_sql",
-              "ckan_package_search",
-              "sparql_query"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-73845",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
-            "vulnerable_tools": [
-              "ckan_get_mqa_quality",
-              "ckan_get_mqa_quality_details"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-73844",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-73846",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 5.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-53509",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MEDIUM",
-            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
-            "vulnerable_tools": [
-              "connect"
-            ]
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
         "version": "< 0.4.85"
       },
       {
@@ -64527,6 +65419,83 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 0.4.112"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-33060",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Versions prior to 0.4.85 provide tools including ckan_pac",
+            "vulnerable_tools": [
+              "ckan_datastore_search_sql",
+              "ckan_package_search",
+              "sparql_query"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-73845",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the ckan_get_mqa_quality and ckan_get_m",
+            "vulnerable_tools": [
+              "ckan_get_mqa_quality",
+              "ckan_get_mqa_quality_details"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-73844",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, error paths reflect raw upstream respon",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-73846",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, canonicalizeParams in src/utils/cache.t",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 5.7,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-53509",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. A known vulnerability CVE-2026-33060 indicated tools incl",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 0.4.106"
       },
       {
         "advisories": [
@@ -81264,19 +82233,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.2.3",
+    "latest_version": "2.3.1",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "mcp-server-appwrite",
     "prompts_count": 0,
     "purl": "pkg:pypi/mcp-server-appwrite",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.2.3",
+    "recommended_safe_version": "2.3.1",
     "repo_http_status": 200,
     "repository_url": "https://pypi.org/project/mcp-server-appwrite/",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `mcp-server-appwrite` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 147 safe version(s).",
+    "security_summary": "Server `mcp-server-appwrite` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 149 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -83045,6 +84014,30 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "2.2.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-03T14:04:20.371484Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.3.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-04T00:20:24.175540Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.3.1"
       }
     ]
   },
@@ -110842,7 +111835,7 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 0.9.2",
+    "latest_version": "< 0.23.0",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "ruby-sdk",
@@ -110937,7 +111930,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.23.0"
+        "version": "< 0.9.2"
       },
       {
         "advisories": [
@@ -111016,7 +112009,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.9.2"
+        "version": "< 0.23.0"
       }
     ]
   },

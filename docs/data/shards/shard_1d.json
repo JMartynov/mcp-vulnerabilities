@@ -8618,19 +8618,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.0.40",
+    "latest_version": "0.0.41",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@tencentcloud/tccc-mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/@tencentcloud%2Ftccc-mcp-server",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.0.40",
+    "recommended_safe_version": "0.0.41",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/@tencentcloud/tccc-mcp-server",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@tencentcloud/tccc-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 33 safe version(s).",
+    "security_summary": "Server `@tencentcloud/tccc-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 34 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:024202bcaccd2d97c61a91c1681035f3982c52e6df98f3607f4a4fa4dfde166c",
@@ -10485,6 +10485,745 @@
         ],
         "toolset_canonical_hash": "sha256:024202bcaccd2d97c61a91c1681035f3982c52e6df98f3607f4a4fa4dfde166c",
         "version": "0.0.40"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-04T02:12:58.203Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b080e7c1e21ee96a2fc3c06496dc93086997d627da5ed737dbe4451e81e0dfe3",
+            "description": "在指定 TCCC 应用下创建一个语音智能体（AI Agent / 语音智能体）。⚠️ 写操作，会在应用里实际创建一个智能体。【宿主前置规则，必须执行】调用前先使用 describe_ccc_instance_list 枚举当前账号下的全部 TCCC 应用：若仅一个应用才可使用其 SdkAppId；若有多个应用，宿主必须停止创建、展示 InstanceName 与 SdkAppId 并向用户询问目标应用。禁止根据历史上下文、环境变量、应用名称、最近使用记录或猜测默认选择。只有用户明确选择后，才能把对应 SdkAppId 传入本工具。入参：SdkAppId（uint64，必填，且必须是用户明确选择或账号唯一应用的 TCCC 应用 ID）、AIAgentName（string，必填，智能体名称，最长 255 字符）、Config（object，必填）。【关键】CreateAIAgent 场景下 Config 里【只有 FlowDefinition 必填】，其余字段全部可省略——省略的由服务端补齐推荐值；最小可用配置就是只给 FlowDefinition（想定制人设再加 Behavior.Instructions 系统提示词），不必手工凑齐整份 Config。Config 可选字段：ExecutionMode（sequential/flexible）、Speech（识别/合成，默认音色 zh-CN-ArticulateJuan、默认识别模型 16k_zh_en）、Behavior（ResponseMode generative/fixed、Instructions、FixedResponse）、KnowledgeBase（FaqMenuIds）、Listening（VAD/打断/热词）、Playback（环境音/无响应提醒挂机）、Call（合规音/最长时长/留言检测）、ExceptionHandling（运行时异常/超并发策略，含转人工）。FlowDefinition（string，必填）：完整画布定义的 JSON 字符串，只放画布产物的 ivrData 段并 JSON.stringify，不要传对象、也不要把整坨 {version,ivrData,voiceSettings} 塞进来。音色除中文外，现也支持 American English（en-US）英语音色；如选英语音色，请同步把 Speech.Languages 设为 [",
+            "name": "create_ai_agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_ai_agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cc95f8d9eff90380023b56f82539b1fcfa91bc7fa72fe834bff411f57b37b231",
+            "description": "为指定 TCCC 应用下的某个语音智能体（AI Agent）生成一张",
+            "name": "create_ai_agent_trial_qrcode",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "TrialConfig",
+                "nested_properties": null,
+                "required": false,
+                "type": "object"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_ai_agent_trial_qrcode` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f9c032eca9e93435f0c9799f627015190de53fddf654e511428727171af979d6",
+            "description": "为指定 TCCC 应用下的语音智能体生成试用 Token，用于客户端发起语音智能体试用会话。入参：SdkAppId（int64，必填，TCCC 应用 ID）、AIAgentId（int64，必填，语音智能体 ID）。出参：DisplayName（string，展示名称）、ChannelId（string，试用通道 ID）、SipJWT（string，SIP 鉴权 Token）、ExpiredTime（int64，Token 过期时间，Unix 秒级时间戳）。调用成功后，本工具会把 SdkAppId、DisplayName、ChannelId、SipJWT 拼接为 Web SIP Demo URL，并把该 URL 编码成二维码图片（image + 落盘路径）一并返回。宿主应让用户真正看到这张二维码，并提醒用户使用手机扫码体验效果更好。SipJWT 属于临时敏感凭证，应仅用于本次试用会话，不要记录到日志、提交到代码仓库或长期保存。",
+            "name": "create_ai_agent_trial_token",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 4.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `create_ai_agent_trial_token` [MEDIUM] initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:42f3bc84bf7655f9dd40053476bf8077dbe9a0700416a81541c68c6c5865c9ac",
+            "description": "创建联络中心实例（即创建一个 TCCC 应用）。入参只需填 InstanceName（实例名称，字符串，必填）。调用成功后返回实例信息，其中的 SdkAppId 就是 TCCC 应用 ID（纯数字，如 1400255946、1600162487 这类，号段不固定），后续所有需要 SdkAppId 的接口都使用这个值，也可以把它配到 TCCC_SDK_APP_ID 环境变量作为默认值。注意：一个腾讯云账号最多创建 20 个应用，创建前先跟用户确认实例名称；实例按实际地域创建，地域由 TCCC_REGION 环境变量决定（不配则默认 ap-guangzhou）。",
+            "name": "create_ccc_instance",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "InstanceName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_ccc_instance` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7c96c03a5b08810480ecd702a4eed843eca962b2a308eb2d51d2d0499cc2057a",
+            "description": "当用户想要生成 / 设计 / 编排 TCCC「AI 画布」或「语音智能体画布」时调用本工具。触发意图包括：做外呼/呼入话术流程、语音 IVR 流程、AI 画布节点编排、对话节点分支与意图设计、systemPrompt 人设编写，或提到 TCCC 画布、agent-flow、ivrData、chatNode、voiceSettings、导入画布 JSON、拆分/合并设计稿、把已导出画布 JSON 改造/逆编译等。本工具本身不生成画布，而是返回一段",
+            "name": "create_tccc_flow_canvas",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "flowType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hasExistingJson",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "requirement",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_tccc_flow_canvas` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:75103cf1cee28224f681bf225aa8f559d04b9aa681514b28f27d03ea577d65c3",
+            "description": "当用户想",
+            "name": "create_voice_agent_by_script",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "LanguageHint",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Scene",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Script",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `create_voice_agent_by_script` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e4d3c1039014179149a542a1541a58c0e3c6a36518734e6ad6a793a525eb03ed",
+            "description": "删除指定 TCCC 应用下的一个语音智能体（AI Agent）。⚠️ 不可逆写操作，删除后无法恢复。入参：SdkAppId（uint64，必填，TCCC 应用 ID）、AIAgentId（int64，必填，要删除的智能体 ID）。出参为空（仅通用响应头 RequestId）；调用成功即表示已删除。",
+            "name": "delete_ai_agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_ai_agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4b40fb22b16be3c01e00afce62332271978fd9a06ce19b61c4b6dc392887f1c7",
+            "description": "⚠️ 危险操作：删除 TCCC 联络中心实例。入参必须显式填写 SdkAppId（uint64，TCCC 应用 ID），不会从 TCCC_SDK_APP_ID 环境变量自动注入，避免误删默认应用。调用成功后无业务出参，仅返回 RequestId。调用前必须向用户确认要删除的 SdkAppId；删除后实例、配置和相关资源可能无法恢复。",
+            "name": "delete_ccc_instance",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_ccc_instance` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:21e5a2971b98ca41d2150d165f4dbe1beaa80ec0ac6e0b03af211be71c501459",
+            "description": "查询单个语音智能体（AI Agent）的详细信息，含完整配置 Config。入参：SdkAppId（uint64，必填，TCCC 应用 ID）、AIAgentId（int64，必填，智能体 ID）。出参 AIAgent 对象，含：AIAgentId（int64）、AIAgentName（名称）、CreateTime、UpdateTime（秒级时间戳），以及 Config（与 CreateAIAgent 相同的完整配置对象：ExecutionMode/Speech/Behavior/KnowledgeBase/Listening/Playback/Call/ExceptionHandling/FlowDefinition）。与 DescribeAIAgentList（只返回 Summary 摘要、不含 Config）不同，本接口用于按 AIAgentId 拉取单个智能体的完整配置详情。",
+            "name": "describe_ai_agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_ai_agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:54769dd38b13df547d45eeea4acdfa420d0423dad111a5a9defd0dd02b4fda76",
+            "description": "分页查询指定 TCCC 应用下的语音智能体（AI Agent）列表。入参：SdkAppId（uint64，必填，TCCC 应用 ID）、PageNumber（int，可选，页码，从 0 开始，不传默认 0）、PageSize（int，可选，每页条数，0~100，不传默认 20）。出参：TotalCount（int64，智能体总数）、AIAgentList（数组，每项为 Summary 精简结构，含 AIAgentId（int64，智能体 ID）、AIAgentName（名称）、CreateTime、UpdateTime（秒级时间戳），列表项不含完整 Config）。如需某个智能体的完整 Config（ExecutionMode/Speech/Behavior/KnowledgeBase/Listening/Playback/Call/ExceptionHandling/FlowDefinition），请用智能体详情接口按 AIAgentId 查询。",
+            "name": "describe_ai_agent_list",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "PageNumber",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "PageSize",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_ai_agent_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7b599024e4eab1536e52e30bc1d90390c6aafd823f73145b4389f9dda6c8e64b",
+            "description": "查询 AI 并发购买列表（TCCC 应用已购买的 AI 并发资源包及生效并发数）。入参全部可选，均为过滤/分页条件：SdkAppIds（uint64 数组，按 TCCC 应用 ID 过滤，不传则查当前账号全部应用；注意是复数，不会从 TCCC_SDK_APP_ID 自动注入）、State（int64 数组，按资源包状态过滤）、SubProduct（string 数组，按子产品码过滤）、GoodsCode（string 数组，按商品码过滤）、PageSize（每页条数，1~100）、PageNumber（页码，从 0 开始）。出参：TotalCount（购买记录总数）、AIBuyList（每个 AI 并发资源包的明细：SdkAppId/ResourceId/RenewFlag/AINum/BeginTime/EndTime/State/SubProductCode/GoodsCode）、EffectiveAINum（每个应用当前生效的 AI 并发数）、PostPayMaxConcurrencyMonth（每个应用当月后付费最大并发）、CanBuyMaxNum（每个应用可购买的最大并发数）。",
+            "name": "describe_ai_concurrency_buy_list",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "PageNumber",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "PageSize",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_ai_concurrency_buy_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:66592989ba1f1418d82578160b64b1f7a4eec470d06f04973d64bbb72d522c8e",
+            "description": "查询当前腾讯云账号下的全部 TCCC 联络中心实例（即 TCCC 应用）列表，这是",
+            "name": "describe_ccc_instance_list",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_ccc_instance_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e11f60f4cb17a822ef0a812674d9d741ac1b585e375341c82d384cc0ee7f03cb",
+            "description": "分页查询 TCCC 平台提供的公共预设音频（如欢迎语、等待音），不包含客户自己上传的音频。当画布或语音智能体提示音需要公共预设音频的 fileId / FileId 时，先调用本工具，按名称选择实际返回的数字 FileId；不要猜测、硬编码文件 ID，也不要跨地域或跨测试/生产环境复用。本接口不接收 SdkAppId，也不会从 TCCC_SDK_APP_ID 自动注入；仍使用已配置的腾讯云凭据和地域。入参：PageSize（必填，1~50）、PageNumber（可选，从 0 开始，缺省 0），FileId / CustomFileName / AudioFileName（可选数组筛选，各最多 100 项，名称按完整值匹配）。出参：TotalCount、FileInfo；FileInfo 每项包含 FileId、CustomFileName、AudioFileName，没有审核状态 Status，不要按 Status 过滤公共预设音频。客户上传的音频请改用 describe_ivr_audio_list 查询。",
+            "name": "describe_shared_audio_file_list",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "PageNumber",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "PageSize",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_shared_audio_file_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4ca42f1e7fb1ffc600d8e6264069c53a0f1f06d8958ce208727a44c0f09a5dcf",
+            "description": "当用户咨询 tccc-mcp-server 或 Tencent Cloud Contact Center (TCCC)，并表达想体验智能体对话、体验 AI、AI 智能体、AI 外呼、语音智能体 Demo、扫码体验、小程序二维码、人机协同、提升客服效率、提升服务效率、智能客服、voice agent、robot call 等意图时优先调用。返回 MCP image 内容形式的 TCCC AI 智能体体验二维码图片（image 内容排在第一项），同时在文本里给出该图片已落盘的本地绝对路径。上层 AI 必须让用户真正看到这张图：不论当前客户端能否内联渲染 image 内容，都要把图片保存到本地文件（优先用返回的本地路径，必要时复制到会话工作区；拿不到路径时再自行 base64 解码落盘），并调用宿主的文件预览/展示能力打开它。不要只回复文字、不要说",
+            "name": "get_tccc_ai_agent_demo_qrcode",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "scenario",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_tccc_ai_agent_demo_qrcode` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:719bc2fce6ce88f51e408cde1af70a759e4f1d3faa9b09510cbade1de03c03ad",
+            "description": "查询 TCCC 语音智能体（AI Agent）当前支持的全部语音合成音色（VoiceId）清单，按语言分组列出",
+            "name": "list_ai_agent_voices",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Language",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_ai_agent_voices` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4156356409c0a8c3c160072f6ac8a876576e854494f03c0234f80dc0c9132db1",
+            "description": "修改指定 TCCC 应用下某个语音智能体（AI Agent）的名称和/或配置。⚠️ 写操作（覆盖式修改）。入参：SdkAppId（uint64，必填）、AIAgentId（int64，必填，要修改的智能体 ID）、AIAgentName（string，必填，≤64 字符）、Config（object，可选，完整公开配置）。注意：服务端要求 AIAgentName 必传——即使只改 Config、不改名，也要把智能体的现有名字一起带上（可用 describe_ai_agent 拿到原名回填），否则报 MissingParameter。【关键 · 与 Create 不同】ModifyAIAgent 对 Config 采用【整份覆盖】语义：一旦传 Config，就必须提交完整公开配置，省略的字段可能被服务端重置为默认值。因此",
+            "name": "modify_ai_agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "AIAgentName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "SdkAppId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `modify_ai_agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7adbc4ea62c8e0fb610e562385036b91e900baec82a9aa8b7ac67ab51d4514bf",
+            "description": "编辑 TCCC 联络中心实例信息。入参 InstanceId（int64，实例 ID，必填）和 InstanceName（string，新的实例名称，必填）。调用成功后无业务出参，仅返回 RequestId。注意：这里使用 InstanceId，不是 SdkAppId；可从 CreateCCCInstance 返回或实例列表中获取。",
+            "name": "modify_ccc_instance_info",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "InstanceId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "InstanceName",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `modify_ccc_instance_info` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d246ed8c164689520068e100845b9d8b93cd676493407024204e9ea78278cdc6",
+            "description": "按 docId 读取 TCCC 知识库中某篇文档的全文。通常在 search_tccc_docs 命中后，需要完整上下文时调用。docId 是 search 结果返回的数字串文档唯一标识。",
+            "name": "read_tccc_doc",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "docId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_tccc_doc` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e25ec68f53b7ae84d8657d476732eb3200658d7a4eac48fd839df03c974b71fb",
+            "description": "当用户咨询 tccc-mcp-server 或 TCCC 相关问题、但不一定需要立即调用具体业务 API 时，可调用本工具记录用户咨询意图分类，用于产品使用统计。rawQuestion 会默认上报原文（截断 500 字），不要传入 SecretId、SecretKey、Token、手机号、邮箱等敏感信息。",
+            "name": "record_tccc_user_intent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "intent",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rawQuestion",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sdkAppId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `record_tccc_user_intent` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:710a48eac87927209847f97f2e5c50fe180fcc08f0b0eb5b2d45e2601388b900",
+            "description": "检索腾讯云联络中心（TCCC）官网文档知识库。当用户咨询 TCCC 的产品功能、概念、接入方式、计费、名词解释、API 用法、常见问题等，且答案可能在官方文档里时调用。返回最相关的文档片段、所属文档标题、官网原文链接和 docId。回答时应基于返回内容作答，并可附上官网链接；需要全文时用 read_tccc_doc 按 docId 读取。",
+            "name": "search_tccc_docs",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "site",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "topK",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_tccc_docs` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:024202bcaccd2d97c61a91c1681035f3982c52e6df98f3607f4a4fa4dfde166c",
+        "version": "0.0.41"
       }
     ]
   },
@@ -25860,7 +26599,7 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "= 1.5.1",
+    "latest_version": ">= 1.2.5, < 1.5.2",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "cherry-studio",
@@ -25878,30 +26617,6 @@
     "toolset_canonical_hash": "",
     "transport": null,
     "versions": [
-      {
-        "advisories": [
-          {
-            "cvss_score": 7.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-54074",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Cherry Studio is a desktop client that supports for multiple LLM providers. From versions 1.2.5 to 1.5.1, Cherry Studio ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": ">= 1.2.5, < 1.5.2"
-      },
       {
         "advisories": [
           {
@@ -25936,6 +26651,30 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "= 1.5.1"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": 7.7,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-54074",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "Cherry Studio is a desktop client that supports for multiple LLM providers. From versions 1.2.5 to 1.5.1, Cherry Studio ",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": ">= 1.2.5, < 1.5.2"
       }
     ]
   },
@@ -57117,7 +57856,90 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 3.6.0"
+        "version": "< 2.9.8"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": 6.4,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-66404",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "MCP Server Kubernetes is an MCP Server that can connect to a Kubernetes cluster and manage it. Prior to 2.9.8, there is ",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": 6.1,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-47250",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "mcp-server-kubernetes is a Model Context Protocol server for Kubernetes cluster management. Prior to version 3.7.0, the ",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 7.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-53355",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "MCP Server Kubernetes is an MCP Server that can connect to a Kubernetes cluster and manage it. A command injection vulne",
+            "vulnerable_tools": [
+              "connect"
+            ]
+          },
+          {
+            "cvss_score": 9.8,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-61459",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "MCP Server Kubernetes before 3.9.0 contains an argument injection vulnerability in structured tools (kubectl_get, kubect",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 8.8,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-46519",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "mcp-server-kubernetes is a Model Context Protocol server for Kubernetes cluster management. Prior to version 3.6.0, mcp-",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 8.3,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-39884",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "mcp-server-kubernetes is a Model Context Protocol server for Kubernetes cluster management. Versions 3.4.0 and prior con",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "<  2.5.0"
       },
       {
         "advisories": [
@@ -57366,90 +58188,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "<  2.5.0"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 6.4,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66404",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MEDIUM",
-            "summary": "MCP Server Kubernetes is an MCP Server that can connect to a Kubernetes cluster and manage it. Prior to 2.9.8, there is ",
-            "vulnerable_tools": [
-              "connect"
-            ]
-          },
-          {
-            "cvss_score": 6.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-47250",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "MEDIUM",
-            "summary": "mcp-server-kubernetes is a Model Context Protocol server for Kubernetes cluster management. Prior to version 3.7.0, the ",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53355",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "MCP Server Kubernetes is an MCP Server that can connect to a Kubernetes cluster and manage it. A command injection vulne",
-            "vulnerable_tools": [
-              "connect"
-            ]
-          },
-          {
-            "cvss_score": 9.8,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-61459",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "MCP Server Kubernetes before 3.9.0 contains an argument injection vulnerability in structured tools (kubectl_get, kubect",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 8.8,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-46519",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "mcp-server-kubernetes is a Model Context Protocol server for Kubernetes cluster management. Prior to version 3.6.0, mcp-",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 8.3,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-39884",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "mcp-server-kubernetes is a Model Context Protocol server for Kubernetes cluster management. Versions 3.4.0 and prior con",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 2.9.8"
+        "version": "< 3.6.0"
       },
       {
         "advisories": [
@@ -65407,7 +66146,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "289dbdbad641943b29a3b8d1eb36506cc8cec10a"
+        "version": "083838eb8e17fe5f6fcaf761bdbe203110288b0b"
       },
       {
         "advisories": [],
@@ -65419,7 +66158,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "083838eb8e17fe5f6fcaf761bdbe203110288b0b"
+        "version": "289dbdbad641943b29a3b8d1eb36506cc8cec10a"
       },
       {
         "advisories": [],
@@ -70484,19 +71223,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.22.1",
+    "latest_version": "2.23.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "ssh-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/ssh-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.22.1",
+    "recommended_safe_version": "2.23.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/tufantunc/ssh-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `ssh-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 64 safe version(s).",
+    "security_summary": "Server `ssh-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 66 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:f537a508c70f218fa8f4ddcfb247227baca68d82b686791124f8716920f07376",
@@ -72223,6 +72962,507 @@
         ],
         "toolset_canonical_hash": "sha256:f537a508c70f218fa8f4ddcfb247227baca68d82b686791124f8716920f07376",
         "version": "2.22.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-03T15:45:51.849Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.22.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-04T06:23:22.585Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6f6dead5d5a3193ce0a499e4c84b01f3ecd8379a7b1019c7460f194d5b94773d",
+            "description": "✅",
+            "name": "Background sessions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Background sessions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e8cc527c0e535d852f2f5f49dd1a235438e8c77e750c8c6424ef604e5f5dd11a",
+            "description": "✅",
+            "name": "Interactive sessions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Interactive sessions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3c1bfda593b315a8743b6ffbb488ea6c372f14905049a013fef74b87f98b3e76",
+            "description": "close-session",
+            "name": "close-session",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `close-session` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d8ef0a6192251f2b394dc567de4f189b381b05d6a5c78398d73ef4ac4607a698",
+            "description": "—",
+            "name": "description parameter",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "44",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "It",
+                "nested_properties": null,
+                "required": false,
+                "type": "was"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Removed",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "an",
+                "nested_properties": null,
+                "required": false,
+                "type": "injection"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "and",
+                "nested_properties": null,
+                "required": false,
+                "type": "never"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "host",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reached",
+                "nested_properties": null,
+                "required": false,
+                "type": "the"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "vector",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `description parameter` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9a086802f63094e8b8cca89dd139375f4cce22023e1935e1e796d030e09e5826",
+            "description": "read-command",
+            "name": "exec",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Allowlisted",
+                "nested_properties": null,
+                "required": false,
+                "type": "read"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Prefer",
+                "nested_properties": null,
+                "required": false,
+                "type": "this"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "for",
+                "nested_properties": null,
+                "required": false,
+                "type": "reads"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "only",
+                "nested_properties": null,
+                "required": false,
+                "type": "commands"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `exec` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a7332b1fd9f982e8131aeed31f64dea5016c5113a7d9926d33213ca0d505da1f",
+            "description": "list-connections",
+            "name": "list-connections",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list-connections` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:85c898ec94620d2bd671d6b6b18b1438c0fe72ad9f7c99b523dfe36b0fe1789c",
+            "description": "list-sessions",
+            "name": "list-sessions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list-sessions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:99631e4aa57da8274f9e25934e63125fadf52ab041f648e5df052bddb888e599",
+            "description": "open-session",
+            "name": "open-session",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `open-session` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:35e5b733c99242df6b9e8a5ba9c9bf466805f5c9ad56abfb3828ddb90e79b9db",
+            "description": "privileged-command",
+            "name": "privileged-command",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `privileged-command` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:971210c8bc8962faa9d36c6cf8e9a84ed27e16fca8ae5bb14b273c3b5bcc49fc",
+            "description": "read-command",
+            "name": "read-command",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `read-command` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c1914266344de3c986346904b80daec2f133b61548a7ae845089648bb28cf3ea",
+            "description": "✅",
+            "name": "read-command, run-command, privileged-command, signal-process",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `read-command, run-command, privileged-command, signal-process` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fdc2e4dd89d40e1b87f5496f02ecf90b763e0b7c456f6dce8f751d844947e2a2",
+            "description": "read-session-output",
+            "name": "read-session-output",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read-session-output` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9c7722c2e64ba990abd993760fbb82b87b5300950b322a97ceee1507e4803c1d",
+            "description": "reload-config",
+            "name": "reload-config",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reload-config` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fe79455b50daa799aa191307f26d92356ecc0ad39a5386f246750033dbe7f0e7",
+            "description": "run-command",
+            "name": "run-command",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `run-command` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b94fdc14de2dbffe8ad62f755e31dc472cd2bc15dced1a5259f7f6469968962a",
+            "description": "sftp-download",
+            "name": "sftp-download",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-download` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bc9664913ce47389056b81ce1ccc971418a2feaabf93fcb099bbe119aef12c3e",
+            "description": "sftp-download-file",
+            "name": "sftp-download-file",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-download-file` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:208918db5f9831cbf2a27f381e1274c6870dbadaa3a1078f7ff2ba27183cbc3d",
+            "description": "sftp-list",
+            "name": "sftp-list",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1a9a58c622d1682b395545b7d6733a401daecc563c784d44dd228f4eee4fd8e7",
+            "description": "sftp-upload",
+            "name": "sftp-upload",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-upload` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aa9b332c6ba6a6deeeb3ba927d785a00e7626fc1d197bba4b6da61962eeaa64f",
+            "description": "✅",
+            "name": "sftp-upload, sftp-download",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-upload, sftp-download` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:051a16de9151e243cefd2c5075f4d9f8a566fbb26f544ac5f4ea1efff1117b9e",
+            "description": "sftp-upload-file",
+            "name": "sftp-upload-file",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-upload-file` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a01fbd30a4671684e1b97e117622318ae2589926b4d5ce4f77d7bb2f400ebcf8",
+            "description": "✅",
+            "name": "sftp-upload-file, sftp-download-file",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "local",
+                "nested_properties": null,
+                "required": false,
+                "type": "side"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "unverifiable",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sftp-upload-file, sftp-download-file` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e21829155139744513b9fe3ead3a8fbcce5285a58e5eacb2af9d190a45681ef6",
+            "description": "signal-process",
+            "name": "signal-process",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `signal-process` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e2fe515be2eb4aff925066038ccba624f38b31e076ebb50e8875d53c37f8e915",
+            "description": "privileged-command",
+            "name": "sudo-exec",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Password",
+                "nested_properties": null,
+                "required": false,
+                "type": "is"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Requires",
+                "nested_properties": null,
+                "required": false,
+                "type": "approval"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "auto",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "piped",
+                "nested_properties": null,
+                "required": false,
+                "type": "via"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stdin",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "unless",
+                "nested_properties": null,
+                "required": false,
+                "type": "approvalPolicy"
+              }
+            ],
+            "risk_score": 7.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `sudo-exec` [CRITICAL] executes arbitrary host system commands or shell scripts; handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:902d32c89ab2013ac33a6c386853900037d30dc494304ad0a69945831ec2668d",
+            "description": "v2",
+            "name": "v1",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "Notes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `v1` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f537a508c70f218fa8f4ddcfb247227baca68d82b686791124f8716920f07376",
+        "version": "2.23.0"
       }
     ]
   },

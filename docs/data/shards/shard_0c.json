@@ -8241,19 +8241,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.1.14",
+    "latest_version": "0.1.15",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@micropage-sh/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@micropage-sh%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.1.14",
+    "recommended_safe_version": "0.1.15",
     "repo_http_status": 200,
     "repository_url": "https://github.com/micropage-sh/mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@micropage-sh/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 15 safe version(s).",
+    "security_summary": "Server `@micropage-sh/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 16 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e79232f2e287131b1232f03dac0993554851608c4cfd2bb14f975620340b0a9a",
@@ -8865,6 +8865,445 @@
         ],
         "toolset_canonical_hash": "sha256:e79232f2e287131b1232f03dac0993554851608c4cfd2bb14f975620340b0a9a",
         "version": "0.1.14"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-03T12:16:05.942Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:52f1ffbaa04f4532d3f157ab910f0d430344de3c8c9cae7b9b4680a2898cdaf5",
+            "description": "How to edit a micropage project safely: project layout, the closed tag vocabulary in brief, and the editing rules (edit in place, no invented tags, no inline colors, no markdown fences).",
+            "name": "agent-guide",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agent-guide` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0d8b3cb7fd66914155762c10d5f7aad0737e6b2441b6bc0bc593ee46011e4c9c",
+            "description": "Create a new, empty micropage project in the signed-in account and return it together with a complete starter .page file (one of the bundled examples) to adapt.\n\nUse it when the user wants a new site. Each call creates another project and counts against the plan",
+            "name": "create_project",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_project` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a66d6f89d86aaf35527cb4577eccf9891e2fa0c290c11453aab3f1ef8f88122f",
+            "description": "Delete a post for good, removing it from the site if it was published. There is no undo; to only take it off the site use unpublish_post. Same as \\",
+            "name": "delete_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d64ebed12db3bd48637e6d7b4de5454f6f5c36ba9d327f6a58f4d65cbd00d360",
+            "description": "Permanently delete a micropage project: its live site goes offline, and its hosted site files and the project record with its builds are removed. It cannot be undone.\n\nOnly call it when the user explicitly asks to delete this specific project. Pass \\",
+            "name": "delete_project",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_project` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:233bcbd89d9a2ea965ffbd2b5f70932e8cc1446ecb7096cd4d94c9b74518c846",
+            "description": "The bundled example .page files by name with a one-line summary each (SaaS launch, portfolio, restaurant, conference, docs, blog, component references). Pick one to copy patterns from.",
+            "name": "examples",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `examples` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:234fa52d127d68de84dbd52c592e13445eaea14f7fec6d9c69abe7e2bfbe9841",
+            "description": "Report the progress of a publish: the build status, the deploy events since after_event_id (queued, built, uploaded, domain wiring, completed or failed), whether it is done, and the live URL.\n\nCall it after publish_build or publish_post, passing the build and after_event_id they returned, and keep calling it with the returned after_event_id until done is true. With after_event_id, only a deploy event after it ends the wait: a site rebuild after a post change is queued (up to about 3 minutes unless the account is Pro+) and reports waiting_for_start until it begins. It waits up to wait_seconds (default ${DEFAULT_WAIT_SECONDS}, max ${MAX_WAIT_SECONDS}) per call, sending progress notifications meanwhile. possibly_stuck flags a publish with no events for far longer than a deploy takes. When a newer build of the project takes the deploy over (build.superseded), it follows that build and returns it as \\",
+            "name": "get_deploy_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runGetDeployStatus(ctx, args, handlerCtx);\n        const supersededHere = result.done && result.superseded[result.superseded.length - 1]?.build_id === result.build.id;\n        const state = supersededHere\n            ? \"superseded, not followed further\"",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_deploy_status` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:24a3ef6810fe15d9b52fe1d6c987b938829d36881d0d997f316108ee34940c90",
+            "description": "Get the URL a stored project file is served from, by its filename (as list_files reports it).\n\nUse it when the user wants a link to an uploaded image, or a full URL is needed somewhere a bare filename does not work (for example a post",
+            "name": "get_file_url",
+            "parameters": [],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `get_file_url` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d400d3b06cf7deb8e17bb0fe3b4842fb65b55be65dc5fdfee93ebb24e55de50a",
+            "description": "Return micropage reference text: the .page grammar, the full reference, the posts format, the agent editing guide, the example index, or one complete example file.\n\nCall this before writing or editing .page markup (and before drafting a post), unless you already have the grammar in context. The vocabulary is closed: tags that are not in the grammar are not rendered, so never guess. Start with topic ",
+            "name": "get_markup_reference",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_markup_reference` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b27c2b5a51f0c1042220867629da5b43099d767247f7923c2e22c0d91a6d4d50",
+            "description": "Return the raw .page markup of a micropage project",
+            "name": "get_page_source",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runGetPageSource(ctx, args);\n        const b = result.build;\n        return structuredResult(result, b ? `Source of build v${b.number ?? \"?\"} (${b.status ?? \"unknown\"}${b.is_active ? \", active\"",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_page_source` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bafbf957d8d63737c1311c039ceaa0950fbfba98f0f33ef358347c21c7b48774",
+            "description": "Show one micropage project in detail: live URL, editor URL, the active build (the default publish target), the latest build, the build that is live now, the failure reason if a build failed, and read-only custom-domain status (Cloudflare hostname and certificate state, and the CNAME target).\n\nUse it to check what is live versus drafted before publishing, to explain why a build failed, or to answer ",
+            "name": "get_project",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runGetProject(ctx, args);\n        const p = result.project;\n        return structuredResult(result, `${p.name ?? p.uuid}",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_project` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0d2523a45aacf43068af119dec8f8dac600c39da8dac9297c09bef7c50215f2a",
+            "description": "The short, canonical .page grammar (docs.micropage.sh/llms.txt): file shape, the closed set of section and element tags, and the rules for agents. Read before writing or editing markup.",
+            "name": "grammar",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `grammar` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:87a841bdd86d8ca6600ffedee6567c19adc2a0c1707ebe68357de29edb850fe4",
+            "description": "The complete .page reference (docs.micropage.sh/llms-full.txt): every site key, element, form option and modifier with examples. Use when the short grammar does not answer the question.",
+            "name": "grammar-full",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `grammar-full` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1c8e85dababc5ff137b29c0b825a7e2353b243ebe6a4b65e266a890a945cf893",
+            "description": "List a micropage project",
+            "name": "list_builds",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_builds` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:62f27899ac4fe47fc9af6275a54d978b1b7ed3bb937b950f276a7ff0e442d72a",
+            "description": "List the files stored in a micropage project (images uploaded by upload_asset, the editor or the CLI), newest first: filename, type, size, SHA-256 and upload date, plus storage used and the plan",
+            "name": "list_files",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_files` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fddf0935e5621fe6e0e68cb71c9caba85abe880ccf1dcfbfd8c3568585ae9e29",
+            "description": "List the forms on a micropage project",
+            "name": "list_forms",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_forms` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9f3dcb1cea48e57f710e1a814556bd0c55d0059ae48241166130b82e3c700d91",
+            "description": "List a project",
+            "name": "list_posts",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runListPosts(ctx, args);\n        const summary = result.post\n            ? `Post \"${result.post.slug}\" (${result.post.published ? \"published\"",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_posts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d63533bf87b25240499dc87ff345d917908b88a483e2f7439412d2bc38045e9e",
+            "description": "List every micropage project in the signed-in account: uuid, numeric id, name, micropage domain, custom domain, live URL, editor URL, and the status and number of each project",
+            "name": "list_projects",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_projects` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a7c16b3a84f4897b5321d6b20d0f3710dcb5ce51055a4a269463b713f7edf3dc",
+            "description": "Read what website visitors submitted through a micropage project",
+            "name": "list_submissions",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const { result, project, rows } = await runListSubmissions(ctx, args);\n        const summary = `${result.count} submission(s)` +\n            (args.id ? \"\"",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_submissions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec3e1476d1124411601741b96a80e6022c1c493bce8ac0d830275e9daa505ad0",
+            "description": "How a post is shaped (title, slug, description, visibility, hero, email list, subject, preview, Markdown body) and its lifecycle: draft, publish, live edits, unpublish, re-send on re-publish.",
+            "name": "posts-format",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `posts-format` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d44c3fdff0c2cdba5b2683f820f62b7881481e78a58bdc1c74f15d938f26db4d",
+            "description": "Show what publish_post would do for one post, and get the confirmation_token publish_post requires. Call it before every publish and show the user the result.\n\nReports whether publishing emails the newsletter list, the list name, the number of active subscribers it would go to, whether publishing is a re-send (the post is already published, or was emailed before and has since been unpublished; either way publishing emails the whole list again), and whether this server is allowed to send email (${ctx.hints.sendSwitchName}).\n\nThe token is tied to the post as it is now: any edit to the post (upsert_post) or to its list invalidates it, and it expires after 15 minutes or when the server restarts. Read-only: nothing is published or sent.",
+            "name": "preview_post_send",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "send_allowed",
+                "nested_properties": null,
+                "required": true,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `preview_post_send` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a9c926a8c036334428bea2ac8b1863928b2512c010e941d8a1f3d7b6841a3341",
+            "description": "Deploy a micropage build to the project",
+            "name": "publish_build",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `publish_build` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a34821de82ff717d0bb608543b7b0ed41218bf506a9b59eadf2d1b865ccf4b13",
+            "description": "Publish a post: put it live on the site under /content and, if it has email enabled with a list, email it to every active subscriber on that list. Publishing a post that is already published, or that was emailed before and has since been unpublished, re-sends the email to the whole list. Same as \\",
+            "name": "publish_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const outcome = await runPublishPost(ctx, args, handlerCtx);\n        if (outcome.kind === \"input\")\n            return outcome.result;\n        const r = outcome.result;\n        return structuredResult(r, `Published \"${r.slug}\"${r.emailed ? `, emailed ${r.recipient_count ?? \"?\"} recipient(s)`",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `publish_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aeaacd4b9c904ccff355babc445f454ed56a3ea4b0e1bf8711e2f0c81d043cad",
+            "description": "Compile .page markup and save it as the project",
+            "name": "save_page",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runSavePage(ctx, args);\n        const verb = result.action === \"updated_draft\" ? \"Updated\"",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save_page` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1dc5282a704982da01480e2298aa7265204d3f8adfbaa484ef5effbc9d5d6d38",
+            "description": "Take a published post off the site: its page 404s and it goes back to draft. The post itself is kept and can be published again later; emails already sent are not recalled. Same as \\",
+            "name": "unpublish_post",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `unpublish_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c75c45984a70f191db91ce1eee108e0e07aa6ee4eb068bf766341c4fa6e705f7",
+            "description": "List the files stored in a micropage project (images uploaded by upload_asset, the editor or the CLI), newest first: filename, type, size, SHA-256 and upload date, plus storage used and the plan",
+            "name": "upload_asset",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "server.registerTool(\"upload_asset\", { ...uploadConfig, inputSchema",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_asset` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8cf0705559fda17ecfacc59a25e512aba36822a09f19cbcdc03c58dae3346232",
+            "description": "Create or update one post (a blog post under /content and/or a newsletter email), keyed by slug: an existing slug is updated, a new one is created as a draft. Same as \\",
+            "name": "upsert_post",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runUpsertPost(ctx, args);\n        const state = result.action === \"unchanged\"\n            ? \"nothing saved\"",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `upsert_post` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:36762ce34689393f11fe3871686f8cc98c3304d701bc2091f91d30d01f32ad35",
+            "description": "Report which micropage account this server acts as: email, plan tier, subscription, and ${ctx.hints.whoamiModes}.\n\nCall it first when a micropage tool fails with a login, session or plan error, or when the user asks which account is connected. It never fails for a missing login: it returns logged_in false and a note saying what the user must do (${ctx.hints.whoamiFix}). It does not log in, log out, or change anything.\n\nDo not call it before every task; the other tools report login and plan problems themselves.",
+            "name": "whoami",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const result = await runWhoami(ctx);\n        const summary = result.logged_in\n            ? `Signed in as ${result.email ?? result.user_id ?? \"(unknown)\"} (${result.plan_tier ?? \"plan unknown\"}, ${result.auth_mode}).`",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `whoami` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:e79232f2e287131b1232f03dac0993554851608c4cfd2bb14f975620340b0a9a",
+        "version": "0.1.15"
       }
     ]
   },
@@ -64789,7 +65228,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "*"
+        "version": "< 2.14.2"
       },
       {
         "advisories": [],
@@ -64813,7 +65252,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 2.14.2"
+        "version": "*"
       },
       {
         "advisories": [],
