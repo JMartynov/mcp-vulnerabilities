@@ -391,6 +391,14 @@ Master Plan: [master_plan_wave27_threat_intel_exploit_prediction_and_deduplicati
 | **149** | **GitLab Advisory Database Synchronization & Multi-Ecosystem Ingestion** | Multi-Ecosystem Ingestion (`discovery/gitlab.py`, `converters/gitlab.py`, `pipeline.py`) | `Done` | Ingest GitLab Community Advisory Database across npm, PyPI, and Go ecosystems, normalize range syntax and disjunctions, and extract CVSS v3.1 vectors. | [task149_gitlab_advisory_database_sync.md](task149_gitlab_advisory_database_sync.md) |
 | **150** | **Smart Cross-Source Advisory Deduplicator & Canonical Alias Graph Engine** | Graph & Ingestion Core (`dedup/`, `graph/alias_graph.py`, `pipeline.py`) | `Done` | Build bidirectional canonical alias graph (DSU connected components) fusing records across 8 sources, resolving CVSS/range conflicts, and retaining full provenance. | [task150_smart_cross_source_deduplicator.md](task150_smart_cross_source_deduplicator.md) |
 
+---
+
+### 28. Wave 28: CLI Resilience & Runtime Edge Case Hardening (In Progress)
+
+| # | Task | Subsystem | Status | Strategic Purpose | Contract File |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| **151** | **CLI Provenance URL Tuple Resolution & OpenSSF None-Ecosystem Hardening** | CLI & Threat Intel (`provenance.py`, `threat_intel/openssf_malicious.py`) | `In Progress` | Fix list/tuple concatenation `TypeError` in `resolve_provenance_urls` and guard against `None` ecosystem in `get_malicious_record`, ensuring robust execution for `mcp-vuln search` and `mcp-vuln hub --json`. | [task151_cli_provenance_and_openssf_edge_cases.md](task151_cli_provenance_and_openssf_edge_cases.md) |
+
 ## Verification Test Results
 ```
 .venv/bin/pytest -q
