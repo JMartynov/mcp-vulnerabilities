@@ -2,7 +2,7 @@
 
 **Target Wave:** Wave 28 (Runtime Edge Cases & CLI Resilience)  
 **Priority:** `P1` (High - Fixes runtime unhandled exceptions in `mcp-vuln search` and `mcp-vuln hub`)  
-**Status:** `In Progress`  
+**Status:** `Done`  
 
 ---
 
