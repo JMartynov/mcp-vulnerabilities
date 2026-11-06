@@ -12,6 +12,8 @@
   // Directory Filters
   let activeVulnFilter = "ALL"; // "ALL" | "VULNERABLE" | "SAFE"
   let activeRiskFilter = "ALL"; // "ALL" | "CRITICAL" | "HIGH" | "MEDIUM" | "LOW"
+  let activeProtocolTrust = "ALL"; // "ALL" | "LOW" | "MEDIUM" | "HIGH"
+  let activeSupplyChain = "ALL"; // "ALL" | "CLEAN" | "VULNERABLE" | "OFFLINE"
   let activeDirectoryEco = "ALL";
   let activePatchFilter = "ALL";
   let directorySearchQuery = "";
@@ -548,6 +550,28 @@
       activeVulnFilter = btn.dataset.vuln;
       applyDirectoryFilters();
     });
+
+    if (document.getElementById("protocol-trust-chips")) {
+      document.getElementById("protocol-trust-chips").addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        document.getElementById("protocol-trust-chips").querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        activeProtocolTrust = btn.dataset.protocol;
+        applyDirectoryFilters();
+      });
+    }
+
+    if (document.getElementById("supply-chain-chips")) {
+      document.getElementById("supply-chain-chips").addEventListener("click", (e) => {
+        const btn = e.target.closest("button");
+        if (!btn) return;
+        document.getElementById("supply-chain-chips").querySelectorAll(".chip").forEach((c) => c.classList.remove("active"));
+        btn.classList.add("active");
+        activeSupplyChain = btn.dataset.supply;
+        applyDirectoryFilters();
+      });
+    }
 
     el.riskTierChips.addEventListener("click", (e) => {
       const btn = e.target.closest("button");
@@ -1176,6 +1200,24 @@
         if (getServerCompositeRisk(server).toUpperCase() !== activeRiskFilter) return false;
       }
 
+      // Protocol Trust Filter
+      if (activeProtocolTrust !== "ALL") {
+        const tier = (server.protocol_trust_tier || "LOW").toUpperCase();
+        if (activeProtocolTrust === "HIGH" && tier !== "HIGH" && tier !== "CRITICAL") return false;
+        if (activeProtocolTrust === "LOW" && tier !== "LOW") return false;
+        if (activeProtocolTrust === "MEDIUM" && tier !== "MEDIUM") return false;
+      }
+
+      // Supply Chain Filter
+      if (activeSupplyChain !== "ALL") {
+        const status = server.dual_axis_status || "UNKNOWN";
+        const cves = server.supply_chain_cve_count || 0;
+        
+        if (activeSupplyChain === "OFFLINE" && status !== "OFFLINE_OR_UNREACHABLE") return false;
+        if (activeSupplyChain === "CLEAN" && (status !== "SCANNED" || cves > 0)) return false;
+        if (activeSupplyChain === "VULNERABLE" && (status !== "SCANNED" || cves === 0)) return false;
+      }
+
       // Ecosystem filter
       if (activeDirectoryEco !== "ALL") {
         if ((server.ecosystem || "").toLowerCase() !== activeDirectoryEco.toLowerCase()) return false;
@@ -1317,6 +1359,27 @@
       const vulnStatusBadge = s.is_vulnerable
         ? `${kevBadge}<span class="badge badge-danger">🔴 ${s.vulnerable_versions_count || 1} Vulnerable Release${s.vulnerable_versions_count > 1 ? "s" : ""}</span>`
         : `<span class="badge badge-success">🟢 Clean Release</span>`;
+        
+      let dualAxisBadges = "";
+      if (s.dual_axis_status) {
+        const pTier = s.protocol_trust_tier || "LOW";
+        const pEmoji = pTier === "HIGH" || pTier === "CRITICAL" ? "🚨" : pTier === "MEDIUM" ? "⚠️" : "🛡️";
+        dualAxisBadges += `<span class="badge badge-protocol-${pTier.toLowerCase()}">${pEmoji} ${pTier} Protocol Risk</span>`;
+        
+        let supplyText = "Clean Dependencies";
+        let supplyStatus = "clean";
+        let supplyEmoji = "🟢";
+        if (s.dual_axis_status === "OFFLINE_OR_UNREACHABLE") {
+          supplyText = "Offline / Unreachable";
+          supplyStatus = "offline";
+          supplyEmoji = "⚪";
+        } else if (s.supply_chain_cve_count > 0) {
+          supplyText = `${s.supply_chain_cve_count} Vulnerable Dependencies`;
+          supplyStatus = "vulnerable";
+          supplyEmoji = "🔴";
+        }
+        dualAxisBadges += ` <span class="badge badge-supply-${supplyStatus}">${supplyEmoji} ${supplyText}</span>`;
+      }
 
       const safeVerBadge = s.recommended_safe_version
         ? `<span class="safe-rec-pill">Recommended: v${escapeHtml(s.recommended_safe_version)}</span>`
@@ -1412,6 +1475,7 @@
 
           <div class="server-status-row">
             ${vulnStatusBadge}
+            ${dualAxisBadges}
             ${safeVerBadge}
             ${primitivesHtml}
             ${envVarsHtml}
@@ -1663,6 +1727,60 @@
     }
 
     el.modalSecurityComment.textContent = server.security_summary || "Automated capability and version security profile attached.";
+
+    const dualAxisContainer = document.getElementById("modal-dual-axis-container");
+    if (dualAxisContainer) {
+      if (server.dual_axis_assessment) {
+        const da = server.dual_axis_assessment;
+        
+        let protocolHtml = `<div>N/A</div>`;
+        if (da.protocol_trust) {
+          const pt = da.protocol_trust;
+          const riskTier = pt.tool_risk_tier || "LOW";
+          protocolHtml = `
+            <div style="margin-bottom: 1rem;">
+              <strong>Tool Risk Tier:</strong> <span class="badge badge-protocol-${riskTier.toLowerCase()}">${riskTier}</span><br/>
+              <strong>Risk Score:</strong> ${pt.risk_score || 0}<br/>
+              <strong>Capability Profile:</strong> ${escapeHtml(pt.capability_profile || "Unknown")}<br/>
+              <strong>Authenticity:</strong> ${pt.authenticity_verified ? "✅ Verified" : "❌ Unverified"}
+            </div>
+          `;
+        }
+
+        let supplyHtml = `<div>N/A</div>`;
+        if (da.supply_chain_hygiene) {
+          const sc = da.supply_chain_hygiene;
+          const status = sc.hygiene_status || "UNKNOWN";
+          const vulnList = (sc.vulnerabilities || []).map(v => `<li>${escapeHtml(v)}</li>`).join("");
+          supplyHtml = `
+            <div>
+              <strong>Hygiene Status:</strong> ${escapeHtml(status)}<br/>
+              <strong>CVE Count:</strong> ${sc.vulnerabilities ? sc.vulnerabilities.length : 0}<br/>
+              <strong>Max CVSS:</strong> ${sc.cvss_max || 0.0}<br/>
+              ${vulnList ? `<ul style="margin-top:0.5rem; margin-bottom:0; font-size:0.9rem;">${vulnList}</ul>` : `<div style="color:var(--text-muted); font-size:0.9rem;">No vulnerable dependencies.</div>`}
+            </div>
+          `;
+        }
+
+        dualAxisContainer.innerHTML = `
+          <h3>⚖️ Dual-Axis Assessment: ${da.status || "UNKNOWN"}</h3>
+          <div style="display: flex; gap: 2rem; margin-top: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 250px; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+              <h4 style="margin-top: 0;">🛡️ Protocol Trust</h4>
+              ${protocolHtml}
+            </div>
+            <div style="flex: 1; min-width: 250px; background: var(--bg-secondary); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+              <h4 style="margin-top: 0;">📦 Supply Chain Hygiene</h4>
+              ${supplyHtml}
+            </div>
+          </div>
+        `;
+        dualAxisContainer.style.display = "block";
+      } else {
+        dualAxisContainer.innerHTML = "";
+        dualAxisContainer.style.display = "none";
+      }
+    }
 
     // Version Selector Pills
     const versions = server.versions || [];

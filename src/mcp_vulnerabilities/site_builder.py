@@ -268,6 +268,9 @@ def _process_server_batch(
             )
             
             record_dict = record.to_dict()
+            da = raw_spec.get("dual_axis_assessment") if isinstance(raw_spec, dict) else getattr(raw_spec, "dual_axis_assessment", None)
+            if da:
+                record_dict["dual_axis_assessment"] = da
             results[pkg_name] = record_dict
             
             if cache:
@@ -817,6 +820,8 @@ def build_site_parallel(
             "read_only_count": sum(1 for t in tools if t.get("annotations", {}).get("readOnlyHint")),
         }
 
+        da = record.get("dual_axis_assessment")
+        
         catalog_index.append({
             "id": f"{ecosystem}:{pkg_name}",
             "package_name": pkg_name,
@@ -851,6 +856,11 @@ def build_site_parallel(
             "protocol_hints": protocol_hints,
             "shard_id": shard_id,
             "shard_file": shard_file,
+            "dual_axis_status": da.get("status") if da else None,
+            "protocol_trust_tier": da.get("protocol_trust", {}).get("tool_risk_tier") if da and isinstance(da.get("protocol_trust"), dict) else None,
+            "protocol_trust_score": da.get("protocol_trust", {}).get("risk_score") if da and isinstance(da.get("protocol_trust"), dict) else None,
+            "supply_chain_cve_count": len(da.get("supply_chain_hygiene", {}).get("vulnerabilities", [])) if da and isinstance(da.get("supply_chain_hygiene"), dict) else 0,
+            "supply_chain_max_cvss": da.get("supply_chain_hygiene", {}).get("cvss_max") if da and isinstance(da.get("supply_chain_hygiene"), dict) else 0.0,
         })
 
     # Sort shards alphabetically by package_name to maintain Sort Order Parity
