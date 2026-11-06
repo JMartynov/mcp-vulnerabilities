@@ -1326,6 +1326,34 @@ def main() -> None:
                 f" MCP SECURITY AUDIT REPORT: {len(report.scanned_servers)} servers scanned"
             )
             print("=" * 70)
+            if report.scanned_servers:
+                print("Inspected MCP Servers:")
+                findings_by_server = {}
+                for f in report.findings:
+                    findings_by_server.setdefault(f.server_name, []).append(f)
+
+                for s in report.scanned_servers:
+                    cname = s.client_name.replace("_", " ").title() if s.client_name else ""
+                    client_tag = f"[{cname}] " if cname else ""
+                    ver_tag = f"@{s.version}" if s.version else "@unpinned"
+                    pkg_tag = f" ({s.package_name}{ver_tag})" if s.package_name else ""
+                    s_findings = findings_by_server.get(s.server_name, [])
+
+                    if not s_findings:
+                        print(f"  ✓ [SAFE] {client_tag}{s.server_name}{pkg_tag} - No known vulnerabilities")
+                    else:
+                        has_conf = any(f.is_confirmed for f in s_findings)
+                        max_sev = next((f.severity_level for f in s_findings if f.severity_level in ("CRITICAL", "HIGH")), None)
+                        if not max_sev:
+                            max_sev = s_findings[0].severity_level
+                        if has_conf:
+                            badge = f"⚠️ [VULNERABLE - {max_sev}]"
+                        else:
+                            badge = f"⚠️ [UNPINNED - {max_sev}]"
+                        count_str = f"{len(s_findings)} issue{'s' if len(s_findings) > 1 else ''}"
+                        print(f"  {badge} {client_tag}{s.server_name}{pkg_tag} - {count_str}")
+                print()
+
             if not report.findings:
                 print("✓ No known vulnerabilities found across scanned MCP servers.")
             else:

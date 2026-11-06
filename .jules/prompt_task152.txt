@@ -1,0 +1,41 @@
+Task 152: Site Builder Linux Multiprocessing Deadlock Immunity & Daily Sync CI Hardening
+
+Contract specifications:
+Read .jules/task152_site_builder_deadlock_and_ci_hardening.md and implement the required changes.
+
+Key Invariants:
+1. In src/mcp_vulnerabilities/site_builder.py:
+   - In build_site_parallel(...):
+     - If workers <= 1:
+       Do NOT use ProcessPoolExecutor. Instead, process chunks sequentially in-process:
+       for chunk in chunks:
+           res = _process_server_batch(chunk, str(in_dir), use_cache, resolved_cache_dir)
+           ... process res ...
+     - If workers > 1:
+       Use ProcessPoolExecutor with explicit spawn start method:
+       import multiprocessing
+       ctx = multiprocessing.get_context("spawn")
+       with ProcessPoolExecutor(max_workers=workers, mp_context=ctx) as executor:
+           ...
+     This eliminates thread-fork deadlocks on Linux runners under pytest.
+
+2. In tests/test_site_builder.py:
+   - In test_build_site_data(tmp_path):
+     Create a minimal mock passports file (e.g. tmp_path / "mock_passports.json" with 1 dummy server spec or empty dict) and pass it as passports_path:
+     passports_file = tmp_path / "mock_passports.json"
+     passports_file.write_text(json.dumps({}), encoding="utf-8")
+     result_file = build_site_data(data_dir=vuln_dir, output_dir=out_dir, passports_path=passports_file)
+     Ensure test_build_site_data runs in milliseconds without loading data/passports.json.gz.
+
+3. In .github/workflows/daily_sync.yml:
+   - In job `sync-mcp-vulnerabilities`:
+     Add `timeout-minutes: 30`
+   - In step `Validate OSV Dataset Integrity & Schemas`:
+     Change `pytest -v` to `pytest -v --timeout=60`
+
+4. Automated Verification:
+   - Run `pytest -v tests/test_site_builder.py` and verify it passes rapidly.
+   - Run `pytest -v tests/test_documentation_parity.py` and verify all tests pass.
+
+Non-Interactive Completion Directive:
+Finalize all changes directly and commit to your branch. Do not ask open-ended questions or wait for user confirmation. Conclude cleanly so the session status transitions to Completed.
