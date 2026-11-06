@@ -56,18 +56,29 @@ The Model Context Protocol (MCP) enables LLMs to invoke external tools, read res
 
 ### Prerequisites
 - Python `>= 3.10`
-- `pip` or [`uv`](https://docs.astral.sh/uv/)
+- [`uv`](https://docs.astral.sh/uv/), [`pipx`](https://pypa.github.io/pipx/), or `pip`
+
+### Quick Run (Zero Install)
+
+Run directly with `uvx` without installing:
+```bash
+uvx mcp-vulnerabilities audit --all-clients
+```
 
 ### Installation
 
-Install via PyPI:
+Install as a standalone CLI tool (recommended):
 ```bash
-pip install mcp-vulnerabilities
+uv tool install mcp-vulnerabilities
 ```
 
-Or install with `uv`:
+Or install with `pipx` or `pip`:
 ```bash
-uv pip install mcp-vulnerabilities
+# via pipx:
+pipx install mcp-vulnerabilities
+
+# via pip:
+pip install mcp-vulnerabilities
 ```
 
 For development installations:
