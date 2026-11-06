@@ -67,6 +67,8 @@ class AuditReport:
                     "name": s.server_name,
                     "package": s.package_name,
                     "version": s.version,
+                    "original_version": getattr(s, "original_version", None),
+                    "resolution_source": getattr(s, "resolution_source", None),
                     "ecosystem": s.ecosystem,
                     "command": s.command,
                 }

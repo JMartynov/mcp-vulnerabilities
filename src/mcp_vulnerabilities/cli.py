@@ -1157,6 +1157,11 @@ def main() -> None:
                 logger.info("Found client config: %s", path)
                 servers.extend(ClientConfigParser.parse_file(path))
 
+        # Resolve versions for unpinned/dynamic servers using mcp-fingerprints
+        from mcp_vulnerabilities.fingerprints.resolver import FingerprintVersionResolver
+        resolver = FingerprintVersionResolver()
+        resolver.enrich_servers(servers)
+
         drift_result = None
         has_drift_failure = False
         
@@ -1353,7 +1358,14 @@ def main() -> None:
                 for s in report.scanned_servers:
                     cname = s.client_name.replace("_", " ").title() if s.client_name else ""
                     client_tag = f"[{cname}] " if cname else ""
-                    ver_tag = f"@{s.version}" if s.version else "@unpinned"
+                    if s.version:
+                        res_src = getattr(s, "resolution_source", None)
+                        if res_src:
+                            ver_tag = f"@{s.version} [fingerprinted: {res_src}]"
+                        else:
+                            ver_tag = f"@{s.version}"
+                    else:
+                        ver_tag = "@unpinned"
                     pkg_tag = f" ({s.package_name}{ver_tag})" if s.package_name else ""
                     s_findings = findings_by_server.get(s.server_name, [])
 

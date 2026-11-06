@@ -29,6 +29,8 @@ class DiscoveredClientServer:
     declared_tools: list[dict[str, Any]] = field(default_factory=list)
     url: str | None = None
     transport: str | None = None
+    original_version: str | None = None
+    resolution_source: str | None = None
 
 
 class ClientConfigParser:
