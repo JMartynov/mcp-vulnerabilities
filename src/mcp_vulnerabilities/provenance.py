@@ -1,12 +1,13 @@
-def resolve_provenance_urls(advisory_id: str, aliases: list[str] | None = None) -> dict[str, str]:
+from collections.abc import Iterable
+
+def resolve_provenance_urls(advisory_id: str, aliases: Iterable[str] | None = None) -> dict[str, str]:
     """
     Resolves authoritative source URLs for an advisory ID and its aliases.
     
     Returns a dictionary containing 'osv', and conditionally 'cve', 'nvd', and 'ghsa'.
     """
     urls = {}
-    aliases = aliases or []
-    all_ids = [advisory_id] + aliases
+    all_ids = [advisory_id] + list(aliases or [])
     
     # OSV is always available
     urls["osv"] = f"https://osv.dev/vulnerability/{advisory_id}"

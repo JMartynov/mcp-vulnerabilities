@@ -42,7 +42,10 @@ class OpenSsfMaliciousSync:
         record = self.get_malicious_record(ecosystem, package_name, version)
         return record is not None
 
-    def get_malicious_record(self, ecosystem: str, package_name: str, version: str | None = None) -> MaliciousPackageRecord | None:
+    def get_malicious_record(self, ecosystem: str | None, package_name: str | None, version: str | None = None) -> MaliciousPackageRecord | None:
+        if not ecosystem or not package_name:
+            return None
+
         key = f"{ecosystem.lower()}::{package_name}"
         record = self.records.get(key)
         if not record:
