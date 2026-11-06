@@ -1,0 +1,22 @@
+Task 151: CLI Provenance URL Tuple Resolution & OpenSSF None-Ecosystem Hardening
+
+Contract specifications:
+Read .jules/task151_cli_provenance_and_openssf_edge_cases.md and implement the required fixes and unit tests.
+
+Key Invariants:
+1. In src/mcp_vulnerabilities/provenance.py:
+   - In resolve_provenance_urls(advisory_id: str, aliases: list[str] | tuple[str, ...] | None = None) -> list[str]:
+     Safely handle aliases whether passed as list, tuple, None, or any iterable of strings.
+     Convert to list before concatenating: all_ids = [advisory_id] + list(aliases or [])
+     Ensure no TypeError can be raised on tuple or None input.
+2. In src/mcp_vulnerabilities/threat_intel/openssf_malicious.py:
+   - In get_malicious_record(self, ecosystem: str | None, package_name: str | None, version: str | None = None):
+     Check if not ecosystem or not package_name: return None before calling .lower() on ecosystem.
+     Ensure no AttributeError is raised when ecosystem or package_name is None or empty.
+3. Automated Tests:
+   - Add unit tests in tests/test_provenance.py verifying resolve_provenance_urls with tuple, list, None, and empty list.
+   - Add unit tests in tests/test_openssf_malicious_packages.py verifying get_malicious_record with ecosystem=None, package_name=None, empty string, and valid inputs.
+   - Verify that all tests pass (run pytest -q tests/test_provenance.py tests/test_openssf_malicious_packages.py).
+
+Non-Interactive Completion Directive:
+Finalize all changes directly and commit to your branch. Do not ask open-ended questions or wait for user confirmation. Conclude cleanly so the session status transitions to Completed.
