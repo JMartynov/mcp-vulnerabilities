@@ -695,6 +695,12 @@ The `mcp-vuln` CLI provides 34 specialized subcommands structured into functiona
 | `correlate` | Correlate structural server passports against vulnerability database | `--output`, `--snapshot`, `--data-dir` |
 | `site-build` | Multicore parallel builder for static web security portal | `--data-dir`, `--output-dir`, `--workers`, `--benchmark` |
 
+### 📋 Complete CLI Options & Flags Index
+
+The following CLI options and flags are supported across all `mcp-vuln` commands:
+
+`--all-clients`, `--allow-outbound`, `--allowed-origin`, `--analyzers`, `--assignee`, `--audit-log`, `--auth-header`, `--auto-merge`, `--batch`, `--benchmark`, `--block-tool`, `--blocklist`, `--bundle`, `--catalog-file`, `--catalog-state-file`, `--cidr`, `--client`, `--command`, `--compliance`, `--concurrency`, `--config`, `--correlate`, `--cors-origins`, `--custom-config`, `--cvelist-delta`, `--cvelistv5-dir`, `--daemon`, `--data-dir`, `--diff`, `--diff-baseline`, `--dir`, `--dry-run`, `--ecosystem`, `--enable-vt`, `--expected-identity`, `--expected-issuer`, `--fail-on`, `--fail-on-drift`, `--fail-on-malware`, `--fail-on-non-compliant`, `--fail-under`, `--feed`, `--file`, `--fix`, `--force`, `--format`, `--gitlab-dir`, `--global`, `--header`, `--host`, `--include-gitlab`, `--install-service`, `--interval`, `--json`, `--limit`, `--live-api`, `--log-file`, `--manifest`, `--markdown-dir`, `--max-files`, `--min-confidence`, `--min-epss`, `--min-severity`, `--mock`, `--mode`, `--network`, `--no-auth`, `--no-cache`, `--no-canary-detection`, `--no-color`, `--no-github`, `--no-glama`, `--no-npm`, `--no-payload-guardrails`, `--no-pypi`, `--no-registries`, `--no-smithery`, `--notify`, `--notify-webhooks`, `--nvd-api`, `--offline`, `--open-browser`, `--output`, `--output-dir`, `--output-gz`, `--output-json`, `--package`, `--passports`, `--pid-file`, `--port`, `--ports`, `--reachable-only`, `--readiness`, `--repo-dir`, `--reset-state`, `--sandbox-type`, `--save-baseline`, `--servers-catalog`, `--severity-threshold`, `--simulate`, `--snapshot`, `--source-dir`, `--state-file`, `--status`, `--stop`, `--strategy`, `--strict`, `--strict-integrity`, `--strict-passport`, `--surfaces`, `--target`, `--target-version`, `--targets`, `--theme`, `--threat-check`, `--threshold`, `--timeout`, `--url`, `--verify-signatures`, `--version`, `--webhook`, `--workers`, `--write`
+
 ---
 
 ## Web Explorer & Portals
