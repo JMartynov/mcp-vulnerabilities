@@ -23,10 +23,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Copy root data to docs # Required to serve data dynamically under GitHub Pages site
+      - name: Copy essential dynamic feeds to docs
         run: |
           mkdir -p docs/data
-          cp -r data/* docs/data/
+          # Copy only essential root data feeds if they exist, without overwriting docs/data/ artifacts
+          for f in data/feed.atom data/feed.json data/mcp_servers.json; do
+            if [ -f "$f" ]; then
+              cp "$f" docs/data/
+            fi
+          done
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
