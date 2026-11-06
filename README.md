@@ -62,7 +62,7 @@ The Model Context Protocol (MCP) enables LLMs to invoke external tools, read res
 
 Run directly with `uvx` without installing:
 ```bash
-uvx mcp-vulnerabilities audit --all-clients
+uvx --from mcp-vulnerabilities mcp-vuln audit --all-clients
 ```
 
 ### Installation
