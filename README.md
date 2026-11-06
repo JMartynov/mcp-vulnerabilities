@@ -359,6 +359,13 @@ pytest -q tests/audit/
 pytest -q tests/test_acceptance_*.py
 ```
 
+### Passport Standard Completeness
+
+The automated Master Passport Specification & Dual-Axis CI Validator test suite (`tests/test_passport_standard_completeness.py`) enforces strict schema validation for MCP Server passports. It verifies a 100% pass rate for exactly 6,010 recorded servers across the catalog, explicitly confirming:
+- The presence and correct version of `passport_schema_version` ('1.1.0'), `package_name`, and `ecosystem`.
+- Every passport implements the `dual_axis_assessment` protocol, capturing `status` (`SCANNED` or `OFFLINE_OR_UNREACHABLE`).
+- For fully `SCANNED` servers, `has_vulnerabilities`, `protocol_trust`, and `supply_chain_hygiene` fields structurally comply with the `DualAxisValidator` with zero warnings.
+
 ### Full Flag Reference
 - `--offline`
 - `--feed`
