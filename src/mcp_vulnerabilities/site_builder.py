@@ -587,14 +587,11 @@ def build_site_parallel(
     resolved_cache_dir = str(main_cache.cache_dir) if main_cache else None
 
     all_warnings = []
-    with ProcessPoolExecutor(max_workers=workers) as executor:
-        futures = [
-            executor.submit(_process_server_batch, chunk, str(in_dir), use_cache, resolved_cache_dir)
-            for chunk in chunks
-        ]
-        for future in as_completed(futures):
+    
+    if workers <= 1:
+        for chunk in chunks:
             try:
-                res = future.result()
+                res = _process_server_batch(chunk, str(in_dir), use_cache, resolved_cache_dir)
                 if isinstance(res, tuple):
                     result, batch_warnings = res
                     for w in batch_warnings:
@@ -604,9 +601,32 @@ def build_site_parallel(
                     result = res
                 catalog_dicts.update(result)
             except BaseException as e:
-                msg = f"Worker batch exception: A process in the process pool was terminated abruptly or failed: {type(e).__name__}"
+                msg = f"Worker batch exception: Batch processing failed: {type(e).__name__}"
                 logger.error(msg)
                 all_warnings.append(msg)
+    else:
+        import multiprocessing
+        ctx = multiprocessing.get_context("spawn")
+        with ProcessPoolExecutor(max_workers=workers, mp_context=ctx) as executor:
+            futures = [
+                executor.submit(_process_server_batch, chunk, str(in_dir), use_cache, resolved_cache_dir)
+                for chunk in chunks
+            ]
+            for future in as_completed(futures):
+                try:
+                    res = future.result()
+                    if isinstance(res, tuple):
+                        result, batch_warnings = res
+                        for w in batch_warnings:
+                            logger.warning(w)
+                        all_warnings.extend(batch_warnings)
+                    else:
+                        result = res
+                    catalog_dicts.update(result)
+                except BaseException as e:
+                    msg = f"Worker batch exception: A process in the process pool was terminated abruptly or failed: {type(e).__name__}"
+                    logger.error(msg)
+                    all_warnings.append(msg)
                 
     if all_warnings:
         errors_file = out_dir / "build_errors.json"

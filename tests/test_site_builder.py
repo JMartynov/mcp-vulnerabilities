@@ -30,7 +30,11 @@ def test_build_site_data(tmp_path: Path):
     )
 
     out_dir = tmp_path / "docs_data"
-    result_file = build_site_data(data_dir=vuln_dir, output_dir=out_dir)
+    
+    passports_file = tmp_path / "mock_passports.json"
+    passports_file.write_text(json.dumps({}), encoding="utf-8")
+    
+    result_file = build_site_data(data_dir=vuln_dir, output_dir=out_dir, passports_path=passports_file)
 
     assert result_file.exists()
     loaded = json.loads(result_file.read_text(encoding="utf-8"))
