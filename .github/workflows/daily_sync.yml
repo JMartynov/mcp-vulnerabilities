@@ -24,6 +24,7 @@ permissions:
 jobs:
   sync-mcp-vulnerabilities:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     outputs:
       release_created: ${{ steps.commit_push.outputs.release_created }}
     steps:
@@ -69,7 +70,7 @@ jobs:
       - name: Validate OSV Dataset Integrity & Schemas
         run: |
           python -m mcp_vulnerabilities.cli validate --dir data/vulnerabilities
-          pytest -v
+          pytest -v --timeout=60
 
       - name: Compile Consolidated Snapshot & Threat Feeds
         run: |
