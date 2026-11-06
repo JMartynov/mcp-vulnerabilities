@@ -178,3 +178,22 @@ def test_web_basket_quarantine_disabled(tmp_path):
     assert "btn btn-quarantined" in js_content
     assert "disabled" in js_content
     assert "window.toggleBasket" in js_content
+
+def test_get_malicious_record_none_ecosystem(tmp_path):
+    data_path = tmp_path / "malicious.json"
+    sync = OpenSsfMaliciousSync(data_path=data_path)
+    
+    # Passing None for ecosystem
+    assert sync.get_malicious_record(None, "foo") is None
+    
+    # Passing None for package_name
+    assert sync.get_malicious_record("npm", None) is None
+    
+    # Passing None for both
+    assert sync.get_malicious_record(None, None) is None
+    
+    # Passing empty string for ecosystem
+    assert sync.get_malicious_record("", "foo") is None
+    
+    # Passing empty string for package_name
+    assert sync.get_malicious_record("npm", "") is None
