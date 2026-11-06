@@ -1321,11 +1321,29 @@ def main() -> None:
                         if inc.affected_tools:
                             print(f"  Affected Tools: {', '.join(inc.affected_tools)}")
                             
+            configs = {}
+            for s in report.scanned_servers:
+                key = (s.client_name, str(s.source_file) if s.source_file else None)
+                configs.setdefault(key, []).append(s)
+
+            client_count = len(set(s.client_name for s in report.scanned_servers if s.client_name))
+            client_str = f" across {client_count} client{'s' if client_count != 1 else ''}" if client_count else ""
             print("\n" + "=" * 70)
             print(
-                f" MCP SECURITY AUDIT REPORT: {len(report.scanned_servers)} servers scanned"
+                f" MCP SECURITY AUDIT REPORT: {len(report.scanned_servers)} servers scanned{client_str}"
             )
             print("=" * 70)
+
+            has_valid_configs = any(path for (_, path) in configs.keys())
+            if has_valid_configs:
+                print("Discovered AI Client Configurations:")
+                for (cname, path), s_list in configs.items():
+                    if path:
+                        client_display = cname.replace("_", " ").title() if cname else "Generic"
+                        count = len(s_list)
+                        print(f"  • {client_display}: {path} ({count} server{'s' if count != 1 else ''})")
+                print()
+
             if report.scanned_servers:
                 print("Inspected MCP Servers:")
                 findings_by_server = {}
@@ -1352,6 +1370,8 @@ def main() -> None:
                             badge = f"⚠️ [UNPINNED - {max_sev}]"
                         count_str = f"{len(s_findings)} issue{'s' if len(s_findings) > 1 else ''}"
                         print(f"  {badge} {client_tag}{s.server_name}{pkg_tag} - {count_str}")
+                    if s.source_file:
+                        print(f"    Config: {s.source_file}")
                 print()
 
             if not report.findings:
@@ -1366,6 +1386,12 @@ def main() -> None:
                     print(
                         f"\n{status_badge} Server: {f.server_name} ({f.package_name})"
                     )
+                    server_meta = next((s for s in report.scanned_servers if s.server_name == f.server_name), None)
+                    if server_meta and server_meta.client_name:
+                        cname = server_meta.client_name.replace("_", " ").title()
+                        print(f"  Client:          {cname}")
+                    if server_meta and server_meta.source_file:
+                        print(f"  Config:          {server_meta.source_file}")
                     if getattr(f, "is_cisa_kev", False):
                         print("  [🚨 CISA KEV: ACTIVELY EXPLOITED IN THE WILD]")
                         added = f.cisa_kev_date_added or 'N/A'
