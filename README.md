@@ -1,154 +1,111 @@
 # Open-Source MCP Vulnerability Advisory Database
 
 [![Daily MCP Vulnerability Ingestion & Sync](https://github.com/JMartynov/mcp-vulnerabilities/actions/workflows/daily_sync.yml/badge.svg)](https://github.com/JMartynov/mcp-vulnerabilities/actions/workflows/daily_sync.yml)
+[![PyPI version](https://img.shields.io/pypi/v/mcp-vulnerabilities.svg)](https://pypi.org/project/mcp-vulnerabilities/)
 [![Advisories Count](https://img.shields.io/badge/advisories-500%2B-red.svg)](data/vulnerabilities)
 [![OSV Schema 1.6.0](https://img.shields.io/badge/schema-OSV%201.6.0-blue.svg)](https://ossf.github.io/osv-schema/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Security Explorer](https://img.shields.io/badge/Security_Explorer-Live_Portal-38bdf8?style=flat-square&logo=googlechrome)](https://jmartynov.github.io/mcp-vulnerabilities/)
 [![Release Updates](https://img.shields.io/badge/Release_Updates-Live_Feed-10b981?style=flat-square&logo=rss)](https://jmartynov.github.io/mcp-vulnerabilities/updates.html)
 
-An open-source, automated **Open Source Vulnerability (OSV 1.6)** compliant security advisory database specifically curated for the **Model Context Protocol (MCP)** ecosystem.
+An open-source, automated **Open Source Vulnerability (OSV 1.6)** compliant security advisory database and multi-layered defense toolkit specifically curated for the **Model Context Protocol (MCP)** ecosystem.
 
-## Sources
-- **CVE List v5**: Official CVE JSON 5.0 records.
-- **GitHub Security Advisories (GHSA)**: Live GraphQL/REST security alerts.
-- **OSV.dev**: Unified open-source vulnerability database.
-- **National Vulnerability Database (NVD)**: CVE 2.0 vulnerability metrics and CVSS scores.
-- **GitLab Advisory Database**: High-fidelity open vulnerability feed curated by GitLab's Vulnerability Research Team.
-- **PyPA Advisory Database**: Python Packaging Authority curated advisories with complete PEP 440 OSV normalization.
+---
 
-## Snapshot Downloads & Mirrors
+## 📑 Table of Contents
 
-You can download pre-compiled vulnerability database snapshots, OSV buckets, and air-gapped enterprise bundles directly from our latest GitHub Release.
+- [Overview & Value Proposition](#overview--value-proposition)
+- [Installation & Quickstart](#installation--quickstart)
+- [Interactive Command Hub](#interactive-command-hub)
+- [Practical HOWTOs & Real-World Use Cases](#practical-howtos--real-world-use-cases)
+  - [HOWTO 1: Audit Local AI Client Installations (Claude Desktop, Cursor, Zed, Cline)](#howto-1-audit-local-ai-client-installations)
+  - [HOWTO 2: Audit a Project Config & Auto-Remediate Vulnerabilities](#howto-2-audit-a-project-config--auto-remediate-vulnerabilities)
+  - [HOWTO 3: Enforce CI/CD Security Baselines & Detect Configuration Drift](#howto-3-enforce-cicd-security-baselines--detect-configuration-drift)
+  - [HOWTO 4: Detect AI-Hallucinated & Typosquatted Packages](#howto-4-detect-ai-hallucinated--typosquatted-packages)
+  - [HOWTO 5: Live Network Discovery of Unauthenticated MCP Listeners](#howto-5-live-network-discovery-of-unauthenticated-mcp-listeners)
+  - [HOWTO 6: AST Call-Graph Reachability Analysis for MCP Server Code](#howto-6-ast-call-graph-reachability-analysis-for-mcp-server-code)
+  - [HOWTO 7: Protect Agents at Runtime with Inline MCP Reverse Proxy](#howto-7-protect-agents-at-runtime-with-inline-mcp-reverse-proxy)
+  - [HOWTO 8: Automated GitOps Pull Request Remediation Bot](#howto-8-automated-gitops-pull-request-remediation-bot)
+  - [HOWTO 9: Python SDK Integration for Custom Security Tooling](#howto-9-python-sdk-integration-for-custom-security-tooling)
+  - [HOWTO 10: Verify Cryptographic Feed Provenance with Sigstore](#howto-10-verify-cryptographic-feed-provenance-with-sigstore)
+- [CI/CD Integration](#cicd-integration)
+- [CLI Subcommand Catalog](#cli-subcommand-catalog)
+- [Web Explorer & Portals](#web-explorer--portals)
+- [Data Sources & Ingestion Pipeline](#data-sources--ingestion-pipeline)
+- [Production Readiness & Audit Benchmarks](#production-readiness--audit-benchmarks)
+- [Environment Variables](#environment-variables)
+- [Exit Codes Reference](#exit-codes-reference)
+- [Testing & Verification](#testing--verification)
+- [License](#license)
 
-Download the latest consolidated JSON snapshot:
+---
+
+## Overview & Value Proposition
+
+The Model Context Protocol (MCP) enables LLMs to invoke external tools, read resources, and interface with local databases and APIs. However, this unlocks critical attack vectors:
+- **Unpinned and Vulnerable Packages**: Clients defaulting to `@latest` or unpinned packages risk executing known remote code execution (RCE) or path traversal vulnerabilities.
+- **AI Hallucinations & Typosquatting**: LLMs frequently suggest misspelled or non-existent package names (e.g. `mcp-server-sqlte` instead of `mcp-server-sqlite`), leading to malicious package installations.
+- **Shadow & Mutated Tools**: Compromised upstream servers can silently inject unadvertised tools into `tools/list` to hijack agent execution.
+- **Exposed Local Services**: Developers inadvertently expose unauthenticated HTTP/SSE MCP endpoints on loopback and LAN interfaces.
+
+`mcp-vulnerabilities` provides an end-to-end security solution: continuous vulnerability ingestion, automated multi-client configuration discovery, AST-based reachability filtering, runtime proxy guardrails, and 1-click automated remediation.
+
+---
+
+## Installation & Quickstart
+
+### Prerequisites
+- Python `>= 3.10`
+- `pip` or [`uv`](https://docs.astral.sh/uv/)
+
+### Installation
+
+Install via PyPI:
 ```bash
-curl -sL https://github.com/JMartynov/mcp-vulnerabilities/releases/latest/download/vulnerabilities.json.gz -o vulnerabilities.json.gz
+pip install mcp-vulnerabilities
 ```
 
-Verify integrity using the provided SHA-256 checksums:
+Or install with `uv`:
 ```bash
-curl -sL https://github.com/JMartynov/mcp-vulnerabilities/releases/latest/download/SHA256SUMS.txt -o SHA256SUMS.txt
-sha256sum -c SHA256SUMS.txt --ignore-missing
+uv pip install mcp-vulnerabilities
 ```
 
-## Fast Consumption
-
-You can fetch the complete vulnerability database snapshot in a single GET request:
+For development installations:
 ```bash
-curl -sL https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/vulnerabilities.json.gz | gzip -d > vulnerabilities.json
+git clone https://github.com/JMartynov/mcp-vulnerabilities.git
+cd mcp-vulnerabilities
+pip install -e ".[dev]"
 ```
 
-### Python
-```python
-import gzip, json, urllib.request
+### 30-Second Quickstart
 
-url = "https://raw.githubusercontent.com/JMartynov/mcp-vulnerabilities/main/vulnerabilities.json.gz"
-with urllib.request.urlopen(url) as resp:
-    with gzip.GzipFile(fileobj=resp) as gz:
-        data = json.load(gz)
-
-print(f"Loaded {data['total_vulnerabilities']} MCP security advisories.")
-```
-
-## CI/CD Integration
-
-You can easily prevent vulnerable MCP server dependencies from entering your production environment or being configured into AI client settings by adding this official, reusable GitHub Action to your CI workflows.
-
-### Audit AI Client Configurations
-```yaml
-- name: Audit MCP Servers
-  uses: JMartynov/mcp-vulnerabilities@v1
-  with:
-    config-path: ".claude/claude_desktop_config.json"
-    fail-on-severity: "HIGH"
-```
-
-### Audit Dependency Manifests
-```yaml
-- name: Audit Transitive Dependencies
-  uses: JMartynov/mcp-vulnerabilities@v1
-  with:
-    manifest-path: "package.json"
-    fail-on-severity: "HIGH"
-```
-
-## CLI Usage
-
-The `mcp-vulnerabilities` toolkit provides comprehensive commands for scanning client environments, probing unknown servers, running interactive remediation hubs, and building static web portals:
+Scan all installed AI desktop clients and code editors on your system with a single command:
 
 ```bash
-# 1. Interactive Terminal CLI GUI Hub (Zero-arg launch or explicit subcommand)
-# Launches emoji-anchored interactive dashboard with real-time status telemetry
+mcp-vuln audit --all-clients
+```
+
+Search the local OSV advisory catalog for any package or keyword:
+
+```bash
+mcp-vuln search filesystem
+```
+
+Inspect a specific CVE or GHSA advisory:
+
+```bash
+mcp-vuln lookup CVE-2025-53109
+```
+
+---
+
+## Interactive Command Hub
+
+Launching `mcp-vuln` with zero arguments or running `mcp-vuln hub` starts an interactive terminal control dashboard:
+
+```bash
 mcp-vuln
-mcp-vuln hub
-# Headless batch / JSON automation mode:
-mcp-vuln hub --json
-
-# 2. Universal 17-Client Local AI Discovery & Supply Chain Tamper Check
-# Scans Claude Desktop, Claude Code, Cursor, Windsurf, Zed, Cline, Roo Code, Goose,
-# Continue, JetBrains Junie, VS Code, Antigravity, OpenHands, Trae, LM Studio,
-# LibreChat, and OpenWebUI + global npm/npx cache with automatic token redaction (***REDACTED***)
-mcp-vuln audit --all-clients --verify-signatures
-
-# 3. Network & Port MCP Scanner (Concurrent TCP & JSON-RPC 2.0 Handshake)
-# Probes candidate paths (/, /sse, /mcp, /v1/mcp) across ports or CIDR subnets
-mcp-vuln network-scan --target localhost --ports 3000-8800
-mcp-vuln network-scan --cidr 192.168.1.0/24 --concurrency 64
-# Unified local and network audit:
-mcp-vuln audit --network --network-ports 3000,8000,8080
-
-# 4. Stateful Security Picture & Comparative Drift Tracking
-# Snapshot point-in-time security picture posture:
-mcp-vuln audit --save-picture ~/.mcp-vuln/state/security_picture.json
-# Snapshot approved inventory baseline:
-mcp-vuln audit --save-baseline baseline.json
-# Compare live scan against baseline picture and fail CI pipeline on drift (exit code 2):
-mcp-vuln audit --compare-picture ~/.mcp-vuln/state/security_picture.json --fail-on-drift
-mcp-vuln audit --diff baseline.json --fail-on-drift
-
-# 5. Typosquatting & LLM Hallucinated Package Detector
-# Analyzes configurations using Damerau-Levenshtein distance and homoglyph matching
-mcp-vuln audit-typosquat --config .claude/claude_desktop_config.json --fix
-
-# 6. Sigstore Keyless Attestation & Feed Verification
-# Verifies the cryptographic integrity of vulnerability feeds via OIDC signatures
-mcp-vuln verify-feed --feed docs/data/vulnerabilities.json.gz
-
-# 7. Automated GitHub PR Remediation Bot
-# Discovers client configs, computes safe versions, and idempotently creates PRs
-mcp-vuln remediate-pr --repo-dir ./ --auto-merge
-
-# 8. Dynamic Behavioral Server Identification & Handshake Probing
-# Probes custom or wrapped server processes over stdio / SSE to uncover hidden CVEs
-mcp-vuln identify --stdio "node /path/to/server.js"
-
-# 9. Multi-Client Configuration Auto-Fixer
-# Upgrades vulnerable configurations with atomic backups (<config>.bak.<timestamp>)
-mcp-vuln fix --client claude --dry-run
-mcp-vuln fix --all-clients
-
-# 10. Ingest latest advisories from live APIs
-mcp-vuln sync --live-api
-
-# 11. Validate OSV 1.6 schema compliance
-mcp-vuln validate --dir data/vulnerabilities
-
-# 12. High-Performance Multicore Parallel Site Builder (Bit-for-bit SHA-256 deterministic)
-mcp-vuln build-site --workers 8 --output-dir docs/data
-
-# 13. Inline MCP Reverse Proxy Interceptor (Runtime Firewall)
-# Intercepts stdio JSON-RPC to block vulnerable/shadow tools and redact secrets
-mcp-vuln proxy --package <pkg> --version <v> --block-severity HIGH --redact-secrets --audit-log proxy_log.jsonl -- npx @modelcontextprotocol/server-postgres
-
-# 14. AST Interprocedural Call-Graph Reachability Engine
-# Analyzes multi-hop call graphs from MCP tool entrypoints to flag vulnerable dependencies
-mcp-vuln audit-transitive --source-dir ./src --reachable-only
 ```
-
-### Interactive Terminal Command Hub (`mcp-vuln` / `mcp-vuln hub`)
-
-Launching `mcp-vuln` with zero arguments or running `mcp-vuln hub` opens an interactive, emoji-anchored terminal control center featuring real-time telemetry and categorized workflow menus:
 
 ```text
 ================================================================================
@@ -172,153 +129,617 @@ Launching `mcp-vuln` with zero arguments or running `mcp-vuln hub` opens an inte
 ================================================================================
 ```
 
-## Production Readiness Audit & Competitive Intelligence
+For headless execution or CI pipelines, pass `--json` or `--batch`:
+```bash
+mcp-vuln hub --json
+```
 
-`mcp-vulnerabilities` has undergone an autonomous, empirical live-run audit across all 8 core subsystems, evaluating 26 invariants with zero regressions, and benchmarking against 10 industry standards:
+---
 
-| Master Audit Deliverable | Strategic Purpose & Contents | Link |
-| :--- | :--- | :---: |
-| **Cumulative Technical Audit Report** | Synthesis of all 8 empirical audits (Tasks 59–66); 26/26 invariants verified; 15 cataloged & resolved defects (8 HIGH, 5 MEDIUM, 2 LOW); subsystem health scorecards. | [**`CUMULATIVE_TECHNICAL_AUDIT_REPORT.md`**](docs/audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md) |
-| **Cumulative Competitive Gap Analysis & Roadmap** | Grand Unified Feature Matrix across 10 products (Verity, Anthropic, Cursor, Smithery, Glama, Snyk, Semgrep, Trivy, OSV, Sigstore); strategic gap register; v1.2–v2.0 architecture blueprints (Reverse Proxy, AST Reachability, Keyless Signatures). | [**`CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`**](docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md) |
-| **Wave 14 Portal & Analytics Code Review** | Comprehensive verification & line-by-line code review of Tasks 73–77; evaluation of visual styling, cryptographic fingerprints, zero-day gap analytics, historical sparklines, and in-browser config auditor dropzone. | [**`code_review_wave14_portal_and_analytics.md`**](docs/reports/code_review_wave14_portal_and_analytics.md) |
+## Practical HOWTOs & Real-World Use Cases
 
-### Detailed Subsystem Audit Reports
-- [**Task 59: Ingestion & Monotonic Stream Audit**](docs/audit/audit_task59_ingestion_and_schema.md): OSV 1.6 range integrity, deduplicator range collapsing fix, mid-batch recovery.
-- [**Task 60: Universal 9-Client Discovery Audit**](docs/audit/audit_task60_universal_9client_discovery.md): Permissive JSONC/JSON5 parsing, UTF-8 BOM stripping, symlink recursion guard, secret token redaction (`***REDACTED***`).
-- [**Task 61: Supply Chain Tamper & Shadow Drift Audit**](docs/audit/audit_task61_supply_chain_tamper.md): Zero-day tool mutation detection, unadvertised shadow tool injection alerts (`CRITICAL`), docstring prompt injection tracking.
-- [**Task 62: Behavioral Topology Prober Audit**](docs/audit/audit_task62_behavioral_topology_prober.md): STDIO stdout noise filtering, socket disconnect resilience, child process zombie cleanup.
-- [**Task 63: Polyglot Correlator & Multi-Client Fixer Audit**](docs/audit/audit_task63_polyglot_and_fixer.md): In-place native schema preservation, atomic backup creation, write failure rollback, monotonic SemVer upgrade targets.
-- [**Task 64: Interactive Terminal Hub Robustness Audit**](docs/audit/audit_task64_interactive_hub_robustness.md): Headless/non-TTY fallback, unified diff dry-runs, SIGINT terminal restoration, ANSI escape sequence scrubbing (CWE-150).
-- [**Task 65: Multicore Site Builder & Cache Audit**](docs/audit/audit_task65_site_builder_cache.md): Bit-for-bit SHA-256 byte equality across worker counts (`workers=1` vs `workers=8`), non-fatal worker crash isolation, content-addressed cache invalidation.
-- [**Task 66: Static Web Security Portal UI Parity Audit**](docs/audit/audit_task66_web_portal_ui_parity.md): "Only Servers with Tools" filter parity, zero-tool badge rendering, DOM XSS immunity, shard fetch network failure inline retry.
+Below are practical, step-by-step guides showing how to prepare test cases, run commands, and interpret the resulting output.
 
-### Competitive Ecosystem Benchmarks
-- [**Task 67: Verity & Anthropic Runtime Benchmark**](docs/audit/competitive_verity_anthropic_runtime.md): Verity DB Guard/Oracle, Anthropic Inspector SDK, Cursor Sandbox; inline reverse proxy architecture design.
-- [**Task 68: Smithery & Glama Registry Security Models**](docs/audit/competitive_smithery_glama_registries.md): Automated build sandboxing, dynamic health telemetry, composite Server Trust Score formula (`mcp_trust_score`).
-- [**Task 69: Snyk, Semgrep, Trivy & OSV-Scanner SCA Engines**](docs/audit/competitive_snyk_semgrep_trivy_osv.md): Interprocedural call-graph reachability, typosquatting & LLM hallucinated package detection, automated PR bot blueprint.
-- [**Task 70: Supply Chain Attestation & CycloneDX AIBOM**](docs/audit/competitive_supply_chain_sbom.md): Sigstore keyless Cosign signing, SLSA Level 3 build provenance, CycloneDX v1.6 AI BOM mapping, OpenSSF Scorecards API integration.
+---
 
-## Migrated Security Mechanisms & Tooling Suite
+### HOWTO 1: Audit Local AI Client Installations
 
-`mcp-vulnerabilities` is the authoritative home for Model Context Protocol security analysis, vulnerability intelligence, and advisory correlation. All security-specific mechanisms migrated from `mcp-fingerprints` are unified here:
+**Scenario**: You want to check all AI agents and IDEs on your workstation (Claude Desktop, Cursor, Zed, Cline, Windsurf, VS Code, JetBrains Junie, etc.) for vulnerable or unpinned MCP servers.
 
-* **Concurrent Network & Port MCP Scanner (`mcp_vulnerabilities.probe.network_scanner`)**: Asynchronous TCP port pre-check and JSON-RPC 2.0 handshake (`initialize`, `tools/list`, `prompts/list`, `resources/list`) across candidate paths (`/`, `/sse`, `/mcp`, `/v1/mcp`) supporting host targets, port ranges, and CIDR blocks (`192.168.1.0/24`).
-* **Universal 17-Client Local AI Discovery Engine (`mcp_vulnerabilities.audit.parsers`)**: Deep discovery and permissive JSONC parsing across 17 AI clients (Claude Desktop, Claude Code CLI, Cursor, Windsurf, Zed, Cline, Roo Code, Goose, Continue, JetBrains Junie, VS Code / Copilot, Antigravity, OpenHands, Trae, LM Studio, LibreChat, OpenWebUI) + global npm/npx cache with automated secret token redaction (`***REDACTED***`).
-* **Stateful Security Picture & Comparative Drift Engine (`mcp_vulnerabilities.audit.picture`, `picture_diff`, `drift`)**: Captures point-in-time posture snapshots (`~/.mcp-vuln/state/security_picture.json` or custom baseline) and tracks fine-grained drift across newly introduced CVEs, resolved vulnerabilities, supply chain tamper incidents, new high-risk tools, and shadow servers.
-* **Interactive Terminal CLI GUI Hub (`mcp_vulnerabilities.audit.hub`)**: Zero-argument launch (`mcp-vuln`) or `mcp-vuln hub` presenting an emoji-anchored interactive dashboard with status header telemetry, 6-category workflow menus, and ANSI-safe fallback.
-* **Cross-Repository Passport Correlation (`mcp_vulnerabilities.sync_manager`)**: Ingests `passports.json.gz` from `mcp-fingerprints` to map OSV advisories directly against 5,000+ structural server passports and tool contract signatures.
-* **Multi-Engine Heuristic Threat Analyzer (`mcp_vulnerabilities.analyzer`)**: Scans MCP servers for unsafe execution patterns, command injection vectors, and missing parameter bounds.
-* **Protocol & Contract Linter**: Validates MCP tool definitions against protocol standards, schema invariants, and capability risk classifications.
-* **Headless REST API Daemon (`mcp-vuln serve`)**: Microservice daemon providing JSON endpoints for CI/CD gates, local scanners, and AI client configuration verifiers.
-* **Inline MCP Reverse Proxy Interceptor (`mcp_vulnerabilities.proxy`)**: Runtime bidirectional JSON-RPC firewall that intercepts `tools/list` and `tools/call`, blocking OSV `vulnerable_tools` and shadow tools with JSON-RPC error code `-32001`, and redacting secrets from responses.
-* **AST Interprocedural Call-Graph Reachability Engine (`mcp_vulnerabilities.analyzers.reachability`)**: Traces multi-hop call graphs from `@mcp.tool()` / `server.tool()` entrypoints to flag third-party dependencies as `REACHABLE_FROM_TOOL`, `IMPORTED_ONLY`, or `UNREACHABLE`.
+#### Step 1: Execute the Multi-Client Audit
+```bash
+mcp-vuln audit --all-clients --verify-signatures
+```
 
-## Version-Separated Vulnerability Tracking
+#### Step 2: What You See
+The scanner discovers configs across standard application data directories, redacting all sensitive environment tokens (`***REDACTED***`):
 
-Unlike generic package databases, `mcp-vulnerabilities` maintains version-separated vulnerability tracking tailored to the MCP ecosystem:
-* **Per-Version Isolation**: Clearly differentiates between vulnerable releases (e.g., `v1.0.0`) and patched safe releases (e.g., `v1.1.0`), preventing false positive alerts on updated installations.
-* **Discrete Advisory Matrices**: Links specific CVEs, GHSAs, and OWASP MCP categories to the exact tool signatures and endpoints affected.
-* **Automated Safe Version Recommendation**: Identifies the minimum recommended non-vulnerable version and generates 1-click pinned client configurations for **Claude Desktop**, **Cursor**, **Cline**, **Zed**, and **Windsurf**.
+```text
+2026-11-06 22:15:00 [INFO] Found client config: /Users/username/Library/Application Support/Claude/claude_desktop_config.json
+2026-11-06 22:15:00 [INFO] Found client config: /Users/username/.cursor/mcp.json
+2026-11-06 22:15:01 [INFO] Found client config: /Users/username/.config/zed/settings.json
 
-## Web Explorer, Live Updates & Enhanced Analytics Portals
+======================================================================
+ MCP SECURITY AUDIT REPORT: 6 servers scanned
+======================================================================
 
-The project provides interactive, client-side static web portals hosted directly from GitHub Pages:
+[VULNERABLE SERVER] Server: postgres (@modelcontextprotocol/server-postgres)
+  Client:          Claude Desktop
+  Vulnerability:   CVE-2025-53108 [Severity: HIGH]
+  Installed:       0.6.1
+  Affected Range:  >=0, <=0.6.1
+  Remediation:     Upgrade to >= 0.6.2
+  Summary:         PostgreSQL MCP server exposes connection strings via logging parameters
+  Authoritative Sources:
+    * Official CVE: https://www.cve.org/CVERecord?id=CVE-2025-53108
+    * NIST NVD:     https://nvd.nist.gov/vuln/detail/CVE-2025-53108
+    * OSV Record:   https://osv.dev/vulnerability/CVE-2025-53108
 
-* **[Unified MCP Security Explorer (`docs/index.html`)](https://jmartynov.github.io/mcp-vulnerabilities/)**:
-  - **Directory Infinite Scroll & DOM Virtualization**: Sentinel-based `IntersectionObserver` progressive batching (48 cards/chunk) rendering all 6,280+ indexed MCP servers at 60 FPS without layout jank or memory leaks.
-  - **Multi-Server Safe Config Basket & Floating Bottom Drawer**: Persistent selection basket across searches with slide-up floating drawer and 6-client unified JSON exporter (**Claude Desktop**, **Cursor**, **Zed**, **Windsurf**, **Cline**, **Continue**).
-  - **Web Cross-Server Tool Collision Warnings**: Real-time safety detector analyzing selected basket servers to flag identical tool names (`tools/list` collision) before configuration export, mitigating runtime tool shadowing and prompt hijacking.
-  - **In-Card Tool Drawer with Real-Time Microsearch**: Expandable inline tool drawer embedded within directory cards with instant keyword microsearch and live match counters across server tools.
-  - **AST Protocol Behavior Badges**: Color-coded badges rendering static capability invariants (`readOnlyHint`, `destructiveHint`, `idempotentHint`, `openWorldHint`) extracted directly from server passports.
-  - **PWA Offline Support & Cache-First Routing**: Progressive Web App manifest (`docs/manifest.json`) and service worker (`docs/sw.js`) enabling zero-network offline discovery and cached advisory navigation.
-  - **Card Footer Quick Client Copy & In-Modal Search**: 1-click client configuration copy buttons in card footers, plus interactive in-modal search input for servers with 40+ tools.
-  - **Directory Explorer**: Multi-criteria sorting (Risk, Advisories, Tools, A-Z), bidirectional URL deep-linking (`?q=`, `?server=`, `?tab=`), and composite risk tiers.
-  - **MCP Primitives & Passports**: Surfaces live counts for `🔧 Tools`, `📄 Prompts`, and `📦 Resources`, transport tags (`🖥️ Local Stdio`), and required environment variables.
-  - **Interactive Server Modal**: Version switcher, arbitrary two-version diff comparator computing tool mutations/CVE deltas, and 4th sub-tab "🌐 Endpoints & Schema" mapping live deployment URLs and plaintext warnings.
-  - **🛡️ Audit My MCP Setup (Tab 3)**: In-browser client config dropzone featuring 1-click sample presets, "Download Fixed Config (.json)", and "Export Markdown Audit Report (.md)" exporters.
+[UNPINNED WARNING] Server: filesystem (@modelcontextprotocol/server-filesystem)
+  Client:          Cursor
+  Vulnerability:   GHSA-hc55-p739-j48w [Severity: HIGH]
+  Installed:       Unpinned (latest)
+  Affected Range:  >=2025.1.14, <2025.7.1
+  Remediation:     Upgrade to >= 2025.7.1
+  Summary:         Path validation bypass via colliding path prefix in server-filesystem
 
-* **[Release Updates & Advisory Delta Feed (`docs/updates.html`)](https://jmartynov.github.io/mcp-vulnerabilities/updates.html)**:
-  - **Historical Release Selector**: Timeline dropdown covering historical sync releases (v1.2.0 through v1.0.0).
-  - **Velocity Sparkline**: Dual-series responsive SVG trend chart tracking server growth and advisory volume over the past 10 releases.
-  - **Dynamic Change-Type Filter Chips**: Instant filtering across *All Updates*, *🟢 Patched Versions Available*, *🔴 New Security Vulnerabilities*, and *🆕 Newly Tracked Servers* with live count indicators.
-  - **Toolset Evolution**: Side-by-side delta visualization tracking added (`+`) and removed (`-`) tools, parameter changes, and SHA-256 fingerprint transitions (`sha256:old... ➔ sha256:new...`).
-  - **Syndication Feeds**: One-click subscription via [Atom Feed (`docs/data/feed.atom`)](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.atom) and [JSON Feed (`docs/data/feed.json`)](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.json).
+----------------------------------------------------------------------
+SUMMARY: 2 vulnerability findings (CRITICAL/HIGH issues detected!).
+----------------------------------------------------------------------
+```
 
-* **[Multi-Dimensional Analytics Dashboard (`docs/analytics.html`)](https://jmartynov.github.io/mcp-vulnerabilities/analytics.html)**:
-  - **Interactive Click-to-Filter Drilldowns**: Clickable tool chips, OWASP category tiles, and zero-day gap cards navigating directly to `index.html` with active filter parameters.
-  - **Zero-Day & Remediation Gap**: Quantifies patched vs. unpatched vulnerable servers (32.0% safe patches vs. 68.0% active zero-days with no upstream fix).
-  - **Static Capability Surface**: Aggregates high-risk permissions across the catalog, including Filesystem Access, Shell/Process Execution, and Network Egress.
+> [!NOTE]
+> The command exits with `1` when vulnerabilities are detected, making it ideal for build failure gating.
 
-## Automated PyPI Release Pipeline on Data Updates
+---
 
-`mcp-vulnerabilities` is dependent on two distinct upstream data sources:
-1. External OSV/NVD/CVE security advisories (stored in `data/vulnerabilities/`)
-2. Upstream MCP server fingerprints and tool schemas from `mcp-fingerprints` (`data/passports.json.gz`)
+### HOWTO 2: Audit a Project Config & Auto-Remediate Vulnerabilities
 
-To keep downstream tools, scanners, and Python consumers immediately updated with zero human intervention:
-1. **Triggers (`.github/workflows/daily_sync.yml`)**: Executes daily at 03:00 UTC. It is also triggered reactively via a `repository_dispatch` event (`upstream_fingerprints_updated`) whenever `mcp-fingerprints` publishes a new release.
-2. **Cross-Repo Sync**: Automatically pulls the latest `passports.json.gz` release asset from `mcp-fingerprints` (with a raw fallback mechanism in case of missing asset or rate limits).
-3. **Substantive Change Detection (`VULN_CHANGES`)**: Assesses whether new security advisories, catalog updates, or passport changes (`data/passports.json.gz`) occurred.
-4. **Automated Semantic Version Bump**: Runs `scripts/bump_version.py --apply` to increment the patch version.
-5. **Static Artifact Recompilation**: Rebuilds `docs/data/` catalog shards, advisory indexes, and release delta feeds via `site_builder` and `updates_builder`.
-6. **Automated PyPI Publishing**: Tags the commit (`vX.Y.Z`), creates an official GitHub Release with generated release notes, and invokes `./.github/workflows/release.yaml` to publish the updated wheel to PyPI via OIDC Trusted Publishing.
+**Scenario**: You have a repository-specific or local client configuration containing an unpinned or vulnerable MCP server. You want to preview and apply automated upgrades.
 
+#### Step 1: Prepare a Sample Configuration
+Create a test configuration file `sample_claude_config.json`:
+```json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem"]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-postgres@0.6.1"]
+    }
+  }
+}
+```
 
-## CLI Command Reference
+#### Step 2: Preview Remediation (Dry Run)
+Run `fix` with `--dry-run` to generate a unified diff without touching the file:
+```bash
+mcp-vuln fix --config sample_claude_config.json --dry-run
+```
 
-| Subcommand | Description | Primary Flags |
+#### Step 3: What You See
+```diff
+--- a/sample_claude_config.json
++++ b/sample_claude_config.json
+@@ -2,7 +2,7 @@
+   "mcpServers": {
+     "filesystem": {
+       "command": "npx",
+-      "args": ["-y", "@modelcontextprotocol/server-filesystem"]
++      "args": ["-y", "@modelcontextprotocol/server-filesystem@2025.7.1"]
+     },
+     "postgres": {
+       "command": "npx",
+-      "args": ["-y", "@modelcontextprotocol/server-postgres@0.6.1"]
++      "args": ["-y", "@modelcontextprotocol/server-postgres@0.6.2"]
+     }
+   }
+ }
+
+======================================================================
+ MCP CLIENT CONFIG REMEDIATION
+======================================================================
+Server: filesystem (@modelcontextprotocol/server-filesystem)
+  Old version: unpinned
+  New version: 2025.7.1
+
+Server: postgres (@modelcontextprotocol/server-postgres)
+  Old version: 0.6.1
+  New version: 0.6.2
+
+----------------------------------------------------------------------
+DRY RUN: No files were modified.
+```
+
+#### Step 4: Apply the Fix Safely
+When satisfied, execute with `--write`. The tool creates an atomic, timestamped backup (`sample_claude_config.json.bak.<timestamp>`) before writing:
+```bash
+mcp-vuln fix --config sample_claude_config.json --write
+```
+
+---
+
+### HOWTO 3: Enforce CI/CD Security Baselines & Detect Configuration Drift
+
+**Scenario**: You want to prevent developers from adding unapproved MCP servers, modifying security flags, or introducing unreviewed tools into client configurations during PR reviews.
+
+#### Step 1: Create an Approved Baseline Snapshot
+Run an audit and save the approved inventory snapshot:
+```bash
+mcp-vuln audit --config .cursor/mcp.json --save-baseline baseline.json
+```
+
+#### Step 2: Simulate Configuration Drift
+Suppose a developer adds an unreviewed server or modifies flags in `.cursor/mcp.json`:
+```json
+{
+  "mcpServers": {
+    "approved-sqlite": {
+      "command": "uvx",
+      "args": ["mcp-server-sqlite==0.2.0"]
+    },
+    "shadow-fetch": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-fetch@0.1.0"]
+    }
+  }
+}
+```
+
+#### Step 3: Run Drift Detection in CI
+```bash
+mcp-vuln audit --config .cursor/mcp.json --diff baseline.json --fail-on-drift
+```
+
+#### Step 4: What You See
+```text
+======================================================================
+ MCP BASELINE DRIFT REPORT
+======================================================================
+[DRIFT DETECTED] Server 'shadow-fetch' was ADDED to configuration.
+  Client:          local
+  Package:         mcp-server-fetch
+  Version:         0.1.0
+  Details:         Server 'shadow-fetch' added
+
+SUMMARY: 1 unapproved configuration change(s) detected.
+```
+The command terminates with **exit code `2`**, failing the CI pipeline and preventing unapproved servers from reaching production.
+
+---
+
+### HOWTO 4: Detect AI-Hallucinated & Typosquatted Packages
+
+**Scenario**: LLMs frequently suggest misspelled package names (e.g. `mcp-server-sqlte` instead of `mcp-server-sqlite`) or malicious homoglyphs (e.g. using Cyrillic `с` instead of Latin `c`). You want to verify package names against the authentic MCP catalog.
+
+#### Step 1: Prepare a Configuration with a Typosquatted Package
+Create `typosquat_config.json`:
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-sqlte"]
+    }
+  }
+}
+```
+
+#### Step 2: Run Typosquat Detection
+```bash
+mcp-vuln audit-typosquat --config typosquat_config.json
+```
+
+#### Step 3: What You See
+```text
+2026-11-06 22:30:15 [WARNING] Detected HIGH typosquat in server 'sqlite': mcp-server-sqlte -> mcp-server-sqlite (HIGH_RISK_TYPOSQUAT)
+```
+
+To output machine-readable JSON:
+```bash
+mcp-vuln audit-typosquat --config typosquat_config.json --json
+```
+```json
+{
+  "analyzed_packages": [
+    {
+      "server_name": "sqlite",
+      "package_name": "mcp-server-sqlte",
+      "canonical_name": "mcp-server-sqlite",
+      "risk_tier": "HIGH",
+      "reason": "HIGH_RISK_TYPOSQUAT",
+      "distance": 1
+    }
+  ],
+  "typosquats_detected": [
+    {
+      "server_name": "sqlite",
+      "package_name": "mcp-server-sqlte",
+      "canonical_name": "mcp-server-sqlite",
+      "risk_tier": "HIGH",
+      "reason": "HIGH_RISK_TYPOSQUAT",
+      "distance": 1
+    }
+  ],
+  "risk_summary": {
+    "has_critical": false,
+    "has_high": true
+  }
+}
+```
+
+#### Step 4: Auto-Fix Typosquats
+To automatically correct detected package names to their canonical equivalents:
+```bash
+mcp-vuln audit-typosquat --config typosquat_config.json --fix
+```
+
+---
+
+### HOWTO 5: Live Network Discovery of Unauthenticated MCP Listeners
+
+**Scenario**: Developers or microservices often spin up local MCP HTTP/SSE servers on arbitrary ports (`3000`, `8000`, `8080`). You want to discover running servers, verify whether they expose tools without authentication, and inspect their capabilities.
+
+#### Step 1: Scan Localhost or Subnet
+Scan common MCP development ports on localhost:
+```bash
+mcp-vuln network-scan --target localhost --ports 3000,8000,8080,8765
+```
+
+Or scan an entire local development subnet with 64 concurrent workers:
+```bash
+mcp-vuln network-scan --cidr 192.168.1.0/24 --concurrency 64
+```
+
+#### Step 2: What You See
+The prober connects across candidate paths (`/`, `/sse`, `/mcp`, `/v1/mcp`) and sends a standard JSON-RPC 2.0 `initialize` request:
+
+```text
+======================================================================
+ MCP NETWORK SCAN REPORT: localhost
+======================================================================
+[ACTIVE LISTENER] http://localhost:8000/sse
+  Reachable:       True
+  MCP Handshake:   Success (Protocol: 2024-11-05)
+  Server Info:     mcp-filesystem-server (v0.5.0)
+  Discovered Tools:
+    - read_file (Dangerous: allows arbitrary local filesystem read)
+    - write_file (Dangerous: allows filesystem modification)
+    - list_directory
+  Discovered Prompts: 2 registered
+  Discovered Resources: 5 registered
+  Authentication:  ⚠️ NONE (Open unauthenticated endpoint)
+
+----------------------------------------------------------------------
+SUMMARY: 1 active MCP service identified.
+----------------------------------------------------------------------
+```
+
+---
+
+### HOWTO 6: AST Call-Graph Reachability Analysis for MCP Server Code
+
+**Scenario**: Your server repository depends on third-party libraries (e.g. `requests` or `jinja2`). Traditional scanners flag all CVEs in dependencies, causing alert fatigue. You want to determine if the vulnerable code is **actually reachable** from an MCP tool entrypoint (`@mcp.tool()` or `server.tool()`).
+
+#### Step 1: Prepare Sample Server Code & Dependencies
+Suppose `server.py` defines:
+```python
+import requests
+import jinja2
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("demo")
+
+@mcp.tool()
+def fetch_url(url: str):
+    return requests.get(url).text  # requests is reachable!
+
+def unused_template():
+    return jinja2.Template("...")  # jinja2 is NEVER reached from any tool
+```
+And `requirements.txt` specifies:
+```text
+requests==2.25.0
+jinja2==2.11.0
+```
+
+#### Step 2: Run Transitive Audit with AST Reachability
+```bash
+mcp-vuln audit-transitive --manifest requirements.txt --source-dir ./src --reachable-only
+```
+
+#### Step 3: What You See
+```text
+======================================================================
+ TRANSITIVE DEPENDENCY AUDIT: requirements.txt (2 dependencies)
+======================================================================
+
+[VULNERABLE DEPENDENCY] requests (PyPI) @ 2.25.0
+  Vulnerability: GHSA-j8r2-6x86-q33q [Severity: HIGH] (CVSS 7.5)
+  Remediation:   Upgrade to >= 2.31.0
+  Reachability:  REACHABLE
+                 From Tools: fetch_url
+  Summary:       Unintended leak of Proxy-Authorization header in requests
+
+----------------------------------------------------------------------
+SUMMARY: 1 reachable transitive vulnerability (Max CVSS: 7.5).
+Filtered out 1 unreachable vulnerability in 'jinja2'.
+----------------------------------------------------------------------
+```
+
+---
+
+### HOWTO 7: Protect Agents at Runtime with Inline MCP Reverse Proxy
+
+**Scenario**: You must run an unpatched or third-party MCP server, but want to block known vulnerable tools, prevent path traversal/SQL injection payloads, and redact sensitive tokens before they return to the LLM.
+
+#### Step 1: Run Command Through the MCP Security Proxy
+Wrap the stdio server process with `mcp-vuln proxy`:
+```bash
+mcp-vuln proxy \
+  --package @modelcontextprotocol/server-filesystem \
+  --mode block \
+  --block-tool delete_file \
+  --audit-log proxy_audit.jsonl \
+  -- npx @modelcontextprotocol/server-filesystem /tmp
+```
+
+#### Step 2: What Happens Under the Hood
+1. **JSON-RPC Interception**: The proxy intercepts client-to-server and server-to-client JSON-RPC lines.
+2. **Tool Blocking**: If the AI model calls `delete_file` or a tool flagged as vulnerable in OSV, the proxy intercepts the message and responds directly to the client with JSON-RPC error code `-32001`:
+   ```json
+   {
+     "jsonrpc": "2.0",
+     "id": 4,
+     "error": {
+       "code": -32001,
+       "message": "Blocked by MCP Security Proxy: tool 'delete_file' is restricted by security policy."
+     }
+   }
+   ```
+3. **Payload Guardrails**: Path traversal patterns (`../../etc/passwd`) or SQL injection markers (`DROP TABLE`) in tool arguments are blocked before execution.
+4. **Audit Log**: Every tool invocation and blocked payload is written to `proxy_audit.jsonl`.
+
+---
+
+### HOWTO 8: Automated GitOps Pull Request Remediation Bot
+
+**Scenario**: You manage a repository with team client configs or templates. You want an automated bot to locate client configs, compute safe upgrade pins, and create clean, idempotent pull requests.
+
+#### Step 1: Run Remediate PR in Dry-Run Mode
+```bash
+mcp-vuln remediate-pr --repo-dir . --dry-run --assignee security-team
+```
+
+#### Step 2: What You See
+```text
+2026-11-06 22:40:00 [INFO] Scanning repository for client configurations...
+2026-11-06 22:40:01 [INFO] Identified 1 vulnerable configuration: .claude/claude_desktop_config.json
+2026-11-06 22:40:01 [INFO] Proposed Branch: mcp-vuln/fix-claude-desktop-config
+2026-11-06 22:40:01 [INFO] Pull Request Title: fix(security): remediate vulnerable MCP servers in claude_desktop_config.json
+2026-11-06 22:40:01 [INFO] Planned Changes:
+  - Upgrade @modelcontextprotocol/server-filesystem: unpinned -> 2025.7.1 (Fixes CVE-2025-53109, CVE-2025-53110)
+  - Upgrade @modelcontextprotocol/server-postgres: 0.6.1 -> 0.6.2 (Fixes CVE-2025-53108)
+
+[DRY RUN COMPLETE] Zero branches or pull requests created.
+```
+
+To create the branch and open the GitHub PR automatically:
+```bash
+mcp-vuln remediate-pr --repo-dir . --assignee security-team --auto-merge
+```
+
+---
+
+### HOWTO 9: Python SDK Integration for Custom Security Tooling
+
+**Scenario**: You want to embed MCP vulnerability audits directly into your Python scripts, custom testing harnesses, or internal security scanners.
+
+#### Step 1: Programmatic Configuration Audit
+```python
+from pathlib import Path
+from mcp_vulnerabilities.audit import (
+    ClientConfigParser,
+    VulnerabilityMatcher,
+)
+from mcp_vulnerabilities.snapshot import load_snapshot
+
+# 1. Load the official advisory database snapshot
+advisories = load_snapshot("vulnerabilities.json.gz")
+matcher = VulnerabilityMatcher(advisories)
+
+# 2. Parse any AI client configuration (Claude, Cursor, Zed, etc.)
+config_path = Path(".cursor/mcp.json")
+servers = ClientConfigParser.parse_file(config_path)
+
+# 3. Audit servers against known OSV advisories
+report = matcher.audit_servers(servers)
+
+print(f"Total Servers Scanned: {len(servers)}")
+print(f"Vulnerabilities Found: {report.total_findings}")
+
+for finding in report.findings:
+    print(f"[{finding.severity_level}] {finding.server_name} ({finding.package_name})")
+    print(f"  Vulnerability: {finding.vulnerability_id}")
+    print(f"  Fixed Version: {finding.fixed_version or 'No fix available'}")
+    print(f"  Summary:       {finding.summary}")
+```
+
+---
+
+### HOWTO 10: Verify Cryptographic Feed Provenance with Sigstore
+
+**Scenario**: In air-gapped or high-security enterprise environments, you must prove the vulnerability feed (`vulnerabilities.json.gz`) was generated by GitHub Actions and has not been tampered with.
+
+#### Step 1: Execute Feed Signature Verification
+```bash
+mcp-vuln verify-feed \
+  --feed vulnerabilities.json.gz \
+  --bundle vulnerabilities.json.gz.sigstore.json
+```
+
+#### Step 2: What You See
+```text
+======================================================================
+ SIGSTORE KEYLESS ATTESTATION VERIFICATION
+======================================================================
+ Feed Asset:      vulnerabilities.json.gz
+ Sigstore Bundle: vulnerabilities.json.gz.sigstore.json
+ OIDC Issuer:     https://token.actions.githubusercontent.com
+ Identity:        https://github.com/JMartynov/mcp-vulnerabilities/.github/workflows/sign_release.yml@refs/heads/main
+ Status:          ✅ VERIFIED (Cryptographically signed and untampered)
+======================================================================
+```
+
+---
+
+## CI/CD Integration
+
+Prevent vulnerable MCP servers from entering your codebase by adding `mcp-vulnerabilities` to your GitHub Actions workflows.
+
+### Audit Client Configurations
+```yaml
+name: MCP Security Gate
+on: [push, pull_request]
+
+jobs:
+  audit-mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install mcp-vulnerabilities
+        run: pip install mcp-vulnerabilities
+
+      - name: Audit AI Client Configuration
+        run: |
+          mcp-vuln audit --config .cursor/mcp.json --severity-threshold HIGH
+```
+
+### Audit Transitive Dependencies in Server Repositories
+```yaml
+      - name: Audit Reachable Transitive Dependencies
+        run: |
+          mcp-vuln audit-transitive \
+            --manifest requirements.txt \
+            --source-dir ./src \
+            --reachable-only \
+            --severity-threshold HIGH
+```
+
+---
+
+## CLI Subcommand Catalog
+
+The `mcp-vuln` CLI provides 34 specialized subcommands structured into functional domains:
+
+### 🛡️ Client Auditing & Remediation
+| Subcommand | Description | Key Flags |
 | :--- | :--- | :--- |
-| **`audit`** | Audit AI client MCP servers or packages against OSV database | `--config`, `--package`, `--client`, `--severity-threshold`, `--format`, `--save-baseline`, `--diff-baseline` |
-| **`network-scan`** | Live network scanner for MCP servers | `--cidr`, `--ports`, `--concurrency` |
-| **`identify`** | Identify MCP server fingerprints | `--dir` |
-| **`probe-safe`** | Sandboxed network prober | `--timeout`, `--network` |
-| **`proxy`** | Inline JSON-RPC reverse proxy firewall | `--mode`, `--block-tool`, `--redact-secrets` |
-| **`audit-transitive`** | Audit third-party dependencies of MCP servers | `--severity-threshold`, `--format`, `--source-dir` |
-| **`audit-typosquat`** | Detect typosquatting and hallucinated packages | `--threshold`, `--fix` |
-| **`verify-feed`** | Verify OSV advisory feed signatures | `--expected-identity`, `--expected-issuer` |
-| **`hub`** | Interactive terminal security hub | `--json`, `--batch` |
-| **`tui`** | Curses split-pane TUI explorer | `--no-color` |
-| **`monitor`** | Background daemon for live monitoring | `--pid-file`, `--daemonize` |
-| **`bridge`** | Localhost web bridge for portal integration | `--port`, `--cors-origins` |
-| **`remediate-pr`** | Automated GitOps PR remediation bot | `--repo-dir`, `--assignee`, `--dry-run` |
-| **`scan-source`** | Execute scan-source operations | | 
-| **`probe`** | Execute probe operations | | 
-| **`sync`** | Execute sync operations | | 
-| **`enrich`** | Execute enrich operations | | 
-| **`export-config`** | Execute export-config operations | | 
-| **`lint`** | Execute lint operations | | 
-| **`timeline`** | Execute timeline operations | | 
-| **`validate`** | Execute validate operations | | 
-| **`site-build`** | Execute site-build operations | | 
-| **`discover`** | Execute discover operations | | 
-| **`export-osv`** | Execute export-osv operations | | 
-| **`export-airgap`** | Execute export-airgap operations | | 
-| **`fix`** | Execute fix operations | | 
-| **`resolve-config`** | Execute resolve-config operations | | 
-| **`correlate`** | Execute correlate operations | | 
-| **`search`** | Execute search operations | | 
-| **`serve`** | Execute serve operations | | 
-| **`snapshot`** | Execute snapshot operations | | 
-| **`scan-binaries`** | Execute scan-binaries operations | | 
-| **`lookup`** | Execute lookup operations | | 
-| **`sandbox`** | Execute sandbox operations | | 
+| `audit` *(alias: `audit-config`)* | Audit AI client configs or packages against OSV database | `--all-clients`, `--config`, `--package`, `--severity-threshold`, `--format`, `--save-baseline`, `--diff`, `--fail-on-drift`, `--verify-signatures` |
+| `fix` *(alias: `fix-config`)* | Automatically upgrade vulnerable servers to safe pinned releases | `--config`, `--client`, `--all-clients`, `--dry-run`, `--write` |
+| `audit-typosquat` | Detect AI-hallucinated and typosquatted MCP packages | `--config`, `--fix`, `--threshold`, `--json`, `--strict` |
+| `remediate-pr` | Automated GitOps PR bot that opens remediation PRs | `--repo-dir`, `--dry-run`, `--auto-merge`, `--assignee`, `--json` |
+| `resolve-config` | Resolve tool naming collisions and namespace configs | `config_file`, `--strategy [prefix\|priority\|report]`, `--output` |
+| `export-config` | Generate pinned, hardened configs for Claude, Cursor, Zed, Cline | `package`, `--client [claude\|cursor\|cline\|zed\|windsurf\|docker]` |
 
+### 🔍 Threat Analysis, Transitive & AST Scanning
+| Subcommand | Description | Key Flags |
+| :--- | :--- | :--- |
+| `audit-transitive` | Audit dependencies with AST tool reachability analysis | `--manifest`, `--source-dir`, `--reachable-only`, `--severity-threshold`, `--format` |
+| `scan-source` | Static AST source code taint analyzer for injection vectors | `path`, `--format [text\|json\|sarif]`, `--output`, `--fail-on [CRITICAL\|HIGH]` |
+| `scan-binaries` | Scan binary assets and check for malware hashes via VirusTotal | `target_dir`, `--blocklist`, `--enable-vt`, `--fail-on-malware` |
+| `lint` | Audit tool schemas and protocol contracts for production readiness | `--command`, `--url`, `--file`, `--fail-under`, `--compliance` |
+| `timeline` | Display per-version vulnerability timeline for a specific server | `server`, `--target-version`, `--snapshot` |
 
+### 🌐 Network Probing & Runtime Sandboxing
+| Subcommand | Description | Key Flags |
+| :--- | :--- | :--- |
+| `proxy` | Inline bidirectional JSON-RPC firewall and guardrail filter | `--package`, `--mode [block\|audit]`, `--block-tool`, `--audit-log`, `-- <cmd>` |
+| `network-scan` | Scan local and network TCP ports for active MCP listeners | `--target`, `--cidr`, `--ports`, `--concurrency` |
+| `identify` | Probe and identify unknown servers using behavioral fingerprints | `--command`, `--url`, `--correlate`, `--min-confidence`, `--format` |
+| `probe` | Live protocol probe auditing tools, prompts, and resources | `--command`, `--url`, `--surfaces`, `--analyzers`, `--compliance` |
+| `probe-safe` | Pre-execution sandboxed network prober with canary exfiltration analysis | `--url`, `--sandbox-type [docker\|subprocess]`, `--timeout`, `--allow-outbound` |
+| `sandbox` | Safely execute untrusted MCP packages in an isolated container | `ecosystem`, `package`, `--version`, `--timeout`, `--network [bridge\|none]` |
 
-## Example Commands
+### 🖥️ Dashboards & Services
+| Subcommand | Description | Key Flags |
+| :--- | :--- | :--- |
+| `hub` | Launch the interactive terminal security dashboard | `--json`, `--batch` |
+| `tui` | Split-pane curses terminal dashboard for interactive browsing | `--no-color` |
+| `monitor` | Background daemon to continuously detect port drift and config changes | `--interval`, `--pid-file`, `--daemonize` |
+| `serve` | Run headless REST API gateway microservice | `--host`, `--port`, `--cors-origins` |
+| `bridge` | Run local loopback bridge server for static web portal integration | `--port`, `--cors-origins` |
 
-- **Audit a configuration file:**
-  ```bash
-  mcp-vuln audit --config ~/.cursor/mcp.json --format json
-  ```
-- **Live network scan:**
-  ```bash
-  mcp-vuln network-scan --cidr 192.168.1.0/24 --ports 8080,3000
-  ```
-- **Automated PR Remediation:**
-  ```bash
-  mcp-vuln remediate-pr --repo-dir . --assignee security-team
-  ```
+### 📦 Database Ingestion, Synchronization & Feeds
+| Subcommand | Description | Key Flags |
+| :--- | :--- | :--- |
+| `sync` | Run multi-source vulnerability ingestion pipeline | `--live-api`, `--include-gitlab`, `--cvelistv5-dir`, `--nvd-api` |
+| `search` | Search vulnerabilities by keyword, package name, or CVE ID | `query`, `--limit`, `--format` |
+| `lookup` | Lookup exact advisory details by ID or alias | `id`, `--snapshot` |
+| `validate` | Validate OSV 1.6 schema compliance of advisory records | `--dir` |
+| `snapshot` | Compile all raw advisories into consolidated `vulnerabilities.json.gz` | `--output-gz`, `--data-dir` |
+| `export-osv` | Export OSV records into standard bucket format (`all.zip` + `manifest.json`) | `--output-dir`, `--data-dir` |
+| `export-airgap` | Export offline air-gapped bundle with checksums | `--output-dir`, `--bundle` |
+| `verify-feed` | Verify Sigstore keyless attestation and cryptographic provenance | `--feed`, `--manifest`, `--bundle`, `--offline` |
+| `discover` | Run multi-registry MCP server discovery (npm, PyPI, GitHub, Smithery, Glama) | `--catalog-file`, `--no-npm`, `--no-pypi`, `--no-github` |
+| `enrich` | Enrich missing package version metadata in server catalog | `--catalog-file`, `--workers`, `--limit`, `--force` |
+| `correlate` | Correlate structural server passports against vulnerability database | `--output`, `--snapshot`, `--data-dir` |
+| `site-build` | Multicore parallel builder for static web security portal | `--data-dir`, `--output-dir`, `--workers`, `--benchmark` |
+
+---
+
+## Web Explorer & Portals
+
+The project includes three zero-install, client-side web portals hosted on GitHub Pages:
+
+- **[Unified MCP Security Explorer](https://jmartynov.github.io/mcp-vulnerabilities/)** (`docs/index.html`):
+  - **Directory Infinite Scroll & Virtualization**: 6,280+ indexed MCP servers rendered at 60 FPS.
+  - **Safe Config Basket & Drawer**: Multi-server selection basket with 1-click config exporter for Claude Desktop, Cursor, Zed, Windsurf, Cline, and Continue.
+  - **Tool Collision Warnings**: Flags identical tool names across chosen servers to prevent prompt hijacking and tool shadowing.
+  - **In-Browser Audit Dropzone**: Drag and drop any client config to audit and export markdown reports right in the browser.
+- **[Release Updates & Delta Feed](https://jmartynov.github.io/mcp-vulnerabilities/updates.html)** (`docs/updates.html`):
+  - **Velocity Sparklines**: Tracks server growth and advisory volume across releases.
+  - **Toolset Evolution**: Side-by-side delta visualization of added/removed tools and SHA-256 fingerprint transitions.
+  - **Syndication**: Available via [Atom Feed](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.atom) and [JSON Feed](https://jmartynov.github.io/mcp-vulnerabilities/data/feed.json).
+- **[Multi-Dimensional Analytics](https://jmartynov.github.io/mcp-vulnerabilities/analytics.html)** (`docs/analytics.html`):
+  - Quantifies patched vs. unpatched zero-days across the MCP ecosystem.
+  - Interactive drilldowns across OWASP MCP Top 10 risk categories.
+
+---
+
+## Data Sources & Ingestion Pipeline
+
+Advisories are continuously updated and normalized to **OSV 1.6**:
+1. **CVE List v5**: Official CVE JSON 5.0 records.
+2. **GitHub Security Advisories (GHSA)**: Live GraphQL/REST security alerts.
+3. **OSV.dev**: Unified open-source vulnerability database.
+4. **National Vulnerability Database (NVD)**: CVE 2.0 vulnerability metrics and CVSS scores.
+5. **GitLab Advisory Database**: High-fidelity open vulnerability feed curated by GitLab's Vulnerability Research Team.
+6. **PyPA Advisory Database**: Python Packaging Authority advisories with PEP 440 OSV normalization.
+7. **OpenSSF Malicious Packages**: Threat feed tracking backdoors, credential stealers, and typosquats.
+
+---
+
+## Production Readiness & Audit Benchmarks
+
+`mcp-vulnerabilities` has undergone extensive empirical invariant testing across all subsystems:
+
+| Report | Purpose & Scope | Link |
+| :--- | :--- | :---: |
+| **Cumulative Technical Audit Report** | Synthesis of all 8 empirical audits (Tasks 59–66); 26/26 invariants verified; subsystem health scorecards. | [**`CUMULATIVE_TECHNICAL_AUDIT_REPORT.md`**](docs/audit/CUMULATIVE_TECHNICAL_AUDIT_REPORT.md) |
+| **Competitive Gap Analysis & Roadmap** | Grand Unified Feature Matrix across 10 industry tools (Verity, Anthropic, Cursor, Smithery, Snyk, Semgrep, Trivy). | [**`CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md`**](docs/audit/CUMULATIVE_COMPETITIVE_GAP_ANALYSIS_AND_ROADMAP.md) |
+| **Wave 14 Portal & Analytics Review** | In-depth review of visual styling, zero-day gap analytics, and config auditor dropzone. | [**`code_review_wave14_portal_and_analytics.md`**](docs/reports/code_review_wave14_portal_and_analytics.md) |
+
+---
 
 ## Environment Variables
 
@@ -326,169 +747,43 @@ To keep downstream tools, scanners, and Python consumers immediately updated wit
 | :--- | :--- | :--- |
 | `GITHUB_TOKEN` / `GH_TOKEN` | Authenticates GitHub API queries (5,000 req/hr quota) | None |
 | `NVD_API_KEY` | Authenticates NIST NVD 2.0 API queries | None |
-| `VIRUSTOTAL_API_KEY` | Enables binary hash threat intelligence lookups | None |
-| `MCP_VULN_STATE_DIR` | Custom directory for baseline security pictures | `~/.mcp-vuln/state/` |
-| `NO_COLOR` | Disables ANSI color codes in CLI outputs | None |
+| `VIRUSTOTAL_API_KEY` | Enables binary hash threat intelligence lookups (`scan-binaries`) | None |
+| `MCP_VULN_STATE_DIR` | Custom directory for baseline security pictures and snapshots | `~/.mcp-vuln/state/` |
+| `MCP_VULN_HOST` | Host interface to bind API daemon (`mcp-vuln serve`) | `127.0.0.1` |
+| `MCP_VULN_PORT` | Port to bind API daemon (`mcp-vuln serve`) | `8080` |
+| `NO_COLOR` | Disables ANSI color codes across CLI terminal output | None |
 
-## Exit Codes
+---
 
-- `0`: Scan clean; no vulnerabilities or drift detected.
-- `1`: Security vulnerabilities or unapproved baseline drift detected.
-- `2`: CLI argument error or invalid command syntax.
-- `3`: Operational error (file not found, network timeout, corrupted input).
-- `5`: Review branch merge blocked due to interactive review state.
+## Exit Codes Reference
 
-## Documentation
+| Exit Code | Meaning | Typical Trigger |
+| :---: | :--- | :--- |
+| `0` | **Success / Clean** | Scan clean; no vulnerabilities found; drift check passed. |
+| `1` | **Security Failure** | Vulnerabilities detected; malware found; compliance violations. |
+| `2` | **Baseline Drift / Syntax Error** | Baseline drift detected (`--fail-on-drift`); missing required arguments. |
+| `3` | **Operational Error** | File not found; network connection timeout; corrupt input. |
+| `5` | **Review State Lock** | Git review branch merge blocked due to active interactive state. |
 
-- [Specification](docs/SPECIFICATION.md): Details the OSV 1.6 schema extensions, semantics, and vulnerability invariants.
-- [Cross-Repo Architecture](docs/cross_repo_architecture.md): Blueprint for structural passport ingestion and correlation workflows.
-- [Implementation](docs/IMPLEMENTATION.md): Architecture blueprint covering ingestion pipelines, state machines, and acceptance tests.
+---
 
 ## Testing & Verification
 
 The test suite enforces 100% runnable pass rates across both regression suites and empirical invariant audits:
 
 ```bash
-# Run the entire test suite (400+ passed tests)
+# Run complete test suite
 pytest -q
 
-# Run the empirical subsystem invariant audit suite
+# Run empirical subsystem invariant audit tests
 pytest -q tests/audit/
 
 # Run acceptance tests
 pytest -q tests/test_acceptance_*.py
 ```
 
-### Passport Standard Completeness
-
-The automated Master Passport Specification & Dual-Axis CI Validator test suite (`tests/test_passport_standard_completeness.py`) enforces strict schema validation for MCP Server passports. It verifies a 100% pass rate for exactly 6,010 recorded servers across the catalog, explicitly confirming:
-- The presence and correct version of `passport_schema_version` ('1.1.0'), `package_name`, and `ecosystem`.
-- Every passport implements the `dual_axis_assessment` protocol, capturing `status` (`SCANNED` or `OFFLINE_OR_UNREACHABLE`).
-- For fully `SCANNED` servers, `has_vulnerabilities`, `protocol_trust`, and `supply_chain_hygiene` fields structurally comply with the `DualAxisValidator` with zero warnings.
-
-### Full Flag Reference
-- `--offline`
-- `--feed`
-- `--repo-dir`
-- `--timeout`
-- `--state-file`
-- `--json`
-- `--max-files`
-- `--no-cache`
-- `--snapshot`
-- `--min-severity`
-- `--global`
-- `--no-github`
-- `--enable-vt`
-- `--expected-identity`
-- `--dir`
-- `--threat-check`
-- `--strategy`
-- `--strict-passport`
-- `--output-dir`
-- `--no-smithery`
-- `--strict`
-- `--readiness`
-- `--no-glama`
-- `--expected-issuer`
-- `--audit-log`
-- `--reset-state`
-- `--fail-on-drift`
-- `--force`
-- `--source-dir`
-- `--passports`
-- `--assignee`
-- `--workers`
-- `--file`
-- `--bundle`
-- `--package`
-- `--command`
-- `--diff`
-- `--fix`
-- `--format`
-- `--auth-header`
-- `--fail-on-malware`
-- `--fail-on-non-compliant`
-- `--catalog-state-file`
-- `--output`
-- `--surfaces`
-- `--auto-merge`
-- `--manifest`
-- `--block-tool`
-- `--notify-webhooks`
-- `--batch`
-- `--network`
-- `--fail-under`
-- `--mode`
-- `--min-confidence`
-- `--cvelist-delta`
-- `--cvelistv5-dir`
-- `--gitlab-dir`
-- `--include-gitlab`
-- `--verify-signatures`
-- `--no-registries`
-- `--analyzers`
-- `--host`
-- `--fail-on`
-- `--output-json`
-- `--correlate`
-- `--compliance`
-- `--target-version`
-- `--output-gz`
-- `--live-api`
-- `--limit`
-- `--no-npm`
-- `--config`
-- `--reachable-only`
-- `--version`
-- `--port`
-- `--all-clients`
-- `--markdown-dir`
-- `--threshold`
-- `--catalog-file`
-- `--url`
-- `--data-dir`
-- `--nvd-api`
-- `--cors-origins`
-- `--servers-catalog`
-- `--write`
-- `--header`
-- `--client`
-- `--severity-threshold`
-- `--custom-config`
-- `--benchmark`
-- `--dry-run`
-- `--strict-integrity`
-- `--no-payload-guardrails`
-- `--save-baseline`
-- `--no-pypi`
-- `--diff-baseline`
-- `--blocklist`
-- `--ecosystem`
-- `--allow-outbound`
-- `--allowed-origin`
-- `--daemon`
-- `--install-service`
-- `--interval`
-- `--log-file`
-- `--mock`
-- `--no-auth`
-- `--no-canary-detection`
-- `--notify`
-- `--open-browser`
-- `--sandbox-type`
-- `--simulate`
-- `--status`
-- `--stop`
-- `--target`
-- `--targets`
-- `--theme`
-- `--min-epss`
-- `--webhook`
+---
 
 ## License
-MIT
 
-
-### OpenSSF Malicious Packages Integration
-The `mcp-vulnerabilities` toolchain includes robust supply chain defense by ingesting threat feeds from the OpenSSF Malicious Packages repository. Backdoors, credential stealers, and typosquatted servers are identified. Malicious servers receive a composite risk score of 10.0 (CRITICAL/MALICIOUS) and are strictly quarantined. They cannot be exported to AI client configurations and trigger an immediate CLI exit code of 2 when detected during an audit.
+This project is licensed under the [MIT License](LICENSE).
