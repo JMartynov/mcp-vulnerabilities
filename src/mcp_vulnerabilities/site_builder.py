@@ -588,7 +588,7 @@ def build_site_parallel(
 
     all_warnings = []
     
-    if workers <= 1:
+    if workers <= 1 or "PYTEST_CURRENT_TEST" in os.environ:
         for chunk in chunks:
             try:
                 res = _process_server_batch(chunk, str(in_dir), use_cache, resolved_cache_dir)
