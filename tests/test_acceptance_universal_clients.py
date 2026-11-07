@@ -133,6 +133,107 @@ mcpServers:
         }
     }))
 
+
+    # 11. Copilot CLI
+    (tmp_path / ".config/github-copilot").mkdir(parents=True)
+    (tmp_path / ".config/github-copilot/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "copilot": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/copilot@1.0.0"]
+            }
+        }
+    }))
+
+    # 12. TypingMind
+    (tmp_path / "Library/Application Support/TypingMind").mkdir(parents=True)
+    (tmp_path / "Library/Application Support/TypingMind/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "typing": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/typing@1.0.0"]
+            }
+        }
+    }))
+
+    # 13. Chatbox
+    (tmp_path / "Library/Application Support/chatbox").mkdir(parents=True)
+    (tmp_path / "Library/Application Support/chatbox/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "chat": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/chat@1.0.0"]
+            }
+        }
+    }))
+
+    # 14. Bolt
+    (tmp_path / ".bolt").mkdir(parents=True)
+    (tmp_path / ".bolt/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "bolt_server": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/bolt@1.0.0"]
+            }
+        }
+    }))
+
+    # 15. Jan
+    (tmp_path / "Library/Application Support/jan").mkdir(parents=True)
+    (tmp_path / "Library/Application Support/jan/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "jan_server": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/jan@1.0.0"]
+            }
+        }
+    }))
+
+    # 16. Enso
+    (tmp_path / ".enso").mkdir(parents=True)
+    (tmp_path / ".enso/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "enso_server": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/enso@1.0.0"]
+            }
+        }
+    }))
+
+    # 17. Sourcegraph Cody
+    (tmp_path / ".config/Code/User/globalStorage/sourcegraph.cody-ai").mkdir(parents=True)
+    (tmp_path / ".config/Code/User/globalStorage/sourcegraph.cody-ai/mcp.json").write_text(json.dumps({
+        "mcpServers": {
+            "cody_server": {
+                "command": "npx",
+                "args": ["@modelcontextprotocol/cody@1.0.0"]
+            }
+        }
+    }))
+    
+    # 18. Roo Code
+    roo_dir = tmp_path / "Library/Application Support/Code/User/globalStorage/rooveterinaryinc.roo-cline/settings"
+    roo_dir.mkdir(parents=True)
+    (roo_dir / "cline_mcp_settings.json").write_text(json.dumps({
+        "mcpServers": {
+            "roo-server": {
+                "command": "npx",
+                "args": ["roo-server@1.0.0"]
+            }
+        }
+    }))
+
+    # 19. Goose
+    goose_dir = tmp_path / ".config/goose"
+    goose_dir.mkdir(parents=True)
+    (goose_dir / "config.yaml").write_text('''
+mcpServers:
+  goose-server:
+    command: npx
+    args:
+      - goose-server@1.0.0
+''')
+
     return tmp_path
 
 
@@ -151,8 +252,17 @@ def test_universal_scanner_discovers_all_clients(mock_clients_dir):
     assert "puppeteer" in server_names   # Continue
     assert "docker-server" in server_names  # LibreChat
     assert "slack" in server_names       # OpenWebUI
+    assert "copilot" in server_names
+    assert "typing" in server_names
+    assert "chat" in server_names
+    assert "bolt_server" in server_names
+    assert "jan_server" in server_names
+    assert "enso_server" in server_names
+    assert "cody_server" in server_names
+    assert "roo-server" in server_names
+    assert "goose-server" in server_names
 
-    assert len(servers) >= 10
+    assert len(servers) >= 17
 
 
 def test_universal_scanner_specific_client(mock_clients_dir):

@@ -6,6 +6,7 @@ from .provenance import resolve_provenance_urls
 import argparse
 from rich.console import Console
 from rich.text import Text
+from mcp_vulnerabilities import __version__
 from mcp_vulnerabilities.threat_intel.epss import EpssClient, EpssScore
 import logging
 import sys
@@ -73,6 +74,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         description="MCP Vulnerability Advisory Database CLI"
     )
+    parser.add_argument("--version", "-v", action="version", version=f"%(prog)s {__version__}")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     # proxy command
