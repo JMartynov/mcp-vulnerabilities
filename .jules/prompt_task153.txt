@@ -1,0 +1,19 @@
+Task 153: Daily Sync CI Pytest-Timeout Dependency & Workflow Resilience Fix
+
+Contract specifications:
+Read .jules/task153_daily_sync_pytest_timeout_fix.md and implement the required changes.
+
+Key Invariants:
+1. In pyproject.toml:
+   Under [project.optional-dependencies] dev, add:
+   "pytest-timeout>=2.2.0",
+
+2. In .github/workflows/daily_sync.yml:
+   In step `Install dependencies`, update to:
+   pip install -e ".[dev]" uv pytest-timeout
+
+3. Automated Verification:
+   Run `pytest -v --timeout=60 tests/test_documentation_parity.py` and verify all tests pass.
+
+Non-Interactive Completion Directive:
+Finalize all changes directly and commit to your branch. Do not ask open-ended questions or wait for user confirmation. Conclude cleanly so the session status transitions to Completed.

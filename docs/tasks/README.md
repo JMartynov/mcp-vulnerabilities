@@ -399,6 +399,7 @@ Master Plan: [master_plan_wave27_threat_intel_exploit_prediction_and_deduplicati
 | :---: | :--- | :--- | :---: | :--- | :--- |
 | **151** | **CLI Provenance URL Tuple Resolution & OpenSSF None-Ecosystem Hardening** | CLI & Threat Intel (`provenance.py`, `threat_intel/openssf_malicious.py`) | `Done` | Fix list/tuple concatenation `TypeError` in `resolve_provenance_urls` and guard against `None` ecosystem in `get_malicious_record`, ensuring robust execution for `mcp-vuln search` and `mcp-vuln hub --json`. | [task151_cli_provenance_and_openssf_edge_cases.md](task151_cli_provenance_and_openssf_edge_cases.md) |
 | **152** | **Site Builder Linux Multiprocessing Deadlock Immunity & Daily Sync CI Hardening** | Site Builder & CI (`site_builder.py`, `test_site_builder.py`, `daily_sync.yml`) | `Done` | Resolve 6-hour Linux CI timeout by enforcing sequential execution for `workers<=1`, `spawn` multiprocessing context for `workers>1`, mock passports in unit tests, and 30-minute CI job timeout. | [task152_site_builder_deadlock_and_ci_hardening.md](task152_site_builder_deadlock_and_ci_hardening.md) |
+| **153** | **Daily Sync CI Pytest-Timeout Dependency & Workflow Resilience Fix** | CI & Environment (`pyproject.toml`, `daily_sync.yml`) | `In Progress` | Add `pytest-timeout>=2.2.0` to dev dependencies and daily sync step installation to resolve `unrecognized arguments: --timeout=60` and restore green CI status. | [task153_daily_sync_pytest_timeout_fix.md](task153_daily_sync_pytest_timeout_fix.md) |
 
 ## Verification Test Results
 ```
