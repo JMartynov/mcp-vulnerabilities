@@ -86,6 +86,9 @@ def test_chunk_validation_malformed(tmp_path):
     except AssertionError:
         pass
 
+import pytest
+
+@pytest.mark.skipif(not (Path("data/chunks") / "track_a").exists(), reason="Track chunks not checked into git")
 def test_all_chunks_exist_and_sum():
     chunks_dir = Path("data/chunks")
     tracks = ["track_a", "track_b", "track_c"]

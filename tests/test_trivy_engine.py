@@ -1,5 +1,6 @@
 import json
 import pytest
+import shutil
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
@@ -49,6 +50,7 @@ def test_trivy_scanner_empty_output(scanner):
         assert len(result.findings) == 0
 
 @pytest.mark.integration
+@pytest.mark.skipif(shutil.which("trivy") is None, reason="trivy binary not found in PATH")
 def test_scan_fs_integration_multiple(scanner, tmp_path):
     # Example 1: Empty dir
     res1 = scanner.scan_fs(tmp_path)
@@ -77,6 +79,7 @@ def test_scan_fs_integration_multiple(scanner, tmp_path):
     assert isinstance(res5, TrivyScanResult)
 
 @pytest.mark.integration
+@pytest.mark.skipif(shutil.which("trivy") is None, reason="trivy binary not found in PATH")
 def test_scan_registry_integration_multiple(scanner):
     # Mode B Examples
     # 1. npm: express (vulnerable version)
@@ -100,6 +103,7 @@ def test_scan_registry_integration_multiple(scanner):
     assert isinstance(res5, TrivyScanResult)
 
 @pytest.mark.integration
+@pytest.mark.skipif(shutil.which("trivy") is None, reason="trivy binary not found in PATH")
 def test_scan_image_integration_multiple(scanner):
     # Mode C Examples
     # 1. alpine:3.10 (Highly vulnerable)
