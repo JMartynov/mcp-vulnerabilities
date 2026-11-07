@@ -127,10 +127,11 @@ class FingerprintVersionResolver:
                         sp_p = Path(pth)
                         search_dirs.append(sp_p)
                         search_dirs.append(sp_p.parent)
-            for parent in cmd_p.parents:
-                search_dirs.append(parent)
-                if (parent / "pyvenv.cfg").exists():
-                    search_dirs.extend(parent.glob("lib/python*/site-packages"))
+            if cmd_p.is_absolute() or len(cmd_p.parts) > 1:
+                for parent in cmd_p.parents:
+                    search_dirs.append(parent)
+                    if (parent / "pyvenv.cfg").exists():
+                        search_dirs.extend(parent.glob("lib/python*/site-packages"))
 
             for d in search_dirs:
                 if not d.exists():
@@ -140,6 +141,18 @@ class FingerprintVersionResolver:
                 if pj.exists():
                     try:
                         txt = pj.read_text(encoding="utf-8")
+                        # First check if the name matches
+                        name_match = re.search(r'name\s*=\s*["\']([^"\']+)["\']', txt)
+                        if name_match:
+                            proj_name = name_match.group(1)
+                            # Convert names to standard lowercase dashed format for comparison
+                            clean_proj_name = proj_name.lower().replace("_", "-")
+                            clean_pkg_name = server.package_name.lower().replace("_", "-") if server.package_name else ""
+                            clean_srv_name = server.server_name.lower().replace("_", "-") if server.server_name else ""
+                            
+                            if clean_proj_name != clean_pkg_name and clean_proj_name != clean_srv_name:
+                                continue # Project name does not match, ignore this pyproject.toml
+                        
                         m = re.search(r'version\s*=\s*["\']([^"\']+)["\']', txt)
                         if m:
                             return m.group(1), "pyproject.toml"

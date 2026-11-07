@@ -38,6 +38,60 @@ def test_resolve_from_npx_cache(tmp_path: Path):
     assert src == "npx-cache"
 
 
+def test_resolve_python_unrelated_pyproject(tmp_path: Path):
+    resolver = FingerprintVersionResolver()
+    
+    # Create an unrelated pyproject.toml
+    proj_dir = tmp_path / "some_other_project"
+    proj_dir.mkdir(parents=True)
+    pyproject_file = proj_dir / "pyproject.toml"
+    pyproject_file.write_text('name = "unrelated-project"\nversion = "9.9.9"', encoding="utf-8")
+    
+    # Fake an env PYTHONPATH
+    server = DiscoveredClientServer(
+        server_name="target-server",
+        package_name="target-server",
+        version=None,
+        ecosystem="PyPI",
+        command="python",
+        args=["-m", "target_server"],
+        env={"PYTHONPATH": str(proj_dir)}
+    )
+
+    ver, src = resolver.resolve_server_version(server)
+    
+    # It should not match the unrelated pyproject.toml
+    assert ver is None
+    assert src is None
+
+
+def test_resolve_python_related_pyproject(tmp_path: Path):
+    resolver = FingerprintVersionResolver()
+    
+    # Create a related pyproject.toml
+    proj_dir = tmp_path / "target_server"
+    proj_dir.mkdir(parents=True)
+    pyproject_file = proj_dir / "pyproject.toml"
+    pyproject_file.write_text('name = "target-server"\nversion = "1.2.3"', encoding="utf-8")
+    
+    # Fake an env PYTHONPATH
+    server = DiscoveredClientServer(
+        server_name="target-server",
+        package_name="target-server",
+        version=None,
+        ecosystem="PyPI",
+        command="python",
+        args=["-m", "target_server"],
+        env={"PYTHONPATH": str(proj_dir)}
+    )
+
+    ver, src = resolver.resolve_server_version(server)
+    
+    # It should match the related pyproject.toml
+    assert ver == "1.2.3"
+    assert src == "pyproject.toml"
+
+
 def test_resolve_from_node_package_json(tmp_path: Path):
     pkg_dir = tmp_path / "my-extension" / "mcp-server"
     pkg_dir.mkdir(parents=True)

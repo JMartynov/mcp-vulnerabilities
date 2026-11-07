@@ -2,6 +2,7 @@ name: Sign Release
 on:
   release:
     types: [published]
+  workflow_dispatch:
 
 jobs:
   sign:
@@ -20,7 +21,7 @@ jobs:
           # Generate manifest for docs/data
           # (Normally this would build the site first or fetch artifacts)
           python3 -c "import sys; sys.path.insert(0, 'src'); from mcp_vulnerabilities.attestation.manifest import generate_catalog_manifest; generate_catalog_manifest('docs/data')"
-      - uses: sigstore/gh-action-sigstore-python@v2.1.1
+      - uses: sigstore/gh-action-sigstore-python@v3.0.0
         with:
           inputs: >-
             dist/*.whl
