@@ -3,6 +3,30 @@ from mcp_vulnerabilities.threat.epss import EpssScore
 
 class CompositeRiskScorer:
     @staticmethod
+    def calculate_trust_score(
+        base_score: float = 100.0,
+        critical_high_count: int = 0,
+        medium_count: int = 0,
+        low_count: int = 0,
+        protocol_risk_penalty: float = 0.0,
+    ) -> float:
+        # Transitive third-party library penalty capped at 15.0 points
+        raw_dep_penalty = 2.0 * critical_high_count + 0.5 * medium_count + 0.1 * low_count
+        dep_penalty = min(15.0, raw_dep_penalty)
+        score = base_score - dep_penalty - protocol_risk_penalty
+        return max(0.0, min(100.0, round(score, 1)))
+
+    @staticmethod
+    def calculate_trust_tier(trust_score: float) -> str:
+        if trust_score >= 90.0:
+            return "EXCELLENT"
+        elif trust_score >= 75.0:
+            return "GOOD"
+        elif trust_score >= 50.0:
+            return "FAIR"
+        return "RISKY"
+
+    @staticmethod
     def calculate_composite_score(cvss_score: float, epss_score: Optional[EpssScore]) -> float:
         if epss_score is not None:
             # S_threat = S_CVSS * 0.70 + S_EPSS * 3.0
