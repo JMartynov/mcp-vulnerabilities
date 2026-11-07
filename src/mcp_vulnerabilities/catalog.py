@@ -13,6 +13,7 @@ from typing import Any
 
 from packaging.version import InvalidVersion, Version
 
+from mcp_vulnerabilities.state import atomic_save_json
 from mcp_vulnerabilities.analyzers.capability_classifier import (
     analyze_tool_security,
     classify_server_security_profile,
@@ -223,28 +224,10 @@ class McpCatalogState:
             "servers": {k: asdict(v) for k, v in sorted(self.records.items())},
             "tombstones": {k: asdict(v) for k, v in sorted(self.tombstones.items())},
         }
-        import uuid
-        tmp_file = self.state_file.with_suffix(f".{uuid.uuid4().hex}.tmp")
         try:
-            with open(tmp_file, "w", encoding="utf-8") as f:
-                json.dump(payload, f, indent=2, sort_keys=True)
-                f.flush()
-                os.fsync(f.fileno())
-
-            # Replace backup atomicaly
-            if self.state_file.exists():
-                bak_file = self.state_file.with_name(self.state_file.name + ".bak")
-                os.replace(self.state_file, bak_file)
-
-            os.replace(tmp_file, self.state_file)
+            atomic_save_json(self.state_file, payload)
         except Exception as e:
             logger.error(f"Error saving catalog state: {e}")
-        finally:
-            if tmp_file.exists():
-                try:
-                    tmp_file.unlink()
-                except OSError:
-                    pass
 
     def is_expired(self, key: str, ttl_days: int = 30) -> bool:
         """Check if a package's TTL has expired."""
