@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Optional
 
 from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer
+from mcp_vulnerabilities.state import atomic_save_json
 
 logger = logging.getLogger(__name__)
 
@@ -139,7 +140,8 @@ class InventorySnapshot:
         )
 
     def save(self, path: str | Path) -> None:
-        save_baseline_snapshot(self, path)
+        data = self.to_dict() if hasattr(self, "to_dict") else asdict(self)
+        atomic_save_json(path, data)
 
     @classmethod
     def load(cls, path: str | Path) -> InventorySnapshot:
@@ -181,7 +183,7 @@ def save_baseline_snapshot(snapshot: InventorySnapshot, path: str | Path) -> Non
     """Saves the inventory snapshot to a JSON file."""
     path = Path(path)
     data = snapshot.to_dict() if hasattr(snapshot, "to_dict") else asdict(snapshot)
-    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
+    atomic_save_json(path, data)
     logger.info("Saved baseline snapshot to %s (%d servers recorded)", path, len(snapshot.servers))
 
 
