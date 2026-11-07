@@ -50,12 +50,16 @@ class AdvisoryFusionEngine:
         # Collect severities
         def get_severity_score(s: SeveritySpec) -> float:
             # Try to extract base score from vector, else use fallback or parse directly if possible
-            match = re.search(r"AV:[A-Z]/AC:[A-Z]/PR:[A-Z]/UI:[A-Z]/S:[A-Z]/C:[A-Z]/I:[A-Z]/A:[A-Z]", s.score)
-            if not match:
-                 try:
-                    return float(s.score)
-                 except ValueError:
-                    return 0.0
+            match = re.search(r"AV:[NALP]/AC:[LH]/PR:[NLH]/UI:[NR]/S:[UC]/C:[NLH]/I:[NLH]/A:[NLH]", s.score)
+            if match:
+                from mcp_vulnerabilities.cvss import calculate_cvss_v3_score
+                score = calculate_cvss_v3_score(s.score)
+                if score is not None:
+                    return score
+            try:
+                return float(s.score)
+            except ValueError:
+                return 0.0
             # A full implementation would parse the CVSS vector properly, but for this exercise we
             # can use the db_specific cvss_score to guide us, or heuristics.
             return 0.0
@@ -73,13 +77,16 @@ class AdvisoryFusionEngine:
             elif v.id.startswith("GLAD-"): src_prio = 3
 
             for s in v.severity:
+                score = get_severity_score(s)
                 # We try to prioritize based on source and then score
                 if src_prio < best_priority:
                     best_priority = src_prio
                     best_severity = s
+                    best_score = score
                 elif src_prio == best_priority:
-                     # fallback to highest score, although actual parsing is complex
-                     pass
+                     if score > best_score:
+                         best_severity = s
+                         best_score = score
 
         if not best_severity and group:
             # Collect from anywhere if no explicit severity list
