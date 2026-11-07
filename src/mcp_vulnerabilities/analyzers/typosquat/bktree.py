@@ -40,7 +40,7 @@ class BKTree:
         # Partition trees by word length for additional pruning
         self.roots: Dict[int, BKTreeNode] = {}
         
-    def add(self, word: str) -> None:
+    def insert(self, word: str) -> None:
         word_len = len(word)
         if word_len not in self.roots:
             self.roots[word_len] = BKTreeNode(word)
@@ -58,11 +58,13 @@ class BKTree:
                 curr.children[dist] = BKTreeNode(word)
                 break
                 
+    add = insert
+                
     @classmethod
     def build(cls, words: Iterable[str]) -> 'BKTree':
         tree = cls()
         for word in words:
-            tree.add(word)
+            tree.insert(word)
         return tree
         
     def search(self, query: str, max_distance: int = 2) -> List[Tuple[str, int]]:

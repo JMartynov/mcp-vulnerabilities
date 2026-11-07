@@ -123,10 +123,23 @@ class TyposquatDetector:
                 return TyposquatResult(package_name, canon, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT (Keyboard Proximity)", 1)
 
         # 3. Levenshtein Distance (Typosquatting)
-        matches = self.bktree.search(package_name, max_distance=2)
-        if matches:
-            best_match, min_dist = matches[0]
-            return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", min_dist)
+        if self.bktree:
+            matches = self.bktree.search(package_name, max_distance=2)
+            if matches:
+                best_match, min_dist = matches[0]
+                return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", min_dist)
+        else:
+            # Fall back gracefully to direct comparison if tree is not built
+            best_match = None
+            min_dist = float('inf')
+            for canon in self.corpus:
+                d = damerau_levenshtein_distance(package_name, canon)
+                if d <= 2 and d < min_dist:
+                    min_dist = d
+                    best_match = canon
+            
+            if best_match:
+                return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", min_dist)
             
         return TyposquatResult(package_name, None, RiskTier.AUTHENTIC, "No typosquat detected", 0)
 
