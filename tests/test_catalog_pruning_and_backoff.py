@@ -138,3 +138,37 @@ def test_npm_backoff_max_cap():
     expected_retry = now + timedelta(days=7.0)
     assert state[endpoint]["next_retry_after"] == expected_retry.isoformat().replace("+00:00", "Z")
 
+
+def test_cli_discover_prune_flags():
+    import argparse
+    from mcp_vulnerabilities.cli import main
+    import sys
+    from unittest.mock import patch
+    
+    test_args = ["mcp-vuln", "discover", "--prune"]
+    with patch.object(sys, 'argv', test_args):
+        with patch('mcp_vulnerabilities.discovery.McpDiscoveryOrchestrator.run_discovery') as mock_run:
+            try:
+                main()
+            except SystemExit:
+                pass
+            mock_run.assert_called_once()
+            _, kwargs = mock_run.call_args
+            assert kwargs.get("include_pruning") is True
+
+def test_cli_sync_prune_flags():
+    import argparse
+    from mcp_vulnerabilities.cli import main
+    import sys
+    from unittest.mock import patch
+    
+    test_args = ["mcp-vuln", "sync", "--prune"]
+    with patch.object(sys, 'argv', test_args):
+        with patch('mcp_vulnerabilities.pipeline.McpVulnerabilityPipeline.run') as mock_run:
+            try:
+                main()
+            except SystemExit:
+                pass
+            mock_run.assert_called_once()
+            _, kwargs = mock_run.call_args
+            assert kwargs.get("include_pruning") is True

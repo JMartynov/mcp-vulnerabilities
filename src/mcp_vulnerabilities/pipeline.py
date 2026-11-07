@@ -290,6 +290,7 @@ class McpVulnerabilityPipeline:
         pypa_data_dir: str | Path | None = "data/sources/pypa",
         offline_fallback_fixtures: str | Path | None = None,
         reset_checkpoints: bool = False,
+        include_pruning: bool = False,
     ) -> PipelineResult:
         """Execute end-to-end ingestion pipeline with incremental state checkpointing."""
         if reset_checkpoints:
@@ -299,6 +300,33 @@ class McpVulnerabilityPipeline:
 
         collected: list[OsvVulnerability] = []
         errors: list[str] = []
+
+        if include_pruning:
+            from mcp_vulnerabilities.discovery.github_curated import GitHubCuratedDiscoveryProvider
+            
+            candidate_repos = []
+            if self.servers_catalog_file.exists():
+                try:
+                    import json
+                    cat_data = json.loads(self.servers_catalog_file.read_text(encoding="utf-8"))
+                    for s in cat_data.get("servers", {}).values():
+                        eco = s.get("ecosystem", "")
+                        name = s.get("name", "")
+                        repo = s.get("repository", "")
+                        if eco and name and repo and eco.lower() == "github":
+                            candidate_repos.append((eco, name, repo))
+                except Exception as cat_e:
+                    logger.debug("Catalog file parse error during pruning check: %s", cat_e)
+            
+            for eco, name, repo in candidate_repos:
+                try:
+                    is_dead = GitHubCuratedDiscoveryProvider.is_repository_archived_or_pruned(repo)
+                    if is_dead:
+                        logger.info("Pruning dead repository: %s", repo)
+                        self.catalog_state.record_deprecation(eco, name, "deleted_404")
+                except Exception as e:
+                    logger.debug("Error checking repository status for %s: %s", repo, e)
+            self.catalog_state.save()
 
         # 0. Pre-load historical advisories
         if not reset_checkpoints and self.output_dir.is_dir():
