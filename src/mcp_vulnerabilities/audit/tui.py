@@ -2,16 +2,19 @@
 Interactive TUI dashboard for security exploration.
 """
 
+import asyncio
 import curses
 import json
 import logging
 import subprocess
 import time
+import platform
+from pathlib import Path
 from typing import Any, List, Tuple
 
 from mcp_vulnerabilities.audit.fixer import ClientConfigFixer
 from mcp_vulnerabilities.audit.matcher import AuditFinding, VulnerabilityMatcher
-from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer, UniversalClientConfigScanner
+from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer, UniversalClientConfigScanner, ClientConfigParser
 from mcp_vulnerabilities.audit.picture import SecurityPicture
 from mcp_vulnerabilities.probe.network_scanner import NetworkMCPScanner
 
@@ -29,7 +32,16 @@ class McpTuiExplorer:
         
         # We need a matcher, ideally loaded from state
         # In a real app we'd load the state/catalog properly
-        self.matcher = VulnerabilityMatcher([])
+        def load_advisories():
+            snap_path = Path("vulnerabilities.json.gz")
+            if snap_path.exists():
+                return VulnerabilityMatcher.from_snapshot(snap_path).advisories
+            dir_path = Path("data/vulnerabilities")
+            if dir_path.exists():
+                return VulnerabilityMatcher.from_directory(dir_path).advisories
+            return []
+            
+        self.matcher = VulnerabilityMatcher(load_advisories())
         
         self.servers: List[DiscoveredClientServer] = []
         self.filtered_servers: List[DiscoveredClientServer] = []
@@ -71,7 +83,56 @@ class McpTuiExplorer:
         curses.init_pair(6, curses.COLOR_CYAN, -1)
 
     def _load_data(self):
-        self.servers = self.scanner.scan_all_clients()
+        if getattr(self.args, "config", None):
+            config_val = self.args.config
+            config_path = Path(config_val)
+            if config_path.is_file() or config_path.exists():
+                self.servers = ClientConfigParser.parse_file(config_path)
+            elif str(config_val) in self.scanner.SUPPORTED_CLIENTS:
+                self.servers = self.scanner.scan_client(str(config_val))
+            else:
+                try:
+                    self.servers = ClientConfigParser.parse_file(config_path)
+                except Exception:
+                    self.servers = []
+        else:
+            self.servers = self.scanner.scan_all_clients()
+            
+        # Network scan
+        if not self.is_test:
+            target = getattr(self.args, "target", "localhost")
+            ports_arg = getattr(self.args, "ports", "*")
+            ports = None
+            if ports_arg and ports_arg != "*":
+                try:
+                    ports = [int(p.strip()) for p in str(ports_arg).split(",") if p.strip()]
+                except ValueError:
+                    ports = None
+            
+            try:
+                try:
+                    loop = asyncio.get_event_loop()
+                except RuntimeError:
+                    loop = asyncio.new_event_loop()
+                    asyncio.set_event_loop(loop)
+                
+                net_results = loop.run_until_complete(self.net_scanner.scan_target(target, ports))
+                for res in net_results:
+                    if res.get("mcp_handshake"):
+                        self.servers.append(DiscoveredClientServer(
+                            server_name=f"{res.get('host', target)}:{res.get('port')}{res.get('path', '')}",
+                            package_name="network-endpoint",
+                            version=None,
+                            ecosystem="network",
+                            command="network",
+                            args=[],
+                            client_name="network",
+                            url=res.get("url"),
+                            declared_tools=res.get("tools", [])
+                        ))
+            except Exception as e:
+                logger.debug(f"Network scan skipped: {e}")
+            
         # For simplicity, not blocking UI on network scan, just doing clients
         self.filtered_servers = self.servers[:]
         self._audit_servers()
@@ -80,38 +141,39 @@ class McpTuiExplorer:
 
     def _audit_servers(self):
         self.findings = {}
-        report = self.matcher.audit_servers(self.servers)
-        for finding in report.findings:
-            key = f"{finding.server.client}:{finding.server.server_name}"
-            if key not in self.findings:
-                self.findings[key] = []
-            self.findings[key].append(finding)
+        for server in self.servers:
+            client = getattr(server, "client", getattr(server, "client_name", ""))
+            key = f"{client}:{server.server_name}"
+            report = self.matcher.audit_servers([server])
+            self.findings[key] = report.findings
 
     def _get_server_badge(self, server: DiscoveredClientServer) -> Tuple[str, int]:
-        key = f"{server.client}:{server.server_name}"
+        client = getattr(server, "client", getattr(server, "client_name", ""))
+        key = f"{client}:{server.server_name}"
         findings = self.findings.get(key, [])
         if not findings:
             return "[CLEAN]", 3
             
-        has_crit = any(f.severity.upper() == "CRITICAL" for f in findings)
+        has_crit = any(getattr(f, "severity_level", getattr(f, "severity", "")).upper() == "CRITICAL" for f in findings)
         if has_crit:
             return "[CRIT]", 4
             
-        has_high = any(f.severity.upper() == "HIGH" for f in findings)
+        has_high = any(getattr(f, "severity_level", getattr(f, "severity", "")).upper() == "HIGH" for f in findings)
         if has_high:
             return "[HIGH]", 5
             
         return "[MED]", 5
 
     def _get_ascii_badge(self, server: DiscoveredClientServer) -> str:
-        key = f"{server.client}:{server.server_name}"
+        client = getattr(server, "client", getattr(server, "client_name", ""))
+        key = f"{client}:{server.server_name}"
         findings = self.findings.get(key, [])
         if not findings:
             return "[CLEAN]"
-        has_crit = any(f.severity.upper() == "CRITICAL" for f in findings)
+        has_crit = any(getattr(f, "severity_level", getattr(f, "severity", "")).upper() == "CRITICAL" for f in findings)
         if has_crit:
             return "[!CRIT!]"
-        has_high = any(f.severity.upper() == "HIGH" for f in findings)
+        has_high = any(getattr(f, "severity_level", getattr(f, "severity", "")).upper() == "HIGH" for f in findings)
         if has_high:
             return "[*HIGH*]"
         return "[MED]"
@@ -300,14 +362,15 @@ class McpTuiExplorer:
             query = self.search_query.lower()
             self.filtered_servers = []
             for s in self.servers:
-                if query in s.server_name.lower() or query in s.client.lower():
+                s_client = getattr(s, "client", getattr(s, "client_name", ""))
+                if query in s.server_name.lower() or query in s_client.lower():
                     self.filtered_servers.append(s)
                     continue
                     
                 # check findings
-                key = f"{s.client}:{s.server_name}"
+                key = f"{s_client}:{s.server_name}"
                 findings = self.findings.get(key, [])
-                if any(query in f.advisory.id.lower() for f in findings):
+                if any(query in getattr(f, "vulnerability_id", getattr(getattr(f, "advisory", None), "id", "")).lower() for f in findings):
                     self.filtered_servers.append(s)
                     continue
                     
@@ -318,6 +381,28 @@ class McpTuiExplorer:
                         
         self.selected_idx = 0
         self.scroll_offset = 0
+
+    def _compute_posture(self) -> str:
+        has_high = False
+        has_any = False
+        for findings in self.findings.values():
+            for f in findings:
+                has_any = True
+                sev = getattr(f, "severity_level", getattr(f, "severity", "")).upper()
+                if sev == "CRITICAL":
+                    return "CRITICAL"
+                elif sev == "HIGH":
+                    has_high = True
+        if has_high:
+            return "HIGH"
+        if has_any:
+            return "WARNING"
+        return "SECURE"
+
+    def _get_header_subtitle(self) -> str:
+        drift_status = "Synced"
+        posture = self._compute_posture()
+        return f" OS: {platform.system()} | Discovered: {len(self.servers)} Servers | Posture: {posture} | Baseline: {drift_status} "
 
     def _draw(self):
         self.stdscr.erase()
@@ -333,8 +418,7 @@ class McpTuiExplorer:
         self.stdscr.addstr(0, 0, " " * self.width)
         self.stdscr.addstr(0, max(0, (self.width - len(header_text)) // 2), header_text)
         
-        drift_status = "Synced"
-        sub_text = f" OS: platform | Discovered: {len(self.servers)} Servers | Posture: Status | Baseline: {drift_status} "
+        sub_text = self._get_header_subtitle()
         self.stdscr.addstr(1, 0, " " * self.width)
         self.stdscr.addstr(1, max(0, (self.width - len(sub_text)) // 2), sub_text)
         self.stdscr.addstr(2, 0, " " * self.width)
@@ -362,7 +446,8 @@ class McpTuiExplorer:
                     badge = self._get_ascii_badge(server)
                     color = 0
                     
-                display_str = f"{badge} {server.client}:{server.server_name}"
+                client = getattr(server, "client", getattr(server, "client_name", ""))
+                display_str = f"{badge} {client}:{server.server_name}"
                 if len(display_str) > left_w - 4:
                     display_str = display_str[:left_w - 7] + "..."
                     
@@ -423,47 +508,55 @@ class McpTuiExplorer:
             self.stdscr.addstr(y, x + 2, title, attr)
 
     def _draw_details(self, y: int, x: int, h: int, w: int, server: DiscoveredClientServer):
+        client = getattr(server, "client", getattr(server, "client_name", ""))
         lines = []
         lines.append(("Section A: Server Identity & Origin", curses.A_BOLD | curses.A_UNDERLINE))
-        lines.append((f"Client: {server.client}", curses.A_NORMAL))
+        lines.append((f"Client: {client}", curses.A_NORMAL))
         lines.append((f"Name:   {server.server_name}", curses.A_NORMAL))
-        if server.config_path:
-            lines.append((f"Path:   {server.config_path}", getattr(curses, "color_pair", lambda x: 0)(6) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
+        config_path = getattr(server, "config_path", getattr(server, "source_file", None))
+        if config_path:
+            lines.append((f"Path:   {config_path}", getattr(curses, "color_pair", lambda x: 0)(6) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
             
         lines.append(("", curses.A_NORMAL))
         lines.append(("Section B: Known Vulnerabilities", curses.A_BOLD | curses.A_UNDERLINE))
-        key = f"{server.client}:{server.server_name}"
+        key = f"{client}:{server.server_name}"
         findings = self.findings.get(key, [])
         if not findings:
             lines.append(("No known vulnerabilities.", getattr(curses, "color_pair", lambda x: 0)(3) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
         else:
             for f in findings:
+                sev = getattr(f, "severity_level", getattr(f, "severity", "UNKNOWN"))
+                vuln_id = getattr(f, "vulnerability_id", getattr(getattr(f, "advisory", None), "id", "UNKNOWN"))
+                safe_version = getattr(f, "fixed_version", getattr(f, "safe_version", None))
                 attr = curses.A_NORMAL
                 if not getattr(self.args, "no_color", False):
-                    if f.severity.upper() == "CRITICAL":
+                    if sev.upper() == "CRITICAL":
                         attr = curses.color_pair(4)
-                    elif f.severity.upper() == "HIGH":
+                    elif sev.upper() == "HIGH":
                         attr = curses.color_pair(5)
-                lines.append((f"• {f.advisory.id} ({f.severity}) - CVSS: {f.cvss_score or 'N/A'}", attr))
-                if f.safe_version:
-                    lines.append((f"  Safe Version: {f.safe_version}", attr))
+                lines.append((f"• {vuln_id} ({sev}) - CVSS: {f.cvss_score or 'N/A'}", attr))
+                if safe_version:
+                    lines.append((f"  Safe Version: {safe_version}", attr))
                     
         lines.append(("", curses.A_NORMAL))
         lines.append(("Section C: Capabilities & Tools", curses.A_BOLD | curses.A_UNDERLINE))
-        tools = server.spec.tools if server.spec else []
+        tools = (server.spec.tools if getattr(server, "spec", None) and getattr(server.spec, "tools", None) else None) or getattr(server, "declared_tools", [])
         if not tools:
             lines.append(("No tools detected.", curses.A_NORMAL))
         else:
             for t in tools[:5]: # show up to 5 tools
-                lines.append((f"• {t.name}: {t.description or 'No description'}", curses.A_NORMAL))
-                if t.inputSchema:
-                    lines.append((f"  Schema: {list(t.inputSchema.get('properties', {}).keys())}", getattr(curses, "color_pair", lambda x: 0)(6) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
+                t_name = getattr(t, "name", t.get("name", "tool") if isinstance(t, dict) else str(t))
+                t_desc = getattr(t, "description", t.get("description", "No description") if isinstance(t, dict) else "No description")
+                lines.append((f"• {t_name}: {t_desc}", curses.A_NORMAL))
+                input_schema = getattr(t, "inputSchema", t.get("inputSchema", {}) if isinstance(t, dict) else {})
+                if input_schema and isinstance(input_schema, dict):
+                    lines.append((f"  Schema: {list(input_schema.get('properties', {}).keys())}", getattr(curses, "color_pair", lambda x: 0)(6) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
             if len(tools) > 5:
                 lines.append((f"  ... and {len(tools) - 5} more", curses.A_NORMAL))
         
         lines.append(("", curses.A_NORMAL))
         lines.append(("Section D: Baseline & Hash", curses.A_BOLD | curses.A_UNDERLINE))
-        sha = server.spec.toolset_canonical_hash if server.spec else "N/A"
+        sha = server.spec.toolset_canonical_hash if getattr(server, "spec", None) and getattr(server.spec, "toolset_canonical_hash", None) else "N/A"
         lines.append((f"Canonical SHA-256 Hash: {sha}", curses.A_NORMAL))
         lines.append(("Tamper status: Intact", getattr(curses, "color_pair", lambda x: 0)(3) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
 
