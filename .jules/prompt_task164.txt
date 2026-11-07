@@ -1,0 +1,17 @@
+Task 164: AST Call-Graph Reachability Tagging in Passport Builder
+
+Scope & Objective:
+Implement `src/mcp_vulnerabilities/passport/builder.py` (`PassportBuilder`) to integrate AST call-graph reachability analysis with MCP passport generation, distinguishing between reachable tool handlers and dormant transitive library dependencies.
+
+Instructions:
+1. In `src/mcp_vulnerabilities/passport/builder.py`:
+   - Create `PassportBuilder` class with `build_from_source(repo_path: Path, package_name: str, ecosystem: str) -> ServerPackageSpec`.
+   - Utilize `AstReachabilityAnalyzer.analyze_directory(repo_path)` from `src/mcp_vulnerabilities/analyzers/reachability/call_graph.py` and `McpSourceScanner` from `src/mcp_vulnerabilities/analyzers/ast_taint/`.
+   - Populate `reachable_via_tool: bool` and reachability annotations on dependencies.
+2. In `src/mcp_vulnerabilities/scoring.py`:
+   - Incorporate `reachable_via_tool` in `calculate_trust_score()` so that unreachable third-party library vulnerabilities are capped/discounted per empirical calibration, while direct tool-reachable vulnerabilities retain full risk penalty.
+3. In `tests/test_passport_builder_reachability.py`:
+   - Author comprehensive unit tests asserting that tool-reachable symbols are flagged `reachable_via_tool=True` and dormant helper libraries are flagged `reachable_via_tool=False`.
+
+Non-Interactive Completion Directive:
+Implement the complete code and tests cleanly. Run pytest on `tests/test_passport_builder_reachability.py` and `tests/test_scoring_calibration.py`. Conclude directly upon success without asking open-ended follow-up questions.

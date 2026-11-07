@@ -1,0 +1,16 @@
+Task 167: Interactive Terminal Cockpit TUI Enhancement
+
+Scope & Objective:
+Fix data source disconnections in `src/mcp_vulnerabilities/audit/tui.py` (`McpTuiExplorer`), populate real OSV vulnerability advisories, resolve hardcoded header strings, and respect `--config`.
+
+Instructions:
+1. In `src/mcp_vulnerabilities/audit/tui.py`:
+   - Initialize `self.matcher = VulnerabilityMatcher(load_advisories())`, loading advisories from `data/vulnerabilities` or `vulnerabilities.json.gz`.
+   - When `self.args.config` is provided, audit only the specified client configuration rather than scanning all 17 clients.
+   - Dynamically compute header subtitle: replace hardcoded "OS: platform" with `platform.system()` and compute real posture status from matched vulnerabilities.
+   - Include discovered network listeners from `self.net_scanner` in the active server list.
+2. In `tests/audit/test_tui.py`:
+   - Add unit tests asserting real advisory matching, `--config` isolation, and header text formatting.
+
+Non-Interactive Completion Directive:
+Implement the complete code and tests cleanly. Use curses mocking or headless test harnesses. Run pytest on `tests/audit/test_tui.py`. Conclude directly upon success without asking open-ended follow-up questions.

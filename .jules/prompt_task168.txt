@@ -1,0 +1,16 @@
+Task 168: Sandboxed Reverse Proxy and Canary Secret Guard
+
+Scope & Objective:
+Harden `mcp-vuln proxy` (`src/mcp_vulnerabilities/proxy/interceptor.py`) with containerized/subprocess sandbox execution drivers, honeytoken canary leak detection, and CLI control flags.
+
+Instructions:
+1. In `src/mcp_vulnerabilities/cli.py`:
+   - Add `--sandbox` (choices: `docker`, `subprocess`, `none`, default: `none`) and `--canary-detection` flags to `proxy` subparser.
+2. In `src/mcp_vulnerabilities/proxy/interceptor.py`:
+   - Support launching child server wrapped by `DockerSandboxDriver` or `RestrictedSubprocessDriver` when `--sandbox` is configured.
+   - Integrate `CanarySecretGuard` into message interception to scan outbound tool call payloads for canary secrets, blocking execution and emitting a high-severity alert if leak is detected.
+3. In `tests/test_mcp_proxy.py`:
+   - Add tests verifying sandbox driver selection and canary secret leak interception.
+
+Non-Interactive Completion Directive:
+Implement the complete code and tests cleanly. Use mock subprocess / sandbox fixtures. Run pytest on `tests/test_mcp_proxy.py`. Conclude directly upon success without asking open-ended follow-up questions.

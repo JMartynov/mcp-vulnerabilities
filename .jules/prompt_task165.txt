@@ -1,0 +1,17 @@
+Task 165: Catalog Pruning CLI and Ingestion Pipeline Integration
+
+Scope & Objective:
+Add `--prune`, `--prune-archived`, and `--prune-deleted` flags to `mcp-vuln sync` and `discover`, connecting dead-repository and tombstone pruning directly into `McpVulnerabilityPipeline` and `McpCatalogState`.
+
+Instructions:
+1. In `src/mcp_vulnerabilities/cli.py`:
+   - Add `--prune`, `--prune-archived`, `--prune-deleted`, and `--offline-backoff` arguments to `sync` and `discover` subparsers.
+2. In `src/mcp_vulnerabilities/pipeline.py`:
+   - Wire `include_pruning` option into `McpVulnerabilityPipeline.run()`. When enabled, check repository status using `GitHubCuratedDiscoveryProvider.is_repository_archived_or_pruned()` and record tombstones in `catalog_state`.
+3. In `src/mcp_vulnerabilities/catalog.py`:
+   - Add `prune_catalog(catalog_data: dict, catalog_state: McpCatalogState) -> dict` returning a sanitized catalog dictionary free of tombstoned/archived servers.
+4. In `tests/test_catalog_pruning_and_backoff.py`:
+   - Add CLI test cases asserting `mcp-vuln sync --prune` and `mcp-vuln discover --prune`.
+
+Non-Interactive Completion Directive:
+Implement the complete code and tests cleanly. Use mock fixtures instead of querying live upstream APIs during tests. Run pytest on `tests/test_catalog_pruning_and_backoff.py`. Conclude directly upon success without asking open-ended follow-up questions.

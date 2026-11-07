@@ -1,0 +1,16 @@
+Task 166: Cross-Repo CI Delta Detection and Release Trigger Suite
+
+Scope & Objective:
+Fix critical parsing bugs in `scripts/check_deltas.py`, extend delta detection to include `data/passports.json.gz`, and add comprehensive test coverage.
+
+Instructions:
+1. In `scripts/check_deltas.py`:
+   - Fix bug on line 23: replace `OsvVulnerability.parse_obj(data)` with `OsvVulnerability.from_dict(data)`.
+   - Add passport delta evaluation: check if `data/passports.json.gz` exists and compare its passport count / hash against previous state. If new passports exist, output `delta_detected=true`.
+2. In `tests/test_cross_repo_dispatch_and_release.py`:
+   - Add unit tests verifying `check_deltas.py` outputs `delta_detected=true` on added vulnerabilities and updated passports.
+3. In `.github/workflows/cross_repo_sync.yml`:
+   - Harmonize delta output step names so release triggers execute properly when deltas are detected.
+
+Non-Interactive Completion Directive:
+Implement the complete code and tests cleanly. Run pytest on `tests/test_cross_repo_dispatch_and_release.py`. Conclude directly upon success without asking open-ended follow-up questions.
