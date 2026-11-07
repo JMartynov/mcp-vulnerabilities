@@ -81,14 +81,35 @@ class GitHubCuratedDiscoveryProvider:
                             repo_url=repo,
                         )
                         if is_rel and repo_name not in discovered:
-                            if not cls.is_repository_archived_or_pruned(repo_name):
-                                discovered[repo_name] = {
-                                    "name": repo_name,
-                                    "ecosystem": "GitHub",
-                                    "repository": repo,
-                                    "title": title,
-                                    "reasons": list(reasons),
-                                }
+                            is_deleted = False
+                            is_archived = False
+
+                            api_url = f"https://api.github.com/repos/{repo_name}"
+                            headers = {"User-Agent": "McpVulnerabilities/1.0", "Accept": "application/vnd.github.v3+json"}
+                            token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+                            if token:
+                                headers["Authorization"] = f"Bearer {token.strip()}"
+
+                            repo_req = urllib.request.Request(api_url, headers=headers)
+                            try:
+                                with urllib.request.urlopen(repo_req, timeout=5.0, context=_get_ssl_context()) as repo_resp:
+                                    repo_data = json.loads(repo_resp.read().decode("utf-8"))
+                                    is_archived = cls.is_repository_archived_or_pruned(repo_name, repo_data)
+                            except urllib.error.HTTPError as he:
+                                if he.code in (404, 410):
+                                    is_deleted = True
+                            except Exception:
+                                pass
+
+                            discovered[repo_name] = {
+                                "name": repo_name,
+                                "ecosystem": "GitHub",
+                                "repository": repo,
+                                "title": title,
+                                "reasons": list(reasons),
+                                "is_deleted": is_deleted,
+                                "is_archived": is_archived,
+                            }
             except Exception as exc:
                 logger.warning("Failed to fetch awesome list %s: %s", url, exc)
 
