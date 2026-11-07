@@ -55,32 +55,76 @@ class NetworkMCPScanner:
         try:
             import httpx
             async with httpx.AsyncClient(timeout=self.timeout) as client:
-                payload = {
+                headers = {"MCP-Protocol-Version": "2026-07-28"}
+                
+                # Try MCP 2.0 server/discover
+                discover_payload = {
                     "jsonrpc": "2.0",
-                    "method": "initialize",
+                    "method": "server/discover",
                     "params": {
-                        "protocolVersion": "2024-11-05",
+                        "protocolVersion": "2026-07-28",
                         "capabilities": {},
                         "clientInfo": {"name": "mcp-vuln-scanner", "version": "1.2.0"}
                     },
                     "id": 1
                 }
-                resp = await client.post(url, json=payload)
+                
+                resp = await client.post(url, json=discover_payload, headers=headers)
+                
+                is_legacy = False
                 if resp.status_code < 500:
                     result["reachable"] = True
-                    data = resp.json()
-                    if "result" in data or "jsonrpc" in data:
-                        result["mcp_handshake"] = True
-                        result["capabilities"] = data.get("result", {}).get("capabilities", {})
-                        
-                        for method_name, key in [("tools/list", "tools"), ("prompts/list", "prompts"), ("resources/list", "resources")]:
-                            try:
-                                list_resp = await client.post(url, json={"jsonrpc": "2.0", "method": method_name, "params": {}, "id": 2})
-                                if list_resp.status_code == 200:
-                                    list_data = list_resp.json()
-                                    result[key] = list_data.get("result", {}).get(key, [])
-                            except Exception:
-                                pass
+                    try:
+                        data = resp.json()
+                        if "error" in data and isinstance(data["error"], dict):
+                            code = data["error"].get("code")
+                            if code in (-32601, -32602):
+                                is_legacy = True
+                    except Exception:
+                        pass
+                
+                data = {}
+                if not is_legacy and resp.status_code < 500:
+                    try:
+                        data = resp.json()
+                        if "result" in data:
+                            result["protocolVersion"] = data.get("result", {}).get("protocolVersion", "2026-07-28")
+                    except Exception:
+                        pass
+                
+                if is_legacy:
+                    # Legacy initialize fallback
+                    init_payload = {
+                        "jsonrpc": "2.0",
+                        "method": "initialize",
+                        "params": {
+                            "protocolVersion": "2024-11-05",
+                            "capabilities": {},
+                            "clientInfo": {"name": "mcp-vuln-scanner", "version": "1.2.0"}
+                        },
+                        "id": 1
+                    }
+                    resp = await client.post(url, json=init_payload)
+                    if resp.status_code < 500:
+                        result["reachable"] = True
+                        try:
+                            data = resp.json()
+                            result["protocolVersion"] = "2024-11-05"
+                        except Exception:
+                            pass
+                
+                if resp.status_code < 500 and ("result" in data or "jsonrpc" in data):
+                    result["mcp_handshake"] = True
+                    result["capabilities"] = data.get("result", {}).get("capabilities", {})
+                    
+                    for method_name, key in [("tools/list", "tools"), ("prompts/list", "prompts"), ("resources/list", "resources")]:
+                        try:
+                            list_resp = await client.post(url, json={"jsonrpc": "2.0", "method": method_name, "params": {}, "id": 2})
+                            if list_resp.status_code == 200:
+                                list_data = list_resp.json()
+                                result[key] = list_data.get("result", {}).get(key, [])
+                        except Exception:
+                            pass
         except ImportError:
             result["reachable"] = await self.check_tcp_port(host, port)
         except Exception as e:

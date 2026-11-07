@@ -16,7 +16,10 @@ for line in sys.stdin:
         method = msg.get("method")
         msg_id = msg.get("id")
         
-        if method == "initialize":
+        if method == "server/discover":
+            sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg_id, 'error': {'code': -32601, 'message': 'Method not found'}}) + '\\n')
+            sys.stdout.flush()
+        elif method == "initialize":
             resp = {
                 "jsonrpc": "2.0",
                 "id": msg_id,
