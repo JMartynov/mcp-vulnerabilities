@@ -1182,6 +1182,11 @@
       el.statTotalServers.textContent = total.toLocaleString();
       el.statVulnServers.textContent = vuln.toLocaleString();
       el.statSafeServers.textContent = safe.toLocaleString();
+      
+      const dirTotalCount = document.getElementById("directory-total-count");
+      if (dirTotalCount) {
+        dirTotalCount.textContent = total.toLocaleString();
+      }
     }
     if (allAdvisories.length > 0) {
       el.statTotalAdvisories.textContent = allAdvisories.length.toLocaleString();
@@ -1454,7 +1459,8 @@
       
       let fpBadge = "";
       if (s.toolset_canonical_hash) {
-          fpBadge = `<div class="fp-badge" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" style="cursor: pointer;" onclick="navigator.clipboard.writeText('${s.toolset_canonical_hash}'); const t = this.querySelector('.tooltip'); t.textContent = 'Copied!'; t.style.display = 'inline'; setTimeout(() => { t.textContent = 'Copy'; t.style.display = 'none'; }, 2000);">🔑 sha256:${s.toolset_canonical_hash.substring(0, 8)}...<span class="tooltip" style="display:none;">Copy</span></div>`;
+          const cleanHash = s.toolset_canonical_hash.replace(/^sha256:/, '');
+          fpBadge = `<div class="fp-badge" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click();}" style="cursor: pointer;" onclick="navigator.clipboard.writeText('${s.toolset_canonical_hash}'); const t = this.querySelector('.tooltip'); t.textContent = 'Copied!'; t.style.display = 'inline'; setTimeout(() => { t.textContent = 'Copy'; t.style.display = 'none'; }, 2000);">🔑 sha256:${cleanHash.substring(0, 8)}...<span class="tooltip" style="display:none;">Copy</span></div>`;
       }
 
       return `
@@ -1498,8 +1504,8 @@
             </div>
             <div class="quick-copy-group">
               <button type="button" class="${basketBtnClass}" ${basketBtnAttr}>${basketBtnText}</button>
-              <button type="button" class="btn btn-quick-copy" data-client="claude" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Claude ]</button>
-              <button type="button" class="btn btn-quick-copy" data-client="cursor" data-pkg="${escapeHtml(s.package_name)}">[ 📋 Cursor ]</button>
+              <button type="button" class="btn btn-quick-copy" data-client="claude" data-pkg="${escapeHtml(s.package_name)}">📋 Claude</button>
+              <button type="button" class="btn btn-quick-copy" data-client="cursor" data-pkg="${escapeHtml(s.package_name)}">📋 Cursor</button>
               <button type="button" class="btn btn-inspect" data-pkg="${escapeHtml(s.package_name)}" data-shard="${escapeHtml(s.shard_file || "")}">
                 🔍 Inspect Server & Versions
               </button>
@@ -2104,6 +2110,15 @@
             if (!baseCves.has(c)) newCves++;
           });
           
+          let hashHtml = "";
+          if (!(baseHash === 'none' && targetHash === 'none')) {
+            hashHtml = `
+            <div class="diff-hash">
+              <span class="hash-trans">${baseHash.replace('sha256:', '')} ➔ ${targetHash.replace('sha256:', '')}</span>
+            </div>
+            `;
+          }
+
           el.diffSummaryRow.innerHTML = `
             <div class="diff-pills">
               <span class="diff-pill diff-added">+ ${addedTools} Added Tools</span>
@@ -2112,9 +2127,7 @@
               <span class="diff-pill diff-fixed">🛡️ ${fixedCves} Fixed Vulnerabilities</span>
               ${newCves > 0 ? `<span class="diff-pill diff-newcve">🔴 ${newCves} New CVEs</span>` : ''}
             </div>
-            <div class="diff-hash">
-              <span class="hash-trans">${baseHash.replace('sha256:', '')} ➔ ${targetHash.replace('sha256:', '')}</span>
-            </div>
+            ${hashHtml}
           `;
           el.diffSummaryRow.style.display = "flex";
         } else {

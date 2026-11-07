@@ -230,14 +230,14 @@
   function renderSparkline(history) {
     if (!el.historicalSparkline || history.length < 2) return;
     
-    el.historicalSparkline.setAttribute("viewBox", "0 0 120 24");
+    el.historicalSparkline.setAttribute("viewBox", "0 0 1000 80");
     el.historicalSparkline.setAttribute("preserveAspectRatio", "none");
     
     // Reverse history to show chronological order (oldest to newest)
     const reversedHistory = [...history].slice(0, 10).reverse();
     
-    const svgWidth = 120;
-    const svgHeight = 24;
+    const svgWidth = 1000;
+    const svgHeight = 80;
     const padding = 10;
     
     // Extract points
@@ -251,7 +251,7 @@
     
     const getPolyline = (points, color, width) => {
       const coords = points.map((val, i) => `${padding + i * xScale},${yScale(val)}`).join(" ");
-      return `<polyline points="${coords}" fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round"/>`;
+      return `<polyline points="${coords}" fill="none" stroke="${color}" stroke-width="${width}" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`;
     };
     
     // Create the SVG content
@@ -265,11 +265,11 @@
     
     // Add dots
     pointsAdvisories.forEach((val, i) => {
-      svgContent += `<circle cx="${padding + i * xScale}" cy="${yScale(val)}" r="4" fill="var(--bg-color)" stroke="var(--critical-color)" stroke-width="2"/>`;
+      svgContent += `<circle cx="${padding + i * xScale}" cy="${yScale(val)}" r="4" fill="var(--bg-color)" stroke="var(--critical-color)" stroke-width="2" vector-effect="non-scaling-stroke"/>`;
     });
     
     pointsServers.forEach((val, i) => {
-      svgContent += `<circle cx="${padding + i * xScale}" cy="${yScale(val)}" r="3" fill="var(--bg-color)" stroke="var(--accent-color)" stroke-width="2"/>`;
+      svgContent += `<circle cx="${padding + i * xScale}" cy="${yScale(val)}" r="4" fill="var(--bg-color)" stroke="var(--accent-color)" stroke-width="2" vector-effect="non-scaling-stroke"/>`;
     });
     
     el.historicalSparkline.innerHTML = svgContent;
