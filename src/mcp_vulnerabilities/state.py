@@ -59,6 +59,13 @@ class SyncState:
         )
 
 
+import logging
+import os
+import shutil
+
+logger = logging.getLogger(__name__)
+
+
 class SyncStateManager:
     """Manages loading, updating, and saving synchronization checkpoints."""
 
@@ -73,7 +80,22 @@ class SyncStateManager:
                 content = self.state_file.read_text(encoding="utf-8")
                 data = json.loads(content)
                 return SyncState.from_dict(data)
-            except Exception:
+            except Exception as e:
+                logger.warning(f"Failed to load sync state from {self.state_file}: {e}")
+                
+                # Attempt to recover from backup
+                bak_file = self.state_file.with_name(self.state_file.name + ".bak")
+                if bak_file.is_file():
+                    try:
+                        logger.info(f"Attempting to recover from {bak_file}")
+                        content = bak_file.read_text(encoding="utf-8")
+                        data = json.loads(content)
+                        recovered_state = SyncState.from_dict(data)
+                        logger.info("Successfully recovered from backup.")
+                        return recovered_state
+                    except Exception as backup_err:
+                        logger.warning(f"Failed to recover from backup {bak_file}: {backup_err}")
+
                 return SyncState()
         return SyncState()
 
@@ -113,4 +135,28 @@ class SyncStateManager:
         """Persist current state to disk."""
         self.state_file.parent.mkdir(parents=True, exist_ok=True)
         data = self.state.to_dict()
-        self.state_file.write_text(json.dumps(data, indent=2, sort_keys=True), encoding="utf-8")
+        
+        # Write to temporary file first
+        tmp_file = self.state_file.with_suffix(f".tmp.{os.getpid()}")
+        try:
+            with open(tmp_file, "w", encoding="utf-8") as f:
+                json.dump(data, f, indent=2, sort_keys=True)
+                f.flush()
+                os.fsync(f.fileno())
+            
+            # Create a backup of the existing state file
+            if self.state_file.exists():
+                bak_file = self.state_file.with_name(self.state_file.name + ".bak")
+                os.replace(self.state_file, bak_file)
+                
+            # Atomically replace the old state file with the new one
+            os.replace(tmp_file, self.state_file)
+        except Exception as e:
+            logger.error(f"Error saving sync state: {e}")
+            raise
+        finally:
+            if tmp_file.exists():
+                try:
+                    tmp_file.unlink()
+                except OSError:
+                    pass

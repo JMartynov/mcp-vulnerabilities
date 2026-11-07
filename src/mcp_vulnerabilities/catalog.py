@@ -176,10 +176,40 @@ class McpCatalogState:
                 )
         except Exception as exc:
             logger.warning("Failed to load catalog state from %s: %s", self.state_file, exc)
+            
+            # Attempt to recover from standard backup (.bak)
+            bak_file = self.state_file.with_name(self.state_file.name + ".bak")
+            if bak_file.is_file():
+                try:
+                    logger.info("Attempting to recover catalog state from %s", bak_file)
+                    raw = json.loads(bak_file.read_text(encoding="utf-8"))
+                    for k, v in raw.get("servers", {}).items():
+                        self.records[k] = ServerRecord(
+                            name=v["name"],
+                            ecosystem=v["ecosystem"],
+                            last_version_seen=v.get("last_version_seen", ""),
+                            last_checked_utc=v.get("last_checked_utc", ""),
+                            known_vulnerabilities=v.get("known_vulnerabilities", []),
+                            metadata=v.get("metadata", {}),
+                        )
+                    for k, v in raw.get("tombstones", {}).items():
+                        self.tombstones[k] = TombstoneRecord(
+                            name=v["name"],
+                            ecosystem=v["ecosystem"],
+                            reason=v["reason"],
+                            tombstoned_at_utc=v["tombstoned_at_utc"],
+                            details=v.get("details", ""),
+                        )
+                    logger.info("Successfully recovered catalog state from backup.")
+                    return
+                except Exception as backup_err:
+                    logger.warning("Failed to recover catalog state from backup %s: %s", bak_file, backup_err)
+
+            # Standard backup failed or missing, rename original corrupted file so we don't lose it entirely
             import shutil
-            bak_file = self.state_file.with_name(self.state_file.name + ".corrupt.bak")
+            corrupt_file = self.state_file.with_name(self.state_file.name + ".corrupt.bak")
             try:
-                shutil.move(self.state_file, bak_file)
+                shutil.move(self.state_file, corrupt_file)
             except Exception:
                 pass
 
@@ -196,11 +226,25 @@ class McpCatalogState:
         import uuid
         tmp_file = self.state_file.with_suffix(f".{uuid.uuid4().hex}.tmp")
         try:
-            tmp_file.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+            with open(tmp_file, "w", encoding="utf-8") as f:
+                json.dump(payload, f, indent=2, sort_keys=True)
+                f.flush()
+                os.fsync(f.fileno())
+
+            # Replace backup atomicaly
+            if self.state_file.exists():
+                bak_file = self.state_file.with_name(self.state_file.name + ".bak")
+                os.replace(self.state_file, bak_file)
+
             os.replace(tmp_file, self.state_file)
-        except Exception:
+        except Exception as e:
+            logger.error(f"Error saving catalog state: {e}")
+        finally:
             if tmp_file.exists():
-                tmp_file.unlink()
+                try:
+                    tmp_file.unlink()
+                except OSError:
+                    pass
 
     def is_expired(self, key: str, ttl_days: int = 30) -> bool:
         """Check if a package's TTL has expired."""
