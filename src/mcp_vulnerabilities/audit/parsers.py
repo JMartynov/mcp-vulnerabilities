@@ -235,7 +235,12 @@ class ClientConfigParser:
                 if arg == "-m" and i + 1 < len(args):
                     mod = args[i + 1]
                     package_name = mod.replace("_", "-")
-                    break
+                elif arg in ("--version", "-v") and i + 1 < len(args):
+                    version = args[i + 1]
+                elif arg.startswith("--version="):
+                    version = arg.split("=", 1)[1]
+                elif arg.startswith("-v="):
+                    version = arg.split("=", 1)[1]
 
         elif cmd_lower == "node":
             ecosystem = "npm"

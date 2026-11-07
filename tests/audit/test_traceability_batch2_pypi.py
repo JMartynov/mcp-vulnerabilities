@@ -16,7 +16,7 @@ def test_batch2_packages_exist_in_catalog(catalog_index):
     catalog_pkgs = {s["package_name"]: s for s in catalog_index if s.get("package_name")}
     sample_names = [
         "Apple-MCPs", "WaveGuardClient", "adhd-hub",
-        "agents", "awslabs-aws-api-mcp-server", "beam_mcp", "blender-mcp"
+        "agent-mcp", "awslabs-aws-api-mcp-server", "beam_mcp", "blender-mcp"
     ]
     for name in sample_names:
         assert name in catalog_pkgs, f"Package {name} missing from catalog index"

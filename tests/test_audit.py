@@ -24,6 +24,14 @@ def test_client_config_parser_claude_desktop(tmp_path: Path):
                 "command": "python",
                 "args": ["-m", "mcp_server_sqlite"]
             },
+            "python_versioned": {
+                "command": "python",
+                "args": ["-m", "mcp_server_mysql", "--version", "0.2.1"]
+            },
+            "python_versioned_eq": {
+                "command": "python",
+                "args": ["-m", "mcp_server_redis", "--version=0.3.0"]
+            },
             "unpinned": {
                 "command": "npx",
                 "args": ["@modelcontextprotocol/server-filesystem", "/tmp"]
@@ -37,7 +45,7 @@ def test_client_config_parser_claude_desktop(tmp_path: Path):
     config_file.write_text(json.dumps(config_data), encoding="utf-8")
 
     servers = ClientConfigParser.parse_file(config_file)
-    assert len(servers) == 5
+    assert len(servers) == 7
 
     by_name = {s.server_name: s for s in servers}
     assert by_name["neo4j"].package_name == "@modelcontextprotocol/server-neo4j"
@@ -51,6 +59,14 @@ def test_client_config_parser_claude_desktop(tmp_path: Path):
     assert by_name["sqlite"].package_name == "mcp-server-sqlite"
     assert by_name["sqlite"].ecosystem == "PyPI"
     assert by_name["sqlite"].version is None
+
+    assert by_name["python_versioned"].package_name == "mcp-server-mysql"
+    assert by_name["python_versioned"].version == "0.2.1"
+    assert by_name["python_versioned"].ecosystem == "PyPI"
+
+    assert by_name["python_versioned_eq"].package_name == "mcp-server-redis"
+    assert by_name["python_versioned_eq"].version == "0.3.0"
+    assert by_name["python_versioned_eq"].ecosystem == "PyPI"
 
     assert by_name["unpinned"].package_name == "@modelcontextprotocol/server-filesystem"
     assert by_name["unpinned"].version is None
