@@ -1,0 +1,32 @@
+Task 154: CI Linux Multiprocessing Immunity & Test Harness Environment Fallback
+
+Contract specifications:
+Read .jules/task154_ci_linux_multiprocessing_and_test_guards.md and implement the required changes.
+
+Key Invariants:
+1. In src/mcp_vulnerabilities/site_builder.py:
+   In build_site_parallel(...):
+   Change:
+   if workers <= 1:
+   To:
+   if workers <= 1 or "PYTEST_CURRENT_TEST" in os.environ:
+   This ensures running under pytest executes in-process without process pool deadlocks on Linux runners.
+
+2. In tests/test_trivy_engine.py:
+   Import shutil.
+   Add `@pytest.mark.skipif(shutil.which("trivy") is None, reason="trivy binary not found in PATH")`
+   to:
+   - test_scan_fs_integration_multiple
+   - test_scan_registry_integration_multiple
+   - test_scan_image_integration_multiple
+
+3. In tests/test_chunk_validation.py:
+   Add `@pytest.mark.skipif(not (Path("data/chunks") / "track_a").exists(), reason="Track chunks not checked into git")`
+   to:
+   - test_all_chunks_exist_and_sum
+
+4. Automated Verification:
+   Run `pytest -v tests/test_parallel_site_builder.py tests/test_trivy_engine.py tests/test_chunk_validation.py` and verify all tests pass or cleanly skip.
+
+Non-Interactive Completion Directive:
+Finalize all changes directly and commit to your branch. Do not ask open-ended questions or wait for user confirmation. Conclude cleanly so the session status transitions to Completed.
