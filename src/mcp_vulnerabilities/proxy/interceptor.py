@@ -2,9 +2,11 @@ import json
 import subprocess
 import sys
 import threading
+import shlex
 from typing import Any, IO
 from .policy import ProxyPolicyEngine, PolicyDecision, AuditEvent
 import time
+from mcp_vulnerabilities.probe.sandbox_prober import DockerSandboxDriver, RestrictedSubprocessDriver, CanarySecretGuard
 
 class McpStdioProxy:
     def __init__(
@@ -12,13 +14,34 @@ class McpStdioProxy:
         policy_engine: ProxyPolicyEngine,
         mode: str = "block",
         audit_log_path: str | None = None,
-        strip_shadow_tools: bool = True
+        strip_shadow_tools: bool = True,
+        sandbox: str = "none",
+        canary_detection: bool = False
     ):
         self.policy_engine = policy_engine
         self.mode = mode
         self.audit_log_path = audit_log_path
         self.strip_shadow_tools = strip_shadow_tools
         self.pending_requests = {} # id -> method
+        self.sandbox = sandbox
+        self.canary_detection = canary_detection
+        
+        self.driver = None
+        if self.sandbox == "docker":
+            self.driver = DockerSandboxDriver(allow_outbound=False)
+        elif self.sandbox == "subprocess":
+            self.driver = RestrictedSubprocessDriver()
+            
+
+        self.canary_guard = None
+        if self.canary_detection:
+            if self.driver:
+                self.canary_guard = self.driver.guard
+            else:
+                import tempfile
+                self._temp_dir = tempfile.TemporaryDirectory()
+                self.canary_guard = CanarySecretGuard(self._temp_dir.name)
+
 
     def log_audit_event(self, event: AuditEvent):
         if self.audit_log_path:
@@ -38,6 +61,27 @@ class McpStdioProxy:
 
         if msg_id is not None and method:
             self.pending_requests[msg_id] = method
+
+        # Scan outbound payload for canary leaks if canary detection is enabled
+        if self.canary_guard and method == "tools/call":
+            payload_str = json.dumps(msg.get("params", {}))
+            leaks = self.canary_guard.analyze_payload(payload_str)
+            if leaks:
+                event = AuditEvent("CANARY_LEAK_DETECTED", "CRITICAL", f"Canary leak detected in tool call: {leaks}", {"leaks": leaks, "request": msg}, "Blocked execution")
+                self.log_audit_event(event)
+                # Force block on Canary leaks regardless of mode
+                if msg_id is not None:
+                    error_resp = {
+                        "jsonrpc": "2.0",
+                        "id": msg_id,
+                        "error": {
+                            "code": -32001,
+                            "message": "Blocked by MCP Security Proxy: Canary leak detected in tool call payload",
+                            "data": {"rule_id": "CANARY_LEAK_DETECTED"}
+                        }
+                    }
+                    return None, json.dumps(error_resp)
+                return None, None
 
         decision = self.policy_engine.evaluate_request(msg)
         if not decision.allowed:
@@ -86,13 +130,22 @@ class McpStdioProxy:
         return line
 
     def run_stdio(self, command: list[str], stdin: IO[str] = sys.stdin, stdout: IO[str] = sys.stdout, stderr: IO[str] = sys.stderr) -> int:
+        env = None
+        cmd = command
+        if self.driver:
+            cmd_str = shlex.join(command)
+            wrapped_cmd_str = self.driver.wrap_command(cmd_str, is_http=False)
+            cmd = shlex.split(wrapped_cmd_str)
+            env = self.driver.get_env()
+
         proc = subprocess.Popen(
-            command,
+            cmd,
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=stderr,
             text=True,
-            bufsize=1
+            bufsize=1,
+            env=env
         )
 
         def server_reader():
@@ -145,5 +198,10 @@ class McpStdioProxy:
                     proc.kill()
                 except Exception:
                     pass
+            
+            if self.driver:
+                self.driver.cleanup()
+            if hasattr(self, '_temp_dir'):
+                self._temp_dir.cleanup()
             
         return proc.returncode

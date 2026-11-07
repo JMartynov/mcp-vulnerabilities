@@ -174,3 +174,56 @@ for line in sys.stdin:
     code = proxy.run_stdio([sys.executable, str(script)], stdin=stdin, stdout=stdout)
     assert code == 0 or code is not None
 
+
+def test_proxy_sandbox_subprocess():
+    policy = ProxyPolicyEngine()
+    proxy = McpStdioProxy(policy, sandbox="subprocess")
+    assert proxy.driver is not None
+    assert type(proxy.driver).__name__ == "RestrictedSubprocessDriver"
+
+def test_proxy_canary_leak_blocked():
+    policy = ProxyPolicyEngine()
+    proxy = McpStdioProxy(policy, sandbox="subprocess", canary_detection=True, mode="block")
+    assert proxy.canary_guard is not None
+
+    req = {
+        "jsonrpc": "2.0",
+        "id": 10,
+        "method": "tools/call",
+        "params": {
+            "name": "say_hello",
+            "arguments": {
+                "message": proxy.canary_guard.tokens.openai_key
+            }
+        }
+    }
+
+    to_srv, to_cli = proxy.process_client_line(json.dumps(req))
+    assert to_srv is None
+    
+    err_resp = json.loads(to_cli)
+    assert err_resp["id"] == 10
+    assert err_resp["error"]["code"] == -32001
+    assert "Canary leak detected in tool call payload" in err_resp["error"]["message"]
+
+def test_proxy_canary_leak_audit():
+    policy = ProxyPolicyEngine()
+    proxy = McpStdioProxy(policy, sandbox="subprocess", canary_detection=True, mode="audit")
+
+    req = {
+        "jsonrpc": "2.0",
+        "id": 11,
+        "method": "tools/call",
+        "params": {
+            "name": "say_hello",
+            "arguments": {
+                "message": proxy.canary_guard.tokens.aws_secret
+            }
+        }
+    }
+
+    to_srv, to_cli = proxy.process_client_line(json.dumps(req))
+    # In audit mode, Canary leak still blocks execution as per requirements
+    assert to_srv is None
+    assert to_cli is not None
+
