@@ -2,16 +2,19 @@
 Interactive TUI dashboard for security exploration.
 """
 
+import asyncio
 import curses
 import json
 import logging
 import subprocess
 import time
+import platform
+from pathlib import Path
 from typing import Any, List, Tuple
 
 from mcp_vulnerabilities.audit.fixer import ClientConfigFixer
 from mcp_vulnerabilities.audit.matcher import AuditFinding, VulnerabilityMatcher
-from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer, UniversalClientConfigScanner
+from mcp_vulnerabilities.audit.parsers import DiscoveredClientServer, UniversalClientConfigScanner, ClientConfigParser
 from mcp_vulnerabilities.audit.picture import SecurityPicture
 from mcp_vulnerabilities.probe.network_scanner import NetworkMCPScanner
 
@@ -24,12 +27,21 @@ class McpTuiExplorer:
         self.is_test = is_test
         
         self.scanner = UniversalClientConfigScanner()
-        # Initialize network scanner with 0 concurrency in test mode to avoid actually running
+# Initialize network scanner with 0 concurrency in test mode to avoid actually running
         self.net_scanner = NetworkMCPScanner(max_concurrency=1 if self.is_test else 64)
         
         # We need a matcher, ideally loaded from state
         # In a real app we'd load the state/catalog properly
-        self.matcher = VulnerabilityMatcher([])
+        def load_advisories():
+            snap_path = Path("vulnerabilities.json.gz")
+            if snap_path.exists():
+                return VulnerabilityMatcher.from_snapshot(snap_path).advisories
+            dir_path = Path("data/vulnerabilities")
+            if dir_path.exists():
+                return VulnerabilityMatcher.from_directory(dir_path).advisories
+            return []
+            
+        self.matcher = VulnerabilityMatcher(load_advisories())
         
         self.servers: List[DiscoveredClientServer] = []
         self.filtered_servers: List[DiscoveredClientServer] = []
@@ -70,8 +82,41 @@ class McpTuiExplorer:
         # Pair 6: Info / Path (Cyan on Default)
         curses.init_pair(6, curses.COLOR_CYAN, -1)
 
-    def _load_data(self):
-        self.servers = self.scanner.scan_all_clients()
+def _load_data(self):
+        if getattr(self.args, "config", None):
+            self.servers = ClientConfigParser.parse_file(Path(self.args.config))
+        else:
+            self.servers = self.scanner.scan_all_clients()
+            
+        # Network scan
+        if not self.is_test:
+            target = getattr(self.args, "target", "localhost")
+            ports_arg = getattr(self.args, "ports", "*")
+            ports = None
+            if ports_arg != "*":
+                ports = [int(p.strip()) for p in ports_arg.split(",")]
+            
+            try:
+                loop = asyncio.get_event_loop()
+            except RuntimeError:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                
+            net_results = loop.run_until_complete(self.net_scanner.scan_target(target, ports))
+            for res in net_results:
+                if res.get("mcp_handshake"):
+                    self.servers.append(DiscoveredClientServer(
+                        server_name=f"{res['host']}:{res['port']}{res['path']}",
+                        package_name="network-endpoint",
+                        version=None,
+                        ecosystem="network",
+                        command="network",
+                        args=[],
+                        client_name="network",
+                        url=res['url'],
+                        declared_tools=res.get("tools", [])
+                    ))
+            
         # For simplicity, not blocking UI on network scan, just doing clients
         self.filtered_servers = self.servers[:]
         self._audit_servers()
@@ -333,8 +378,25 @@ class McpTuiExplorer:
         self.stdscr.addstr(0, 0, " " * self.width)
         self.stdscr.addstr(0, max(0, (self.width - len(header_text)) // 2), header_text)
         
-        drift_status = "Synced"
-        sub_text = f" OS: platform | Discovered: {len(self.servers)} Servers | Posture: Status | Baseline: {drift_status} "
+drift_status = "Synced"
+        
+        posture = "SECURE"
+        has_high = False
+        for findings in self.findings.values():
+            for f in findings:
+                if f.severity.upper() == "CRITICAL":
+                    posture = "CRITICAL"
+                    break
+                elif f.severity.upper() == "HIGH":
+                    has_high = True
+            if posture == "CRITICAL":
+                break
+        if posture != "CRITICAL" and has_high:
+            posture = "HIGH"
+        elif posture == "SECURE" and any(len(f) > 0 for f in self.findings.values()):
+            posture = "WARNING"
+            
+        sub_text = f" OS: {platform.system()} | Discovered: {len(self.servers)} Servers | Posture: {posture} | Baseline: {drift_status} "
         self.stdscr.addstr(1, 0, " " * self.width)
         self.stdscr.addstr(1, max(0, (self.width - len(sub_text)) // 2), sub_text)
         self.stdscr.addstr(2, 0, " " * self.width)
