@@ -1,0 +1,20 @@
+Resolve Task 161: CLI Subcommand Tree Parity and Acceptance Invariant Suite.
+
+Requirements:
+1. In `src/mcp_vulnerabilities/cli.py`:
+   - Add `--version` top-level flag to the main argument parser:
+     `parser.add_argument("--version", "-v", action="version", version=f"%(prog)s {__version__}")` (using `mcp_vulnerabilities.__version__`).
+   - Ensure `mcp-vuln --version` returns exit code 0 and prints version string.
+
+2. In `tests/test_acceptance_invariants.py`:
+   - In `test_cli_version_invariant()`, remove `pytest.skip` and assert that `result.returncode == 0` and version string is present.
+   - Verify all subcommands in `SUBCOMMANDS = ["audit", "network-scan", "identify", "proxy", "audit-transitive", "audit-typosquat", "verify-feed", "hub", "tui", "monitor", "bridge"]` return exit code 0 on `--help`.
+
+3. In `tests/test_acceptance_universal_clients.py`:
+   - Expand client discovery test coverage to assert mock discovery and configuration parsing across all 17 documented AI clients (Claude Desktop, Cursor, Zed, Windsurf, Cline, Roo Code, Goose, Continue, LibreChat, OpenWebUI, Copilot CLI, TypingMind, Chatbox, Bolt, Jan, Enso, Sourcegraph Cody).
+   - Ensure all 17 clients have mock configuration paths and parser fixtures.
+
+4. Run `pytest tests/test_acceptance_invariants.py tests/test_acceptance_universal_clients.py` and ensure 100% tests pass.
+
+Non-Interactive Completion Directive:
+Implement the CLI version flag, un-skip acceptance tests, expand client discovery tests, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

@@ -1,0 +1,23 @@
+Resolve Task 158: Engine Hygiene, Asyncio Loop Scoping, and Universal Atomic Persistence.
+
+Requirements:
+1. In `pyproject.toml`:
+   - Under `[tool.pytest.ini_options]`, explicitly configure:
+     `asyncio_default_fixture_loop_scope = "function"`
+   - Ensure pytest runs without `PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset`.
+
+2. In `tests/test_trivy_engine.py`:
+   - When `shutil.which("trivy") is None`, provide a synthetic subprocess mock fixture so that integration tests (`test_scan_fs_integration_multiple`, `test_scan_registry_integration_multiple`, `test_scan_image_integration_multiple`) execute and validate `TrivyScanResult` construction, finding counts, and SBOM building without skipping.
+   - Ensure `tests/test_trivy_engine.py` passes 100% with 0 skipped tests on environments without native trivy.
+
+3. In `src/mcp_vulnerabilities/catalog.py`:
+   - Import `atomic_save_json` from `mcp_vulnerabilities.state` (or use `.tmp.<pid>` + `fsync` + `os.replace` with `.bak` recovery).
+   - In `McpCatalogState.save()`, use `atomic_save_json(self.state_file, data)` instead of raw `open(..., "w")`.
+
+4. In `src/mcp_vulnerabilities/audit/drift.py`:
+   - Use `atomic_save_json` in `InventorySnapshot.save()` and `save_baseline_snapshot()`.
+
+5. Run `pytest tests/test_trivy_engine.py tests/test_catalog_state.py` and ensure 100% tests pass.
+
+Non-Interactive Completion Directive:
+Implement the changes cleanly, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

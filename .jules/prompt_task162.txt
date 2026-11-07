@@ -1,0 +1,25 @@
+Resolve Task 162: High-Speed BK-Tree Typosquat Indexing and Real-Time WebSocket Bridge.
+
+Requirements:
+1. In `src/mcp_vulnerabilities/analyzers/typosquat/bktree.py`:
+   - Implement a clean, generic Burkhard-Keller Tree (`BKTree`):
+     - `__init__(distance_fn)`
+     - `insert(item)`
+     - `search(query, max_distance: int) -> list[tuple[str, int]]` (returns matching items and their edit distance).
+   - Use standard Levenshtein / Damerau-Levenshtein distance as the metric.
+
+2. In `src/mcp_vulnerabilities/analyzers/typosquat/detector.py`:
+   - Integrate `BKTree` for fast fuzzy searching across registered catalog package names.
+   - Fall back gracefully to direct comparison if tree is not built or query threshold is small.
+
+3. In `src/mcp_vulnerabilities/daemon/bridge.py`:
+   - Add structured event broadcasting: `emit_event(event_type: str, payload: dict)` for WebSocket / SSE subscribers (e.g. `scan_start`, `server_found`, `vulnerability_found`, `scan_complete`).
+
+4. Author unit tests:
+   - `tests/test_bktree_typosquat.py`: Validate BK-tree insertion, query at distance 1, 2, triangle inequality bounds, and accuracy matching linear scan results.
+   - `tests/test_bridge_stream.py`: Validate bridge event emitter formatting and subscriber dispatch.
+
+5. Run `pytest tests/test_bktree_typosquat.py tests/test_bridge_stream.py` and ensure 100% tests pass.
+
+Non-Interactive Completion Directive:
+Implement the BK-Tree index and bridge stream event logic, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

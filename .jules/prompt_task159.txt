@@ -1,0 +1,43 @@
+Resolve Task 159: Risk Scoring Calibration and Transitive Dependency Penalty Capping.
+
+Requirements:
+1. In `src/mcp_vulnerabilities/scoring.py`:
+   - Enhance `CompositeRiskScorer` to implement calibrated trust score calculation:
+     ```python
+     @staticmethod
+     def calculate_trust_score(
+         base_score: float = 100.0,
+         critical_high_count: int = 0,
+         medium_count: int = 0,
+         low_count: int = 0,
+         protocol_risk_penalty: float = 0.0,
+     ) -> float:
+         # Transitive third-party library penalty capped at 15.0 points
+         raw_dep_penalty = 2.0 * critical_high_count + 0.5 * medium_count + 0.1 * low_count
+         dep_penalty = min(15.0, raw_dep_penalty)
+         score = base_score - dep_penalty - protocol_risk_penalty
+         return max(0.0, min(100.0, round(score, 1)))
+
+     @staticmethod
+     def calculate_trust_tier(trust_score: float) -> str:
+         if trust_score >= 90.0:
+             return "EXCELLENT"
+         elif trust_score >= 75.0:
+             return "GOOD"
+         elif trust_score >= 50.0:
+             return "FAIR"
+         return "RISKY"
+     ```
+   - Ensure existing methods `calculate_composite_score` and `calculate_elevated_tier` are preserved.
+
+2. Author `tests/test_scoring_calibration.py`:
+   - Test clean baseline (100.0 score -> EXCELLENT).
+   - Test 1-2 medium library CVEs (penalty 0.5-1.0).
+   - Test 20 high library CVEs (penalty strictly capped at 15.0).
+   - Test protocol risk penalty dominance (e.g. prompt injection penalty 40.0 lowers score appropriately).
+   - Test trust tier transitions.
+
+3. Run `pytest tests/test_scoring_calibration.py` and ensure 100% tests pass.
+
+Non-Interactive Completion Directive:
+Implement the scoring calibration and tests, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

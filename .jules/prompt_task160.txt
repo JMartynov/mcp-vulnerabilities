@@ -1,0 +1,24 @@
+Resolve Task 160: Catalog Freshness, Dead Repository Pruning, and Offline Retry Backoff.
+
+Requirements:
+1. In `src/mcp_vulnerabilities/discovery/github_curated.py` (or discovery pipeline):
+   - Add capability to inspect repository status (`archived`, deleted 404, or moved).
+   - Implement `is_repository_archived_or_pruned(repo_name_or_url: str, repo_metadata: dict | None = None) -> bool`.
+   - Provide a clean mechanism to flag repositories that are archived or return HTTP 404.
+
+2. In `src/mcp_vulnerabilities/discovery/npm.py` (or generic discovery provider):
+   - Implement exponential retry backoff tracking for offline endpoints:
+     - Track `consecutive_failures: int` and `next_retry_after: str` (RFC 3339 timestamp).
+     - Function `should_skip_due_to_backoff(endpoint: str, state: dict, current_time: datetime | None = None) -> bool`.
+     - Calculate exponential backoff interval: `min(max_backoff_days, base_hours * (2 ** (consecutive_failures - 1)))`.
+
+3. Author `tests/test_catalog_pruning_and_backoff.py`:
+   - Test detection of archived repository metadata (`archived: true`).
+   - Test detection of deleted repository HTTP 404 responses.
+   - Test exponential backoff calculation (1 failure -> base backoff, 2 failures -> 2x, capped at max_backoff).
+   - Test `should_skip_due_to_backoff` returns True before `next_retry_after` and False after.
+
+4. Run `pytest tests/test_catalog_pruning_and_backoff.py` and ensure 100% tests pass.
+
+Non-Interactive Completion Directive:
+Implement the pruning and backoff logic and tests cleanly, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.
