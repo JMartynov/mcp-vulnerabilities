@@ -1,0 +1,36 @@
+Fix web presentation issues across docs/updates.js, docs/analytics.html, docs/style.css, and docs/app.js:
+
+1. docs/updates.js:
+   - In renderSparkline(history):
+     Fix viewBox and coordinate scaling so the sparkline does not distort. Currently viewBox is "0 0 120 24" with preserveAspectRatio="none", causing extreme 8x horizontal stretching that warps circles into giant sausages.
+     Change svgWidth to 1000 and svgHeight to 80 (or match viewBox="0 0 1000 80").
+     Add vector-effect="non-scaling-stroke" to lines and circles, with stroke-width 2-3px, and radius r=4.
+
+2. docs/analytics.html:
+   - In .bar-label CSS:
+     Increase flex basis from 200px to 280px (e.g. `flex: 0 0 280px;`) so full OWASP MCP category names (such as "Data Minimization / Serialization Flaws", "Broken Object-Level Authorization") are readable without truncation.
+
+3. docs/style.css:
+   - In .modal-title-wrap: ensure `min-width: 0; flex: 1; margin-right: 12px; word-break: break-word;` so modal titles never overlap the close button.
+   - Add responsive styles for mobile:
+     @media (max-width: 768px) {
+       .header-links { flex-wrap: wrap; gap: 6px; }
+       .badge-link { font-size: 0.75rem; padding: 4px 8px; }
+     }
+   - Add balanced left borders to metric cards:
+     .metric-critical { border-left: 4px solid var(--critical-color); }
+     .metric-card:first-child { border-left: 4px solid var(--accent-color); }
+
+4. docs/app.js:
+   - In line 1457 (fpBadge):
+     Clean up hash: use `const cleanHash = s.toolset_canonical_hash.replace(/^sha256:/, '');` then render `🔑 sha256:${cleanHash.substring(0, 8)}...` to prevent duplicate `sha256:sha256:`.
+   - In el.diffSummaryRow (version comparison in modal):
+     If `baseHash === 'none' && targetHash === 'none'`, do not render the `.diff-hash` div containing `none ➔ none`.
+   - In quick-copy buttons:
+     Replace `[ 📋 Claude ]` and `[ 📋 Cursor ]` with `📋 Claude` and `📋 Cursor` (remove outer square brackets).
+   - In tab button: remove static hardcoded `(5,050+)` or update dynamically when catalog loads.
+
+5. Verify all existing tests pass (`pytest`).
+
+Non-Interactive Completion Directive:
+Implement the changes cleanly, test them, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

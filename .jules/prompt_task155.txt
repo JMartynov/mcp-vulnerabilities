@@ -1,0 +1,29 @@
+Fix remaining failing GitHub Actions pipelines across ci.yml, test_action.yml, and sign_release.yml.
+
+Specific Requirements:
+1. tests/audit/test_traceability_batch2_pypi.py:
+   - In sample_names, replace "agents" with "agent-mcp" (because "agents" in the catalog is an npm package, whereas "agent-mcp" is a PyPI package from Batch 2).
+   - Ensure the assertion catalog_pkgs[name]["ecosystem"] in ("pypi", "PyPI") passes cleanly.
+
+2. src/mcp_vulnerabilities/audit/parsers.py:
+   - In ClientConfigParser._parse_server_entry under cmd_lower in ("python", "python3"):
+     Parse python args for version flags: if "--version" or "-v" is followed by a version string, or "--version=<ver>", extract that version into the `version` field of DiscoveredClientServer.
+
+3. src/mcp_vulnerabilities/fingerprints/resolver.py:
+   - In FingerprintVersionResolver._resolve_uncached under Python virtualenv and project inspection:
+     Only inspect cmd_p.parents if cmd_p.is_absolute() or len(cmd_p.parts) > 1. Do NOT inspect cmd_p.parents when cmd_p is bare "python" or "python3" to avoid accidentally scanning the current repository's root directory.
+     When reading any candidate pyproject.toml, verify that the project name declared in pyproject.toml matches server.package_name (or server.server_name). If the names do not match, do not use that version.
+
+4. .github/workflows/sign_release.yml:
+   - Upgrade sigstore/gh-action-sigstore-python from @v2.1.1 to @v3.0.0 (resolving the deprecated actions/upload-artifact@v3 failure).
+   - Add workflow_dispatch: to the `on:` triggers.
+
+5. .github/workflows/test_action.yml:
+   - Add workflow_dispatch: to the `on:` triggers.
+
+6. Add or update unit tests to verify:
+   - ClientConfigParser correctly extracts version from python -m <pkg> --version <ver>.
+   - FingerprintVersionResolver does not match an unrelated pyproject.toml for a python server.
+
+Non-Interactive Completion Directive:
+Implement the changes cleanly, run pytest to ensure tests pass, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.
