@@ -86,6 +86,8 @@ def main() -> None:
     proxy_parser.add_argument("--no-payload-guardrails", action="store_false", dest="enable_payload_guardrails")
     proxy_parser.add_argument("--audit-log", help="Path to audit log file")
     proxy_parser.add_argument("--dir", help="Path to vulnerabilities directory")
+    proxy_parser.add_argument("--sandbox", choices=["docker", "subprocess", "none"], default="none", help="Sandbox execution driver")
+    proxy_parser.add_argument("--canary-detection", action="store_true", help="Enable canary secret leak detection")
     proxy_parser.add_argument("command_args", nargs=argparse.REMAINDER, help="-- <command> [args...]")
 
 
@@ -793,7 +795,9 @@ def main() -> None:
         proxy = McpStdioProxy(
             policy_engine=policy_engine,
             mode=args.mode,
-            audit_log_path=args.audit_log
+            audit_log_path=args.audit_log,
+            sandbox=args.sandbox,
+            canary_detection=args.canary_detection
         )
 
         sys.exit(proxy.run_stdio(cmd_args))
