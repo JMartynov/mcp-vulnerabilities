@@ -1,0 +1,21 @@
+Author a comprehensive empirical test suite verifying deterministic multi-source advisory fusion.
+
+Requirements:
+1. In `tests/test_fusion_multi_source.py`:
+   - Test multi-source convergence: Simulate an advisory present in NVD, GHSA, GitLab, and PyPA with divergent summaries, details, references, and ranges.
+   - Assert the fused `OsvVulnerability` output:
+     - Selects the canonical CVE ID.
+     - Preserves all unique aliases in sorted order.
+     - Preserves authoritative NVD severity while recording divergent scores.
+     - Merges disjoint references, normalizing URLs (stripping query tracking params, normalizing trailing slashes).
+     - Merges version range events (`introduced`, `fixed`) correctly.
+   - Test circular alias graph loops:
+     - Set up alias cycles (A -> B -> C -> A) and verify `CanonicalAliasGraph.build_clusters()` terminates and groups all nodes into a single cluster.
+   - Test edge cases:
+     - Ingestion of single-source advisory (no-op fusion).
+     - Advisory with missing summaries/details (falls back gracefully).
+     - Non-standard version ranges.
+2. Run `pytest` and verify all tests pass.
+
+Non-Interactive Completion Directive:
+Implement the test suite cleanly, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

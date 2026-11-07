@@ -1,0 +1,15 @@
+Implement atomic resilient sync state persistence and recovery.
+
+Requirements:
+1. In `src/mcp_vulnerabilities/state.py` (and relevant sync state loaders/savers in `pipeline.py`):
+   - Ensure saving state to disk uses atomic file writing: write to a temporary file in the same directory (`.tmp.<pid>`), flush/os.fsync, and `os.replace` to target path.
+   - Maintain a backup copy (`.bak`) on successful write.
+   - When loading sync state or catalog state, if the file is corrupted or contains malformed JSON, catch `JSONDecodeError`, attempt to recover from `.bak` if valid, or construct a clean initial state without crashing the pipeline.
+2. In `tests/test_sync_state_resilience.py`:
+   - Test atomic write correctness.
+   - Test corrupted JSON file recovery (ensure fallback works and warning is logged).
+   - Test missing state file returns empty/default state.
+3. Run `pytest` to ensure all tests pass.
+
+Non-Interactive Completion Directive:
+Implement the changes cleanly, test them with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

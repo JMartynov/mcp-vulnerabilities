@@ -1,0 +1,26 @@
+Implement CVSS vector base score calculation and severity level extraction.
+
+Requirements:
+1. In `src/mcp_vulnerabilities/audit/matcher.py`:
+   - Enhance `_extract_severity_info` to parse CVSS v3.1 / v3.0 vectors when numeric score is missing.
+   - Calculate CVSS v3 base score using the standard formula:
+     - Impact Sub Score (ISS) = 1 - [ (1 - Impact_Conf) * (1 - Impact_Integ) * (1 - Impact_Avail) ]
+     - Impact:
+       If Scope Unchanged: 6.42 * ISS
+       If Scope Changed: 7.52 * [ISS - 0.029] - 3.25 * [ISS - 0.02]^15
+     - Exploitability = 8.22 * AV * AC * PR * UI
+     - Base Score = roundup to 1 decimal place.
+   - If vector parsing encounters an unknown/extended format, extract nominal severity based on metric indicators or conservative mapping.
+   - Derive qualitative severity: 9.0-10.0 CRITICAL, 7.0-8.9 HIGH, 4.0-6.9 MEDIUM, 0.1-3.9 LOW.
+2. In `src/mcp_vulnerabilities/dedup/fusion.py`:
+   - Use vector-derived score in `get_severity_score` to prioritize authoritative severities.
+3. In `tests/test_cvss_vector_scoring.py`:
+   - Test standard vectors:
+     - `CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H` -> 9.8 CRITICAL
+     - `CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:N` -> 6.8 MEDIUM (or 7.0+ if modified)
+     - `CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H` -> 5.5 MEDIUM
+   - Ensure `_extract_severity_info` returns non-UNKNOWN severity and float score for vector-only advisories.
+4. Run `pytest` to ensure all tests pass.
+
+Non-Interactive Completion Directive:
+Implement the changes cleanly, test them with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.

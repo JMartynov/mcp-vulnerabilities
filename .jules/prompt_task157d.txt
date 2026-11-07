@@ -1,0 +1,23 @@
+Author an end-to-end integration test suite verifying that all 9 upstream vulnerability and threat intelligence sources produce schema-valid OSV records.
+
+Requirements:
+1. In `tests/test_all_nine_sources_ingestion.py`:
+   - Implement comprehensive tests for each of the 9 sources:
+     1. GitHub Security Advisories (`convert_ghsa_to_osv`)
+     2. National Vulnerability Database (`convert_nvd_to_osv` / `NvdApiConverter`)
+     3. CVEListV5 (`CveJson5Converter`)
+     4. OSV.dev (`convert_osv_dev_to_canonical`)
+     5. PyPA (`PypaAdvisoryConverter` / `pypa.py`)
+     6. GitLab (`GitLabAdvisoryConverter` / `gitlab.py`)
+     7. OpenSSF Malicious (`OpenSsfMaliciousSync` / `converters/openssf_malware.py`)
+     8. Threat Intel (`CisaKevEnricher` & `EpssClient`)
+     9. Verity / Markdown Disclosures (`VerityConverter` & `MarkdownCveConverter`)
+   - Assert every converted record:
+     - Passes `OsvValidator.validate(record)` with 0 schema violations.
+     - Has valid timestamps (`published <= modified`).
+     - Contains valid affected package names, ecosystems, and PURLs.
+     - Resolves provenance URLs cleanly with `resolve_provenance_urls()`.
+2. Run `pytest tests/test_all_nine_sources_ingestion.py` and ensure 100% tests pass.
+
+Non-Interactive Completion Directive:
+Implement the test suite cleanly, verify with pytest, and conclude without asking interactive follow-up questions so the session cleanly transitions to Completed.
