@@ -483,8 +483,30 @@ class VulnerabilityMatcher:
     ) -> tuple[str, float | None]:
         """Extracts normalized severity string and numeric CVSS score."""
         cvss_score: float | None = None
+        nominal_severity = None
         for s in adv.get("severity", []):
-            score_str = s.get("score", "")
+            score_str = str(s.get("score", ""))
+            
+            # Try parsing CVSS vector
+            match = re.search(r"AV:[NALP]/AC:[LH]/PR:[NLH]/UI:[NR]/S:[UC]/C:[NLH]/I:[NLH]/A:[NLH]", score_str)
+            if match:
+                from mcp_vulnerabilities.cvss import calculate_cvss_v3_score
+                cvss_score = calculate_cvss_v3_score(score_str)
+                if cvss_score is not None:
+                    break
+            
+            # If vector parsing encounters an unknown/extended format, extract nominal severity
+            if score_str.startswith("CVSS:"):
+                # Rough fallback: extract nominal severity from impact metrics if score parsing failed
+                if "C:H" in score_str and "I:H" in score_str and "A:H" in score_str:
+                    nominal_severity = "CRITICAL"
+                elif "C:H" in score_str or "I:H" in score_str or "A:H" in score_str:
+                    nominal_severity = "HIGH"
+                elif "C:L" in score_str or "I:L" in score_str or "A:L" in score_str:
+                    nominal_severity = "MEDIUM"
+                else:
+                    nominal_severity = "LOW"
+
             if isinstance(score_str, (int, float)):
                 cvss_score = float(score_str)
                 break
@@ -506,7 +528,7 @@ class VulnerabilityMatcher:
                 except (ValueError, TypeError):
                     pass
 
-        sev = db_spec.get("severity")
+        sev = db_spec.get("severity") or nominal_severity
 
         if not sev and cvss_score is not None:
             if cvss_score >= 9.0:
