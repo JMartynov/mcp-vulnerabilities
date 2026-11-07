@@ -14,6 +14,8 @@ from mcp_vulnerabilities.models import RangeSpec, EventSpec, RangeType
 logger = logging.getLogger(__name__)
 
 class OpenSsfMaliciousSync:
+    _records_cache: dict[str, tuple[float, dict[str, MaliciousPackageRecord]]] = {}
+
     def __init__(self, data_path: Path | str = "data/malicious_packages.json"):
         self.data_path = Path(data_path)
         self.records: dict[str, MaliciousPackageRecord] = {}
@@ -22,11 +24,18 @@ class OpenSsfMaliciousSync:
     def load(self):
         if self.data_path.exists():
             try:
+                path_str = str(self.data_path.resolve())
+                mtime = self.data_path.stat().st_mtime
+                if path_str in self._records_cache and self._records_cache[path_str][0] == mtime:
+                    self.records = self._records_cache[path_str][1].copy()
+                    return
+
                 data = json.loads(self.data_path.read_text(encoding="utf-8"))
                 for record_dict in data:
                     record = MaliciousPackageRecord(**record_dict)
                     key = f"{record.ecosystem.lower()}::{record.package_name}"
                     self.records[key] = record
+                self._records_cache[path_str] = (mtime, self.records.copy())
             except Exception as e:
                 logger.error(f"Failed to load malicious packages from {self.data_path}: {e}")
 
@@ -35,6 +44,8 @@ class OpenSsfMaliciousSync:
         try:
             data = [vars(record) for record in self.records.values()]
             self.data_path.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
+            path_str = str(self.data_path.resolve())
+            self._records_cache[path_str] = (self.data_path.stat().st_mtime, self.records.copy())
         except Exception as e:
             logger.error(f"Failed to save malicious packages to {self.data_path}: {e}")
 

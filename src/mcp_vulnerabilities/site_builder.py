@@ -69,6 +69,12 @@ def _process_server_batch(
         
     cache = TwoTierVulnerabilityCache(cache_dir=cache_dir) if use_cache else None
 
+    try:
+        from mcp_vulnerabilities.threat_intel.openssf_malicious import OpenSsfMaliciousSync
+        malicious_sync = OpenSsfMaliciousSync()
+    except Exception:
+        malicious_sync = None
+
     results = {}
     warnings = []
 
@@ -219,9 +225,11 @@ def _process_server_batch(
             required_env_vars = latest_v_record.required_env_vars if latest_v_record else ()
 
             # OpenSSF Malicious Check
-            from mcp_vulnerabilities.threat_intel.openssf_malicious import OpenSsfMaliciousSync
-            malicious_sync = OpenSsfMaliciousSync()
-            malicious_record = malicious_sync.get_malicious_record(spec.ecosystem, spec.package_name)
+            malicious_record = (
+                malicious_sync.get_malicious_record(spec.ecosystem, spec.package_name)
+                if malicious_sync
+                else None
+            )
 
             is_malicious = False
             quarantine_tier = None
