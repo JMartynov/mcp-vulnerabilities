@@ -36,6 +36,31 @@ class GitHubCuratedDiscoveryProvider:
     LINK_REGEX = re.compile(r"\[([^\]]+)\]\((https://github\.com/[^/)]+/[^/)]+)\)")
 
     @classmethod
+    def is_repository_archived_or_pruned(cls, repo_name_or_url: str, repo_metadata: dict | None = None) -> bool:
+        """Check if a repository is archived, disabled, deleted, or otherwise pruned."""
+        if repo_metadata is not None:
+            return repo_metadata.get("archived", False) or repo_metadata.get("disabled", False)
+            
+        repo_name = repo_name_or_url.split("https://github.com/")[-1].strip("/")
+        api_url = f"https://api.github.com/repos/{repo_name}"
+        headers = {"User-Agent": "McpVulnerabilities/1.0", "Accept": "application/vnd.github.v3+json"}
+        token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+        if token:
+            headers["Authorization"] = f"Bearer {token.strip()}"
+            
+        repo_req = urllib.request.Request(api_url, headers=headers)
+        try:
+            with urllib.request.urlopen(repo_req, timeout=5.0, context=_get_ssl_context()) as repo_resp:
+                repo_data = json.loads(repo_resp.read().decode("utf-8"))
+                return repo_data.get("archived", False) or repo_data.get("disabled", False)
+        except urllib.error.HTTPError as he:
+            if he.code in (404, 410):
+                return True
+        except Exception:
+            pass
+        return False
+
+    @classmethod
     def discover(cls) -> list[dict[str, Any]]:
         """Harvest curated repositories and topics."""
         discovered: dict[str, dict[str, Any]] = {}
@@ -56,35 +81,14 @@ class GitHubCuratedDiscoveryProvider:
                             repo_url=repo,
                         )
                         if is_rel and repo_name not in discovered:
-                            is_deleted = False
-                            is_archived = False
-                            
-                            api_url = f"https://api.github.com/repos/{repo_name}"
-                            headers = {"User-Agent": "McpVulnerabilities/1.0", "Accept": "application/vnd.github.v3+json"}
-                            token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
-                            if token:
-                                headers["Authorization"] = f"Bearer {token.strip()}"
-                                
-                            repo_req = urllib.request.Request(api_url, headers=headers)
-                            try:
-                                with urllib.request.urlopen(repo_req, timeout=5.0, context=_get_ssl_context()) as repo_resp:
-                                    repo_data = json.loads(repo_resp.read().decode("utf-8"))
-                                    is_archived = repo_data.get("archived", False)
-                            except urllib.error.HTTPError as he:
-                                if he.code in (404, 410):
-                                    is_deleted = True
-                            except Exception:
-                                pass
-                                
-                            discovered[repo_name] = {
-                                "name": repo_name,
-                                "ecosystem": "GitHub",
-                                "repository": repo,
-                                "title": title,
-                                "reasons": list(reasons),
-                                "is_deleted": is_deleted,
-                                "is_archived": is_archived,
-                            }
+                            if not cls.is_repository_archived_or_pruned(repo_name):
+                                discovered[repo_name] = {
+                                    "name": repo_name,
+                                    "ecosystem": "GitHub",
+                                    "repository": repo,
+                                    "title": title,
+                                    "reasons": list(reasons),
+                                }
             except Exception as exc:
                 logger.warning("Failed to fetch awesome list %s: %s", url, exc)
 
@@ -112,9 +116,7 @@ class GitHubCuratedDiscoveryProvider:
                         repo_url=html_url,
                     )
                     
-                    archived = it.get("archived", False)
-                    disabled = it.get("disabled", False)
-                    if archived or disabled:
+                    if cls.is_repository_archived_or_pruned(full_name, repo_metadata=it):
                         continue
                     if is_rel:
                         discovered[full_name] = {
