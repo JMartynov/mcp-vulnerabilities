@@ -324,6 +324,13 @@ class UniversalClientConfigScanner:
         "lm_studio",
         "librechat",
         "openwebui",
+        "copilot_cli",
+        "typingmind",
+        "chatbox",
+        "bolt",
+        "jan",
+        "enso",
+        "sourcegraph_cody",
     )
 
     def __init__(self, root: Path | None = None) -> None:
@@ -411,6 +418,40 @@ class UniversalClientConfigScanner:
             return [
                 self.root / "openwebui_mcp.json",
                 self.root / ".openwebui/config.json",
+            ]
+        elif c == "copilot_cli":
+            return [
+                self.root / ".github/copilot-cli/mcp.json",
+                self.root / ".config/github-copilot/mcp.json",
+            ]
+        elif c == "typingmind":
+            return [
+                self.root / "Library/Application Support/TypingMind/mcp.json",
+                self.root / ".config/typingmind/mcp.json",
+            ]
+        elif c == "chatbox":
+            return [
+                self.root / "Library/Application Support/chatbox/mcp.json",
+                self.root / ".config/chatbox/mcp.json",
+            ]
+        elif c == "bolt":
+            return [
+                self.root / ".bolt/mcp.json",
+            ]
+        elif c == "jan":
+            return [
+                self.root / "Library/Application Support/jan/mcp.json",
+                self.root / ".config/jan/mcp.json",
+                self.root / "jan/mcp.json",
+            ]
+        elif c == "enso":
+            return [
+                self.root / ".enso/mcp.json",
+            ]
+        elif c == "sourcegraph_cody":
+            return [
+                self.root / "Library/Application Support/Code/User/globalStorage/sourcegraph.cody-ai/mcp.json",
+                self.root / ".config/Code/User/globalStorage/sourcegraph.cody-ai/mcp.json",
             ]
         return []
 

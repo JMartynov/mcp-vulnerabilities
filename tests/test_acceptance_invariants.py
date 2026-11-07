@@ -21,9 +21,8 @@ def test_cli_subcommand_help_invariants(subcmd):
 def test_cli_version_invariant():
     """Verify version output invariant."""
     result = subprocess.run([sys.executable, "-m", "mcp_vulnerabilities.cli", "--version"], capture_output=True, text=True)
-    if result.returncode != 0:
-        pytest.skip("CLI does not have --version implemented yet.")
     assert "mcp-vuln" in result.stdout or "mcp-vulnerabilities" in result.stdout or "." in result.stdout
+    assert result.returncode == 0
 
 def test_json_output_schema_compliance():
     """Validate JSON output schema compliance across subcommands."""
