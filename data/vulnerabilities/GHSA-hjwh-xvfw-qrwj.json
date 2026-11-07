@@ -1,0 +1,62 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 1.12.0 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-searxng",
+        "purl": "pkg:npm/mcp-searxng"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.12.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-hjwh-xvfw-qrwj"
+    ],
+    "sources_merged": [
+      "GHSA-hjwh-xvfw-qrwj"
+    ]
+  },
+  "details": "mcp-searxng version 1.11.0 exposes SearXNG Basic Authentication credentials embedded in the `SEARXNG_URL` environment variable.\n\nWhen the server starts in STDIO mode and an MCP client connects, the complete `SEARXNG_URL`, including its username and password, is sent to the client through an MCP `notifications/message` logging notification.\n\nAdditionally, when URL validation fails, the complete credential-bearing URL is included in the configuration error. This error is logged through MCP and returned to the client as a JSON-RPC error response.\n\nFor example, a value such as:\n\n```text\nhttp://username:password@searxng.example.com\n```\n\nis exposed without redaction.\n\nA connected MCP client or anyone with access to captured server logs may recover the SearXNG credentials and use them to access the configured SearXNG instance.\n\nThe issue was confirmed in:\n\n```text\nmcp-searxng 1.11.0\n```\n\nSuggested severity: **Medium**",
+  "id": "GHSA-hjwh-xvfw-qrwj",
+  "modified": "2026-08-19T00:00:00Z",
+  "published": "2026-08-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-hjwh-xvfw-qrwj"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/ihor-sokoliuk/mcp-searxng/releases/tag/v1.12.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-hjwh-xvfw-qrwj"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses"
+}

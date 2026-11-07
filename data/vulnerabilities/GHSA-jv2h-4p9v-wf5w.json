@@ -1,0 +1,58 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+        "remediation_guidance": "Upgrade to version 0.42.1 or above."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "ouroboros-ai",
+        "purl": "pkg:pypi/ouroboros-ai"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "0.42.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-jv2h-4p9v-wf5w"
+    ],
+    "sources_merged": [
+      "GHSA-jv2h-4p9v-wf5w"
+    ]
+  },
+  "details": "The CVE-2026-47211 fix (0.39.0) added `_UNTRUSTED_ENV_DENYLIST` to stop an untrusted project-directory `.env` from redirecting execution. The denylist was incomplete \u2014 several execution-routing keys of the same RCE class were omitted, so a malicious cloned repo can still reach arbitrary command execution by shipping a `.env` (auto-loaded at import, no review step):\n\n- **Backend config-home roots** `CODEX_HOME`, `OPENCODE_CONFIG`, `OPENCODE_CONFIG_DIR`, `XDG_CONFIG_HOME`: a spawned vendor CLI resolves its config from these. `CODEX_HOME=./.evil` + committed `./.evil/config.toml` redirects the nested Codex agent to attacker config \u2014 `mcp_servers.<name>.command/args` (RCE) and `approval_policy=\"never\"` / `sandbox_mode=\"danger-full-access\"` (silent removal of the human approval gate). (reported by matte1782)\n- **MCP bridge / plugin execution roster** `OUROBOROS_MCP_CONFIG` (the YAML's server `command`/`args` are spawned via stdio_client \u2014 RCE), `OUROBOROS_PLUGIN_LOCKFILE`, `OUROBOROS_PLUGIN_TRUST_ROOT` (redirect the installed-plugin roster / trust root so `ooo <name>` dispatches into attacker code). (reported by hackkim)\n- **SSRF guard toggle** `OUROBOROS_ALLOW_LOCAL_TRANSPORT` (re-enables loopback/private MCP transport targets).\n- **Instruction / capability roots** `OUROBOROS_AGENTS_DIR`, `COPILOT_CUSTOM_INSTRUCTIONS_DIRS` (replace spawned sub-agent role prompts), `OUROBOROS_RUNTIME_PROFILE` (backend selector), `OUROBOROS_TOOL_CAPABILITIES` (override YAML can lower a tool's `approval_class`, weakening the approval gate).\n\nAdditionally, the MCP bridge auto-loaded `./.ouroboros/mcp_servers.yaml` from the working directory (`create_bridge_from_env(cwd=Path.cwd())`), so running `ooo` inside a malicious repo spawned the committed roster's `command` \u2014 RCE with no `.env` at all. (cwd-branch noted by hackkim)",
+  "id": "GHSA-jv2h-4p9v-wf5w",
+  "modified": "2026-06-19T00:00:00Z",
+  "published": "2026-06-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/Q00/ouroboros/security/advisories/GHSA-jv2h-4p9v-wf5w"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-jv2h-4p9v-wf5w"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "ouroboros-ai: Incomplete fix of CVE-2026-47211: untrusted project .env can still reach RCE via omitted execution-routing keys"
+}

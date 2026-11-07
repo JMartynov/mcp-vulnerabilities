@@ -1,0 +1,67 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "remediation_guidance": "Upgrade to version 1.0.0 or above."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "mcp-contextforge-gateway",
+        "purl": "pkg:pypi/mcp-contextforge-gateway"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.0.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-vwf3-4xxj-qg6h"
+    ],
+    "sources_merged": [
+      "GHSA-vwf3-4xxj-qg6h"
+    ]
+  },
+  "details": "`mcpgateway.services.prompt_service.PromptService` renders user-supplied prompt templates using Jinja2's plain `Environment()` rather than `SandboxedEnvironment`. An authenticated user with permission to register or update prompt templates can store a malicious template that, on subsequent rendering, executes arbitrary Python code on the gateway host with the privileges of the gateway process. This is a Server-Side Template Injection (SSTI) vulnerability leading to Remote Code Execution.",
+  "id": "GHSA-vwf3-4xxj-qg6h",
+  "modified": "2026-08-25T00:00:00Z",
+  "published": "2026-08-25T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/IBM/mcp-context-forge/commit/4d31004661858a2e99055b3c0c9f14218b8f7120"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/IBM/mcp-context-forge/issues/538"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/IBM/mcp-context-forge/pull/4072"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/IBM/mcp-context-forge/releases/tag/v1.0.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/IBM/mcp-context-forge/security/advisories/GHSA-vwf3-4xxj-qg6h"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-vwf3-4xxj-qg6h"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "mcp-contextforge-gateway has Server-Side Template Injection (SSTI) leading to Remote Code Execution in `PromptService._render_template` via unsandboxed Jinja2 Environment"
+}

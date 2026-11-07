@@ -1,0 +1,66 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:N",
+        "remediation_guidance": "Upgrade to version 1.85.10 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "appium-mcp",
+        "purl": "pkg:npm/appium-mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.85.10"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-x975-rgx4-5fh4"
+    ],
+    "sources_merged": [
+      "GHSA-x975-rgx4-5fh4"
+    ]
+  },
+  "details": "`appium-mcp`'s `createLocatorGeneratorUI` function interpolates attacker-controlled element attributes \u2014 `text`, `content-desc`, `resource-id`, and locator selector values \u2014 directly into an HTML template literal without any HTML or JavaScript context escaping. An attacker who controls the UI of the app under test can inject arbitrary HTML and JavaScript into the MCP UI resource returned by the `generate_locators` tool. When a victim's MCP client renders this resource, the injected script executes and can invoke arbitrary MCP tools via `window.parent.postMessage`, leading to unauthorized MCP tool execution such as taking screenshots, reading page source, or any other registered capability.",
+  "id": "GHSA-x975-rgx4-5fh4",
+  "modified": "2026-06-19T00:00:00Z",
+  "published": "2026-06-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-x975-rgx4-5fh4"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/appium/appium-mcp/commit/e222bbbd6fe2b656a320efcd143563f08061a83d"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/appium/appium-mcp/releases/tag/v1.85.10"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/appium/appium-mcp/security/advisories/GHSA-x975-rgx4-5fh4"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:C/C:L/I:H/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "appium-mcp: Unescaped Locator Data XSS in MCP-UI Resource (createLocatorGeneratorUI)"
+}

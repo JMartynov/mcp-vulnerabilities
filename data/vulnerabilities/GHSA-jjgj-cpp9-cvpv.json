@@ -1,0 +1,66 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 2026.2.21 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "openclaw",
+        "purl": "pkg:npm/openclaw"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2026.2.21"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-jjgj-cpp9-cvpv"
+    ],
+    "sources_merged": [
+      "GHSA-jjgj-cpp9-cvpv"
+    ]
+  },
+  "details": "A malicious or compromised MCP (Model Context Protocol) tool server can exfiltrate arbitrary local files from the host system by injecting `MEDIA:` directives into tool result text content. OpenClaw's tool result processing pipeline extracts file paths from `MEDIA:` tokens without source-level validation, passes them through a `localRoots` allowlist check that includes `os.tmpdir()` by default (covering `/tmp` on Linux/macOS and `%TEMP%` on Windows), and then reads and delivers the file contents to external messaging channels such as Discord, Slack, Telegram, and WhatsApp.",
+  "id": "GHSA-jjgj-cpp9-cvpv",
+  "modified": "2026-03-04T00:00:00Z",
+  "published": "2026-03-04T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-jjgj-cpp9-cvpv"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/openclaw/openclaw"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-jjgj-cpp9-cvpv"
+    },
+    {
+      "type": "WEB",
+      "url": "https://owasp.org/www-community/attacks/Path_Traversal"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "OpenClaw Vulnerable to Local File Exfiltration via MCP Tool Result MEDIA: Directive Injection"
+}

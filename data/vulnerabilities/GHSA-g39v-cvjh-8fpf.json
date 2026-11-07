@@ -1,0 +1,74 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 7.5.0 or above."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "ha-mcp",
+        "purl": "pkg:pypi/ha-mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "7.5.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-g39v-cvjh-8fpf"
+    ],
+    "sources_merged": [
+      "GHSA-g39v-cvjh-8fpf"
+    ]
+  },
+  "details": "When `ENABLE_YAML_CONFIG_EDITING=true`, every `ha_config_set_yaml` call backs up the pre-edit file to `<config>/www/yaml_backups/`, which Home Assistant serves at `/local/` with **no authentication**. Anyone who can reach the HA web interface can download the most recent pre-edit `configuration.yaml` (or other YAML file) \u2014 typically containing plaintext MQTT passwords, REST credentials, webhook IDs, geofence coordinates, and `shell_command` definitions \u2014 with zero credentials.",
+  "id": "GHSA-g39v-cvjh-8fpf",
+  "modified": "2026-05-14T00:00:00Z",
+  "published": "2026-05-14T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-g39v-cvjh-8fpf"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/homeassistant-ai/ha-mcp/commit/09c524526b5f945638aa97de6218fadcd233023c"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/homeassistant-ai/ha-mcp/pull/1180"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/homeassistant-ai/ha-mcp/releases/tag/v7.4.1.dev456"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/homeassistant-ai/ha-mcp/releases/tag/v7.5.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/homeassistant-ai/ha-mcp/security/advisories/GHSA-g39v-cvjh-8fpf"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "Home Assistant MCP Server: YAML config backups written under www/ are served unauthenticated at /local/"
+}

@@ -1,0 +1,58 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 0.22.0 or above."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "mcp-atlassian",
+        "purl": "pkg:pypi/mcp-atlassian"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "0.22.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-wm45-qh3g-v83f"
+    ],
+    "sources_merged": [
+      "GHSA-wm45-qh3g-v83f"
+    ]
+  },
+  "details": "A client that can invoke MCP tools can read **arbitrary files from the server host** and exfiltrate them as Atlassian attachments. The attachment-upload tools take a client-supplied `file_path` and `open()` it on the **server's** filesystem.\n\nThe upload tools are meant to attach a file from the **caller's** environment \u2014 the client supplies a path expecting it to refer to its own machine. Over a remote transport (HTTP/SSE) that path is instead resolved and read on the server, and the tool offers no way for the client to send file *content* in place of a server-side path. A remote client therefore reads the server's files \u2014 and, in multi-tenant deployments, other tenants' data \u2014 instead of its own. (In a local `stdio` deployment the server runs as the user, so the path refers to the user's own files and reading any path is the intended behavior; the exposure is specific to remote/multi-user transports.)",
+  "id": "GHSA-wm45-qh3g-v83f",
+  "modified": "2026-07-10T00:00:00Z",
+  "published": "2026-07-10T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-wm45-qh3g-v83f"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/sooperset/mcp-atlassian/security/advisories/GHSA-wm45-qh3g-v83f"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "mcp-atlassian: Arbitrary server-side file read via attachment upload"
+}

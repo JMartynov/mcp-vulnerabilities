@@ -1,0 +1,58 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+        "remediation_guidance": "Upgrade to version 1.7.1 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-searxng",
+        "purl": "pkg:npm/mcp-searxng"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.7.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-xcqx-9jf5-w339"
+    ],
+    "sources_merged": [
+      "GHSA-xcqx-9jf5-w339"
+    ]
+  },
+  "details": "The `web_url_read` MCP tool in mcp-searxng enforces its 5 MiB response-size limit exclusively by inspecting the `Content-Length` header of a preliminary HEAD request. When a server omits `Content-Length` \u2014 a standard HTTP practice \u2014 `checkContentLength()` returns `null`, the guard condition short-circuits to `false`, and `response.text()` loads the entire response body into memory without any byte cap. An unauthenticated attacker who controls or can redirect to an HTTP endpoint can force the server process to consume unbounded memory and CPU, leading to a Denial of Service.",
+  "id": "GHSA-xcqx-9jf5-w339",
+  "modified": "2026-06-19T00:00:00Z",
+  "published": "2026-06-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-xcqx-9jf5-w339"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-xcqx-9jf5-w339"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`"
+}

@@ -1,0 +1,70 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+        "remediation_guidance": "Upgrade to version 2.0.0 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "@dynatrace-oss/dynatrace-mcp-server",
+        "purl": "pkg:npm/@dynatrace-oss/dynatrace-mcp-server"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.0.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-xrmj-5g4g-8987"
+    ],
+    "sources_merged": [
+      "GHSA-xrmj-5g4g-8987"
+    ]
+  },
+  "details": "A template injection vulnerability in the `create_workflow_for_notification` tool lets a caller embed Jinja2 expressions that the Dynatrace workflow engine evaluates at runtime, exfiltrating event data to attacker-controlled destinations through a workflow that persists in the tenant after the MCP session ends.",
+  "id": "GHSA-xrmj-5g4g-8987",
+  "modified": "2026-07-31T00:00:00Z",
+  "published": "2026-07-31T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-xrmj-5g4g-8987"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/dynatrace-oss/dynatrace-mcp/commit/64dfcb1095823d0fb43013635446288a6ff60e29"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/dynatrace-oss/dynatrace-mcp/pull/547"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/dynatrace-oss/dynatrace-mcp/releases/tag/v2.0.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/dynatrace-oss/dynatrace-mcp/security/advisories/GHSA-xrmj-5g4g-8987"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:U/C:L/I:L/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "@dynatrace-oss/dynatrace-mcp-server has a workflow template injection via create_workflow_for_notification"
+}

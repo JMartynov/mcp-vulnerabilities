@@ -1,0 +1,62 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+        "remediation_guidance": "Upgrade to version 1.1.0 or above."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "atomic-agents-stack",
+        "purl": "pkg:pypi/atomic-agents-stack"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.1.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-xhcr-cqfr-m3hv"
+    ],
+    "sources_merged": [
+      "GHSA-xhcr-cqfr-m3hv"
+    ]
+  },
+  "details": "The HTTP MCP server-registry backend factory (`atomic_agents/mcp_registry/http.py`, `make_http_mcp_server_registry_backend_from_url`) accepts both `http` and `https` schemes. Catalog entries carry `command`/`args` that are type-validated but content-unrestricted, and are later spawned as local stdio subprocesses by `MCPClientPool`. Over a cleartext `http://` catalog URL, a network man-in-the-middle can rewrite the catalog response to inject an arbitrary `command`/`args` and obtain code execution on the agent host, with no LLM involvement. The Policy MCP allowlist is not a default mitigation (`mcp_allow_fn` defaults to None), so absent an operator-authored allowlist every resolved spec connects.\n\n**Affected:** `mcp_registry/http.py`, all versions through 1.0.0. (The `https` path is sound: `httpx` defaults to `verify=True`, `follow_redirects=False`.)\n\n**Fix:** require `https` by default and gate `http://` behind a loud explicit opt-in. Defense-in-depth: allowlist the resolved command basename (or require confirmation) before any registry-sourced subprocess spawn. Document the consequence in spec/36.",
+  "id": "GHSA-xhcr-cqfr-m3hv",
+  "modified": "2026-08-17T00:00:00Z",
+  "published": "2026-08-17T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-xhcr-cqfr-m3hv"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/dep0we/atomic-agents-stack/releases#release-v1.1.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/dep0we/atomic-agents-stack/security/advisories/GHSA-xhcr-cqfr-m3hv"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "atomic-agents-stack: HTTP MCP catalog accepts cleartext http and spawns catalog-supplied commands (MITM to RCE)"
+}

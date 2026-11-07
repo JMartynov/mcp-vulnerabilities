@@ -1,0 +1,58 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+        "remediation_guidance": "Unfortunately, there is no solution available yet."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "@grackle-ai/plugin-core",
+        "purl": "pkg:npm/@grackle-ai/plugin-core"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "0.132.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-f9ff-5x35-7gfw"
+    ],
+    "sources_merged": [
+      "GHSA-f9ff-5x35-7gfw"
+    ]
+  },
+  "details": "Authorization for scoped (agent) MCP callers is enforced **inline, per tool**, and is applied inconsistently \u2014 several mutating tools silently omit the ancestry/workspace check that their siblings perform. Because the MCP server authenticates all outbound gRPC with the full server API key and the backend gRPC handlers perform **no caller-based authorization**, the MCP tool layer is the *sole* authorization boundary. A malicious or prompt-injected scoped agent can therefore perform cross-task and cross-session operations it should not be allowed to (an IDOR / privilege-boundary bypass).\n\nThis advisory bundles the audit's **Systemic Pattern A** findings: **F2, F6, F7, F12** (and the duplicate F19).",
+  "id": "GHSA-f9ff-5x35-7gfw",
+  "modified": "2026-07-02T00:00:00Z",
+  "published": "2026-07-02T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-f9ff-5x35-7gfw"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/nick-pape/grackle/security/advisories/GHSA-f9ff-5x35-7gfw"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "Grackle: Fail-open authorization in the MCP tool layer lets scoped agents perform cross-task and cross-session mutations (IDOR)"
+}

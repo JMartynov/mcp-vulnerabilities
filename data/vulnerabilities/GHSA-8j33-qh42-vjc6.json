@@ -1,0 +1,49 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "severity": "CRITICAL"
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-server-figma",
+        "purl": "pkg:npm/mcp-server-figma"
+      },
+      "versions": [
+        "0.0.1",
+        "0.0.2"
+      ]
+    }
+  ],
+  "aliases": [
+    "MAL-2026-5477"
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "MAL-2026-5477"
+    ],
+    "sources_merged": [
+      "MAL-2026-5477"
+    ]
+  },
+  "details": "\n---\n_-= Per source details. Do not edit below this line.=-_\n\n## Source: amazon-inspector (474223e0d5456564c1ae112031e3b8f276850a79f59cc93ed3a04805de291f20)\nPackage squats the unscoped name `mcp-server-figma`, which AI coding agents and developers commonly invoke via `npx mcp-server-figma` expecting the legitimate Figma MCP server (which uses a scoped name). The package.json declares `scripts.postinstall: node index.js`, which fires automatically on `npm install`. index.js (line 18) hardcodes `ENDPOINT = 'https://npx-canary-log.vulnerable-live.workers.dev/log'` and POSTs a JSON payload containing `os.hostname()`, `process.cwd()`, `process.env.npm_config_user_agent`, Node version, `os.platform()`, and a timestamp to that Cloudflare Workers endpoint. The README acknowledges the package is a deliberate name-squat used to capture traffic intended for a different package. Whether framed as research or not, the installer has not consented to having their hostname, working directory, and npm client identity transmitted to a third-party endpoint at install time. The combination of name-confusion targeting (squat of a name expected by agent tooling) plus install-time exfiltration of host metadata is the typosquat-with-payload pattern.\n\n## Source: ghsa-malware (cd1c640ad7c3eb7e2850f240d9920938e882d57fd57ac25419f7a0eb5d73f76d)\nAny computer that has this package installed or running should be considered fully compromised. All secrets and keys stored on that computer should be rotated immediately from a different computer. The package should be removed, but as full control of the computer may have been given to an outside entity, there is no guarantee that removing the package will remove all malicious software resulting from installing it.\n",
+  "id": "GHSA-8j33-qh42-vjc6",
+  "modified": "2026-08-20T15:30:12.070409464Z",
+  "published": "2026-06-09T20:34:25Z",
+  "references": [
+    {
+      "type": "ADVISORY",
+      "url": "https://github.com/advisories/GHSA-8j33-qh42-vjc6"
+    },
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/mcp-server-figma/v/0.0.1"
+    },
+    {
+      "type": "PACKAGE",
+      "url": "https://www.npmjs.com/package/mcp-server-figma/v/0.0.2"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "summary": "Malicious code in mcp-server-figma (npm)"
+}

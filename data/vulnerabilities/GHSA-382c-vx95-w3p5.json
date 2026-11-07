@@ -1,0 +1,62 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Unfortunately, there is no solution available yet."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "@jsonbored/gittensory-mcp",
+        "purl": "pkg:npm/@jsonbored/gittensory-mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "last_affected": "0.1.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-382c-vx95-w3p5"
+    ],
+    "sources_merged": [
+      "GHSA-382c-vx95-w3p5"
+    ]
+  },
+  "details": "`GET /v1/contributors/:login/profile` and the `gittensory_get_contributor_profile` MCP tool skip the contributor-scoped access check that every sibling endpoint enforces. Any authenticated session/API/MCP token holder can read any contributor's profile; for confirmed Gittensor miners that exposes `alphaPerDay`, `taoPerDay`, `usdPerDay` (and the `hotkey` on the REST path). Authenticated cross-contributor disclosure, CWE-284 / IDOR.",
+  "id": "GHSA-382c-vx95-w3p5",
+  "modified": "2026-07-09T00:00:00Z",
+  "published": "2026-07-09T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/JSONbored/gittensory/commit/811ef5fb9d748170011f8854d88c64627ad666a0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/JSONbored/gittensory/security/advisories/GHSA-382c-vx95-w3p5"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-382c-vx95-w3p5"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "Gittensory: Missing contributor-scoped access control on profile endpoint and MCP tool leaks miner financial data"
+}

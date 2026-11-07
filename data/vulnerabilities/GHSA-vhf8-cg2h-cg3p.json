@@ -1,0 +1,81 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+        "remediation_guidance": "Upgrade to versions 2.31.5, 2.32.1 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "n8n",
+        "purl": "pkg:npm/n8n"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.31.5"
+            }
+          ],
+          "type": "SEMVER"
+        },
+        {
+          "events": [
+            {
+              "introduced": "2.32.0"
+            },
+            {
+              "fixed": "2.32.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-vhf8-cg2h-cg3p"
+    ],
+    "sources_merged": [
+      "GHSA-vhf8-cg2h-cg3p"
+    ]
+  },
+  "details": "On an n8n instance with SSRF protection enabled, the MCP Client node sent requests to a user-supplied endpoint without routing them through that protection and without pinning the resolved address. An authenticated user who could create or edit a workflow could therefore cause the server to connect to internal or otherwise blocked hosts and read the responses back through the workflow, exposing internal services the SSRF protection was meant to protect.",
+  "id": "GHSA-vhf8-cg2h-cg3p",
+  "modified": "2026-07-22T00:00:00Z",
+  "published": "2026-07-22T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-vhf8-cg2h-cg3p"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/n8n-io/n8n/commit/f69dfc6dd2178a14ea1624d2e1d403c2e755042f"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/n8n-io/n8n/releases/tag/n8n@2.31.5"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/n8n-io/n8n/releases/tag/n8n@2.32.1"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/n8n-io/n8n/security/advisories/GHSA-vhf8-cg2h-cg3p"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:L",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "n8n: SSRF Protection Bypass via MCP Client Node"
+}

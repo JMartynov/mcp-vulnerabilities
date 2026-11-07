@@ -1,0 +1,66 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 2.7.1 or above."
+      },
+      "package": {
+        "ecosystem": "Go",
+        "name": "github.com/oapi-codegen/oapi-codegen/v2",
+        "purl": "pkg:golang/github.com/oapi-codegen/oapi-codegen/v2"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.7.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-rjwr-m7qx-3fjr"
+    ],
+    "sources_merged": [
+      "GHSA-rjwr-m7qx-3fjr"
+    ]
+  },
+  "details": "The vulnerability in oapi-codegen seems to be similar with CVE-2026-22785,  which is a generated-code injection issue where untrusted OpenAPI `summary` text is embedded into generated TypeScript MCP server source without proper escaping. `oapi-codegen` has a similar vulnerability in its server URL generator: untrusted OpenAPI `servers[].description` text is inserted into a generated Go line comment without normalizing embedded newlines. A crafted description can break out of the comment, add imports through `goimports`, and emit executable Go declarations into the generated package.\n\n> [!NOTE]\n> A vulnerability like this requires that it is missed in code review **and** that you then call the malicious method.\n>\n> Using an `init()` function could be enough to not require a direct call to the code, and instead rely on you importing the package, but either way, code review should be performed before any `oapi-codegen` generated code is executed.\n>\n> We **strongly recommend** all users to be reviewing changes to their generated code before they execute anything within it, to protect against supply chain attacks or malicious injected code.\n>\n> This is also why we recommend `oapi-codegen` generated code is committed to source control.",
+  "id": "GHSA-rjwr-m7qx-3fjr",
+  "modified": "2026-07-17T00:00:00Z",
+  "published": "2026-07-17T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-rjwr-m7qx-3fjr"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/oapi-codegen/oapi-codegen/commit/19c6282e9a6fb84b51aa92b12fad1f0b7e5f5ef6"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/oapi-codegen/oapi-codegen/releases/tag/v2.7.1"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/oapi-codegen/oapi-codegen/security/advisories/GHSA-rjwr-m7qx-3fjr"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "oapi-codegen: OpenAPI Server Description Escapes Generated Go Comment and Injects Executable Code"
+}

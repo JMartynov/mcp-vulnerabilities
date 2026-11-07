@@ -3963,7 +3963,7 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 0.11.1",
+    "latest_version": "<= 0.15.2",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "5ire",
@@ -4048,7 +4048,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "<= 0.15.2"
+        "version": ">= 0.13.2, < 0.14.0"
       },
       {
         "advisories": [
@@ -4186,7 +4186,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": ">= 0.13.2, < 0.14.0"
+        "version": "< 0.11.1"
       },
       {
         "advisories": [
@@ -4255,7 +4255,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.11.1"
+        "version": "<= 0.15.2"
       }
     ]
   },
@@ -7363,6 +7363,53 @@
       }
     ]
   },
+  "@contentful/mcp-server": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "HIGH",
+    "description": "Contentful MCP Server: export_space/import_space tools pass LLM-controlled `host`/`proxy` args to CMA client, redirecting server PAT to attacker-controlled endpoint",
+    "display_name": "@contentful/mcp-server",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": "HIGH",
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": true,
+    "latest_version": "1.7.19",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "@contentful/mcp-server",
+    "prompts_count": 0,
+    "purl": "pkg:npm/@contentful/mcp-server",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.7.19",
+    "repo_http_status": 200,
+    "repository_url": null,
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Package `@contentful/mcp-server` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "",
+    "transport": null,
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "1.7.19"
+      }
+    ]
+  },
   "@dnsdoctor/mcp": {
     "archival_reason": null,
     "author": "DNS Doctor",
@@ -7952,19 +7999,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "63.2.0",
+    "latest_version": "63.2.2",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@jrpool/kilotest",
     "prompts_count": 0,
     "purl": "pkg:npm/@jrpool%2Fkilotest",
     "quarantine_tier": null,
-    "recommended_safe_version": "63.2.0",
+    "recommended_safe_version": "63.2.2",
     "repo_http_status": 200,
     "repository_url": "https://github.com/jrpool/kilotest",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@jrpool/kilotest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 150 safe version(s).",
+    "security_summary": "Server `@jrpool/kilotest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 152 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:1acf7b6348456ed5e03b304aebcdb4d984e78e8602de39568efaebab2c2da92c",
@@ -22357,6 +22404,723 @@
         ],
         "toolset_canonical_hash": "sha256:1acf7b6348456ed5e03b304aebcdb4d984e78e8602de39568efaebab2c2da92c",
         "version": "63.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-06T19:06:20.452Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "63.2.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-06T21:17:25.932Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:65969608fdaf76c1e708b4277b80eef2d0b2f994822ad56b27ad244ff98a8994",
+            "description": "Waits for a job ordered via the orderNewTest or orderRetest tool to finish, using the report identifier either tool returned. Use this instead of polling listIssues when an immediate answer is preferred. Blocks until the report is ready, the job fails, or a maximum wait time elapses, sending no interim notices; returns the finished job’s status and, if ready, its report identifier.",
+            "name": "awaitTest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `awaitTest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:57b69ed231dcacd89dee25618fff7a4e19080e70f64f902920785a24e793dbf8",
+            "description": "Example Page",
+            "name": "cherry",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cherry` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0f083c5c6674c60a9f65720a387ce2d2689f3e4c4861c31347bbf66eb5a9802f",
+            "description": "Explains what Kilotest is, what its tools do, and how its results are structured. Use this before any other tool when the available tools or workflow are unclear. Returns a prose overview of the Kilotest domain, the tool workflow, and links to further documentation. ${sharedContext}",
+            "name": "getKilotestOverview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `getKilotestOverview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:27bc6043026b3a4d68c96f969dcf49be6c18ebe036021a301b06323cef4a82a0",
+            "description": "Retrieves one entire report as JSON, with all of its issues, violators, and diagnoses. Use this instead of drilling down through listIssues, listViolators, and listDiagnoses when the full report is needed in one call. Returns the complete report data for the specified timestamp and job identifier. The size of the report is disclosed by the listIssues tool.",
+            "name": "getReport",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `getReport` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:31f1c8384dded8eedfb74eca5858adbc2c98fc86ea5a90095c0dfe5152820f86",
+            "description": "Lists the diagnoses that rule engines gave for how one element exhibited one issue in one report. Use this after listViolators to get details about the element as a violator of the issue. Returns, for each rule engine that reported a violation by the element of a rule belonging to the issue, the diagnosis given by the rule engine.",
+            "name": "listDiagnoses",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `listDiagnoses` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:add6318fc323fc4bbd17a0b9869bbae5fb2beb3bc9f17b219df5d124dc5446db",
+            "description": "Lists the issues reported in one report, along with the history of all reports about the same page. Use this after listPages to switch to an earlier or later report or to begin examining this report. Returns the history and the basics about this report’s issues.",
+            "name": "listIssues",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `listIssues` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e9943ac6fd93a73ab497621096f1196c575f9dd2f82742b52117479c8adcd89e",
+            "description": "Lists all pages Kilotest has tested. Use this first to discover whether a page already has any reports before requesting a test. Returns, for each tested page, its description, URL, and the timestamp and job identifier of its latest available report.",
+            "name": "listPages",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `listPages` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f51b8ea0f19592895ffcefbc5eb7e362e9bd1bc6da641b0d9c7acb37db154e63",
+            "description": "Lists the elements of a tested page that were reported as exhibiting one issue in one report. Use this after listIssues to drill down from an issue to the elements violating rules belonging to that issue. Returns basics about each violating element.",
+            "name": "listViolators",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `listViolators` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:08ed2583dfb192c6c7199b9672567ec675b5aa240c162a6e5220a28c6f50841c",
+            "description": "Orders testing of a page that has no report yet, with automated approval or rejection and immediate enqueueing if approved. Use this instead of requestNewTest when immediate testing is wanted; testing typically takes 2 to 4 minutes. Returns an order confirmation and disposition details, including, if approved, a report identifier (timestamp and job identifier) and a question about whether to wait for completion with the awaitTest tool.",
+            "name": "orderNewTest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `orderNewTest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e49d17bc8e4dddfb302bd8445189879653ba27dfac90ea11306a99cb2fe836b9",
+            "description": "Orders a retest of a page whose existing report is considered obsolete, with automated approval or rejection and immediate enqueuing if approved. Use this instead of requestRetest when immediate retesting is wanted; testing typically takes 2 to 4 minutes. Returns an order confirmation and disposition details, including, if approved, a report identifier (timestamp and job identifier) and a question about whether to wait for completion with the awaitTest tool.",
+            "name": "orderRetest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `orderRetest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:687fe10e3a93d30dbaffe96777eba1aa2dc0455cc66f8e1138393dbd93272419",
+            "description": "Submits a request to add a new feature or improve an existing one; queued for manager review. There is no immediate-approval alternative for feature requests. Returns a request confirmation with disposition details.",
+            "name": "requestFeature",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `requestFeature` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2488546b3a2a8b5c4abaebe06517c05790a48eb0ecb25cbdc5f472e6486f3823",
+            "description": "Submits a request to test a page that has no report yet; queued for manager approval. Use orderNewTest instead for immediate, automatically approved testing. Returns a request confirmation with disposition details.",
+            "name": "requestNewTest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `requestNewTest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a93053139a9604e11d4889bca30003fffa2f239ac359182fbbdb5f43cf341193",
+            "description": "Submits a request to retest a page whose existing report is considered obsolete; queued for manager approval. Use orderRetest instead for immediate, automatically approved retesting. Returns a request confirmation with disposition details.",
+            "name": "requestRetest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `requestRetest` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:1acf7b6348456ed5e03b304aebcdb4d984e78e8602de39568efaebab2c2da92c",
+        "version": "63.2.2"
       }
     ]
   },
@@ -23407,6 +24171,53 @@
         ],
         "toolset_canonical_hash": "sha256:d592273ca99bb7dba86e388cb612cd025d067996c9911d26ae941ab21539d04f",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "@lobehub/chat": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "HIGH",
+    "description": "Lobe Chat Desktop vulnerable to Remote Code Execution via XSS in Chat Messages",
+    "display_name": "@lobehub/chat",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": "HIGH",
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": true,
+    "latest_version": "1.129.4",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "@lobehub/chat",
+    "prompts_count": 0,
+    "purl": "pkg:npm/@lobehub/chat",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.129.4",
+    "repo_http_status": 200,
+    "repository_url": null,
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Package `@lobehub/chat` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "",
+    "transport": null,
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "1.129.4"
       }
     ]
   },
@@ -31696,7 +32507,7 @@
     "repository_url": null,
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Package `Flowise` has 6 security advisories.",
+    "security_summary": "Package `Flowise` has 7 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "",
@@ -31713,6 +32524,17 @@
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise's HTTP ",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 9.8,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-71336",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "Flowise before 3.0.6 (affected versions 2.2.7-patch.1 and earlier) contains an unsandboxed remote code execution vulnera",
             "vulnerable_tools": []
           },
           {
@@ -31749,14 +32571,25 @@
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 9.8,
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-59528",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 3.0.6 or above.",
+            "severity": "CRITICAL",
+            "summary": "Flowise has Remote Code Execution vulnerability",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
             "id": "CVE-2025-8943",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Unfortunately, there is no solution available yet.",
             "severity": "CRITICAL",
-            "summary": "The Custom MCPs feature is designed to execute OS commands, for instance, using tools like `npx` to spin up local MCP Se",
+            "summary": "Flowise OS command remote code execution",
             "vulnerable_tools": []
           }
         ],
@@ -31796,61 +32629,25 @@
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 8.7,
+            "cvss_score": 9.8,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-69263",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the mitigation ",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 9.9,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-56274",
+            "id": "CVE-2025-71336",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Flowise before 3.1.2 contains multiple OS command injection vulnerabilities in the Custom MCP Server feature due to inco",
+            "summary": "Flowise before 3.0.6 (affected versions 2.2.7-patch.1 and earlier) contains an unsandboxed remote code execution vulnera",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 10.0,
+            "cvss_score": 9.8,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2025-59528",
+            "id": "CVE-2025-71336",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. In version 3.0.5, Flowise is vu",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "= 3.0.5"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-69257",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, Flowise's HTTP ",
+            "summary": "Flowise before 3.0.6 (affected versions 2.2.7-patch.1 and earlier) contains an unsandboxed remote code execution vulnera",
             "vulnerable_tools": []
           },
           {
@@ -31885,6 +32682,28 @@
             "severity": "CRITICAL",
             "summary": "Flowise before 3.1.2 contains multiple OS command injection vulnerabilities in the Custom MCP Server feature due to inco",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-59528",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 3.0.6 or above.",
+            "severity": "CRITICAL",
+            "summary": "Flowise has Remote Code Execution vulnerability",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-8943",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Unfortunately, there is no solution available yet.",
+            "severity": "CRITICAL",
+            "summary": "Flowise OS command remote code execution",
+            "vulnerable_tools": []
           }
         ],
         "connections": [],
@@ -31896,7 +32715,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "3.0.1"
+        "version": "2.2.7-patch.1"
       },
       {
         "advisories": [
@@ -31931,17 +32750,6 @@
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Flowise before 3.1.2 contains multiple OS command injection vulnerabilities in the Custom MCP Server feature due to inco",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 10.0,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-59528",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. In version 3.0.5, Flowise is vu",
             "vulnerable_tools": []
           }
         ],
@@ -31978,17 +32786,6 @@
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. Prior to 3.1.3, the mitigation ",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 10.0,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-59528",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Flowise is a drag & drop user interface to build a customized large language model flow. In version 3.0.5, Flowise is vu",
             "vulnerable_tools": []
           }
         ],
@@ -102441,6 +103238,53 @@
       }
     ]
   },
+  "github.com/apache/skywalking-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "HIGH",
+    "description": "Apache SkyWalking MCP: Server-Side Request Forgery via SW-URL Header in MCP Server",
+    "display_name": "github.com/apache/skywalking-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "Go",
+    "highest_cve_severity": "HIGH",
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": true,
+    "latest_version": "0.2.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "github.com/apache/skywalking-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:go/github.com/apache/skywalking-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.2.0",
+    "repo_http_status": 200,
+    "repository_url": null,
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Package `github.com/apache/skywalking-mcp` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "",
+    "transport": null,
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "0.2.0"
+      }
+    ]
+  },
   "googlecalendar": {
     "archival_reason": null,
     "author": null,
@@ -114992,7 +115836,7 @@
     "repository_url": null,
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Package `mcp-audit-logging` has 3 security advisories.",
+    "security_summary": "Package `mcp-audit-logging` has 6 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "",
@@ -115013,6 +115857,32 @@
       },
       {
         "advisories": [
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-LOGFORGE-001",
+            "owasp_mcp_category": "Log Tampering",
+            "remediation_guidance": "Enforces server-generated ISO timestamps and authenticated actor IDs.",
+            "severity": "HIGH",
+            "summary": "Audit Log Forgery & Timestamp Manipulation in Security Audit Trails & Logging (mcp-audit-logging)",
+            "vulnerable_tools": [
+              "record_audit_event"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-LOGDEL-001",
+            "owasp_mcp_category": "Improper Data Retention Control",
+            "remediation_guidance": "Validates mandatory 90-day minimum retention boundary before deletion.",
+            "severity": "HIGH",
+            "summary": "Unauthorized Audit Log Deletion in Security Audit Trails & Logging (mcp-audit-logging)",
+            "vulnerable_tools": [
+              "delete_expired_logs"
+            ]
+          },
           {
             "cvss_score": 8.5,
             "epss_percentile": null,
@@ -115044,6 +115914,19 @@
             "epss_percentile": null,
             "epss_score": null,
             "id": "VERITY-LITE-MONGO-REGEX-DOS-001",
+            "owasp_mcp_category": "ReDoS / Query CPU Exhaustion",
+            "remediation_guidance": "Escapes regex characters and requires literal string equality matching.",
+            "severity": "HIGH",
+            "summary": "Unanchored Regex Query Denial of Service in Security Audit Trails & Logging (mcp-audit-logging)",
+            "vulnerable_tools": [
+              "query_audit_logs"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-REGEX-DOS-001",
             "owasp_mcp_category": "ReDoS / Query CPU Exhaustion",
             "remediation_guidance": "Escapes regex characters and requires literal string equality matching.",
             "severity": "HIGH",
@@ -115121,195 +116004,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "1.0.0"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 7.3,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-7443",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "A weakness has been identified in BurtTheCoder mcp-dnstwist up to 1.0.4. Affected by this vulnerability is the function ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.0.1"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 7.3,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-7443",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "A weakness has been identified in BurtTheCoder mcp-dnstwist up to 1.0.4. Affected by this vulnerability is the function ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.0.2"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 7.3,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-7443",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "A weakness has been identified in BurtTheCoder mcp-dnstwist up to 1.0.4. Affected by this vulnerability is the function ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.0.3"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 7.3,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-7443",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "A weakness has been identified in BurtTheCoder mcp-dnstwist up to 1.0.4. Affected by this vulnerability is the function ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
         "version": "1.0.4"
-      }
-    ]
-  },
-  "mcp-neo4j": {
-    "archival_reason": null,
-    "author": null,
-    "composite_risk_score": null,
-    "composite_risk_tier": "CRITICAL",
-    "description": "mcp-neo4j-cypher is an MCP server for executing Cypher queries against Neo4j databases. In versions prior to 0.6.0, the ",
-    "display_name": "mcp-neo4j",
-    "dual_axis_security": null,
-    "ecosystem": "MCP",
-    "highest_cve_severity": "CRITICAL",
-    "homepage_url": null,
-    "is_malicious": false,
-    "is_unpublished": false,
-    "is_vulnerable": true,
-    "latest_version": "0.6.0",
-    "license": null,
-    "malicious_advisory_id": null,
-    "package_name": "mcp-neo4j",
-    "prompts_count": 0,
-    "purl": "pkg:mcp/mcp-neo4j",
-    "quarantine_tier": null,
-    "recommended_safe_version": null,
-    "repo_http_status": 200,
-    "repository_url": null,
-    "required_env_vars": [],
-    "resources_count": 0,
-    "security_summary": "Package `mcp-neo4j` has 1 security advisories.",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "",
-    "transport": null,
-    "versions": [
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-35402",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-neo4j-cypher is an MCP server for executing Cypher queries against Neo4j databases. In versions prior to 0.6.0, the ",
-            "vulnerable_tools": [
-              "read_only"
-            ]
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 0.6.0"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-35402",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-neo4j-cypher is an MCP server for executing Cypher queries against Neo4j databases. In versions prior to 0.6.0, the ",
-            "vulnerable_tools": [
-              "read_only"
-            ]
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "0.6.0"
       }
     ]
   },
@@ -115463,64 +116158,97 @@
       }
     ]
   },
-  "mcp-server-openai": {
+  "mcp-text-editor": {
     "archival_reason": null,
-    "author": "Maxwell Weinzierl",
+    "author": null,
     "composite_risk_score": null,
-    "composite_risk_tier": "LOW",
-    "description": "A Model Context Protocol server providing tools to manage OpenAI API keys & spending",
-    "display_name": "mcp-server-openai",
+    "composite_risk_tier": "MEDIUM",
+    "description": "A security vulnerability has been detected in tumf mcp-text-editor up to 1.0.2. This issue affects the function _validat",
+    "display_name": "mcp-text-editor",
     "dual_axis_security": null,
-    "ecosystem": "pypi",
-    "highest_cve_severity": null,
+    "ecosystem": "MCP",
+    "highest_cve_severity": "MEDIUM",
     "homepage_url": null,
     "is_malicious": false,
     "is_unpublished": false,
-    "is_vulnerable": false,
-    "latest_version": "1.0.0",
-    "license": "MIT",
+    "is_vulnerable": true,
+    "latest_version": "1.0.2",
+    "license": null,
     "malicious_advisory_id": null,
-    "package_name": "mcp-server-openai",
+    "package_name": "mcp-text-editor",
     "prompts_count": 0,
-    "purl": "pkg:pypi/mcp-server-openai",
+    "purl": "pkg:mcp/mcp-text-editor",
+    "quarantine_tier": null,
+    "recommended_safe_version": null,
+    "repo_http_status": 200,
+    "repository_url": null,
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Package `mcp-text-editor` has 1 security advisories.",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "",
+    "transport": null,
+    "versions": [
+      {
+        "advisories": [
+          {
+            "cvss_score": 6.3,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-15138",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "A security vulnerability has been detected in tumf mcp-text-editor up to 1.0.2. This issue affects the function _validat",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "1.0.2"
+      }
+    ]
+  },
+  "mcp-use": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "HIGH",
+    "description": "mcp-use contains malware after npm account takeover",
+    "display_name": "mcp-use",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": "HIGH",
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": true,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "mcp-use",
+    "prompts_count": 0,
+    "purl": "pkg:npm/mcp-use",
     "quarantine_tier": null,
     "recommended_safe_version": "1.0.0",
     "repo_http_status": 200,
     "repository_url": null,
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `mcp-server-openai` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
+    "security_summary": "Package `mcp-use` has 1 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:31df232afd43ef364b7a07e4f0664eb92927990f07be26b4ce1fdb2a2dafba6b",
-    "transport": "stdio",
+    "toolset_canonical_hash": "",
+    "transport": null,
     "versions": [
-      {
-        "advisories": [],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": "2025-08-07T03:15:45.149429Z",
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "version": "0.1.3"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": "2025-08-07T03:26:55.938188Z",
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
-        "version": "0.1.4"
-      },
       {
         "advisories": [],
         "connections": [],
@@ -115530,86 +116258,8 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:f712f7de4aa0e33e52d49e954c4a50dc2a5b3616af654f0cb30fe12cbf271d5e",
-            "description": "Fetches OpenAI costs for the specified period.",
-            "name": "get_costs",
-            "parameters": [
-              {
-                "default": null,
-                "description": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "name": "start_time",
-                "nested_properties": null,
-                "required": true,
-                "type": "string"
-              },
-              {
-                "default": null,
-                "description": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "name": "end_time",
-                "nested_properties": null,
-                "required": false,
-                "type": "string"
-              },
-              {
-                "default": null,
-                "description": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "name": "group_by",
-                "nested_properties": null,
-                "required": false,
-                "type": "string"
-              },
-              {
-                "default": null,
-                "description": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "name": "project_ids",
-                "nested_properties": null,
-                "required": false,
-                "type": "string"
-              }
-            ],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_costs` operates with safe parameters and poses minimal static capability risk."
-          },
-          {
-            "annotations": {},
-            "canonical_hash": "sha256:d64b6d07eb794702ae78176526bacff334eda82fed093ef1c8c67f39362e8370",
-            "description": "Fetches OpenAI projects for the current organization.",
-            "name": "get_projects",
-            "parameters": [
-              {
-                "default": null,
-                "description": null,
-                "enum": null,
-                "format": null,
-                "items_type": null,
-                "name": "include_archived",
-                "nested_properties": null,
-                "required": false,
-                "type": "string"
-              }
-            ],
-            "risk_score": 0.0,
-            "risk_tier": "low",
-            "security_comment": "Tool `get_projects` operates with safe parameters and poses minimal static capability risk."
-          }
-        ],
-        "toolset_canonical_hash": "sha256:31df232afd43ef364b7a07e4f0664eb92927990f07be26b4ce1fdb2a2dafba6b",
+        "tools": [],
+        "toolset_canonical_hash": "",
         "version": "1.0.0"
       }
     ]
@@ -117193,16 +117843,16 @@
     "archival_reason": null,
     "author": "Dana K. Williams",
     "composite_risk_score": null,
-    "composite_risk_tier": "LOW",
+    "composite_risk_tier": "CRITICAL",
     "description": "A Model Context Protocol (MCP) server that enables secure interaction with MySQL databases. This server allows AI assistants to list tables, read data, and execute SQL queries through a controlled interface, making database exploration and analysis safer and more structured.",
     "display_name": "mysql_mcp_server",
     "dual_axis_security": null,
     "ecosystem": "pypi",
-    "highest_cve_severity": null,
+    "highest_cve_severity": "CRITICAL",
     "homepage_url": null,
     "is_malicious": false,
     "is_unpublished": false,
-    "is_vulnerable": false,
+    "is_vulnerable": true,
     "latest_version": "0.4.5",
     "license": null,
     "malicious_advisory_id": null,
@@ -117215,17 +117865,40 @@
     "repository_url": "https://github.com/designcomputer/mysql_mcp_server",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `mysql_mcp_server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 13 safe version(s).",
+    "security_summary": "Server `mysql_mcp_server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 9 vulnerable version(s), 4 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:c71b9452e786619311d5a7737d0efd370833968b8f8cf7189fd365f62550da60",
     "transport": "stdio",
     "versions": [
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-11529",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.3.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server is Vulnerable to SQL Injection Through its mysql URI Handler",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2024-12-03T21:39:30.877634Z",
         "required_env_vars": [],
@@ -117235,10 +117908,33 @@
         "version": "0.1.0"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-11529",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.3.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server is Vulnerable to SQL Injection Through its mysql URI Handler",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2025-03-22T23:36:49.837042Z",
         "required_env_vars": [],
@@ -117248,10 +117944,33 @@
         "version": "0.1.2"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-11529",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.3.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server is Vulnerable to SQL Injection Through its mysql URI Handler",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2025-03-29T15:55:41.178104Z",
         "required_env_vars": [],
@@ -117261,10 +117980,33 @@
         "version": "0.2.0"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-11529",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.3.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server is Vulnerable to SQL Injection Through its mysql URI Handler",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2025-03-29T17:02:13.336817Z",
         "required_env_vars": [],
@@ -117274,10 +118016,33 @@
         "version": "0.2.1"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-11529",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.3.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server is Vulnerable to SQL Injection Through its mysql URI Handler",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2025-04-18T20:29:22.098736Z",
         "required_env_vars": [],
@@ -117287,10 +118052,22 @@
         "version": "0.2.2"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2026-05-31T18:27:06.192623Z",
         "required_env_vars": [],
@@ -117300,10 +118077,22 @@
         "version": "0.3.0"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2026-05-31T21:16:25.001740Z",
         "required_env_vars": [],
@@ -117313,10 +118102,22 @@
         "version": "0.3.1"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2026-06-08T18:07:42.889906Z",
         "required_env_vars": [],
@@ -117326,10 +118127,22 @@
         "version": "0.4.0"
       },
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59971",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 0.4.2 or above.",
+            "severity": "CRITICAL",
+            "summary": "MySQL MCP Server: Missing Origin/Host Validation in SSE Transport Enables Unauthenticated SQL Execution (DNS Rebinding / Direct Exposure)",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": "2026-06-08T18:22:07.590100Z",
         "required_env_vars": [],
@@ -119412,19 +120225,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "7.0.1",
+    "latest_version": "7.0.2",
     "license": "Apache-2.0",
     "malicious_advisory_id": null,
     "package_name": "privacyfence",
     "prompts_count": 0,
     "purl": "pkg:pypi/privacyfence",
     "quarantine_tier": null,
-    "recommended_safe_version": "7.0.1",
+    "recommended_safe_version": "7.0.2",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/privacyfence/privacyfence",
+    "repository_url": "https://smithery.ai/servers/privacyfence",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `privacyfence` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 46 safe version(s).",
+    "security_summary": "Server `privacyfence` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 47 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:c62f729e30742901eb494776706d84dba2a702e1a498016f641f443db19133dd",
@@ -120118,6 +120931,110 @@
         ],
         "toolset_canonical_hash": "sha256:c62f729e30742901eb494776706d84dba2a702e1a498016f641f443db19133dd",
         "version": "7.0.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-06T12:17:10.114757Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0496bcf3e27082267521f4cba1ab75ac70c72eeb30093b7f847eda2418e63647",
+            "description": "Long-poll pending approvals from gated calls' {status: 'approval_pending', approval_id, ...} results; status only, never content. Before the first call for an approval, relay that result's message and url (binder_url if several) to the user -- never wait silently. If pending_count > 1, first issue your other ready gated calls, then pass all approval_ids in one call (one human pass). Keep timeout_seconds under your client's tool-call timeout. Returns {approval_id: status}: 'pending' (schedule a follow-up if you can, else call again), 'approved' (re-issue the ORIGINAL call with identical arguments -- the only way to get the data), 'denied' (a human said no -- re-issuing will not change that; don't retry, ask the user how to proceed unless denial_feedback says otherwise), 'expired' (re-issuing starts a fresh approval) or 'unknown' (no such id here). denial_feedback holds the user's instruction for a denial: follow it. Returns on any change or at the timeout. Prefer this over re-issuing the original call to poll.",
+            "name": "privacyfence_await_approval",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `privacyfence_await_approval` [MEDIUM] initiates outbound network requests (potential SSRF risk); processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8b25bbcfd3868c9652edca6537b622bb6d11fe35eaabd55dd3f2baccc3c09115",
+            "description": "Tell PrivacyFence this conversation is an unattended/scheduled Cowork run (e.g. a Routine firing on a schedule) with no human necessarily watching, for the rest of this connection. From then on, any gated tool call that isn't already covered by a configured auto-accept rule is denied immediately with a clear error, instead of PrivacyFence opening a native approval dialog that nobody will answer. Call this once at the start of a scheduled run, and pair it with privacyfence_check_policy to plan which steps are safe to attempt. Never changes what auto-accepts, only what happens when nothing does. Errors if an administrator hasn't enabled unattended sessions for this install. Do not call this during a normal interactive conversation -- it makes denials immediate instead of prompting. reason: one sentence on why this session is unattended (e.g. the Routine/schedule that triggered it) -- logged in the audit entry for this session change, since no popup is shown for it to appear in.",
+            "name": "privacyfence_begin_unattended_session",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_begin_unattended_session` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bbe3e7a606ad94b0a3556d53b62b355f6fee4f8808cad3dd53a927a3dba9c1c9",
+            "description": "Before calling a gated tool, ask whether that exact call would auto-accept or need a human. Pass the connector, tool and args you're about to call. Returns {gate, verdict, matched_rule, matched_rule_id, reason, pii_gate_may_apply, pii_gate, pii_gate_detail, suggested_rules}. verdict: 'auto_accept' (the real call passes through identically), 'requires_review' (no rule can match these args) or 'unknown' (depends on fetched content). matched_rule_id (auto_accept only) is privacyfence_propose_policy_change's rule_id. suggested_rules: rules that would cover an uncovered call, {group, label, value, value_known, verb, operation, requires_args?}; value is null if the call reaches it at run time, [] if the rule takes none; requires_args: args the call must also pass. pii_gate: whether the PII scan can still force a popup or, unattended or with a scoped token, a denial: 'none', 'allowed_by_token', 'allowed_unless_inline' or 'applies' (see pii_gate_detail). No side effects. reason: why you check (logged, unverified).",
+            "name": "privacyfence_check_policy",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_check_policy` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:946007657aeffd3f9d285757630a8b892634c144f090733efbdfa9a77bd096c2",
+            "description": "Get a one-time URL to upload a local file to PrivacyFence, for a client without the PrivacyFence extension (e.g. Claude Code) -- use it when a tool's local_path/attachments parameter says PrivacyFence can't read your files directly. Returns {upload_id, upload_url, method: 'PUT', max_bytes, expires_at, example}: PUT the raw bytes to upload_url (e.g. the curl -T example); no Authorization header -- the URL is the credential. Then pass upload_id to the tool that needs the file (its upload_id parameter, e.g. drive_upload_file, or an 'upload:<upload_id>' attachments entry, e.g. gmail_*_with_attachments). Never fetch upload_url yourself or pass it as local_path. Single-use, expires in 10 minutes, claimable only by your next tool call in this conversation. This uploads, gates and approves nothing: that happens when the destination tool runs. reason: one sentence on why this file is needed now (logged, self-reported, unverified).",
+            "name": "privacyfence_create_upload_slot",
+            "parameters": [],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `privacyfence_create_upload_slot` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:10277cd9fca0972bc156dbd0c4e1517c1629e3e0dd33074ba88bcd1a87d200ab",
+            "description": "Clear the unattended-session flag set by privacyfence_begin_unattended_session for this connection, restoring normal interactive approval behavior. Call this when a scheduled run finishes. Not strictly required -- the flag also clears automatically when the connection closes -- but call it if this connection might be reused afterward for something interactive. reason: one sentence on why the unattended session is ending now -- logged the same way as privacyfence_begin_unattended_session's.",
+            "name": "privacyfence_end_unattended_session",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_end_unattended_session` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:783a61ca82627501be23ebc10ca86c0b12d6d9121acf8e277d70a7555cd25378",
+            "description": "List every configured auto-accept rule, plus the scope catalogue privacyfence_propose_policy_change accepts. Returns {rules, scope_groups}. Each rule has: id (pass as privacyfence_propose_policy_change's rule_id to update or remove it), sentence (human-readable), connector, scope_type, value, operations (internal keys, informational), verbs ({verb, family} pairs; family is 'read', 'write', 'send' or 'destructive'), conditions, and covered_tools (every tool name the rule can auto-accept). Each scope_groups entry has an id (pass as group), the verbs that scope can govern (pass a subset as verbs; any other verb is rejected before a popup), and whether it needs a value. Call this before proposing a change: an id or group only matches something real if you listed it rather than guessed. Read-only, no popup. reason: one sentence on why you're listing the policy now (logged, self-reported; this discloses the full rule set).",
+            "name": "privacyfence_list_policy",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_list_policy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:44257e73ee60d97bfc43cd2d3b5b36d9e5466cff8e4be468945e08da44bcaa70",
+            "description": "Propose adding, updating or removing an auto-accept rule (a scope plus allowed verbs). ALWAYS blocks on a human-approved dialog. If declined, or in an unattended session, it errors -- never assume success. Call privacyfence_list_policy first: group, verbs and rule_id must be listed, not guessed; a verb not in that group's scope_groups entry is rejected before any popup.\n\noperation='add'/'update' need group (a scope_groups id, e.g. 'drive.folder'), value (the resource's id -- folder id, channel ID, project key -- not its name or title, except label names and file types; a non-id is refused; omit unless needs_value or value_optional) and verbs (non-empty subset of the group's verbs). Verbs: read, download, search, add, update, restructure, move, send, delete (older names map). 'update' also takes rule_id (replaces that rule). 'remove' needs only rule_id.\n\nReturns {confirmed, changed, description, rule_ids}; changed is false if nothing differed.\n\nreason: one sentence on why you're proposing this (logged).",
+            "name": "privacyfence_propose_policy_change",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_propose_policy_change` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a71c1b0bfe6b2c9bf21796b0a4d42f84d9d7cd1a9cce812e9372f34f9a06d9c8",
+            "description": "Propose a scoped token (a named, expiring bearer credential limited to some rules and tools, for a routine or scheduled job) for the person to review in PrivacyFence Settings. Returns at once with review_url: give it to the person. Nothing is created until they review it, type its name and confirm; they may narrow it. You never receive the token, nor whether it was created. Set from_session=true to build its rules and tools from the calls approved in this session, or pass rules (each {kind:'new', group, value, verbs} with group and verbs from privacyfence_list_policy's scope_groups and value a comma-separated id list, or {kind:'copy', rule_id}) and tools. days defaults to 90. Ask for allow_personal_data or allow_personal_data_reads only if the job needs them. Refused in an unattended session. reason: one sentence on what the token is for (logged and shown to the person).",
+            "name": "privacyfence_propose_scoped_token",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_propose_scoped_token` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:90e20d4c2ad230aae6f0525d4b3e20db2ca748bd8ec2cc42588215c81e8bfac8",
+            "description": "Check whether THIS PrivacyFence install is set up: call it before the first PrivacyFence-governed action in a conversation, or when asked why a connector (gmail_*, ...) is missing. An empty or partial tool list means connectors aren't authenticated yet, NOT that PrivacyFence is irrelevant -- this tool exists even when every other is missing. Returns {mode ('local'/'org'), setup_complete (any connector authenticated), connectors [{name, enabled, authenticated, blocked_by: null, 'no_org_config', 'not_authenticated' or a reason}], next_step, message, sign_in_url (always null), deprecation (local mode: a notice to relay once)}. If setup isn't complete, relay message as-is. next_step 'open_privacyfence_companion' (local): the human opens PrivacyFence's companion app (menu-bar, tray or applications menu) and chooses Open Settings; you have no link. 'contact_your_administrator' (org): sign-in is via the org's IdP. Only side effect: an audit entry. reason: one sentence on why you're checking now (logged).",
+            "name": "privacyfence_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `privacyfence_status` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:c62f729e30742901eb494776706d84dba2a702e1a498016f641f443db19133dd",
+        "version": "7.0.2"
       }
     ]
   },
@@ -120584,7 +121501,7 @@
     "repository_url": null,
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Package `python-sdk` has 6 security advisories.",
+    "security_summary": "Package `python-sdk` has 3 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "",
@@ -120617,28 +121534,6 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 7.6,
             "epss_percentile": null,
             "epss_score": null,
@@ -120647,99 +121542,6 @@
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.28.1"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 8.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53365",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52870",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
             "vulnerable_tools": []
           }
         ],
@@ -120781,28 +121583,6 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 7.6,
             "epss_percentile": null,
             "epss_score": null,
@@ -120811,263 +121591,6 @@
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.23.0"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 8.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53365",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52870",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.27.2"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 8.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53365",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52870",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.9.4"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 8.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53365",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52870",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
             "vulnerable_tools": []
           }
         ],
@@ -121109,28 +121632,6 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 7.6,
             "epss_percentile": null,
             "epss_score": null,
@@ -121139,17 +121640,6 @@
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
             "vulnerable_tools": []
           }
         ],
@@ -121162,7 +121652,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "1.9.4"
+        "version": "< 1.28.1"
       },
       {
         "advisories": [
@@ -121191,28 +121681,6 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 7.6,
             "epss_percentile": null,
             "epss_score": null,
@@ -121221,181 +121689,6 @@
             "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.23.0"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 8.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53365",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52870",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.27.2"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": 8.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53365",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.1,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.27.2,",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 7.6,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52870",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.23.0 unti",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called `mcp` on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to versi",
             "vulnerable_tools": []
           }
         ],
@@ -123456,92 +123749,6 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.9.0"
-      }
-    ]
-  },
-  "rhoai/odh-mod-arch-gen-ai-rhel9": {
-    "archival_reason": null,
-    "author": null,
-    "composite_risk_score": null,
-    "composite_risk_tier": "HIGH",
-    "description": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
-    "display_name": "rhoai/odh-mod-arch-gen-ai-rhel9",
-    "dual_axis_security": null,
-    "ecosystem": "MCP",
-    "highest_cve_severity": "HIGH",
-    "homepage_url": null,
-    "is_malicious": false,
-    "is_unpublished": false,
-    "is_vulnerable": true,
-    "latest_version": "1779829736",
-    "license": null,
-    "malicious_advisory_id": null,
-    "package_name": "rhoai/odh-mod-arch-gen-ai-rhel9",
-    "prompts_count": 0,
-    "purl": "pkg:mcp/rhoai/odh-mod-arch-gen-ai-rhel9",
-    "quarantine_tier": null,
-    "recommended_safe_version": "1779829736",
-    "repo_http_status": 200,
-    "repository_url": null,
-    "required_env_vars": [],
-    "resources_count": 0,
-    "security_summary": "Package `rhoai/odh-mod-arch-gen-ai-rhel9` has 1 security advisories.",
-    "static_risk_score": 0.0,
-    "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "",
-    "transport": null,
-    "versions": [
-      {
-        "advisories": [],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "*"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.4.0"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.4.0"
-      },
-      {
-        "advisories": [],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": false,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1779829736"
       }
     ]
   },

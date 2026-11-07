@@ -1,0 +1,62 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "remediation_guidance": "Upgrade to version 3.0.1 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "auth-fetch-mcp",
+        "purl": "pkg:npm/auth-fetch-mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "3.0.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-hv85-774v-26fg"
+    ],
+    "sources_merged": [
+      "GHSA-hv85-774v-26fg"
+    ]
+  },
+  "details": "1. **Cloud credential theft** \u2014 server on EC2 / GCE / Azure VM. MCP client invokes `auth_fetch({ url: \"http://169.254.169.254/latest/meta-data/iam/security-credentials/<role>\" })` and receives temporary credentials in the tool response. Or invokes `download_media({ urls: [...], output_dir: \"/tmp/exfil\" })` to persist them to disk.\n\n2. **Internal service enumeration** \u2014 MCP client probes private-range hosts (10/8, 172.16/12, 192.168/16). Each `auth_fetch` returns the page DOM; each `download_media` writes the response to disk.\n\n3. **Loopback exploitation** \u2014 server runs alongside Redis (127.0.0.1:6379), ElasticSearch (127.0.0.1:9200), or internal admin UIs. MCP client reads them via `auth_fetch`.\n\n4. **Disk-write side channel** (`download_media` only) \u2014 output_dir is also user-controlled, with no documented restriction. An MCP client can request `output_dir = \"/some/user-writable-shared-dir\"` and exfil internal-service responses to a location accessible to a co-tenant process.\n\nThe injection vector is any content reaching the model that prompts a fetch tool call. The tool description explicitly says \"MUST be used instead of Fetch/web_fetch when the page requires login\" \u2014 meaning the model is encouraged to call this tool for any \"private page\" mention, which a prompt-injected upstream content can trivially trigger.",
+  "id": "GHSA-hv85-774v-26fg",
+  "modified": "2026-05-19T00:00:00Z",
+  "published": "2026-05-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-hv85-774v-26fg"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/ymw0407/auth-fetch-mcp/releases/tag/v3.0.1"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/ymw0407/auth-fetch-mcp/security/advisories/GHSA-hv85-774v-26fg"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "auth-fetch-mcp: SSRF and disk exfiltration via unvalidated auth_fetch and download_media URLs"
+}

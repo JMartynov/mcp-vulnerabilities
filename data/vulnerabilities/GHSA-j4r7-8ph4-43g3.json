@@ -1,0 +1,62 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 2.1.3 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "faf-mcp",
+        "purl": "pkg:npm/faf-mcp"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "2.1.3"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-j4r7-8ph4-43g3"
+    ],
+    "sources_merged": [
+      "GHSA-j4r7-8ph4-43g3"
+    ]
+  },
+  "details": "`faf-mcp` MCP tools accept a caller-controlled `path` argument and resolve it (`~` expansion + `path.resolve()`) straight into a filesystem read/write **without confining it to a trusted project directory**. An absolute path or `../` traversal is resolved and used as-is, so the server process can be made to read \u2014 and, via the file tools, write \u2014 files outside the intended `.faf` project context. The only remaining limit is OS file permissions.",
+  "id": "GHSA-j4r7-8ph4-43g3",
+  "modified": "2026-08-19T00:00:00Z",
+  "published": "2026-08-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/Wolfe-Jam/faf-mcp/releases/tag/v2.1.3"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/Wolfe-Jam/faf-mcp/security/advisories/GHSA-j4r7-8ph4-43g3"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-j4r7-8ph4-43g3"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "faf-mcp has an arbitrary local file read/write via unconfined `path` argument in FAF tools"
+}

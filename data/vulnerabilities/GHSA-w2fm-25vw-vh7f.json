@@ -1,0 +1,70 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+        "remediation_guidance": "Upgrade to version 1.1.0 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-handler",
+        "purl": "pkg:npm/mcp-handler"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.1.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-w2fm-25vw-vh7f"
+    ],
+    "sources_merged": [
+      "GHSA-w2fm-25vw-vh7f"
+    ]
+  },
+  "details": "`mcp-handler` versions prior to 1.1.0 accepted `@modelcontextprotocol/sdk` < 1.26.0 as a peer dependency. That SDK version contains a vulnerability [[CVE-2026-25536](https://nvd.nist.gov/vuln/detail/CVE-2026-25536)] that causes concurrent requests from different clients to share server-side state including authentication context and tool execution results when a `StreamableHTTPServerTransport` instance is reused across requests.\n\n**Note:** This is _not_ a vulnerability in `mcp-handler` itself. The root cause is in the peer dependency `@modelcontextprotocol/sdk`.",
+  "id": "GHSA-w2fm-25vw-vh7f",
+  "modified": "2026-04-01T00:00:00Z",
+  "published": "2026-04-01T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-345p-7cg4-v4c7"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-w2fm-25vw-vh7f"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/vercel/mcp-handler"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/vercel/mcp-handler/security/advisories/GHSA-w2fm-25vw-vh7f"
+    },
+    {
+      "type": "WEB",
+      "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25536"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "mcp-handler has a tool response leak across concurrent client sessions ('Race Condition')"
+}

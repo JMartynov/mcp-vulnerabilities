@@ -1,0 +1,58 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 1.7.1 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-searxng",
+        "purl": "pkg:npm/mcp-searxng"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.7.1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-mrvx-jmjw-vggc"
+    ],
+    "sources_merged": [
+      "GHSA-mrvx-jmjw-vggc"
+    ]
+  },
+  "details": "The `web_url_read` MCP tool in `mcp-searxng` is vulnerable to Server-Side Request Forgery (SSRF) via DNS rebinding bypass. The `assertUrlAllowed()` function at `src/url-reader.ts:85-93` validates only the syntactic hostname string against a private IP/hostname blocklist without performing DNS resolution. An attacker who controls a domain that resolves to a private or loopback IP address (e.g., via a wildcard DNS service like `nip.io`, or a custom DNS entry) can bypass the security check and cause the MCP server to read arbitrary internal HTTP services reachable from the server host. This allows exfiltration of sensitive data from internal services with no authentication required in the default HTTP configuration.",
+  "id": "GHSA-mrvx-jmjw-vggc",
+  "modified": "2026-06-19T00:00:00Z",
+  "published": "2026-06-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-mrvx-jmjw-vggc"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/ihor-sokoliuk/mcp-searxng/security/advisories/GHSA-mrvx-jmjw-vggc"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:C/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": " SearXNG MCP Server: DNS-resolved Private Hostname SSRF in `web_url_read`"
+}
