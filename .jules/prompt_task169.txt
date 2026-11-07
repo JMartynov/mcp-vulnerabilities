@@ -1,0 +1,23 @@
+Task 169: MCP 2.0 Protocol Negotiation (2026-07-28 + Legacy Fallback)
+
+Scope & Objective:
+Upgrade the live probing client, network port scanner, and runtime fingerprint resolver in `mcp-vulnerabilities` (`mcp-vuln`) to negotiate MCP 2.0 (`2026-07-28` via `server/discover`) first, with automatic fallback to legacy `initialize()` (`2024-11-05`) when scanning older MCP 1.x servers.
+
+Instructions:
+1. In `src/mcp_vulnerabilities/probe/client.py`:
+   - Add `SUPPORTED_PROTOCOL_VERSIONS = ("2026-07-28", "2025-11-25", "2025-06-18", "2024-11-05")`, `LATEST_PROTOCOL_VERSION = "2026-07-28"`, `LEGACY_PROTOCOL_VERSION = "2024-11-05"`.
+   - Add `is_discover_unsupported_error(resp: dict[str, Any]) -> bool` (checks for error codes -32601 or -32602).
+   - In `McpProbeClient`, send `server/discover` (`protocolVersion: "2026-07-28"`) first. If the server returns JSON-RPC error -32601 or -32602, fall back to `initialize` (`2024-11-05`) followed by `notifications/initialized`. Store the negotiated `protocol_version` in probe result metadata.
+2. In `src/mcp_vulnerabilities/probe/network_scanner.py`:
+   - In HTTP probe, send `"MCP-Protocol-Version": "2026-07-28"` request header. Try `server/discover` first, falling back to `initialize` (`2024-11-05`) if rejected with -32601/-32602, recording detected `protocolVersion`.
+3. In `src/mcp_vulnerabilities/fingerprints/resolver.py`:
+   - During live stdio resolution, use the two-stage `server/discover` -> `initialize` negotiation so MCP 2.0 stdio servers resolve cleanly without failing handshake.
+4. In `tests/test_mcp2_protocol_negotiation.py`:
+   - Author unit tests for:
+     (a) `McpProbeClient` negotiating `2026-07-28` via `server/discover`.
+     (b) automatic fallback to `initialize` (`2024-11-05`) on -32601/-32602.
+     (c) `network_scanner` detecting both MCP 2.0 and legacy 1.x HTTP listeners.
+     (d) `resolver` handling both protocol versions.
+
+Non-Interactive Completion Directive:
+Implement the complete code and tests cleanly. Run pytest on `tests/test_mcp2_protocol_negotiation.py` and `tests/ -k "probe or network or resolver"`. Conclude directly upon success without asking open-ended follow-up questions.
