@@ -36,6 +36,15 @@ class BridgeDaemon:
         self.no_auth = no_auth
         self.session_token = secrets.token_hex(16)
         self.server: Optional[asyncio.AbstractServer] = None
+        self.subscribers: list[asyncio.Queue] = []
+        
+    async def emit_event(self, event_type: str, payload: dict):
+        event_data = {"type": event_type, "payload": payload}
+        for q in self.subscribers:
+            try:
+                q.put_nowait(event_data)
+            except asyncio.QueueFull:
+                pass
 
     async def start(self):
         self.server = await asyncio.start_server(self.handle_client, self.host, self.port)
@@ -237,6 +246,24 @@ class BridgeDaemon:
                 await writer.drain()
                 if i < len(events) - 1:
                     await asyncio.sleep(0.05)
+        else:
+            q = asyncio.Queue()
+            self.subscribers.append(q)
+            try:
+                while True:
+                    ev = await q.get()
+                    event_name = ev["type"]
+                    data = json.dumps(ev["payload"])
+                    chunk = f"event: {event_name}\ndata: {data}\n\n"
+                    writer.write(chunk.encode('utf-8'))
+                    await writer.drain()
+            except asyncio.CancelledError:
+                pass
+            except Exception:
+                pass
+            finally:
+                if q in self.subscribers:
+                    self.subscribers.remove(q)
 
     async def _handle_websocket(self, reader: asyncio.StreamReader, writer: asyncio.StreamWriter, headers: dict, is_simulation: bool):
         ws_key = headers.get("sec-websocket-key")
@@ -326,8 +353,40 @@ class BridgeDaemon:
                 
                 writer.write(bytes([0x88, 0x00]))
                 await writer.drain()
+                await read_task
+            else:
+                q = asyncio.Queue()
+                self.subscribers.append(q)
                 
-            await read_task
+                async def ws_writer():
+                    try:
+                        while True:
+                            ev = await q.get()
+                            payload = json.dumps(ev).encode('utf-8')
+                            frame = bytearray()
+                            frame.append(0x81)
+                            if len(payload) < 126:
+                                frame.append(len(payload))
+                            elif len(payload) < 65536:
+                                frame.append(126)
+                                frame.extend(len(payload).to_bytes(2, byteorder='big'))
+                            else:
+                                frame.append(127)
+                                frame.extend(len(payload).to_bytes(8, byteorder='big'))
+                            frame.extend(payload)
+                            writer.write(frame)
+                            await writer.drain()
+                    except asyncio.CancelledError:
+                        pass
+                    except Exception:
+                        pass
+                
+                write_task = asyncio.create_task(ws_writer())
+                await read_task
+                write_task.cancel()
+                if q in self.subscribers:
+                    self.subscribers.remove(q)
+                
         except Exception:
             pass
 
