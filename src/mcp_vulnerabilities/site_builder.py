@@ -601,7 +601,7 @@ def build_site_parallel(
                     result = res
                 catalog_dicts.update(result)
             except BaseException as e:
-                msg = f"Worker batch exception: Batch processing failed: {type(e).__name__}"
+                msg = f"Worker batch exception: A process in the process pool was terminated abruptly or failed: {type(e).__name__}"
                 logger.error(msg)
                 all_warnings.append(msg)
     else:
