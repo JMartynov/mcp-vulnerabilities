@@ -18,11 +18,18 @@ def test_medium_library_cves():
     assert CompositeRiskScorer.calculate_trust_tier(score_2) == "EXCELLENT"
 
 def test_high_library_cves_capped():
-    # 20 high library CVEs => raw penalty = 20 * 2.0 = 40.0
+    # 20 high unreachable library CVEs => raw penalty = 20 * 2.0 = 40.0
     # But penalty should be capped at 15.0 => score = 100.0 - 15.0 = 85.0
-    score = CompositeRiskScorer.calculate_trust_score(critical_high_count=20)
+    score = CompositeRiskScorer.calculate_trust_score(critical_high_unreachable_count=20)
     assert score == 85.0
     assert CompositeRiskScorer.calculate_trust_tier(score) == "GOOD"
+
+def test_high_reachable_library_cves_not_capped():
+    # 20 high reachable library CVEs => raw penalty = 20 * 2.0 = 40.0
+    # Penalty should not be capped => score = 100.0 - 40.0 = 60.0
+    score = CompositeRiskScorer.calculate_trust_score(critical_high_count=20)
+    assert score == 60.0
+    assert CompositeRiskScorer.calculate_trust_tier(score) == "FAIR"
 
 def test_protocol_risk_penalty_dominance():
     # prompt injection penalty 40.0 lowers score appropriately
@@ -32,7 +39,7 @@ def test_protocol_risk_penalty_dominance():
     
     # Combined with capped dependency penalty
     score_combined = CompositeRiskScorer.calculate_trust_score(
-        critical_high_count=20, # penalty capped at 15.0
+        critical_high_unreachable_count=20, # penalty capped at 15.0
         protocol_risk_penalty=40.0
     )
     assert score_combined == 45.0
