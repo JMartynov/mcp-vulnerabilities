@@ -45,7 +45,10 @@ def main():
             continue
         try:
             msg = json.loads(line)
-            if msg.get("method") == "initialize":
+            if msg.get("method") == "server/discover":
+                sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg.get('id'), 'error': {'code': -32601, 'message': 'Method not found'}}) + '\n')
+                sys.stdout.flush()
+            elif msg.get("method") == "initialize":
                 handle_init(msg.get("id"))
             elif msg.get("method") == "notifications/initialized":
                 pass

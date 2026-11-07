@@ -180,7 +180,10 @@ class TestLiveApiServer(unittest.TestCase):
 for line in sys.stdin:
     try:
         msg = json.loads(line)
-        if msg.get('method') == 'initialize':
+        if msg.get('method') == 'server/discover':
+            sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg['id'], 'error': {'code': -32601, 'message': 'Method not found'}}) + '\\n')
+            sys.stdout.flush()
+        elif msg.get('method') == 'initialize':
             sys.stdout.write(json.dumps({'jsonrpc': '2.0', 'id': msg['id'], 'result': {'serverInfo': {'name': 'test', 'version': '1.0'}, 'capabilities': {}}}) + '\\n')
             sys.stdout.flush()
         elif msg.get('method') == 'tools/list':

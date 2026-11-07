@@ -74,7 +74,14 @@ class MockLiveSseServer(BaseHTTPRequestHandler):
             req_id = msg.get("id")
             method = msg.get("method")
 
-            if method == "initialize":
+            if method == "server/discover":
+                resp = {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {"code": -32601, "message": "Method not found"}
+                }
+                self.server.messages_to_send.append(resp)
+            elif method == "initialize":
                 resp = {
                     "jsonrpc": "2.0",
                     "id": req_id,
