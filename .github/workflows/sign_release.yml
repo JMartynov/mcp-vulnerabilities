@@ -22,12 +22,8 @@ jobs:
           pip install build .
       - name: Prepare assets and generate manifest
         run: |
-          if [ -f "docs/data/vulnerabilities.json" ] && [ ! -f "docs/data/vulnerabilities.json.gz" ]; then
-            gzip -k docs/data/vulnerabilities.json
-          fi
-          if [ ! -d "dist" ] || [ -z "$(ls -A dist 2>/dev/null)" ]; then
-            python -m build --outdir dist
-          fi
+          gzip -k -f docs/data/vulnerabilities.json
+          python -m build --outdir dist
           python3 -c "import sys; sys.path.insert(0, 'src'); from mcp_vulnerabilities.attestation.manifest import generate_catalog_manifest; generate_catalog_manifest('docs/data')"
       - uses: sigstore/gh-action-sigstore-python@v3.0.0
         with:
