@@ -140,6 +140,10 @@ def main() -> None:
     disc_p.add_argument(
         "--no-glama", action="store_true", help="Skip Glama.ai discovery"
     )
+    disc_p.add_argument("--prune", action="store_true", help="Prune dead or tombstoned servers")
+    disc_p.add_argument("--prune-archived", action="store_true", help="Prune archived repositories")
+    disc_p.add_argument("--prune-deleted", action="store_true", help="Prune deleted repositories")
+    disc_p.add_argument("--offline-backoff", action="store_true", help="Enable exponential backoff for offline endpoints")
 
     # network-scan
     network_scan_p = subparsers.add_parser("network-scan", help="Scan local and network TCP ports for active MCP servers and unauthenticated listeners")
@@ -242,6 +246,10 @@ def main() -> None:
         action="store_true",
         help="Dispatch webhooks for new critical/high advisories",
     )
+    sync_p.add_argument("--prune", action="store_true", help="Prune dead or tombstoned servers")
+    sync_p.add_argument("--prune-archived", action="store_true", help="Prune archived repositories")
+    sync_p.add_argument("--prune-deleted", action="store_true", help="Prune deleted repositories")
+    sync_p.add_argument("--offline-backoff", action="store_true", help="Enable exponential backoff for offline endpoints")
 
     # Search
     search_p = subparsers.add_parser(
@@ -827,6 +835,8 @@ def main() -> None:
             include_other_registries=not args.no_registries,
             include_smithery=not args.no_smithery,
             include_glama=not args.no_glama,
+            include_pruning=args.prune or args.prune_archived or args.prune_deleted,
+            offline_backoff=args.offline_backoff
         )
         print(
             f"Discovery complete. Discovered {len(servers)} MCP servers -> {args.catalog_file}"
@@ -868,6 +878,7 @@ def main() -> None:
             if not args.live_api
             else None,
             reset_checkpoints=args.reset_state,
+            include_pruning=args.prune or args.prune_archived or args.prune_deleted,
         )
         logger.info(
             "Sync complete: collected=%d, merged=%d, emitted=%d, errors=%d",
