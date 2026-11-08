@@ -746,6 +746,7 @@
         el.tabAudit.setAttribute("aria-selected", "true");
       }
       if (el.viewAudit) el.viewAudit.style.display = "block";
+      checkBridgeConnection();
     }
   }
 
@@ -2728,6 +2729,20 @@ window.detectCollisions = function() {
   };
 
   document.addEventListener("DOMContentLoaded", () => {
+    checkBridgeConnection();
+
+    // Bind click listeners for #btn-live-scan and #btn-live-drift
+    const btnLiveScan = document.getElementById("btn-live-scan");
+    if (btnLiveScan) {
+        btnLiveScan.addEventListener("click", runLiveScan);
+    }
+    const btnLiveDrift = document.getElementById("btn-live-drift");
+    if (btnLiveDrift) {
+        btnLiveDrift.addEventListener("click", () => {
+            alert("Baseline drift check not fully implemented yet.");
+        });
+    }
+
     document.querySelectorAll(".basket-client-tab").forEach(tab => {
       tab.addEventListener("click", () => {
         document.querySelectorAll(".basket-client-tab").forEach(t => t.classList.remove("active"));
@@ -2918,12 +2933,67 @@ async function runLiveScan() {
     const origText = btn.innerHTML;
     btn.innerHTML = "⏳ Scanning...";
     btn.disabled = true;
-    
-    const res = await fetch("http://127.0.0.1:8765/api/v1/scan");
-    if (!res.ok) throw new Error("Scan failed");
-    const data = await res.json();
-    
+
     const resultsContainer = document.getElementById("bridge-results-container");
+    const progressBar = document.getElementById("bridge-progress-bar");
+    if (progressBar) {
+        progressBar.style.display = "block";
+        const fill = progressBar.querySelector(".progress-fill");
+        const label = progressBar.querySelector(".progress-label");
+        if (fill) fill.style.width = "0%";
+        if (label) label.textContent = "Connecting...";
+    }
+
+    let scanCompleteData = null;
+
+    if (window.EventSource) {
+        await new Promise((resolve, reject) => {
+            const es = new EventSource("http://127.0.0.1:8765/api/v1/events");
+            
+            es.addEventListener("scan_progress", (e) => {
+                const data = JSON.parse(e.data);
+                if (progressBar) {
+                    const fill = progressBar.querySelector(".progress-fill");
+                    const label = progressBar.querySelector(".progress-label");
+                    if (fill) fill.style.width = `${data.percent}%`;
+                    if (label) label.textContent = data.message || data.step;
+                }
+            });
+
+            es.addEventListener("scan_complete", (e) => {
+                scanCompleteData = JSON.parse(e.data);
+                es.close();
+                resolve();
+            });
+
+            es.onerror = (e) => {
+                es.close();
+                // We'll let the fallback handle it if no complete data
+                if (!scanCompleteData) {
+                    resolve(); // gracefully resolve to fallback
+                }
+            };
+        });
+    }
+
+    let data;
+    if (scanCompleteData) {
+        // Fetch full results if scan_complete event doesn't have all data, or just use what it has
+        // According to the daemon stream it just sends servers_found, vulnerabilities
+        // We need to fetch the actual scan results to render them.
+        const res = await fetch("http://127.0.0.1:8765/api/v1/scan");
+        if (!res.ok) throw new Error("Scan failed");
+        data = await res.json();
+    } else {
+        // Fallback without SSE
+        const res = await fetch("http://127.0.0.1:8765/api/v1/scan");
+        if (!res.ok) throw new Error("Scan failed");
+        data = await res.json();
+    }
+    
+    if (progressBar) {
+        progressBar.style.display = "none";
+    }
     let html = `<h3>Found ${data.servers.length} Servers</h3><ul class="audit-list">`;
     
     for (const server of data.servers) {
