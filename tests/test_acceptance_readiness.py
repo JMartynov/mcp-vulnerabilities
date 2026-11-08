@@ -82,7 +82,7 @@ def test_live_lint_cli_file_execution():
         Path(temp_path).unlink(missing_ok=True)
 
 
-MOCK_LINT_STDIO_CODE = """
+MOCK_LINT_STDIO_CODE = r"""
 import sys
 import json
 
@@ -101,8 +101,10 @@ for line in sys.stdin:
                     "capabilities": {"tools": {}}
                 }
             }
-            sys.stdout.write(json.dumps(resp) + "\\n")
+            sys.stdout.write(json.dumps(resp) + "\n")
             sys.stdout.flush()
+        elif method == "notifications/initialized":
+            pass
         elif method == "tools/list":
             resp = {
                 "jsonrpc": "2.0",
@@ -126,7 +128,15 @@ for line in sys.stdin:
                     ]
                 }
             }
-            sys.stdout.write(json.dumps(resp) + "\\n")
+            sys.stdout.write(json.dumps(resp) + "\n")
+            sys.stdout.flush()
+        else:
+            resp = {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {"code": -32601, "message": "Method not found"}
+            }
+            sys.stdout.write(json.dumps(resp) + "\n")
             sys.stdout.flush()
     except Exception:
         pass

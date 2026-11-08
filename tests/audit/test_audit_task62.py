@@ -62,6 +62,17 @@ while True:
             }
             print(json.dumps(resp))
             sys.stdout.flush()
+        else:
+            resp = {
+                "jsonrpc": "2.0",
+                "id": req.get("id", 1),
+                "error": {
+                    "code": -32601,
+                    "message": "Method not found"
+                }
+            }
+            print(json.dumps(resp))
+            sys.stdout.flush()
     except Exception as e:
         pass
 """)

@@ -6,13 +6,13 @@ from pathlib import Path
 from mcp_vulnerabilities.probe.transport import StdioTransport
 from mcp_vulnerabilities.probe.client import McpProbeClient
 
-MOCK_STDIO_DEADLOCK_CODE = """
+MOCK_STDIO_DEADLOCK_CODE = r"""
 import sys
 import json
 import time
 
 # Write 256KB to stderr
-sys.stderr.write("A" * 1024 * 256 + "\\n")
+sys.stderr.write("A" * 1024 * 256 + "\n")
 sys.stderr.flush()
 
 for line in sys.stdin:
@@ -30,8 +30,10 @@ for line in sys.stdin:
                     "capabilities": {"tools": {}}
                 }
             }
-            sys.stdout.write(json.dumps(resp) + "\\n")
+            sys.stdout.write(json.dumps(resp) + "\n")
             sys.stdout.flush()
+        elif method == "notifications/initialized":
+            pass
         elif method == "tools/list":
             resp = {
                 "jsonrpc": "2.0",
@@ -40,9 +42,17 @@ for line in sys.stdin:
                     "tools": [{"name": "stdio_tool"}]
                 }
             }
-            sys.stdout.write(json.dumps(resp) + "\\n")
+            sys.stdout.write(json.dumps(resp) + "\n")
             sys.stdout.flush()
             break
+        else:
+            resp = {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {"code": -32601, "message": "Method not found"}
+            }
+            sys.stdout.write(json.dumps(resp) + "\n")
+            sys.stdout.flush()
     except json.JSONDecodeError:
         pass
 """
