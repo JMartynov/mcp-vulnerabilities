@@ -307,7 +307,6 @@ class McpVulnerabilityPipeline:
             candidate_repos = []
             if self.servers_catalog_file.exists():
                 try:
-                    import json
                     cat_data = json.loads(self.servers_catalog_file.read_text(encoding="utf-8"))
                     for s in cat_data.get("servers", {}).values():
                         eco = s.get("ecosystem", "")
