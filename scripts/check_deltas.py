@@ -20,10 +20,43 @@ def load_vulns(directory: Path):
             with open(f, "r") as fp:
                 data = json.load(fp)
                 if "id" in data:
-                    vulns.append(OsvVulnerability.parse_obj(data))
+                    vulns.append(OsvVulnerability.from_dict(data))
         except Exception as e:
             pass # ignore parse errors for now
     return vulns
+
+def check_passports_delta() -> bool:
+    old_passport = Path("data/passports_backup.json.gz")
+    new_passport = Path("data/passports.json.gz")
+    
+    if not new_passport.exists():
+        return False
+        
+    if not old_passport.exists():
+        return True
+        
+    import gzip
+    
+    try:
+        old_data = gzip.open(old_passport, "rb").read()
+        new_data = gzip.open(new_passport, "rb").read()
+            
+        old_json = json.loads(old_data)
+        new_json = json.loads(new_data)
+        
+        old_count = old_json.get("total_passports", 0)
+        new_count = new_json.get("total_passports", 0)
+        
+        if new_count > old_count:
+            return True
+            
+        if old_json.get("passports") != new_json.get("passports"):
+            return True
+            
+    except Exception:
+        pass
+        
+    return False
 
 def main():
     old_dir = Path("data/vulnerabilities_backup")
@@ -34,6 +67,9 @@ def main():
     
     detector = DeltaDetector()
     has_delta = detector.evaluate_deltas(old_vulns, new_vulns)
+    
+    if not has_delta:
+        has_delta = check_passports_delta()
     
     print(f"delta_detected={str(has_delta).lower()}")
 

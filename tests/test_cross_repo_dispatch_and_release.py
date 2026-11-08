@@ -60,6 +60,56 @@ def test_invariant_2_delta_detector():
     has_delta = detector.evaluate_deltas(old_data, new_data_case_b)
     assert has_delta is True
 
+def test_check_deltas_script(tmp_path, monkeypatch):
+    import gzip
+    
+    # Mock data directories
+    monkeypatch.chdir(tmp_path)
+    old_dir = tmp_path / "data" / "vulnerabilities_backup"
+    new_dir = tmp_path / "data" / "vulnerabilities"
+    data_dir = tmp_path / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    old_dir.mkdir(parents=True, exist_ok=True)
+    new_dir.mkdir(parents=True, exist_ok=True)
+
+    script_path = Path(__file__).parent.parent / "scripts" / "check_deltas.py"
+    
+    # Test 1: No deltas at all
+    with open(old_dir / "vuln1.json", "w") as f:
+        json.dump({"id": "GHSA-1234", "summary": "test", "details": "test", "modified": "2023-01-01T00:00:00Z", "affected": [], "severity": []}, f)
+    with open(new_dir / "vuln1.json", "w") as f:
+        json.dump({"id": "GHSA-1234", "summary": "test", "details": "test", "modified": "2023-01-01T00:00:00Z", "affected": [], "severity": []}, f)
+        
+    passports_data = json.dumps({"total_passports": 100}).encode("utf-8")
+    with gzip.open(data_dir / "passports.json.gz", "wb") as f:
+        f.write(passports_data)
+    with gzip.open(data_dir / "passports_backup.json.gz", "wb") as f:
+        f.write(passports_data)
+
+    env = os.environ.copy()
+    env["PYTHONPATH"] = str(Path(__file__).parent.parent / "src")
+    
+    result = subprocess.run([sys.executable, str(script_path)], capture_output=True, text=True, env=env)
+    assert "delta_detected=false" in result.stdout
+
+    # Test 2: Vulnerability delta
+    with open(new_dir / "vuln2.json", "w") as f:
+        json.dump({"id": "GHSA-5678", "summary": "test2", "details": "test2", "modified": "2023-01-01T00:00:00Z", "affected": [], "severity": []}, f)
+        
+    result = subprocess.run([sys.executable, str(script_path)], capture_output=True, text=True, env=env)
+    assert "delta_detected=true" in result.stdout
+
+    # Reset vulnerabilites to have no delta
+    os.remove(new_dir / "vuln2.json")
+    
+    # Test 3: Passports delta (count changed)
+    new_passports_data = json.dumps({"total_passports": 101}).encode("utf-8")
+    with gzip.open(data_dir / "passports.json.gz", "wb") as f:
+        f.write(new_passports_data)
+        
+    result = subprocess.run([sys.executable, str(script_path)], capture_output=True, text=True, env=env)
+    assert "delta_detected=true" in result.stdout
+
 def test_invariant_3a_fallback_rate_limit():
     try:
         from mcp_vulnerabilities.sync_manager import CrossRepoSyncManager
