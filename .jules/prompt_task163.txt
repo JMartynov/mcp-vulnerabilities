@@ -1,17 +1,18 @@
 Task 163: Frontend Web Portal Live Bridge Client Integration
 
+STRICT NON-INTERACTIVE DIRECTIVE: DO NOT pause for plan approval or ask open-ended questions. Execute immediately.
+
 Scope & Objective:
 Wire the frontend Web Portal (docs/index.html and docs/app.js) to the local daemon bridge (src/mcp_vulnerabilities/daemon/bridge.py), fixing dead connection checks, attaching action listeners, and providing live streaming feedback via SSE/WebSocket.
 
 Instructions:
-1. In `docs/app.js`:
-   - Invoke `checkBridgeConnection()` when the DOM loads and whenever switching to the Audit tab.
-   - Bind click listeners for `#btn-live-scan` and `#btn-live-drift`.
-   - Update `runLiveScan()` to support SSE streaming via `EventSource('/api/v1/events')` (with fallback to `/api/v1/scan`), updating progress percentages and step labels in `#bridge-progress-bar`.
-2. In `docs/index.html`:
-   - Add `#bridge-progress-bar` with step status indicators inside `#bridge-results-container`.
-3. In `tests/daemon/test_bridge_stream.py`:
-   - Ensure complete unit tests verifying simulated SSE and WebSocket event streams from `BridgeDaemon`.
+1. In docs/app.js:
+   - Invoke checkBridgeConnection() when the DOM loads and whenever switching to the Audit tab.
+   - Bind click listeners for #btn-live-scan and #btn-live-drift.
+   - Update runLiveScan() to support SSE streaming via EventSource('/api/v1/events') (with fallback to /api/v1/scan), updating progress percentages and step labels in #bridge-progress-bar.
+2. In docs/index.html:
+   - Add #bridge-progress-bar with step status indicators inside #bridge-results-container.
+3. In tests/daemon/test_bridge_stream.py:
+   - Ensure complete unit tests verifying simulated SSE and WebSocket event streams from BridgeDaemon.
 
-Non-Interactive Completion Directive:
-Implement the complete code and tests cleanly. Run pytest on `tests/daemon/` to verify. Conclude directly upon success without asking open-ended follow-up questions.
+Run pytest on tests/daemon/ to verify. Conclude directly upon success.
