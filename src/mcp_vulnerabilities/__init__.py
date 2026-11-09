@@ -26,7 +26,7 @@ from mcp_vulnerabilities.models import (
 from mcp_vulnerabilities.pipeline import McpVulnerabilityPipeline, PipelineResult
 from mcp_vulnerabilities.validator import OsvValidationError, OsvValidator
 
-__version__ = "1.7.4"
+__version__ = "1.7.5"
 
 __all__ = [
     "__version__",
