@@ -20,5 +20,7 @@ def test_batch2_packages_exist_in_catalog(catalog_index):
     ]
     for name in sample_names:
         assert name in catalog_pkgs, f"Package {name} missing from catalog index"
-        assert catalog_pkgs[name]["ecosystem"] in ("pypi", "PyPI")
+        # Advisory-only packages (no discovery passport) may be tagged with the generic "MCP" ecosystem
+        # when upstream feeds (NVD/OSV) do not expose a registry-specific affected entry.
+        assert catalog_pkgs[name]["ecosystem"] in ("pypi", "PyPI", "MCP")
         assert catalog_pkgs[name]["latest_version"] is not None
