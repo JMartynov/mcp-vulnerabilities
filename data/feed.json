@@ -6,6 +6,45 @@
   "description": "Real-time feed of OSV-compliant security advisories, CVEs, and vulnerabilities across MCP servers.",
   "items": [
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-125322",
+      "url": "https://github.com/pgEdge/pgedge-postgres-mcp/commit/933f1b4cb136183eb307064c1cf1ad2bf015f314",
+      "title": "[UNKNOWN] CVE-2026-125322: pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl",
+      "summary": "pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-125322</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> pgedge-postgres-mcp</p>\n<p><strong>Details:</strong><br>pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible clients. Prior to 1.1.0, the where parameter of the count_rows tool accepted subqueries against tables other than the table named in the tool call. A caller could use predicates and the returned row count as an inference oracle to extract data from any other table that the connected database role could read. The database privilege boundary remained intact, and the flaw did not grant access to tables outside that role's existing SELECT privileges. This issue is fixed in version 1.1.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/commit/933f1b4cb136183eb307064c1cf1ad2bf015f314\">https://github.com/pgEdge/pgedge-postgres-mcp/commit/933f1b4cb136183eb307064c1cf1ad2bf015f314</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/issues/200\">https://github.com/pgEdge/pgedge-postgres-mcp/issues/200</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/pull/201\">https://github.com/pgEdge/pgedge-postgres-mcp/pull/201</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/releases/tag/v1.1.0\">https://github.com/pgEdge/pgedge-postgres-mcp/releases/tag/v1.1.0</a></li>\n</ul></p>",
+      "date_published": "2026-11-10T17:39:00.060Z",
+      "date_modified": "2026-11-10T17:39:00.060Z",
+      "tags": [
+        "UNKNOWN",
+        "pgedge-postgres-mcp"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-125321",
+      "url": "https://github.com/pgEdge/pgedge-postgres-mcp/commit/6a19e46a240b9f4661a4a253811948dd75c4077e",
+      "title": "[UNKNOWN] CVE-2026-125321: pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl",
+      "summary": "pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-125321</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> pgedge-postgres-mcp</p>\n<p><strong>Details:</strong><br>pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible clients. Prior to 1.1.0, deployments exposing the nondefault HTTP transport with authentication enabled used the leftmost caller-supplied X-Forwarded-For value as the client address for login rate limiting. ExtractIPAddress in internal/auth/middleware.go supplied that value to IsAllowed and RecordFailedAttempt in internal/auth/rate_limiter.go, allowing an unauthenticated caller to rotate addresses to evade throttling or assert another user's address to consume that user's limiter bucket. The published nginx configuration appended rather than replaced X-Forwarded-For, making the issue reachable without an operator misconfiguration. Username-keyed account lockout did not use the client address, but shipped defaults disabled that separate control through MaxFailedAttemptsBeforeLockout: 0. This issue is fixed in version 1.1.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/commit/6a19e46a240b9f4661a4a253811948dd75c4077e\">https://github.com/pgEdge/pgedge-postgres-mcp/commit/6a19e46a240b9f4661a4a253811948dd75c4077e</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/issues/204\">https://github.com/pgEdge/pgedge-postgres-mcp/issues/204</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/pull/205\">https://github.com/pgEdge/pgedge-postgres-mcp/pull/205</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/security/advisories/GHSA-v347-v3w7-7fq9\">https://github.com/pgEdge/pgedge-postgres-mcp/security/advisories/GHSA-v347-v3w7-7fq9</a></li>\n</ul></p>",
+      "date_published": "2026-11-10T17:36:23.877Z",
+      "date_modified": "2026-11-10T17:36:23.877Z",
+      "tags": [
+        "UNKNOWN",
+        "pgedge-postgres-mcp"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-125320",
+      "url": "https://github.com/pgEdge/pgedge-postgres-mcp/commit/5571bd492a803e8f8831599c88b4619c5041fd8e",
+      "title": "[UNKNOWN] CVE-2026-125320: pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl",
+      "summary": "pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-125320</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> pgedge-postgres-mcp</p>\n<p><strong>Details:</strong><br>pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible clients. Prior to 1.1.0, the HTTP transport did not validate the Origin header on incoming requests. A user who visited an attacker-controlled page could be targeted through DNS rebinding, allowing the page to reach a locally running server and read schemas and query results from configured databases. The issue affected deployments with the HTTP transport enabled on a machine that also ran a browser, while the default stdio transport was not reachable through this path. This issue is fixed in version 1.1.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/commit/5571bd492a803e8f8831599c88b4619c5041fd8e\">https://github.com/pgEdge/pgedge-postgres-mcp/commit/5571bd492a803e8f8831599c88b4619c5041fd8e</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/issues/231\">https://github.com/pgEdge/pgedge-postgres-mcp/issues/231</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/pull/232\">https://github.com/pgEdge/pgedge-postgres-mcp/pull/232</a></li>\n<li><a href=\"https://github.com/pgEdge/pgedge-postgres-mcp/releases/tag/v1.1.0\">https://github.com/pgEdge/pgedge-postgres-mcp/releases/tag/v1.1.0</a></li>\n</ul></p>",
+      "date_published": "2026-11-10T17:23:43.734Z",
+      "date_modified": "2026-11-10T17:23:43.734Z",
+      "tags": [
+        "UNKNOWN",
+        "pgedge-postgres-mcp"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-125271",
       "url": "https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-125271.json",
       "title": "[UNKNOWN] CVE-2026-125271: Incorrect normalization of operation names in the custom security policy enforcement in awslabs aws-api-mcp-server befor",
@@ -51,7 +90,7 @@
       "summary": "A vulnerability has been identified in Mendix Studio Pro 11 (All versions >= V11.15.0 < V11.16.0), Mendix Studio Pro 11.",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-112136</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>A vulnerability has been identified in Mendix Studio Pro 11 (All versions >= V11.15.0 < V11.16.0), Mendix Studio Pro 11.12 (All versions >= V11.12.6 < V11.12.7). The affected products MCP Server does not properly restrict its HTTP listener to the loopback interface, leaving it potentially exposed to remote systems. This could allow an attacker with network access to interact with the MCP Server remotely.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://cert-portal.siemens.com/productcert/html/ssa-710379.html\">https://cert-portal.siemens.com/productcert/html/ssa-710379.html</a></li>\n</ul></p>",
       "date_published": "2026-11-10T12:17:16.540Z",
-      "date_modified": "2026-11-10T12:17:16.540Z",
+      "date_modified": "2026-11-10T17:17:20.530Z",
       "tags": [
         "UNKNOWN",
         "unknown"
@@ -64,7 +103,7 @@
       "summary": "Dynatrace MCP Server is an MCP server for Dynatrace Observability. Prior to 1.8.7, the create_dynatrace_notebook registr",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-123812</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Dynatrace MCP Server is an MCP server for Dynatrace Observability. Prior to 1.8.7, the create_dynatrace_notebook registration in src/index.ts performs a persistent document-write action without calling requestHumanApproval, although the project's other write tools use that gate to obtain operator consent. A caller can create tenant-visible notebooks containing attacker-controlled Markdown or DQL content, and tenant users may later execute embedded DQL when opening the notebook. The tool also lacks a destructiveHint annotation that would signal its side effects to MCP clients. This issue is fixed in version 1.8.7.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/dynatrace-oss/dynatrace-mcp/commit/2851d3ce29d834c93b67f0db903c10e0b488e7ac\">https://github.com/dynatrace-oss/dynatrace-mcp/commit/2851d3ce29d834c93b67f0db903c10e0b488e7ac</a></li>\n<li><a href=\"https://github.com/dynatrace-oss/dynatrace-mcp/releases/tag/v1.8.7\">https://github.com/dynatrace-oss/dynatrace-mcp/releases/tag/v1.8.7</a></li>\n<li><a href=\"https://github.com/dynatrace-oss/dynatrace-mcp/security/advisories/GHSA-pc2w-4mq8-32qw\">https://github.com/dynatrace-oss/dynatrace-mcp/security/advisories/GHSA-pc2w-4mq8-32qw</a></li>\n</ul></p>",
       "date_published": "2026-11-09T22:18:37.437Z",
-      "date_modified": "2026-11-09T22:18:37.437Z",
+      "date_modified": "2026-11-10T17:17:24.257Z",
       "tags": [
         "UNKNOWN",
         "unknown"
@@ -1270,45 +1309,6 @@
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-100633</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>SiYuan is a self-hosted personal knowledge management system. In versions 3.8.0 through 3.8.3, the MCP file tool's sensitive-path guard (util.IsForbiddenAbsPath(), invoked from resolvePath()) is applied only to the allowed root of recursive operations and not to each resolved descendant path — an incomplete fix for GHSA-c8r8-95hg-mp34. An authenticated administrator using the in-app Agent or the external MCP server can therefore bypass the protected-workspace-file denylist: file.grep can return matching lines from non-hidden protected descendants (for example conf/conf.json, TLS keys, data/snippets/conf.json, data/templates/, data/.siyuan/publishAccess.json, notebook .siyuan internals, or the kernel log), file.copy can copy protected descendants to an ordinary path where file.read can then retrieve them, and unzip can overwrite protected descendants using ordinary, lexically contained ZIP member names. Because file.grep is globally classified as a safe action, it receives no per-call confirmation, and the confirmation cards for file.copy and unzip show only the allowed root arguments. This issue is fixed in version 3.8.4. Suggested title: SiYuan 3.8.0 through 3.8.3 Sensitive-Path Guard Bypass in Recursive MCP File Operations.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/siyuan-note/siyuan/security/advisories/GHSA-9g6v-r3xf-673q\">https://github.com/siyuan-note/siyuan/security/advisories/GHSA-9g6v-r3xf-673q</a></li>\n<li><a href=\"https://www.vulncheck.com/advisories/siyuan-3.8.0-through-3.8.3-path-traversal-via-mcp-file-operations\">https://www.vulncheck.com/advisories/siyuan-3.8.0-through-3.8.3-path-traversal-via-mcp-file-operations</a></li>\n</ul></p>",
       "date_published": "2026-09-26T14:16:44.687Z",
       "date_modified": "2026-10-05T16:17:03.570Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-96526",
-      "url": "https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-96526.json",
-      "title": "[UNKNOWN] CVE-2026-96526: The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an object-level authorization check on one ",
-      "summary": "The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an object-level authorization check on one ",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-96526</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an object-level authorization check on one of its workflow REST routes, allowing users with the Contributor role to disclose the title and publication status of any post, page or custom post type, including other users' private, draft, pending and scheduled content.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://wpscan.com/vulnerability/79c3ae87-fc63-42b1-bb68-c7420060f9d4\">https://wpscan.com/vulnerability/79c3ae87-fc63-42b1-bb68-c7420060f9d4</a></li>\n</ul></p>",
-      "date_published": "2026-09-26T07:17:03.333Z",
-      "date_modified": "2026-09-28T15:17:09.083Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-96525",
-      "url": "https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-96525.json",
-      "title": "[UNKNOWN] CVE-2026-96525: The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an ownership or sufficient capability check",
-      "summary": "The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an ownership or sufficient capability check",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-96525</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>The MCP Server for WordPress  WordPress plugin before 1.8.2 does not perform an ownership or sufficient capability check on its workflow create, update and delete REST routes, allowing users with the Contributor role to modify, delete and create site-wide workflow configuration, including workflows created by administrators.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://wpscan.com/vulnerability/f814fb88-4198-4ba0-972c-658a1d672289\">https://wpscan.com/vulnerability/f814fb88-4198-4ba0-972c-658a1d672289</a></li>\n</ul></p>",
-      "date_published": "2026-09-26T07:17:03.233Z",
-      "date_modified": "2026-09-28T15:17:09.083Z",
-      "tags": [
-        "UNKNOWN",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-96524",
-      "url": "https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-96524.json",
-      "title": "[UNKNOWN] CVE-2026-96524: The MCP Server for WordPress  WordPress plugin before 1.8.2 does not correctly verify the WordPress REST API nonce for c",
-      "summary": "The MCP Server for WordPress  WordPress plugin before 1.8.2 does not correctly verify the WordPress REST API nonce for c",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-96524</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>The MCP Server for WordPress  WordPress plugin before 1.8.2 does not correctly verify the WordPress REST API nonce for cookie-authenticated requests when a condition an attacker can influence is present, allowing unauthenticated attackers to perform administrator-only actions, including creating a new administrator account, by tricking a logged-in administrator into visiting a crafted page.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://wpscan.com/vulnerability/d8e97a77-b70f-41f0-8d1e-0d50b6d878c6\">https://wpscan.com/vulnerability/d8e97a77-b70f-41f0-8d1e-0d50b6d878c6</a></li>\n</ul></p>",
-      "date_published": "2026-09-26T07:17:03.130Z",
-      "date_modified": "2026-09-28T15:17:09.083Z",
       "tags": [
         "UNKNOWN",
         "unknown"
