@@ -107,7 +107,7 @@ def identifier(setup_dummy_passports_and_vulns):
 
 EXACT_MATCH_SCRIPT = """#!/bin/bash
 while read line; do
-    if [[ "$line" == *'"method": "initialize"'* ]]; then
+    if [[ "$line" == *'"method": "initialize"'* ]] || [[ "$line" == *'"method": "server/discover"'* ]]; then
         echo '{"jsonrpc": "2.0", "id": 1, "result": {"serverInfo": {"name": "mock_wrapper", "version": "1.0"}, "capabilities": {"tools": {}}}}'
     elif [[ "$line" == *"tools/list"* ]]; then
         echo '{"jsonrpc": "2.0", "id": 2, "result": {"tools": [{"name": "read_file", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]}}, {"name": "write_file", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}, "content": {"type": "string"}}, "required": ["path", "content"]}}, {"name": "list_directory", "inputSchema": {"type": "object", "properties": {"path": {"type": "string"}}, "required": ["path"]}}]}}'
@@ -121,7 +121,7 @@ done
 
 PROPRIETARY_MATCH_SCRIPT = """#!/bin/bash
 while read line; do
-    if [[ "$line" == *'"method": "initialize"'* ]]; then
+    if [[ "$line" == *'"method": "initialize"'* ]] || [[ "$line" == *'"method": "server/discover"'* ]]; then
         echo '{"jsonrpc": "2.0", "id": 1, "result": {"serverInfo": {"name": "proprietary_erp", "version": "1.0"}, "capabilities": {"tools": {}}}}'
     elif [[ "$line" == *"tools/list"* ]]; then
         echo '{"jsonrpc": "2.0", "id": 2, "result": {"tools": [{"name": "query_internal_erp", "inputSchema": {"type": "object", "properties": {"query": {"type": "string"}}, "required": ["query"]}}, {"name": "submit_leave_request", "inputSchema": {"type": "object", "properties": {"dates": {"type": "string"}}, "required": ["dates"]}}]}}'
@@ -315,7 +315,7 @@ class MockMcpServer(BaseHTTPRequestHandler):
             req_id = msg.get("id")
             method = msg.get("method")
             
-            if method == "initialize":
+            if method in ("initialize", "discover", "server/discover"):
                 MockMcpServer.message_queue.append({
                     "jsonrpc": "2.0",
                     "id": req_id,
@@ -324,6 +324,8 @@ class MockMcpServer(BaseHTTPRequestHandler):
                         "capabilities": {"tools": {}}
                     }
                 })
+            elif method == "notifications/initialized":
+                pass
             elif method == "tools/list":
                 MockMcpServer.message_queue.append({
                     "jsonrpc": "2.0",
@@ -336,6 +338,12 @@ class MockMcpServer(BaseHTTPRequestHandler):
                 MockMcpServer.message_queue.append({"jsonrpc": "2.0", "id": req_id, "result": {"prompts": []}})
             elif method == "resources/list":
                 MockMcpServer.message_queue.append({"jsonrpc": "2.0", "id": req_id, "result": {"resources": []}})
+            elif req_id is not None:
+                MockMcpServer.message_queue.append({
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {"code": -32601, "message": "Method not found"}
+                })
                 
             self.send_response(202)
             self.end_headers()
