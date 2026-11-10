@@ -31,19 +31,22 @@ class McpDiscoveryOrchestrator:
         include_other_registries: bool = True,
         include_smithery: bool = True,
         include_glama: bool = True,
+        include_pruning: bool = False,
+        offline_backoff: bool = False,
     ) -> list[dict[str, Any]]:
         """Run multi-registry discovery and merge results into the persistent catalog."""
         logger.info("Starting multi-registry MCP server discovery...")
         aggregated: dict[str, dict[str, Any]] = {}
 
         # Load catalog state to record deprecations
-        from mcp_vulnerabilities.catalog import McpCatalogState
+        from mcp_vulnerabilities.catalog import McpCatalogState, prune_catalog
         catalog_state = McpCatalogState()
+        backoff_state: dict[str, Any] | None = {} if offline_backoff else None
 
         # 1. npm
         if include_npm:
             logger.info("Discovering from npm Registry...")
-            for pkg in NpmDiscoveryProvider.discover():
+            for pkg in NpmDiscoveryProvider.discover(backoff_state=backoff_state):
                 if pkg.get("is_deprecated"):
                     catalog_state.record_deprecation("npm", pkg["name"], "deprecated", pkg.get("deprecation_reason", ""))
                     continue
@@ -110,6 +113,9 @@ class McpDiscoveryOrchestrator:
             "total_servers": len(aggregated),
             "servers": aggregated,
         }
+        if include_pruning:
+            catalog_data = prune_catalog(catalog_data, catalog_state)
+            aggregated = catalog_data.get("servers", {})
         self.catalog_file.write_text(json.dumps(catalog_data, indent=2, sort_keys=True), encoding="utf-8")
         logger.info(
             "Discovery complete. Discovered %d unique MCP servers -> %s",

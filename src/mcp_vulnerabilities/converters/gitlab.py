@@ -24,8 +24,12 @@ class GitLabAdvisoryConverter:
 
     @classmethod
     def from_yaml(cls, yaml_content: str | bytes) -> OsvVulnerability:
-        data = yaml.safe_load(yaml_content)
-        return cls.from_dict(data)
+        try:
+            data = yaml.safe_load(yaml_content)
+        except yaml.composer.ComposerError:
+            docs = [d for d in yaml.safe_load_all(yaml_content) if isinstance(d, dict)]
+            data = docs[0] if docs else {}
+        return cls.from_dict(data or {})
 
     @classmethod
     def from_file(cls, path: str | Path) -> OsvVulnerability:

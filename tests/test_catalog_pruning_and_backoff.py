@@ -140,14 +140,66 @@ def test_npm_backoff_max_cap():
 
 
 def test_cli_discover_prune_flags():
-    import argparse
     from mcp_vulnerabilities.cli import main
     import sys
     from unittest.mock import patch
     
-    test_args = ["mcp-vuln", "discover", "--prune"]
+    test_args = ["mcp-vuln", "discover", "--prune", "--offline-backoff"]
     with patch.object(sys, 'argv', test_args):
-        with patch('mcp_vulnerabilities.discovery.McpDiscoveryOrchestrator.run_discovery') as mock_run:
+        with patch('mcp_vulnerabilities.discovery.McpDiscoveryOrchestrator.run_discovery', autospec=True) as mock_run:
+            mock_run.return_value = []
+            try:
+                main()
+            except SystemExit:
+                pass
+            mock_run.assert_called_once()
+            _, kwargs = mock_run.call_args
+            assert kwargs.get("include_pruning") is True
+            assert kwargs.get("offline_backoff") is True
+
+
+def test_orchestrator_run_discovery_with_pruning_and_backoff(tmp_path):
+    from mcp_vulnerabilities.discovery.orchestrator import McpDiscoveryOrchestrator
+    from mcp_vulnerabilities.catalog import McpCatalogState
+
+    catalog_file = tmp_path / "mcp_servers.json"
+    state_file = tmp_path / "mcp_catalog_state.json"
+    state = McpCatalogState(state_file=state_file)
+    state.record_deprecation("npm", "dead-pkg", "deprecated", "No longer maintained")
+    state.save()
+
+    orchestrator = McpDiscoveryOrchestrator(catalog_file=catalog_file)
+    with patch("mcp_vulnerabilities.catalog.McpCatalogState", return_value=state), \
+         patch("mcp_vulnerabilities.discovery.npm.NpmDiscoveryProvider.discover") as mock_npm:
+        mock_npm.return_value = [
+            {"name": "alive-pkg", "ecosystem": "npm", "version": "1.0.0"},
+            {"name": "dead-pkg", "ecosystem": "npm", "version": "1.0.0"},
+        ]
+        servers = orchestrator.run_discovery(
+            include_npm=True,
+            include_pypi=False,
+            include_github=False,
+            include_other_registries=False,
+            include_smithery=False,
+            include_glama=False,
+            include_pruning=True,
+            offline_backoff=True,
+        )
+        assert len(servers) == 1
+        assert servers[0]["name"] == "alive-pkg"
+        mock_npm.assert_called_once()
+        _, npm_kwargs = mock_npm.call_args
+        assert isinstance(npm_kwargs.get("backoff_state"), dict)
+
+
+def test_cli_sync_prune_flags():
+    from mcp_vulnerabilities.cli import main
+    import sys
+    from unittest.mock import patch
+    
+    test_args = ["mcp-vuln", "sync", "--prune"]
+    with patch.object(sys, 'argv', test_args):
+        with patch('mcp_vulnerabilities.pipeline.McpVulnerabilityPipeline.run', autospec=True) as mock_run:
             try:
                 main()
             except SystemExit:
@@ -156,19 +208,3 @@ def test_cli_discover_prune_flags():
             _, kwargs = mock_run.call_args
             assert kwargs.get("include_pruning") is True
 
-def test_cli_sync_prune_flags():
-    import argparse
-    from mcp_vulnerabilities.cli import main
-    import sys
-    from unittest.mock import patch
-    
-    test_args = ["mcp-vuln", "sync", "--prune"]
-    with patch.object(sys, 'argv', test_args):
-        with patch('mcp_vulnerabilities.pipeline.McpVulnerabilityPipeline.run') as mock_run:
-            try:
-                main()
-            except SystemExit:
-                pass
-            mock_run.assert_called_once()
-            _, kwargs = mock_run.call_args
-            assert kwargs.get("include_pruning") is True
