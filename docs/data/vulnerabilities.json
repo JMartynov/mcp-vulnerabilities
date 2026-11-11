@@ -1367,7 +1367,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@cyanheads/git-mcp-server",
-          "purl": "pkg:npm/@cyanheads/git-mcp-server"
+          "purl": "pkg:npm/%40cyanheads/git-mcp-server"
         },
         "ranges": [
           {
@@ -1407,7 +1407,7 @@
         "url": "https://github.com/advisories/GHSA-3q26-f695-pp76"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/cyanheads/git-mcp-server"
       },
       {
@@ -1423,7 +1423,7 @@
         "url": "https://github.com/cyanheads/git-mcp-server/security/advisories/GHSA-3q26-f695-pp76"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53107"
       }
     ],
@@ -1537,7 +1537,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@modelcontextprotocol/server-filesystem",
-          "purl": "pkg:npm/@modelcontextprotocol/server-filesystem"
+          "purl": "pkg:npm/%40modelcontextprotocol/server-filesystem"
         },
         "ranges": [
           {
@@ -1591,7 +1591,7 @@
         "url": "https://github.com/advisories/GHSA-hc55-p739-j48w"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/modelcontextprotocol/servers"
       },
       {
@@ -1603,7 +1603,7 @@
         "url": "https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-hc55-p739-j48w"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53110"
       }
     ],
@@ -4240,11 +4240,11 @@
     "published": "2025-10-29T00:00:00Z",
     "references": [
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-rj5c-58rq-j5g5"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/jlowin/fastmcp"
       },
       {
@@ -4252,7 +4252,7 @@
         "url": "https://github.com/jlowin/fastmcp/security/advisories/GHSA-rj5c-58rq-j5g5"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-62801"
       },
       {
@@ -4596,7 +4596,7 @@
     "published": "2026-03-31T00:00:00Z",
     "references": [
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/PrefectHQ/fastmcp"
       },
       {
@@ -4608,7 +4608,7 @@
         "url": "https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-m8x7-r2rg-vh5g"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-m8x7-r2rg-vh5g"
       },
       {
@@ -4616,7 +4616,7 @@
         "url": "https://github.com/jlowin/fastmcp/security/advisories/GHSA-m8x7-r2rg-vh5g"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-64340"
       },
       {
@@ -8047,12 +8047,10 @@
     ],
     "database_specific": {
       "origin_sources": [
-        "CVE-2026-102943",
-        "GHSA-5m6c-38r8-5w76"
+        "CVE-2026-102943"
       ],
       "sources_merged": [
-        "CVE-2026-102943",
-        "GHSA-5m6c-38r8-5w76"
+        "CVE-2026-102943"
       ]
     },
     "details": "## Summary\n\nThe traversal fix for CVE-2026-33344 was implemented as HTTP middleware installed only in the chi handler chain, but the MCP service calls the same API method in process, so arbitrary YAML file read is reachable again through the MCP tool surface with a viewer-role key. Read-only, limited to .yaml/.yml targets. Confirmed at HEAD f6c039f (post v2.10.7).\n\n## The defect\n\nThe fix for CVE-2026-33344 is a reflection-based HTTP middleware (internal/frontend/.../api.go, roughly lines 553-597) that inspects a request field named FileName and rejects anything that is not a plain name. It is installed in exactly one place: the chi strict-handler chain (api.go around line 419).\n\nThe MCP service does not go through that chain. internal/service/mcp/server.go calls the API method directly as an in-process Go call:\n\n```go\nfunc (svc *Service) getDAGSpec(ctx context.Context, name string) (map[string]any, error) {   // line 307\n    resp, err := svc.api.GetDAGSpec(ctx, daguapi.GetDAGSpecRequestObject{\n        FileName: daguapi.DAGFileName(name),                                                 // line 309\n    })\n```\n\nNo HTTP request is constructed, so no middleware executes, and the underlying resolver is still uncontained:\n\n```go\nfunc (store *Storage) locateDAG(nameOrPath string) (string, error) {                 // line 1041\n    if strings.Contains(nameOrPath, string(filepath.Separator)) {                    // line 1042\n        foundPath, err := findDAGFile(nameOrPath)\n        if err == nil {\n            return foundPath, nil                                                    // line 1045, no containment check\n        }\n    }\n```\n\nAn absolute path contains a separator, so it takes the first branch and is returned as-is, with no check that it falls under store.baseDir or any entry in store.searchPaths.\n\n## Verification\n\nVerified end to end using the project's own conformance/mcptest harness against a real running HTTP server, not by source reading:\n\n```\ndagu_read {\"target\":\"dag_spec\",\"name\":\"/abs/outside/secret.yaml\"}\n-> HTTP 200, full file contents returned in data.spec\n```\n\nThis also succeeded with a viewer-role API key on an auth-enabled server (auth.mode: builtin), so it is not admin-only. Control test that makes this a residual: the equivalent REST request is correctly blocked (400, \"name must only contain alphanumeric characters...\"). The HTTP lane is fixed; the MCP lane is not.\n\nBounded impact: read only (dagu_change and dagu_execute are both blocked by spec-level name validation; I tested both); only .yaml/.yml targets. Secondary: GetDAGSpec skips the requireWorkspaceVisible check its sibling handlers run, so this also crosses workspace isolation.\n\n## Suggested fix\n\nMove the containment check out of HTTP middleware and into locateDAG itself, rejecting any resolved path that does not fall under baseDir or a configured search path. A middleware that runs on only one of two transports into the same API cannot hold the boundary; the resolver is the correct chokepoint since both transports converge there. Separately, add requireWorkspaceVisible to GetDAGSpec to match its siblings.\n\n## Tooling\n\nAI assistance was used while investigating. The traversal was reproduced against a real running server through the project's own MCP conformance harness, including with a viewer-role API key, and the REST control test confirms the HTTP lane is blocked. Confirmed in the uncontained locateDAG branch and the direct in-process GetDAGSpec call at HEAD.",
@@ -8560,7 +8558,7 @@
     "published": "2026-10-07T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-w794-rj3p-xv45"
       },
       {
@@ -8588,11 +8586,11 @@
         "url": "https://github.com/langflow-ai/langflow/security/advisories/GHSA-7w94-79vh-5mr2"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/langflow-ai/langflow/security/advisories/GHSA-w794-rj3p-xv45"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105697"
       },
       {
@@ -8821,7 +8819,7 @@
     "published": "2026-10-07T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-4f6c-2vvp-gw82"
       },
       {
@@ -8841,11 +8839,11 @@
         "url": "https://github.com/langflow-ai/langflow/releases/tag/v1.10.3"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/langflow-ai/langflow/security/advisories/GHSA-4f6c-2vvp-gw82"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105741"
       }
     ],
@@ -12590,7 +12588,7 @@
     },
     "details": "A template injection vulnerability in the `create_workflow_for_notification` tool lets a caller embed Jinja2 expressions that the Dynatrace workflow engine evaluates at runtime, exfiltrating event data to attacker-controlled destinations through a workflow that persists in the tenant after the MCP session ends.",
     "id": "CVE-2026-123809",
-    "modified": "2026-11-09T22:18:36.983Z",
+    "modified": "2026-11-10T19:20:44.137Z",
     "published": "2026-07-31T00:00:00Z",
     "references": [
       {
@@ -12739,30 +12737,6 @@
     "affected": [
       {
         "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:L/A:L",
-          "remediation_guidance": "Upgrade to version 2.0.0 or above."
-        },
-        "package": {
-          "ecosystem": "npm",
-          "name": "@dynatrace-oss/dynatrace-mcp-server",
-          "purl": "pkg:npm/@dynatrace-oss/dynatrace-mcp-server"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "0"
-              },
-              {
-                "fixed": "2.0.0"
-              }
-            ],
-            "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
           "cvss_score": 7.5,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:L/A:L",
           "cwe_ids": [
@@ -12780,6 +12754,30 @@
             "events": [
               {
                 "introduced": "< 2.0.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:L/A:L",
+          "remediation_guidance": "Upgrade to version 2.0.0 or above."
+        },
+        "package": {
+          "ecosystem": "npm",
+          "name": "@dynatrace-oss/dynatrace-mcp-server",
+          "purl": "pkg:npm/@dynatrace-oss/dynatrace-mcp-server"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "2.0.0"
               }
             ],
             "type": "SEMVER"
@@ -12830,7 +12828,7 @@
         "url": "https://github.com/dynatrace-oss/dynatrace-mcp/releases/tag/v2.0.0"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/dynatrace-oss/dynatrace-mcp/security/advisories/GHSA-p7w7-4929-vpj5"
       },
       {
@@ -12987,8 +12985,8 @@
         },
         "package": {
           "ecosystem": "MCP",
-          "name": "pgedge-postgres-mcp",
-          "purl": "pkg:mcp/pgedge-postgres-mcp"
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
         },
         "ranges": [
           {
@@ -13012,8 +13010,8 @@
     },
     "details": "pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible clients. Prior to 1.1.0, the HTTP transport did not validate the Origin header on incoming requests. A user who visited an attacker-controlled page could be targeted through DNS rebinding, allowing the page to reach a locally running server and read schemas and query results from configured databases. The issue affected deployments with the HTTP transport enabled on a machine that also ran a browser, while the default stdio transport was not reachable through this path. This issue is fixed in version 1.1.0.",
     "id": "CVE-2026-125320",
-    "modified": "2026-11-10T17:23:43.734Z",
-    "published": "2026-11-10T17:23:43.734Z",
+    "modified": "2026-11-10T18:17:33.213Z",
+    "published": "2026-11-10T18:17:33.213Z",
     "references": [
       {
         "type": "WEB",
@@ -13059,8 +13057,8 @@
         },
         "package": {
           "ecosystem": "MCP",
-          "name": "pgedge-postgres-mcp",
-          "purl": "pkg:mcp/pgedge-postgres-mcp"
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
         },
         "ranges": [
           {
@@ -13084,8 +13082,8 @@
     },
     "details": "pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible clients. Prior to 1.1.0, deployments exposing the nondefault HTTP transport with authentication enabled used the leftmost caller-supplied X-Forwarded-For value as the client address for login rate limiting. ExtractIPAddress in internal/auth/middleware.go supplied that value to IsAllowed and RecordFailedAttempt in internal/auth/rate_limiter.go, allowing an unauthenticated caller to rotate addresses to evade throttling or assert another user's address to consume that user's limiter bucket. The published nginx configuration appended rather than replaced X-Forwarded-For, making the issue reachable without an operator misconfiguration. Username-keyed account lockout did not use the client address, but shipped defaults disabled that separate control through MaxFailedAttemptsBeforeLockout: 0. This issue is fixed in version 1.1.0.",
     "id": "CVE-2026-125321",
-    "modified": "2026-11-10T17:36:23.877Z",
-    "published": "2026-11-10T17:36:23.877Z",
+    "modified": "2026-11-10T21:19:21.760Z",
+    "published": "2026-11-10T18:17:33.380Z",
     "references": [
       {
         "type": "WEB",
@@ -13127,8 +13125,8 @@
         },
         "package": {
           "ecosystem": "MCP",
-          "name": "pgedge-postgres-mcp",
-          "purl": "pkg:mcp/pgedge-postgres-mcp"
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
         },
         "ranges": [
           {
@@ -13152,8 +13150,8 @@
     },
     "details": "pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible clients. Prior to 1.1.0, the where parameter of the count_rows tool accepted subqueries against tables other than the table named in the tool call. A caller could use predicates and the returned row count as an inference oracle to extract data from any other table that the connected database role could read. The database privilege boundary remained intact, and the flaw did not grant access to tables outside that role's existing SELECT privileges. This issue is fixed in version 1.1.0.",
     "id": "CVE-2026-125322",
-    "modified": "2026-11-10T17:39:00.060Z",
-    "published": "2026-11-10T17:39:00.060Z",
+    "modified": "2026-11-10T18:17:33.560Z",
+    "published": "2026-11-10T18:17:33.560Z",
     "references": [
       {
         "type": "WEB",
@@ -19234,7 +19232,7 @@
     "published": "2026-03-31T00:00:00Z",
     "references": [
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/PrefectHQ/fastmcp"
       },
       {
@@ -19242,7 +19240,7 @@
         "url": "https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-rww4-4w9c-7733"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-rww4-4w9c-7733"
       },
       {
@@ -19250,7 +19248,7 @@
         "url": "https://github.com/jlowin/fastmcp/security/advisories/GHSA-rww4-4w9c-7733"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-27124"
       },
       {
@@ -19405,11 +19403,11 @@
     "published": "2026-02-26T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-vjqx-cfc4-9h6v"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/modelcontextprotocol/servers"
       },
       {
@@ -19425,7 +19423,7 @@
         "url": "https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-vjqx-cfc4-9h6v"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-27735"
       },
       {
@@ -20999,7 +20997,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@aborruso/ckan-mcp-server",
-          "purl": "pkg:npm/%40aborruso/ckan-mcp-server"
+          "purl": "pkg:npm/@aborruso/ckan-mcp-server"
         },
         "ranges": [
           {
@@ -21051,7 +21049,7 @@
         "url": "https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-3xm7-qw7j-qc8v"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-33060"
       }
     ],
@@ -21115,7 +21113,7 @@
         "url": "https://github.com/advisories/GHSA-89xv-2j6f-qhc8"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/modelcontextprotocol/go-sdk"
       },
       {
@@ -21127,7 +21125,7 @@
         "url": "https://github.com/modelcontextprotocol/go-sdk/security/advisories/GHSA-89xv-2j6f-qhc8"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-33252"
       }
     ],
@@ -23682,6 +23680,27 @@
       {
         "database_specific": {
           "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+          "cvss_v4_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
+        },
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "awslabs-aws-api-mcp-server",
+          "purl": "pkg:pypi/awslabs-aws-api-mcp-server"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              }
+            ],
+            "type": "ECOSYSTEM"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
           "remediation_guidance": "Upgrade to versions 1.3.9, 1.3.9 or above."
         },
         "package": {
@@ -23700,27 +23719,6 @@
               }
             ],
             "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
-          "cvss_v4_vector": "CVSS:4.0/AV:L/AC:L/AT:N/PR:N/UI:P/VC:H/VI:N/VA:N/SC:N/SI:N/SA:N"
-        },
-        "package": {
-          "ecosystem": "PyPI",
-          "name": "awslabs-aws-api-mcp-server",
-          "purl": "pkg:pypi/awslabs-aws-api-mcp-server"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "0"
-              }
-            ],
-            "type": "ECOSYSTEM"
           }
         ]
       }
@@ -23752,7 +23750,7 @@
         "url": "https://aws.amazon.com/security/security-bulletins/2026-007-AWS"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-2cpp-j2fc-qhp7"
       },
       {
@@ -23768,7 +23766,7 @@
         "url": "https://github.com/pypa/advisory-database/tree/main/vulns/awslabs-aws-api-mcp-server/PYSEC-2026-162.yaml"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-4270"
       },
       {
@@ -28640,7 +28638,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@aborruso/ckan-mcp-server",
-          "purl": "pkg:npm/@aborruso/ckan-mcp-server"
+          "purl": "pkg:npm/%40aborruso/ckan-mcp-server"
         },
         "ranges": [
           {
@@ -28676,7 +28674,7 @@
     "published": "2026-07-07T00:00:00Z",
     "references": [
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-3xm7-qw7j-qc8v"
       },
       {
@@ -34747,7 +34745,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@aborruso/ckan-mcp-server",
-          "purl": "pkg:npm/%40aborruso/ckan-mcp-server"
+          "purl": "pkg:npm/@aborruso/ckan-mcp-server"
         },
         "ranges": [
           {
@@ -34783,7 +34781,7 @@
     "published": "2026-09-22T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-3xm7-qw7j-qc8v"
       },
       {
@@ -34791,7 +34789,7 @@
         "url": "https://github.com/advisories/GHSA-798p-78g2-v556"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-g84h-j7jj-x32p"
       },
       {
@@ -34811,7 +34809,7 @@
         "url": "https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-798p-78g2-v556"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61612"
       }
     ],
@@ -37790,30 +37788,6 @@
     "affected": [
       {
         "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-          "remediation_guidance": "Upgrade to version 0.22.0 or above."
-        },
-        "package": {
-          "ecosystem": "PyPI",
-          "name": "mcp-atlassian",
-          "purl": "pkg:pypi/mcp-atlassian"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "0"
-              },
-              {
-                "fixed": "0.22.0"
-              }
-            ],
-            "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
           "cvss_score": 7.7,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
           "cwe_ids": [
@@ -37831,6 +37805,30 @@
             "events": [
               {
                 "introduced": "< 0.22.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+          "remediation_guidance": "Upgrade to version 0.22.0 or above."
+        },
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "mcp-atlassian",
+          "purl": "pkg:pypi/mcp-atlassian"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "0.22.0"
               }
             ],
             "type": "SEMVER"
@@ -37873,7 +37871,7 @@
         "url": "https://github.com/sooperset/mcp-atlassian/releases/tag/v0.22.0"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/sooperset/mcp-atlassian/security/advisories/GHSA-g5r6-gv6m-f5jv"
       },
       {
@@ -38055,7 +38053,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@aborruso/ckan-mcp-server",
-          "purl": "pkg:npm/@aborruso/ckan-mcp-server"
+          "purl": "pkg:npm/%40aborruso/ckan-mcp-server"
         },
         "ranges": [
           {
@@ -38111,7 +38109,7 @@
         "url": "https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-83x6-42hr-jc76"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73845"
       }
     ],
@@ -45604,7 +45602,7 @@
     "published": "2026-10-07T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-39w2-rjm5-chcv"
       },
       {
@@ -45616,11 +45614,11 @@
         "url": "https://github.com/vercel/next.js/releases/tag/v16.3.8"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/vercel/next.js/security/advisories/GHSA-39w2-rjm5-chcv"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-94486"
       }
     ],
@@ -53400,6 +53398,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -53452,6 +53461,17 @@
           "purl": "pkg:mcp/mcp-analytics-aggregate@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -53568,6 +53588,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -53620,6 +53651,17 @@
           "purl": "pkg:mcp/mcp-auth-rbac@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -53736,6 +53778,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -53788,6 +53841,17 @@
           "purl": "pkg:mcp/mcp-customer-crud@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -53904,6 +53968,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -53956,6 +54031,17 @@
           "purl": "pkg:mcp/mcp-audit-logging@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -54072,6 +54158,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54124,6 +54221,17 @@
           "purl": "pkg:mcp/mcp-analytics-aggregate@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -54240,6 +54348,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54292,6 +54411,17 @@
           "purl": "pkg:mcp/mcp-customer-crud@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -54408,6 +54538,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54492,6 +54633,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54544,6 +54696,17 @@
           "purl": "pkg:mcp/mcp-customer-crud@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -54816,6 +54979,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54868,6 +55042,17 @@
           "purl": "pkg:mcp/mcp-rug-pull@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -54984,6 +55169,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55036,6 +55232,17 @@
           "purl": "pkg:mcp/mcp-side-effect@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55152,6 +55359,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55204,6 +55422,17 @@
           "purl": "pkg:mcp/mcp-token-scope@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55320,6 +55549,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55372,6 +55612,17 @@
           "purl": "pkg:mcp/mcp-transport-chaos@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55488,6 +55739,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55540,6 +55802,17 @@
           "purl": "pkg:mcp/mongo-basic@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55656,6 +55929,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55708,6 +55992,17 @@
           "purl": "pkg:mcp/mongo-basic@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55824,6 +56119,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55876,6 +56182,17 @@
           "purl": "pkg:mcp/mysql-search@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55992,6 +56309,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56044,6 +56372,17 @@
           "purl": "pkg:mcp/mysql-search@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56160,6 +56499,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56212,6 +56562,17 @@
           "purl": "pkg:mcp/mysql-admin@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56328,6 +56689,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56380,6 +56752,17 @@
           "purl": "pkg:mcp/postgres-basic@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56496,6 +56879,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56548,6 +56942,17 @@
           "purl": "pkg:mcp/postgres-query@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56664,6 +57069,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56716,6 +57132,17 @@
           "purl": "pkg:mcp/postgres-query@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56832,6 +57259,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56884,6 +57322,17 @@
           "purl": "pkg:mcp/snowflake-stage@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57000,6 +57449,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57052,6 +57512,17 @@
           "purl": "pkg:mcp/snowflake-trading@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57168,6 +57639,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57220,6 +57702,17 @@
           "purl": "pkg:mcp/snowflake-governance@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57336,6 +57829,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57388,6 +57892,17 @@
           "purl": "pkg:mcp/snowflake-clinical@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57504,6 +58019,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57556,6 +58082,17 @@
           "purl": "pkg:mcp/snowflake-trading@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57672,6 +58209,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57724,6 +58272,17 @@
           "purl": "pkg:mcp/mcp-vector-search@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57840,6 +58399,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57892,6 +58462,17 @@
           "purl": "pkg:mcp/mcp-verifier-deception@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
