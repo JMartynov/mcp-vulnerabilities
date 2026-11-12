@@ -373,3 +373,33 @@ def test_vulnerability_matcher_multi_interval_ranges():
     assert report_250.total_findings == 0
 
 
+def test_matcher_all_versions_when_ranges_and_versions_empty():
+    """An advisory with an affected package but no ranges or versions affects all versions."""
+    mock_advisory = {
+        "id": "MAL-2026-TEST",
+        "affected": [
+            {
+                "package": {
+                    "name": "malicious-pkg",
+                    "ecosystem": "npm",
+                }
+            }
+        ]
+    }
+    matcher = VulnerabilityMatcher([mock_advisory])
+    server = DiscoveredClientServer(
+        server_name="malicious-pkg",
+        package_name="malicious-pkg",
+        version="1.0.0",
+        ecosystem="npm",
+        command="npx",
+        args=[],
+    )
+    report = matcher.audit_servers([server])
+    assert report.total_findings == 1
+    finding = report.findings[0]
+    assert finding.vulnerability_id == "MAL-2026-TEST"
+    assert finding.is_confirmed is True
+
+
+

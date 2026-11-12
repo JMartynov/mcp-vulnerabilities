@@ -25414,12 +25414,12 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_score": null,
-    "composite_risk_tier": "HIGH",
+    "composite_risk_tier": "CRITICAL",
     "description": "@postman/postman-mcp-server contains malware after npm account takeover",
     "display_name": "@postman/postman-mcp-server",
     "dual_axis_security": null,
     "ecosystem": "npm",
-    "highest_cve_severity": "HIGH",
+    "highest_cve_severity": "CRITICAL",
     "homepage_url": null,
     "is_malicious": false,
     "is_unpublished": false,
@@ -25431,7 +25431,7 @@
     "prompts_count": 0,
     "purl": "pkg:npm/@postman/postman-mcp-server",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.0.0",
+    "recommended_safe_version": null,
     "repo_http_status": 200,
     "repository_url": null,
     "required_env_vars": [],
@@ -25443,10 +25443,22 @@
     "transport": null,
     "versions": [
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GMS-2025-768",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Unfortunately, there is no solution yet.",
+            "severity": "CRITICAL",
+            "summary": "@postman/postman-mcp-server contains malware after npm account takeover",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": null,
         "required_env_vars": [],
@@ -41448,12 +41460,12 @@
     "archival_reason": null,
     "author": null,
     "composite_risk_score": null,
-    "composite_risk_tier": "HIGH",
+    "composite_risk_tier": "MEDIUM",
     "description": "A flaw was found in the AAP MCP server. An unauthenticated remote attacker can exploit a log injection vulnerability by ",
     "display_name": "ansible-automation-platform-tech-preview/mcp-server-rhel9",
     "dual_axis_security": null,
     "ecosystem": "MCP",
-    "highest_cve_severity": "HIGH",
+    "highest_cve_severity": "MEDIUM",
     "homepage_url": null,
     "is_malicious": false,
     "is_unpublished": false,
@@ -41465,7 +41477,7 @@
     "prompts_count": 0,
     "purl": "pkg:mcp/ansible-automation-platform-tech-preview/mcp-server-rhel9",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.0.0",
+    "recommended_safe_version": null,
     "repo_http_status": 200,
     "repository_url": null,
     "required_env_vars": [],
@@ -41477,10 +41489,22 @@
     "transport": null,
     "versions": [
       {
-        "advisories": [],
+        "advisories": [
+          {
+            "cvss_score": 5.3,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-6494",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "MEDIUM",
+            "summary": "A flaw was found in the AAP MCP server. An unauthenticated remote attacker can exploit a log injection vulnerability by ",
+            "vulnerable_tools": []
+          }
+        ],
         "connections": [],
         "dual_axis_security": null,
-        "is_vulnerable": false,
+        "is_vulnerable": true,
         "prompts": [],
         "release_date": null,
         "required_env_vars": [],
@@ -107428,7 +107452,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+    "description": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
     "display_name": "mcp-hostile-metadata",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -107474,11 +107498,24 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-UNICODE-001",
-            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
-            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
+            "id": "MCP-TOOL-POISON-001",
+            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
+            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
             "severity": "HIGH",
-            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "vulnerable_tools": [
+              "generate_summary_report"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VERITY-MCP-TOOL-POISON-001",
+            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
+            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
+            "severity": "HIGH",
+            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
             "vulnerable_tools": [
               "generate_summary_report"
             ]
@@ -107500,24 +107537,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-TOOL-POISON-001",
-            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
-            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
+            "id": "MCP-UNICODE-001",
+            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
+            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
             "severity": "HIGH",
-            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
-            "vulnerable_tools": [
-              "generate_summary_report"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-MCP-TOOL-POISON-001",
-            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
-            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
-            "severity": "HIGH",
-            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
             "vulnerable_tools": [
               "generate_summary_report"
             ]
@@ -110390,7 +110414,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
+    "description": "Sun Ray Server Software (SRSS) 1.3, when Non-Smartcard Mobility (NSCM) is enabled, allows remote attackers to login as a",
     "display_name": "n/a",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -110423,11 +110447,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2025-56405",
+            "id": "CVE-2002-2036",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
+            "summary": "Sun Ray Server Software (SRSS) 1.3, when Non-Smartcard Mobility (NSCM) is enabled, allows remote attackers to login as a",
             "vulnerable_tools": []
           },
           {
@@ -110445,11 +110469,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2008-5313",
+            "id": "CVE-2015-8316",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "mailscanner 4.68.8 and other versions before 4.74.16-1 might allow local users to overwrite arbitrary files via a symlin",
+            "summary": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
             "vulnerable_tools": []
           },
           {
@@ -110467,33 +110491,33 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2015-8316",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2002-2036",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Sun Ray Server Software (SRSS) 1.3, when Non-Smartcard Mobility (NSCM) is enabled, allows remote attackers to login as a",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "CVE-2026-50757",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Directory Traversal vulnerability in DayuanJiang next-ai-draw-io 0.4.13 allowsa remote attacker to execute arbitrary cod",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2008-5313",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mailscanner 4.68.8 and other versions before 4.74.16-1 might allow local users to overwrite arbitrary files via a symlin",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-56405",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
             "vulnerable_tools": []
           }
         ],

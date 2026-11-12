@@ -401,6 +401,9 @@ class VulnerabilityMatcher:
         versions: list[str],
     ) -> bool:
         """Checks if a version is within the specified OSV ranges or version list."""
+        if not ranges and not versions:
+            return True
+
         if versions and version_str in versions:
             return True
 
