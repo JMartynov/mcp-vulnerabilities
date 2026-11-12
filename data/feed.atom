@@ -5,10 +5,27 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-11-10T18:17:33.560Z</updated>
+  <updated>2026-11-11T21:16:46.563Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-65968</id>
+    <title>[UNKNOWN] CVE-2026-65968: ideon is a self-hosted visual workspace. Prior to version 0.9.4, validateUrlForSSRF() / safeFetch() in lib/oauth/ssrf-pr</title>
+    <link rel="alternate" href="https://github.com/3xpyth0n/ideon/commit/58e2f26bb7259d24c963a753962ac34f56c63b01" />
+    <updated>2026-11-11T21:16:46.563Z</updated>
+    <published>2026-11-11T21:16:46.563Z</published>
+    <summary>ideon is a self-hosted visual workspace. Prior to version 0.9.4, validateUrlForSSRF() / safeFetch() in lib/oauth/ssrf-pr</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-65968&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;ideon is a self-hosted visual workspace. Prior to version 0.9.4, validateUrlForSSRF() / safeFetch() in lib/oauth/ssrf-protection.ts (and the parallel validateMcpUrl() in lib/security/validators.ts) perform SSRF host-blocking by string/regex matching on new URL(url).hostname. Their IPv6 branch only recognises the textual forms ::1, fe80:/fc00:/fd00: prefixes, and the dotted-decimal IPv4-mapped form ::ffff:127.x. It does not recognise the WHATWG-canonical IPv4-mapped-IPv6 host that Node emits for a mapped address, which is hex-compressed and bracket-wrapped: [::ffff:7f00:1] for 127.0.0.1, [::ffff:a9fe:a9fe] for 169.254.169.254. An authenticated user who registers a STREAMABLE_HTTP / SSE MCP server with URL http://[::ffff:7f00:1]:PORT/ (loopback) or http://[::ffff:a9fe:a9fe]/ (cloud metadata) passes both guards, and the server-side OAuth-discovery action then fetches that host, yielding server-side request forgery to loopback and to the cloud metadata service. This issue has been patched in version 0.9.4.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/3xpyth0n/ideon/commit/58e2f26bb7259d24c963a753962ac34f56c63b01"&gt;https://github.com/3xpyth0n/ideon/commit/58e2f26bb7259d24c963a753962ac34f56c63b01&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/3xpyth0n/ideon/releases/tag/v0.9.4"&gt;https://github.com/3xpyth0n/ideon/releases/tag/v0.9.4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/3xpyth0n/ideon/security/advisories/GHSA-cvcr-fcf6-366r"&gt;https://github.com/3xpyth0n/ideon/security/advisories/GHSA-cvcr-fcf6-366r&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <id>urn:mcp:vulnerability:CVE-2026-125322</id>
     <title>[UNKNOWN] CVE-2026-125322: pgEdge Postgres MCP Server enables SQL queries against PostgreSQL databases through Model Context Protocol compatible cl</title>
@@ -3212,22 +3229,6 @@ Office-PowerPoint-MCP-Server hasta la versión 2.0.7 contiene una vulnerabilidad
 &lt;li&gt;&lt;a href="https://github.com/penpot/penpot/blob/1d2c37e52c733f74017d90b0fd1ae2d074a5c33d/mcp/packages/server/src/PluginBridge.ts#L52"&gt;https://github.com/penpot/penpot/blob/1d2c37e52c733f74017d90b0fd1ae2d074a5c33d/mcp/packages/server/src/PluginBridge.ts#L52&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/penpot/penpot/commit/b5274a44766d095247037be18c1d1918ac67ddeb"&gt;https://github.com/penpot/penpot/commit/b5274a44766d095247037be18c1d1918ac67ddeb&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/penpot/penpot/security/advisories/GHSA-22qr-rp27-j9wm"&gt;https://github.com/penpot/penpot/security/advisories/GHSA-22qr-rp27-j9wm&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-100633</id>
-    <title>[UNKNOWN] CVE-2026-100633: SiYuan is a self-hosted personal knowledge management system. In versions 3.8.0 through 3.8.3, the MCP file tool's sensi</title>
-    <link rel="alternate" href="https://github.com/siyuan-note/siyuan/security/advisories/GHSA-9g6v-r3xf-673q" />
-    <updated>2026-10-05T16:17:03.570Z</updated>
-    <published>2026-09-26T14:16:44.687Z</published>
-    <summary>SiYuan is a self-hosted personal knowledge management system. In versions 3.8.0 through 3.8.3, the MCP file tool's sensi</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-100633&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;SiYuan is a self-hosted personal knowledge management system. In versions 3.8.0 through 3.8.3, the MCP file tool's sensitive-path guard (util.IsForbiddenAbsPath(), invoked from resolvePath()) is applied only to the allowed root of recursive operations and not to each resolved descendant path — an incomplete fix for GHSA-c8r8-95hg-mp34. An authenticated administrator using the in-app Agent or the external MCP server can therefore bypass the protected-workspace-file denylist: file.grep can return matching lines from non-hidden protected descendants (for example conf/conf.json, TLS keys, data/snippets/conf.json, data/templates/, data/.siyuan/publishAccess.json, notebook .siyuan internals, or the kernel log), file.copy can copy protected descendants to an ordinary path where file.read can then retrieve them, and unzip can overwrite protected descendants using ordinary, lexically contained ZIP member names. Because file.grep is globally classified as a safe action, it receives no per-call confirmation, and the confirmation cards for file.copy and unzip show only the allowed root arguments. This issue is fixed in version 3.8.4. Suggested title: SiYuan 3.8.0 through 3.8.3 Sensitive-Path Guard Bypass in Recursive MCP File Operations.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/siyuan-note/siyuan/security/advisories/GHSA-9g6v-r3xf-673q"&gt;https://github.com/siyuan-note/siyuan/security/advisories/GHSA-9g6v-r3xf-673q&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.vulncheck.com/advisories/siyuan-3.8.0-through-3.8.3-path-traversal-via-mcp-file-operations"&gt;https://www.vulncheck.com/advisories/siyuan-3.8.0-through-3.8.3-path-traversal-via-mcp-file-operations&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

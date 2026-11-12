@@ -5589,19 +5589,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.14.3",
+    "latest_version": "1.14.4",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@mambalabsdev/mcp-gtm-suite",
     "prompts_count": 0,
     "purl": "pkg:npm/@mambalabsdev%2Fmcp-gtm-suite",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.14.3",
+    "recommended_safe_version": "1.14.4",
     "repo_http_status": 200,
     "repository_url": "https://github.com/mambalabsdev/mcp-gtm-suite",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@mambalabsdev/mcp-gtm-suite` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 24 safe version(s).",
+    "security_summary": "Server `@mambalabsdev/mcp-gtm-suite` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:a9b2e807a0dc30323a69aa46e25be66959f798fb99b87d33c0fe16e87f423d4e",
@@ -9191,6 +9191,1110 @@
         ],
         "toolset_canonical_hash": "sha256:a9b2e807a0dc30323a69aa46e25be66959f798fb99b87d33c0fe16e87f423d4e",
         "version": "1.14.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-10T17:51:31.424Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e85f87df68b9d46e6bd2eb363c725a68dd844af49bff0c2f61b379f8f126464a",
+            "description": "Aggregate a company",
+            "name": "aggregate_gtm_signals",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "If true, the summary becomes a longer, more detailed explanation.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "explain_mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Include a plain-English gtm_signal_summary.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_summary",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which signals to aggregate. Defaults to hiring and tech_stack. Each extra source adds one sub actor run to the bill and one dimension to the composite score, which is normalized over the sources selected.",
+                "enum": [
+                  "hiring",
+                  "tech_stack",
+                  "funding",
+                  "events",
+                  "workplace"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "sources",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `aggregate_gtm_signals` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed6fcd8ae1f129e06601bef611bd3c39c22dbb26faaf305f4158ff5680482672",
+            "description": "Give it a domain and it returns whether an AI agent can read that site, and what the site",
+            "name": "audit_agent_accessibility",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Probes sitemap, OpenAPI, well known files and feeds. Adds 7 concurrent requests. Default: true.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "check_endpoints",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Parses JSON-LD, microdata, Open Graph and canonical off the homepage. Costs no extra requests. Default: true.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "check_structured_data",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Run only these checks. Omit for all of them. Narrowing narrows the work, and the score is rescaled over the checks selected.",
+                "enum": [
+                  "llms_txt",
+                  "robots_ai",
+                  "sitemap",
+                  "openapi",
+                  "security_txt",
+                  "feeds",
+                  "json_ld",
+                  "microdata",
+                  "open_graph",
+                  "canonical",
+                  "render_mode"
+                ],
+                "format": null,
+                "items_type": "string",
+                "name": "checks",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "One company domain, for example vercel.com. Protocol and path are stripped.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "false",
+                  "true"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `audit_agent_accessibility` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9a55c6fe7eebac2c1d90bda5c8a517b26005903495c0cad914dc73d8b16372f4",
+            "description": "Point it at LinkedIn person profiles or company pages and it returns the posts a search engine has indexed for each one, as flat rows: permalink, author, a text excerpt, and the publish date decoded from the post id. No request is sent to LinkedIn and no cookie or account is used. A result counts only when its permalink names the source, so posts are never attributed to the wrong author. Coverage is what the search index holds: posts appear days or weeks after publishing and many never appear. Commenters, reaction counts, comment counts and media are no longer returned (removed 2026-10-12, they came only from LinkedIn pages). Rows carry row_type post or notice; filter on row_type before loading a table. post_id is the activity URN and is stable across runs. Every row carries degraded and degradation_reason. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+            "name": "capture_linkedin_posts_and_commenters",
+            "parameters": [
+              {
+                "default": null,
+                "description": "LinkedIn company page URLs, for example https://www.linkedin.com/company/microsoft. Supply this, profile_urls, or both.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "company_urls",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO date or timestamp, for example 2026-08-01. Posts published before this are skipped BEFORE anything is charged. Leave empty to take everything the index holds.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "posted_since",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "LinkedIn person profile URLs, for example https://www.linkedin.com/in/williamhgates. Country subdomains such as uk.linkedin.com are fine. Supply this, company_urls, or both.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "profile_urls",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `capture_linkedin_posts_and_commenters` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e643dae85f72fb3d0fbad07a1533e04c39d07691171de7c03bed5764e67a430d",
+            "description": "One contact in, one classified row out. Give it a job title and it returns the department, the seniority level, a seniority_rank from 1 to 12 you can filter with a comparison, and classification_rule, the named rule that fired, so every decision is auditable. The classification is a deterministic rule table: it needs no API key, calls no model, and returns the same answer for the same title every time. Only job_title is required. full_name and company_domain are read only when verify_position is on, which checks whether the person is still listed on their employer",
+            "name": "classify_contact",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `classify_contact` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4148d3bb91b79586a9601fbe952d9425c69b188439357b43512dfe7fe41d23c5",
+            "description": "Given a company domain, determine how far that company has gone with AI. Returns an ai_maturity tier of none, declared (says AI but nothing observable is running), deployed (AI tooling is live on the site), or commercialized (the pricing page charges for AI via credits, tokens, an add-on, an AI-named plan, or a per-outcome price), plus the detected AI vendors, validated llms.txt status, robots.txt AI-crawler policy, and the evidence behind the verdict. A domain behind a bot challenge returns blocked=true at low confidence rather than a false negative. Returns flat, Clay-ready JSON. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per domain analyzed.",
+            "name": "detect_ai_tooling",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `detect_ai_tooling` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1ca94466184203556b69c9299d468f196b259587b0f40466877da92486d98b4b",
+            "description": "Detect which GTM tools a company uses from its public website. Returns CRM, sequencer, and marketing automation signals with per-tool boolean flags as a flat, Clay-ready JSON row. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "detect_gtm_tech_stack",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Deprecated alias for domain, accepted by the actor for older callers. Prefer domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Crawl up to 2 extra pages for better coverage. Defaults to true when omitted.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "crawl_additional_pages",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. Supply this, company_domain or url.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "By default a clean detection is cached for 7 days and reused. Set true to force a fresh detection.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Report only these tools. Omit to report every detectable tool. Only tools with a client side fingerprint are selectable. Detection is unchanged, so filtering costs nothing extra.",
+                "enum": [
+                  "hubspot",
+                  "salesforce",
+                  "marketo",
+                  "pardot",
+                  "intercom",
+                  "drift",
+                  "apollo",
+                  "outreach",
+                  "gong",
+                  "zoominfo"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "technologies",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Deprecated alias for domain, accepted by the actor as a full company website URL. Prefer domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `detect_gtm_tech_stack` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:940a676d739de9f4678bfb1427bb37d1faba17d16027176329107f5728b06f97",
+            "description": "Enrich a company domain into structured firmographics: employee band, industry, HQ, founded year, revenue estimate, logo, and description, with source provenance. Parsed from the company",
+            "name": "enrich_company_firmographics",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Domains enriched concurrently per wave in batch mode. Default 5, maximum 10.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "batchSize",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional company name, used as a fallback label when the page does not expose one.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain to enrich, e.g. stripe.com. Provide this or domains.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "List of bare domains for batch processing. Takes precedence over domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domains",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Force a fresh enrichment and ignore the 7 day result cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `enrich_company_firmographics` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5ced5e48214df5f1245ad0869ddd7094d5a49f5555b8044cc01d78acc00ba071",
+            "description": "Given a company domain, determine whether that company runs cold email outbound and on what stack. Returns a runs_outbound verdict of program (a deliberate cold outbound setup), light (one weak signal), none, or unknown, with the evidence behind it. The strongest signal is the lookalike sending domains a real program leaves behind: domains like getcompany.com or company-mail.com that carry their own mail and redirect back to the primary site. Also returns the inbox provider (Google Workspace, Microsoft 365 and others) for the primary domain and each sending domain, any detected sending platform (Outreach, Salesloft, Lemlist, Instantly, Smartlead, Apollo and more), registration clusters showing sending domains bought on the same day, cold email infrastructure vendors, and SPF, DKIM and DMARC posture. Sending platform recall is partial by design: sequencers that connect over OAuth to a customer",
+            "name": "fingerprint_outbound_infrastructure",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fingerprint_outbound_infrastructure` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8bf76f398d6043a99aa0568d76f1d1a60a3bcdee4d1ff9063e23298211dc29d6",
+            "description": "Monitor a company domain for changes across hiring, tech stack, funding, firmographics, and social since the last run. Returns only what changed as typed change events in flat, Clay-ready JSON. Pass sources to watch fewer than all five sources and min_severity to drop minor changes; each source left out is one fewer sub actor run on the bill. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "get_company_changes",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional company name hint, used when the domain does not match the brand name, e.g. Deel for deel.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Company domain to monitor, without https or www, e.g. stripe.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Report only changes at or above this severity. low reports every change and is the default. high keeps leadership moves, funding, acquisitions, and a CRM or sequencer appearing or disappearing.",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "min_severity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Snapshot object returned by a prior run. Supply it and it is the baseline instead of stored state, which is what makes a scheduled run cheap.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_snapshot",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which sources to monitor. Omit for all five. Each source left out is one fewer sub actor run per company, so a single source watch is billed for one source, not five.",
+                "enum": [
+                  "hiring",
+                  "tech_stack",
+                  "firmographic",
+                  "funding",
+                  "social"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "sources",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Per-child run timeout in seconds. Children run in parallel, so total wall time is about the slowest child. Default: 300.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sub_actor_timeout_secs",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_company_changes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c3de72ec5216628ced0e747976c9eb053c6fc1b731091c944e8509c9b0c95f88",
+            "description": "Scan Google News and PR wires for funding rounds, executive moves, product launches, and acquisitions at any company domain. Returns deduplicated, dated events in flat Clay-ready JSON. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "get_funding_press_signals",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional company name hint, used when the domain does not match the brand name, e.g. Deel for deel.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Company domain to scan, without https or www, e.g. stripe.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "How far back to search, in days. Default 365.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "lookback_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Report only these event types. Omit for every type. Narrowing also narrows the search: a funding only run issues one news query instead of four.",
+                "enum": [
+                  "funding_round",
+                  "ipo",
+                  "acquisition",
+                  "exec_move",
+                  "product_launch",
+                  "partnership"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "signal_types",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_funding_press_signals` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c022e6f7960d37952af07fad350ba06a7bd5668ff0935748b8d32a23514a60fa",
+            "description": "Give it a company domain. It returns the third party conferences and trade shows that company publicly says it attends, with a year for each where one can be resolved, as one flat row. The search runs against the company",
+            "name": "map_company_event_presence",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `map_company_event_presence` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b591191f9dbab524738d0d7357e3e4e0dd374753a0edf3e92a17f2bc636fb773",
+            "description": "Map a company",
+            "name": "map_company_social_presence",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. Provide this or company_name.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional company name. Improves search accuracy and disambiguation. Provide this or company_domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Fetch profile pages to extract follower counts (default true). Set false for URLs only, which is cheaper.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includeFollowerCounts",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which platforms to map. Defaults to all five.",
+                "enum": [
+                  "linkedin",
+                  "x",
+                  "instagram",
+                  "facebook",
+                  "youtube"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "platforms",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Force a fresh lookup and ignore the 7 day result cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `map_company_social_presence` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0c7cbe8d847f182f4cddd5f04538d17463df7797fe8d6f9a7e35376421878c31",
+            "description": "Pick a public award register and a time window and it returns the companies that won public work in it, one flat row per winning company rather than one per award, with award count, total value, largest award, awarding body, award date, a deep link to the source record, and a resolved company domain. Five registers are covered: US federal contracts and US federal grants from USASpending, NIH SBIR and STTR from NIH RePORTER, and UK Contracts Finder and UK Find a Tender. This reports awards that have already been made, so it is not a tender feed and will not tell you what is open to bid on. US federal data lags about two days, so a one day window on a US register returns little or nothing. Winners are sorted by total award value and max_entities is the hard cap on billed rows. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+            "name": "monitor_public_awards",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `monitor_public_awards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9ee6c3687b72a047f3d12e82f7b84b70810c594485ad98e375e34271084d0f66",
+            "description": "Push enriched lead rows into an existing Instantly or Smartlead campaign. Maps common Clay column names onto each sequencer",
+            "name": "push_leads_to_sequencer",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `push_leads_to_sequencer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4044965e0147aa09bb23d70346573c7077843491362231b6f7bfdfda7ef0cb80",
+            "description": "Resolve any combination of company name, domain, or LinkedIn URL into one canonical company identity: the name, primary domain, and LinkedIn company URL, each with a 0-100 confidence score plus an overall score and a match method. Cross-checks the inputs you give it, resolves the ones you do not, and flags conflicts (a domain and a LinkedIn slug that disagree) instead of merging them. A LinkedIn URL the actor finds is returned only when verified against the company site or the name, with the reason in linkedin_verification. Provide at least one of company_name, domain, or linkedin_url. Use this to reconcile or deduplicate records you already hold; use resolve_linkedin_url instead when you only need the LinkedIn company URL for a domain or name. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "resolve_company_identity",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Company name, e.g. Stripe. Provide at least one of company_name, domain, or linkedin_url.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. The strongest canonical key when provided.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "LinkedIn company URL (https://www.linkedin.com/company/stripe) or bare slug (stripe).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "linkedin_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minLinkedinConfidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Force a fresh resolution and ignore the 7 day result cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `resolve_company_identity` [MEDIUM] initiates outbound network requests (potential SSRF risk); processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c72c599a52a00c56ec69d09508c262be7363e84dc06384ea1c9f9fa7012329a7",
+            "description": "Give it a company domain and it returns the registered legal entity behind it: legal name, company number, jurisdiction, status, entity type, LEI and VAT number, as one flat row with a full audit trail of what was rejected and why. Three registers are queried: UK Companies House, GLEIF and SEC EDGAR. Register search endpoints are fuzzy and always return something, so by default a record is accepted only when the normalized legal names are identical. That is why roughly 6 domains in 10 resolve rather than 10 in 10, and why a null here is a trustworthy answer rather than a gap. Read match_method, match_confidence and rejected_candidates before acting on a match. Setting match_strictness to fuzzy will hand you a confidently wrong company on most domains and should be treated as a research mode, not a default. This is not a company database and not a credit or risk product. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+            "name": "resolve_legal_entity",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `resolve_legal_entity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:95d272fa2fde2ffa84940a334f65e127c760339d7f9cf5c23ba5c369259d38b5",
+            "description": "Resolve a company domain or name to its LinkedIn company URL, with a 0-100 confidence_score, social links, and optional firmographics from search snippets, as a flat, Clay-ready JSON row. A URL is returned only when verified: the company homepage links it, or its name is identical to the name the company site declares or the company_name you pass; otherwise linkedin_company_url is null and verification says why. No request is sent to LinkedIn. Provide at least one of company_domain or company_name. Use this when the LinkedIn company URL is the answer you need; use resolve_company_identity instead to cross-check a name, domain, and LinkedIn URL you already hold and get a canonical identity with conflicts flagged. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "resolve_linkedin_url",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. Required if company_name is not provided.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Company name. Required if company_domain is not provided.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "false",
+                  "true"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "includeFirmographics",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minConfidenceScore",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "false",
+                  "true"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `resolve_linkedin_url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5d4e0b66893740a0de33291b1e814b00b21b44c1737599c4c475669b80a89556",
+            "description": "Scan company career pages to detect GTM hiring activity. Returns sales, marketing, and revenue operations job postings across Greenhouse, Lever, and Ashby as a flat, Clay-ready JSON row. Use this for a go-to-market hiring verdict (is the company building its sales and marketing team, and how fast); use scan_job_board_keywords instead to count open roles in categories or keywords you choose, including non-GTM roles. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "scan_gtm_hiring_signals",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional ATS board slug override when it differs from the domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "ats_slug",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When true, include the full per-role detail array (title, department, location, url). Default: false.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_role_details",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "single",
+                  "batch",
+                  "velocity"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "GTM role count from the previous run for this domain, used in velocity mode to compute the delta.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_gtm_role_count",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO date of the previous run for this domain, used in velocity mode to report days between runs.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_run_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional list of GTM role keywords to filter on. Defaults to the built-in list.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "role_filter",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `scan_gtm_hiring_signals` [MEDIUM] initiates outbound network requests (potential SSRF risk); processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ef55f17a7a0ab9c4c5a59604532b578f6213be177c3fad2256ef6493ebedf125",
+            "description": "Scan a company",
+            "name": "scan_job_board_keywords",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Keyword strings to match when Custom is included in role_categories.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "custom_keywords",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Fall back to a pre-indexed job database when the live ATS cascade finds nothing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "enable_fallback",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Comma-separated matched role titles from a previous run, to compute deltas.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_roles_detected",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO date of the previous run, e.g. 2026-03-15.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_run_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "One or more of: GTM, Engineering, Finance, Operations, Executive, Custom.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "role_categories",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scan_job_board_keywords` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5409791f272dd61b78fed54ead12f9df7b641091af749948bb96f0d209a3d055",
+            "description": "Score a company against your ideal customer profile (ICP) using weighted signals. Returns a 0 to 100 icp_score, an A to D icp_tier, and a per-signal breakdown as a flat, Clay-ready JSON row. Define your ICP with a template, scoring_config, or plain-English icp_description (which requires llm_api_key). Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "score_icp_fit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `score_icp_fit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d22ea9aeb752f7ae4da756d393395e48d7ee4ddd863957d1f28a704c1abe7544",
+            "description": "Given a company domain, measure how much long-form work that company publishes and whether the rate is rising or falling. Returns post counts for the last 30 days, 90 days and 12 months, a monthly average, and a cadence_trend of accelerating, steady, declining, dormant or unknown, with the percent change behind it. The trend compares the last 90 days against the prior 275 days, both normalized to posts per month. Also returns the blog URL, the format mix (blog posts, guides, reports, case studies, whitepapers, podcasts, videos, press releases, research), the number of distinct bylines, and how the post list was discovered. This measures EDITORIAL output volume, not product changelogs: a release feed is detected and rejected rather than counted. Publication dates are read from the post pages, because sitemap lastmod was measured to be a modification date running later than publication by a median of 151 to 1653 days. When a site",
+            "name": "track_publication_cadence",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `track_publication_cadence` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:a9b2e807a0dc30323a69aa46e25be66959f798fb99b87d33c0fe16e87f423d4e",
+        "version": "1.14.4"
       }
     ]
   },
