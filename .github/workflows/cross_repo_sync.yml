@@ -94,6 +94,7 @@ jobs:
           
           gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
           gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
+          gh workflow run daily_web_audit.yml || true
 
       - name: Commit & Push Canonical Vulnerability Updates Directly to Main
         if: github.ref == 'refs/heads/main' && steps.delta_check.outputs.delta_detected != 'true'
@@ -106,3 +107,4 @@ jobs:
           fi
           git diff --staged --quiet || git commit -m "chore(sync): automated cross-repo sync of passports.json.gz [skip ci]"
           git push origin main || echo "Failed to push"
+          gh workflow run daily_web_audit.yml || true
