@@ -195,10 +195,15 @@ class ClientConfigParser:
         args = [os.path.expandvars(a) for a in args]
 
         # Secret Redaction: redact secret-bearing keys while preserving benign URL configuration keys
-        secret_pattern = re.compile(r"KEY|TOKEN|SECRET|PASSWORD|AUTH|CREDENTIAL", re.IGNORECASE)
+        secret_key_pattern = re.compile(
+            r"KEY|TOKEN|SECRET|PASSWORD|AUTH|CREDENTIAL|DATABASE_URL|CONNECTION_URL",
+            re.IGNORECASE,
+        )
+        cred_url_pattern = re.compile(r"://[^/\s@]*:[^/\s@]*@")
         redacted_env = {}
         for k, v in env.items():
-            if secret_pattern.search(k):
+            str_v = str(v) if v is not None else ""
+            if secret_key_pattern.search(k) or cred_url_pattern.search(str_v):
                 redacted_env[k] = "***REDACTED***"
             else:
                 redacted_env[k] = v

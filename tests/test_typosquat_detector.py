@@ -41,8 +41,9 @@ def test_invariant_97_2a_homoglyph(detector):
     assert res.canonical_name == "mcp-server-sqlite"
 
 import json
-import subprocess
 import os
+import subprocess
+import sys
 
 def test_invariant_97_3a_cli_exit_codes(tmp_path):
     config = {
@@ -59,7 +60,7 @@ def test_invariant_97_3a_cli_exit_codes(tmp_path):
         
     env = os.environ.copy()
     env["PYTHONPATH"] = "src"
-    res = subprocess.run(["python3", "-m", "mcp_vulnerabilities.cli", "audit-typosquat", "--config", str(config_path)], env=env, capture_output=True)
+    res = subprocess.run([sys.executable, "-m", "mcp_vulnerabilities.cli", "audit-typosquat", "--config", str(config_path)], env=env, capture_output=True)
     assert res.returncode == 1
 
 def test_invariant_97_3b_cli_fix(tmp_path):
@@ -77,7 +78,7 @@ def test_invariant_97_3b_cli_fix(tmp_path):
         
     env = os.environ.copy()
     env["PYTHONPATH"] = "src"
-    res = subprocess.run(["python3", "-m", "mcp_vulnerabilities.cli", "audit-typosquat", "--config", str(config_path), "--fix"], env=env, capture_output=True)
+    res = subprocess.run([sys.executable, "-m", "mcp_vulnerabilities.cli", "audit-typosquat", "--config", str(config_path), "--fix"], env=env, capture_output=True)
     assert res.returncode == 1
     
     with open(config_path, "r") as f:
@@ -99,7 +100,7 @@ def test_invariant_97_3c_cli_json(tmp_path):
         
     env = os.environ.copy()
     env["PYTHONPATH"] = "src"
-    res = subprocess.run(["python3", "-m", "mcp_vulnerabilities.cli", "audit-typosquat", "--config", str(config_path), "--json"], env=env, capture_output=True, text=True)
+    res = subprocess.run([sys.executable, "-m", "mcp_vulnerabilities.cli", "audit-typosquat", "--config", str(config_path), "--json"], env=env, capture_output=True, text=True)
     
     data = json.loads(res.stdout)
     assert "analyzed_packages" in data

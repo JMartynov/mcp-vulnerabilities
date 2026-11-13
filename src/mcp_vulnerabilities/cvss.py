@@ -220,8 +220,8 @@ def is_version_in_ranges(
     if not ranges:
         return False
 
-    # Filter to SEMVER ranges if typed ranges exist
-    semver_ranges: list[Any] = []
+    # Filter to evaluable ranges (SEMVER or ECOSYSTEM) if typed ranges exist
+    evaluable_ranges: list[Any] = []
     has_typed_ranges = False
 
     for r in ranges:
@@ -229,16 +229,16 @@ def is_version_in_ranges(
         if r_type is not None:
             has_typed_ranges = True
             r_type_val = getattr(r_type, "value", str(r_type)).upper()
-            if r_type_val == "SEMVER":
-                semver_ranges.append(r)
+            if r_type_val in ("SEMVER", "ECOSYSTEM"):
+                evaluable_ranges.append(r)
         else:
-            semver_ranges.append(r)
+            evaluable_ranges.append(r)
 
-    # If all ranges were explicitly non-SEMVER (e.g. ECOSYSTEM or GIT), conservatively mark vulnerable
-    if has_typed_ranges and not semver_ranges:
+    # If all ranges were explicitly non-evaluable (e.g. GIT), conservatively mark vulnerable
+    if has_typed_ranges and not evaluable_ranges:
         return True
 
-    for r in semver_ranges:
+    for r in evaluable_ranges:
         raw_events = getattr(r, "events", None) or (r.get("events", []) if isinstance(r, dict) else [])
         intervals: list[tuple[Version | None, Version | None, Version | None]] = []
         curr_intro: Version | None = None
