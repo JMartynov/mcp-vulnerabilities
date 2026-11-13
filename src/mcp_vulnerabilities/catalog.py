@@ -21,7 +21,7 @@ from mcp_vulnerabilities.analyzers.capability_classifier import (
     generate_tool_security_comment,
 )
 from mcp_vulnerabilities.analyzers.models import DualAxisSecurityAssessment
-from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
+from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher, is_version_in_ranges
 from mcp_vulnerabilities.fingerprints.correlator import VulnerabilityCorrelator
 from mcp_vulnerabilities.fingerprints.models import (
     ParameterMetadata,
@@ -664,6 +664,269 @@ def _load_passports(passports_path: str | Path | None = None) -> dict[str, Serve
     return load_passport_data(passports_path=passports_path, as_specs=True)
 
 
+def evaluate_passport_security(
+    spec: ServerPackageSpec | dict[str, Any],
+    matcher: VulnerabilityMatcher | None = None,
+    candidate_advs: list[dict[str, Any]] | None = None,
+    raw_spec: dict[str, Any] | ServerPackageSpec | None = None,
+    malicious_sync: Any = None,
+) -> UnifiedMcpSecurityRecord:
+    """Evaluate security profile and version-specific vulnerabilities for an MCP server passport.
+
+    Correlates passport version fingerprints against OSV vulnerability advisories,
+    performs static tool capability and risk assessments, sorts releases, computes
+    per-version remediation targets (upgrade commands or no-fix flags), and builds
+    a comprehensive UnifiedMcpSecurityRecord.
+
+    Args:
+        spec: ServerPackageSpec instance or raw passport dictionary.
+        matcher: Optional VulnerabilityMatcher for version range matching and advisory lookups.
+        candidate_advs: Optional pre-filtered list of advisory dictionaries for the package.
+        raw_spec: Optional raw dictionary or spec for extra metadata (unpublished, archival, etc.).
+        malicious_sync: Optional threat intel sync service for OpenSSF malicious package lookup.
+
+    Returns:
+        UnifiedMcpSecurityRecord populated with version assessments, risk profile, and metadata.
+    """
+    if isinstance(spec, dict):
+        spec_obj = ServerPackageSpec.from_dict(spec)
+        if raw_spec is None:
+            raw_spec = spec
+    else:
+        spec_obj = spec
+        if raw_spec is None:
+            raw_spec = spec
+
+    norm_name = VulnerabilityMatcher._normalize_package_name(spec_obj.package_name)
+    if candidate_advs is None:
+        if matcher is not None:
+            candidate_advs = matcher._package_index.get(norm_name, [])
+        else:
+            candidate_advs = []
+
+    version_records: list[VersionSecurityRecord] = []
+    all_tools_for_scoring: list[dict[str, Any]] = []
+
+    for vf in spec_obj.versions:
+        ver_str = vf.version
+        is_vuln = False
+        matching_advs: list[OsvVulnerability] = []
+
+        for adv_dict in candidate_advs:
+            for affected in adv_dict.get("affected", []):
+                pkg_meta = affected.get("package", {})
+                if (
+                    VulnerabilityMatcher._normalize_package_name(pkg_meta.get("name", ""))
+                    != norm_name
+                ):
+                    continue
+
+                eco = pkg_meta.get("ecosystem", "").lower()
+                if eco and spec_obj.ecosystem:
+                    spec_eco = spec_obj.ecosystem.lower()
+                    if eco != spec_eco:
+                        if eco == "pypi" and spec_eco in ("pypi", "pip") or eco == "golang" and spec_eco in ("go", "golang"):
+                            pass
+                        else:
+                            continue
+
+                ranges = affected.get("ranges", [])
+                versions = affected.get("versions", [])
+                in_range = False
+                if matcher is not None:
+                    in_range = matcher._is_version_in_ranges(ver_str, ranges, versions)
+                else:
+                    in_range = is_version_in_ranges(ver_str, ranges=ranges, versions=versions)
+
+                if in_range:
+                    is_vuln = True
+                    try:
+                        matching_advs.append(OsvVulnerability.from_dict(adv_dict))
+                    except Exception:
+                        pass
+
+        tool_assessments: list[ToolSecurityAssessment] = []
+        for tool in vf.tool_signatures:
+            tool_dict = tool.to_dict()
+            all_tools_for_scoring.append(tool_dict)
+            analysis = analyze_tool_security(tool_dict)
+            comment = generate_tool_security_comment(
+                tool=tool_dict,
+                analysis=analysis,
+                affecting_advisories=[a.id for a in matching_advs],
+            )
+            assessment = ToolSecurityAssessment(
+                name=tool.name,
+                canonical_hash=tool.canonical_hash,
+                description=tool.description,
+                risk_score=float(analysis.get("risk_score", 0.0)),
+                risk_tier=analysis.get("risk_tier", "LOW"),
+                security_comment=comment,
+                parameters=tool.parameters,
+                annotations=tool.annotations,
+            )
+            tool_assessments.append(assessment)
+
+        v_record = VersionSecurityRecord(
+            version=ver_str,
+            is_vulnerable=is_vuln,
+            advisories=matching_advs,
+            toolset_canonical_hash=vf.toolset_canonical_hash,
+            tools=tool_assessments,
+            prompts=list(vf.prompt_signatures),
+            resources=list(vf.resource_signatures),
+            release_date=vf.release_date,
+            required_env_vars=vf.required_env_vars,
+            connections=getattr(vf, "connections", []),
+        )
+        version_records.append(v_record)
+
+    # Sort versions chronologically/semantically
+    version_records.sort(key=lambda r: _parse_sort_version(r.version))
+
+    # Add per-version remediation targets
+    for v_rec in version_records:
+        if v_rec.is_vulnerable:
+            rec_ver = compute_remediation_target(v_rec.version, version_records)
+            v_rec.recommended_update_version = rec_ver
+            if rec_ver:
+                v_rec.upgrade_command = generate_upgrade_command(
+                    spec_obj.ecosystem,
+                    spec_obj.package_name,
+                    rec_ver,
+                )
+            else:
+                v_rec.no_fix_available = True
+
+    # Determine latest_version and recommended_safe_version
+    latest_version = version_records[-1].version if version_records else ""
+    recommended_safe_version: str | None = None
+    for r in reversed(version_records):
+        if not r.is_vulnerable:
+            recommended_safe_version = r.version
+            break
+
+    overall_vuln = any(r.is_vulnerable for r in version_records)
+
+    # Profile scoring
+    profile = classify_server_security_profile(all_tools_for_scoring)
+    vuln_count = sum(1 for r in version_records if r.is_vulnerable)
+    safe_count = len(version_records) - vuln_count
+    sec_summary = generate_server_security_summary(
+        package_name=spec_obj.package_name,
+        profile=profile,
+        vuln_versions_count=vuln_count,
+        safe_versions_count=safe_count,
+    )
+
+    is_unpublished = (
+        raw_spec.get("is_unpublished", False)
+        if isinstance(raw_spec, dict)
+        else getattr(raw_spec, "is_unpublished", False)
+    )
+    repo_http_status = (
+        raw_spec.get("repo_http_status", 200)
+        if isinstance(raw_spec, dict)
+        else getattr(raw_spec, "repo_http_status", 200)
+    )
+    archival_reason = (
+        raw_spec.get("archival_reason")
+        if isinstance(raw_spec, dict)
+        else getattr(raw_spec, "archival_reason", None)
+    )
+    transport = (
+        raw_spec.get("transport", getattr(spec_obj, "transport", "stdio"))
+        if isinstance(raw_spec, dict)
+        else getattr(raw_spec, "transport", getattr(spec_obj, "transport", "stdio"))
+    )
+
+    latest_v_record = None
+    if version_records:
+        for r in reversed(version_records):
+            if r.tools or r.required_env_vars:
+                latest_v_record = r
+                break
+        if not latest_v_record:
+            latest_v_record = version_records[-1]
+
+    prompts_count = len(latest_v_record.prompts) if latest_v_record else 0
+    resources_count = len(latest_v_record.resources) if latest_v_record else 0
+    toolset_canonical_hash = (
+        latest_v_record.toolset_canonical_hash if latest_v_record else None
+    )
+    required_env_vars = (
+        latest_v_record.required_env_vars if latest_v_record else ()
+    )
+
+    # OpenSSF Malicious Check
+    malicious_record = (
+        malicious_sync.get_malicious_record(spec_obj.ecosystem, spec_obj.package_name)
+        if malicious_sync
+        else None
+    )
+
+    is_malicious = False
+    quarantine_tier = None
+    malicious_advisory_id = None
+    comp_risk_score = None
+
+    if malicious_record:
+        is_malicious = True
+        quarantine_tier = "MALICIOUS"
+        malicious_advisory_id = malicious_record.id
+        comp_risk_score = 10.0
+        sec_summary = f"MALICIOUS PACKAGE DETECTED: {malicious_record.id} - {malicious_record.summary}"
+        overall_vuln = True
+
+    # Dual Axis Security if present in raw_spec
+    dual_axis_sec = None
+    da_raw = (
+        raw_spec.get("dual_axis_security")
+        if isinstance(raw_spec, dict)
+        else getattr(raw_spec, "dual_axis_security", None)
+    )
+    if isinstance(da_raw, dict):
+        try:
+            dual_axis_sec = DualAxisSecurityAssessment.from_dict(da_raw)
+        except Exception:
+            pass
+    elif isinstance(da_raw, DualAxisSecurityAssessment):
+        dual_axis_sec = da_raw
+
+    record = UnifiedMcpSecurityRecord(
+        package_name=spec_obj.package_name,
+        ecosystem=spec_obj.ecosystem,
+        purl=spec_obj.purl,
+        display_name=spec_obj.display_name or spec_obj.package_name,
+        description=spec_obj.description,
+        author=spec_obj.author,
+        repository_url=spec_obj.repository_url,
+        homepage_url=spec_obj.homepage_url,
+        license=spec_obj.license,
+        latest_version=latest_version,
+        recommended_safe_version=recommended_safe_version,
+        is_vulnerable=overall_vuln,
+        security_summary=sec_summary,
+        static_risk_score=float(profile.get("overall_risk_score", 0.0)),
+        static_risk_tier=profile.get("risk_tier", "LOW"),
+        is_unpublished=is_unpublished,
+        repo_http_status=repo_http_status,
+        archival_reason=archival_reason,
+        transport=transport,
+        prompts_count=prompts_count,
+        resources_count=resources_count,
+        toolset_canonical_hash=toolset_canonical_hash,
+        required_env_vars=required_env_vars,
+        versions=version_records,
+        is_malicious=is_malicious,
+        quarantine_tier=quarantine_tier,
+        malicious_advisory_id=malicious_advisory_id,
+        composite_risk_score=comp_risk_score,
+        dual_axis_security=dual_axis_sec,
+    )
+    return record
+
+
 def build_unified_mcp_security_catalog(
     passports_path: str | Path | None = None,
     vulnerabilities_dir: str | Path | None = None,
@@ -706,135 +969,9 @@ def build_unified_mcp_security_catalog(
 
     # 3. Process known passport packages
     for pkg_name, spec in passports.items():
-        norm_name = VulnerabilityMatcher._normalize_package_name(spec.package_name)
-        candidate_advs = matcher._package_index.get(norm_name, [])
-
-        version_records: list[VersionSecurityRecord] = []
-        all_tools_for_scoring: list[dict[str, Any]] = []
-
-        for vf in spec.versions:
-            ver_str = vf.version
-            is_vuln = False
-            matching_advs: list[OsvVulnerability] = []
-
-            for adv_dict in candidate_advs:
-                for affected in adv_dict.get("affected", []):
-                    pkg_meta = affected.get("package", {})
-                    if (
-                        VulnerabilityMatcher._normalize_package_name(pkg_meta.get("name", ""))
-                        != norm_name
-                    ):
-                        continue
-
-                    eco = pkg_meta.get("ecosystem", "").lower()
-                    if eco and spec.ecosystem:
-                        spec_eco = spec.ecosystem.lower()
-                        if eco != spec_eco:
-                            if eco == "pypi" and spec_eco in ("pypi", "pip") or eco == "golang" and spec_eco in ("go", "golang"):
-                                pass
-                            else:
-                                continue
-
-                    ranges = affected.get("ranges", [])
-                    versions = affected.get("versions", [])
-                    if matcher._is_version_in_ranges(ver_str, ranges, versions):
-                        is_vuln = True
-                        try:
-                            matching_advs.append(OsvVulnerability.from_dict(adv_dict))
-                        except Exception:
-                            pass
-
-            # Build tool security assessments
-            tool_assessments: list[ToolSecurityAssessment] = []
-            for tool in vf.tool_signatures:
-                tool_dict = tool.to_dict()
-                all_tools_for_scoring.append(tool_dict)
-                analysis = analyze_tool_security(tool_dict)
-                comment = generate_tool_security_comment(
-                    tool=tool_dict,
-                    analysis=analysis,
-                    affecting_advisories=[a.id for a in matching_advs],
-                )
-                assessment = ToolSecurityAssessment(
-                    name=tool.name,
-                    canonical_hash=tool.canonical_hash,
-                    description=tool.description,
-                    risk_score=float(analysis.get("risk_score", 0.0)),
-                    risk_tier=analysis.get("risk_tier", "LOW"),
-                    security_comment=comment,
-                    parameters=tool.parameters,
-                    annotations=tool.annotations,
-                )
-                tool_assessments.append(assessment)
-
-            v_record = VersionSecurityRecord(
-                version=ver_str,
-                is_vulnerable=is_vuln,
-                advisories=matching_advs,
-                toolset_canonical_hash=vf.toolset_canonical_hash,
-                tools=tool_assessments,
-                prompts=list(vf.prompt_signatures),
-                resources=list(vf.resource_signatures),
-                release_date=vf.release_date,
-                required_env_vars=vf.required_env_vars,
-            )
-            version_records.append(v_record)
-
-        # Sort versions chronologically/semantically
-        version_records.sort(key=lambda r: _parse_sort_version(r.version))
-
-        # Add per-version remediation targets
-        for v_rec in version_records:
-            if v_rec.is_vulnerable:
-                rec_ver = compute_remediation_target(v_rec.version, version_records)
-                v_rec.recommended_update_version = rec_ver
-                if rec_ver:
-                    v_rec.upgrade_command = generate_upgrade_command(
-                        spec.ecosystem,
-                        spec.package_name,
-                        rec_ver,
-                    )
-                else:
-                    v_rec.no_fix_available = True
-
-        # Determine latest_version and recommended_safe_version
-        latest_version = version_records[-1].version if version_records else ""
-        recommended_safe_version: str | None = None
-        for r in reversed(version_records):
-            if not r.is_vulnerable:
-                recommended_safe_version = r.version
-                break
-
-        overall_vuln = any(r.is_vulnerable for r in version_records)
-
-        # Profile scoring
-        profile = classify_server_security_profile(all_tools_for_scoring)
-        vuln_count = sum(1 for r in version_records if r.is_vulnerable)
-        safe_count = len(version_records) - vuln_count
-        sec_summary = generate_server_security_summary(
-            package_name=spec.package_name,
-            profile=profile,
-            vuln_versions_count=vuln_count,
-            safe_versions_count=safe_count,
-        )
-
-        record = UnifiedMcpSecurityRecord(
-            package_name=spec.package_name,
-            ecosystem=spec.ecosystem,
-            purl=spec.purl,
-            display_name=spec.display_name or spec.package_name,
-            description=spec.description,
-            author=spec.author,
-            repository_url=spec.repository_url,
-            homepage_url=spec.homepage_url,
-            license=spec.license,
-            latest_version=latest_version,
-            recommended_safe_version=recommended_safe_version,
-            is_vulnerable=overall_vuln,
-            security_summary=sec_summary,
-            static_risk_score=float(profile.get("overall_risk_score", 0.0)),
-            static_risk_tier=profile.get("risk_tier", "LOW"),
-            versions=version_records,
+        record = evaluate_passport_security(
+            spec=spec,
+            matcher=matcher,
         )
         unified_catalog[spec.package_name] = record
 
@@ -940,6 +1077,7 @@ __all__ = [
     "VersionSecurityRecord",
     "VulnerabilityCorrelator",
     "build_unified_mcp_security_catalog",
+    "evaluate_passport_security",
     "load_passport_data",
     "normalize_version",
     "prune_catalog",

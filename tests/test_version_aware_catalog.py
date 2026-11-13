@@ -7,6 +7,7 @@ from mcp_vulnerabilities.catalog import (
     VersionSecurityRecord,
     UnifiedMcpSecurityRecord,
     build_unified_mcp_security_catalog,
+    evaluate_passport_security,
 )
 from mcp_vulnerabilities.fingerprints.models import (
     ParameterMetadata,
@@ -216,3 +217,90 @@ def test_build_unified_mcp_security_catalog_version_separation(tmp_path: Path):
     assert v1_0_0.recommended_update_version == "1.1.0"
     assert v1_0_0.upgrade_command == "npm install @test/mcp-server@^1.1.0"
     assert v1_0_0.no_fix_available is False
+
+
+def test_evaluate_passport_security_helper():
+    from unittest.mock import MagicMock
+    from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
+
+    tool = ToolContractSignature(
+        name="run_script",
+        canonical_hash="hash_rs",
+        description="Run arbitrary script",
+    )
+    vf1 = VersionFingerprint(
+        version="1.0.0",
+        toolset_canonical_hash="th1",
+        tool_signatures=(tool,),
+    )
+    vf2 = VersionFingerprint(
+        version="2.0.0",
+        toolset_canonical_hash="th2",
+        tool_signatures=(tool,),
+    )
+    spec = ServerPackageSpec(
+        package_name="test-passport-pkg",
+        purl="pkg:npm/test-passport-pkg",
+        ecosystem="npm",
+        display_name="Test Passport Pkg",
+        description="Sample server for evaluate_passport_security",
+        versions=(vf1, vf2),
+    )
+
+    adv = {
+        "id": "GHSA-test-eval-1",
+        "affected": [
+            {
+                "package": {"name": "test-passport-pkg", "ecosystem": "npm"},
+                "ranges": [{"type": "SEMVER", "events": [{"introduced": "0"}, {"fixed": "2.0.0"}]}],
+            }
+        ],
+    }
+
+    matcher = VulnerabilityMatcher([adv])
+
+    # 1. Test evaluation with spec object
+    record = evaluate_passport_security(spec=spec, matcher=matcher)
+    assert record.package_name == "test-passport-pkg"
+    assert record.is_vulnerable is True
+    assert record.latest_version == "2.0.0"
+    assert record.recommended_safe_version == "2.0.0"
+    assert len(record.versions) == 2
+    assert record.versions[0].is_vulnerable is True
+    assert record.versions[0].recommended_update_version == "2.0.0"
+    assert record.versions[1].is_vulnerable is False
+
+    # 2. Test evaluation with raw spec dict and extra metadata
+    raw_dict = spec.to_dict()
+    raw_dict["is_unpublished"] = True
+    raw_dict["repo_http_status"] = 404
+    raw_dict["archival_reason"] = "Repository deleted"
+    raw_dict["transport"] = "sse"
+
+    record_dict_input = evaluate_passport_security(
+        spec=raw_dict,
+        matcher=matcher,
+        candidate_advs=[adv],
+    )
+    assert record_dict_input.is_unpublished is True
+    assert record_dict_input.repo_http_status == 404
+    assert record_dict_input.archival_reason == "Repository deleted"
+    assert record_dict_input.transport == "sse"
+
+    # 3. Test with malicious sync detection
+    mock_malicious_sync = MagicMock()
+    mock_mal_rec = MagicMock()
+    mock_mal_rec.id = "MAL-TEST-001"
+    mock_mal_rec.summary = "Malicious backdoor detected"
+    mock_malicious_sync.get_malicious_record.return_value = mock_mal_rec
+
+    record_malicious = evaluate_passport_security(
+        spec=spec,
+        matcher=matcher,
+        malicious_sync=mock_malicious_sync,
+    )
+    assert record_malicious.is_malicious is True
+    assert record_malicious.quarantine_tier == "MALICIOUS"
+    assert record_malicious.malicious_advisory_id == "MAL-TEST-001"
+    assert record_malicious.composite_risk_score == 10.0
+    assert "MALICIOUS PACKAGE DETECTED" in record_malicious.security_summary
