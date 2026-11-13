@@ -13,7 +13,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from packaging.version import parse as parse_version
 
 from mcp_vulnerabilities.catalog import McpCatalogState
 from mcp_vulnerabilities.cvss import is_version_in_ranges
@@ -25,11 +24,11 @@ from mcp_vulnerabilities.converters.nvd import NvdConverter
 from mcp_vulnerabilities.converters.osv_dev import OsvDevConverter
 from mcp_vulnerabilities.converters.verity import VerityCatalogConverter
 from mcp_vulnerabilities.discovery.gitlab import GitLabAdvisorySync
-from mcp_vulnerabilities.converters.pypa import PyPaAdvisoryConverter
 from mcp_vulnerabilities.discovery.pypa import PyPaAdvisorySync
 from mcp_vulnerabilities.deduplicator import OsvDeduplicator
 from mcp_vulnerabilities.filter import McpRelevanceFilter
-from mcp_vulnerabilities.models import OsvVulnerability, RangeSpec, RangeType
+from mcp_vulnerabilities.models import OsvVulnerability, RangeSpec
+from mcp_vulnerabilities.ssl_utils import get_ssl_context
 from mcp_vulnerabilities.state import SyncStateManager
 from mcp_vulnerabilities.validator import OsvValidator
 
@@ -61,10 +60,6 @@ def _get_github_headers() -> dict[str, str]:
 def is_version_affected(version_str: str | None, ranges: tuple[RangeSpec, ...]) -> bool:
     """Evaluates if a given version is affected based on OSV RangeSpecs."""
     return is_version_in_ranges(version_str, ranges=ranges)
-
-
-
-from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 
 def _get_ssl_context() -> ssl.SSLContext:

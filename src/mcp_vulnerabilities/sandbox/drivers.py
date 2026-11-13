@@ -5,7 +5,6 @@ import os
 import shutil
 import subprocess
 import uuid
-import time
 from typing import Any, Dict, List, Optional
 
 from mcp_vulnerabilities.probe.client import McpProbeClient

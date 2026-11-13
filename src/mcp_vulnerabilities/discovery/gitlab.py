@@ -1,13 +1,10 @@
-import json
 import logging
-import os
 import shutil
 import subprocess
 import tarfile
 import urllib.error
 import urllib.request
 from pathlib import Path
-from typing import Any
 
 from mcp_vulnerabilities.converters.gitlab import GitLabConverter
 from mcp_vulnerabilities.models import OsvVulnerability

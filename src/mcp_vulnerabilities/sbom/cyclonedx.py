@@ -1,9 +1,9 @@
 import uuid
 import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 from mcp_vulnerabilities.audit.matcher import AuditReport, AuditFinding, DiscoveredClientServer
 from mcp_vulnerabilities.probe.fingerprinter import ProbeAuditReport
-from mcp_vulnerabilities.fingerprints.canonicalizer import extract_tool_signature, compute_sha256
+from mcp_vulnerabilities.fingerprints.canonicalizer import extract_tool_signature
 
 class CycloneDxBomBuilder:
     def __init__(self):

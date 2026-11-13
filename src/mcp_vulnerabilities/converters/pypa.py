@@ -1,6 +1,6 @@
 import yaml
 from pathlib import Path
-from typing import Any, cast
+from typing import Any
 from mcp_vulnerabilities.models import (
     OsvVulnerability,
     AffectedPackage,

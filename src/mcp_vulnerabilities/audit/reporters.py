@@ -266,15 +266,15 @@ class SarifReporter:
                 level = cls._map_severity_to_level(inc.severity)
 
                 if rule_id not in rules_dict:
-                    prov_urls = resolve_provenance_urls(rule_id, finding.aliases if hasattr(finding, "aliases") else [])
-                help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
-                rules_dict[rule_id] = {
+                    prov_urls = resolve_provenance_urls(rule_id, inc.aliases if hasattr(inc, "aliases") else [])
+                    help_uri = prov_urls.get("cve") or prov_urls.get("ghsa") or prov_urls.get("osv")
+                    rules_dict[rule_id] = {
                         "id": rule_id,
                         "name": name,
                         "shortDescription": {"text": desc},
                         "fullDescription": {"text": f"{desc} Detects unauthorized tool modifications."},
                         "defaultConfiguration": {"level": level},
-                    "helpUri": help_uri,
+                        "helpUri": help_uri,
                         "help": {"text": "Review tool configuration for unexpected shadow tools or tampered schemas."},
                     }
 

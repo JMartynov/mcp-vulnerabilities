@@ -3,7 +3,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional
 
 class TwoTierVulnerabilityCache:
     """Two-tier disk and bounded in-memory LRU cache for vulnerability matrices."""

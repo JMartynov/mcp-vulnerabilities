@@ -11,11 +11,9 @@ from datetime import datetime, timezone, timedelta
 from typing import Any
 
 from mcp_vulnerabilities.filter import McpRelevanceFilter
+from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 logger = logging.getLogger("mcp_vulnerabilities.discovery.npm")
-
-
-from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 
 def _get_ssl_context() -> ssl.SSLContext:

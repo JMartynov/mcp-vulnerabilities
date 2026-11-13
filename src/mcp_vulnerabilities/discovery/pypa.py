@@ -1,8 +1,5 @@
 import logging
-import subprocess
-import yaml
 from pathlib import Path
-from typing import Any
 
 from mcp_vulnerabilities.converters.pypa import PyPaConverter
 from mcp_vulnerabilities.models import OsvVulnerability
@@ -40,7 +37,6 @@ class PyPaAdvisorySync:
         # Compute a hash of all matching files to serve as sync marker
         # In a real git clone we'd use HEAD sha, but here we just want idempotency over files.
         import hashlib
-        import os
         
         hasher = hashlib.sha256()
         

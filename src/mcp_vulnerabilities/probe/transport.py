@@ -1,10 +1,17 @@
+import collections
 import json
 import logging
 import queue
+import shlex
 import subprocess
 import threading
+import urllib.error
+import urllib.parse
+import urllib.request
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
+
+from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +57,6 @@ class StdioTransport(BaseTransport):
         self.env = env
         self.cwd = cwd
         self.process: Optional[subprocess.Popen] = None
-        import collections
         self.stderr_buffer = collections.deque(maxlen=100)
         self._stderr_thread: Optional[threading.Thread] = None
         self._stdout_thread: Optional[threading.Thread] = None
@@ -96,8 +102,6 @@ class StdioTransport(BaseTransport):
             self._stdout_queue.put((None, e))
 
     def start(self) -> None:
-        import shlex
-
         try:
             if self.args is not None:
                 cmd_list = [self.command] + list(self.args)
@@ -214,13 +218,9 @@ class HttpSseTransport(BaseTransport):
         self._endpoint_event = threading.Event()
 
     def _get_ssl_context(self):
-        from mcp_vulnerabilities.ssl_utils import get_ssl_context
         return get_ssl_context(insecure=self.insecure)
 
     def start(self) -> None:
-        import urllib.request
-        import urllib.error
-
         self._stop_event.clear()
         self._endpoint_event.clear()
         self.queue = queue.Queue()
@@ -264,8 +264,6 @@ class HttpSseTransport(BaseTransport):
                     if not decoded.strip():
                         # End of event
                         if event_name == "endpoint" and buffer:
-                            import urllib.parse
-
                             self.endpoint = urllib.parse.urljoin(
                                 self.url, buffer.strip()
                             )
@@ -318,8 +316,6 @@ class HttpSseTransport(BaseTransport):
     def send(self, message: Dict[str, Any]) -> None:
         if not self.endpoint:
             raise TransportError("Transport is not fully initialized (no endpoint).")
-        import urllib.request
-        import urllib.error
 
         req_headers = dict(self.headers)
         req_headers["Content-Type"] = "application/json"

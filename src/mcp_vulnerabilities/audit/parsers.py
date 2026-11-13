@@ -10,6 +10,8 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+import yaml
+
 from mcp_fingerprints.config_scanner import ConfigScanner, NpmGlobalScanner
 
 logger = logging.getLogger(__name__)
@@ -85,7 +87,6 @@ class ClientConfigParser:
             data = json.loads(clean_text)
         except Exception:
             try:
-                import yaml
                 data = yaml.safe_load(clean_text)
             except Exception as e:
                 logger.warning(f"Could not parse config file {path}: {e}")
@@ -151,8 +152,6 @@ class ClientConfigParser:
         source_file: Path | None = None,
         client_name: str | None = None,
     ) -> DiscoveredClientServer | None:
-        import os
-
         # Continue nested transport
         if "transport" in conf and isinstance(conf["transport"], dict):
             transport_conf = conf["transport"]

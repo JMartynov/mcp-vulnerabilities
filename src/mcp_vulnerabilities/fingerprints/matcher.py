@@ -2,7 +2,7 @@ import gzip
 import json
 import logging
 from pathlib import Path
-from typing import Any, Dict, List, Set, Tuple, Optional
+from typing import Any, Dict, List, Set, Tuple
 
 from .models import FingerprintMatchResult, ServerPackageSpec, VersionFingerprint
 from .canonicalizer import extract_tool_signature, compute_toolset_canonical_hash

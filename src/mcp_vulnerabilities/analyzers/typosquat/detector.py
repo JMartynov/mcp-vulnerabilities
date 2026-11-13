@@ -1,4 +1,6 @@
+from enum import Enum
 import re
+from typing import Optional, Set
 import unicodedata
 from dataclasses import dataclass
 
@@ -34,8 +36,6 @@ def check_keyboard_proximity(s1: str, s2: str) -> bool:
             return True
     return False
 
-from enum import Enum
-from typing import Set, Tuple, Optional
 
 class RiskTier(Enum):
     CRITICAL = "CRITICAL"

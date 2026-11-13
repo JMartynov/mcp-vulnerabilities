@@ -3,8 +3,8 @@ import subprocess
 import sys
 import threading
 import shlex
-from typing import Any, IO
-from .policy import ProxyPolicyEngine, PolicyDecision, AuditEvent
+from typing import IO
+from .policy import ProxyPolicyEngine, AuditEvent
 import time
 from mcp_vulnerabilities.probe.sandbox_prober import DockerSandboxDriver, RestrictedSubprocessDriver, CanarySecretGuard
 

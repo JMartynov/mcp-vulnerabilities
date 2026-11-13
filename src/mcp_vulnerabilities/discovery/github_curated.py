@@ -9,16 +9,12 @@ import ssl
 import urllib.request
 import urllib.error
 import os
-import urllib.error
-import os
 from typing import Any
 
 from mcp_vulnerabilities.filter import McpRelevanceFilter
+from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 logger = logging.getLogger("mcp_vulnerabilities.discovery.github_curated")
-
-
-from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 
 def _get_ssl_context() -> ssl.SSLContext:

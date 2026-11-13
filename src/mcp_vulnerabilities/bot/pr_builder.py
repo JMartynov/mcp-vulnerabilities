@@ -2,7 +2,6 @@ import logging
 import subprocess
 import json
 from pathlib import Path
-from typing import Any
 from datetime import datetime
 
 from .scanner import RemediationPlan

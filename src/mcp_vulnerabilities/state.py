@@ -3,10 +3,14 @@
 from __future__ import annotations
 
 import json
+import logging
+import os
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -57,13 +61,6 @@ class SyncState:
             last_global_sync_utc=data.get("last_global_sync_utc", datetime.now(UTC).isoformat()),
             sources=sources,
         )
-
-
-import logging
-import os
-import shutil
-
-logger = logging.getLogger(__name__)
 
 
 def atomic_save_json(target_file: Path | str, data: dict[str, Any]) -> None:

@@ -7,8 +7,8 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import List, Dict, Any, Optional
-from mcp_vulnerabilities.audit.picture import SecurityPicture, SecurityServerRecord
+from typing import List, Dict, Any
+from mcp_vulnerabilities.audit.picture import SecurityPicture
 
 logger = logging.getLogger(__name__)
 

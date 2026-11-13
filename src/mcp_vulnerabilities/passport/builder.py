@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from typing import Dict, Any
 
 from mcp_fingerprints.models import ServerPackageSpec, VersionFingerprint
 from mcp_vulnerabilities.analyzers.reachability.call_graph import AstReachabilityAnalyzer

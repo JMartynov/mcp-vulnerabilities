@@ -2,15 +2,18 @@
 
 from __future__ import annotations
 
+import datetime
 import gzip
+import hashlib
 import json
 import logging
-import hashlib
 import tarfile
+import zipfile
 from pathlib import Path
 from typing import Any
 
 from mcp_vulnerabilities.feed import AdvisoryFeedBuilder
+from mcp_vulnerabilities.validator import OsvValidator
 
 logger = logging.getLogger("mcp_vulnerabilities.snapshot")
 
@@ -240,12 +243,6 @@ def export_airgap_bundle(
         "checksum_path": str(checksum_path),
         "snapshot_info": snapshot_res,
     }
-
-
-import datetime
-import zipfile
-
-from mcp_vulnerabilities.validator import OsvValidator
 
 
 def export_osv_bucket(data_dir: Path, output_dir: Path) -> dict[str, Any]:

@@ -9,10 +9,9 @@ import ssl
 import urllib.request
 from typing import Any
 
-logger = logging.getLogger("mcp_vulnerabilities.discovery.glama")
-
-
 from mcp_vulnerabilities.ssl_utils import get_ssl_context
+
+logger = logging.getLogger("mcp_vulnerabilities.discovery.glama")
 
 
 def _get_ssl_context() -> ssl.SSLContext:

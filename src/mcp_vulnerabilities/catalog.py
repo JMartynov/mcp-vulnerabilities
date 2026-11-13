@@ -5,7 +5,6 @@ from __future__ import annotations
 import gzip
 import json
 import logging
-import os
 from dataclasses import asdict, dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path

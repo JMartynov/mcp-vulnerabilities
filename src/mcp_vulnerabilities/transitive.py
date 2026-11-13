@@ -20,12 +20,10 @@ else:
     except ImportError:
         pass
 
-
-logger = logging.getLogger(__name__)
-
-
 from mcp_vulnerabilities.cvss import extract_advisory_severity
 from mcp_vulnerabilities.ssl_utils import get_ssl_context
+
+logger = logging.getLogger(__name__)
 
 
 def _get_ssl_context() -> ssl.SSLContext:

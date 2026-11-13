@@ -14,12 +14,12 @@ logger = logging.getLogger(__name__)
 
 # Try to import from mcp_fingerprints if available
 try:
-    from mcp_fingerprints.snapshot_diff import (
+    from mcp_fingerprints.snapshot_diff import (  # noqa: F401
         InventorySnapshot as FpInventorySnapshot,
         DiscoveredServer as FpDiscoveredServer,
         compare_snapshots as fp_compare_snapshots,
         DiffResult as FpDiffResult,
-        ServerDriftDetail as FpServerDriftDetail
+        ServerDriftDetail as FpServerDriftDetail,
     )
     HAS_FP = True
 except ImportError:

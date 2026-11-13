@@ -8,8 +8,6 @@ import hashlib
 import json
 
 import logging
-from mcp_vulnerabilities.threat_intel.epss import EpssClient
-from mcp_vulnerabilities.scoring import CompositeRiskScorer
 
 import os
 import time
@@ -22,12 +20,10 @@ from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
 from mcp_vulnerabilities.catalog import (
     UnifiedMcpSecurityRecord,
     VersionSecurityRecord,
-    ToolSecurityAssessment,
     _load_passports,
     _parse_sort_version,
     compute_remediation_target,
     generate_upgrade_command,
-    build_unified_mcp_security_catalog,
     evaluate_passport_security,
 )
 from mcp_vulnerabilities.models import OsvVulnerability

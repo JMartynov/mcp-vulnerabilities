@@ -9,7 +9,7 @@ import sys
 import time
 import re
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import Any
 
 def sanitize_ansi(text: str) -> str:
     ansi_escape = re.compile(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])')

@@ -7,7 +7,6 @@ from typing import Any
 from .capability_classifier import (
     CapabilityRiskClassifier,
     SecurityCommentaryEngine,
-    analyze_tool_security,
 )
 from .models import AnalysisTarget, ThreatCategory, ThreatFinding, ThreatSeverity
 from .regex_matcher import RegexThreatMatcher

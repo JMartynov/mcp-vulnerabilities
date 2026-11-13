@@ -4,9 +4,7 @@ Performs fast concurrent TCP port pre-check and JSON-RPC 2.0 handshake across ca
 """
 
 import asyncio
-import json
 import logging
-import socket
 from typing import List, Dict, Any, Optional
 
 logger = logging.getLogger(__name__)

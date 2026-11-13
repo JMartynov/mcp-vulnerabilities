@@ -6,10 +6,13 @@ import json
 import ssl
 import tempfile
 import unittest
+from unittest.mock import patch
 import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
+
+import pytest
 
 from mcp_vulnerabilities.catalog import McpCatalogState
 from mcp_vulnerabilities.converters.ghsa import GhsaConverter
@@ -41,6 +44,7 @@ def _fetch_json(url: str, headers: dict[str, str] | None = None, timeout: float 
         return json.loads(resp.read().decode("utf-8"))
 
 
+@pytest.mark.integration
 class TestAcceptanceRealRepositories(unittest.TestCase):
     """End-to-end acceptance tests validating real package registries and OSV conformance."""
 
@@ -178,6 +182,151 @@ class TestAcceptanceRealRepositories(unittest.TestCase):
             # Sync state record for osv_dev should report 0 scanned on warm run
             osv_chk = pipeline_run2.state_manager.get_checkpoint("osv_dev")
             self.assertEqual(osv_chk.records_scanned, 0, "Warm run should have scanned 0 packages")
+
+
+class TestMockedAcceptanceRepositories(unittest.TestCase):
+    """Deterministic, fast unit acceptance tests running without external network access."""
+
+    @patch("mcp_vulnerabilities.discovery.npm.NpmDiscoveryProvider.discover")
+    @patch("urllib.request.urlopen")
+    def test_mocked_npm_repository_discovery_and_osv_batch(self, mock_urlopen: Any, mock_discover: Any) -> None:
+        """Verify npm discovery and OSV batch query logic deterministically with mocks."""
+        mock_discover.return_value = [
+            {"name": "@modelcontextprotocol/server-postgres", "ecosystem": "npm", "version": "0.6.2"}
+        ]
+        fake_response = {
+            "results": [
+                {
+                    "package": {"name": "@modelcontextprotocol/server-postgres", "ecosystem": "npm"},
+                    "vulns": [],
+                }
+            ]
+        }
+        mock_cm = unittest.mock.MagicMock()
+        mock_cm.read.return_value = json.dumps(fake_response).encode("utf-8")
+        mock_urlopen.return_value.__enter__.return_value = mock_cm
+
+        npm_packages = NpmDiscoveryProvider.discover(queries=("@modelcontextprotocol/server-postgres",), limit_per_query=5)
+        self.assertTrue(len(npm_packages) > 0)
+        target_pkg = npm_packages[0]
+        self.assertEqual(target_pkg["name"], "@modelcontextprotocol/server-postgres")
+        self.assertEqual(target_pkg["ecosystem"], "npm")
+
+        batch_url = "https://api.osv.dev/v1/querybatch"
+        payload = json.dumps({"queries": [{"package": {"name": target_pkg["name"], "ecosystem": "npm"}}]}).encode("utf-8")
+        data = _fetch_json(batch_url, data=payload, timeout=10.0)
+        self.assertIn("results", data)
+        self.assertEqual(len(data["results"]), 1)
+
+    @patch("mcp_vulnerabilities.discovery.pypi.PypiDiscoveryProvider.discover")
+    def test_mocked_pypi_repository_discovery(self, mock_discover: Any) -> None:
+        """Verify PyPI discovery contract and canonical server identification deterministically."""
+        mock_pkgs = [{"name": "fastmcp", "ecosystem": "PyPI", "version": "0.4.1"}]
+        mock_pkgs.extend(
+            {"name": f"mcp-server-tool-{i}", "ecosystem": "PyPI", "version": "1.0.0"}
+            for i in range(105)
+        )
+        mock_discover.return_value = mock_pkgs
+
+        pypi_packages = PypiDiscoveryProvider.discover(timeout=10.0)
+        self.assertTrue(len(pypi_packages) > 100)
+        pypi_names = {p["name"].lower() for p in pypi_packages}
+        self.assertIn("fastmcp", pypi_names)
+        self.assertTrue(any(n.startswith("mcp-server-") for n in pypi_names))
+
+    def test_mocked_ghsa_advisory_conversion_and_validation(self) -> None:
+        """Verify GHSA conversion to valid OSV 1.6.0 document without live GitHub network calls."""
+        sample_adv = {
+            "id": "GHSA-test-mock-0001",
+            "summary": "Mocked test advisory for command injection in MCP tool",
+            "details": "A command injection vulnerability was discovered in test-tool.",
+            "published_at": "2026-01-01T00:00:00Z",
+            "updated_at": "2026-01-02T00:00:00Z",
+            "severity": "HIGH",
+            "vulnerabilities": [
+                {
+                    "package": {"name": "test-mcp-server", "ecosystem": "npm"},
+                    "vulnerable_version_range": "< 1.2.0",
+                    "first_patched_version": {"identifier": "1.2.0"},
+                }
+            ],
+            "identifiers": [
+                {"type": "GHSA", "value": "GHSA-test-mock-0001"},
+                {"type": "CVE", "value": "CVE-2026-99999"},
+            ],
+            "references": [
+                {"url": "https://github.com/advisories/GHSA-test-mock-0001"}
+            ],
+        }
+
+        osv_model = GhsaConverter.from_dict(sample_adv)
+        self.assertEqual(osv_model.id, "GHSA-test-mock-0001")
+        self.assertTrue(bool(osv_model.summary))
+        self.assertTrue(bool(osv_model.details))
+
+        val_errors = OsvValidator.validate(osv_model)
+        self.assertEqual(val_errors, [], f"Validation errors on mocked GHSA {osv_model.id}: {val_errors}")
+
+    def test_mocked_end_to_end_version_aware_caching_lifecycle(self) -> None:
+        """Verify McpVulnerabilityPipeline skips queries on warm cache without network calls."""
+        with tempfile.TemporaryDirectory() as tmpdir:
+            out_dir = Path(tmpdir) / "vulns"
+            state_file = Path(tmpdir) / "sync_state.json"
+            catalog_state_file = Path(tmpdir) / "catalog_state.json"
+            servers_file = Path(tmpdir) / "servers.json"
+
+            servers_file.write_text(
+                json.dumps({
+                    "version": "1.0.0",
+                    "servers": {
+                        "npm:@modelcontextprotocol/server-postgres": {
+                            "name": "@modelcontextprotocol/server-postgres",
+                            "ecosystem": "npm",
+                            "version": "0.6.2",
+                        },
+                        "pypi:fastmcp": {
+                            "name": "fastmcp",
+                            "ecosystem": "PyPI",
+                            "version": "0.4.1",
+                        },
+                    },
+                }),
+                encoding="utf-8",
+            )
+
+            pipeline = McpVulnerabilityPipeline(
+                output_dir=out_dir,
+                state_file=state_file,
+                catalog_state_file=catalog_state_file,
+                servers_catalog_file=servers_file,
+            )
+
+            with patch.object(McpVulnerabilityPipeline, "_query_osv_batch", return_value={}):
+                # Cold cache run
+                pipeline.run(
+                    include_osv_api=True,
+                    include_ghsa_api=False,
+                    include_verity_catalog=False,
+                )
+
+                cat_state1 = McpCatalogState(state_file=catalog_state_file)
+                self.assertIn("npm:@modelcontextprotocol/server-postgres", cat_state1.records)
+                self.assertIn("pypi:fastmcp", cat_state1.records)
+
+                # Warm cache run
+                pipeline_run2 = McpVulnerabilityPipeline(
+                    output_dir=out_dir,
+                    state_file=state_file,
+                    catalog_state_file=catalog_state_file,
+                    servers_catalog_file=servers_file,
+                )
+                pipeline_run2.run(
+                    include_osv_api=True,
+                    include_ghsa_api=False,
+                    include_verity_catalog=False,
+                )
+                osv_chk = pipeline_run2.state_manager.get_checkpoint("osv_dev")
+                self.assertEqual(osv_chk.records_scanned, 0, "Warm run should have scanned 0 packages")
 
 
 if __name__ == "__main__":

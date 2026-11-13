@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from sigstore.verify import Verifier, policy
+from sigstore.verify import Verifier
 from sigstore.models import Bundle
 from sigstore.verify.policy import Identity
 

@@ -5,17 +5,16 @@ import shlex
 import subprocess
 import time
 import tempfile
-import shutil
 from pathlib import Path
 from typing import Optional
 
 from mcp_vulnerabilities.probe.client import McpProbeClient
 from mcp_vulnerabilities.probe.transport import StdioTransport
+from mcp_vulnerabilities.sandbox.drivers import SandboxError, TimeoutExpired
 from mcp_vulnerabilities.sandbox.models import SandboxInspectionResult
 
 logger = logging.getLogger(__name__)
 
-from mcp_vulnerabilities.sandbox.drivers import SandboxError, TimeoutExpired
 
 class EphemeralSandbox:
     def __init__(self, engine_cmd: str | None, timeout: int = 60, network: str = "bridge"):
