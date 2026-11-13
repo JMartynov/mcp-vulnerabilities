@@ -52033,7 +52033,7 @@
     "author": "Zeng Liangyi",
     "composite_risk_score": null,
     "composite_risk_tier": "LOW",
-    "description": "Local-first AI PKM for coding conversations — supports Claude Code, Cursor, Codex CLI, Trae, GitHub Copilot",
+    "description": "Local-first AI PKM for coding conversations — imports 32 AI coding agent harnesses (Claude Code, Claude Desktop, Codex CLI, Cursor, Copilot, Gemini CLI, Qwen Code, OpenCode, Pi, Kimi Code and more), locally and from WSL",
     "display_name": "chatcrystal",
     "dual_axis_security": null,
     "ecosystem": "npm",
@@ -52042,19 +52042,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.6.2",
+    "latest_version": "0.7.1",
     "license": "Apache-2.0",
     "malicious_advisory_id": null,
     "package_name": "chatcrystal",
     "prompts_count": 0,
     "purl": "pkg:npm/chatcrystal",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.6.2",
+    "recommended_safe_version": "0.7.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/ZengLiangYi/ChatCrystal",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `chatcrystal` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 45 safe version(s).",
+    "security_summary": "Server `chatcrystal` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 47 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:2731bd4b6919116b76147883364cc585c285efc35ee7b711386d79130935ffc5",
@@ -52832,6 +52832,220 @@
         ],
         "toolset_canonical_hash": "sha256:2731bd4b6919116b76147883364cc585c285efc35ee7b711386d79130935ffc5",
         "version": "0.6.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-11T16:57:56.147Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.7.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-11T17:00:42.017Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:270177dc4ec97bd49a09b0a719327c52230a51ccdeb685ed4aa4b8a06866cba4",
+            "description": "Get the full content of a note including title, summary, key conclusions, code snippets, and tags.",
+            "name": "get_note",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Note ID",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_note` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c0386a729d1d9ab62afbbeb428384a50d0f746094f776e6dababb52b7eebb7b7",
+            "description": "Get related notes for a given note, including relationship type and confidence score.",
+            "name": "get_relations",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Note ID to find relations for",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "noteId",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_relations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:22323d07eea1d3c43fb374facd6e81303e860a8fca1d810b426da39ed703145d",
+            "description": "Get related notes for a given note, including relationship type and confidence score.",
+            "name": "list_notes",
+            "parameters": [
+              {
+                "default": 1,
+                "description": "1-based page number for paginated note summaries. Each page returns up to 20 notes.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "page",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Literal keyword filter applied to note title and summary; not semantic search.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "search",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tag",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_notes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8a0083d1aeecf95a59f173ffc96d8908f95ed03df295aa47b3cbf867308bd13f",
+            "description": "Persist a task memory only when it can become a high-quality ChatCrystal note: specific title, concrete summary, meaningful key conclusions, and a durable reusable lesson such as a pitfall, fix, decision, pattern, or symptom-to-resolution mapping. Do not write one-time environment checks, version/status reports, ordinary progress logs, or vague robustness claims. Weak auto writebacks are skipped by core validation and recorded only as receipts.",
+            "name": "recall_for_task",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const data = await client.recallForTask(input);\n        return {\n            content",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `recall_for_task` [LOW] inspects or modifies host environment variables."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f286f67aed161361914a87e783e55a5da20b0c29736107a844c65f6c17d1d2ec",
+            "description": "Semantic search across your AI conversation knowledge base. Returns matching notes ranked by relevance.",
+            "name": "search_knowledge",
+            "parameters": [
+              {
+                "default": 10,
+                "description": "Maximum number of results",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Search query text",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_knowledge` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c834061e862c1d1a24b2de2f9eedb1c9365f356e5b7618b87f16e44fb7de425",
+            "description": "Persist a task memory only when it can become a high-quality ChatCrystal note: specific title, concrete summary, meaningful key conclusions, and a durable reusable lesson such as a pitfall, fix, decision, pattern, or symptom-to-resolution mapping. Do not write one-time environment checks, version/status reports, ordinary progress logs, or vague robustness claims. Weak auto writebacks are skipped by core validation and recorded only as receipts.",
+            "name": "validate_task_memory",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const data = await client.validateTaskMemory(input);\n        return {\n            content",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `validate_task_memory` [LOW] inspects or modifies host environment variables."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:42ac7a636e9ed6b3dfbc387b9d68360a67fdb017af81a4f6f60e53295ce2296b",
+            "description": "Persist a task memory only when it can become a high-quality ChatCrystal note: specific title, concrete summary, meaningful key conclusions, and a durable reusable lesson such as a pitfall, fix, decision, pattern, or symptom-to-resolution mapping. Do not write one-time environment checks, version/status reports, ordinary progress logs, or vague robustness claims. Weak auto writebacks are skipped by core validation and recorded only as receipts.",
+            "name": "write_task_memory",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "const data = await client.writeTaskMemory(input);\n        return {\n            content",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `write_task_memory` [LOW] inspects or modifies host environment variables."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:2731bd4b6919116b76147883364cc585c285efc35ee7b711386d79130935ffc5",
+        "version": "0.7.1"
       }
     ]
   },
@@ -68318,19 +68532,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.50.0",
+    "latest_version": "0.51.0",
     "license": "MIT License\n        \n        Copyright (c) 2026 Brian Speagle\n        \n        Permission is hereby granted, free of charge, to any person obtaining a copy\n        of this software and associated documentation files (the \"Software\"), to deal\n        in the Software without restriction, including without limitation the rights\n        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n        copies of the Software, and to permit persons to whom the Software is\n        furnished to do so, subject to the following conditions:\n        \n        The above copyright notice and this permission notice shall be included in all\n        copies or substantial portions of the Software.\n        \n        THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n        SOFTWARE.",
     "malicious_advisory_id": null,
     "package_name": "gingugu",
     "prompts_count": 0,
     "purl": "pkg:pypi/gingugu",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.50.0",
+    "recommended_safe_version": "0.51.0",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/gingugu",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `gingugu` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 76 safe version(s).",
+    "security_summary": "Server `gingugu` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 77 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:cce66d1f811355d3220725e8ec77c18898a4d8a76b66a75fc785e601b594b3aa",
@@ -85613,6 +85827,1648 @@
         ],
         "toolset_canonical_hash": "sha256:cce66d1f811355d3220725e8ec77c18898a4d8a76b66a75fc785e601b594b3aa",
         "version": "0.50.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-12T02:23:19.335736Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ecb5b3de10803c4e64823e4b309f95c36ff4c5d34ff6a601a425e44237709da7",
+            "description": "Permanently remove a credential service or a single field. Secret data is",
+            "name": "credential_delete",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "service_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confirm",
+                "nested_properties": null,
+                "required": true,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "field_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `credential_delete` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:749b496b0b67b0c3e1bf1dea593cc7ae8bbc624458b5ec11bf684b6ff2159a30",
+            "description": "Retrieve a stored credential bundle. Secret values are REDACTED by default",
+            "name": "credential_get",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "service_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fields",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reveal",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "into",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `credential_get` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:53fb3c6b2b31b4fae40d23b258624b6a264a5a7caed53442747655a0312fdbdd",
+            "description": "List all stored credential services and their non-secret fields. Does NOT",
+            "name": "credential_list",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "check_expiry",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `credential_list` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:af5041d8c6be2b987f4a2fae94f4b708bb7fd7b82c38982dfff7e0a33a502e0d",
+            "description": "Store or update a credential bundle (API keys, tokens, passwords) securely.",
+            "name": "credential_store",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "service_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fields",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expires_at",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `credential_store` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:37f6efd914b5401fb785fb52508b4ad2d4f50c61ab60e2fefb5c4da94a259de4",
+            "description": "Combine multiple memories into one to reduce redundancy and knowledge bloat.",
+            "name": "memory_consolidate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "memory_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "strategy",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "keep_originals",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_similarity",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_consolidate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8b468b4aea99711dd64af0285b512b4c7075f3e419769b9893a55ca96eabe8fe",
+            "description": "Load the most relevant memories for the current session. Call this at session",
+            "name": "memory_context",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "task_hint",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compact",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "explain",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_context` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8415a8a2c6944e7dcf6460f2e05209f2852323387a7bc505133df0550a591601",
+            "description": "Deterministic background consolidation over the memory graph.",
+            "name": "memory_dream",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "proposal_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relation_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tag",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reverse",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_dream` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b8d6bdd279c6c29f6848b4327cfcfd46e384ad1ea52b1071c1927ddff8d6becf",
+            "description": "Enumerate graph edges with both endpoints resolved to titles. Read-only.",
+            "name": "memory_edges",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relation_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "memory_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_edges` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fa429564c774b55fc0e8ab3b18150c7a4605243f40a874d622eb0f525addd6cc",
+            "description": "Search or slice WITHIN one memory's body, without loading the whole thing.",
+            "name": "memory_excerpt",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "memory_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "start",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "end",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_matches",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "context_chars",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "case_sensitive",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `memory_excerpt` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:08c33e9e2cc0673135007a752b9fb7a58f1bb97a8bde82c1c98f4b15a95ecfdb",
+            "description": "Export memories to a portable JSON payload (backup/transfer).",
+            "name": "memory_export",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_deprecated",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_export` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2eb21a818be19c61878b46fc2f5b5cd9a8f8e1cd9abe56aac4a802ae0e6b79e4",
+            "description": "Mark a memory as no longer valid or permanently remove it. Default behavior",
+            "name": "memory_forget",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "memory_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hard_delete",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_forget` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:758cade6c7453caea3d4e44f8ab85af60e4072fdc966d751232997041cf7b8b6",
+            "description": "Import a JSON payload produced by ``memory_export``.",
+            "name": "memory_import",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "data",
+                "nested_properties": null,
+                "required": true,
+                "type": "object"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "on_conflict",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_import` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db3087a89c86c53eb9de3fee95c4342158cd19cde00ebdcbc96b6e321192eb41",
+            "description": "Manage namespaces. ``action`` is one of: list, create, update, delete.",
+            "name": "memory_namespaces",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "default_repo",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cascade",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `memory_namespaces` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6e387be8f28779e946cace3c71353f8d7181e9531f2b67939fa4802a48ea9fc4",
+            "description": "Search memories by relevance using hybrid BM25 + semantic ranking. Use for",
+            "name": "memory_recall",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_deprecated",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_related",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compact",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "explain",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `memory_recall` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0895fe6738754d7d1b211ce11fc8ca754f6cde5650b6bdcc0ac5533ffd52445",
+            "description": "Create a directional link between two memories. Relations are used by",
+            "name": "memory_relate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relation_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "edges",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_relate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:32709a578a25c0bfefa55425062c8a4f3dabfe7b006ae1909b1de9d55d5fca35",
+            "description": "Advanced filtered search across memories with full control over filters and",
+            "name": "memory_search",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "created_after",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "created_before",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sort_by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_deprecated",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compact",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "claims",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "orphans",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pinned",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "explain",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `memory_search` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:45f6aa70de908a9f94b71eb5979178a9be0d256679290eda03c1d9dac0cd2ffe",
+            "description": "Return health statistics for the memory store. Use to monitor memory growth,",
+            "name": "memory_stats",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "flag_stale",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "review_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8fcf4d8777a0239444d7d92771104b1862d13d18f9335566cad2028fd96e6357",
+            "description": "Store a new memory in the knowledge base. Use to capture anything worth",
+            "name": "memory_store",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metadata",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "provenance",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "about",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dedupe_check",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relation_check",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_store` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:19c0866875c689520f991a0ae93e38652dc64f65df165d757237647a84661b46",
+            "description": "Bind a memory to a tool call so it is put in front of the agent at the moment",
+            "name": "memory_tripwire",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "memory_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tool",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pattern",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tripwire_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "input",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "namespace",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_tripwire` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f26a744ddfce1efc9040d47f8f797c22f1e0469f590e30b74bd29b88978a48f6",
+            "description": "Repair the graph: retype a mislabelled edge, turn a backwards one around, or",
+            "name": "memory_unrelate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relation_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "new_relation_type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reverse",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "edges",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dry_run",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_unrelate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1e9a0299d15747d6b0be401b2ba17063761db5238cacdd66636471e1daaaa32a",
+            "description": "Update one or more fields of an existing memory. Use to correct outdated",
+            "name": "memory_update",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "memory_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "metadata",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "resolve_claims",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relation_check",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pinned",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "provenance",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "about",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `memory_update` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:cce66d1f811355d3220725e8ec77c18898a4d8a76b66a75fc785e601b594b3aa",
+        "version": "0.51.0"
       }
     ]
   },
@@ -107452,7 +109308,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+    "description": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
     "display_name": "mcp-hostile-metadata",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -107498,24 +109354,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-TOOL-POISON-001",
-            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
-            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
+            "id": "MCP-UNICODE-001",
+            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
+            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
             "severity": "HIGH",
-            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
-            "vulnerable_tools": [
-              "generate_summary_report"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-MCP-TOOL-POISON-001",
-            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
-            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
-            "severity": "HIGH",
-            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
             "vulnerable_tools": [
               "generate_summary_report"
             ]
@@ -107537,11 +109380,24 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-UNICODE-001",
-            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
-            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
+            "id": "MCP-TOOL-POISON-001",
+            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
+            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
             "severity": "HIGH",
-            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "vulnerable_tools": [
+              "generate_summary_report"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VERITY-MCP-TOOL-POISON-001",
+            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
+            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
+            "severity": "HIGH",
+            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
             "vulnerable_tools": [
               "generate_summary_report"
             ]
@@ -110414,7 +112270,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "Sun Ray Server Software (SRSS) 1.3, when Non-Smartcard Mobility (NSCM) is enabled, allows remote attackers to login as a",
+    "description": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
     "display_name": "n/a",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -110447,11 +112303,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2002-2036",
+            "id": "CVE-2025-56405",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Sun Ray Server Software (SRSS) 1.3, when Non-Smartcard Mobility (NSCM) is enabled, allows remote attackers to login as a",
+            "summary": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
             "vulnerable_tools": []
           },
           {
@@ -110469,11 +112325,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2015-8316",
+            "id": "CVE-2008-5313",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
+            "summary": "mailscanner 4.68.8 and other versions before 4.74.16-1 might allow local users to overwrite arbitrary files via a symlin",
             "vulnerable_tools": []
           },
           {
@@ -110491,33 +112347,33 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2015-8316",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2002-2036",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "Sun Ray Server Software (SRSS) 1.3, when Non-Smartcard Mobility (NSCM) is enabled, allows remote attackers to login as a",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "CVE-2026-50757",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Directory Traversal vulnerability in DayuanJiang next-ai-draw-io 0.4.13 allowsa remote attacker to execute arbitrary cod",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2008-5313",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mailscanner 4.68.8 and other versions before 4.74.16-1 might allow local users to overwrite arbitrary files via a symlin",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-56405",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
             "vulnerable_tools": []
           }
         ],
