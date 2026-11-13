@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from mcp_vulnerabilities.converters.common import infer_vulnerable_tools
+
 from mcp_vulnerabilities.models import (
     AffectedPackage,
     DatabaseSpecificMcp,
@@ -83,7 +85,7 @@ class OsvDevConverter:
 
         # Affected packages
         affected_list: list[AffectedPackage] = []
-        vulnerable_tools = cls._infer_vulnerable_tools(details)
+        vulnerable_tools = infer_vulnerable_tools(details)
 
         for aff in data.get("affected", []):
             pkg_data = aff.get("package", {})
@@ -181,26 +183,4 @@ class OsvDevConverter:
 
     @classmethod
     def _infer_vulnerable_tools(cls, text: str) -> list[str]:
-        tools: set[str] = set()
-        keywords = (
-            "query",
-            "get",
-            "search",
-            "read",
-            "write",
-            "exec",
-            "init",
-            "add",
-            "diff",
-            "checkout",
-            "install",
-            "fetch",
-            "delete",
-            "update",
-            "cypher",
-        )
-        for match in re.finditer(r"`([a-z][a-z0-9_]{2,30})`", text):
-            candidate = match.group(1)
-            if any(term in candidate for term in keywords):
-                tools.add(candidate)
-        return sorted(tools)
+        return infer_vulnerable_tools(text)

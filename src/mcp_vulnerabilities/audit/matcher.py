@@ -4,13 +4,15 @@ import gzip
 import json
 import logging
 import re
-from ..provenance import resolve_provenance_urls
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from packaging.version import InvalidVersion, Version
-
+from mcp_vulnerabilities.cvss import (
+    extract_advisory_severity,
+    is_version_in_ranges,
+    parse_version_lenient,
+)
 from mcp_vulnerabilities.models import OsvVulnerability
 
 from .parsers import DiscoveredClientServer
@@ -401,152 +403,10 @@ class VulnerabilityMatcher:
         versions: list[str],
     ) -> bool:
         """Checks if a version is within the specified OSV ranges or version list."""
-        if not ranges and not versions:
-            return True
+        return is_version_in_ranges(version_str, ranges=ranges, versions=versions)
 
-        if versions and version_str in versions:
-            return True
-
-        try:
-            target_v = self._parse_version(version_str)
-        except Exception:
-            return False
-
-        for r in ranges:
-            events = r.get("events", [])
-            intervals = []
-            curr_intro = None
-            curr_last_aff = None
-
-            for ev in events:
-                if "introduced" in ev:
-                    if curr_intro is not None:
-                        intervals.append((curr_intro, None, curr_last_aff))
-                        curr_last_aff = None
-                    intro_raw = ev["introduced"]
-                    curr_intro = self._parse_version("0.0.0") if intro_raw == "0" else self._parse_version(intro_raw)
-                elif "fixed" in ev:
-                    fix_v = self._parse_version(ev["fixed"])
-                    intervals.append((curr_intro, fix_v, curr_last_aff))
-                    curr_intro = None
-                    curr_last_aff = None
-                elif "last_affected" in ev:
-                    curr_last_aff = self._parse_version(ev["last_affected"])
-
-            if curr_intro is not None or curr_last_aff is not None:
-                intervals.append((curr_intro, None, curr_last_aff))
-
-            for intro_v, fix_v, last_aff_v in intervals:
-                in_interval = True
-                if intro_v is not None and target_v < intro_v:
-                    in_interval = False
-                if fix_v is not None and target_v >= fix_v:
-                    in_interval = False
-                if last_aff_v is not None and target_v > last_aff_v:
-                    in_interval = False
-
-                if in_interval and (
-                    intro_v is not None or fix_v is not None or last_aff_v is not None
-                ):
-                    return True
-
-        return False
-
-    @staticmethod
-    def _parse_version(v_str: str) -> Version:
-        clean = v_str.lstrip("v=").strip()
-        
-        # Handle Maven qualifiers
-        clean = re.sub(r'[\.\-]?(RELEASE|Final)$', '', clean, flags=re.IGNORECASE)
-        clean = re.sub(r'[\.\-]?SNAPSHOT$', '.dev0', clean, flags=re.IGNORECASE)
-        
-        # Handle Go pseudo-versions: v0.0.0-20260101120000-abcdef123456
-        if '-' in clean:
-            parts = clean.split('-')
-            if len(parts) >= 3 and len(parts[-2]) == 14 and parts[-2].isdigit():
-                clean = f"{parts[0]}.dev{parts[-2]}"
-                
-        # Handle docker tags like "latest"
-        if clean.lower() == "latest":
-            return Version("9999.9999.9999")
-            
-        try:
-            return Version(clean)
-        except InvalidVersion:
-            # Fallback for non-standard versions: strip suffixes
-            m = re.match(r"^(\d+(\.\d+)*)", clean)
-            if m:
-                return Version(m.group(1))
-            return Version("0.0.0")
-
-    @staticmethod
-    def _extract_severity_info(
-        adv: dict[str, Any],
-        affected: dict[str, Any] | None = None,
-    ) -> tuple[str, float | None]:
-        """Extracts normalized severity string and numeric CVSS score."""
-        cvss_score: float | None = None
-        nominal_severity = None
-        for s in adv.get("severity", []):
-            score_str = str(s.get("score", ""))
-            
-            # Try parsing CVSS vector
-            match = re.search(r"AV:[NALP]/AC:[LH]/PR:[NLH]/UI:[NR]/S:[UC]/C:[NLH]/I:[NLH]/A:[NLH]", score_str)
-            if match:
-                from mcp_vulnerabilities.cvss import calculate_cvss_v3_score
-                cvss_score = calculate_cvss_v3_score(score_str)
-                if cvss_score is not None:
-                    break
-            
-            # If vector parsing encounters an unknown/extended format, extract nominal severity
-            if score_str.startswith("CVSS:"):
-                # Rough fallback: extract nominal severity from impact metrics if score parsing failed
-                if "C:H" in score_str and "I:H" in score_str and "A:H" in score_str:
-                    nominal_severity = "CRITICAL"
-                elif "C:H" in score_str or "I:H" in score_str or "A:H" in score_str:
-                    nominal_severity = "HIGH"
-                elif "C:L" in score_str or "I:L" in score_str or "A:L" in score_str:
-                    nominal_severity = "MEDIUM"
-                else:
-                    nominal_severity = "LOW"
-
-            if isinstance(score_str, (int, float)):
-                cvss_score = float(score_str)
-                break
-            try:
-                cvss_score = float(score_str)
-                break
-            except (ValueError, TypeError):
-                pass
-
-        # Check database_specific severity
-        db_spec = adv.get("database_specific", {})
-        if affected:
-            aff_spec = affected.get("database_specific", {})
-            if not db_spec.get("severity") and aff_spec.get("severity"):
-                db_spec = aff_spec
-            if cvss_score is None and aff_spec.get("cvss_score"):
-                try:
-                    cvss_score = float(aff_spec["cvss_score"])
-                except (ValueError, TypeError):
-                    pass
-
-        sev = db_spec.get("severity") or nominal_severity
-
-        if not sev and cvss_score is not None:
-            if cvss_score >= 9.0:
-                sev = "CRITICAL"
-            elif cvss_score >= 7.0:
-                sev = "HIGH"
-            elif cvss_score >= 4.0:
-                sev = "MEDIUM"
-            else:
-                sev = "LOW"
-
-        if not sev:
-            sev = "UNKNOWN"
-
-        return sev.upper(), cvss_score
+    _parse_version = staticmethod(parse_version_lenient)
+    _extract_severity_info = staticmethod(extract_advisory_severity)
 
     @staticmethod
     def _normalize_package_name(name: str) -> str:

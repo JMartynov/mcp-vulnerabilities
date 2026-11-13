@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from mcp_vulnerabilities.converters.common import infer_vulnerable_tools
+
 from mcp_vulnerabilities.models import (
     AffectedPackage,
     DatabaseSpecificMcp,
@@ -115,7 +117,7 @@ class GhsaConverter:
                 v.get("first_patched_version"),
             )
 
-            vulnerable_tools = cls._infer_vulnerable_tools(details)
+            vulnerable_tools = infer_vulnerable_tools(details)
             valid_sevs = ("CRITICAL", "HIGH", "MEDIUM", "LOW")
 
             db_mcp = DatabaseSpecificMcp(
@@ -192,26 +194,4 @@ class GhsaConverter:
 
     @classmethod
     def _infer_vulnerable_tools(cls, text: str) -> list[str]:
-        tools: set[str] = set()
-        keywords = (
-            "query",
-            "get",
-            "search",
-            "read",
-            "write",
-            "exec",
-            "init",
-            "add",
-            "diff",
-            "checkout",
-            "install",
-            "fetch",
-            "delete",
-            "update",
-            "cypher",
-        )
-        for match in re.finditer(r"`([a-z][a-z0-9_]{2,30})`", text):
-            candidate = match.group(1)
-            if any(term in candidate for term in keywords):
-                tools.add(candidate)
-        return sorted(tools)
+        return infer_vulnerable_tools(text)

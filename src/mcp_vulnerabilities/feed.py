@@ -9,6 +9,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+from mcp_vulnerabilities.cvss import extract_advisory_severity
+
 logger = logging.getLogger(__name__)
 
 FEED_TITLE = "Model Context Protocol (MCP) Security Advisories"
@@ -176,29 +178,7 @@ class AdvisoryFeedBuilder:
 
     @staticmethod
     def _extract_severity_info(adv: dict[str, Any]) -> tuple[str, float | None]:
-        cvss_score = None
-        for s in adv.get("severity", []):
-            try:
-                cvss_score = float(s.get("score"))
-                break
-            except (ValueError, TypeError):
-                pass
-
-        db_spec = adv.get("database_specific", {})
-        if not db_spec and adv.get("affected"):
-            db_spec = adv["affected"][0].get("database_specific", {})
-
-        sev = db_spec.get("severity")
-        if not sev and cvss_score:
-            if cvss_score >= 9.0:
-                sev = "CRITICAL"
-            elif cvss_score >= 7.0:
-                sev = "HIGH"
-            elif cvss_score >= 4.0:
-                sev = "MEDIUM"
-            else:
-                sev = "LOW"
-        return (sev or "UNKNOWN").upper(), cvss_score
+        return extract_advisory_severity(adv)
 
     @classmethod
     def _build_html_content(cls, adv: dict[str, Any], severity: str, cvss: float | None) -> str:

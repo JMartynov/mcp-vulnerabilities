@@ -24,6 +24,7 @@ else:
 logger = logging.getLogger(__name__)
 
 
+from mcp_vulnerabilities.cvss import extract_advisory_severity
 from mcp_vulnerabilities.ssl_utils import get_ssl_context
 
 
@@ -291,26 +292,7 @@ class TransitiveDependencyAuditor:
 
     @staticmethod
     def _extract_severity_info(adv: dict[str, Any]) -> tuple[str, float | None]:
-        cvss = None
-        for s in adv.get("severity", []):
-            try:
-                cvss = float(s.get("score"))
-                break
-            except (ValueError, TypeError):
-                pass
-
-        db_spec = adv.get("database_specific", {})
-        sev = db_spec.get("severity")
-        if not sev and cvss is not None:
-            if cvss >= 9.0:
-                sev = "CRITICAL"
-            elif cvss >= 7.0:
-                sev = "HIGH"
-            elif cvss >= 4.0:
-                sev = "MEDIUM"
-            else:
-                sev = "LOW"
-        return (sev or "UNKNOWN").upper(), cvss
+        return extract_advisory_severity(adv)
 
     @staticmethod
     def _find_fixed_version(adv: dict[str, Any]) -> str | None:

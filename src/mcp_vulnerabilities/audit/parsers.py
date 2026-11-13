@@ -195,10 +195,11 @@ class ClientConfigParser:
         # Environment variable expansion
         args = [os.path.expandvars(a) for a in args]
 
-        # Secret Redaction
+        # Secret Redaction: redact secret-bearing keys while preserving benign URL configuration keys
+        secret_pattern = re.compile(r"KEY|TOKEN|SECRET|PASSWORD|AUTH|CREDENTIAL", re.IGNORECASE)
         redacted_env = {}
         for k, v in env.items():
-            if k != "URL" and re.search(r"KEY|TOKEN|SECRET|PASSWORD|URL", k, re.IGNORECASE):
+            if secret_pattern.search(k):
                 redacted_env[k] = "***REDACTED***"
             else:
                 redacted_env[k] = v

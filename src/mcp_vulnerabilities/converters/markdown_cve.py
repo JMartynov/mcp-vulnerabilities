@@ -5,6 +5,8 @@ from __future__ import annotations
 import re
 from pathlib import Path
 
+from mcp_vulnerabilities.converters.common import infer_vulnerable_tools
+
 from mcp_vulnerabilities.models import (
     AffectedPackage,
     DatabaseSpecificMcp,
@@ -149,7 +151,7 @@ class MarkdownAdvisoryConverter:
         references = cls._extract_references(text, fields)
 
         # Extract vulnerable tools if present in breakdown
-        vulnerable_tools = cls._infer_vulnerable_tools(details)
+        vulnerable_tools = infer_vulnerable_tools(details)
 
         db_mcp = DatabaseSpecificMcp(
             vulnerable_tools=tuple(vulnerable_tools),
@@ -299,36 +301,4 @@ class MarkdownAdvisoryConverter:
     @classmethod
     def _infer_vulnerable_tools(cls, text: str) -> list[str]:
         """Infer tool names mentioned in vulnerability descriptions."""
-        tools: set[str] = set()
-        lower = text.lower()
-        keywords = (
-            "query",
-            "get",
-            "search",
-            "read",
-            "write",
-            "exec",
-            "init",
-            "add",
-            "diff",
-            "checkout",
-            "install",
-            "fetch",
-            "delete",
-            "update",
-            "cypher",
-        )
-        # Look for code snippets mentioning tool names (e.g. `get_customer`, `cypher_query`)
-        for match in re.finditer(r"`([a-z][a-z0-9_]{2,30})`", text):
-            candidate = match.group(1)
-            if any(term in candidate for term in keywords):
-                tools.add(candidate)
-
-        # Context-aware fallback for domain-specific servers
-        if not tools:
-            if "cypher query" in lower or "cypher" in lower:
-                tools.add("cypher_query")
-            elif "git_init" in lower:
-                tools.add("git_init")
-
-        return sorted(tools)
+        return infer_vulnerable_tools(text)

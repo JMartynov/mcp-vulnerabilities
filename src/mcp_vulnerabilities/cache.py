@@ -1,13 +1,14 @@
-import json
+from collections import OrderedDict
 import hashlib
+import json
 import os
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
 class TwoTierVulnerabilityCache:
-    """Two-tier disk and memory cache for caching version vulnerability matrices."""
+    """Two-tier disk and bounded in-memory LRU cache for vulnerability matrices."""
 
-    def __init__(self, cache_dir: Optional[str | Path] = None):
+    def __init__(self, cache_dir: Optional[str | Path] = None, maxsize: int = 5000):
         if cache_dir is None:
             env_dir = os.environ.get("MCP_VULN_CACHE_DIR") or os.environ.get("MCP_CACHE_DIR")
             if env_dir:
@@ -18,7 +19,8 @@ class TwoTierVulnerabilityCache:
         else:
             self.cache_dir = Path(cache_dir)
         self.cache_dir.mkdir(parents=True, exist_ok=True)
-        self._memory_cache: Dict[str, Any] = {}
+        self.maxsize = max(1, maxsize)
+        self._memory_cache: OrderedDict[str, Any] = OrderedDict()
 
     def _get_key(self, passport_canonical_hash: str, osv_index_hash: str) -> str:
         """Combine hashes into a single cache key."""
@@ -31,6 +33,7 @@ class TwoTierVulnerabilityCache:
         
         # Tier 1: In-memory LRU cache
         if key in self._memory_cache:
+            self._memory_cache.move_to_end(key)
             return self._memory_cache[key]
         
         # Tier 2: Disk cache
@@ -39,6 +42,9 @@ class TwoTierVulnerabilityCache:
             try:
                 data = json.loads(cache_file.read_text(encoding='utf-8'))
                 self._memory_cache[key] = data
+                self._memory_cache.move_to_end(key)
+                if len(self._memory_cache) > self.maxsize:
+                    self._memory_cache.popitem(last=False)
                 return data
             except Exception:
                 # Corrupt cache, ignore
@@ -52,6 +58,9 @@ class TwoTierVulnerabilityCache:
         
         # Tier 1
         self._memory_cache[key] = data
+        self._memory_cache.move_to_end(key)
+        if len(self._memory_cache) > self.maxsize:
+            self._memory_cache.popitem(last=False)
         
         # Tier 2
         cache_file = self.cache_dir / f"{key}.json"

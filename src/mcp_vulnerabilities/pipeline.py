@@ -16,6 +16,7 @@ from typing import Any
 from packaging.version import parse as parse_version
 
 from mcp_vulnerabilities.catalog import McpCatalogState
+from mcp_vulnerabilities.cvss import is_version_in_ranges
 from mcp_vulnerabilities.converters.cve_json5 import CveJson5Converter
 from mcp_vulnerabilities.converters.ghsa import GhsaConverter
 from mcp_vulnerabilities.converters.gitlab import GitLabAdvisoryConverter
@@ -59,63 +60,7 @@ def _get_github_headers() -> dict[str, str]:
 
 def is_version_affected(version_str: str | None, ranges: tuple[RangeSpec, ...]) -> bool:
     """Evaluates if a given version is affected based on OSV RangeSpecs."""
-    if not version_str:
-        return True  # Conservatively mark vulnerable if version unknown
-
-    try:
-        v = parse_version(version_str)
-    except Exception:
-        return True
-
-    affected = False
-
-    if not ranges:
-        return True
-
-    semver_ranges = [r for r in ranges if r.type == RangeType.SEMVER]
-    if not semver_ranges:
-        return True
-
-    for r in semver_ranges:
-        range_affected = False
-        for ev in r.events:
-            if ev.introduced:
-                if ev.introduced == "0":
-                    range_affected = True
-                else:
-                    try:
-                        intro_v = parse_version(ev.introduced)
-                        if v >= intro_v:
-                            range_affected = True
-                    except Exception:
-                        pass
-            elif ev.fixed:
-                try:
-                    fixed_v = parse_version(ev.fixed)
-                    if v >= fixed_v:
-                        range_affected = False
-                except Exception:
-                    pass
-            elif ev.last_affected:
-                try:
-                    last_v = parse_version(ev.last_affected)
-                    if v > last_v:
-                        range_affected = False
-                except Exception:
-                    pass
-            elif ev.limit:
-                try:
-                    limit_v = parse_version(ev.limit)
-                    if v >= limit_v:
-                        range_affected = False
-                except Exception:
-                    pass
-
-        if range_affected:
-            affected = True
-            break
-
-    return affected
+    return is_version_in_ranges(version_str, ranges=ranges)
 
 
 

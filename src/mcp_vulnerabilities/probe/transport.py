@@ -1,11 +1,14 @@
 import json
 import logging
+import queue
 import subprocess
 import threading
 from abc import ABC, abstractmethod
 from typing import Any, Dict, Optional
 
 logger = logging.getLogger(__name__)
+
+_SENTINEL = object()
 
 
 class TransportError(Exception):
@@ -50,6 +53,8 @@ class StdioTransport(BaseTransport):
         import collections
         self.stderr_buffer = collections.deque(maxlen=100)
         self._stderr_thread: Optional[threading.Thread] = None
+        self._stdout_thread: Optional[threading.Thread] = None
+        self._stdout_queue: queue.Queue = queue.Queue()
 
     @property
     def last_stderr_lines(self) -> list[str]:
@@ -65,6 +70,30 @@ class StdioTransport(BaseTransport):
                 self.stderr_buffer.append(line.rstrip())
         except Exception:
             pass
+
+    def _drain_stdout(self) -> None:
+        if not self.process or not self.process.stdout:
+            return
+        try:
+            for line in iter(self.process.stdout.readline, ""):
+                if not line:
+                    break
+                line_str = line.strip()
+                if not line_str:
+                    continue
+                try:
+                    parsed = json.loads(line_str)
+                    self._stdout_queue.put((parsed, None))
+                except Exception:
+                    if hasattr(self, 'stderr_buffer'):
+                        if isinstance(line_str, bytes):
+                            self.stderr_buffer.append("stdout noise: " + line_str.decode('utf-8', 'ignore'))
+                        else:
+                            self.stderr_buffer.append("stdout noise: " + line_str)
+                    continue
+            self._stdout_queue.put((None, None))
+        except Exception as e:
+            self._stdout_queue.put((None, e))
 
     def start(self) -> None:
         import shlex
@@ -86,8 +115,11 @@ class StdioTransport(BaseTransport):
                 cwd=self.cwd,
             )
             
+            self._stdout_queue = queue.Queue()
             self._stderr_thread = threading.Thread(target=self._drain_stderr, daemon=True)
             self._stderr_thread.start()
+            self._stdout_thread = threading.Thread(target=self._drain_stdout, daemon=True)
+            self._stdout_thread.start()
         except Exception as e:
             raise TransportError(f"Failed to start subprocess: {e}")
 
@@ -116,6 +148,8 @@ class StdioTransport(BaseTransport):
                     pass
                     
             self.process = None
+        if hasattr(self, '_stdout_queue'):
+            self._stdout_queue.put((None, None))
 
     def send(self, message: Dict[str, Any]) -> None:
         if not self.process or not self.process.stdin:
@@ -128,69 +162,26 @@ class StdioTransport(BaseTransport):
             raise TransportError(f"Failed to send message: {e}")
 
     def receive(self, timeout: float = 5.0) -> Dict[str, Any]:
-        if not self.process or not self.process.stdout:
+        if not self.process:
             raise TransportError("Transport is not active.")
 
-        # Read line with timeout using a thread
-        result: list[Optional[str]] = [None]
-        error: list[Optional[Exception]] = [None]
-
-        def read_line():
-            try:
-                # readline blocks, keep reading until we get valid json
-                while True:
-                    line = self.process.stdout.readline()
-                    if not line:
-                        result[0] = None
-                        break
-                    
-                    line_str = line.strip()
-                    if not line_str:
-                        continue
-                        
-                    # Try to parse to see if it's JSON, if not keep going
-                    try:
-                        import json
-                        json.loads(line_str)
-                        result[0] = line
-                        break
-                    except Exception:
-                        # Log it or just append to stderr buffer
-                        if hasattr(self, 'stderr_buffer'):
-                            # Safely handle if line_str is bytes
-                            if isinstance(line_str, bytes):
-                                self.stderr_buffer.append("stdout noise: " + line_str.decode('utf-8', 'ignore'))
-                            else:
-                                self.stderr_buffer.append("stdout noise: " + line_str)
-                        continue
-            except Exception as e:
-                error[0] = e
-
-        t = threading.Thread(target=read_line, daemon=True)
-        t.start()
-        t.join(timeout)
-
-        if t.is_alive():
-            # Stop the process to unblock readline if possible
+        try:
+            msg, error = self._stdout_queue.get(timeout=timeout)
+        except queue.Empty:
             self.stop()
             raise TransportTimeoutError(
                 f"Timeout of {timeout}s exceeded while waiting for response."
             )
 
-        if error[0]:
-            raise TransportError(f"Error reading response: {error[0]}")
+        if error:
+            raise TransportError(f"Error reading response: {error}")
 
-        line = result[0]
-        if not line:
-            # Check if process exited
-            if self.process.poll() is not None:
+        if msg is None:
+            if self.process and self.process.poll() is not None:
                 raise TransportError("Subprocess exited unexpectedly.")
             raise TransportError("Empty response received.")
 
-        try:
-            return json.loads(line)
-        except json.JSONDecodeError as e:
-            raise TransportError(f"Invalid JSON response: {e}, raw: {line}")
+        return msg
 
 
 class TransportAuthError(TransportError):
@@ -216,7 +207,7 @@ class HttpSseTransport(BaseTransport):
         self.endpoint: Optional[str] = None
         self.sse_response: Optional[Any] = None
         self.sse_thread: Optional[threading.Thread] = None
-        self.queue: list[Dict[str, Any]] = []
+        self.queue: queue.Queue = queue.Queue()
         self._stop_event = threading.Event()
         self._lock = threading.Lock()
         self._error: Optional[Exception] = None
@@ -232,7 +223,7 @@ class HttpSseTransport(BaseTransport):
 
         self._stop_event.clear()
         self._endpoint_event.clear()
-        self.queue.clear()
+        self.queue = queue.Queue()
         self._error = None
 
         req_headers = dict(self.headers)
@@ -282,8 +273,7 @@ class HttpSseTransport(BaseTransport):
                         elif event_name == "message" and buffer:
                             try:
                                 msg = json.loads(buffer)
-                                with self._lock:
-                                    self.queue.append(msg)
+                                self.queue.put(msg)
                             except json.JSONDecodeError:
                                 pass
                         buffer = ""
@@ -316,6 +306,8 @@ class HttpSseTransport(BaseTransport):
             except Exception:
                 pass
             self.sse_response = None
+        if hasattr(self, 'queue'):
+            self.queue.put(_SENTINEL)
         if self.sse_thread and self.sse_thread.is_alive():
             try:
                 # We can't interrupt readline directly safely, but closing the socket usually does it
@@ -352,19 +344,24 @@ class HttpSseTransport(BaseTransport):
         if timeout is None:
             timeout = self.timeout
 
-        import time
+        if self._error:
+            raise TransportError(f"Error in SSE stream: {self._error}")
 
-        start = time.time()
-        while True:
+        try:
+            item = self.queue.get(timeout=timeout)
+        except queue.Empty:
             if self._error:
                 raise TransportError(f"Error in SSE stream: {self._error}")
             if self._stop_event.is_set():
                 raise TransportError("SSE stream closed unexpectedly.")
-            with self._lock:
-                if self.queue:
-                    return self.queue.pop(0)
-            if time.time() - start > timeout:
-                raise TransportTimeoutError(
-                    f"Timeout of {timeout}s exceeded while waiting for response."
-                )
-            time.sleep(0.05)
+            raise TransportTimeoutError(
+                f"Timeout of {timeout}s exceeded while waiting for response."
+            )
+
+        if item is _SENTINEL:
+            self.queue.put(_SENTINEL)
+            if self._error:
+                raise TransportError(f"Error in SSE stream: {self._error}")
+            raise TransportError("SSE stream closed unexpectedly.")
+
+        return item
