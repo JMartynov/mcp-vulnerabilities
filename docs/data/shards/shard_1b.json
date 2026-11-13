@@ -1706,19 +1706,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.6.1",
+    "latest_version": "1.6.2",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@astroway/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@astroway%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.6.1",
+    "recommended_safe_version": "1.6.2",
     "repo_http_status": 200,
     "repository_url": "https://github.com/astroway/astroway-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@astroway/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 27 safe version(s).",
+    "security_summary": "Server `@astroway/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 28 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:fec8ec5ba0de8236f57f081d9fe7d11cba0ab9684a1065f765d6b4948a1044fd",
@@ -2272,6 +2272,118 @@
         ],
         "toolset_canonical_hash": "sha256:fec8ec5ba0de8236f57f081d9fe7d11cba0ab9684a1065f765d6b4948a1044fd",
         "version": "1.6.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-12T17:20:48.862Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:693d275ad2df9faa176995641b1ee57416677696e2eb50ddfaa43208c4f088ed",
+            "description": "Check current API key status: tier, credit balance, rate limits, monthly cycle reset. Run this BEFORE invoking expensive endpoints (Tier 4+ at 100+ credits, Tier 6/7 at 500-5000 credits) to confirm the user has budget. Returns plain-text human-readable summary.",
+            "name": "astroway_account_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `astroway_account_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db93aaecb8352cf35b46e0f2a8fe067da804d4965b9565b09e5e65085b92615c",
+            "description": "Invoke any AstroWay tool by name (discover names with astroway_find_tool first). Returns the JSON result as text. Note: in discovery mode results are text-only — for validated structuredContent, register the tool directly (default mode, omit ASTROWAY_DISCOVERY_MODE).",
+            "name": "astroway_call_tool",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Arguments object for the tool (use the param names from astroway_find_tool).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "arguments",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `astroway_call_tool` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a78583f26c250d832d4250d1fe8d93646a4f6534dba5fd84201f6d869f8c9509",
+            "description": "Estimate the credit cost of one or more endpoints WITHOUT invoking them. Returns total + per-endpoint breakdown with tier annotations. Useful when planning multi-step workflows: estimate first, ask user confirmation, then invoke. Cache TTL 5 min.",
+            "name": "astroway_cost_estimate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "// v0.10+ — F23",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `astroway_cost_estimate` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:54f0c2d506a2f3bab369441e2506195fe7c69d0ab91d71878be62ec7bbffd07f",
+            "description": "Search the full AstroWay catalogue by keyword and return the best-matching tools with their one-line description and input parameter names. Use this to locate the right tool, then invoke it with astroway_call_tool. Example queries: ",
+            "name": "astroway_find_tool",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Max results (default 8).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `astroway_find_tool` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:fec8ec5ba0de8236f57f081d9fe7d11cba0ab9684a1065f765d6b4948a1044fd",
+        "version": "1.6.2"
       }
     ]
   },
@@ -2289,19 +2401,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.47.1",
+    "latest_version": "1.48.0",
     "license": "SSPL-1.0",
     "malicious_advisory_id": null,
     "package_name": "@browserless.io/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@browserless.io%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.47.1",
+    "recommended_safe_version": "1.48.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/browserless/browserless-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@browserless.io/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 59 safe version(s).",
+    "security_summary": "Server `@browserless.io/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 60 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:a27166791fa0c635c76500f82d66ab2f4da08775083078e8e8937a13a34b1d00",
@@ -4521,6 +4633,200 @@
         ],
         "toolset_canonical_hash": "sha256:a27166791fa0c635c76500f82d66ab2f4da08775083078e8e8937a13a34b1d00",
         "version": "1.47.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-12T21:15:38.842Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c2864034f8547b3c076c29721723fff32506a0f20d27362439fe25025f7e9c30",
+            "description": "Read the Browserless account behind the current API token: plan, unit balance, billing period, and the names of the account API keys. Use it to answer",
+            "name": "browserless_account",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_account` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b3e7203b122d561145b682644f80b2b594c0f46ea636334a9520f091fad63212",
+            "description": "Crawl a website and scrape every discovered page using Browserless. Starts from a seed URL and follows links up to a configurable depth. Supports sitemap discovery, path filtering, subdomain handling, and custom scrape options. Returns scraped content (markdown/HTML) for each page along with metadata. Useful for comprehensive site analysis, content extraction, and data gathering.",
+            "name": "browserless_crawl",
+            "parameters": [],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `browserless_crawl` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9350d549b64475ffa83a3eca030ce46ee83d9a60b8f9098a08d69fed01257420",
+            "description": "Execute custom Puppeteer JavaScript code on the Browserless cloud. Your function receives a Puppeteer",
+            "name": "browserless_function",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_function` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a67789daf0ceae57835b8707372d90550ea6dfcf2a73abc8e62ab0f65daa259b",
+            "description": "Create, resume, cancel, or report a Stripe Link checkout in the exact active browser session. Create requires the latest browserless_agent sessionId. Pass payment-field deep selectors whenever a card form is shown, including Stripe-hosted checkout; omit them only for a pure Link Pay Token handoff. Resume retrieves and fills only after Link approval; payment credentials never reach this tool.",
+            "name": "browserless_link_checkout",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_link_checkout` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3dd8787e8a3553acd00bbf3ac7a482fd5e63106b91ae4458e56136d774081dff",
+            "description": "Manage the Browserless Stripe Link wallet. Use action",
+            "name": "browserless_link_connect",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_link_connect` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cdf2657ceacebb4b08c2f5d73edfd0736f544d07ff98fecc8a1bdd292433dfa6",
+            "description": "Create, inspect, or close a live viewer link for an existing browser through REST, without an agent connection. Create options default on the server: view-only, jpeg, quality 70, not resizable, browser interface shown. Status returns status, reason, interactable, viewerCount, and expiresAt (epoch ms). Ended links remain inspectable until their browser closes; closing an ended link returns not found.",
+            "name": "browserless_live_url",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_live_url` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:199161feb0b2c5c99b468c087b3c24251cd168942502e100963642f3925aa4bd",
+            "description": "Read Browserless",
+            "name": "browserless_logs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_logs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:50311fbb181d3cf57b1190d4159cf68c2e90799d42bbcd47b3b96aa1a8c158d0",
+            "description": "Discover and map all URLs on a website using Browserless. Scans a site via sitemaps and link extraction to find all pages. Returns a list of URLs with optional titles and descriptions. Use the search parameter to order results by relevance to a query. Useful for site audits, content discovery, and building site maps.",
+            "name": "browserless_map",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `browserless_map` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f37fe6c0f686c8d2941abc1a39c4deac2e9c6f630b82f458efc0b6df90599133",
+            "description": "Run a Lighthouse performance audit on any URL via the Browserless /performance API. Returns scores and metrics for accessibility, best practices, performance, PWA, and SEO. Optionally filter by category, emulate a mobile or desktop device, supply a custom Lighthouse config, or supply performance budgets. Returns category scores inline and saves the full JSON report outside the conversation. Use the local path (stdio) or download URL (HTTP) to inspect only the audits you need. Note: audits can take 30s–120s depending on the site.",
+            "name": "browserless_performance",
+            "parameters": [],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `browserless_performance` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:637906bf91b61ce2202e94fed17785c1c24e78cd8af8dfdeb0fd5711921bc03e",
+            "description": "List the authentication profiles saved for the current token. A profile is a saved logged-in browser state (cookies + storage) that can be replayed by passing its name as",
+            "name": "browserless_profiles",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_profiles` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bd0c88d47be32798286e30792d8f7fa2a116580ba744d8e00d84133cea5493f2",
+            "description": "Inspect the sessions on the Browserless account behind the current API token: browsers running right now, persistent sessions saved on dedicated workers, recorded session replays, and 1Password credential integrations. Use it to answer",
+            "name": "browserless_sessions",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_sessions` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:199cb9bb3ce625c1ee3a4b440a385a4280f68ede93931c59dad5fbed02da2493",
+            "description": "Scrape a SINGLE webpage and return HTML, markdown, raw DOM text, links, screenshots, or PDFs plus page metadata. Handles JavaScript-heavy pages and anti-bot measures automatically. For content across MULTIPLE pages of a site, use browserless_crawl; to list a site",
+            "name": "browserless_smartscraper",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_smartscraper` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8e568b946255a5e8b347c3da625b6690329f3bd401e7647ad848b8fbfe967efe",
+            "description": "Read request and unit consumption for the Browserless account behind the current API token: successes, errors, timeouts, queueing, peak concurrency, captchas, proxy bytes and units. Use it to answer",
+            "name": "browserless_usage",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browserless_usage` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bd14e82cd4375717873628c5f2efa81c19dba1459407f13993444dbf4d7f11f1",
+            "description": "Extract specific information from a webpage using the smart scraper",
+            "name": "extract-content",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `extract-content` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:03b8b3702c29db53a0e966d8404f3535161107d2d9240875a8d99fe42fa7ff23",
+            "description": "Whether to capture a screenshot (true/false)",
+            "name": "includeScreenshot",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `includeScreenshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5dfb5fb3525abdcac623894ab678408a811283b470c965ed100cd9d2682bfb67",
+            "description": "What information to extract from the page",
+            "name": "instructions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `instructions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7d49e67bde400668552855dbf0ea742d16239b21961b6184f9a83ebbae76a61b",
+            "description": "Scrape a webpage and return its content as markdown with metadata",
+            "name": "scrape-url",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `scrape-url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0dc7f64402dcdd48121748aa052d1ab876a3f3a0340d6b17035a6db4b64b1d8e",
+            "description": "The URL to extract content from",
+            "name": "url",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:a27166791fa0c635c76500f82d66ab2f4da08775083078e8e8937a13a34b1d00",
+        "version": "1.48.0"
       }
     ]
   },
@@ -15411,7 +15717,7 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": ">= v0.8.2, <= 0.8.2-rc3",
+    "latest_version": "< v0.8.2-rc2",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "LibreChat",
@@ -15463,7 +15769,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< v0.8.2-rc2"
+        "version": ">= v0.8.2, <= 0.8.2-rc3"
       },
       {
         "advisories": [
@@ -15499,7 +15805,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": ">= v0.8.2, <= 0.8.2-rc3"
+        "version": "< v0.8.2-rc2"
       }
     ]
   },
