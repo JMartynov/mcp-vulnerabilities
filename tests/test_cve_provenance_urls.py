@@ -1,6 +1,7 @@
 import pytest
 import sys
 import os
+from pathlib import Path
 import builtins
 from unittest.mock import MagicMock
 
@@ -39,14 +40,20 @@ def test_authoritative_url_resolution_other():
     assert "ghsa" not in urls
     
 def test_cli_audit_report_provenance_urls():
-    with open('src/mcp_vulnerabilities/cli.py', 'r') as f:
+    p = Path("src/mcp_vulnerabilities/cli/handlers/audit.py")
+    if not p.exists():
+        p = Path("src/mcp_vulnerabilities/cli.py")
+    with open(p, "r") as f:
         content = f.read()
     assert "resolve_provenance_urls" in content
     assert "Official CVE:" in content
     assert "NIST NVD:" in content
 
 def test_cli_lookup_provenance_urls():
-    with open('src/mcp_vulnerabilities/cli.py', 'r') as f:
+    p = Path("src/mcp_vulnerabilities/cli/handlers/catalog.py")
+    if not p.exists():
+        p = Path("src/mcp_vulnerabilities/cli.py")
+    with open(p, "r") as f:
         content = f.read()
     assert "Provenance:" in content
 

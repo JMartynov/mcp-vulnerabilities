@@ -4,7 +4,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from mcp_vulnerabilities.database.matcher import VulnerabilityMatcher
+from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
 
 @dataclasses.dataclass
 class PolicyDecision:
@@ -42,7 +42,15 @@ class ProxyPolicyEngine:
             self._load_vulnerabilities()
 
     def _load_vulnerabilities(self):
-        matcher = VulnerabilityMatcher(self.vulnerabilities_dir)
+        if not self.vulnerabilities_dir:
+            return
+        v_path = Path(self.vulnerabilities_dir)
+        if not v_path.exists():
+            return
+        if v_path.is_file():
+            matcher = VulnerabilityMatcher.from_snapshot(v_path)
+        else:
+            matcher = VulnerabilityMatcher.from_directory(v_path, recursive=True)
         vulnerable_tools = matcher.get_vulnerable_tools(self.package_name)
         self.blocked_tools.update(vulnerable_tools)
 

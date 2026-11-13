@@ -564,14 +564,31 @@ class UnifiedMcpSecurityRecord:
         )
 
 
-def _load_passports(passports_path: str | Path | None) -> dict[str, ServerPackageSpec]:
-    """Helper to load ServerPackageSpecs from gz, json, or directory."""
-    passports: dict[str, ServerPackageSpec] = {}
+def load_passport_data(
+    passports_path: str | Path | None = None,
+    as_specs: bool = True,
+) -> dict[str, Any]:
+    """
+    Consolidate passport file discovery and loading logic (directory vs json vs passports.json.gz).
+
+    Args:
+        passports_path: Path to a directory containing passport json files, or a .json/.json.gz file.
+                        If None or if the path does not exist, checks candidate paths:
+                        'passports.json.gz', 'data/passports.json.gz', 'data/fingerprints'.
+        as_specs: If True, returns dict[str, ServerPackageSpec]. If False, returns dict[str, dict] (raw passport data).
+
+    Returns:
+        Mapping from package name to ServerPackageSpec (if as_specs=True) or raw dictionary (if as_specs=False).
+    """
+    passports: dict[str, Any] = {}
 
     target: Path | None = None
     if passports_path:
-        target = Path(passports_path)
-    else:
+        p = Path(passports_path)
+        if p.exists():
+            target = p
+
+    if not target:
         for candidate in (
             Path("passports.json.gz"),
             Path("data/passports.json.gz"),
@@ -590,8 +607,13 @@ def _load_passports(passports_path: str | Path | None) -> dict[str, ServerPackag
                 continue
             try:
                 data = json.loads(j_file.read_text(encoding="utf-8"))
-                spec = ServerPackageSpec.from_dict(data)
-                passports[spec.package_name] = spec
+                if as_specs:
+                    spec = ServerPackageSpec.from_dict(data)
+                    passports[spec.package_name] = spec
+                else:
+                    pkg = data.get("package_name")
+                    if pkg:
+                        passports[pkg] = data
             except Exception as exc:
                 logger.debug("Failed to read passport %s: %s", j_file, exc)
     else:
@@ -605,22 +627,41 @@ def _load_passports(passports_path: str | Path | None) -> dict[str, ServerPackag
                     if isinstance(data, dict):
                         for k, v in data.items():
                             if isinstance(v, dict):
-                                spec = ServerPackageSpec.from_dict(v)
-                                passports[spec.package_name] = spec
+                                if as_specs:
+                                    spec = ServerPackageSpec.from_dict(v)
+                                    passports[spec.package_name] = spec
+                                else:
+                                    pkg = v.get("package_name", k)
+                                    passports[pkg] = v
                     elif isinstance(data, list):
                         for v in data:
                             if isinstance(v, dict):
-                                spec = ServerPackageSpec.from_dict(v)
-                                passports[spec.package_name] = spec
+                                if as_specs:
+                                    spec = ServerPackageSpec.from_dict(v)
+                                    passports[spec.package_name] = spec
+                                else:
+                                    pkg = v.get("package_name")
+                                    if pkg:
+                                        passports[pkg] = v
                 elif isinstance(data, list):
                     for v in data:
                         if isinstance(v, dict):
-                            spec = ServerPackageSpec.from_dict(v)
-                            passports[spec.package_name] = spec
+                            if as_specs:
+                                spec = ServerPackageSpec.from_dict(v)
+                                passports[spec.package_name] = spec
+                            else:
+                                pkg = v.get("package_name")
+                                if pkg:
+                                    passports[pkg] = v
         except Exception as exc:
             logger.warning("Failed to load passports from %s: %s", target, exc)
 
     return passports
+
+
+def _load_passports(passports_path: str | Path | None = None) -> dict[str, ServerPackageSpec]:
+    """Helper to load ServerPackageSpecs from gz, json, or directory."""
+    return load_passport_data(passports_path=passports_path, as_specs=True)
 
 
 def build_unified_mcp_security_catalog(
@@ -899,6 +940,7 @@ __all__ = [
     "VersionSecurityRecord",
     "VulnerabilityCorrelator",
     "build_unified_mcp_security_catalog",
+    "load_passport_data",
     "normalize_version",
     "prune_catalog",
 ]

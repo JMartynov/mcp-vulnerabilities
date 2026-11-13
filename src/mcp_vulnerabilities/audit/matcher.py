@@ -111,13 +111,15 @@ class VulnerabilityMatcher:
                     self._package_index.setdefault(norm, []).append(adv)
 
     @classmethod
-    def from_directory(cls, dir_path: Path) -> "VulnerabilityMatcher":
+    def from_directory(cls, dir_path: Path | str, recursive: bool = False) -> "VulnerabilityMatcher":
         """Loads all OSV JSON files from a directory."""
+        dir_path = Path(dir_path)
         advisories: list[dict[str, Any]] = []
         if not dir_path.exists():
             return cls(advisories)
 
-        for json_file in dir_path.glob("*.json"):
+        pattern = dir_path.rglob("*.json") if recursive else dir_path.glob("*.json")
+        for json_file in pattern:
             if json_file.name in (
                 "sync_state.json",
                 "mcp_catalog_state.json",
@@ -168,6 +170,31 @@ class VulnerabilityMatcher:
             if target in aliases:
                 return OsvVulnerability.from_dict(adv_dict)
         return None
+
+    def get_vulnerable_tools(self, package_name: str) -> set[str]:
+        """Extracts vulnerable tool names associated with a package from database_specific MCP extensions.
+
+        Args:
+            package_name: Name of the package to query.
+
+        Returns:
+            Set of vulnerable tool names identified in advisories for the package.
+        """
+        vulnerable_tools: set[str] = set()
+        norm_target = self._normalize_package_name(package_name)
+        candidates = self._package_index.get(norm_target, [])
+        search_list = candidates if candidates else self.advisories
+        for adv in search_list:
+            for affected in adv.get("affected", []):
+                pkg = affected.get("package", {})
+                name = pkg.get("name", "")
+                if name and (name == package_name or self._normalize_package_name(name) == norm_target):
+                    db_specific = affected.get("database_specific", {})
+                    if isinstance(db_specific, dict):
+                        tools = db_specific.get("vulnerable_tools", [])
+                        if isinstance(tools, (list, set, tuple)):
+                            vulnerable_tools.update(tools)
+        return vulnerable_tools
 
     def search(
         self, query: str, min_severity: str | None = None, ecosystem: str | None = None

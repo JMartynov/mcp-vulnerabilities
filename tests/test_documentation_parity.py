@@ -14,7 +14,10 @@ assert SPEC_PATH.exists()
 assert IMPL_PATH.exists()
 
 def get_actual_commands_and_flags():
-    with open("src/mcp_vulnerabilities/cli.py", "r", encoding="utf-8") as f:
+    cli_path = Path("src/mcp_vulnerabilities/cli/parser.py")
+    if not cli_path.exists():
+        cli_path = Path("src/mcp_vulnerabilities/cli.py")
+    with open(cli_path, "r", encoding="utf-8") as f:
         cli_content = f.read()
     
     tree = ast.parse(cli_content)

@@ -1,4 +1,5 @@
 import json
+import pytest
 import subprocess
 import sys
 import threading
@@ -111,6 +112,25 @@ def test_vulnerability_matcher(tmp_path):
     
     policy = ProxyPolicyEngine(package_name="test-pkg", vulnerabilities_dir=vuln_dir)
     assert "bad_tool" in policy.blocked_tools
+
+def test_database_matcher_deprecated_shim(tmp_path):
+    from mcp_vulnerabilities.database.matcher import VulnerabilityMatcher as DeprecatedMatcher
+    
+    vuln_dir = tmp_path / "vulns"
+    vuln_dir.mkdir()
+    vuln_file = vuln_dir / "vuln.json"
+    vuln_file.write_text(json.dumps({
+        "affected": [
+            {
+                "package": {"name": "legacy-pkg"},
+                "database_specific": {"vulnerable_tools": ["legacy_tool"]}
+            }
+        ]
+    }))
+    
+    with pytest.deprecated_call():
+        legacy_matcher = DeprecatedMatcher(vuln_dir)
+    assert legacy_matcher.get_vulnerable_tools("legacy-pkg") == {"legacy_tool"}
 
 def test_subprocess_stdio_teardown(tmp_path):
     policy = ProxyPolicyEngine()

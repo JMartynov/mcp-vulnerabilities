@@ -1,5 +1,5 @@
 from typing import Optional
-from mcp_vulnerabilities.threat.epss import EpssScore
+from mcp_vulnerabilities.threat_intel.epss import EpssScore
 
 class CompositeRiskScorer:
     @staticmethod
