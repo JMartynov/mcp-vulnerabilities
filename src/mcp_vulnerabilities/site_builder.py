@@ -56,7 +56,7 @@ def _process_server_batch(
     vulnerabilities_dir: str,
     use_cache: bool,
     cache_dir: str | Path | None = None,
-) -> dict[str, dict[str, Any]]:
+) -> tuple[dict[str, dict[str, Any]], list[str]]:
     """
     Worker function to process a batch of servers and evaluate vulnerabilities.
     Returns serialized dict representations of UnifiedMcpSecurityRecords.

@@ -92,9 +92,18 @@ class AlertDispatcher:
 
     def _send_macos_notification(self, title: str, message: str, severity: str) -> None:
         sound = "Basso" if severity in ("CRITICAL", "HIGH") else "Submarine"
-        script = f'display notification "{message}" with title "{title}" sound name "{sound}"'
+        script = (
+            "on run argv\n"
+            "  display notification (item 1 of argv) with title (item 2 of argv) sound name (item 3 of argv)\n"
+            "end run"
+        )
         try:
-            subprocess.run(["osascript", "-e", script], check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            subprocess.run(
+                ["osascript", "-e", script, message, title, sound],
+                check=False,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
         except Exception as e:
             logger.warning(f"Failed to send macOS notification: {e}")
 

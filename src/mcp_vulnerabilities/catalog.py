@@ -593,7 +593,7 @@ def _load_passports(passports_path: str | Path | None) -> dict[str, ServerPackag
                 spec = ServerPackageSpec.from_dict(data)
                 passports[spec.package_name] = spec
             except Exception as exc:
-                logger.debug("Failed to read passport %s: %exc", j_file, exc)
+                logger.debug("Failed to read passport %s: %s", j_file, exc)
     else:
         open_func = gzip.open if target.name.endswith(".gz") else open
         try:
@@ -900,6 +900,7 @@ __all__ = [
     "VulnerabilityCorrelator",
     "build_unified_mcp_security_catalog",
     "normalize_version",
+    "prune_catalog",
 ]
 
 

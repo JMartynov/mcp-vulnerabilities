@@ -9,7 +9,7 @@ from mcp_vulnerabilities.models import (
 )
 from mcp_vulnerabilities.graph.alias_graph import CanonicalAliasGraph
 from mcp_vulnerabilities.dedup.url_normalizer import deduplicate_references
-from packaging.version import parse as parse_version
+from packaging.version import InvalidVersion, parse as parse_version
 import re
 from typing import Any
 
@@ -248,7 +248,12 @@ class AdvisoryFusionEngine:
             for a in aff_list:
                 all_versions.update(a.versions)
 
-            sorted_versions = tuple(sorted(all_versions, key=lambda v: parse_version(v) if _is_valid_version(v) else v))
+            sorted_versions = tuple(
+                sorted(
+                    all_versions,
+                    key=lambda v: (0, parse_version(v)) if _is_valid_version(v) else (1, str(v)),
+                )
+            )
 
             merged_ranges = cls._union_ranges(aff_list)
 
@@ -410,5 +415,5 @@ def _is_valid_version(v: str) -> bool:
     try:
         parse_version(v)
         return True
-    except:
+    except (InvalidVersion, TypeError, ValueError):
         return False

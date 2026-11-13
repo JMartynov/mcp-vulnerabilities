@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 import json
 import re
 from pathlib import Path
@@ -135,7 +136,7 @@ class OsvValidator:
             and mod_valid
             and model.published
             and model.modified
-            and model.published > model.modified
+            and datetime.fromisoformat(model.published) > datetime.fromisoformat(model.modified)
         ):
             errors.append(
                 f"Timestamp anomaly: 'published' ({model.published}) is after "
