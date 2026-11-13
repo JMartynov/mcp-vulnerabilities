@@ -133,6 +133,8 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
             "owasp_mcp_category": None,
             "vulnerable_tools": [],
             "remediation_guidance": "",
+            "epss_score": None,
+            "epss_percentile": None,
         }
 
 
@@ -142,6 +144,8 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
     owasp: str | None = None
     vulnerable_tools: list[str] = []
     remediation_guidance: str = ""
+    epss_score: float | None = None
+    epss_percentile: float | None = None
 
     # 1. Inspect affected[0].database_specific
     affected = adv.get("affected", [])
@@ -163,12 +167,12 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
             remediation_guidance = str(aff_db["remediation_guidance"])
         if aff_db.get("epss_score") is not None:
             try:
-                float(aff_db["epss_score"])
+                epss_score = float(aff_db["epss_score"])
             except (ValueError, TypeError):
                 pass
         if aff_db.get("epss_percentile") is not None:
             try:
-                float(aff_db["epss_percentile"])
+                epss_percentile = float(aff_db["epss_percentile"])
             except (ValueError, TypeError):
                 pass
 
@@ -189,6 +193,16 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
             vulnerable_tools = list(top_db["vulnerable_tools"])
         if not remediation_guidance and top_db.get("remediation_guidance"):
             remediation_guidance = str(top_db["remediation_guidance"])
+        if epss_score is None and top_db.get("epss_score") is not None:
+            try:
+                epss_score = float(top_db["epss_score"])
+            except (ValueError, TypeError):
+                pass
+        if epss_percentile is None and top_db.get("epss_percentile") is not None:
+            try:
+                epss_percentile = float(top_db["epss_percentile"])
+            except (ValueError, TypeError):
+                pass
 
         # Check raw_cve_json5 metrics if present
         raw = top_db.get("raw_cve_json5", {})
@@ -242,6 +256,8 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
         "owasp_mcp_category": owasp,
         "vulnerable_tools": vulnerable_tools,
         "remediation_guidance": remediation_guidance,
+        "epss_score": epss_score,
+        "epss_percentile": epss_percentile,
     }
 
 

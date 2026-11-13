@@ -158,3 +158,35 @@ def test_site_builder_protocol_hints(tmp_path: Path):
     
     tool_annotations_2 = next(t["annotations"] for t in tools if t["name"] == "read_files")
     assert tool_annotations_2["readOnlyHint"] is True
+
+
+def test_resolve_advisory_details_epss():
+    """Verify that _resolve_advisory_details returns epss_score and epss_percentile."""
+    from mcp_vulnerabilities.site_builder import _resolve_advisory_details
+
+    adv = {
+        "id": "CVE-2026-12345",
+        "affected": [
+            {
+                "package": {"name": "test-pkg"},
+                "database_specific": {
+                    "severity": "HIGH",
+                    "cvss_score": 7.5,
+                    "epss_score": 0.42,
+                    "epss_percentile": 0.95,
+                },
+            }
+        ],
+    }
+
+    details = _resolve_advisory_details(adv)
+    assert details["epss_score"] == 0.42
+    assert details["epss_percentile"] == 0.95
+    assert details["severity"] == "HIGH"
+    assert details["cvss_score"] == 7.5
+
+    # Also verify non-dict / missing handles defaults cleanly
+    empty_details = _resolve_advisory_details({})
+    assert empty_details["epss_score"] is None
+    assert empty_details["epss_percentile"] is None
+
