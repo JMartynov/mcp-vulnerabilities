@@ -58,7 +58,7 @@ class ClientConfigFixer:
         patched_text = original_text
 
         report = self.matcher.audit_servers(servers)
-        
+
         # Group findings by server name
         findings_by_server: dict[str, list[AuditFinding]] = {}
         for f in report.findings:
@@ -90,12 +90,12 @@ class ClientConfigFixer:
             findings = findings_by_server.get(server.server_name)
             if not findings:
                 continue
-                
+
             safe_version = self._calculate_minimum_safe_version(findings)
             if not safe_version:
                 logger.warning(f"No safe version found for {server.server_name}, skipping.")
                 continue
-                
+
             # If the current version is already >= safe_version (e.g. unpinned), skip
             try:
                 if server.version and Version(server.version) >= Version(safe_version):
@@ -104,9 +104,9 @@ class ClientConfigFixer:
                 pass
 
             old_version = server.version or "unpinned"
-            
+
             pkg_esc = re.escape(server.package_name)
-            
+
             # Safe string replacement for the config file text
             if old_version and old_version != "unpinned":
                 old_esc = re.escape(old_version)
@@ -162,13 +162,13 @@ class ClientConfigFixer:
 
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         backup_path = config_path.with_name(f"{config_path.name}.bak.{timestamp}")
-        
+
         # Create atomic backup
         shutil.copy2(config_path, backup_path)
-        
+
         # Atomically write
         tmp_path = config_path.with_name(f"{config_path.name}.tmp")
-        
+
         try:
             tmp_path.write_text(patched_text, encoding="utf-8")
             os.replace(tmp_path, config_path)
@@ -180,7 +180,7 @@ class ClientConfigFixer:
             if backup_path.exists():
                 shutil.copy2(backup_path, config_path)
             sys.exit(1)
-        
+
         return {
             "status": "success",
             "changes": changes_made,
@@ -191,9 +191,9 @@ class ClientConfigFixer:
         """Fixes configurations across all supported clients or a specific one."""
         scanner = UniversalClientConfigScanner()
         results = []
-        
+
         clients_to_scan = [specific_client] if specific_client else scanner.SUPPORTED_CLIENTS
-        
+
         for client in clients_to_scan:
             paths = scanner.get_client_paths(client)
             for path in paths:

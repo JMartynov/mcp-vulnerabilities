@@ -31,7 +31,7 @@ def generate_catalog_manifest(data_dir: str | Path) -> str:
 
     # Sort files deterministically
     manifest["files"] = dict(sorted(manifest["files"].items()))
-    
+
     manifest_path = data_dir / "manifest.json"
     with open(manifest_path, "w") as f:
         json.dump(manifest, f, indent=2)
@@ -52,7 +52,7 @@ def verify_catalog_manifest(data_dir: str | Path) -> None:
         filepath = data_dir / filename
         if not filepath.exists():
             raise FileNotFoundError(f"Tracked file missing: {filepath}")
-        
+
         current_hash = hash_file(filepath)
         if current_hash != info["sha256"]:
             raise ChecksumMismatchError(f"Hash mismatch for {filename}. Expected {info['sha256']}, got {current_hash}")

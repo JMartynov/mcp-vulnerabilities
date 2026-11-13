@@ -73,7 +73,7 @@ class AlertDispatcher:
     def _mark_alert(self, alert_id: str) -> None:
         self.alert_cache[alert_id] = time.time()
         self._save_cache()
-        
+
     def dispatch(self, title: str, message: str, severity: str, alert_id: str, payload: Dict[str, Any]) -> None:
         if self._is_debounced(alert_id):
             logger.debug(f"Alert {alert_id} suppressed by debounce.")
@@ -155,7 +155,7 @@ class AlertDispatcher:
             data = payload
 
         req = urllib.request.Request(
-            url, 
+            url,
             data=json.dumps(data).encode("utf-8"),
             headers={"Content-Type": "application/json"}
         )
@@ -194,7 +194,7 @@ class McpMonitorDaemon:
         self.network_scanner = NetworkMCPScanner()
         self.client_scanner = UniversalClientConfigScanner()
         self.dispatcher = AlertDispatcher(self.config)
-        
+
         self.config.pid_file.parent.mkdir(parents=True, exist_ok=True)
         self.config.log_file.parent.mkdir(parents=True, exist_ok=True)
         self.config.baseline_path.parent.mkdir(parents=True, exist_ok=True)
@@ -225,7 +225,7 @@ class McpMonitorDaemon:
 
         with open(os.devnull, 'r') as devnull:
             os.dup2(devnull.fileno(), sys.stdin.fileno())
-            
+
         with open(self.config.log_file, 'a') as log_file:
             os.dup2(log_file.fileno(), sys.stdout.fileno())
             os.dup2(log_file.fileno(), sys.stderr.fileno())
@@ -237,7 +237,7 @@ class McpMonitorDaemon:
         except IOError:
             logger.error(f"Another instance is already running (locked PID file {self.config.pid_file})")
             sys.exit(1)
-            
+
         self.pid_fd.write(f"{os.getpid()}\n")
         self.pid_fd.flush()
 
@@ -254,17 +254,17 @@ class McpMonitorDaemon:
     def start(self, daemon: bool = False) -> None:
         if daemon:
             self._daemonize()
-            
+
         self._write_pid()
         self._register_signals()
-        
+
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s [%(levelname)s] %(message)s",
             force=True
         )
         logger.info(f"Monitor started with interval {self.config.interval_seconds}s")
-        
+
         self.running = True
         try:
             asyncio.run(self._loop())
@@ -299,17 +299,17 @@ class McpMonitorDaemon:
                     self._handle_drift(diff)
             except Exception as e:
                 logger.error(f"Error in monitoring cycle: {e}")
-                
+
             if not self.running:
                 break
-                
+
             await asyncio.sleep(self.config.interval_seconds)
 
     async def run_monitoring_cycle(self) -> SecurityDriftReport | None:
         ports = parse_ports_spec(self.config.ports_spec)
         endpoints = await self.network_scanner.scan_target(self.config.targets, ports)
         client_servers = self.client_scanner.scan_all_clients()
-        
+
         # Build SecurityPicture from scans
         servers_records = []
         for srv in client_servers:
@@ -321,7 +321,7 @@ class McpMonitorDaemon:
                 canonical_tool_hash=None,
                 passport_id=None,
             ))
-            
+
         for ep in endpoints:
             if ep.get("mcp_handshake"):
                 name = f"network_{ep['host']}:{ep['port']}{ep['path']}"
@@ -342,24 +342,24 @@ class McpMonitorDaemon:
             tampered_servers=0,
             servers=servers_records,
         )
-        
+
         baseline = SecurityPicture.load(self.config.baseline_path)
         if baseline is None:
             logger.info("No baseline found. Saving current as initial baseline.")
             live_picture.save(self.config.baseline_path)
             return None
-            
+
         diff = SecurityPictureDiffer.compare(baseline=baseline, current=live_picture)
-        
+
         # Optionally update baseline if it's drifting (or leave it to manual accept)
-        # We don't automatically overwrite baseline unless told to. 
+        # We don't automatically overwrite baseline unless told to.
         # But we do need to return the diff.
         return diff
 
     def _handle_drift(self, diff: SecurityDriftReport) -> None:
         if not diff.is_drift_detected:
             return
-            
+
         payload = {
             "new_vulnerabilities": diff.newly_introduced_vulnerabilities,
             "resolved_vulnerabilities": diff.resolved_vulnerabilities,
@@ -368,37 +368,37 @@ class McpMonitorDaemon:
             "removed_servers": diff.removed_servers,
             "tool_schema_changes": diff.tool_schema_changes,
         }
-        
+
         # Aggregate alert text
         messages = []
         severity = "MEDIUM"
-        
+
         if diff.tamper_incidents:
             severity = "CRITICAL"
             for t in diff.tamper_incidents:
                 messages.append(f"Tamper Detected: {t.get('package_name')} - {t.get('reason', t.get('incident', ''))}")
-                
+
         if diff.newly_introduced_vulnerabilities:
             if severity != "CRITICAL":
                 severity = "HIGH"
             for v in diff.newly_introduced_vulnerabilities:
                 messages.append(f"New Vulnerability: {v.get('package_name')} - {v.get('cve')}")
-                
+
         if diff.added_servers:
             for s in diff.added_servers:
                 messages.append(f"Rogue/New Server: {s.get('package_name')}@{s.get('version')}")
-                
+
         if diff.tool_schema_changes:
             for c in diff.tool_schema_changes:
                 messages.append(f"Tool Schema Changed: {c.get('package_name')}")
 
         if not messages:
             return
-            
+
         alert_id = str(hash(json.dumps(payload, sort_keys=True)))
         title = "MCP Security Alert: Posture Drift Detected"
         msg = "\n".join(messages)
-        
+
         self.dispatcher.dispatch(title, msg, severity, alert_id, payload)
 
 
@@ -435,7 +435,7 @@ def stop_monitor(pid_file: Path) -> bool:
 def install_service(system: str) -> None:
     executable = sys.executable
     script_path = os.path.abspath(sys.argv[0])
-    
+
     if system == "launchd":
         plist_path = Path.home() / "Library/LaunchAgents/com.mcp-vuln.monitor.plist"
         plist_path.parent.mkdir(parents=True, exist_ok=True)
@@ -461,7 +461,7 @@ def install_service(system: str) -> None:
         plist_path.write_text(plist_content)
         print(f"Service installed to {plist_path}")
         print(f"Load with: launchctl load {plist_path}")
-        
+
     elif system == "systemd":
         service_path = Path.home() / ".config/systemd/user/mcp-vuln-monitor.service"
         service_path.parent.mkdir(parents=True, exist_ok=True)
@@ -494,7 +494,7 @@ def start_monitor(args):
         else:
             print("Monitor daemon is not running.")
             sys.exit(1)
-            
+
     if hasattr(args, "stop") and getattr(args, "stop"):
         pid_file = Path(getattr(args, "pid_file", "~/.mcp-vuln/monitor.pid")).expanduser()
         if stop_monitor(pid_file):
@@ -503,7 +503,7 @@ def start_monitor(args):
         else:
             print("Monitor daemon is not running or failed to stop.")
             sys.exit(1)
-            
+
     if hasattr(args, "install_service") and getattr(args, "install_service"):
         if sys.platform == "darwin":
             install_service("launchd")
@@ -512,7 +512,7 @@ def start_monitor(args):
         sys.exit(0)
 
     config = MonitorConfig()
-    
+
     if hasattr(args, "interval") and args.interval is not None:
         config.interval_seconds = args.interval
     if hasattr(args, "targets") and args.targets is not None:
@@ -523,12 +523,12 @@ def start_monitor(args):
         config.notify_os = True
     elif hasattr(args, "desktop_notify") and args.desktop_notify:
         config.notify_os = True
-        
+
     if hasattr(args, "webhook") and args.webhook:
         config.webhook_url = args.webhook
     elif hasattr(args, "alert_webhook") and args.alert_webhook:
         config.webhook_url = args.alert_webhook
-        
+
     if hasattr(args, "pid_file") and args.pid_file:
         config.pid_file = Path(args.pid_file).expanduser()
     if hasattr(args, "log_file") and getattr(args, "log_file", None):

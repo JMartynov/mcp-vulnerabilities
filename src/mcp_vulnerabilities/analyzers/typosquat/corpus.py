@@ -33,7 +33,7 @@ def load_authentic_corpus(catalog_path: str | Path | None = None) -> Set[str]:
     corpus = get_default_corpus()
     if not catalog_path:
         return corpus
-        
+
     catalog_path = Path(catalog_path)
     if catalog_path.exists():
         try:

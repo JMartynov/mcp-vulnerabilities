@@ -29,13 +29,13 @@ class PyPaAdvisoryConverter:
     def decompose_pep440_ranges(cls, spec_str: str) -> tuple[RangeSpec, ...]:
         if not spec_str:
             return ()
-            
+
         spec = SpecifierSet(spec_str)
-        
+
         lower_bound = None
         upper_bound = None
         exclusions = []
-        
+
         for s in spec:
             if s.operator in (">=", ">"):
                 lower_bound = s
@@ -54,7 +54,7 @@ class PyPaAdvisoryConverter:
                 for i in range(idx + 1, len(rel)):
                     rel[i] = 0
                 upper_v = ".".join(map(str, rel))
-                
+
                 return (RangeSpec(
                     type=RangeType.ECOSYSTEM,
                     events=(
@@ -62,24 +62,24 @@ class PyPaAdvisoryConverter:
                         EventSpec(fixed=upper_v)
                     )
                 ),)
-                
+
         events_list: list[EventSpec] = []
-        
+
         current_introduced = "0"
         if lower_bound:
             current_introduced = lower_bound.version
             if lower_bound.operator == ">":
                 current_introduced = cls._bump_patch(current_introduced)
-                
+
         # sort exclusions
         exclusions = sorted([Version(s.version) for s in exclusions])
-        
+
         for ex_v in exclusions:
             # segment: introduced -> excluded version
             events_list.append(EventSpec(introduced=current_introduced))
             events_list.append(EventSpec(fixed=str(ex_v)))
             current_introduced = cls._bump_patch(str(ex_v))
-            
+
         if upper_bound:
             events_list.append(EventSpec(introduced=current_introduced))
             if upper_bound.operator == "<":
@@ -89,10 +89,10 @@ class PyPaAdvisoryConverter:
         else:
             if current_introduced != "0" or not exclusions:
                 events_list.append(EventSpec(introduced=current_introduced))
-            
+
         if not events_list:
             return ()
-            
+
         return (RangeSpec(
             type=RangeType.ECOSYSTEM,
             events=tuple(events_list)
@@ -105,9 +105,9 @@ class PyPaAdvisoryConverter:
             pkg_data = aff.get("package", {})
             pkg_name = pkg_data.get("name", "")
             ecosystem = pkg_data.get("ecosystem", "PyPI")
-            
+
             ranges_list = []
-            
+
             # If ranges already provided, convert them
             for r in aff.get("ranges", []):
                 events = []
@@ -124,14 +124,14 @@ class PyPaAdvisoryConverter:
                     repo=r.get("repo"),
                     database_specific=r.get("database_specific", {})
                 ))
-                
+
             # If specifiers string is present and ranges are missing, or it's a raw PEP 440 constraint
             spec_str = aff.get("database_specific", {}).get("pep440_specifier")
             if spec_str and not ranges_list:
                 pep_ranges = cls.decompose_pep440_ranges(spec_str)
                 if pep_ranges:
                     ranges_list.extend(pep_ranges)
-            
+
             affected_list.append(AffectedPackage(
                 package=PackageSpec(
                     name=pkg_name,
@@ -141,7 +141,7 @@ class PyPaAdvisoryConverter:
                 ranges=tuple(ranges_list),
                 versions=tuple(aff.get("versions", ()))
             ))
-            
+
         references_list = []
         for ref in data.get("references", []):
             references_list.append(ReferenceSpec(

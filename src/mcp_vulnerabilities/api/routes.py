@@ -49,11 +49,11 @@ def handle_scan_probe(handler, server):
     body = parse_body(handler)
     if body is None:
         return 400, {"Content-Type": "application/json"}, format_error("BAD_REQUEST", "Invalid JSON body")
-    
+
     command = body.get("command")
     url = body.get("url")
     timeout = body.get("timeout", 30.0)
-    
+
     if command:
         if not getattr(server, "allow_remote_commands", False):
             return 403, {"Content-Type": "application/json"}, format_error(
@@ -78,20 +78,20 @@ def handle_scan_probe(handler, server):
         except Exception as e:
             details = str(e)
             if hasattr(transport, "last_stderr_lines") and transport.last_stderr_lines:
-                details += f"\nStderr:\n" + "\n".join(transport.last_stderr_lines)
+                details += "\nStderr:\n" + "\n".join(transport.last_stderr_lines)
             return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to connect to MCP server", details)
-        
+
         try:
-            info = client.get_server_info()
+            client.get_server_info()
             tools = client.list_tools()
-            prompts = client.list_prompts()
-            resources = client.list_resources()
+            client.list_prompts()
+            client.list_resources()
         except Exception as e:
             details = str(e)
             if hasattr(transport, "last_stderr_lines") and transport.last_stderr_lines:
-                details += f"\nStderr:\n" + "\n".join(transport.last_stderr_lines)
+                details += "\nStderr:\n" + "\n".join(transport.last_stderr_lines)
             return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to get MCP server capabilities", details)
-        
+
     fingerprint = compute_toolset_canonical_hash(tools)
 
     identity = None
@@ -105,7 +105,7 @@ def handle_scan_probe(handler, server):
                 "version": match.version,
                 "repository": match.repository_url
             }
-            
+
     vulnerabilities = []
     if server.vulnerability_matcher and identity:
         # we can search the vulnerability matcher for this package
@@ -116,7 +116,7 @@ def handle_scan_probe(handler, server):
                 "reason": res.matched_on,
                 "severity": res.advisory.database_specific.get("severity", "UNKNOWN") if res.advisory.database_specific else "UNKNOWN"
             })
-            
+
     return 200, {"Content-Type": "application/json"}, {
         "fingerprint": fingerprint,
         "identity": identity,
@@ -156,7 +156,7 @@ def handle_identify(handler, server):
             except Exception as e:
                 details = str(e)
                 if hasattr(transport, "last_stderr_lines") and transport.last_stderr_lines:
-                    details += f"\nStderr:\n" + "\n".join(transport.last_stderr_lines)
+                    details += "\nStderr:\n" + "\n".join(transport.last_stderr_lines)
                 return 500, {"Content-Type": "application/json"}, format_error("PROBE_FAILED", "Failed to probe server", details)
     elif "url" in body:
         transport = HttpSseTransport(url=body["url"])
@@ -174,7 +174,7 @@ def handle_identify(handler, server):
             tools = body
         else:
             return 400, {"Content-Type": "application/json"}, format_error("BAD_REQUEST", "Invalid input format")
-        
+
     matches = server.fingerprint_matcher.match_tools(tools)
     if matches:
         match = matches[0]
@@ -190,11 +190,11 @@ def handle_scan_config(handler, server):
     body = parse_body(handler)
     if body is None:
         return 400, {"Content-Type": "application/json"}, format_error("BAD_REQUEST", "Invalid JSON body")
-        
+
     config = body.get("config")
     if not config:
         return 400, {"Content-Type": "application/json"}, format_error("BAD_REQUEST", "Missing config object")
-        
+
     detect_collisions = body.get("detect_collisions", True)
     severity_threshold = body.get("severity_threshold")
 
@@ -216,7 +216,7 @@ def handle_scan_config(handler, server):
                 "vulnerability_id": f.vulnerability_id,
                 "reason": f.summary
             })
-                
+
     if detect_collisions and server.fingerprint_matcher:
         detector = ConflictDetector(server.fingerprint_matcher)
         collisions = detector.detect_conflicts(config_data=config, servers=servers)
@@ -225,7 +225,7 @@ def handle_scan_config(handler, server):
                 "tool": c.get("tool_name"),
                 "servers": c.get("servers", [])
             })
-            
+
     return 200, {"Content-Type": "application/json"}, results
 
 def handle_vulnerabilities(handler, server):
@@ -247,7 +247,7 @@ def handle_vulnerabilities(handler, server):
         aliases = v_dict.get("aliases", [])
         if cve and cve.lower() not in [a.lower() for a in aliases]:
             continue
-            
+
         if tool:
             tool_found = False
             db_specific = v_dict.get("database_specific", {})
@@ -257,7 +257,7 @@ def handle_vulnerabilities(handler, server):
                     break
             if not tool_found:
                 continue
-                
+
         if ecosystem:
             eco_found = False
             for affected in v_dict.get("affected", []):
@@ -267,11 +267,11 @@ def handle_vulnerabilities(handler, server):
                     break
             if not eco_found:
                 continue
-                
+
         filtered.append(v_dict)
-        
+
     paginated = filtered[offset:offset+limit]
-    
+
     return 200, {"Content-Type": "application/json"}, {
         "total": len(filtered),
         "offset": offset,
@@ -305,7 +305,7 @@ def router(handler, server):
             return 200, {"Content-Type": "text/html"}, html
         elif path == "/api/v1/vulnerabilities":
             return handle_vulnerabilities(handler, server)
-            
+
     elif method == "POST":
         if path == "/api/v1/scan/probe":
             return handle_scan_probe(handler, server)
@@ -313,5 +313,5 @@ def router(handler, server):
             return handle_identify(handler, server)
         elif path == "/api/v1/scan/config":
             return handle_scan_config(handler, server)
-            
+
     return 404, {"Content-Type": "application/json"}, format_error("NOT_FOUND", "Endpoint not found")

@@ -67,18 +67,18 @@ class ClientConfigParser:
         # Handle comments
         # Strip /* */ comments
         clean_text = re.sub(r'/\*.*?\*/', '', text, flags=re.DOTALL)
-        
+
         # Strip // comments carefully avoiding strings
         string_re = r'"(?:\\.|[^"\\])*"'
         sl_comment_re = r'//.*?\n|//.*?$'
         pattern = re.compile(f'({string_re})|({sl_comment_re})', re.MULTILINE)
-        
+
         def repl(m):
             if m.group(1): return m.group(1)
             return "\n" if m.group(0).endswith('\n') else ""
-            
+
         clean_text = pattern.sub(repl, clean_text)
-        
+
         # Handle trailing commas
         clean_text = re.sub(r',\s*([\]}])', r'\1', clean_text)
 
@@ -159,7 +159,7 @@ class ClientConfigParser:
 
         command_val = conf.get("command", conf.get("cmd", ""))
         url_val = conf.get("url", "")
-        
+
         if isinstance(command_val, dict):
             # Zed context_servers format: command: { path: "...", args: [...] }
             cmd_path = command_val.get("path") or command_val.get("command", command_val.get("cmd", ""))
@@ -269,7 +269,7 @@ class ClientConfigParser:
         declared_tools = conf.get("tools", command_val.get("tools", []) if isinstance(command_val, dict) else [])
         if not isinstance(declared_tools, list):
             declared_tools = []
-            
+
         return DiscoveredClientServer(
             server_name=name,
             package_name=package_name,

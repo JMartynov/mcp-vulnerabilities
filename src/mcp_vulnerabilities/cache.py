@@ -30,12 +30,12 @@ class TwoTierVulnerabilityCache:
     def get(self, passport_canonical_hash: str, osv_index_hash: str) -> Optional[Dict[str, Any]]:
         """Retrieve precomputed version vulnerability matrix from cache."""
         key = self._get_key(passport_canonical_hash, osv_index_hash)
-        
+
         # Tier 1: In-memory LRU cache
         if key in self._memory_cache:
             self._memory_cache.move_to_end(key)
             return self._memory_cache[key]
-        
+
         # Tier 2: Disk cache
         cache_file = self.cache_dir / f"{key}.json"
         if cache_file.exists():
@@ -49,19 +49,19 @@ class TwoTierVulnerabilityCache:
             except Exception:
                 # Corrupt cache, ignore
                 pass
-        
+
         return None
 
     def set(self, passport_canonical_hash: str, osv_index_hash: str, data: Dict[str, Any]) -> None:
         """Save computed version vulnerability matrix to cache."""
         key = self._get_key(passport_canonical_hash, osv_index_hash)
-        
+
         # Tier 1
         self._memory_cache[key] = data
         self._memory_cache.move_to_end(key)
         if len(self._memory_cache) > self.maxsize:
             self._memory_cache.popitem(last=False)
-        
+
         # Tier 2
         cache_file = self.cache_dir / f"{key}.json"
         try:

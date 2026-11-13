@@ -36,7 +36,7 @@ class RepositoryScanner:
         for p in self.repo_root.rglob("*"):
             if not p.is_file():
                 continue
-                
+
             # Skip ignored directories
             skip = False
             for part in p.relative_to(self.repo_root).parts:
@@ -59,14 +59,14 @@ class RepositoryScanner:
                     discovered.append(p)
             except Exception:
                 pass
-                
+
         return list(set(discovered))
 
     def _apply_fix_safely(self, text: str, server: DiscoveredClientServer, safe_version: str) -> str:
         """Applies version upgrade safely using strict regex to avoid collateral damage."""
         pkg_esc = re.escape(server.package_name)
         old_version = server.version or "unpinned"
-        
+
         # If unpinned
         if old_version == "unpinned":
             if server.ecosystem == "npm":
@@ -101,7 +101,7 @@ class RepositoryScanner:
         elif server.ecosystem == "Docker":
             pattern = rf'("{pkg_esc}:){old_esc}(")'
             return re.sub(pattern, rf'\g<1>{safe_version}\g<2>', text)
-            
+
         return text
 
 
@@ -115,30 +115,30 @@ class RepositoryScanner:
                 servers = ClientConfigParser.parse_file(config_path)
                 if not servers:
                     continue
-                    
+
                 report = self.matcher.audit_servers(servers)
                 if not report.findings:
                     continue
 
                 fix_result = self.fixer.fix_config(config_path, dry_run=True)
-                
+
                 if fix_result["status"] == "dry_run" and fix_result.get("changes"):
                     original_text = config_path.read_text(encoding="utf-8")
-                    
+
                     findings_by_server = {}
                     for f in report.findings:
                         findings_by_server.setdefault(f.server_name, []).append(f)
-                    
+
                     patched_text = original_text
                     for server in servers:
                         findings = findings_by_server.get(server.server_name)
                         if not findings:
                             continue
-                            
+
                         safe_version = self.fixer._calculate_minimum_safe_version(findings)
                         if not safe_version:
                             continue
-                            
+
                         patched_text = self._apply_fix_safely(patched_text, server, safe_version)
 
                     plans.append(RemediationPlan(

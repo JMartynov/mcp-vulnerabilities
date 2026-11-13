@@ -57,7 +57,7 @@ def _process_server_batch(
     except Exception:
         # Fallback if it's a snapshot or file
         matcher = VulnerabilityMatcher.from_snapshot(Path(vulnerabilities_dir))
-        
+
     cache = TwoTierVulnerabilityCache(cache_dir=cache_dir) if use_cache else None
 
     try:
@@ -98,21 +98,21 @@ def _process_server_batch(
                 raw_spec=raw_spec,
                 malicious_sync=malicious_sync,
             )
-            
+
             record_dict = record.to_dict()
             da = raw_spec.get("dual_axis_assessment") if isinstance(raw_spec, dict) else getattr(raw_spec, "dual_axis_assessment", None)
             if da:
                 record_dict["dual_axis_assessment"] = da
             results[pkg_name] = record_dict
-            
+
             if cache:
                 cache.set(passport_canonical_hash, osv_index_hash, record_dict)
-                
+
         except Exception as e:
             msg = f"Error processing server {pkg_name}: {e}"
             logger.warning(msg)
             warnings.append(msg)
-            
+
     return results, warnings
 
 
@@ -137,8 +137,6 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
 
 
     cvss_score: float | None = None
-    epss_score: float | None = None
-    epss_percentile: float | None = None
     sev: str | None = None
 
     owasp: str | None = None
@@ -165,12 +163,12 @@ def _resolve_advisory_details(adv: Any) -> dict[str, Any]:
             remediation_guidance = str(aff_db["remediation_guidance"])
         if aff_db.get("epss_score") is not None:
             try:
-                epss_score = float(aff_db["epss_score"])
+                float(aff_db["epss_score"])
             except (ValueError, TypeError):
                 pass
         if aff_db.get("epss_percentile") is not None:
             try:
-                epss_percentile = float(aff_db["epss_percentile"])
+                float(aff_db["epss_percentile"])
             except (ValueError, TypeError):
                 pass
 
@@ -328,7 +326,7 @@ def build_site_parallel(
 ) -> dict[str, Any]:
     """Parallel implementation of site builder."""
     t0 = time.time()
-    
+
     in_dir = Path(vuln_path) if vuln_path else Path("data/vulnerabilities")
     out_dir = Path(output_dir)
     shards_dir = out_dir / "shards"
@@ -378,7 +376,7 @@ def build_site_parallel(
 
     if passports_path is None and Path("data/passports.json.gz").exists():
         passports_path = Path("data/passports.json.gz")
-    
+
     if passports_path:
         p = Path(passports_path)
         if p.exists():
@@ -397,7 +395,7 @@ def build_site_parallel(
             passports = _load_passports(passports_path)
     else:
         passports = _load_passports(passports_path)
-        
+
     # Filter out tombstones
     if isinstance(passports, dict):
         filtered_passports = {}
@@ -407,19 +405,19 @@ def build_site_parallel(
             if catalog_state.package_key(eco, name) not in catalog_state.tombstones:
                 filtered_passports[k] = p_dict
         passports = filtered_passports
-    
+
     # Split passports into chunks
     items = list(passports.items())
     chunk_size = max(1, len(items) // workers)
     chunks = [dict(items[i:i + chunk_size]) for i in range(0, len(items), chunk_size)]
-    
+
     catalog_dicts: dict[str, Any] = {}
-    
+
     main_cache = TwoTierVulnerabilityCache(cache_dir=cache_dir) if use_cache else None
     resolved_cache_dir = str(main_cache.cache_dir) if main_cache else None
 
     all_warnings = []
-    
+
     if workers <= 1 or "PYTEST_CURRENT_TEST" in os.environ:
         for chunk in chunks:
             try:
@@ -459,23 +457,23 @@ def build_site_parallel(
                     msg = f"Worker batch exception: A process in the process pool was terminated abruptly or failed: {type(e).__name__}"
                     logger.error(msg)
                     all_warnings.append(msg)
-                
+
     if all_warnings:
         errors_file = out_dir / "build_errors.json"
         errors_file.write_text(json.dumps(all_warnings, indent=2), encoding="utf-8")
-                
+
     # Also handle advisory-only packages not in passports (from matcher index)
     # We can use the original function for this part if needed, or simply let the old function run for them.
     # To keep it completely identical, we should probably run the old function on the remainder, or just
     # do a quick sync run for them.
-    
+
     # We can just call build_unified_mcp_security_catalog and only extract the missing ones.
     # Actually, building advisory-only packages is very fast since they have no tools to score.
     # We can construct them here or use a helper.
     # For now, let's replicate the advisory-only logic.
-    
+
     matcher = VulnerabilityMatcher.from_directory(in_dir) if in_dir.is_dir() else VulnerabilityMatcher.from_snapshot(in_dir)
-    
+
     for norm_name, advs in matcher._package_index.items():
         if any(
             VulnerabilityMatcher._normalize_package_name(p) == norm_name
@@ -587,7 +585,7 @@ def build_site_parallel(
         k: v for k, v in catalog_dicts.items()
         if k not in ("unknown", "", "none") and v.get("package_name") not in ("unknown", "", "none")
     }
-    
+
     t2 = time.time()
 
     # 3. Partition Catalog into Shards and Build Index
@@ -673,7 +671,7 @@ def build_site_parallel(
         }
 
         da = record.get("dual_axis_assessment")
-        
+
         catalog_index.append({
             "id": f"{ecosystem}:{pkg_name}",
             "package_name": pkg_name,
@@ -809,7 +807,7 @@ def build_site_parallel(
     env_vars = collections.Counter()
     tool_counts = collections.defaultdict(set)
     transports_dist = collections.Counter()
-    
+
     for s_id, s_data in shards.items():
         for pkg, pkg_data in s_data.items():
             has_fs = False
@@ -817,16 +815,16 @@ def build_site_parallel(
             has_network = False
             has_mutating = False
             has_tools = False
-            
+
             versions = pkg_data.get("versions", [])
             if not versions:
                 continue
 
             v = _select_representative_version(versions)
-            
+
             # Union of required_env_vars from rep_version and pkg_data
             req_envs_set = set(v.get("required_env_vars") or []) | set(pkg_data.get("required_env_vars") or [])
-            
+
             headers_schema = v.get("headers_schema") or {}
             if isinstance(headers_schema, dict):
                 props = headers_schema.get("properties", {})
@@ -842,10 +840,10 @@ def build_site_parallel(
                             req_envs_set.update(c_props.keys())
 
             req_envs = sorted(list(req_envs_set))
-            
+
             for env in req_envs:
                 env_vars[env] += 1
-                
+
             tools = v.get("tools", [])
             if tools:
                 has_tools = True
@@ -854,17 +852,17 @@ def build_site_parallel(
                 chash = t.get("canonical_hash")
                 if name and chash:
                     tool_counts[name].add(chash)
-                
+
                 tname = (t.get("name") or "").lower()
                 if any(x in tname for x in ["read", "write", "file", "fs", "path", "dir"]): has_fs = True
                 if any(x in tname for x in ["exec", "bash", "cmd", "shell", "run", "script"]): has_shell = True
                 if any(x in tname for x in ["http", "request", "fetch", "url", "network", "api", "curl"]): has_network = True
                 if any(x in tname for x in ["create", "update", "delete", "write", "insert", "put", "post", "remove", "add", "set"]): has_mutating = True
-            
+
             if has_fs: fs_read_write += 1
             if has_shell: shell_exec += 1
             if has_network: network_egress += 1
-            
+
             if has_tools:
                 if has_mutating: mutating_tools += 1
                 else: read_only_tools += 1
@@ -877,7 +875,7 @@ def build_site_parallel(
                 patched_remediable_count += 1
             else:
                 zero_day_unpatched_count += 1
-                
+
     def _extract_transports(p_data: Any) -> None:
         if isinstance(p_data, dict):
             items = p_data.values()
@@ -885,7 +883,7 @@ def build_site_parallel(
             items = p_data
         else:
             return
-            
+
         for v in items:
             if not isinstance(v, dict) and not hasattr(v, "get"):
                 if hasattr(v, "transport"):
@@ -899,7 +897,7 @@ def build_site_parallel(
                 continue
 
             transports_dist[v.get("transport", "unknown")] += 1
-            
+
             for ver in v.get("versions", []):
                 if isinstance(ver, dict):
                     conns = ver.get("connections", [])
@@ -972,11 +970,11 @@ def build_site_parallel(
     analytics_file.write_text(
         json.dumps(analytics_data, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8"
     )
-    
+
     t4 = time.time()
-    
+
     if benchmark:
-        print(f"Benchmark Results:")
+        print("Benchmark Results:")
         print(f"  OSV Consolidate: {t1-t0:.3f}s")
         print(f"  Catalog Eval:    {t2-t1:.3f}s")
         print(f"  Sharding/Index:  {t3-t2:.3f}s")
@@ -1046,11 +1044,11 @@ if __name__ == "__main__":
     parser.add_argument("--no-cache", action="store_true", help="Force complete re-evaluation without cache")
     parser.add_argument("--benchmark", action="store_true", help="Print detailed timing breakdown")
     args = parser.parse_args()
-    
+
     passports = args.passports
     if passports is None and Path("data/passports.json.gz").exists():
         passports = Path("data/passports.json.gz")
-    
+
     build_static_site_data(
         data_dir=args.data_dir,
         output_dir=args.output_dir,

@@ -26,7 +26,7 @@ class ThreatFeedNotifier:
 
         for adv in advisories:
             severity, cvss = AdvisoryFeedBuilder._extract_severity_info(adv)
-            
+
             # Check if severity is CRITICAL or HIGH, or if CVSS score >= 7.0
             is_high_severity = severity in ("CRITICAL", "HIGH")
             if not is_high_severity and cvss is not None and cvss >= 7.0:
@@ -44,15 +44,15 @@ class ThreatFeedNotifier:
         adv_id = adv.get("id", "UNKNOWN")
         summary = adv.get("summary") or adv.get("details", "")[:140]
         url = AdvisoryFeedBuilder._extract_canonical_url(adv)
-        
+
         # Color based on severity
         color = 16711680 if severity == "CRITICAL" else 16753920 # Red or Orange
-        
+
         # Extract vulnerable tools and remediation
         db_spec = adv.get("database_specific", {})
         if not db_spec and adv.get("affected"):
             db_spec = adv["affected"][0].get("database_specific", {})
-            
+
         vulnerable_tools = db_spec.get("vulnerable_tools", [])
         tools_str = ", ".join(vulnerable_tools) if vulnerable_tools else "Unknown"
         remediation = db_spec.get("remediation_guidance", "See advisory link for details.")
@@ -80,12 +80,12 @@ class ThreatFeedNotifier:
         adv_id = adv.get("id", "UNKNOWN")
         summary = adv.get("summary") or adv.get("details", "")[:140]
         url = AdvisoryFeedBuilder._extract_canonical_url(adv)
-        
+
         cvss_str = str(cvss) if cvss is not None else "N/A"
-        
+
         # Determine emoji based on severity
         emoji = "🚨" if severity == "CRITICAL" else "⚠️"
-        
+
         payload = {
             "blocks": [
                 {

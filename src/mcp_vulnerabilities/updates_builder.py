@@ -65,7 +65,7 @@ def build_updates_data(
     # Filter to updated/vulnerable servers for release delta
     updated_servers: list[dict[str, Any]] = []
     for rec in catalog.values():
-        # Only include servers with is_vulnerable == True OR genuinely updated records 
+        # Only include servers with is_vulnerable == True OR genuinely updated records
         # where we might determine change_type
         if not rec.is_vulnerable and not any(v.is_vulnerable for v in rec.versions):
             continue
@@ -127,16 +127,16 @@ def build_updates_data(
             history = []
 
     prev_history = [h for h in history if h.get("release_version") != rel_version]
-    
+
     current_total_advs = len(advisories)
     current_total_servers = len(catalog)
     current_total_versions = sum(len(s.versions) for s in catalog.values())
-    
+
     new_advisories = current_total_advs
     updated_advisories = 0
     new_mcp_servers = current_total_servers
     updated_mcp_versions = current_total_versions
-    
+
     if prev_history:
         prev_entry = prev_history[0]
         if "cumulative_totals" in prev_entry:
@@ -148,7 +148,7 @@ def build_updates_data(
             prev_total_advs = prev_counts.get("new_advisories", 0)
             prev_total_servers = prev_counts.get("new_mcp_servers", 0)
             prev_total_versions = prev_counts.get("updated_mcp_versions", 0)
-        
+
         new_advisories = max(0, current_total_advs - prev_total_advs)
         new_mcp_servers = max(0, current_total_servers - prev_total_servers)
         updated_mcp_versions = max(0, current_total_versions - prev_total_versions)
@@ -159,7 +159,7 @@ def build_updates_data(
         "new_mcp_servers": new_mcp_servers,
         "updated_mcp_versions": updated_mcp_versions,
     }
-    
+
     cumulative_totals = {
         "total_advisories": current_total_advs,
         "total_servers": current_total_servers,

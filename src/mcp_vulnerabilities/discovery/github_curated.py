@@ -36,14 +36,14 @@ class GitHubCuratedDiscoveryProvider:
         """Check if a repository is archived, disabled, deleted, or otherwise pruned."""
         if repo_metadata is not None:
             return repo_metadata.get("archived", False) or repo_metadata.get("disabled", False)
-            
+
         repo_name = repo_name_or_url.split("https://github.com/")[-1].strip("/")
         api_url = f"https://api.github.com/repos/{repo_name}"
         headers = {"User-Agent": "McpVulnerabilities/1.0", "Accept": "application/vnd.github.v3+json"}
         token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
         if token:
             headers["Authorization"] = f"Bearer {token.strip()}"
-            
+
         repo_req = urllib.request.Request(api_url, headers=headers)
         try:
             with urllib.request.urlopen(repo_req, timeout=5.0, context=_get_ssl_context()) as repo_resp:
@@ -132,7 +132,7 @@ class GitHubCuratedDiscoveryProvider:
                         summary=desc,
                         repo_url=html_url,
                     )
-                    
+
                     if cls.is_repository_archived_or_pruned(full_name, repo_metadata=it):
                         continue
                     if is_rel:

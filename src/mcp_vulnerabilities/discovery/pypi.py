@@ -34,10 +34,10 @@ class PypiDiscoveryProvider:
                 data = json.loads(resp.read().decode("utf-8"))
                 info = data.get("info", {})
                 releases = data.get("releases", {})
-                
+
                 # Check for yanked releases
                 version = info.get("version", "")
-                
+
                 if version and version in releases:
                     # check if yanked
                     is_yanked = any(r.get("yanked", False) for r in releases[version])
@@ -55,10 +55,7 @@ class PypiDiscoveryProvider:
                             version = str(max(valid_versions))
                         else:
                             version = "" # All yanked or none valid
-                            
-                project_urls = info.get("project_urls", {}) or {}
-                repo = project_urls.get("Source Code") or project_urls.get("Repository") or project_urls.get("Code") or project_urls.get("Homepage", "")
-                
+
                 return version
         except Exception as exc:
             logger.warning("Failed to resolve version for %s: %s", name, exc)

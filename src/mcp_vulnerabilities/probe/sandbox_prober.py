@@ -99,10 +99,10 @@ class DockerSandboxDriver:
         network = "none" if not self.allow_outbound and not is_http else "bridge"
         env_vars = self.guard.get_env_dict()
         env_flags = " ".join([f'-e {k}="{v}"' for k, v in env_vars.items()])
-        
+
         # If it's a URL, maybe we don't actually wrap it with Docker, or maybe we use curl inside Docker?
         # But if we just run the server inside docker, we wrap the command.
-        
+
         base_docker = (
             f"docker run -i --rm --network {network} --read-only --cap-drop ALL "
             f"--security-opt no-new-privileges --memory 512m --cpus 1.0 "
@@ -110,7 +110,7 @@ class DockerSandboxDriver:
             f"-v {self.temp_dir}:/sandbox_home -e HOME=/sandbox_home -w /sandbox_home "
             f"mcp-probe-runner:alpine"
         )
-        
+
         if is_http:
             # For HTTP, the target is remote. The prompt says:
             # "creates an isolated bridge network bound strictly to the target host/port, blocking all other public Internet egress."
@@ -118,7 +118,7 @@ class DockerSandboxDriver:
             # Actually, we can just run a python proxy, but let's just return the command to execute it if needed.
             # We'll just let HttpSseTransport handle the URL natively for simplicity and focus on stdio sandboxing.
             return command
-            
+
         return f'{base_docker} sh -c {shlex.quote(command)}'
 
     def get_env(self) -> Dict[str, str]:
@@ -157,7 +157,7 @@ class SandboxProber:
         self.timeout = timeout
         self.canary_detection = canary_detection
         self.allow_outbound = allow_outbound
-        
+
         if sandbox_type == "docker":
             self.driver = DockerSandboxDriver(allow_outbound)
         else:
@@ -168,9 +168,9 @@ class SandboxProber:
 
     def execute_probe(self, target: str) -> SandboxProbeVerdict:
         is_http = target.startswith("http://") or target.startswith("https://")
-        
+
         start_time = time.time()
-        
+
         if is_http:
             wrapped_target = target
             transport = HttpSseTransport(wrapped_target, timeout=self.timeout)
@@ -181,21 +181,21 @@ class SandboxProber:
             transport = StdioTransport(wrapped_target, env=env_vars)
 
         client = McpProbeClient(transport)
-        
+
         # We need to capture the traffic for canary detection.
         # We will override client's _send_request or capture stdout if we can.
         # Easiest is to dump tools, prompts, resources and server info to string.
-        
+
         server_info = {}
         dangerous_tools = []
         cve_findings = []
         threat_level = ThreatLevel.CLEAN
         leaked_canaries = set()
-        
+
         try:
             client.connect_and_discover(timeout=self.timeout)
             server_info = getattr(client, "server_info", {})
-            
+
             # Check for canaries in parsed schemas
             if self.canary_detection:
                 payload = json.dumps({
@@ -207,16 +207,16 @@ class SandboxProber:
                 leaks = self.driver.guard.analyze_payload(payload)
                 if leaks:
                     leaked_canaries.update(leaks)
-                    
+
             # Check dangerous tools
             for tool in client.tools:
                 desc = tool.get("description", "").lower()
-                
+
                 # Check description
                 if "ignore previous instructions" in desc or "system prompt" in desc:
                     dangerous_tools.append(tool.get("name"))
                     threat_level = max(threat_level, ThreatLevel.SUSPICIOUS, key=lambda x: list(ThreatLevel).index(x))
-                    
+
                 schema = tool.get("inputSchema", {})
                 props = schema.get("properties", {})
                 for prop_name, prop_val in props.items():
@@ -224,28 +224,28 @@ class SandboxProber:
                     if prop_name_low in ["cmd", "command", "exec", "script", "bash", "sh"]:
                         dangerous_tools.append(tool.get("name"))
                         threat_level = max(threat_level, ThreatLevel.SUSPICIOUS, key=lambda x: list(ThreatLevel).index(x))
-                    
+
                     if "path" in prop_name_low or "file" in prop_name_low:
                         # naive check
                         if "/etc/passwd" in str(prop_val) or "~/.ssh" in str(prop_val):
                             dangerous_tools.append(tool.get("name"))
                             threat_level = max(threat_level, ThreatLevel.SUSPICIOUS, key=lambda x: list(ThreatLevel).index(x))
-            
+
         except Exception:
             # connection failed or timeout
             pass
-            
+
         duration = time.time() - start_time
-        
+
         if leaked_canaries:
             threat_level = ThreatLevel.MALICIOUS
-            
+
         recommendation = "Safe to use."
         if threat_level == ThreatLevel.MALICIOUS:
             recommendation = "Do NOT use this server. It attempted to exfiltrate host secrets."
         elif threat_level == ThreatLevel.SUSPICIOUS:
             recommendation = "Exercise caution. Dangerous tool parameters or prompt injection vectors detected."
-            
+
         return SandboxProbeVerdict(
             endpoint_url=target,
             driver=self.sandbox_type,

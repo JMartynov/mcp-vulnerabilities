@@ -49,12 +49,12 @@ class NetworkMCPScanner:
                 "prompts": [],
                 "resources": []
             }
-        
+
         try:
             import httpx
             async with httpx.AsyncClient(timeout=self.timeout) as client:
                 headers = {"MCP-Protocol-Version": "2026-07-28"}
-                
+
                 # Try MCP 2.0 server/discover
                 discover_payload = {
                     "jsonrpc": "2.0",
@@ -66,9 +66,9 @@ class NetworkMCPScanner:
                     },
                     "id": 1
                 }
-                
+
                 resp = await client.post(url, json=discover_payload, headers=headers)
-                
+
                 is_legacy = False
                 if resp.status_code < 500:
                     result["reachable"] = True
@@ -80,7 +80,7 @@ class NetworkMCPScanner:
                                 is_legacy = True
                     except Exception:
                         pass
-                
+
                 data = {}
                 if not is_legacy and resp.status_code < 500:
                     try:
@@ -89,7 +89,7 @@ class NetworkMCPScanner:
                             result["protocolVersion"] = data.get("result", {}).get("protocolVersion", "2026-07-28")
                     except Exception:
                         pass
-                
+
                 if is_legacy:
                     # Legacy initialize fallback
                     init_payload = {
@@ -110,11 +110,11 @@ class NetworkMCPScanner:
                             result["protocolVersion"] = "2024-11-05"
                         except Exception:
                             pass
-                
+
                 if resp.status_code < 500 and ("result" in data or "jsonrpc" in data):
                     result["mcp_handshake"] = True
                     result["capabilities"] = data.get("result", {}).get("capabilities", {})
-                    
+
                     for method_name, key in [("tools/list", "tools"), ("prompts/list", "prompts"), ("resources/list", "resources")]:
                         try:
                             list_resp = await client.post(url, json={"jsonrpc": "2.0", "method": method_name, "params": {}, "id": 2})
@@ -127,7 +127,7 @@ class NetworkMCPScanner:
             result["reachable"] = await self.check_tcp_port(host, port)
         except Exception as e:
             logger.debug(f"Probe error on {url}: {e}")
-            
+
         return result
 
     async def scan_target(self, host: str, ports: Optional[List[int]] = None) -> List[Dict[str, Any]]:

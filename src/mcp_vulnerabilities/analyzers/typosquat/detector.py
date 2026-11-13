@@ -18,17 +18,17 @@ def check_keyboard_proximity(s1: str, s2: str) -> bool:
         'z': 'a s x', 'x': 'z a s d c', 'c': 'x s d f v', 'v': 'c d f g b',
         'b': 'v f g h n', 'n': 'b g h j m', 'm': 'n h j k'
     }
-    
+
     if len(s1) != len(s2):
         return False
-        
+
     diffs = 0
     diff_idx = -1
     for i in range(len(s1)):
         if s1[i] != s2[i]:
             diffs += 1
             diff_idx = i
-            
+
     if diffs == 1:
         c1 = s1[diff_idx].lower()
         c2 = s2[diff_idx].lower()
@@ -56,7 +56,7 @@ def levenshtein_distance(s1: str, s2: str) -> int:
         return levenshtein_distance(s2, s1)
     if len(s2) == 0:
         return len(s1)
-    
+
     previous_row = range(len(s2) + 1)
     for i, c1 in enumerate(s1):
         current_row = [i + 1]
@@ -66,7 +66,7 @@ def levenshtein_distance(s1: str, s2: str) -> int:
             substitutions = previous_row[j] + (c1 != c2)
             current_row.append(min(insertions, deletions, substitutions))
         previous_row = current_row
-    
+
     return previous_row[-1]
 
 def normalize_confusables(text: str) -> str:
@@ -83,7 +83,7 @@ def normalize_confusables(text: str) -> str:
             res.append(confusables[char])
         else:
             res.append(char)
-    
+
     return unicodedata.normalize('NFKD', "".join(res)).encode('ascii', 'ignore').decode('ascii')
 
 
@@ -101,13 +101,13 @@ class TyposquatDetector:
         if normalized_name != package_name:
             if normalized_name in self.corpus:
                 return TyposquatResult(package_name, normalized_name, RiskTier.CRITICAL, "CRITICAL_HOMOGLYPH_ATTACK", 0)
-            
+
             # Check distance against normalized
             matches = self.bktree.search(normalized_name, max_distance=2)
             if matches:
                 best_match, min_dist = matches[0]
                 return TyposquatResult(package_name, best_match, RiskTier.CRITICAL, "CRITICAL_HOMOGLYPH_ATTACK", min_dist)
-                    
+
         # 2. Permutation/Transposition Detection
         parts = re.split(r'[-/]', package_name)
         parts_sorted = sorted(parts)
@@ -116,7 +116,7 @@ class TyposquatDetector:
             if sorted(canon_parts) == parts_sorted and parts != canon_parts:
                 return TyposquatResult(package_name, canon, RiskTier.SUSPICIOUS, "SUSPICIOUS_NAMING_PERMUTATION", 0)
 
-        
+
         # 2.5 Keyboard Proximity (Bit-Squatting)
         for canon in self.corpus:
             if check_keyboard_proximity(package_name, canon):
@@ -137,9 +137,9 @@ class TyposquatDetector:
                 if d <= 2 and d < min_dist:
                     min_dist = d
                     best_match = canon
-            
+
             if best_match:
                 return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", min_dist)
-            
+
         return TyposquatResult(package_name, None, RiskTier.AUTHENTIC, "No typosquat detected", 0)
 

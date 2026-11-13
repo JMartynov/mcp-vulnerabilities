@@ -16,10 +16,10 @@ class CompositeRiskScorer:
         # Unreachable vulnerabilities are capped at 15.0 points total
         raw_unreachable_penalty = 2.0 * critical_high_unreachable_count + 0.5 * medium_unreachable_count + 0.1 * low_unreachable_count
         unreachable_penalty = min(15.0, raw_unreachable_penalty)
-        
+
         # Reachable vulnerabilities are not capped (direct tool-reachable retain full risk penalty)
         reachable_penalty = 2.0 * critical_high_count + 0.5 * medium_count + 0.1 * low_count
-        
+
         score = base_score - unreachable_penalty - reachable_penalty - protocol_risk_penalty
         return max(0.0, min(100.0, round(score, 1)))
 

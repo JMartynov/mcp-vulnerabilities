@@ -4,15 +4,15 @@ import subprocess
 class ContainerEngine:
     def __init__(self):
         self.runtime = self._detect_runtime()
-        
+
     def _detect_runtime(self) -> str | None:
         """Detect available container runtime (docker or podman)."""
         for runtime in ["docker", "podman"]:
             try:
                 subprocess.run(
-                    [runtime, "info"], 
-                    stdout=subprocess.DEVNULL, 
-                    stderr=subprocess.DEVNULL, 
+                    [runtime, "info"],
+                    stdout=subprocess.DEVNULL,
+                    stderr=subprocess.DEVNULL,
                     check=True,
                     timeout=5
                 )
@@ -23,10 +23,10 @@ class ContainerEngine:
 
     def is_available(self) -> bool:
         return self.runtime is not None
-        
+
     def get_runtime(self) -> str | None:
         return self.runtime
-        
+
     def get_version(self) -> str | None:
         if not self.runtime:
             return None

@@ -135,14 +135,14 @@ class McpVulnerabilityPipeline:
         for keyword in keywords:
             start_index = 0
             total_results = 1  # Dummy value to enter loop
-            
+
             while start_index < total_results:
                 url = f"https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={urllib.parse.quote(keyword)}&resultsPerPage={results_per_page}&startIndex={start_index}"
                 req = urllib.request.Request(url, headers=headers)
-                
+
                 retries = 3
                 data = None
-                
+
                 while retries > 0:
                     try:
                         time.sleep(delay)
@@ -157,29 +157,29 @@ class McpVulnerabilityPipeline:
                             retries -= 1
                         else:
                             raise
-                
+
                 if not data:
                     logger.error(f"Failed to fetch NVD data for {keyword} at {start_index}")
                     break
-                
+
                 total_results = data.get("totalResults", 0)
                 vulnerabilities = data.get("vulnerabilities", [])
                 nvd_scanned += len(vulnerabilities)
-                
+
                 for vuln_wrap in vulnerabilities:
                     cve_item = vuln_wrap.get("cve", {})
                     if not cve_item:
                         continue
-                    
+
                     try:
                         vuln = NvdConverter.from_dict(vuln_wrap)
-                        
+
                         desc = ""
                         for d in cve_item.get("descriptions", []):
                             if d.get("lang") == "en":
                                 desc = d.get("value", "")
                                 break
-                                
+
                         is_rel, _ = McpRelevanceFilter.is_relevant(
                             summary=desc[:200],
                             details=desc,
@@ -190,9 +190,9 @@ class McpVulnerabilityPipeline:
                             nvd_synced += 1
                     except Exception as e:
                         logger.debug("NVD conversion error: %s", e)
-                        
+
                 start_index += results_per_page
-                
+
         self.state_manager.update_checkpoint(
             "nvd_api",
             records_scanned=nvd_chk.records_scanned + nvd_scanned,
@@ -243,7 +243,7 @@ class McpVulnerabilityPipeline:
 
         if include_pruning:
             from mcp_vulnerabilities.discovery.github_curated import GitHubCuratedDiscoveryProvider
-            
+
             candidate_repos = []
             if self.servers_catalog_file.exists():
                 try:
@@ -256,7 +256,7 @@ class McpVulnerabilityPipeline:
                             candidate_repos.append((eco, name, repo))
                 except Exception as cat_e:
                     logger.debug("Catalog file parse error during pruning check: %s", cat_e)
-            
+
             for eco, name, repo in candidate_repos:
                 try:
                     is_dead = GitHubCuratedDiscoveryProvider.is_repository_archived_or_pruned(repo)
@@ -416,7 +416,7 @@ class McpVulnerabilityPipeline:
         if include_ghsa_api:
             ghsa_chk = self.state_manager.get_checkpoint("ghsa_api")
             last_updated_at = ghsa_chk.last_updated_at
-            
+
             ghsa_scanned = 0
             ghsa_synced = 0
             newest_advisory_updated_at = last_updated_at
@@ -425,7 +425,7 @@ class McpVulnerabilityPipeline:
                 base_ghsa_url = "https://api.github.com/advisories?per_page=100&direction=desc&sort=updated"
                 if last_updated_at:
                     base_ghsa_url += f"&since={last_updated_at}"
-                
+
                 next_url = base_ghsa_url
                 pages_fetched = 0
                 max_pages = 5
@@ -438,7 +438,7 @@ class McpVulnerabilityPipeline:
                     try:
                         with urllib.request.urlopen(req, timeout=12.0, context=_get_ssl_context()) as resp:
                             data = json.loads(resp.read().decode("utf-8"))
-                            
+
                             if isinstance(data, list):
                                 ghsa_scanned += len(data)
                                 for adv in data:
@@ -446,7 +446,7 @@ class McpVulnerabilityPipeline:
                                     if adv_updated_at:
                                         if not newest_advisory_updated_at or adv_updated_at > newest_advisory_updated_at:
                                             newest_advisory_updated_at = adv_updated_at
-                                        
+
                                     pkg_name = adv.get("vulnerabilities", [{}])[0].get("package", {}).get("name")
                                     is_rel, _ = McpRelevanceFilter.is_relevant(
                                         package_name=pkg_name,
@@ -464,7 +464,7 @@ class McpVulnerabilityPipeline:
                                                 self.catalog_state.mark_stale(aff.package.ecosystem, aff.package.name)
                                         except Exception as conv_e:
                                             logger.debug("GHSA conversion error: %s", conv_e)
-                            
+
                             next_url = None
                             link_header = resp.headers.get("Link")
                             if link_header:
@@ -481,7 +481,7 @@ class McpVulnerabilityPipeline:
                             logger.error(f"GitHub API rate limit exceeded ({e.code}). Please configure GITHUB_TOKEN to elevate quotas.")
                             break
                         raise
-                    
+
                     pages_fetched += 1
 
                 self.state_manager.update_checkpoint(
@@ -498,7 +498,7 @@ class McpVulnerabilityPipeline:
         if include_cvelist_delta:
             cve_delta_chk = self.state_manager.get_checkpoint("cvelist_delta")
             last_marker = cve_delta_chk.last_marker
-            
+
             cve_delta_scanned = 0
             cve_delta_synced = 0
             newest_head_sha = last_marker
@@ -514,12 +514,12 @@ class McpVulnerabilityPipeline:
                         commits = json.loads(resp.read().decode("utf-8"))
                         if isinstance(commits, list) and commits:
                             newest_head_sha = commits[0]["sha"]
-                            
+
                             for commit in commits:
                                 commit_sha = commit["sha"]
                                 if last_marker and commit_sha == last_marker:
                                     break
-                                    
+
                                 detail_url = f"https://api.github.com/repos/CVEProject/cvelistV5/commits/{commit_sha}"
                                 detail_req = urllib.request.Request(
                                     detail_url,
@@ -709,14 +709,14 @@ class McpVulnerabilityPipeline:
             gitlab_chk = self.state_manager.get_checkpoint("gitlab_advisories")
             gitlab_scanned = 0
             gitlab_synced = 0
-            
+
             try:
                 syncer = GitLabAdvisorySync()
                 repo_path = syncer.sync_repository()
                 scanned_vulns = syncer.scan_advisories(target_dir=repo_path)
-                
+
                 gitlab_scanned = len(scanned_vulns)
-                
+
                 for v in scanned_vulns:
                     is_rel, _ = McpRelevanceFilter.is_relevant(
                         package_name=v.affected[0].package.name if v.affected else None,
@@ -726,7 +726,7 @@ class McpVulnerabilityPipeline:
                     if is_rel:
                         collected.append(v)
                         gitlab_synced += 1
-                        
+
                 self.state_manager.update_checkpoint(
                     "gitlab_advisories",
                     records_scanned=gitlab_chk.records_scanned + gitlab_scanned,
@@ -744,11 +744,11 @@ class McpVulnerabilityPipeline:
                     for k in self.catalog_state.records.keys():
                         if k.startswith("pypi:"):
                             target_packages.add(k.split(":", 1)[1])
-                
+
                 # We always fall back to common tools if catalog is empty
                 if not target_packages:
                     target_packages = {"fastmcp", "mcp", "langchain-core", "langchain-community", "llama-index-core", "uvicorn"}
-                
+
                 pypa_records = PyPaAdvisorySync.sync_local(pypa_data_dir, target_packages=target_packages)
                 collected.extend(pypa_records)
                 logger.info("Ingested %d records from PyPA database.", len(pypa_records))

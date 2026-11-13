@@ -21,7 +21,7 @@ class PyPaAdvisorySync:
     def _sync(self, data_dir: str | Path) -> list[OsvVulnerability]:
         p = Path(data_dir)
         vulns_dir = p / "vulns"
-        
+
         if not p.is_dir():
             logger.warning(f"PyPA advisory directory not found: {p}")
             return []
@@ -37,11 +37,11 @@ class PyPaAdvisorySync:
         # Compute a hash of all matching files to serve as sync marker
         # In a real git clone we'd use HEAD sha, but here we just want idempotency over files.
         import hashlib
-        
+
         hasher = hashlib.sha256()
-        
+
         collected = []
-        
+
         # Sort paths to ensure deterministic hashing
         yaml_paths = sorted(list(vulns_dir.rglob("*.yaml")))
         for yaml_path in yaml_paths:
@@ -54,7 +54,7 @@ class PyPaAdvisorySync:
 
                 stat = yaml_path.stat()
                 hasher.update(f"{yaml_path.name}:{stat.st_mtime}:{stat.st_size}".encode('utf-8'))
-                
+
             except Exception as e:
                 logger.error(f"Failed to process PyPA advisory metadata {yaml_path}: {e}")
 
@@ -70,7 +70,7 @@ class PyPaAdvisorySync:
                     normalized_targets = {tp.lower().replace("_", "-") for tp in self.target_packages}
                     if parent_name not in normalized_targets:
                         continue
-                        
+
                 with open(yaml_path, "r", encoding="utf-8") as f:
                     content = f.read()
 

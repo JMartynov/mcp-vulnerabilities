@@ -9,7 +9,7 @@ class RegexThreatMatcher:
         # Dictionary of rule_id to (pattern, category, severity, title, description, remediation, cwe)
         self.rules: dict[str, tuple[Pattern, ThreatCategory, ThreatSeverity, str, str, str, str]] = {}
         self._initialize_rules()
-        
+
     def _initialize_rules(self):
         # Prompt Injection & System Overrides
         self.add_rule(
@@ -42,7 +42,7 @@ class RegexThreatMatcher:
             remediation="Remove or sanitize zero-width characters from input strings.",
             cwe="CWE-74"
         )
-        
+
         # Arbitrary Command Execution
         self.add_rule(
             rule_id="R_CODE_EXEC_001",
@@ -64,7 +64,7 @@ class RegexThreatMatcher:
             remediation="Avoid executing arbitrary shell commands and use specific APIs instead.",
             cwe="CWE-78"
         )
-        
+
         # Credential Exfiltration
         self.add_rule(
             rule_id="R_CRED_EXFIL_001",

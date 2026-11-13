@@ -67,19 +67,19 @@ def atomic_save_json(target_file: Path | str, data: dict[str, Any]) -> None:
     """Safely and atomically save JSON data to a file using temporary file and backup."""
     target_file = Path(target_file)
     target_file.parent.mkdir(parents=True, exist_ok=True)
-    
+
     tmp_file = target_file.with_suffix(f".tmp.{os.getpid()}")
     try:
         with open(tmp_file, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, sort_keys=True)
             f.flush()
             os.fsync(f.fileno())
-        
+
         # Create a backup of the existing state file
         if target_file.exists():
             bak_file = target_file.with_name(target_file.name + ".bak")
             os.replace(target_file, bak_file)
-            
+
         # Atomically replace the old state file with the new one
         os.replace(tmp_file, target_file)
     except Exception as e:
@@ -109,7 +109,7 @@ class SyncStateManager:
                 return SyncState.from_dict(data)
             except Exception as e:
                 logger.warning(f"Failed to load sync state from {self.state_file}: {e}")
-                
+
                 # Attempt to recover from backup
                 bak_file = self.state_file.with_name(self.state_file.name + ".bak")
                 if bak_file.is_file():

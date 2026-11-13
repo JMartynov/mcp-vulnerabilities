@@ -75,12 +75,12 @@ class InteractiveTerminalHub:
             print("  [5] 🚀 Launch Web Explorer & Dashboard")
             print("  [6] 🎛️ Launch Split-Pane TUI Explorer")
             print("  [q] 🚪 Quit Hub")
-            
+
             try:
                 choice = input("\n👉 Enter selection [1-6, q]: ").strip().lower()
             except (EOFError, KeyboardInterrupt):
                 break
-            
+
             if choice == "1":
                 print("\n[+] Running Universal Audit across 17 AI Clients...")
                 time.sleep(1)

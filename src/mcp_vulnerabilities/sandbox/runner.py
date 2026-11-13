@@ -47,7 +47,7 @@ class EphemeralSandbox:
 
     def _stage1_fetch(self, package_spec: str, ecosystem: str, target_dir: Path) -> Path:
         base_image = "python:3.12-slim" if ecosystem == "pypi" else "node:20-alpine"
-        
+
         if ecosystem == "pypi":
             cmd = [
                 self.engine_cmd, "run", "--rm",
@@ -70,7 +70,7 @@ class EphemeralSandbox:
             raise TimeoutExpired(f"Stage 1 fetch timed out after {self.timeout}s")
         except subprocess.CalledProcessError as e:
             raise SandboxError(f"Stage 1 fetch failed: {e.stderr}")
-            
+
         files = list(target_dir.glob("*"))
         if not files:
             raise SandboxError("Stage 1 fetch produced no files")
@@ -94,22 +94,22 @@ class EphemeralSandbox:
 
         elif ecosystem == "npm":
             return package.split('/')[-1] if '/' in package else package
-            
+
         return package
 
     def _stage2_inspect(self, package_file: Path, ecosystem: str, package: str, version: str | None, start_time: float) -> SandboxInspectionResult:
         base_image = "python:3.12-slim" if ecosystem == "pypi" else "node:20-alpine"
         container_id = None
-        
+
         try:
             run_cmd = self._build_run_command(base_image, volumes=[f"{package_file.parent}:/pkg:ro"])
-            
+
             logger.debug(f"Starting isolated sandbox container: {shlex.join(run_cmd)}")
             result = subprocess.run(run_cmd, capture_output=True, text=True, check=True)
             container_id = result.stdout.strip()
-            
+
             target_file = f"/pkg/{package_file.name}"
-            
+
             if ecosystem == "pypi":
                 install_cmd = [
                     "pip", "install", "--no-cache-dir", "--no-deps", "--no-index",
@@ -120,7 +120,7 @@ class EphemeralSandbox:
                     "npm", "install", "--prefix", "/tmp", "--offline",
                     "--no-audit", "--no-fund", target_file
                 ]
-                
+
             exec_cmd = [self.engine_cmd, "exec", "-w", "/tmp", container_id] + install_cmd
             logger.debug(f"Installing package offline: {shlex.join(exec_cmd)}")
             try:
@@ -129,27 +129,27 @@ class EphemeralSandbox:
                 raise TimeoutExpired(f"Package installation timed out after {self.timeout}s")
             except subprocess.CalledProcessError as e:
                 raise SandboxError(f"Package installation failed: {e.stderr}")
-            
+
             server_cmd = self._get_installed_binary(container_id, ecosystem, package)
-            
+
             elapsed = time.time() - start_time
             remaining = max(1.0, self.timeout - elapsed)
-            
+
             if ecosystem == "pypi":
                 probe_cmd = [self.engine_cmd, "exec", "-i", "-w", "/tmp", container_id, "timeout", str(int(remaining)), "python", "-m", package.replace('-', '_')]
                 if server_cmd != package and "/" in server_cmd:
                     probe_cmd = [self.engine_cmd, "exec", "-i", "-w", "/tmp", container_id, "timeout", str(int(remaining)), "python", server_cmd]
             else:
                 probe_cmd = [self.engine_cmd, "exec", "-i", "-w", "/tmp", container_id, "timeout", str(int(remaining)), "npx", "--no-install", server_cmd]
-                
+
             logger.debug(f"Probing: {shlex.join(probe_cmd)}")
-            
+
             transport = StdioTransport(command=shlex.join(probe_cmd))
             client = McpProbeClient(transport)
-            
+
             exit_code = 0
             raw_stderr = ""
-            
+
             try:
                 probe_timeout = min(5.0, remaining)
                 client.connect_and_discover(timeout=probe_timeout)
@@ -157,11 +157,11 @@ class EphemeralSandbox:
                 logger.error(f"Probe failed: {e}")
                 raw_stderr = str(e)
                 exit_code = 1
-                
+
             execution_time = time.time() - start_time
             if execution_time > self.timeout:
                 raise TimeoutExpired(f"Execution timed out after {self.timeout}s")
-                
+
             return SandboxInspectionResult(
                 package_name=package,
                 ecosystem=ecosystem,
@@ -173,10 +173,10 @@ class EphemeralSandbox:
                 exit_code=exit_code,
                 status="completed"
             )
-            
+
         except subprocess.TimeoutExpired:
             raise TimeoutExpired(f"Execution timed out after {self.timeout}s")
-            
+
         finally:
             if container_id:
                 try:
@@ -186,7 +186,7 @@ class EphemeralSandbox:
 
     def execute(self, ecosystem: str, package: str, version: str | None = None) -> SandboxInspectionResult:
         start_time = time.time()
-        
+
         if not self.engine_cmd:
             return SandboxInspectionResult(
                 package_name=package,
@@ -202,10 +202,10 @@ class EphemeralSandbox:
             )
 
         package_spec = f"{package}=={version}" if version and ecosystem == "pypi" else (f"{package}@{version}" if version else package)
-        
+
         with tempfile.TemporaryDirectory() as tmpdir:
             target_dir = Path(tmpdir)
             target_dir.chmod(0o777)
-            
+
             package_file = self._stage1_fetch(package_spec, ecosystem, target_dir)
             return self._stage2_inspect(package_file, ecosystem, package, version, start_time)

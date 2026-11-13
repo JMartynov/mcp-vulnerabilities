@@ -25,13 +25,13 @@ class McpStdioProxy:
         self.pending_requests = {} # id -> method
         self.sandbox = sandbox
         self.canary_detection = canary_detection
-        
+
         self.driver = None
         if self.sandbox == "docker":
             self.driver = DockerSandboxDriver(allow_outbound=False)
         elif self.sandbox == "subprocess":
             self.driver = RestrictedSubprocessDriver()
-            
+
 
         self.canary_guard = None
         if self.canary_detection:
@@ -120,11 +120,11 @@ class McpStdioProxy:
             new_msg, events = self.policy_engine.inspect_response(msg, request_method)
             for event in events:
                 self.log_audit_event(event)
-            
+
             if request_method == "tools/list" and not self.strip_shadow_tools:
                 # Do not strip if disabled, use the original message
                 return json.dumps(msg)
-            
+
             return json.dumps(new_msg)
 
         return line
@@ -160,7 +160,7 @@ class McpStdioProxy:
                             break
             except Exception:
                 pass
-        
+
         t = threading.Thread(target=server_reader, daemon=True)
         t.start()
 
@@ -179,7 +179,7 @@ class McpStdioProxy:
                         stdout.flush()
                     except (BrokenPipeError, IOError):
                         break
-                    
+
             # Wait briefly for thread to finish reading before tearing down
             time.sleep(0.5)
         except (EOFError, KeyboardInterrupt):
@@ -198,10 +198,10 @@ class McpStdioProxy:
                     proc.kill()
                 except Exception:
                     pass
-            
+
             if self.driver:
                 self.driver.cleanup()
             if hasattr(self, '_temp_dir'):
                 self._temp_dir.cleanup()
-            
+
         return proc.returncode

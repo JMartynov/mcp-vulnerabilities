@@ -16,7 +16,7 @@ class ComplianceSarifReporter:
         cls, report: OwaspComplianceReport, target_path: Optional[str] = None
     ) -> Dict[str, Any]:
         target_path = target_path or "schema.json"
-        
+
         sarif = {
             "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
             "version": "2.1.0",
@@ -34,7 +34,7 @@ class ComplianceSarifReporter:
                 }
             ]
         }
-        
+
         run = sarif["runs"][0]
         rules_dict = {}
         results = []

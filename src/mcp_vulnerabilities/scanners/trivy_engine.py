@@ -97,7 +97,7 @@ class TrivyScanner:
                     check=True,
                     capture_output=True
                 )
-                
+
                 for file in os.listdir(tmpdir):
                     if file.endswith(".tgz"):
                         tar_path = os.path.join(tmpdir, file)
@@ -106,7 +106,7 @@ class TrivyScanner:
                                 tar.extractall(path=tmpdir, filter='data')
                             else:
                                 tar.extractall(path=tmpdir)
-                            
+
                 return self._run_trivy(pkg, "fs", os.path.join(tmpdir, "package"))
             except subprocess.CalledProcessError as e:
                 logger.error(f"Failed to fetch npm package {pkg}: {e.stderr.decode()}")
@@ -122,7 +122,7 @@ class TrivyScanner:
                     check=True,
                     capture_output=True
                 )
-                
+
                 # Unpack wheels or tarballs
                 for file in os.listdir(tmpdir):
                     file_path = os.path.join(tmpdir, file)
@@ -135,7 +135,7 @@ class TrivyScanner:
                                 tar.extractall(path=tmpdir, filter='data')
                             else:
                                 tar.extractall(path=tmpdir)
-                
+
                 return self._run_trivy(pkg, "fs", tmpdir)
             except subprocess.CalledProcessError as e:
                 logger.error(f"Failed to fetch PyPI package {pkg}: {e.stderr.decode()}")

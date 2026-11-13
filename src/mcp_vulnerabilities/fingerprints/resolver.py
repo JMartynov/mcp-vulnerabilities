@@ -149,10 +149,10 @@ class FingerprintVersionResolver:
                             clean_proj_name = proj_name.lower().replace("_", "-")
                             clean_pkg_name = server.package_name.lower().replace("_", "-") if server.package_name else ""
                             clean_srv_name = server.server_name.lower().replace("_", "-") if server.server_name else ""
-                            
+
                             if clean_proj_name != clean_pkg_name and clean_proj_name != clean_srv_name:
                                 continue # Project name does not match, ignore this pyproject.toml
-                        
+
                         m = re.search(r'version\s*=\s*["\']([^"\']+)["\']', txt)
                         if m:
                             return m.group(1), "pyproject.toml"
@@ -181,7 +181,7 @@ class FingerprintVersionResolver:
                     text=True,
                     env=env,
                 )
-                
+
                 # Try server/discover
                 discover_req = (
                     json.dumps(
@@ -203,19 +203,19 @@ class FingerprintVersionResolver:
                 )
                 p.stdin.write(discover_req)
                 p.stdin.flush()
-                
+
                 rlist, _, _ = select.select([p.stdout], [], [], 1.5)
                 if rlist and p.stdout:
                     line = p.stdout.readline()
                     try:
                         data = json.loads(line)
                         is_legacy = False
-                        
+
                         if "error" in data and isinstance(data["error"], dict):
                             code = data.get("error", {}).get("code")
                             if code in (-32601, -32602):
                                 is_legacy = True
-                        
+
                         if not is_legacy and "result" in data:
                             srv_info = data.get("result", {}).get("serverInfo", {})
                             v = srv_info.get("version")
@@ -223,7 +223,7 @@ class FingerprintVersionResolver:
                                 clean_v = re.sub(r"^[a-zA-Z\-_]+", "", str(v)).strip()
                                 p.terminate()
                                 return clean_v or str(v), "handshake"
-                        
+
                         if is_legacy:
                             # Fallback to initialize
                             init_req = (
@@ -256,7 +256,7 @@ class FingerprintVersionResolver:
                                     clean_v = re.sub(r"^[a-zA-Z\-_]+", "", str(v)).strip()
                                     p.terminate()
                                     return clean_v or str(v), "handshake"
-                                
+
                     except json.JSONDecodeError:
                         pass
                 p.terminate()

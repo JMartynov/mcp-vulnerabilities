@@ -314,7 +314,7 @@ def create_parser() -> argparse.ArgumentParser:
     aud_p.add_argument("--fail-on-drift", action="store_true", help="Exit with exit code 2 if baseline drift is detected")
 
     # Audit Transitive
-    
+
     # Audit Typosquat
     typo_p = subparsers.add_parser(
         "audit-typosquat", help="Detect AI hallucinated and typosquatted MCP packages"

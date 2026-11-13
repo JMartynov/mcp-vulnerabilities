@@ -79,7 +79,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             return None
         if len(taints) == 1:
             return taints[0]
-        
+
         # Merge taints: keep the intersection of sanitized categories
         # because if ANY part is unsanitized, the whole is unsanitized for that category.
         intersection = set(TaintSinkCategory)
@@ -88,7 +88,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             intersection.intersection_update(t.sanitized_categories)
             if t.parameter_name not in names:
                 names.append(t.parameter_name)
-        
+
         return TaintState(parameter_name=", ".join(names), sanitized_categories=intersection)
 
     def _is_tainted(self, node: ast.AST) -> Optional[TaintState]:
@@ -113,7 +113,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             return self._combine_taints(taints)
         elif isinstance(node, ast.Call):
             call_name = self._get_call_name(node.func)
-            
+
             # Check if this call is a known sanitizer
             is_sanitizer = call_name in KNOWN_SANITIZERS
             sanitized_cats = KNOWN_SANITIZERS.get(call_name, set())
@@ -182,17 +182,17 @@ class McpToolAstVisitor(ast.NodeVisitor):
                         if isinstance(elt, ast.Name):
                             self.tainted_vars[elt.id] = TaintState(parameter_name=tainted_param.parameter_name, sanitized_categories=set(tainted_param.sanitized_categories))
         self.generic_visit(node)
-        
+
     def visit_AnnAssign(self, node: ast.AnnAssign):
         if not self.in_tool_function:
             self.generic_visit(node)
             return
-            
+
         if node.value:
             tainted_param = self._is_tainted(node.value)
             if tainted_param and isinstance(node.target, ast.Name):
                 self.tainted_vars[node.target.id] = TaintState(parameter_name=tainted_param.parameter_name, sanitized_categories=set(tainted_param.sanitized_categories))
-                
+
         self.generic_visit(node)
 
     def _get_call_name(self, func_node: ast.AST) -> str:
@@ -209,7 +209,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             return
 
         call_name = self._get_call_name(node.func)
-        
+
         # Helper function delegation
         if call_name in self.functions and call_name not in self.call_stack:
             self.call_stack.add(call_name)
@@ -217,7 +217,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             # Save state
             old_tainted_vars = self.tainted_vars.copy()
             old_param_lines = self.param_lines.copy()
-            
+
             # Map args to params
             new_tainted_vars = {}
             all_pos_args = func_def.args.posonlyargs + func_def.args.args
@@ -228,24 +228,24 @@ class McpToolAstVisitor(ast.NodeVisitor):
                     if arg_taint:
                         new_tainted_vars[param_name] = TaintState(parameter_name=arg_taint.parameter_name, sanitized_categories=set(arg_taint.sanitized_categories))
                         self.param_lines[param_name] = node.lineno
-                        
+
             for kw in node.keywords:
                 arg_taint = self._is_tainted(kw.value)
                 if arg_taint:
                     new_tainted_vars[kw.arg] = TaintState(parameter_name=arg_taint.parameter_name, sanitized_categories=set(arg_taint.sanitized_categories))
                     self.param_lines[kw.arg] = node.lineno
-            
+
             self.tainted_vars = new_tainted_vars
-            
+
             # Visit target function body
             for stmt in func_def.body:
                 self.visit(stmt)
-                
+
             # Restore state
             self.tainted_vars = old_tainted_vars
             self.param_lines = old_param_lines
             self.call_stack.remove(call_name)
-            
+
         # Check sinks
         sink_category = None
         severity = "HIGH"
@@ -259,7 +259,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             sink_category = TaintSinkCategory.COMMAND_INJECTION
             severity = "CRITICAL"
             remediation = "Use parameterized commands (lists) with shell=False, and validate input against an allowlist."
-            
+
             # Special case for subprocess calls that are safe if the first arg is a list
             if call_name.startswith("subprocess."):
                 if node.args:
@@ -267,10 +267,10 @@ class McpToolAstVisitor(ast.NodeVisitor):
                     # If it's a fixed list of strings, it might be safe (though elements could be tainted)
                     # We check if the command itself (or its arguments) is tainted
                     tainted_param = self._is_tainted(first_arg)
-                    
+
                     # If shell=True is passed, it's always dangerous
                     shell_true = any(kw.arg == "shell" and isinstance(kw.value, ast.Constant) and kw.value.value is True for kw in node.keywords)
-                    
+
                     if tainted_param and (shell_true or not isinstance(first_arg, (ast.List, ast.Tuple))):
                         # Tainted string to subprocess or shell=True
                         pass
@@ -324,7 +324,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
                 if taint and sink_category not in taint.sanitized_categories:
                     tainted_param = taint.parameter_name
                     break
-            
+
             if not tainted_param:
                 for kw in node.keywords:
                     taint = self._is_tainted(kw.value)

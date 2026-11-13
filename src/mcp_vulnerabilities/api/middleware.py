@@ -43,14 +43,14 @@ class ApiRequestHandler(BaseHTTPRequestHandler):
         req_id = str(uuid.uuid4())
         try:
             status, headers, response_data = self.router(self, self.server_instance)
-            
+
             self.send_response(status)
             self._send_cors_headers()
             self.send_header('X-Request-ID', req_id)
             for k, v in headers.items():
                 self.send_header(k, v)
             self.end_headers()
-            
+
             if response_data is not None:
                 if isinstance(response_data, dict) or isinstance(response_data, list):
                     self.wfile.write(json.dumps(response_data).encode('utf-8'))

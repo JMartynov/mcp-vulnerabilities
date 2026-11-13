@@ -118,7 +118,7 @@ class StdioTransport(BaseTransport):
                 env=self.env,
                 cwd=self.cwd,
             )
-            
+
             self._stdout_queue = queue.Queue()
             self._stderr_thread = threading.Thread(target=self._drain_stderr, daemon=True)
             self._stderr_thread.start()
@@ -134,7 +134,7 @@ class StdioTransport(BaseTransport):
                 self.process.wait(timeout=2.0)
             except subprocess.TimeoutExpired:
                 self.process.kill()
-                
+
             if self.process.stderr:
                 try:
                     self.process.stderr.close()
@@ -150,7 +150,7 @@ class StdioTransport(BaseTransport):
                     self.process.stdout.close()
                 except Exception:
                     pass
-                    
+
             self.process = None
         if hasattr(self, '_stdout_queue'):
             self._stdout_queue.put((None, None))

@@ -44,7 +44,7 @@ class GitLabAdvisoryConverter:
         # Map package slug
         package_slug = data.get("package_slug", "")
         ecosystem_str, _, package_name = package_slug.partition("/")
-        
+
         ecosystem_map = {
             "npm": "npm",
             "pypi": "PyPI",
@@ -55,7 +55,7 @@ class GitLabAdvisoryConverter:
             "pypi": "pypi",
             "go": "golang",
         }
-        
+
         eco = ecosystem_map.get(ecosystem_str.lower(), ecosystem_str)
         purl_eco = purl_eco_map.get(ecosystem_str.lower(), ecosystem_str.lower())
         purl = f"pkg:{purl_eco}/{package_name}"
@@ -85,31 +85,31 @@ class GitLabAdvisoryConverter:
                 events = []
                 # Simple parsing of "<=1.2.3", "<1.2.3", ">=1.0.0"
                 parts = dj.split()
-                
+
                 introduced = "0"
                 fixed = None
                 last_affected = None
-                
+
                 for part in parts:
                     if part.startswith(">="):
                         introduced = part[2:]
                     elif part.startswith(">"):
-                        pass 
+                        pass
                     elif part.startswith("<="):
                         last_affected = part[2:]
                     elif part.startswith("<"):
                         fixed = part[1:]
-                
+
                 if fixed is None and last_affected is None and data.get("fixed_versions"):
                     fixed = data.get("fixed_versions")[0]
-                    
+
                 if introduced:
                     events.append(EventSpec(introduced=introduced))
                 if fixed:
                     events.append(EventSpec(fixed=fixed))
                 if last_affected:
                     events.append(EventSpec(last_affected=last_affected))
-                    
+
                 if events:
                     ranges.append(RangeSpec(type=RangeType.SEMVER, events=tuple(events)))
 
@@ -121,7 +121,7 @@ class GitLabAdvisoryConverter:
         severity = []
         db_specific_mcp = None
         db_specific = {}
-        
+
         cvss_v3 = data.get("cvss_v3")
         if cvss_v3:
             severity.append(SeveritySpec(type=SeverityType.CVSS_V3, score=cvss_v3))
@@ -151,7 +151,7 @@ class GitLabAdvisoryConverter:
         references = []
         for u in urls:
             references.append(ReferenceSpec(url=u, type=ReferenceType.WEB))
-            
+
         uuid = data.get("uuid")
         if uuid:
             db_specific["gitlab_uuid"] = uuid
@@ -168,7 +168,7 @@ class GitLabAdvisoryConverter:
             references=tuple(references),
             database_specific=db_specific,
         )
-            
+
         return osv_vuln
 
 

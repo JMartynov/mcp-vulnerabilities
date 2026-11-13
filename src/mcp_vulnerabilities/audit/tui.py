@@ -25,11 +25,11 @@ class McpTuiExplorer:
         self.stdscr = stdscr
         self.args = args
         self.is_test = is_test
-        
+
         self.scanner = UniversalClientConfigScanner()
         # Initialize network scanner with 0 concurrency in test mode to avoid actually running
         self.net_scanner = NetworkMCPScanner(max_concurrency=1 if self.is_test else 64)
-        
+
         # We need a matcher, ideally loaded from state
         # In a real app we'd load the state/catalog properly
         def load_advisories():
@@ -40,24 +40,24 @@ class McpTuiExplorer:
             if dir_path.exists():
                 return VulnerabilityMatcher.from_directory(dir_path).advisories
             return []
-            
+
         self.matcher = VulnerabilityMatcher(load_advisories())
-        
+
         self.servers: List[DiscoveredClientServer] = []
         self.filtered_servers: List[DiscoveredClientServer] = []
         self.findings: dict[str, List[AuditFinding]] = {}
-        
+
         self.selected_idx = 0
         self.scroll_offset = 0
         self.detail_scroll = 0
-        
+
         self.search_query = ""
         self.is_searching = False
         self.focus_left = True  # True = Server List, False = Detail View
-        
+
         self.status_msg = ""
         self.status_time = 0
-        
+
         if not self.is_test:
             self._init_colors()
             self._load_data()
@@ -67,7 +67,7 @@ class McpTuiExplorer:
     def _init_colors(self):
         curses.start_color()
         curses.use_default_colors()
-        
+
         # Color pairs
         # Pair 1: Header/Highlight (White on Blue)
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)
@@ -97,7 +97,7 @@ class McpTuiExplorer:
                     self.servers = []
         else:
             self.servers = self.scanner.scan_all_clients()
-            
+
         # Network scan
         if not self.is_test:
             target = getattr(self.args, "target", "localhost")
@@ -108,14 +108,14 @@ class McpTuiExplorer:
                     ports = [int(p.strip()) for p in str(ports_arg).split(",") if p.strip()]
                 except ValueError:
                     ports = None
-            
+
             try:
                 try:
                     loop = asyncio.get_event_loop()
                 except RuntimeError:
                     loop = asyncio.new_event_loop()
                     asyncio.set_event_loop(loop)
-                
+
                 net_results = loop.run_until_complete(self.net_scanner.scan_target(target, ports))
                 for res in net_results:
                     if res.get("mcp_handshake"):
@@ -132,7 +132,7 @@ class McpTuiExplorer:
                         ))
             except Exception as e:
                 logger.debug(f"Network scan skipped: {e}")
-            
+
         # For simplicity, not blocking UI on network scan, just doing clients
         self.filtered_servers = self.servers[:]
         self._audit_servers()
@@ -153,15 +153,15 @@ class McpTuiExplorer:
         findings = self.findings.get(key, [])
         if not findings:
             return "[CLEAN]", 3
-            
+
         has_crit = any(getattr(f, "severity_level", getattr(f, "severity", "")).upper() == "CRITICAL" for f in findings)
         if has_crit:
             return "[CRIT]", 4
-            
+
         has_high = any(getattr(f, "severity_level", getattr(f, "severity", "")).upper() == "HIGH" for f in findings)
         if has_high:
             return "[HIGH]", 5
-            
+
         return "[MED]", 5
 
     def _get_ascii_badge(self, server: DiscoveredClientServer) -> str:
@@ -181,7 +181,7 @@ class McpTuiExplorer:
     def _copy_to_clipboard(self, text: str):
         if self.is_test:
             return
-        
+
         # Very simple clipboard logic using subprocess
         try:
             p = subprocess.Popen(['pbcopy'], stdin=subprocess.PIPE, stderr=subprocess.DEVNULL)
@@ -200,26 +200,26 @@ class McpTuiExplorer:
     def run(self):
         if self.is_test:
             return
-            
+
         # Hide cursor
         curses.curs_set(0)
         self.stdscr.timeout(100)  # non-blocking for status msg timeout
-        
+
         while self.running:
             self.height, self.width = self.stdscr.getmaxyx()
             self._draw()
-            
+
             try:
                 ch = self.stdscr.getch()
                 if ch != -1:
                     self.handle_keystroke(ch)
             except curses.error:
                 pass
-                
+
             # Clear status message after 3 seconds
             if self.status_msg and time.time() - self.status_time > 3:
                 self.status_msg = ""
-                
+
     def handle_keystroke(self, ch: int):
         if self.is_searching:
             if ch == 27:  # ESC
@@ -242,10 +242,10 @@ class McpTuiExplorer:
             # curses handles the geometry update automatically in python 3.9+,
             # but we force a redraw by continuing the loop.
             return
-            
+
         if ch in (ord('q'), 27): # q or ESC
             self.running = False
-            
+
         elif ch in (curses.KEY_UP, ord('k')):
             if self.focus_left:
                 if self.selected_idx > 0:
@@ -255,7 +255,7 @@ class McpTuiExplorer:
             else:
                 if self.detail_scroll > 0:
                     self.detail_scroll -= 1
-                    
+
         elif ch in (curses.KEY_DOWN, ord('j')):
             if self.focus_left:
                 if self.selected_idx < len(self.filtered_servers) - 1:
@@ -272,25 +272,25 @@ class McpTuiExplorer:
                     max_scroll = max(0, 15 + min(5, tools_len) * 2 + findings_len * 2 - (self.height - 7))
                     if self.detail_scroll < max_scroll:
                         self.detail_scroll += 1
-                
+
         elif ch in (curses.KEY_PPAGE,):
             if self.focus_left:
                 self.selected_idx = max(0, self.selected_idx - 10)
                 self.scroll_offset = max(0, self.scroll_offset - 10)
-                
+
         elif ch in (curses.KEY_NPAGE,):
             if self.focus_left:
                 self.selected_idx = min(len(self.filtered_servers) - 1, self.selected_idx + 10)
                 list_height = self.height - 5 - 2
                 if self.selected_idx >= self.scroll_offset + list_height:
                     self.scroll_offset = self.selected_idx - list_height + 1
-                    
+
         elif ch == ord('\t'):
             self.focus_left = not self.focus_left
-            
+
         elif ch == ord('/'):
             self.is_searching = True
-            
+
         elif ch == ord('r'):
             self.status_msg = "Re-probing in background..."
             self.status_time = time.time()
@@ -303,7 +303,7 @@ class McpTuiExplorer:
                 self.status_msg = "✅ Re-probe complete!"
                 self.status_time = time.time()
             threading.Thread(target=bg_probe, daemon=True).start()
-            
+
         elif ch == ord('p'):
             try:
                 pic = SecurityPicture.capture()
@@ -312,7 +312,7 @@ class McpTuiExplorer:
             except Exception as e:
                 self.status_msg = f"❌ Error saving picture: {e}"
             self.status_time = time.time()
-            
+
         elif ch == ord('f'):
             if not self.filtered_servers:
                 return
@@ -329,12 +329,12 @@ class McpTuiExplorer:
             except Exception as e:
                 self.status_msg = f"❌ Fix error: {e}"
             self.status_time = time.time()
-            
+
         elif ch == ord('c'):
             if not self.filtered_servers:
                 return
             server = self.filtered_servers[self.selected_idx]
-            
+
             # Simple redact
             clean_env = {}
             for k, v in (server.env or {}).items():
@@ -342,7 +342,7 @@ class McpTuiExplorer:
                     clean_env[k] = "***REDACTED***"
                 else:
                     clean_env[k] = v
-                    
+
             cfg = {
                 "command": server.command,
                 "args": server.args,
@@ -366,19 +366,19 @@ class McpTuiExplorer:
                 if query in s.server_name.lower() or query in s_client.lower():
                     self.filtered_servers.append(s)
                     continue
-                    
+
                 # check findings
                 key = f"{s_client}:{s.server_name}"
                 findings = self.findings.get(key, [])
                 if any(query in getattr(f, "vulnerability_id", getattr(getattr(f, "advisory", None), "id", "")).lower() for f in findings):
                     self.filtered_servers.append(s)
                     continue
-                    
+
                 # check tools
                 if s.spec and s.spec.tools:
                     if any(query in t.name.lower() for t in s.spec.tools):
                         self.filtered_servers.append(s)
-                        
+
         self.selected_idx = 0
         self.scroll_offset = 0
 
@@ -406,63 +406,63 @@ class McpTuiExplorer:
 
     def _draw(self):
         self.stdscr.erase()
-        
+
         if self.height < 24 or self.width < 80:
             self.stdscr.addstr(0, 0, "Terminal too small (need 80x24)", curses.A_BOLD)
             self.stdscr.refresh()
             return
-            
+
         # Draw Header (Top 3 lines)
         header_text = " 🛡️  MCP SECURITY EXPLORER v1.22.0  🛡️ "
         self.stdscr.attron(curses.color_pair(1) | curses.A_BOLD)
         self.stdscr.addstr(0, 0, " " * self.width)
         self.stdscr.addstr(0, max(0, (self.width - len(header_text)) // 2), header_text)
-        
+
         sub_text = self._get_header_subtitle()
         self.stdscr.addstr(1, 0, " " * self.width)
         self.stdscr.addstr(1, max(0, (self.width - len(sub_text)) // 2), sub_text)
         self.stdscr.addstr(2, 0, " " * self.width)
         self.stdscr.attroff(curses.color_pair(1) | curses.A_BOLD)
-        
+
         left_w = int(self.width * 0.4)
         right_w = self.width - left_w
         main_h = self.height - 5
-        
+
         # Left Panel (Server List)
         self._draw_box(3, 0, main_h, left_w, " Servers ", self.focus_left)
-        
+
         list_h = main_h - 2
         for i in range(list_h):
             idx = self.scroll_offset + i
             if idx < len(self.filtered_servers):
                 server = self.filtered_servers[idx]
-                
+
                 # Check for color support
                 use_color = not getattr(self.args, "no_color", False)
-                
+
                 if use_color:
                     badge, color = self._get_server_badge(server)
                 else:
                     badge = self._get_ascii_badge(server)
                     color = 0
-                    
+
                 client = getattr(server, "client", getattr(server, "client_name", ""))
                 display_str = f"{badge} {client}:{server.server_name}"
                 if len(display_str) > left_w - 4:
                     display_str = display_str[:left_w - 7] + "..."
-                    
+
                 attr = curses.A_NORMAL
                 if use_color:
                     attr = curses.color_pair(color)
-                    
+
                 if idx == self.selected_idx:
                     if use_color:
                         attr = curses.color_pair(2) | curses.A_BOLD
                     else:
                         attr = curses.A_REVERSE | curses.A_BOLD
-                        
+
                 self.stdscr.addstr(4 + i, 2, display_str, attr)
-                
+
         # Scroll indicators
         if self.scroll_offset > 0:
             self.stdscr.addstr(3, left_w - 4, " ▲ ")
@@ -471,11 +471,11 @@ class McpTuiExplorer:
 
         # Right Panel (Details)
         self._draw_box(3, left_w, main_h, right_w, " Inspector ", not self.focus_left)
-        
+
         if self.filtered_servers:
             server = self.filtered_servers[self.selected_idx]
             self._draw_details(4, left_w + 2, main_h - 2, right_w - 4, server)
-            
+
         # Footer
         footer_y = self.height - 2
         self.stdscr.attron(curses.color_pair(1))
@@ -483,14 +483,14 @@ class McpTuiExplorer:
         footer_text = " [f] Fix  [c] Copy  [p] Save Picture  [r] Re-probe  [/] Search  [q] Quit "
         self.stdscr.addstr(footer_y, 2, footer_text)
         self.stdscr.attroff(curses.color_pair(1))
-        
+
         # Status / Search
         self.stdscr.addstr(footer_y + 1, 0, " " * self.width)
         if self.is_searching:
             self.stdscr.addstr(footer_y + 1, 2, f"🔍 Search: {self.search_query}_", curses.A_BOLD)
         elif self.status_msg:
             self.stdscr.addstr(footer_y + 1, 2, self.status_msg, curses.A_BOLD)
-            
+
         self.stdscr.refresh()
 
     def _draw_box(self, y: int, x: int, h: int, w: int, title: str, focused: bool):
@@ -516,7 +516,7 @@ class McpTuiExplorer:
         config_path = getattr(server, "config_path", getattr(server, "source_file", None))
         if config_path:
             lines.append((f"Path:   {config_path}", getattr(curses, "color_pair", lambda x: 0)(6) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
-            
+
         lines.append(("", curses.A_NORMAL))
         lines.append(("Section B: Known Vulnerabilities", curses.A_BOLD | curses.A_UNDERLINE))
         key = f"{client}:{server.server_name}"
@@ -537,7 +537,7 @@ class McpTuiExplorer:
                 lines.append((f"• {vuln_id} ({sev}) - CVSS: {f.cvss_score or 'N/A'}", attr))
                 if safe_version:
                     lines.append((f"  Safe Version: {safe_version}", attr))
-                    
+
         lines.append(("", curses.A_NORMAL))
         lines.append(("Section C: Capabilities & Tools", curses.A_BOLD | curses.A_UNDERLINE))
         tools = (server.spec.tools if getattr(server, "spec", None) and getattr(server.spec, "tools", None) else None) or getattr(server, "declared_tools", [])
@@ -553,7 +553,7 @@ class McpTuiExplorer:
                     lines.append((f"  Schema: {list(input_schema.get('properties', {}).keys())}", getattr(curses, "color_pair", lambda x: 0)(6) if not getattr(self.args, "no_color", False) else curses.A_NORMAL))
             if len(tools) > 5:
                 lines.append((f"  ... and {len(tools) - 5} more", curses.A_NORMAL))
-        
+
         lines.append(("", curses.A_NORMAL))
         lines.append(("Section D: Baseline & Hash", curses.A_BOLD | curses.A_UNDERLINE))
         sha = server.spec.toolset_canonical_hash if getattr(server, "spec", None) and getattr(server.spec, "toolset_canonical_hash", None) else "N/A"

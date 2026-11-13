@@ -44,7 +44,7 @@ def is_vulnerable(ver, ranges, versions):
         intro = None
         fix = None
         last = None
-        
+
         for ev in events:
             if "introduced" in ev:
                 intro = parse_version(ev["introduced"])
@@ -52,7 +52,7 @@ def is_vulnerable(ver, ranges, versions):
                 fix = parse_version(ev["fixed"])
             if "last_affected" in ev:
                 last = parse_version(ev["last_affected"])
-                
+
         in_range = True
         if intro is not None and target < intro:
             in_range = False
@@ -60,7 +60,7 @@ def is_vulnerable(ver, ranges, versions):
             in_range = False
         if last is not None and target > last:
             in_range = False
-            
+
         if in_range and (intro is not None or fix is not None or last is not None):
             return True
     return False
@@ -82,7 +82,7 @@ def main():
     parser = argparse.ArgumentParser(description="Query airgapped vulnerability database.")
     parser.add_argument("--package", required=True, help="Package specifier, e.g. pkgname@1.2.3")
     args = parser.parse_args()
-    
+
     if "@" in args.package:
         parts = args.package.rsplit("@", 1)
         if len(parts) == 2 and parts[0]:
@@ -100,16 +100,16 @@ def main():
     if not gz_path.exists():
         print("Error: vulnerabilities.json.gz not found in current directory.", file=sys.stderr)
         sys.exit(1)
-        
+
     with gzip.open(gz_path, "rt", encoding="utf-8") as f:
         data = json.load(f)
-        
+
     vulns = data.get("vulnerabilities", {})
     if isinstance(vulns, dict):
         advisories = list(vulns.values())
     else:
         advisories = vulns
-        
+
     findings = check_package(pkg, ver, advisories)
     if findings:
         print(f"VULNERABILITIES FOUND FOR {args.package}:")
@@ -191,51 +191,51 @@ def export_airgap_bundle(
     """Package the OSV advisory database and an embedded search script into an offline air-gapped bundle."""
     out_path = Path(output_tar)
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    
+
     dir_path = Path(data_dir)
     gz_path = out_path.parent / "vulnerabilities.json.gz"
-    
+
     # Generate snapshot first
     snapshot_res = build_snapshot(data_dir=dir_path, output_gz=gz_path, generate_feeds=False)
-    
+
     query_py_path = out_path.parent / "query.py"
     query_py_path.write_text(QUERY_SCRIPT_CONTENT, encoding="utf-8")
-    
+
     # Create tarball
     with tarfile.open(out_path, "w:gz") as tar:
         # Add generated vulnerabilities.json.gz
         tar.add(gz_path, arcname="vulnerabilities.json.gz")
         # Add query.py
         tar.add(query_py_path, arcname="query.py")
-        
+
         # Add all json files in data_dir (including index.json, excluding sync_state.json)
         for j_file in sorted(dir_path.rglob("*.json")):
             if j_file.name == "sync_state.json":
                 continue
             arc_name = Path("data/vulnerabilities") / j_file.relative_to(dir_path)
             tar.add(j_file, arcname=str(arc_name))
-            
+
     # Compute sha256 checksum
     sha256_hash = hashlib.sha256()
     with open(out_path, "rb") as f:
         for byte_block in iter(lambda: f.read(4096), b""):
             sha256_hash.update(byte_block)
-            
+
     checksum = sha256_hash.hexdigest()
     checksum_path = out_path.with_suffix(".tar.gz.sha256")
     if out_path.suffix == ".gz" and out_path.stem.endswith(".tar"):
         checksum_path = out_path.parent / (out_path.name + ".sha256")
     elif out_path.suffix == ".gz":
         checksum_path = out_path.with_suffix(".gz.sha256")
-        
+
     checksum_path.write_text(f"{checksum}  {out_path.name}\n", encoding="utf-8")
-    
+
     # Cleanup intermediate files
     if gz_path.exists():
         gz_path.unlink()
     if query_py_path.exists():
         query_py_path.unlink()
-        
+
     logger.info("Created airgap bundle %s (checksum: %s)", out_path, checksum)
     return {
         "bundle_path": str(out_path),
@@ -250,16 +250,16 @@ def export_osv_bucket(data_dir: Path, output_dir: Path) -> dict[str, Any]:
     data_path = Path(data_dir)
     out_path = Path(output_dir)
     out_path.mkdir(parents=True, exist_ok=True)
-    
+
     zip_path = out_path / "all.zip"
     manifest_path = out_path / "manifest.json"
-    
+
     vulnerabilities = []
-    
+
     # OSV format requires deterministic zip, meaning stable timestamps and order
     # Using 1980-01-01 00:00:00 as epoch for zip files
     zip_time = (1980, 1, 1, 0, 0, 0)
-    
+
     with zipfile.ZipFile(zip_path, 'w', compression=zipfile.ZIP_DEFLATED) as zf:
         for j_file in sorted(data_path.rglob("*.json")):
             if j_file.name in ("sync_state.json", "index.json", ".vuln_index.pickle"):
@@ -267,7 +267,7 @@ def export_osv_bucket(data_dir: Path, output_dir: Path) -> dict[str, Any]:
             try:
                 # Read content and rewrite to ensure formatting
                 content_dict = json.loads(j_file.read_text(encoding="utf-8"))
-                
+
                 # Check for required fields based on OSV 1.6 using OsvValidator
                 errors = OsvValidator.validate(content_dict)
                 if errors:
@@ -277,27 +277,27 @@ def export_osv_bucket(data_dir: Path, output_dir: Path) -> dict[str, Any]:
                 if "modified" not in content_dict or "published" not in content_dict:
                     logger.warning("Missing modified or published for %s", j_file.name)
                     continue
-                    
+
                 json_str = json.dumps(content_dict, ensure_ascii=False, indent=2)
-                
+
                 # Write to zip deterministically
                 zinfo = zipfile.ZipInfo(j_file.name, zip_time)
                 # zipfile.ZIP_DEFLATED is already used at the file level but set permissions
                 zinfo.external_attr = 0o644 << 16  # standard rw-r--r--
                 zinfo.compress_type = zipfile.ZIP_DEFLATED
                 zf.writestr(zinfo, json_str.encode("utf-8"))
-                
+
                 vulnerabilities.append(content_dict)
             except Exception as exc:
                 logger.warning("Error reading %s during export: %s", j_file, exc)
-                
+
     # Calculate SHA256 of the zip file
     hasher = hashlib.sha256()
     with open(zip_path, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
             hasher.update(chunk)
     zip_sha256 = hasher.hexdigest()
-    
+
     # Create manifest.json
     manifest = {
         "count": len(vulnerabilities),
@@ -305,14 +305,14 @@ def export_osv_bucket(data_dir: Path, output_dir: Path) -> dict[str, Any]:
         "sha256": zip_sha256
     }
     manifest_path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    
+
     logger.info(
         "Successfully exported OSV bucket with %d vulnerabilities to %s (SHA256: %s)",
         len(vulnerabilities),
         output_dir,
         zip_sha256,
     )
-    
+
     return manifest
 
 

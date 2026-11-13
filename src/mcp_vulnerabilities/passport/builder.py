@@ -11,15 +11,15 @@ class PassportBuilder:
 
     def build_from_source(self, repo_path: Path, package_name: str, ecosystem: str) -> ServerPackageSpec:
         """Build a ServerPackageSpec from analyzing a local source directory."""
-        
+
         # Run reachability analysis
         report = AstReachabilityAnalyzer.analyze_directory(repo_path)
-        
+
         dependencies = {}
         for imported_pkg in report.imports.keys():
             dep_info = AstReachabilityAnalyzer.evaluate_package(imported_pkg, report)
             is_reachable = dep_info.status == "REACHABLE"
-            
+
             dep_data = {
                 "reachable_via_tool": is_reachable,
                 "called_symbols": dep_info.called_symbols,
@@ -30,9 +30,9 @@ class PassportBuilder:
         # Utilize McpSourceScanner
         scanner = McpSourceScanner(str(repo_path))
         findings = scanner.scan()
-        
+
         # Format taint findings into dependencies dictionary so they aren't lost
-        # (Since VersionFingerprint doesn't natively hold taint findings directly, 
+        # (Since VersionFingerprint doesn't natively hold taint findings directly,
         # we stash them under a special key for correlation).
         dependencies["__taint_findings__"] = json.dumps([
             {
@@ -44,7 +44,7 @@ class PassportBuilder:
             }
             for f in findings
         ])
-        
+
         vf = VersionFingerprint(
             version="0.0.0-dev",
             toolset_canonical_hash="unknown",

@@ -39,7 +39,7 @@ class DualAxisValidator:
         pt = model.protocol_trust
         if pt.status.value not in ["VERIFIED", "RESTRICTED", "ELEVATED_RISK", "SUSPICIOUS"]:
             errors.append(f"Invalid ProtocolTrustStatus: '{pt.status.value}'")
-        
+
         if pt.prompt_injection_guard not in ["SHIELDED", "UNGUARDED", "PARTIAL"]:
             errors.append(f"Invalid prompt_injection_guard: '{pt.prompt_injection_guard}'")
 
@@ -66,7 +66,7 @@ class DualAxisValidator:
         for k in req_keys:
             if k in sc.vulnerability_counts and not isinstance(sc.vulnerability_counts[k], int):
                 errors.append(f"vulnerability_counts['{k}'] must be an int")
-                
+
         return errors
 
     @classmethod

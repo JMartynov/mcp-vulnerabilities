@@ -37,7 +37,7 @@ class BridgeDaemon:
         self.session_token = secrets.token_hex(16)
         self.server: Optional[asyncio.AbstractServer] = None
         self.subscribers: list[asyncio.Queue] = []
-        
+
     async def emit_event(self, event_type: str, payload: dict):
         event_data = {"type": event_type, "payload": payload}
         for q in self.subscribers:
@@ -82,7 +82,7 @@ class BridgeDaemon:
             "Connection": "close"
         }
         headers.update(extra_headers)
-        
+
         response = f"HTTP/1.1 {status_code} {status_text}\r\n"
         for k, v in headers.items():
             response += f"{k}: {v}\r\n"
@@ -97,7 +97,7 @@ class BridgeDaemon:
             request_line_str = request_line.decode('utf-8').strip()
             if not request_line_str:
                 return
-            
+
             parts = request_line_str.split(" ")
             if len(parts) < 2:
                 return
@@ -123,7 +123,7 @@ class BridgeDaemon:
             if method == "OPTIONS":
                 self._send_response(writer, 200, "OK", cors_headers, b"")
                 return
-                
+
             parsed_url = urllib.parse.urlparse(path)
             query = urllib.parse.parse_qs(parsed_url.query)
 
@@ -152,7 +152,7 @@ class BridgeDaemon:
                         if not all([client, server_name, target_version]):
                             self._send_response(writer, 400, "Bad Request", cors_headers, json.dumps({"error": "missing parameters"}).encode())
                             return
-                        
+
                         try:
                             from mcp_vulnerabilities.audit.fixer import ClientConfigFixer
                             from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
@@ -160,7 +160,7 @@ class BridgeDaemon:
                             _ = ClientConfigFixer(matcher)
                         except Exception:
                             pass
-                        
+
                         # Just a dummy call since we can't easily run fix_config without path, or we can use fix_all_clients
                         res = {"status": "ok", "message": f"Fixed {server_name} in {client} to {target_version}"}
                         self._send_response(writer, 200, "OK", cors_headers, json.dumps(res).encode())
@@ -205,8 +205,8 @@ class BridgeDaemon:
                 await self._handle_websocket(reader, writer, headers, is_simulation)
             else:
                 self._send_response(writer, 404, "Not Found", cors_headers, b"")
-                
-        except Exception as e:
+
+        except Exception:
             pass
         finally:
             if not writer.is_closing():
@@ -223,7 +223,7 @@ class BridgeDaemon:
             "Connection": "keep-alive"
         }
         headers.update(cors_headers)
-        
+
         response = "HTTP/1.1 200 OK\r\n"
         for k, v in headers.items():
             response += f"{k}: {v}\r\n"
@@ -270,9 +270,9 @@ class BridgeDaemon:
         if not ws_key:
             self._send_response(writer, 400, "Bad Request", {}, b"Missing Sec-WebSocket-Key")
             return
-        
+
         ws_accept = base64.b64encode(hashlib.sha1((ws_key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").encode('utf-8')).digest()).decode('utf-8')
-        
+
         response = (
             "HTTP/1.1 101 Switching Protocols\r\n"
             "Upgrade: websocket\r\n"
@@ -286,43 +286,42 @@ class BridgeDaemon:
             while True:
                 try:
                     header = await reader.readexactly(2)
-                    fin = (header[0] & 0x80) != 0
                     opcode = header[0] & 0x0F
-                    
+
                     if opcode == 0x8: # close
                         break
-                        
+
                     has_mask = (header[1] & 0x80) != 0
                     payload_len = header[1] & 0x7F
-                    
+
                     if payload_len == 126:
                         ext_len = await reader.readexactly(2)
                         payload_len = int.from_bytes(ext_len, byteorder='big')
                     elif payload_len == 127:
                         ext_len = await reader.readexactly(8)
                         payload_len = int.from_bytes(ext_len, byteorder='big')
-                        
+
                     if has_mask:
                         masking_key = await reader.readexactly(4)
                     else:
                         masking_key = None
-                        
+
                     payload_data = await reader.readexactly(payload_len)
-                    
+
                     if has_mask:
                         unmasked = bytearray(payload_len)
                         for i in range(payload_len):
                             unmasked[i] = payload_data[i] ^ masking_key[i % 4]
                         payload_data = unmasked
-                        
+
                     if opcode == 0x1:
                         pass
-                    
+
                 except asyncio.IncompleteReadError:
                     break
-                except Exception as e:
+                except Exception:
                     break
-        
+
         read_task = asyncio.create_task(ws_reader())
 
         try:
@@ -350,14 +349,14 @@ class BridgeDaemon:
                     await writer.drain()
                     if i < len(events) - 1:
                         await asyncio.sleep(0.05)
-                
+
                 writer.write(bytes([0x88, 0x00]))
                 await writer.drain()
                 await read_task
             else:
                 q = asyncio.Queue()
                 self.subscribers.append(q)
-                
+
                 async def ws_writer():
                     try:
                         while True:
@@ -380,13 +379,13 @@ class BridgeDaemon:
                         pass
                     except Exception:
                         pass
-                
+
                 write_task = asyncio.create_task(ws_writer())
                 await read_task
                 write_task.cancel()
                 if q in self.subscribers:
                     self.subscribers.remove(q)
-                
+
         except Exception:
             pass
 
@@ -399,9 +398,9 @@ def main():
     parser.add_argument("--no-auth", action="store_true", help="Disable session token requirement (for local testing)")
     parser.add_argument("--open-browser", action="store_true", help="Automatically open docs/index.html in default browser on launch")
     args = parser.parse_args()
-    
+
     cors_origins = args.allowed_origins.split(',') if args.allowed_origins else []
-    
+
     if args.open_browser:
         import webbrowser
         from pathlib import Path
@@ -409,7 +408,7 @@ def main():
         webbrowser.open(f"file://{docs_path.resolve()}")
 
     daemon = BridgeDaemon(port=args.port, simulate=args.simulate, allowed_origins=cors_origins, no_auth=args.no_auth)
-    
+
     async def run():
         await daemon.start()
         print(f"BridgeDaemon listening on {daemon.host}:{daemon.port}")
@@ -438,15 +437,15 @@ def run_bridge_server(args):
     cors_origins = getattr(args, 'cors_origins', '').split(',') if getattr(args, 'cors_origins', '') else []
     no_auth = getattr(args, 'no_auth', False)
     open_browser = getattr(args, 'open_browser', False)
-    
+
     if open_browser:
         import webbrowser
         from pathlib import Path
         docs_path = Path(__file__).parent.parent.parent.parent / "docs" / "index.html"
         webbrowser.open(f"file://{docs_path.resolve()}")
-    
+
     daemon = BridgeDaemon(host=host, port=port, simulate=simulate, allowed_origins=cors_origins, no_auth=no_auth)
-    
+
     async def run():
         await daemon.start()
         print(f"BridgeDaemon listening on {daemon.host}:{daemon.port}")

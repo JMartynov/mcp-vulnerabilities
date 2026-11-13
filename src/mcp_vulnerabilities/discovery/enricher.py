@@ -27,7 +27,7 @@ class CatalogVersionEnricher:
         Returns stats dict with counts for attempted, updated, failed, and skipped.
         """
         logger.info("Loading catalog for enrichment from %s", self.catalog_file)
-        
+
         if not self.catalog_file.exists():
             logger.error("Catalog file %s not found.", self.catalog_file)
             return {"attempted": 0, "updated": 0, "failed": 0, "skipped": 0}
@@ -40,7 +40,7 @@ class CatalogVersionEnricher:
             return {"attempted": 0, "updated": 0, "failed": 0, "skipped": 0}
 
         servers = catalog_data.get("servers", {})
-        
+
         candidates = []
         for key, pkg in servers.items():
             if pkg.get("ecosystem") == "PyPI":
@@ -53,7 +53,7 @@ class CatalogVersionEnricher:
         logger.info("Found %d PyPI packages to enrich.", len(candidates))
 
         stats = {"attempted": len(candidates), "updated": 0, "failed": 0, "skipped": 0}
-        
+
         if not candidates:
             return stats
 

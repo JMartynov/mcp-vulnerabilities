@@ -10,7 +10,7 @@ RULE_MAPPINGS = {
     "MALWARE": ("LLM03:2025", "MCP04", "Supply Chain Vulnerabilities"),
     "PROMPT_INJECTION": ("LLM01:2025", "MCP06", "Prompt Injection"),
     "CREDENTIAL_EXFILTRATION": ("LLM02:2025", "MCP01", "Sensitive Information Disclosure"),
-    
+
     # AST Taint (typically string representation)
     "COMMAND_INJECTION": ("LLM05:2025", "MCP05", "Improper Output Handling"),
     "CODE_EVALUATION": ("LLM05:2025", "MCP05", "Improper Output Handling"),
@@ -31,7 +31,7 @@ class OwaspComplianceScorer:
     def _map_rule(cls, rule_id: str) -> Tuple[str, str, str]:
         if rule_id in RULE_MAPPINGS:
             return RULE_MAPPINGS[rule_id]
-        
+
         # Fallbacks or string matching
         if "PROMPT_INJECTION" in rule_id.upper() or rule_id.endswith(".yar"):
              return ("LLM01:2025", "MCP06", "Prompt Injection")
@@ -41,14 +41,14 @@ class OwaspComplianceScorer:
              return ("LLM05:2025", "MCP05", "Improper Output Handling")
         if rule_id.startswith("MCP-R"):
              return ("LLM06:2025", "MCP02", "Excessive Agency")
-        
+
         # Default fallback
         return ("LLMXX:2025", "MCPXX", "Unknown Vulnerability")
 
     @classmethod
     def evaluate(
-        cls, 
-        readiness_issues: List[ReadinessIssue] = None, 
+        cls,
+        readiness_issues: List[ReadinessIssue] = None,
         threat_findings: List[ThreatFinding] = None,
         taint_findings: List[Any] = None
     ) -> OwaspComplianceReport:
@@ -114,7 +114,7 @@ class OwaspComplianceScorer:
             score -= cls._penalty(sev)
 
         score = max(0, score)
-        
+
         tier = ComplianceTier.COMPLIANT
         if score < 70:
             tier = ComplianceTier.NON_COMPLIANT

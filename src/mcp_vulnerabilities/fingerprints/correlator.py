@@ -51,7 +51,7 @@ class VulnerabilityCorrelator:
             if spec.package_name == package_name or package_name in spec.to_dict().get("aliases", []):
                 package_spec = spec
                 break
-        
+
         if not package_spec:
             return None
 
@@ -71,7 +71,7 @@ class VulnerabilityCorrelator:
                     pkg = affected.get("package", {})
                     if VulnerabilityMatcher._normalize_package_name(pkg.get("name", "")) != norm_name:
                         continue
-                    
+
                     eco = pkg.get("ecosystem", "").lower()
                     if eco and package_spec.ecosystem:
                         spec_eco = package_spec.ecosystem.lower()
@@ -87,13 +87,13 @@ class VulnerabilityCorrelator:
                     if self.matcher._is_version_in_ranges(version_str, ranges, versions):
                         is_vulnerable = True
                         matching_advisories.append(OsvVulnerability.from_dict(adv_dict))
-            
+
             timeline.append(VersionVulnerabilityState(
                 version=version_str,
                 is_vulnerable=is_vulnerable,
                 matching_advisories=matching_advisories
             ))
-        
+
         # Sort timeline by version
         def sort_key(state: VersionVulnerabilityState):
             try:
@@ -126,7 +126,7 @@ class VulnerabilityCorrelator:
             recommended_safe_version=recommended_safe_version,
             no_fix_available=no_fix_available
         )
-        
+
     def generate_remediation_command(self, ecosystem: str, package: str, safe_version: str) -> str | None:
         """Generates an ecosystem-specific remediation upgrade command."""
         from mcp_vulnerabilities.catalog import generate_upgrade_command

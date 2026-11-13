@@ -171,7 +171,7 @@ def build_inventory_snapshot_from_scan(
             env=dict(ds.env) if ds.env else {},
             declared_tools=list(ds.declared_tools) if ds.declared_tools else []
         ))
-    
+
     return InventorySnapshot(
         host_id=host_id,
         timestamp=datetime.now(timezone.utc).isoformat(),

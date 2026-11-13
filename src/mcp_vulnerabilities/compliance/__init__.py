@@ -3,7 +3,7 @@ from .owasp import OwaspComplianceScorer
 
 __all__ = [
     "ComplianceTier",
-    "ComplianceViolation", 
+    "ComplianceViolation",
     "OwaspComplianceReport",
     "OwaspComplianceScorer"
 ]

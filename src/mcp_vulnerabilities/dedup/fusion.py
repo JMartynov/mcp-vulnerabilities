@@ -43,7 +43,6 @@ class AdvisoryFusionEngine:
 
         # 2. Severity & CVSS Priority
         # NVD v3.1/v4.0 > GHSA > GitLab > Highest nominal score
-        severities = []
         divergent_severities = {}
         authoritative_severity = None
 

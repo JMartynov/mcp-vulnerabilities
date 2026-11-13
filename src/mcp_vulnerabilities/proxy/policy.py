@@ -56,7 +56,7 @@ class ProxyPolicyEngine:
     def evaluate_request(self, msg: dict[str, Any]) -> PolicyDecision:
         if msg.get("method") != "tools/call":
             return PolicyDecision(True, "DEFAULT_ALLOW", "Not a tools/call")
-        
+
         tool_name = msg.get("params", {}).get("name")
         if not tool_name:
             return PolicyDecision(True, "DEFAULT_ALLOW", "No tool name")
@@ -77,7 +77,7 @@ class ProxyPolicyEngine:
                         return PolicyDecision(False, "PAYLOAD_GUARDRAIL_VIOLATION", "SQL injection detected")
                     if "$(" in arg_val or "`" in arg_val or "|" in arg_val or ";" in arg_val:
                         return PolicyDecision(False, "PAYLOAD_GUARDRAIL_VIOLATION", "Shell injection detected")
-                    
+
         return PolicyDecision(True, "ALLOW", "Request allowed")
 
     def inspect_response(self, msg: dict[str, Any], request_method: str | None = None) -> tuple[dict[str, Any], list[AuditEvent]]:
@@ -93,7 +93,7 @@ class ProxyPolicyEngine:
                         events.append(AuditEvent("SHADOW_TOOL_DETECTED", "CRITICAL", f"Unadvertised tool {tool_name}", {"tool": tool_name}, "Stripped from tools/list"))
                         continue
                     filtered_tools.append(tool)
-                
+
                 # Create a copy so we do not mutate in place for all callers if not desired
                 new_msg = dict(msg)
                 new_msg["result"] = dict(result)

@@ -176,7 +176,7 @@ class McpCatalogState:
                 )
         except Exception as exc:
             logger.warning("Failed to load catalog state from %s: %s", self.state_file, exc)
-            
+
             # Attempt to recover from standard backup (.bak)
             bak_file = self.state_file.with_name(self.state_file.name + ".bak")
             if bak_file.is_file():
@@ -245,10 +245,10 @@ class McpCatalogState:
     def should_query(self, ecosystem: str, name: str, current_version: str | None = None, ttl_days: int = 30) -> bool:
         """Check whether a package requires re-querying based on version change or TTL."""
         key = self.package_key(ecosystem, name)
-        
+
         if hasattr(self, "tombstones") and key in self.tombstones:
             return False
-            
+
         record = self.records.get(key)
         if not record:
             return True  # Never audited before
@@ -424,7 +424,7 @@ class VersionSecurityRecord:
             ResourceSignature.from_dict(r) if isinstance(r, dict) else r
             for r in raw_resources
         ]
-        
+
         dual_axis_security = None
         if "dual_axis_security" in data and data["dual_axis_security"] is not None:
             dual_axis_security = DualAxisSecurityAssessment.from_dict(data["dual_axis_security"])
@@ -1087,28 +1087,28 @@ def prune_catalog(catalog_data: dict, catalog_state: 'McpCatalogState') -> dict:
     """Removes tombstoned and archived servers from the catalog dictionary."""
     if not catalog_data or "servers" not in catalog_data:
         return catalog_data
-    
+
     servers = catalog_data["servers"]
     pruned_servers = {}
-    
+
     for key, server in servers.items():
         eco = server.get("ecosystem")
         name = server.get("name")
         if not eco or not name:
             pruned_servers[key] = server
             continue
-            
+
         canonical_key = catalog_state.package_key(eco, name)
-        
+
         # Check tombstones
         if canonical_key in catalog_state.tombstones:
             tombstone = catalog_state.tombstones[canonical_key]
             # Log pruning for info
             logger.info("Pruning %s from catalog: %s", key, tombstone.reason)
             continue
-            
+
         pruned_servers[key] = server
-        
+
     pruned_data = catalog_data.copy()
     pruned_data["servers"] = pruned_servers
     pruned_data["total_servers"] = len(pruned_servers)

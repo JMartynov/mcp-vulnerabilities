@@ -92,7 +92,7 @@ class CorrelatedTimeline:
         ensuring monotonic upgrade (safe_version > current_version).
         """
         from mcp_vulnerabilities.audit.matcher import VulnerabilityMatcher
-        
+
         try:
             curr_v = VulnerabilityMatcher._parse_version(current_version)
         except Exception:

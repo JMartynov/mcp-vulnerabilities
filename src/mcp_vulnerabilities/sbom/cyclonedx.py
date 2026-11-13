@@ -40,7 +40,7 @@ class CycloneDxBomBuilder:
     def add_audit_report(self, report: AuditReport) -> None:
         for server in report.scanned_servers:
             self._add_server_component(server)
-            
+
         for finding in report.findings:
             self._add_vulnerability(finding)
 
@@ -60,7 +60,7 @@ class CycloneDxBomBuilder:
             sig = extract_tool_signature(tool)
             endpoint = f"mcp://{report.server_name}/tools/{sig.name}"
             service["endpoints"].append(endpoint)
-            
+
             tool_comp_ref = f"tool:{report.server_name}:{sig.name}"
             tool_comp = {
                 "bom-ref": tool_comp_ref,
@@ -72,15 +72,15 @@ class CycloneDxBomBuilder:
                 alg, val = sig.canonical_hash.split(":", 1) if ":" in sig.canonical_hash else ("SHA-256", sig.canonical_hash)
                 if alg == "sha256": alg = "SHA-256"
                 tool_comp["hashes"] = [{"alg": alg, "content": val}]
-                
+
             self.bom["components"].append(tool_comp)
-            
+
             # Dependency linkage
             self.bom["dependencies"].append({
                 "ref": service_ref,
                 "dependsOn": [tool_comp_ref]
             })
-            
+
         self.bom["services"].append(service)
 
         for finding in report.findings:
@@ -108,14 +108,14 @@ class CycloneDxBomBuilder:
         purl = f"pkg:{purl_eco}/{server.package_name}"
         if server.version:
             purl += f"@{server.version}"
-        
+
         bom_ref = self._generate_bom_ref("component", server.package_name, server.version)
-        
+
         # Check if already exists
         for c in self.bom["components"]:
             if c["bom-ref"] == bom_ref:
                 return
-                
+
         comp = {
             "bom-ref": bom_ref,
             "type": "library",
@@ -124,12 +124,12 @@ class CycloneDxBomBuilder:
         }
         if server.version:
             comp["version"] = server.version
-            
+
         self.bom["components"].append(comp)
 
     def _add_vulnerability(self, finding: AuditFinding) -> None:
         bom_ref = self._generate_bom_ref("component", finding.package_name, finding.installed_version)
-        
+
         vuln = {
             "id": finding.vulnerability_id,
             "ratings": [],
@@ -149,7 +149,7 @@ class CycloneDxBomBuilder:
                 "detail": finding.summary or "No summary provided."
             }
         }
-        
+
         if finding.severity_level:
             severity_map = {
                 "CRITICAL": "critical",
@@ -159,7 +159,7 @@ class CycloneDxBomBuilder:
                 "MODERATE": "medium"
             }
             mapped_sev = severity_map.get(finding.severity_level.upper(), "unknown")
-            
+
             rating = {
                 "severity": mapped_sev,
                 "method": "CVSSv3" if finding.cvss_score else "other"
@@ -167,12 +167,12 @@ class CycloneDxBomBuilder:
             if finding.cvss_score:
                 rating["score"] = finding.cvss_score
             vuln["ratings"].append(rating)
-                
+
         if finding.references:
             vuln["advisories"] = [{"url": ref} for ref in finding.references]
-            
+
         self.bom["vulnerabilities"].append(vuln)
-        
+
     def build(self) -> Dict[str, Any]:
         res = {k: v for k, v in self.bom.items() if v or k in ("components", "services", "vulnerabilities", "dependencies")}
         if not res.get("components"):

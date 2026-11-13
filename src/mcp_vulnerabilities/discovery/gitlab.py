@@ -30,9 +30,9 @@ class GitLabAdvisorySync:
                 if repo_dir.exists():
                     shutil.rmtree(repo_dir)
                 repo_dir.mkdir(parents=True, exist_ok=True)
-                
+
                 subprocess.run(["git", "clone", "--filter=blob:none", "--sparse", self.repo_url, str(repo_dir)], check=True, capture_output=True)
-                
+
                 for eco in self.target_ecosystems:
                     subprocess.run(["git", "-C", str(repo_dir), "sparse-checkout", "add", eco], check=True, capture_output=True)
             return True
@@ -44,11 +44,9 @@ class GitLabAdvisorySync:
         try:
             archive_path = self.storage_dir / "archive.tar.gz"
             urllib.request.urlretrieve(self.archive_url, archive_path)
-            
+
             with tarfile.open(archive_path, "r:gz") as tar:
                 # Filter to only extract the ecosystems we care about, adjusting paths to strip the top-level dir
-                top_dir = tar.getnames()[0].split('/')[0] if tar.getnames() else "advisories-community-main"
-                
                 members_to_extract = []
                 for member in tar.getmembers():
                     parts = member.name.split('/')
@@ -56,9 +54,9 @@ class GitLabAdvisorySync:
                         # Strip the top dir
                         member.name = "/".join(parts[1:])
                         members_to_extract.append(member)
-                
+
                 tar.extractall(path=repo_dir, members=members_to_extract)
-            
+
             archive_path.unlink()
             return True
         except (urllib.error.URLError, tarfile.TarError, OSError) as e:
@@ -84,7 +82,7 @@ class GitLabAdvisorySync:
         """Scan directory and parse advisories into OSV models."""
         target = Path(target_dir) if target_dir else self.storage_dir / "repo"
         advisories = []
-        
+
         if not target.exists():
             return advisories
 
@@ -98,6 +96,6 @@ class GitLabAdvisorySync:
                             advisories.append(vuln)
                         except Exception as e:
                             logger.error(f"Failed to parse {file_path}: {e}")
-                            
+
         return advisories
 

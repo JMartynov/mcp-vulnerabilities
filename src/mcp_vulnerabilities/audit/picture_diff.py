@@ -27,16 +27,16 @@ class SecurityPictureDiffer:
     @staticmethod
     def compare(baseline: SecurityPicture, current: SecurityPicture) -> SecurityDriftReport:
         report = SecurityDriftReport()
-        
+
         baseline_map = {s.package_name: s for s in baseline.servers}
         current_map = {s.package_name: s for s in current.servers}
-        
+
         baseline_pkgs = set(baseline_map.keys())
         current_pkgs = set(current_map.keys())
-        
+
         added = current_pkgs - baseline_pkgs
         removed = baseline_pkgs - current_pkgs
-        
+
         for pkg in added:
             s = current_map[pkg]
             report.added_servers.append({"package_name": pkg, "version": s.version})
@@ -57,20 +57,20 @@ class SecurityPictureDiffer:
         for pkg in common:
             b_s = baseline_map[pkg]
             c_s = current_map[pkg]
-            
+
             # Check version / CVE diffs
             b_cves = set(b_s.confirmed_cves)
             c_cves = set(c_s.confirmed_cves)
-            
+
             for cve in c_cves - b_cves:
                 report.newly_introduced_vulnerabilities.append({"package_name": pkg, "cve": cve, "version": c_s.version})
             for cve in b_cves - c_cves:
                 report.resolved_vulnerabilities.append({"package_name": pkg, "cve": cve, "version": c_s.version})
-                
+
             # Check tamper status
             if not b_s.tamper_status and c_s.tamper_status:
                 report.tamper_incidents.append({"package_name": pkg, "version": c_s.version, "incident": "New tamper signature detected"})
-                
+
             # Check tool hash / schema changes
             if b_s.canonical_tool_hash and c_s.canonical_tool_hash and b_s.canonical_tool_hash != c_s.canonical_tool_hash:
                 report.tool_schema_changes.append({"package_name": pkg, "old_hash": b_s.canonical_tool_hash, "new_hash": c_s.canonical_tool_hash})
