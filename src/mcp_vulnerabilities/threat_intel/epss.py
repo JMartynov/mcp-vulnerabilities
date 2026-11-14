@@ -26,7 +26,9 @@ class EpssScore:
         Returns:
             bool: True if EPSS score >= 0.36 or percentile >= 0.90, False otherwise.
         """
-        return self.score >= 0.36 or self.percentile >= 0.90
+        return (self.score is not None and self.score >= 0.36) or (
+            self.percentile is not None and self.percentile >= 0.90
+        )
 
 
 class EpssClient:

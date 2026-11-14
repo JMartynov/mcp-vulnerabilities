@@ -100,3 +100,26 @@ def test_web_epss_pill_classes():
     assert "epss-warning" in content
     assert "epss-low" in content
     assert "escapeHtml" in content
+
+
+def test_epss_score_is_high_risk_with_none():
+    # Both None
+    epss_none = EpssScore("CVE-2024-0001", score=None, percentile=None, date="2024-01-01")  # type: ignore[arg-type]
+    assert epss_none.is_high_risk is False
+
+    # Score None, percentile below threshold
+    epss_score_none_low = EpssScore("CVE-2024-0002", score=None, percentile=0.5, date="2024-01-01")  # type: ignore[arg-type]
+    assert epss_score_none_low.is_high_risk is False
+
+    # Score None, percentile meets threshold
+    epss_score_none_high = EpssScore("CVE-2024-0003", score=None, percentile=0.90, date="2024-01-01")  # type: ignore[arg-type]
+    assert epss_score_none_high.is_high_risk is True
+
+    # Percentile None, score below threshold
+    epss_pct_none_low = EpssScore("CVE-2024-0004", score=0.1, percentile=None, date="2024-01-01")  # type: ignore[arg-type]
+    assert epss_pct_none_low.is_high_risk is False
+
+    # Percentile None, score meets threshold
+    epss_pct_none_high = EpssScore("CVE-2024-0005", score=0.36, percentile=None, date="2024-01-01")  # type: ignore[arg-type]
+    assert epss_pct_none_high.is_high_risk is True
+
