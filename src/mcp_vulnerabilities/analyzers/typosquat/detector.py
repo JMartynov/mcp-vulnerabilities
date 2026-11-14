@@ -139,7 +139,7 @@ class TyposquatDetector:
                     best_match = canon
 
             if best_match:
-                return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", min_dist)
+                return TyposquatResult(package_name, best_match, RiskTier.HIGH, "HIGH_RISK_TYPOSQUAT", int(min_dist))
 
         return TyposquatResult(package_name, None, RiskTier.AUTHENTIC, "No typosquat detected", 0)
 

@@ -158,6 +158,7 @@ class SandboxProber:
         self.canary_detection = canary_detection
         self.allow_outbound = allow_outbound
 
+        self.driver: DockerSandboxDriver | RestrictedSubprocessDriver
         if sandbox_type == "docker":
             self.driver = DockerSandboxDriver(allow_outbound)
         else:
@@ -186,11 +187,11 @@ class SandboxProber:
         # We will override client's _send_request or capture stdout if we can.
         # Easiest is to dump tools, prompts, resources and server info to string.
 
-        server_info = {}
-        dangerous_tools = []
-        cve_findings = []
+        server_info: dict[str, Any] = {}
+        dangerous_tools: list[str] = []
+        cve_findings: list[dict[str, Any]] = []
         threat_level = ThreatLevel.CLEAN
-        leaked_canaries = set()
+        leaked_canaries: set[str] = set()
 
         try:
             client.connect_and_discover(timeout=self.timeout)
@@ -211,10 +212,12 @@ class SandboxProber:
             # Check dangerous tools
             for tool in client.tools:
                 desc = tool.get("description", "").lower()
+                tool_name = str(tool.get("name") or "")
 
                 # Check description
                 if "ignore previous instructions" in desc or "system prompt" in desc:
-                    dangerous_tools.append(tool.get("name"))
+                    if tool_name:
+                        dangerous_tools.append(tool_name)
                     threat_level = max(threat_level, ThreatLevel.SUSPICIOUS, key=lambda x: list(ThreatLevel).index(x))
 
                 schema = tool.get("inputSchema", {})
@@ -222,13 +225,15 @@ class SandboxProber:
                 for prop_name, prop_val in props.items():
                     prop_name_low = prop_name.lower()
                     if prop_name_low in ["cmd", "command", "exec", "script", "bash", "sh"]:
-                        dangerous_tools.append(tool.get("name"))
+                        if tool_name:
+                            dangerous_tools.append(tool_name)
                         threat_level = max(threat_level, ThreatLevel.SUSPICIOUS, key=lambda x: list(ThreatLevel).index(x))
 
                     if "path" in prop_name_low or "file" in prop_name_low:
                         # naive check
                         if "/etc/passwd" in str(prop_val) or "~/.ssh" in str(prop_val):
-                            dangerous_tools.append(tool.get("name"))
+                            if tool_name:
+                                dangerous_tools.append(tool_name)
                             threat_level = max(threat_level, ThreatLevel.SUSPICIOUS, key=lambda x: list(ThreatLevel).index(x))
 
         except Exception:

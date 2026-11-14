@@ -29,8 +29,8 @@ try:
     HAVE_VERITY_CATALOG = True
 except ImportError:
     HAVE_VERITY_CATALOG = False
-    McpServerSpec = Any  # type: ignore
-    VulnerabilityCondition = Any  # type: ignore
+    McpServerSpec = Any
+    VulnerabilityCondition = Any
     def list_server_specs() -> list[Any]:
         return []
 

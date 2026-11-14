@@ -57,7 +57,7 @@ class StdioTransport(BaseTransport):
         self.env = env
         self.cwd = cwd
         self.process: Optional[subprocess.Popen] = None
-        self.stderr_buffer = collections.deque(maxlen=100)
+        self.stderr_buffer: collections.deque[str] = collections.deque(maxlen=100)
         self._stderr_thread: Optional[threading.Thread] = None
         self._stdout_thread: Optional[threading.Thread] = None
         self._stdout_queue: queue.Queue = queue.Queue()

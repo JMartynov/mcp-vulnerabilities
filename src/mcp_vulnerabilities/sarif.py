@@ -17,7 +17,7 @@ class ComplianceSarifReporter:
     ) -> Dict[str, Any]:
         target_path = target_path or "schema.json"
 
-        sarif = {
+        sarif: dict[str, Any] = {
             "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
             "version": "2.1.0",
             "runs": [
@@ -36,7 +36,7 @@ class ComplianceSarifReporter:
         }
 
         run = sarif["runs"][0]
-        rules_dict = {}
+        rules_dict: dict[str, Any] = {}
         results = []
 
         for violation in report.violations:

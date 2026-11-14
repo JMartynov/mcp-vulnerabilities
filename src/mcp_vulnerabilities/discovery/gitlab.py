@@ -81,7 +81,7 @@ class GitLabAdvisorySync:
     def scan_advisories(self, target_dir: Path | str | None = None) -> list[OsvVulnerability]:
         """Scan directory and parse advisories into OSV models."""
         target = Path(target_dir) if target_dir else self.storage_dir / "repo"
-        advisories = []
+        advisories: list[OsvVulnerability] = []
 
         if not target.exists():
             return advisories

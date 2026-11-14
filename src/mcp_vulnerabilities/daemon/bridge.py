@@ -66,7 +66,7 @@ class BridgeDaemon:
             return True
         return False
 
-    def _get_cors_headers(self, origin: str) -> Dict[str, str]:
+    def _get_cors_headers(self, origin: str | None) -> Dict[str, str]:
         if not origin:
             return {}
         return {
@@ -247,7 +247,7 @@ class BridgeDaemon:
                 if i < len(events) - 1:
                     await asyncio.sleep(0.05)
         else:
-            q = asyncio.Queue()
+            q: asyncio.Queue = asyncio.Queue()
             self.subscribers.append(q)
             try:
                 while True:
@@ -354,7 +354,7 @@ class BridgeDaemon:
                 await writer.drain()
                 await read_task
             else:
-                q = asyncio.Queue()
+                q: asyncio.Queue = asyncio.Queue()
                 self.subscribers.append(q)
 
                 async def ws_writer():

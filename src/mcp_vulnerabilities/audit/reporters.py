@@ -39,7 +39,7 @@ class SarifReporter:
     def generate_audit_sarif(cls, report: AuditReport, target_path: Optional[str] = None) -> Dict[str, Any]:
         sarif = cls._create_base_sarif()
         run = sarif["runs"][0]
-        rules_dict = {}
+        rules_dict: Dict[str, Any] = {}
         results = []
 
         # Default path if none provided
@@ -121,7 +121,7 @@ class SarifReporter:
     def generate_transitive_sarif(cls, report: TransitiveAuditResult) -> Dict[str, Any]:
         sarif = cls._create_base_sarif()
         run = sarif["runs"][0]
-        rules_dict = {}
+        rules_dict: Dict[str, Any] = {}
         results = []
 
         target_path = report.target_manifest or "package.json"
@@ -181,7 +181,7 @@ class SarifReporter:
     def generate_ast_taint_sarif(cls, findings: list) -> Dict[str, Any]:
         sarif = cls._create_base_sarif()
         run = sarif["runs"][0]
-        rules_dict = {}
+        rules_dict: Dict[str, Any] = {}
         results = []
 
         # Deterministic sorting
@@ -242,7 +242,7 @@ class SarifReporter:
     def generate_tamper_sarif(cls, reports: list, target_path: str = "mcp_client_config.json") -> Dict[str, Any]:
         sarif = cls._create_base_sarif()
         run = sarif["runs"][0]
-        rules_dict = {}
+        rules_dict: Dict[str, Any] = {}
         results = []
 
         for report in reports:
@@ -304,7 +304,7 @@ class SarifReporter:
     ) -> Dict[str, Any]:
         sarif = cls._create_base_sarif()
         run = sarif["runs"][0]
-        rules_dict = {}
+        rules_dict: Dict[str, Any] = {}
         results = []
 
         collisions = getattr(report, "collisions", [])

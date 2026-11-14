@@ -3,7 +3,7 @@ import subprocess
 import sys
 import threading
 import shlex
-from typing import IO
+from typing import IO, Any
 from .policy import ProxyPolicyEngine, AuditEvent
 import time
 from mcp_vulnerabilities.probe.sandbox_prober import DockerSandboxDriver, RestrictedSubprocessDriver, CanarySecretGuard
@@ -22,11 +22,11 @@ class McpStdioProxy:
         self.mode = mode
         self.audit_log_path = audit_log_path
         self.strip_shadow_tools = strip_shadow_tools
-        self.pending_requests = {} # id -> method
+        self.pending_requests: dict[Any, str] = {} # id -> method
         self.sandbox = sandbox
         self.canary_detection = canary_detection
 
-        self.driver = None
+        self.driver: DockerSandboxDriver | RestrictedSubprocessDriver | None = None
         if self.sandbox == "docker":
             self.driver = DockerSandboxDriver(allow_outbound=False)
         elif self.sandbox == "subprocess":

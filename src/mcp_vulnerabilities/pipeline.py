@@ -984,7 +984,7 @@ class McpVulnerabilityPipeline:
         url = "https://api.osv.dev/v1/querybatch"
         queries = []
         for p in packages:
-            q = {"package": {"name": p["name"], "ecosystem": p["ecosystem"]}}
+            q: dict[str, Any] = {"package": {"name": p["name"], "ecosystem": p["ecosystem"]}}
             if p.get("version"):
                 q["version"] = p["version"]
             queries.append(q)

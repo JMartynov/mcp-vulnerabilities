@@ -436,13 +436,16 @@ def handle_audit(args: argparse.Namespace) -> None:
 
                 if getattr(f, "epss_score", None) is not None:
                     c = Console()
-                    pct = f.epss_percentile * 100.0
-                    score_pct = f.epss_score * 100.0
+                    score = f.epss_score
+                    percentile = f.epss_percentile
+                    assert score is not None
+                    pct = (percentile or 0.0) * 100.0
+                    score_pct = score * 100.0
                     epss_color = (
                         "red"
-                        if f.epss_score >= 0.35
+                        if score >= 0.35
                         else "yellow"
-                        if f.epss_score >= 0.10
+                        if score >= 0.10
                         else "cyan"
                     )
                     high_prob = " ⚠️ High Probability" if f.epss_high_risk else ""

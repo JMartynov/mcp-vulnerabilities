@@ -1,5 +1,5 @@
 import ast
-from typing import List, Dict, Optional
+from typing import List, Dict, Optional, Any, Set
 from .models import TaintFinding, TaintSinkCategory, TaintState, KNOWN_SANITIZERS
 
 
@@ -16,7 +16,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
         self.current_tool_name = ""
         self.tainted_vars: Dict[str, TaintState] = {}  # var_name -> TaintState
         self.param_lines: Dict[str, int] = {}
-        self.call_stack = set()
+        self.call_stack: Set[str] = set()
 
     def visit_Module(self, node: ast.Module):
         for stmt in node.body:
@@ -41,7 +41,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
             return self._is_tool_decorator(decorator.func)
         return False
 
-    def visit_FunctionDef(self, node: ast.FunctionDef):
+    def visit_FunctionDef(self, node: Any):
         is_tool = any(self._is_tool_decorator(d) for d in node.decorator_list)
         if not is_tool:
             self.generic_visit(node)
@@ -231,7 +231,7 @@ class McpToolAstVisitor(ast.NodeVisitor):
 
             for kw in node.keywords:
                 arg_taint = self._is_tainted(kw.value)
-                if arg_taint:
+                if arg_taint and kw.arg is not None:
                     new_tainted_vars[kw.arg] = TaintState(parameter_name=arg_taint.parameter_name, sanitized_categories=set(arg_taint.sanitized_categories))
                     self.param_lines[kw.arg] = node.lineno
 

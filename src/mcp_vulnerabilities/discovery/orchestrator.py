@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import logging
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from mcp_vulnerabilities.discovery.github_curated import GitHubCuratedDiscoveryProvider
 from mcp_vulnerabilities.discovery.glama import GlamaDiscoveryProvider
@@ -115,7 +115,7 @@ class McpDiscoveryOrchestrator:
         }
         if include_pruning:
             catalog_data = prune_catalog(catalog_data, catalog_state)
-            aggregated = catalog_data.get("servers", {})
+            aggregated = cast(dict[str, dict[str, Any]], catalog_data.get("servers", {}))
         self.catalog_file.write_text(json.dumps(catalog_data, indent=2, sort_keys=True), encoding="utf-8")
         logger.info(
             "Discovery complete. Discovered %d unique MCP servers -> %s",

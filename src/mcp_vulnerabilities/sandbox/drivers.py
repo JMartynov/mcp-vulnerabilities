@@ -208,7 +208,7 @@ class IncusSandboxRunner(BaseSandboxRunner):
 class AutoSandboxRunner(BaseSandboxRunner):
     """Automatically selects the best available sandbox driver (Incus, Docker, or Host)."""
 
-    def __init__(self):
+    def __init__(self) -> None:
         if shutil.which("incus"):
             self._runner: BaseSandboxRunner = IncusSandboxRunner()
         elif shutil.which("docker"):

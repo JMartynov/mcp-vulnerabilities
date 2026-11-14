@@ -44,6 +44,10 @@ class AuditFinding:
     cisa_kev_due_date: str | None = None
     cisa_kev_ransomware_campaign_use: str | None = None
     cisa_kev_required_action: str | None = None
+    epss_score: float | None = None
+    epss_percentile: float | None = None
+    epss_high_risk: bool = False
+    aliases: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -98,7 +102,9 @@ class AuditReport:
 class VulnerabilityMatcher:
     """Evaluates client server dependencies against canonical OSV vulnerability records."""
 
-    def __init__(self, advisories: list[dict[str, Any]]):
+    def __init__(self, advisories: list[dict[str, Any]] | None = None):
+        if advisories is None:
+            advisories = []
         self.advisories = advisories
         # Index advisories by normalized package name
         self._package_index: dict[str, list[dict[str, Any]]] = {}

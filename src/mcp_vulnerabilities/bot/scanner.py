@@ -125,7 +125,7 @@ class RepositoryScanner:
                 if fix_result["status"] == "dry_run" and fix_result.get("changes"):
                     original_text = config_path.read_text(encoding="utf-8")
 
-                    findings_by_server = {}
+                    findings_by_server: dict[str, list[Any]] = {}
                     for f in report.findings:
                         findings_by_server.setdefault(f.server_name, []).append(f)
 

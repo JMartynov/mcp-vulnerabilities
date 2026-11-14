@@ -49,6 +49,10 @@ class VersionVulnerabilityState:
     toolset_canonical_hash: Optional[str] = None
     fingerprint: Optional[VersionFingerprint] = None
 
+    @property
+    def advisories(self) -> List[OsvVulnerability]:
+        return self.matching_advisories
+
     def to_dict(self) -> Dict[str, Any]:
         return {
             "version": self.version,
@@ -85,6 +89,10 @@ class CorrelatedTimeline:
     package_spec: Optional[ServerPackageSpec] = None
     recommended_safe_version: Optional[str] = None
     no_fix_available: bool = False
+
+    @property
+    def ecosystem(self) -> str:
+        return self.package_spec.ecosystem if self.package_spec and hasattr(self.package_spec, "ecosystem") else "unknown"
 
     def get_remediation_for_version(self, current_version: str) -> Tuple[Optional[str], bool]:
         """

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import re
-from typing import Any
+from typing import Any, Literal
 
 from .models import ReadinessIssue, ReadinessReport
 
@@ -198,6 +198,7 @@ class ReadinessLinter:
 
         score = max(0, score)
 
+        grade: Literal["A", "B", "C", "D", "F"]
         if score >= 90:
             grade = "A"
         elif score >= 80:

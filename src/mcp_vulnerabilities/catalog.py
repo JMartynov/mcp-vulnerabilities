@@ -630,7 +630,7 @@ def load_passport_data(
                                     spec = ServerPackageSpec.from_dict(v)
                                     passports[spec.package_name] = spec
                                 else:
-                                    pkg = v.get("package_name", k)
+                                    pkg = str(v.get("package_name") or k)
                                     passports[pkg] = v
                     elif isinstance(data, list):
                         for v in data:
@@ -1020,7 +1020,7 @@ def build_unified_mcp_security_catalog(
                         try:
                             matching_advs.append(OsvVulnerability.from_dict(adv_dict))
                         except Exception:
-                            matching_advs.append(adv_dict)
+                            matching_advs.append(adv_dict)  # type: ignore[arg-type]
 
             is_vuln = len(matching_advs) > 0
             syn_version_records.append(

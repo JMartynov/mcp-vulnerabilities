@@ -11,7 +11,7 @@ def format_error(code: str, message: str, details: Any = None) -> dict:
     return {"error": {"code": code, "message": message, "details": details}}
 
 class ApiRequestHandler(BaseHTTPRequestHandler):
-    router: Callable = None
+    router: Callable | None = None
     cors_origins: str | None = None
     server_instance = None
 

@@ -537,7 +537,7 @@ def build_site_parallel(
                         try:
                             matching_advs.append(OsvVulnerability.from_dict(adv_dict))
                         except Exception:
-                            matching_advs.append(adv_dict)
+                            matching_advs.append(adv_dict)  # type: ignore[arg-type]
 
             if matching_advs:
                 is_vuln = True
@@ -820,9 +820,9 @@ def build_site_parallel(
     top_tools = sorted(top_tools, key=lambda x: x["count"], reverse=True)[:10]
 
     import collections
-    env_vars = collections.Counter()
+    env_vars: collections.Counter[Any] = collections.Counter()
     tool_counts = collections.defaultdict(set)
-    transports_dist = collections.Counter()
+    transports_dist: collections.Counter[Any] = collections.Counter()
 
     for s_id, s_data in shards.items():
         for pkg, pkg_data in s_data.items():

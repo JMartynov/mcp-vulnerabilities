@@ -201,64 +201,67 @@ class FingerprintVersionResolver:
                     )
                     + "\n"
                 )
-                p.stdin.write(discover_req)
-                p.stdin.flush()
+                pin = p.stdin
+                pout = p.stdout
+                if pin and pout:
+                    pin.write(discover_req)
+                    pin.flush()
 
-                rlist, _, _ = select.select([p.stdout], [], [], 1.5)
-                if rlist and p.stdout:
-                    line = p.stdout.readline()
-                    try:
-                        data = json.loads(line)
-                        is_legacy = False
+                    rlist, _, _ = select.select([pout], [], [], 1.5)
+                    if rlist and pout:
+                        line = pout.readline()
+                        try:
+                            data = json.loads(line)
+                            is_legacy = False
 
-                        if "error" in data and isinstance(data["error"], dict):
-                            code = data.get("error", {}).get("code")
-                            if code in (-32601, -32602):
-                                is_legacy = True
+                            if "error" in data and isinstance(data["error"], dict):
+                                code = data.get("error", {}).get("code")
+                                if code in (-32601, -32602):
+                                    is_legacy = True
 
-                        if not is_legacy and "result" in data:
-                            srv_info = data.get("result", {}).get("serverInfo", {})
-                            v = srv_info.get("version")
-                            if v:
-                                clean_v = re.sub(r"^[a-zA-Z\-_]+", "", str(v)).strip()
-                                p.terminate()
-                                return clean_v or str(v), "handshake"
-
-                        if is_legacy:
-                            # Fallback to initialize
-                            init_req = (
-                                json.dumps(
-                                    {
-                                        "jsonrpc": "2.0",
-                                        "id": 2,
-                                        "method": "initialize",
-                                        "params": {
-                                            "protocolVersion": "2024-11-05",
-                                            "capabilities": {},
-                                            "clientInfo": {
-                                                "name": "mcp-vuln-audit",
-                                                "version": "1.0.0",
-                                            },
-                                        },
-                                    }
-                                )
-                                + "\n"
-                            )
-                            p.stdin.write(init_req)
-                            p.stdin.flush()
-                            rlist2, _, _ = select.select([p.stdout], [], [], 1.5)
-                            if rlist2 and p.stdout:
-                                line2 = p.stdout.readline()
-                                data2 = json.loads(line2)
-                                srv_info = data2.get("result", {}).get("serverInfo", {})
+                            if not is_legacy and "result" in data:
+                                srv_info = data.get("result", {}).get("serverInfo", {})
                                 v = srv_info.get("version")
                                 if v:
                                     clean_v = re.sub(r"^[a-zA-Z\-_]+", "", str(v)).strip()
                                     p.terminate()
                                     return clean_v or str(v), "handshake"
 
-                    except json.JSONDecodeError:
-                        pass
+                            if is_legacy:
+                                # Fallback to initialize
+                                init_req = (
+                                    json.dumps(
+                                        {
+                                            "jsonrpc": "2.0",
+                                            "id": 2,
+                                            "method": "initialize",
+                                            "params": {
+                                                "protocolVersion": "2024-11-05",
+                                                "capabilities": {},
+                                                "clientInfo": {
+                                                    "name": "mcp-vuln-audit",
+                                                    "version": "1.0.0",
+                                                },
+                                            },
+                                        }
+                                    )
+                                    + "\n"
+                                )
+                                pin.write(init_req)
+                                pin.flush()
+                                rlist2, _, _ = select.select([pout], [], [], 1.5)
+                                if rlist2 and pout:
+                                    line2 = pout.readline()
+                                    data2 = json.loads(line2)
+                                    srv_info = data2.get("result", {}).get("serverInfo", {})
+                                    v = srv_info.get("version")
+                                    if v:
+                                        clean_v = re.sub(r"^[a-zA-Z\-_]+", "", str(v)).strip()
+                                        p.terminate()
+                                        return clean_v or str(v), "handshake"
+
+                        except json.JSONDecodeError:
+                            pass
                 p.terminate()
             except Exception:
                 pass

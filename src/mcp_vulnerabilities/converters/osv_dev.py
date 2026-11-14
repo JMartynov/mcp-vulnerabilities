@@ -152,7 +152,7 @@ class OsvDevConverter:
                     package=PackageSpec(name=primary_id, ecosystem="MCP", purl=f"pkg:mcp/{primary_id}"),
                     database_specific=DatabaseSpecificMcp(
                         vulnerable_tools=tuple(vulnerable_tools),
-                        remediation_guidance=cls._extract_remediation(details),
+                        remediation_guidance=cls._extract_mitigation(details),
                     ),
                 )
             )

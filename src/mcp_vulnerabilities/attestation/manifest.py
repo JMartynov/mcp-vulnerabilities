@@ -2,6 +2,7 @@ import hashlib
 import json
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 class ChecksumMismatchError(Exception):
     pass
@@ -15,7 +16,7 @@ def hash_file(filepath: Path) -> str:
 
 def generate_catalog_manifest(data_dir: str | Path) -> str:
     data_dir = Path(data_dir)
-    manifest = {
+    manifest: dict[str, Any] = {
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "files": {}
     }

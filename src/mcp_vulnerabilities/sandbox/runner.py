@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 class EphemeralSandbox:
     def __init__(self, engine_cmd: str | None, timeout: int = 60, network: str = "bridge"):
-        self.engine_cmd = engine_cmd
+        self.engine_cmd: str = engine_cmd or "docker"
         self.timeout = timeout
         self.network = network
 

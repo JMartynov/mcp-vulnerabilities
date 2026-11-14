@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import sys
 from pathlib import Path
+from typing import Any
 from unittest.mock import Mock
 
 from mcp_vulnerabilities.analyzers import (
@@ -244,7 +245,7 @@ def handle_scan_binaries(args: argparse.Namespace) -> None:
     elif args.format == "sarif":
         import json
 
-        sarif = {
+        sarif: dict[str, Any] = {
             "version": "2.1.0",
             "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
             "runs": [

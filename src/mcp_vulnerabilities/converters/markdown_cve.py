@@ -272,7 +272,7 @@ class MarkdownAdvisoryConverter:
         refs: list[ReferenceSpec] = []
         seen_urls: set[str] = set()
 
-        def _add_ref(url: str, ref_type: ReferenceType) -> None:
+        def _add_ref(url: str, ref_type: ReferenceType | str) -> None:
             clean = url.strip().rstrip(")]>\"'")
             if clean and clean.startswith("http") and clean not in seen_urls:
                 seen_urls.add(clean)

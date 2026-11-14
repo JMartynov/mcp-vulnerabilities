@@ -121,8 +121,8 @@ def handle_search(args: argparse.Namespace) -> None:
                 print(f"Severity:   {sev_str}")
                 print(f"Matched On: {r.matched_on}")
 
-                affected_pkgs = []
-                vuln_tools = []
+                affected_pkgs: list[str] = []
+                vuln_tools: list[str] = []
                 for aff in adv.affected:
                     affected_pkgs.append(
                         f"{aff.package.name} ({aff.package.ecosystem})"

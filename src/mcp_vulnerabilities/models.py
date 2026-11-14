@@ -77,7 +77,7 @@ class EventSpec:
 class RangeSpec:
     """Affected version range specification."""
 
-    type: RangeType = RangeType.SEMVER
+    type: Any = RangeType.SEMVER
     events: tuple[EventSpec, ...] = field(default_factory=tuple)
     repo: str | None = None
     database_specific: dict[str, Any] = field(default_factory=dict)
@@ -87,7 +87,7 @@ class RangeSpec:
 class SeveritySpec:
     """Numerical or categorical vulnerability severity score."""
 
-    type: SeverityType
+    type: Any
     score: str
 
 
@@ -96,7 +96,7 @@ class ReferenceSpec:
     """External link or reference document."""
 
     url: str
-    type: ReferenceType = ReferenceType.WEB
+    type: Any = ReferenceType.WEB
 
 
 @dataclass(frozen=True)

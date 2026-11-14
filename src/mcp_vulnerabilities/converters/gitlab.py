@@ -100,8 +100,9 @@ class GitLabAdvisoryConverter:
                     elif part.startswith("<"):
                         fixed = part[1:]
 
-                if fixed is None and last_affected is None and data.get("fixed_versions"):
-                    fixed = data.get("fixed_versions")[0]
+                fixed_versions = data.get("fixed_versions")
+                if fixed is None and last_affected is None and fixed_versions:
+                    fixed = fixed_versions[0]
 
                 if introduced:
                     events.append(EventSpec(introduced=introduced))

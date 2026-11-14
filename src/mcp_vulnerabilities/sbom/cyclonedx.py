@@ -46,7 +46,7 @@ class CycloneDxBomBuilder:
 
     def add_probe_report(self, report: ProbeAuditReport) -> None:
         service_ref = self._generate_bom_ref("service", report.server_name, report.server_version)
-        service = {
+        service: dict[str, Any] = {
             "bom-ref": service_ref,
             "type": "application",
             "name": report.server_name,
@@ -130,7 +130,7 @@ class CycloneDxBomBuilder:
     def _add_vulnerability(self, finding: AuditFinding) -> None:
         bom_ref = self._generate_bom_ref("component", finding.package_name, finding.installed_version)
 
-        vuln = {
+        vuln: dict[str, Any] = {
             "id": finding.vulnerability_id,
             "ratings": [],
             "affects": [
@@ -160,7 +160,7 @@ class CycloneDxBomBuilder:
             }
             mapped_sev = severity_map.get(finding.severity_level.upper(), "unknown")
 
-            rating = {
+            rating: dict[str, Any] = {
                 "severity": mapped_sev,
                 "method": "CVSSv3" if finding.cvss_score else "other"
             }

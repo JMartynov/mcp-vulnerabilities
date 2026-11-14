@@ -121,7 +121,7 @@ class AdvisoryFusionEngine:
         modified = max((v.modified for v in group if v.modified), default="")
 
         # 5. References & Provenance Preservation
-        all_refs = []
+        all_refs: list[Any] = []
         for v in group:
             all_refs.extend(v.references)
 
@@ -234,16 +234,17 @@ class AdvisoryFusionEngine:
             pkg_spec = base_aff.package
 
             # Normalize PURL for output consistency
-            if pkg_spec.purl:
+            purl = pkg_spec.purl
+            if purl:
                 eco_map = {"mcp": "mcp", "npm": "npm", "pypi": "pypi", "golang": "golang", "cargo": "cargo", "docker": "docker", "github": "github"}
                 for k, v in eco_map.items():
                     if pkg_spec.ecosystem.lower() == k:
-                        if not pkg_spec.purl.startswith(f"pkg:{v}/"):
+                        if not purl.startswith(f"pkg:{v}/"):
                             pkg_spec = pkg_spec.__class__(ecosystem=pkg_spec.ecosystem, name=pkg_spec.name, purl=f"pkg:{v}/{pkg_spec.name}")
                         break
 
             # 3. Affected Version Ranges (Union)
-            all_versions = set()
+            all_versions: set[str] = set()
             for a in aff_list:
                 all_versions.update(a.versions)
 
@@ -318,7 +319,7 @@ class AdvisoryFusionEngine:
     @classmethod
     def _union_ranges(cls, aff_list: list[AffectedPackage]) -> list[RangeSpec]:
         """Compute the mathematical union of affected intervals."""
-        intervals = []
+        intervals: list[tuple[str, str | None, Any, str | None]] = []
         for a in aff_list:
             for r in a.ranges:
                 current_intro = "0"
@@ -351,7 +352,7 @@ class AdvisoryFusionEngine:
             return []
 
         # Group by type and repo
-        grouped_intervals = {}
+        grouped_intervals: dict[tuple[Any, str | None], list[tuple[str, str | None]]] = {}
         for intro, fixed, r_type, repo in intervals:
             grouped_intervals.setdefault((r_type, repo), []).append((intro, fixed))
 
@@ -369,7 +370,7 @@ class AdvisoryFusionEngine:
 
             sorted_ivals = sorted(ivals, key=lambda x: v_parse(x[0]))
 
-            merged = []
+            merged: list[tuple[str, str | None]] = []
             for current in sorted_ivals:
                 if not merged:
                     merged.append(current)

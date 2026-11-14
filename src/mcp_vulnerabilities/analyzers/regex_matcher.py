@@ -5,7 +5,7 @@ from .models import ThreatCategory, ThreatSeverity
 
 
 class RegexThreatMatcher:
-    def __init__(self):
+    def __init__(self) -> None:
         # Dictionary of rule_id to (pattern, category, severity, title, description, remediation, cwe)
         self.rules: dict[str, tuple[Pattern, ThreatCategory, ThreatSeverity, str, str, str, str]] = {}
         self._initialize_rules()

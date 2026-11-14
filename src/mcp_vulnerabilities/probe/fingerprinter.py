@@ -166,7 +166,7 @@ class BehavioralTopologyIdentifier:
         pkg_name = match.package_name
         version = match.matched_version if hasattr(match, "matched_version") else getattr(match, "version", None)
 
-        vulns = []
+        vulns: list[Any] = []
         if self.correlator and pkg_name:
             timeline_res = self.correlator.correlate_package(pkg_name)
             if timeline_res:
