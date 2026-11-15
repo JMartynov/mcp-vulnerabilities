@@ -58743,19 +58743,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.2.0",
+    "latest_version": "0.2.1",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@vaulted/mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/@vaulted%2Fmcp-server",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.2.0",
+    "recommended_safe_version": "0.2.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/vaulted-fyi/vaulted-mcp-server",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@vaulted/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
+    "security_summary": "Server `@vaulted/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:11fe906b1d40916a88567112ad5d73bd68eb5976ad7c76335015e6963a36baa5",
@@ -59039,6 +59039,259 @@
         ],
         "toolset_canonical_hash": "sha256:11fe906b1d40916a88567112ad5d73bd68eb5976ad7c76335015e6963a36baa5",
         "version": "0.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-13T16:47:35.448Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9d72c86346a13846c2a6225f1905ab16299c96d013d0c766addc3a59433e79cb",
+            "description": "Check the status of a previously shared secret — how many times it",
+            "name": "check_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previousViews",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "secret_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status_token",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `check_status` [MEDIUM] initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:285224feb331bef464b25ae4e1b8d9d8e1cb3c837488d9d677b132b5e4099bb2",
+            "description": "create_secret",
+            "name": "create_secret",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "How long before the secret expires. Defaults to 24h.",
+                "enum": [
+                  "1h",
+                  "2h",
+                  "6h",
+                  "12h",
+                  "24h",
+                  "3d",
+                  "7d",
+                  "14d",
+                  "30d"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "expiry",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "label",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "1",
+                  "3",
+                  "5",
+                  "10"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "max_views",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "passphrase",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_secret` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b6572a82bc8ede82f8f3cf26180253671fe07b40e8c55bee4d471d0c720df740",
+            "description": "List previously shared secrets and their current status — view counts, expiry, and whether they",
+            "name": "list_secrets",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_secrets` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cb1bb8c3c65cf88d26519ae4e7849b2bc09b0e529d1ab0376bf797eec8b46953",
+            "description": "Check the status of a previously shared secret — how many times it",
+            "name": "view_secret",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Encryption key (alternative to URL). Must be paired with secret_id.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "encryption_key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "file_path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "browser",
+                  "clipboard",
+                  "file",
+                  "direct"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "output_mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Passphrase to decrypt a passphrase-protected secret",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "passphrase",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Secret ID (alternative to URL). Must be paired with encryption_key.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "secret_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "ttl_seconds",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `view_secret` [MEDIUM] initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:11fe906b1d40916a88567112ad5d73bd68eb5976ad7c76335015e6963a36baa5",
+        "version": "0.2.1"
       }
     ]
   },
@@ -88739,7 +88992,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "LiteLLM: MCP Authentication Bypass via OAuth2 Passthrough Fallback",
+    "description": "LiteLLM: Authenticated command execution via MCP stdio test endpoints",
     "display_name": "litellm",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -88772,22 +89025,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-59822",
+            "id": "CVE-2026-42271",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.84.0 or above.",
+            "remediation_guidance": "Upgrade to version 1.83.7 or above.",
             "severity": "CRITICAL",
-            "summary": "LiteLLM: MCP Authentication Bypass via OAuth2 Passthrough Fallback",
+            "summary": "LiteLLM: Authenticated command execution via MCP stdio test endpoints",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-42271",
+            "id": "CVE-2026-59822",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.83.7 or above.",
+            "remediation_guidance": "Upgrade to version 1.84.0 or above.",
             "severity": "CRITICAL",
-            "summary": "LiteLLM: Authenticated command execution via MCP stdio test endpoints",
+            "summary": "LiteLLM: MCP Authentication Bypass via OAuth2 Passthrough Fallback",
             "vulnerable_tools": []
           }
         ],
@@ -117054,11 +117307,24 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "POSTGRES-RECURSIVE-DOS-001",
+            "id": "VERITY-POSTGRES-RECURSIVE-DOS-001",
             "owasp_mcp_category": "Resource Exhaustion / Query DoS",
             "remediation_guidance": "Enforces statement timeout limits and rejects recursive constructs.",
             "severity": "HIGH",
             "summary": "Unbounded Recursive Query CPU Exhaustion in PostgreSQL Analytics & Reporting Target (postgres-analytics)",
+            "vulnerable_tools": [
+              "run_metric_report"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "POSTGRES-ORDERBY-SQLI-001",
+            "owasp_mcp_category": "SQL Injection / Dynamic Clause Evaluation",
+            "remediation_guidance": "Enforces strict column identifier allowlisting.",
+            "severity": "HIGH",
+            "summary": "Dynamic Identifier & ORDER BY Clause SQL Injection in PostgreSQL Analytics & Reporting Target (postgres-analytics)",
             "vulnerable_tools": [
               "run_metric_report"
             ]
@@ -117080,24 +117346,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "VERITY-POSTGRES-RECURSIVE-DOS-001",
+            "id": "POSTGRES-RECURSIVE-DOS-001",
             "owasp_mcp_category": "Resource Exhaustion / Query DoS",
             "remediation_guidance": "Enforces statement timeout limits and rejects recursive constructs.",
             "severity": "HIGH",
             "summary": "Unbounded Recursive Query CPU Exhaustion in PostgreSQL Analytics & Reporting Target (postgres-analytics)",
-            "vulnerable_tools": [
-              "run_metric_report"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "POSTGRES-ORDERBY-SQLI-001",
-            "owasp_mcp_category": "SQL Injection / Dynamic Clause Evaluation",
-            "remediation_guidance": "Enforces strict column identifier allowlisting.",
-            "severity": "HIGH",
-            "summary": "Dynamic Identifier & ORDER BY Clause SQL Injection in PostgreSQL Analytics & Reporting Target (postgres-analytics)",
             "vulnerable_tools": [
               "run_metric_report"
             ]

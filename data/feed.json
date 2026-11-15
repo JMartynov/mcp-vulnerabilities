@@ -656,6 +656,58 @@
       ]
     },
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-84317",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[HIGH] CVE-2026-84317: Nginx UI: MCP nginx_config_add skips config directive validation → authenticated nginx directive injection (RCE on the official image)",
+      "summary": "Nginx UI: MCP nginx_config_add skips config directive validation → authenticated nginx directive injection (RCE on the official image)",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84317</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>`internal/config/validation.go` (`ValidateConfigFile`) is a security control that blocks dangerous\nnginx directives — `js_*`, `perl_*`, `load_module` of the njs/perl modules, and `user root`. It is\nenforced on three of the four config-write paths: `api/config/add.go`, `api/config/modify.go`, and\n`mcp/config/config_modify.go`. The fourth path — the MCP tool `nginx_config_add`\n(`mcp/config/config_add.go`) — does NOT call it: it writes the caller-supplied `content` straight to\ndisk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection)\ncan therefore inject exactly the directives the control is meant to block, leading to nginx code\nexecution on deployments where the njs/perl module is available (e.g. the official Docker image).</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-76pm-mq2q-9gcr\">https://github.com/advisories/GHSA-76pm-mq2q-9gcr</a></li>\n</ul></p>",
+      "date_published": "2026-10-15T00:00:00Z",
+      "date_modified": "2026-10-15T00:00:00Z",
+      "tags": [
+        "HIGH",
+        "github.com/0xJacky/Nginx-UI"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-84318",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[HIGH] CVE-2026-84318: Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE",
+      "summary": "Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84318</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>The MCP tool `nginx_config_add` writes nginx configuration files to disk and triggers an nginx reload without calling `config.ValidateConfigFile`. The identical flow in the REST API (`POST /api/configs`) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (`perl`, `js_import`, `load_module`, `user root`, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-9jww-cxg5-rj9m\">https://github.com/advisories/GHSA-9jww-cxg5-rj9m</a></li>\n</ul></p>",
+      "date_published": "2026-10-15T00:00:00Z",
+      "date_modified": "2026-10-15T00:00:00Z",
+      "tags": [
+        "HIGH",
+        "github.com/0xJacky/Nginx-UI"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-84319",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[HIGH] CVE-2026-84319: Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context",
+      "summary": "Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84319</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.3)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>The regular HTTP configuration API rejects restricted Nginx directives such as `load_module`, `js_import`, and `js_content`.\n\nHowever, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. In the lab, this allowed the user to load `ngx_http_js_module.so`, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context.\n\nThis is authenticated and is not OS command execution by itself.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-5r62-gj48-897x\">https://github.com/advisories/GHSA-5r62-gj48-897x</a></li>\n</ul></p>",
+      "date_published": "2026-10-15T00:00:00Z",
+      "date_modified": "2026-10-15T00:00:00Z",
+      "tags": [
+        "HIGH",
+        "github.com/0xJacky/Nginx-UI"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-84360",
+      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
+      "title": "[HIGH] CVE-2026-84360: Nginx UI: OTP secure-session step-up can be bypassed via MCP configuration tools",
+      "summary": "Nginx UI: OTP secure-session step-up can be bypassed via MCP configuration tools",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84360</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.1)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>An OTP-enabled authenticated user who cannot use the HTTP configuration mutation endpoints without a valid secure session can still mutate Nginx configuration through `/mcp` and `/mcp_message` using only ordinary authentication.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-vc32-4gwf-77xp\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-vc32-4gwf-77xp</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-vc32-4gwf-77xp\">https://github.com/advisories/GHSA-vc32-4gwf-77xp</a></li>\n</ul></p>",
+      "date_published": "2026-10-15T00:00:00Z",
+      "date_modified": "2026-10-15T00:00:00Z",
+      "tags": [
+        "HIGH",
+        "github.com/0xJacky/Nginx-UI"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-109527",
       "url": "https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080",
       "title": "[HIGH] CVE-2026-109527: The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp ",
@@ -702,45 +754,6 @@
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-110616</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.1)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to access the /api/* management API because the auth_token field defaults to null and is never assigned. Attackers sending requests without Authorization or Origin headers to non-loopback listeners can control agent instances, rewrite configurations including provider credentials, and manage cron jobs and MCP servers.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/nullclaw/nullhub\">https://github.com/nullclaw/nullhub</a></li>\n<li><a href=\"https://github.com/nullclaw/nullhub/blob/v2026.5.29/Dockerfile#L69-L71\">https://github.com/nullclaw/nullhub/blob/v2026.5.29/Dockerfile#L69-L71</a></li>\n<li><a href=\"https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/api/settings.zig#L29-L54\">https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/api/settings.zig#L29-L54</a></li>\n<li><a href=\"https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/server.zig#L546-L556\">https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/server.zig#L546-L556</a></li>\n</ul></p>",
       "date_published": "2026-10-14T15:17:13.767Z",
       "date_modified": "2026-10-20T02:17:09.270Z",
-      "tags": [
-        "HIGH",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-84319",
-      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
-      "title": "[HIGH] CVE-2026-84319: Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re",
-      "summary": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects re",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84319</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.3)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, the regular HTTP configuration API rejects restricted Nginx directives such as load_module, js_import, and js_content. However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. This allows the user to load ngx_http_js_module.so, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context. This issue is fixed in version 2.4.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T21:17:22.517Z",
-      "date_modified": "2026-10-13T21:19:11.433Z",
-      "tags": [
-        "HIGH",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-84318",
-      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
-      "title": "[HIGH] CVE-2026-84318: Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr",
-      "summary": "Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add wr",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84318</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Nginx UI is a web user interface for the Nginx web server. From 2.0.0-rc.6 until 2.4.1, the MCP tool nginx_config_add writes nginx configuration files to disk and triggers an nginx reload without calling config.ValidateConfigFile. The identical flow in the REST API (POST /api/configs) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (perl, js_import, load_module, user root, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution. This issue is fixed in version 2.4.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T21:17:22.360Z",
-      "date_modified": "2026-10-13T15:17:50.383Z",
-      "tags": [
-        "HIGH",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-84317",
-      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
-      "title": "[HIGH] CVE-2026-84317: Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig",
-      "summary": "Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfig",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84317</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Nginx UI is a web user interface for the Nginx web server. Prior to 2.4.1, internal/config/validation.go (ValidateConfigFile) is a security control that blocks dangerous nginx directives — js_*, perl_*, load_module of the njs/perl modules, and user root. It is enforced on three of the four config-write paths: api/config/add.go, api/config/modify.go, and mcp/config/config_modify.go. The fourth path — the MCP tool nginx_config_add (mcp/config/config_add.go) — does NOT call it: it writes the caller-supplied content straight to disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection) can therefore inject exactly the directives the control is meant to block, leading to nginx code execution on deployments where the njs/perl module is available (e.g. the official Docker image). This issue is fixed in version 2.4.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T21:17:22.213Z",
-      "date_modified": "2026-10-13T18:17:26.047Z",
       "tags": [
         "HIGH",
         "unknown"
@@ -1298,20 +1311,6 @@
       "tags": [
         "LOW",
         "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-100868",
-      "url": "https://github.com/penpot/penpot",
-      "title": "[MEDIUM] CVE-2026-100868: Penpot before 2.18.0 binds the MCP server plugin WebSocket bridge to all network interfaces without authentication in si",
-      "summary": "Penpot before 2.18.0 binds the MCP server plugin WebSocket bridge to all network interfaces without authentication in si",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-100868</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.3)</p>\n<p><strong>Affected Package(s):</strong> unknown, @penpot/mcp</p>\n<p><strong>Details:</strong><br>Penpot before 2.18.0 binds the MCP server plugin WebSocket bridge to all network interfaces without authentication in single-user mode. Unauthenticated attackers on adjacent networks can connect to the WebSocket port to impersonate the Penpot browser plugin, intercept task payloads, and return forged results to the MCP client.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/penpot/penpot\">https://github.com/penpot/penpot</a></li>\n<li><a href=\"https://github.com/penpot/penpot/blob/1d2c37e52c733f74017d90b0fd1ae2d074a5c33d/mcp/packages/server/src/PluginBridge.ts#L52\">https://github.com/penpot/penpot/blob/1d2c37e52c733f74017d90b0fd1ae2d074a5c33d/mcp/packages/server/src/PluginBridge.ts#L52</a></li>\n<li><a href=\"https://github.com/penpot/penpot/commit/b5274a44766d095247037be18c1d1918ac67ddeb\">https://github.com/penpot/penpot/commit/b5274a44766d095247037be18c1d1918ac67ddeb</a></li>\n<li><a href=\"https://github.com/penpot/penpot/security/advisories/GHSA-22qr-rp27-j9wm\">https://github.com/penpot/penpot/security/advisories/GHSA-22qr-rp27-j9wm</a></li>\n</ul></p>",
-      "date_published": "2026-09-27T13:16:37.960Z",
-      "date_modified": "2026-10-08T16:17:00.783Z",
-      "tags": [
-        "MEDIUM",
-        "unknown",
-        "@penpot/mcp"
       ]
     }
   ]
