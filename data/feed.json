@@ -253,19 +253,6 @@
       ]
     },
     {
-      "id": "urn:mcp:vulnerability:CVE-2026-76894",
-      "url": "https://github.com/ondata/ckan-mcp-server/commit/3b827af72b228d42aa7b0d7dac5347d16af3f4e5",
-      "title": "[LOW] CVE-2026-76894: CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the DataStore table UI in src/resources",
-      "summary": "CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the DataStore table UI in src/resources",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-76894</p>\n<p><strong>Severity:</strong> LOW (CVSS 3.1)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the DataStore table UI in src/resources/datastore-table-ui.ts accepts window message events without validating event.origin and sends JSON-RPC messages through postMessage with a wildcard target origin. A frame that can reach the embedded document can inject fabricated fields or records, spoof pending ui/initialize responses, disrupt the MCP UI handshake, or receive outbound messages when the resource is embedded by an untrusted parent. Values are HTML escaped, so the demonstrated content injection is display spoofing rather than script execution, and exploitability depends on the host embedding model. This issue is fixed in version 0.4.112.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/ondata/ckan-mcp-server/commit/3b827af72b228d42aa7b0d7dac5347d16af3f4e5\">https://github.com/ondata/ckan-mcp-server/commit/3b827af72b228d42aa7b0d7dac5347d16af3f4e5</a></li>\n<li><a href=\"https://github.com/ondata/ckan-mcp-server/releases/tag/v0.4.112\">https://github.com/ondata/ckan-mcp-server/releases/tag/v0.4.112</a></li>\n<li><a href=\"https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc\">https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc</a></li>\n</ul></p>",
-      "date_published": "2026-11-03T21:17:43.240Z",
-      "date_modified": "2026-11-09T16:17:34.720Z",
-      "tags": [
-        "LOW",
-        "unknown"
-      ]
-    },
-    {
       "id": "urn:mcp:vulnerability:CVE-2026-116635",
       "url": "https://github.com/awslabs/mcp/security/advisories/GHSA-r6mm-377j-qg8m",
       "title": "[MEDIUM] CVE-2026-116635: Improper limitation of a pathname to a restricted directory in the deployment status component of the AWS Serverless MCP",
@@ -604,19 +591,6 @@
       ]
     },
     {
-      "id": "urn:mcp:vulnerability:CVE-2026-96620",
-      "url": "https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662",
-      "title": "[CRITICAL] CVE-2026-96620: Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s",
-      "summary": "Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-96620</p>\n<p><strong>Severity:</strong> CRITICAL</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a separate token without validation, so a dash-leading value is parsed as an independent CLI flag. An attacker can inject the --mcp-config flag to define a stdio MCP server, causing arbitrary command execution at CLI startup outside the SDK permission controls. The issue is exploitable when an application passes untrusted input as the session ID to resume. This issue is fixed in version 0.2.121.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662\">https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662</a></li>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/pull/1123\">https://github.com/anthropics/claude-agent-sdk-python/pull/1123</a></li>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121\">https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121</a></li>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm\">https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm</a></li>\n</ul></p>",
-      "date_published": "2026-10-16T20:18:28.293Z",
-      "date_modified": "2026-10-21T22:16:50.597Z",
-      "tags": [
-        "CRITICAL",
-        "unknown"
-      ]
-    },
-    {
       "id": "urn:mcp:vulnerability:CVE-2026-88755",
       "url": "https://gist.github.com/lkloliver/aac8dcf8a53fc4b3c1b0a5dfbf36ef68",
       "title": "[HIGH] CVE-2026-88755: Z.ai ZCode v3.11.2.6792 was discovered to automatically establish connections with MCP servers declared inside a reposit",
@@ -640,6 +614,32 @@
       "tags": [
         "HIGH",
         "unknown"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-76894",
+      "url": "https://github.com/advisories/GHSA-vqff-r82h-9crc",
+      "title": "[LOW] CVE-2026-76894: ckan-mcp-server: DataStore Table UI resource does not validate postMessage origin (in) and posts to targetOrigin \"*\" (out)",
+      "summary": "ckan-mcp-server: DataStore Table UI resource does not validate postMessage origin (in) and posts to targetOrigin \"*\" (out)",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-76894</p>\n<p><strong>Severity:</strong> LOW (CVSS 3.1)</p>\n<p><strong>Affected Package(s):</strong> @aborruso/ckan-mcp-server</p>\n<p><strong>Details:</strong><br>The MCP Apps UI resource (an interactive DataStore table rendered in the host's webview/iframe) communicates with its parent via `postMessage`. Its inbound `message` listener performs no `event.origin` validation, and its outbound messages are sent with target origin `'*'`. Any window/frame able to reach the document can inject data into the table and interfere with the MCP UI handshake, and the UI's own JSON-RPC messages are broadcast without an origin restriction.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/advisories/GHSA-vqff-r82h-9crc\">https://github.com/advisories/GHSA-vqff-r82h-9crc</a></li>\n<li><a href=\"https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc\">https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc</a></li>\n<li><a href=\"https://nvd.nist.gov/vuln/detail/CVE-2026-76894\">https://nvd.nist.gov/vuln/detail/CVE-2026-76894</a></li>\n</ul></p>",
+      "date_published": "2026-10-16T00:00:00Z",
+      "date_modified": "2026-10-16T00:00:00Z",
+      "tags": [
+        "LOW",
+        "@aborruso/ckan-mcp-server"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-96620",
+      "url": "https://github.com/advisories/GHSA-h4mw-j7qp-8mwm",
+      "title": "[CRITICAL] CVE-2026-96620: Claude Agent SDK: Argument Injection via resume Option Allows Arbitrary Command Execution",
+      "summary": "Claude Agent SDK: Argument Injection via resume Option Allows Arbitrary Command Execution",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-96620</p>\n<p><strong>Severity:</strong> CRITICAL (CVSS 9.8)</p>\n<p><strong>Affected Package(s):</strong> claude-agent-sdk</p>\n<p><strong>Details:</strong><br>The Claude Agent SDK for Python passed the `resume` option to the Claude CLI without validation, allowing a value beginning with `-` to be interpreted as a separate CLI flag. An attacker who controlled the `resume` value could inject an `--mcp-config` flag defining a stdio MCP server, resulting in arbitrary command execution at CLI startup that bypassed the SDK's permission controls. Exploitation required an application to pass untrusted input as the session ID to resume.\n\nUsers are advised to update to the latest version of the claude-agent-sdk package.\n\nThank you to hackerone.com/moamenmahmood for reporting this issue.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/advisories/GHSA-h4mw-j7qp-8mwm\">https://github.com/advisories/GHSA-h4mw-j7qp-8mwm</a></li>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662\">https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662</a></li>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/pull/1123\">https://github.com/anthropics/claude-agent-sdk-python/pull/1123</a></li>\n<li><a href=\"https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121\">https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121</a></li>\n</ul></p>",
+      "date_published": "2026-10-16T00:00:00Z",
+      "date_modified": "2026-10-16T00:00:00Z",
+      "tags": [
+        "CRITICAL",
+        "claude-agent-sdk"
       ]
     },
     {

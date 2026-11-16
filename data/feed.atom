@@ -394,23 +394,6 @@ AI assistance was used while investigating. The traversal was reproduced against
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-76894</id>
-    <title>[LOW] CVE-2026-76894: CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the DataStore table UI in src/resources</title>
-    <link rel="alternate" href="https://github.com/ondata/ckan-mcp-server/commit/3b827af72b228d42aa7b0d7dac5347d16af3f4e5" />
-    <updated>2026-11-09T16:17:34.720Z</updated>
-    <published>2026-11-03T21:17:43.240Z</published>
-    <summary>CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the DataStore table UI in src/resources</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-76894&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; LOW (CVSS 3.1)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;CKAN MCP Server is a tool for querying CKAN open data portals. Prior to 0.4.112, the DataStore table UI in src/resources/datastore-table-ui.ts accepts window message events without validating event.origin and sends JSON-RPC messages through postMessage with a wildcard target origin. A frame that can reach the embedded document can inject fabricated fields or records, spoof pending ui/initialize responses, disrupt the MCP UI handshake, or receive outbound messages when the resource is embedded by an untrusted parent. Values are HTML escaped, so the demonstrated content injection is display spoofing rather than script execution, and exploitability depends on the host embedding model. This issue is fixed in version 0.4.112.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/ondata/ckan-mcp-server/commit/3b827af72b228d42aa7b0d7dac5347d16af3f4e5"&gt;https://github.com/ondata/ckan-mcp-server/commit/3b827af72b228d42aa7b0d7dac5347d16af3f4e5&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ondata/ckan-mcp-server/releases/tag/v0.4.112"&gt;https://github.com/ondata/ckan-mcp-server/releases/tag/v0.4.112&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc"&gt;https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-116635</id>
     <title>[MEDIUM] CVE-2026-116635: Improper limitation of a pathname to a restricted directory in the deployment status component of the AWS Serverless MCP</title>
     <link rel="alternate" href="https://github.com/awslabs/mcp/security/advisories/GHSA-r6mm-377j-qg8m" />
@@ -877,24 +860,6 @@ AWS fixed this issue service-side. No customer action is required.&lt;/p&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-96620</id>
-    <title>[CRITICAL] CVE-2026-96620: Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s</title>
-    <link rel="alternate" href="https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662" />
-    <updated>2026-10-21T22:16:50.597Z</updated>
-    <published>2026-10-16T20:18:28.293Z</published>
-    <summary>Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a s</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-96620&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; CRITICAL&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Claude Agent SDK is a Python SDK for Claude Code. Prior to 0.2.121, the resume option is passed to the Claude CLI as a separate token without validation, so a dash-leading value is parsed as an independent CLI flag. An attacker can inject the --mcp-config flag to define a stdio MCP server, causing arbitrary command execution at CLI startup outside the SDK permission controls. The issue is exploitable when an application passes untrusted input as the session ID to resume. This issue is fixed in version 0.2.121.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662"&gt;https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/pull/1123"&gt;https://github.com/anthropics/claude-agent-sdk-python/pull/1123&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121"&gt;https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm"&gt;https://github.com/anthropics/claude-agent-sdk-python/security/advisories/GHSA-h4mw-j7qp-8mwm&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-88755</id>
     <title>[HIGH] CVE-2026-88755: Z.ai ZCode v3.11.2.6792 was discovered to automatically establish connections with MCP servers declared inside a reposit</title>
     <link rel="alternate" href="https://gist.github.com/lkloliver/aac8dcf8a53fc4b3c1b0a5dfbf36ef68" />
@@ -925,6 +890,45 @@ AWS fixed this issue service-side. No customer action is required.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Wheels CLI 4.0.0 through 4.1.1 insufficiently validates or escapes caller-supplied values and package contents. Deploy release/version/rollback values can execute shell commands on deploy hosts as the SSH user and on the CI runner during builds. Package removal and destroy paths can delete unintended files; package extraction can overwrite other vendor files; generator names can write outside the project or inject executable CFML into generated code. Inputs may originate from CI variables, branch names, packages or an AI agent using the CLI's MCP tools. Also relevant are unencoded display properties in generated scaffold show views since 4.1.0 and in generated admin views, permitting stored XSS, and stale process-ID handling in RustCFML server commands that can terminate an unrelated process. This is fixed in 4.1.2; existing affected generated views also require the documented edit.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://github.com/wheels-dev/wheels/security/advisories/GHSA-cghp-86c6-6fjc"&gt;https://github.com/wheels-dev/wheels/security/advisories/GHSA-cghp-86c6-6fjc&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-76894</id>
+    <title>[LOW] CVE-2026-76894: ckan-mcp-server: DataStore Table UI resource does not validate postMessage origin (in) and posts to targetOrigin "*" (out)</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-vqff-r82h-9crc" />
+    <updated>2026-10-16T00:00:00Z</updated>
+    <published>2026-10-16T00:00:00Z</published>
+    <summary>ckan-mcp-server: DataStore Table UI resource does not validate postMessage origin (in) and posts to targetOrigin "*" (out)</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-76894&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; LOW (CVSS 3.1)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @aborruso/ckan-mcp-server&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The MCP Apps UI resource (an interactive DataStore table rendered in the host's webview/iframe) communicates with its parent via `postMessage`. Its inbound `message` listener performs no `event.origin` validation, and its outbound messages are sent with target origin `'*'`. Any window/frame able to reach the document can inject data into the table and interfere with the MCP UI handshake, and the UI's own JSON-RPC messages are broadcast without an origin restriction.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-vqff-r82h-9crc"&gt;https://github.com/advisories/GHSA-vqff-r82h-9crc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc"&gt;https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-vqff-r82h-9crc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://nvd.nist.gov/vuln/detail/CVE-2026-76894"&gt;https://nvd.nist.gov/vuln/detail/CVE-2026-76894&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-96620</id>
+    <title>[CRITICAL] CVE-2026-96620: Claude Agent SDK: Argument Injection via resume Option Allows Arbitrary Command Execution</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-h4mw-j7qp-8mwm" />
+    <updated>2026-10-16T00:00:00Z</updated>
+    <published>2026-10-16T00:00:00Z</published>
+    <summary>Claude Agent SDK: Argument Injection via resume Option Allows Arbitrary Command Execution</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-96620&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; CRITICAL (CVSS 9.8)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; claude-agent-sdk&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Claude Agent SDK for Python passed the `resume` option to the Claude CLI without validation, allowing a value beginning with `-` to be interpreted as a separate CLI flag. An attacker who controlled the `resume` value could inject an `--mcp-config` flag defining a stdio MCP server, resulting in arbitrary command execution at CLI startup that bypassed the SDK's permission controls. Exploitation required an application to pass untrusted input as the session ID to resume.
+
+Users are advised to update to the latest version of the claude-agent-sdk package.
+
+Thank you to hackerone.com/moamenmahmood for reporting this issue.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-h4mw-j7qp-8mwm"&gt;https://github.com/advisories/GHSA-h4mw-j7qp-8mwm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662"&gt;https://github.com/anthropics/claude-agent-sdk-python/commit/347a1cb88d7652199399db1b7f914e0a459a6662&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/pull/1123"&gt;https://github.com/anthropics/claude-agent-sdk-python/pull/1123&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121"&gt;https://github.com/anthropics/claude-agent-sdk-python/releases/tag/v0.2.121&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>

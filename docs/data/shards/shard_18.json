@@ -32532,7 +32532,7 @@
     "author": "Ofri Peretz",
     "composite_risk_score": null,
     "composite_risk_tier": "LOW",
-    "description": "ESLint plugin for Model Context Protocol (MCP) SDK security — follows tool arguments into shells, file paths, URLs, SQL and eval; catches credential leaks, untrusted text in model-facing descriptions and prompts, unhardened HTTP transports, shared statele",
+    "description": "ESLint MCP security rules for the Model Context Protocol SDK — follows tool arguments into shells, file paths, URLs, SQL and eval; catches credential leaks, untrusted text in model-facing descriptions and prompts, unhardened HTTP transports, shared statel",
     "display_name": "eslint-plugin-mcp-sdk-security",
     "dual_axis_security": null,
     "ecosystem": "npm",
@@ -32541,19 +32541,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.0.1",
+    "latest_version": "2.0.2",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "eslint-plugin-mcp-sdk-security",
     "prompts_count": 0,
     "purl": "pkg:npm/eslint-plugin-mcp-sdk-security",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.0.1",
+    "recommended_safe_version": "2.0.2",
     "repo_http_status": 200,
     "repository_url": "https://github.com/ofri-peretz/eslint",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `eslint-plugin-mcp-sdk-security` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 19 safe version(s).",
+    "security_summary": "Server `eslint-plugin-mcp-sdk-security` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 20 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:f24848cbcb6f822201cdc0f6947431bb9a4c72774bfa9be285172946f599b345",
@@ -34624,6 +34624,490 @@
         ],
         "toolset_canonical_hash": "sha256:f24848cbcb6f822201cdc0f6947431bb9a4c72774bfa9be285172946f599b345",
         "version": "2.0.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T05:17:12.647Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc52e7e927ab331a553c90287578467c996555174a44517245ffc5e5d237474c",
+            "description": "Execute JSON",
+            "name": "JSON",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `JSON` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:337a951ebc7b1c03d70ff18cbfcba3420b14ded403f8ac45ae876ac2d8921f4f",
+            "description": "Execute URL",
+            "name": "URL",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `URL` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:05cfd429938d6dbcbcca9df70372a98b15c5f898af2581cf558a0395c494e908",
+            "description": "Execute __dirname",
+            "name": "__dirname",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `__dirname` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f4f6b8c83390a70eebabc93b13a4343b3042321a5b8336b940ed59d000b6a25f",
+            "description": "Execute __filename",
+            "name": "__filename",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `__filename` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:75f2d03a10a1c5dbbdf366a81c4430440dd4b581cfaf8f7e7a81a7fe5ef029b8",
+            "description": "Status of a build",
+            "name": "build_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "build",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `build_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:63776bc026d95ebb9624f857c92ff9b3b41e70c691e61e67b7fccefbae6ab8cc",
+            "description": "Apply one arithmetic operation to two numbers",
+            "name": "calculate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "a",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "b",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "add",
+                  "subtract",
+                  "multiply"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "operation",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `calculate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e2613471e7ff04c7b134dacac9a687697050855059f8facf40acab20dc270faf",
+            "description": "Deploy an approved build",
+            "name": "deploy",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "approvalId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "build",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `deploy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:595cf9b617fadec70dcbe0a0b74a76480d81b312b20698a98ef80959978179a8",
+            "description": "Fetch a web page and return its text",
+            "name": "fetch_page",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `fetch_page` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e99699b05a7194831af6054f5ff828283bd8e03e1a8807a663b1c3b6ae649c22",
+            "description": "Find a user by name",
+            "name": "find_user",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_user` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:badb6d9b2213c6c9068fffcee677bb8d3213dea7a50b4571ad6742c2f598c2ff",
+            "description": "Read public metadata for a GitHub repository",
+            "name": "get_repo",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "owner",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "repo",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_repo` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1f6081a10b6a988b9f290bc9ff411fa9d5de17c6fc25cb1eca300d50718b5dc0",
+            "description": "List the caller repositories",
+            "name": "list_repos",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_repos` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec9dd8492d8a9d0a51081d563628f85c0eae329b7125b1406ccd61f18521278b",
+            "description": "Disallow an MCP tool argument reaching eval, new Function or a vm context as code",
+            "name": "no-code-injection-in-tool",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `no-code-injection-in-tool` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:04752c4090d5c8b44c2137855ca70f2b68aa92fb20125ad553c476361c1357e7",
+            "description": "Disallow an MCP tool argument choosing the command a child_process call runs",
+            "name": "no-command-injection-in-tool",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `no-command-injection-in-tool` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:05e1de55cac8558964c3d41082a4a5baa55ada4c680b0441e69247a3ce0d9b44",
+            "description": "Disallow an MCP tool returning the server",
+            "name": "no-credential-leak-in-tool",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-credential-leak-in-tool` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d53aec2b756f970d411fdc778658d7f314a1f69dad6c6bfa8da7de0333bb24e2",
+            "description": "Disallow registering or listing two MCP tools with the same name on one server",
+            "name": "no-duplicate-tool-name",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-duplicate-tool-name` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fbd1768c17801f1cb7d9b7eac06262418426bd002e1d5841f1930dbf9b0d42f4",
+            "description": "Disallow an MCP tool argument choosing the file an fs call reads, writes or deletes without a containment check",
+            "name": "no-path-traversal-in-tool",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `no-path-traversal-in-tool` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b690927e674c4d332330acc515f7de1f10650e256c50a534cd2dc9e0b18925cf",
+            "description": "Disallow an MCP sessionIdGenerator that returns a counter, a timestamp, Math.random() or a constant",
+            "name": "no-predictable-session-id",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-predictable-session-id` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b93428d837bc9e01fad82270afbf85b1576ac6748515f9398cdb37dce1e89116",
+            "description": "Disallow sharing one stateless Streamable HTTP transport or one MCP server across requests",
+            "name": "no-shared-stateless-transport",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-shared-stateless-transport` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6179b3296373f0c8b498443b148bfd255cb3b19147090662e87061d7a3258297",
+            "description": "Disallow an MCP tool argument reaching the text of a SQL query instead of its parameters",
+            "name": "no-sql-injection-in-tool",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `no-sql-injection-in-tool` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5fb3ee76d9bdf364967dd83dddc5bad8fcf3746701f6646de1fb008e2b030b0c",
+            "description": "Disallow an MCP tool argument choosing the host an outbound HTTP request is sent to",
+            "name": "no-ssrf-in-tool",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-ssrf-in-tool` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:024c917379bf7b0a2c7c3a8b9f05310d0c406ef521f6a7e360af188f0f88b675",
+            "description": "Disallow MCP tool, prompt and resource descriptions built from text a client, a remote service or a file controls",
+            "name": "no-tool-description-injection",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-tool-description-injection` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4665c9999211f3d1fede15f880b22ebb594bbc814f83f0be0a62e3f50d6ed234",
+            "description": "Disallow an MCP client spawning a stdio server whose command comes from a tool argument, a network response or a project config file",
+            "name": "no-untrusted-stdio-command",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `no-untrusted-stdio-command` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a0214a5ad0b56ed8b38225392f129bd40a94395521ea25317a5d4f9b11d8d69c",
+            "description": "Disallow an MCP client writing a server",
+            "name": "no-untrusted-tool-metadata-in-prompt",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-untrusted-tool-metadata-in-prompt` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:88690adfe7db9303facedbbd9384b1289d094fbc56d2c52e649d245131e93ec9",
+            "description": "Disallow a tool handler reading an argument its declared input schema does not include",
+            "name": "no-unvalidated-tool-args",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `no-unvalidated-tool-args` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d565102b771a3e3a880840d41dda58cd2323f4e2a975a67d0e67c855a98f918",
+            "description": "Read one of the published documents",
+            "name": "read_doc",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_doc` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8395202909a4f868fd0d327617052afad49a42c86d8b01d682f0bb3e68900a81",
+            "description": "Read a file from the workspace",
+            "name": "read_file",
+            "parameters": [
+              {
+                "default": "utf8",
+                "description": null,
+                "enum": [
+                  "utf8",
+                  "base64"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "encoding",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `read_file` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f6bf782013e77090133d301965365f9f76a9482fe446fbe25b1a25eec178a60",
+            "description": "Require an MCP HTTP server transport to validate the Host header and a network-reachable MCP server to authenticate its callers",
+            "name": "require-http-transport-hardening",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `require-http-transport-hardening` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7d8575f24728b402ea4afefb57dfd33caa28da56316151385489afb102cbab64",
+            "description": "Require an input schema when an MCP tool handler reads arguments",
+            "name": "require-tool-input-schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `require-tool-input-schema` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:12824886137d83af872a4be55fc59fe0f4c2dbded44df503d4b3a3ee1fd8eda4",
+            "description": "Current server time in ISO-8601",
+            "name": "server_time",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `server_time` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:323afea7849b199d1d347fd140a0571e859fa53e672545dc2d862854bfcfa189",
+            "description": "Describe the authenticated client",
+            "name": "whoami",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `whoami` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f24848cbcb6f822201cdc0f6947431bb9a4c72774bfa9be285172946f599b345",
+        "version": "2.0.2"
       }
     ]
   },
@@ -51072,7 +51556,7 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-SIDE-EFFECT-001",
+            "id": "VERITY-MCP-SIDE-EFFECT-001",
             "owasp_mcp_category": "Side Effect Security",
             "remediation_guidance": "Enforces destination URL allowlists and side-effect declarations.",
             "severity": "HIGH",
@@ -51085,7 +51569,7 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "VERITY-MCP-SIDE-EFFECT-001",
+            "id": "MCP-SIDE-EFFECT-001",
             "owasp_mcp_category": "Side Effect Security",
             "remediation_guidance": "Enforces destination URL allowlists and side-effect declarations.",
             "severity": "HIGH",
