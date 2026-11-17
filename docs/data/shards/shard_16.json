@@ -22213,7 +22213,7 @@
     "repository_url": null,
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Package `ai-workflow-automation-ai-agent-hub` has 1 security advisories.",
+    "security_summary": "Package `ai-workflow-automation-ai-agent-hub` has 2 security advisories.",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "",
@@ -22226,6 +22226,17 @@
             "epss_percentile": null,
             "epss_score": null,
             "id": "CVE-2026-121576",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "Incorrect Privilege Assignment vulnerability in AtlasAiDev MCP Server for WordPress ai-workflow-automation-ai-agent-hub ",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 7.2,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-125771",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "HIGH",
@@ -45673,7 +45684,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "LOW",
-    "description": "MCP server that lets agents drive DingTalk (dws) and WeCom (wecom-cli) CLIs: send messages, write reports, create todos, query calendars and approvals. Ships MCP resources, server instructions, structured tool output, and an inline QR login row for the DS",
+    "description": "MCP connector that lets AI agents drive DingTalk (dws) and WeCom (wecom-cli): messages, calendar, todos, approvals and docs. Zero setup — the CLI downloads itself and login is a QR scan.",
     "display_name": "im-connector",
     "dual_axis_security": null,
     "ecosystem": "npm",
@@ -45682,22 +45693,22 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.6.1",
+    "latest_version": "1.6.3",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "im-connector",
     "prompts_count": 0,
     "purl": "pkg:npm/im-connector",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.6.1",
+    "recommended_safe_version": "1.6.3",
     "repo_http_status": 200,
-    "repository_url": null,
+    "repository_url": "https://github.com/max-holo/dsh-im-connector",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `im-connector` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 15 safe version(s).",
+    "security_summary": "Server `im-connector` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 17 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:6ca1330b0469107be54800d3d1cb8093192f1903a933676ae24c552724f9743d",
     "transport": "stdio",
     "versions": [
       {
@@ -45894,6 +45905,134 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.6.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-16T07:34:10.989Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.6.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-16T07:58:48.591Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a4c15f85da2a922b123d18be413dbb7c9eba4c9b6bf26338a28479381c487caf",
+            "description": "环境自检：返回各平台 CLI 版本、登录状态、是否随包携带二进制与实际可执行入口。首次使用或命令异常时先调用。",
+            "name": "info",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `info` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:87e450758a10354f31c379e21c380e4bf6d8a25f4ca910cc120bf498924fc0b4",
+            "description": "发起平台登录（无需终端）：企业微信返回可直接渲染的扫码二维码（图片内容 + 绝对路径 markdown，贴进回复即可内联显示）；",
+            "name": "login",
+            "parameters": [
+              {
+                "default": null,
+                "description": "钉钉登录方式：browser=本机浏览器授权（默认），device=设备码；企业微信固定扫码",
+                "enum": [
+                  "browser",
+                  "device"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "provider",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `login` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eb56a83e940dbb38816562a08fda0a7a7668c7ddcbbcb4b96b1888fa1e06ef36",
+            "description": "查询登录状态：是否已授权、登录进程是否仍在运行、二维码（若可用）、最近输出与退出码。",
+            "name": "login_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "provider",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `login_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8342f55d9ed2245d89c48a61251dc681f35cbc91d48e513c2139129caba1df00",
+            "description": "统一 IM 透传：执行指定平台的 CLI 命令并返回其 JSON 输出。args 是原生命令参数（不是自然语言）。",
+            "name": "run",
+            "parameters": [
+              {
+                "default": null,
+                "description": "对应平台 CLI 的命令及参数（字符串数组）",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "args",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "provider",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:6ca1330b0469107be54800d3d1cb8093192f1903a933676ae24c552724f9743d",
+        "version": "1.6.3"
       }
     ]
   },

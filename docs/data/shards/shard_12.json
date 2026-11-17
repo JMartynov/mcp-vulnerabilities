@@ -4158,19 +4158,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.2.0",
+    "latest_version": "2.2.1",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@genwave/svgmaker-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@genwave%2Fsvgmaker-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.2.0",
+    "recommended_safe_version": "2.2.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/GenWaveLLC/svgmaker-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@genwave/svgmaker-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 14 safe version(s).",
+    "security_summary": "Server `@genwave/svgmaker-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 15 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e2ef844b7223c51c3f9db4031f73937436743627c17855b2460bbf376ce40092",
@@ -4719,6 +4719,200 @@
         ],
         "toolset_canonical_hash": "sha256:e2ef844b7223c51c3f9db4031f73937436743627c17855b2460bbf376ce40092",
         "version": "2.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-16T06:40:16.670Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b9efe33004afcf0c67c79aaf0de461f43e21e8c8087d2617c40a0b75968483ff",
+            "description": "Get the SVGMaker account identity and credit balance: email, display name, account type, and remaining credits. Use this to check credits before a paid operation, or to confirm which account the key belongs to. For per-request counts and credit spend over time, use svgmaker_account_usage instead. Takes no arguments.",
+            "name": "svgmaker_account_info",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_account_info` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:36d115e2257633631ce54500d25989312eae588550273f88f24d7f4cb96bf9e5",
+            "description": "Get SVGMaker API usage statistics for the account: request counts, credits used, success and error counts, and breakdowns by category and by day. Use this to answer",
+            "name": "svgmaker_account_usage",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_account_usage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4ec955ed3e32d008920c0c19b5f896fc87f582ac69765657da1c9114ad03843e",
+            "description": "Execute svgmaker_convert",
+            "name": "svgmaker_convert",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_convert` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dad36cb54709d9974b7669b508c6a38a277a43cd02856f45ab0c86c7cb25d053",
+            "description": "Execute svgmaker_edit",
+            "name": "svgmaker_edit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_edit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4d1f42259089cf47072019160e9d264ba4179a321dfa4cb1109e1ad5f66ef901",
+            "description": "Execute svgmaker_gallery_download",
+            "name": "svgmaker_gallery_download",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_gallery_download` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8811ca672d70d7193dce33111330c17cd051c8c57e7d8ddaa7b55c137e662752",
+            "description": "Get the details of a public gallery item by id: the prompt used, type, quality, hashtags and categories. Returns metadata as text, not the image — use svgmaker_gallery_preview to see the image itself.",
+            "name": "svgmaker_gallery_get",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_gallery_get` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3b9437c7ffe245c3cd11bb2f3ad6df799186cb78d6c996cff91503931f07d530",
+            "description": "Browse the public SVGMaker gallery and list item ids, with optional filters and pagination. Use this to find reference or inspiration images made by other users. For images the caller made themselves, use svgmaker_generations_list instead. Returns ids and page counts only, not images.",
+            "name": "svgmaker_gallery_list",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_gallery_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:da6a09de2a96c07d24cb455a852fa0d96126634897a49541f53b02b8b8f4467d",
+            "description": "Show a public gallery item in the conversation as a PNG image. Use this to check what a gallery item looks like, on any transport, and it costs no credits. Use svgmaker_gallery_download instead when the user wants the file or a URL, and svgmaker_generations_preview for generations the caller made.",
+            "name": "svgmaker_gallery_preview",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `svgmaker_gallery_preview` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82b3d86a60569d052b50fe61b2242a763b5e9dd1406807f92715c3968167a794",
+            "description": "Execute svgmaker_generate",
+            "name": "svgmaker_generate",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_generate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8ea7a5007042516c5b327e936ef45cfa321c6081b5b0eefb143b3df4577a9b55",
+            "description": "Delete one of your generations and its files. The deletion is permanent and cannot be undone, so confirm the exact id with the user before you call this. Requires a paid account. Returns a confirmation message.",
+            "name": "svgmaker_generations_delete",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_generations_delete` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:660786a27c6b0aa506c5c2d986204523799ad21275f6bd39b8d83f8161828bfb",
+            "description": "Execute svgmaker_generations_download",
+            "name": "svgmaker_generations_download",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_generations_download` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c6c978be7fbe5d3a15c4e0e068d518a89adcd5efbaa426be7c5d3f13b45399a",
+            "description": "Get the details of one of your generations by id: the prompt used, type, quality, public/private state, hashtags and categories. Returns metadata as text, not the image — use svgmaker_generations_preview to see the image itself.",
+            "name": "svgmaker_generations_get",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_generations_get` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:39130c197c52c8d7756eedb367851b3faa47b9b7c3b9af3915271c4f734b3b8d",
+            "description": "List the ids of your own SVG generations, with optional filters and pagination. Use this to find the id of earlier work before calling svgmaker_generations_get, _preview, _download, _share or _delete. For public community images, use svgmaker_gallery_list instead. Returns ids and page counts only, not images.",
+            "name": "svgmaker_generations_list",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_generations_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aeb8f8799cd397f38d98f441c0949d131f837f0976eac51c228dfadb0eefa53b",
+            "description": "Show one of your generations in the conversation as a PNG image. Use this to check what a generation looks like, on any transport. Use svgmaker_generations_download instead when the user wants the file or a URL, and svgmaker_gallery_preview for a public gallery item.",
+            "name": "svgmaker_generations_preview",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `svgmaker_generations_preview` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ee6fb20bebd7208c300a7b45defbae192b9326e22d74a6e4a92541471390ed30",
+            "description": "Make one of your generations publicly visible and return its permanent share URL. Use this when the user wants a link other people can open. This exposes the image publicly, so ask first if the intent is unclear.",
+            "name": "svgmaker_generations_share",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `svgmaker_generations_share` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1f8ed248724b254d1487cc0a77979eee28fc86261f23f7d7ab146663bc068c24",
+            "description": "Show a local image file (PNG, SVG, WebP or SVGZ) in the conversation as a PNG image. Use this to look at a file already on disk. Works over the stdio transport only, because it reads the local filesystem. To look at an SVGMaker generation or a gallery item, use svgmaker_generations_preview or svgmaker_gallery_preview with an id instead.",
+            "name": "svgmaker_preview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_preview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e4ebc0adb3ca91708e23a0f890be2ee9ffb99899bd7159bbedb698a3301366c2",
+            "description": "Execute svgmaker_remove_background",
+            "name": "svgmaker_remove_background",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_remove_background` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:651bd51603e2ab8d5f1688e63b00d3de325636454665a1c45ec579c92128c2e5",
+            "description": "Execute svgmaker_upload",
+            "name": "svgmaker_upload",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svgmaker_upload` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:e2ef844b7223c51c3f9db4031f73937436743627c17855b2460bbf376ce40092",
+        "version": "2.2.1"
       }
     ]
   },
@@ -73699,19 +73893,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.49.3",
+    "latest_version": "0.50.3",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "terse-mcp",
     "prompts_count": 0,
     "purl": "pkg:pypi/terse-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.49.3",
+    "recommended_safe_version": "0.50.3",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/terse-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `terse-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 151 safe version(s).",
+    "security_summary": "Server `terse-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 157 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:056b12fcd16eaf65c15d8de497ead4d64ccbde855c9d283fadd6799cd796cdf2",
@@ -76324,6 +76518,299 @@
         ],
         "toolset_canonical_hash": "sha256:056b12fcd16eaf65c15d8de497ead4d64ccbde855c9d283fadd6799cd796cdf2",
         "version": "0.49.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T13:02:25.643347Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.49.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T13:15:31.606651Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.49.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T13:27:15.963329Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.50.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T13:38:48.271806Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.50.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T14:59:21.433961Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.50.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-15T16:53:19.096339Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5bbb43d731c7615aa704c28db153dd861a8c8b05e664bfa2f4a3f499676bd658",
+            "description": "[] alone is not enough. Passthrough stops compression, but the capture",
+            "name": "\"tiers\"",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `\"tiers\"` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:41a20ad27d2cf26431bfe6cecbe621948766d291560055385e425b0b80b5ad75",
+            "description": "",
+            "name": "Confirm the behavior, not just the token count, with terse fluency --drop-eval (below)",
+            "parameters": [],
+            "risk_score": 7.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `Confirm the behavior, not just the token count, with terse fluency --drop-eval (below)` [CRITICAL] executes arbitrary host system commands or shell scripts; handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b300d3f8171295e5a501546d86f16addb5750a8bb27aac35e1fe028d4b88301e",
+            "description": "terse restores the entire payload from",
+            "name": "Everything is recoverable, and the gate proves it",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Everything is recoverable, and the gate proves it` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9a599a60142ba717b8dd2ed038ad54f97dfca51cfe5e462f4c52e985c8e9c3b3",
+            "description": "100%",
+            "name": "claude-sonnet-5",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "100",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `claude-sonnet-5` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:575ba34f9b98d78cd67e42ec5000745e9cffc2fd3907b3345a07013275a618cc",
+            "description": "100%",
+            "name": "deepseek-v4-pro",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "100",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `deepseek-v4-pro` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6f964aefd2728c1b9aa902b14d73ddcd3e272fa1346d7379f055e944e4dca670",
+            "description": "100%",
+            "name": "glm-5.2",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "100",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `glm-5.2` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5dc3582836e4b870ce12fb8806a475d39e2e891021a6cd7b8c31bbd2db8043eb",
+            "description": "N keeps the first N qualifying blocks (at or above min) inline per",
+            "name": "keep_first",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `keep_first` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a62c9f7e0eee2c9a120f939ca74a622a1763daaa6dd0b4258ae5276177f3ea10",
+            "description": "100%",
+            "name": "minimax-m3",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "100",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `minimax-m3` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9248bd4a4c606451decc04d303a1695128ec9e6134f31b722c035f192b2c50bf",
+            "description": "called retrieve when needed",
+            "name": "model",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "asked",
+                "nested_properties": null,
+                "required": false,
+                "type": "for"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "block",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "the",
+                "nested_properties": null,
+                "required": false,
+                "type": "right"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `model` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e229066da52075f9217553d50b3224128b291892d0fe109d60c09acc95efdb90",
+            "description": "100%",
+            "name": "qwen3.7-max",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "100",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `qwen3.7-max` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:00b631abc9e2e39fc144499d3a9094d0604e39d43a5c8e2a0af8363f972c0d17",
+            "description": "N stops dropping a rule's field for a tool once the model has fetched",
+            "name": "retract_after",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `retract_after` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9f44bd7c69b09c2ba713068a7c413d8d5c2ce6b3c762d69d568afe2f375ee8bd",
+            "description": "does a model read the",
+            "name": "uv run terse fluency — the one that matters for the proxy",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `uv run terse fluency — the one that matters for the proxy` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:056b12fcd16eaf65c15d8de497ead4d64ccbde855c9d283fadd6799cd796cdf2",
+        "version": "0.50.3"
       }
     ]
   },
