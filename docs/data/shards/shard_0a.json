@@ -80781,24 +80781,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "LITE-MONGO-LOOKUP-001",
+            "id": "VERITY-LITE-MONGO-LOOKUP-001",
             "owasp_mcp_category": "Data Exfiltration via Aggregation",
             "remediation_guidance": "Rejects $lookup stages outside allowlisted public metric views.",
             "severity": "HIGH",
             "summary": "Confidential Collection Join Exfiltration in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
-            "vulnerable_tools": [
-              "run_aggregation"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-LITE-MONGO-CODEEXEC-001",
-            "owasp_mcp_category": "Code Injection",
-            "remediation_guidance": "Disallows $accumulator and $function operators completely.",
-            "severity": "HIGH",
-            "summary": "Server-Side Code Execution via Accumulator in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
             "vulnerable_tools": [
               "run_aggregation"
             ]
@@ -80820,6 +80807,19 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "VERITY-LITE-MONGO-CODEEXEC-001",
+            "owasp_mcp_category": "Code Injection",
+            "remediation_guidance": "Disallows $accumulator and $function operators completely.",
+            "severity": "HIGH",
+            "summary": "Server-Side Code Execution via Accumulator in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
+            "vulnerable_tools": [
+              "run_aggregation"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "VERITY-LITE-MONGO-AGG-DOS-001",
             "owasp_mcp_category": "Resource Exhaustion / DoS",
             "remediation_guidance": "Limits pipeline depth to 5 stages and forbids nested $facet arrays.",
@@ -80833,11 +80833,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "VERITY-LITE-MONGO-LOOKUP-001",
-            "owasp_mcp_category": "Data Exfiltration via Aggregation",
-            "remediation_guidance": "Rejects $lookup stages outside allowlisted public metric views.",
+            "id": "LITE-MONGO-CODEEXEC-001",
+            "owasp_mcp_category": "Code Injection",
+            "remediation_guidance": "Disallows $accumulator and $function operators completely.",
             "severity": "HIGH",
-            "summary": "Confidential Collection Join Exfiltration in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
+            "summary": "Server-Side Code Execution via Accumulator in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
             "vulnerable_tools": [
               "run_aggregation"
             ]
@@ -80846,11 +80846,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "LITE-MONGO-CODEEXEC-001",
-            "owasp_mcp_category": "Code Injection",
-            "remediation_guidance": "Disallows $accumulator and $function operators completely.",
+            "id": "LITE-MONGO-LOOKUP-001",
+            "owasp_mcp_category": "Data Exfiltration via Aggregation",
+            "remediation_guidance": "Rejects $lookup stages outside allowlisted public metric views.",
             "severity": "HIGH",
-            "summary": "Server-Side Code Execution via Accumulator in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
+            "summary": "Confidential Collection Join Exfiltration in Business Intelligence & Aggregations (mcp-analytics-aggregate)",
             "vulnerable_tools": [
               "run_aggregation"
             ]
@@ -80920,13 +80920,26 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "LITE-MONGO-DRAFT-001",
+            "id": "VERITY-LITE-MONGO-DRAFT-001",
             "owasp_mcp_category": "Information Disclosure",
             "remediation_guidance": "Always injects compound filter status: 'published' in search queries.",
             "severity": "HIGH",
             "summary": "Unpublished Draft Product Exfiltration in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)",
             "vulnerable_tools": [
               "search_products"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-2ND-NOSQL-001",
+            "owasp_mcp_category": "Second-Order NoSQL Injection",
+            "remediation_guidance": "Recursively sanitizes and stringifies stored metadata properties.",
+            "severity": "HIGH",
+            "summary": "Second-Order NoSQL Injection in Metadata in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)",
+            "vulnerable_tools": [
+              "get_product_details"
             ]
           },
           {
@@ -80959,13 +80972,13 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "LITE-MONGO-2ND-NOSQL-001",
-            "owasp_mcp_category": "Second-Order NoSQL Injection",
-            "remediation_guidance": "Recursively sanitizes and stringifies stored metadata properties.",
+            "id": "LITE-MONGO-DRAFT-001",
+            "owasp_mcp_category": "Information Disclosure",
+            "remediation_guidance": "Always injects compound filter status: 'published' in search queries.",
             "severity": "HIGH",
-            "summary": "Second-Order NoSQL Injection in Metadata in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)",
+            "summary": "Unpublished Draft Product Exfiltration in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)",
             "vulnerable_tools": [
-              "get_product_details"
+              "search_products"
             ]
           },
           {
@@ -80979,19 +80992,6 @@
             "summary": "Second-Order NoSQL Injection in Metadata in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)",
             "vulnerable_tools": [
               "get_product_details"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-LITE-MONGO-DRAFT-001",
-            "owasp_mcp_category": "Information Disclosure",
-            "remediation_guidance": "Always injects compound filter status: 'published' in search queries.",
-            "severity": "HIGH",
-            "summary": "Unpublished Draft Product Exfiltration in E-Commerce Catalog & Stock Inventory (mcp-catalog-inventory)",
-            "vulnerable_tools": [
-              "search_products"
             ]
           }
         ],
