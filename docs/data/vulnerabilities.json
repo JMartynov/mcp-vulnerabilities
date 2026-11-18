@@ -1367,7 +1367,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@cyanheads/git-mcp-server",
-          "purl": "pkg:npm/@cyanheads/git-mcp-server"
+          "purl": "pkg:npm/%40cyanheads/git-mcp-server"
         },
         "ranges": [
           {
@@ -1407,7 +1407,7 @@
         "url": "https://github.com/advisories/GHSA-3q26-f695-pp76"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/cyanheads/git-mcp-server"
       },
       {
@@ -1423,7 +1423,7 @@
         "url": "https://github.com/cyanheads/git-mcp-server/security/advisories/GHSA-3q26-f695-pp76"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53107"
       }
     ],
@@ -1447,7 +1447,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@modelcontextprotocol/server-filesystem",
-          "purl": "pkg:npm/@modelcontextprotocol/server-filesystem"
+          "purl": "pkg:npm/%40modelcontextprotocol/server-filesystem"
         },
         "ranges": [
           {
@@ -1501,7 +1501,7 @@
         "url": "https://github.com/advisories/GHSA-q66q-fx2p-7w4m"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/modelcontextprotocol/servers"
       },
       {
@@ -1513,7 +1513,7 @@
         "url": "https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-q66q-fx2p-7w4m"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53109"
       }
     ],
@@ -1537,7 +1537,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@modelcontextprotocol/server-filesystem",
-          "purl": "pkg:npm/%40modelcontextprotocol/server-filesystem"
+          "purl": "pkg:npm/@modelcontextprotocol/server-filesystem"
         },
         "ranges": [
           {
@@ -1591,7 +1591,7 @@
         "url": "https://github.com/advisories/GHSA-hc55-p739-j48w"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/modelcontextprotocol/servers"
       },
       {
@@ -1603,7 +1603,7 @@
         "url": "https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-hc55-p739-j48w"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53110"
       }
     ],
@@ -1826,11 +1826,11 @@
     "published": "2025-07-04T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-3qhf-m339-9g5v"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/modelcontextprotocol/python-sdk"
       },
       {
@@ -1854,7 +1854,7 @@
         "url": "https://github.com/pypa/advisory-database/tree/main/vulns/mcp/PYSEC-2026-1616.yaml"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-53366"
       },
       {
@@ -3496,7 +3496,7 @@
     "affected": [
       {
         "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
           "remediation_guidance": "Unfortunately, there is no solution available yet."
         },
         "package": {
@@ -3532,7 +3532,7 @@
     },
     "details": "`feiskyer/mcp-kubernetes-server` through **0.1.11** allows **OS command injection** via the `/mcp/kubectl` endpoint. The handler constructs a shell command with user-supplied arguments and executes it with `subprocess` using `shell=True`, enabling injection through shell metacharacters (e.g., `;`, `&&`, `$()`), even when the server is running in **read-only** mode.\n\nA remote, unauthenticated attacker can execute arbitrary OS commands on the host, resulting in full compromise of confidentiality, integrity, and availability.\n\nThis issue is **distinct from** `mcp-server-kubernetes` and from **CVE-2025-53355**.",
     "id": "CVE-2025-59377",
-    "modified": "2025-09-25T00:00:00Z",
+    "modified": "2026-11-16T00:00:00Z",
     "published": "2025-09-15T00:00:00Z",
     "references": [
       {
@@ -3541,11 +3541,11 @@
       },
       {
         "type": "WEB",
-        "url": "https://github.com/feiskyer/mcp-kubernetes-server"
+        "url": "https://github.com/feiskyer/mcp-kubernetes-server/blob/78957b6c1a3982080cf6fcaac6f6e9014116a71c/src/mcp_kubernetes_server/command.py#L38"
       },
       {
         "type": "WEB",
-        "url": "https://github.com/feiskyer/mcp-kubernetes-server/blob/78957b6c1a3982080cf6fcaac6f6e9014116a71c/src/mcp_kubernetes_server/command.py#L38"
+        "url": "https://github.com/pypa/advisory-database/tree/main/vulns/mcp-kubernetes-server/PYSEC-2026-409.yaml"
       },
       {
         "type": "WEB",
@@ -3557,13 +3557,17 @@
       },
       {
         "type": "WEB",
+        "url": "https://pypi.org/project/mcp-kubernetes-server"
+      },
+      {
+        "type": "WEB",
         "url": "https://www.tenable.com/cve/CVE-2025-59377"
       }
     ],
     "schema_version": "1.6.0",
     "severity": [
       {
-        "score": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
         "type": "CVSS_V3"
       }
     ],
@@ -4142,11 +4146,11 @@
     "published": "2025-10-29T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-mxxr-jv3v-6pgc"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/jlowin/fastmcp"
       },
       {
@@ -4162,7 +4166,7 @@
         "url": "https://github.com/jlowin/fastmcp/security/advisories/GHSA-mxxr-jv3v-6pgc"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-62800"
       },
       {
@@ -4240,11 +4244,11 @@
     "published": "2025-10-29T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-rj5c-58rq-j5g5"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/jlowin/fastmcp"
       },
       {
@@ -4252,7 +4256,7 @@
         "url": "https://github.com/jlowin/fastmcp/security/advisories/GHSA-rj5c-58rq-j5g5"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-62801"
       },
       {
@@ -4764,7 +4768,7 @@
         "url": "https://github.com/advisories/GHSA-6xpm-ggf7-wc3p"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/geelen/mcp-remote"
       },
       {
@@ -4776,7 +4780,7 @@
         "url": "https://jfrog.com/blog/2025-6514-critical-mcp-remote-rce-vulnerability"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-6514"
       },
       {
@@ -5351,7 +5355,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@modelcontextprotocol/sdk",
-          "purl": "pkg:npm/@modelcontextprotocol/sdk"
+          "purl": "pkg:npm/%40modelcontextprotocol/sdk"
         },
         "ranges": [
           {
@@ -5394,7 +5398,7 @@
         "url": "https://github.com/advisories/GHSA-w48q-cv73-mx4w"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/modelcontextprotocol/typescript-sdk"
       },
       {
@@ -5414,7 +5418,7 @@
         "url": "https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-w48q-cv73-mx4w"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-66414"
       }
     ],
@@ -5489,11 +5493,11 @@
     "published": "2025-12-02T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-9h52-p55h-vw2f"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/modelcontextprotocol/python-sdk"
       },
       {
@@ -5509,7 +5513,7 @@
         "url": "https://github.com/pypa/advisory-database/tree/main/vulns/mcp/PYSEC-2026-1617.yaml"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-66416"
       },
       {
@@ -5908,11 +5912,11 @@
     "published": "2025-12-17T00:00:00Z",
     "references": [
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-5cgr-j3jf-jw3v"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/modelcontextprotocol/servers"
       },
       {
@@ -5924,7 +5928,7 @@
         "url": "https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-5cgr-j3jf-jw3v"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-68143"
       },
       {
@@ -6314,7 +6318,7 @@
     "published": "2026-03-16T00:00:00Z",
     "references": [
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/PrefectHQ/fastmcp"
       },
       {
@@ -6322,11 +6326,11 @@
         "url": "https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-5h2m-4q8j-pqpj"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-5h2m-4q8j-pqpj"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-69196"
       },
       {
@@ -6482,30 +6486,6 @@
     "affected": [
       {
         "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
-          "remediation_guidance": "Upgrade to version 3.0.6 or above."
-        },
-        "package": {
-          "ecosystem": "npm",
-          "name": "flowise",
-          "purl": "pkg:npm/flowise"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "2.2.7-patch.1"
-              },
-              {
-                "fixed": "3.0.6"
-              }
-            ],
-            "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
           "cvss_score": 9.8,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
           "cwe_ids": [
@@ -6523,6 +6503,30 @@
             "events": [
               {
                 "introduced": "0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+          "remediation_guidance": "Upgrade to version 3.0.6 or above."
+        },
+        "package": {
+          "ecosystem": "npm",
+          "name": "flowise",
+          "purl": "pkg:npm/flowise"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "2.2.7-patch.1"
+              },
+              {
+                "fixed": "3.0.6"
               }
             ],
             "type": "SEMVER"
@@ -6561,7 +6565,7 @@
         "url": "https://github.com/FlowiseAI/Flowise/releases/tag/flowise%403.0.6"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/FlowiseAI/Flowise/security/advisories/GHSA-6933-jpx5-q87q"
       },
       {
@@ -6573,7 +6577,7 @@
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-71336"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://www.vulncheck.com/advisories/flowise-unsandboxed-remote-code-execution-via-custom-mcp"
       }
     ],
@@ -7044,7 +7048,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@modelcontextprotocol/sdk",
-          "purl": "pkg:npm/@modelcontextprotocol/sdk"
+          "purl": "pkg:npm/%40modelcontextprotocol/sdk"
         },
         "ranges": [
           {
@@ -7111,7 +7115,7 @@
         "url": "https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-cqwc-fm46-7fff"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-0621"
       },
       {
@@ -8558,7 +8562,7 @@
     "published": "2026-10-07T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-w794-rj3p-xv45"
       },
       {
@@ -8586,11 +8590,11 @@
         "url": "https://github.com/langflow-ai/langflow/security/advisories/GHSA-7w94-79vh-5mr2"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/langflow-ai/langflow/security/advisories/GHSA-w794-rj3p-xv45"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-105697"
       },
       {
@@ -8908,7 +8912,7 @@
     "published": "2026-10-06T00:00:00Z",
     "references": [
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-935w-9g4m-p28p"
       },
       {
@@ -8928,7 +8932,7 @@
         "url": "https://github.com/vllm-project/vllm/releases/tag/v0.30.0"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/vllm-project/vllm/security/advisories/GHSA-935w-9g4m-p28p"
       },
       {
@@ -12837,30 +12841,6 @@
     "affected": [
       {
         "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
-          "remediation_guidance": "Upgrade to version 2.1.1 or above."
-        },
-        "package": {
-          "ecosystem": "npm",
-          "name": "@dynatrace-oss/dynatrace-mcp-server",
-          "purl": "pkg:npm/@dynatrace-oss/dynatrace-mcp-server"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "0"
-              },
-              {
-                "fixed": "2.1.1"
-              }
-            ],
-            "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
           "cvss_score": 4.3,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
           "cwe_ids": [
@@ -12878,6 +12858,30 @@
             "events": [
               {
                 "introduced": "< 2.1.1"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:N/A:N",
+          "remediation_guidance": "Upgrade to version 2.1.1 or above."
+        },
+        "package": {
+          "ecosystem": "npm",
+          "name": "@dynatrace-oss/dynatrace-mcp-server",
+          "purl": "pkg:npm/@dynatrace-oss/dynatrace-mcp-server"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "2.1.1"
               }
             ],
             "type": "SEMVER"
@@ -12920,7 +12924,7 @@
         "url": "https://github.com/dynatrace-oss/dynatrace-mcp/releases/tag/v2.1.1"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/dynatrace-oss/dynatrace-mcp/security/advisories/GHSA-pqh8-p93p-2rx7"
       },
       {
@@ -14033,6 +14037,162 @@
       }
     ],
     "summary": "IBM Langflow OSS 1.0.0 through 1.10.1  are vulnerable to unauthenticated remote code execution via environment variable "
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 7.2,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+          "cwe_ids": [
+            "CWE-79"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "last_affected": "2.5.28"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "origin_sources": [
+        "CVE-2026-130121"
+      ],
+      "sources_merged": [
+        "CVE-2026-130121"
+      ]
+    },
+    "details": "The AI Puffer - MCP Server for Claude & ChatGPT, with AI Chatbot plugin for WordPress is vulnerable to Stored Cross-Site Scripting via AI-generated comment replies in all versions up to, and including, 2.5.28 due to insufficient sanitization of the AI model's output in the insert_comment_reply_logic() function, which saves replies with wp_insert_comment() and bypasses the kses filtering WordPress normally applies to comment content. This makes it possible for unauthenticated attackers to inject arbitrary web scripts in pages that will execute whenever a user accesses an injected page, by submitting a comment that leads the AI model to reproduce an HTML payload in its automated reply. This is only exploitable when an administrator has configured a Comment Auto-Reply automation task with 'Action on reply' set to 'Approve' (the default is 'Hold for moderation'), and the attacker's comment has been approved.",
+    "id": "CVE-2026-130121",
+    "modified": "2026-11-18T04:17:14.670Z",
+    "published": "2026-11-18T04:17:14.167Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://plugins.trac.wordpress.org/browser/gpt3-ai-content-generator/tags/2.5.28/classes/automations/comment-reply-worker.php#L160"
+      },
+      {
+        "type": "WEB",
+        "url": "https://plugins.trac.wordpress.org/browser/gpt3-ai-content-generator/tags/2.5.28/classes/automations/comment-reply-worker.php#L27"
+      },
+      {
+        "type": "WEB",
+        "url": "https://plugins.trac.wordpress.org/browser/gpt3-ai-content-generator/tags/2.5.28/classes/automations/comment-reply-worker.php#L62"
+      },
+      {
+        "type": "WEB",
+        "url": "https://plugins.trac.wordpress.org/changeset/3807151/gpt3-ai-content-generator"
+      },
+      {
+        "type": "WEB",
+        "url": "https://www.wordfence.com/threat-intel/vulnerabilities/id/d164f090-83ee-499a-85e3-d642713467b9?source=cve"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:L/I:L/A:N",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "The AI Puffer - MCP Server for Claude & ChatGPT, with AI Chatbot plugin for WordPress is vulnerable to Stored Cross-Site"
+  },
+  {
+    "affected": [
+      {
+        "database_specific": {
+          "cvss_score": 8.2,
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+          "cwe_ids": [
+            "CWE-212"
+          ],
+          "severity": "HIGH"
+        },
+        "package": {
+          "ecosystem": "MCP",
+          "name": "unknown",
+          "purl": "pkg:mcp/unknown"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "3.1.3"
+              },
+              {
+                "last_affected": "3.1.4"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      }
+    ],
+    "database_specific": {
+      "origin_sources": [
+        "CVE-2026-130796"
+      ],
+      "sources_merged": [
+        "CVE-2026-130796"
+      ]
+    },
+    "details": "Flowise 3.1.3 through 3.1.4 contains an information disclosure vulnerability that allows unauthenticated attackers to read MCP server bearer tokens via the GET /api/v1/public-chatflows/:id handler. Attackers can use the leaked mcpServerConfig token on the POST /api/v1/mcp/:chatflowId route to invoke chatflows, bypassing API key protection and consuming the owner's model quota.",
+    "id": "CVE-2026-130796",
+    "modified": "2026-11-17T20:17:45.760Z",
+    "published": "2026-11-17T20:17:45.610Z",
+    "references": [
+      {
+        "type": "WEB",
+        "url": "https://flowiseai.com/sunset"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FlowiseAI/Flowise/blob/a65f81bb43ef66d3ce734bf0dff4223ae8041c95/packages/server/src/controllers/chatflows/index.ts#L229-L256"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FlowiseAI/Flowise/blob/a65f81bb43ef66d3ce734bf0dff4223ae8041c95/packages/server/src/database/entities/ChatFlow.ts#L64-L68"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FlowiseAI/Flowise/blob/a65f81bb43ef66d3ce734bf0dff4223ae8041c95/packages/server/src/services/mcp-server/index.ts#L223-L250"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/FlowiseAI/Flowise/blob/main/SECURITY.md"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/geo-chen/oss/blob/main/Flowise.md"
+      },
+      {
+        "type": "ADVISORY",
+        "url": "https://www.vulncheck.com/advisories/flowise-3.1.3-through-3.1.4-mcp-server-token-disclosure-via-public-chatflow-endpoint"
+      }
+    ],
+    "schema_version": "1.6.0",
+    "severity": [
+      {
+        "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "type": "CVSS_V3"
+      }
+    ],
+    "summary": "Flowise 3.1.3 through 3.1.4 contains an information disclosure vulnerability that allows unauthenticated attackers to re"
   },
   {
     "affected": [
@@ -15355,6 +15515,27 @@
       {
         "database_specific": {
           "cvss_v3_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
+          "cvss_v4_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
+        },
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "awslabs-aws-api-mcp-server",
+          "purl": "pkg:pypi/awslabs-aws-api-mcp-server"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              }
+            ],
+            "type": "ECOSYSTEM"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
           "remediation_guidance": "Upgrade to version 1.3.47 or above."
         },
         "package": {
@@ -15373,27 +15554,6 @@
               }
             ],
             "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:R/S:U/C:H/I:H/A:H",
-          "cvss_v4_vector": "CVSS:4.0/AV:L/AC:L/AT:P/PR:N/UI:P/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N"
-        },
-        "package": {
-          "ecosystem": "PyPI",
-          "name": "awslabs-aws-api-mcp-server",
-          "purl": "pkg:pypi/awslabs-aws-api-mcp-server"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "0"
-              }
-            ],
-            "type": "ECOSYSTEM"
           }
         ]
       }
@@ -15425,7 +15585,7 @@
         "url": "https://aws.amazon.com/security/security-bulletins/2026-063-aws"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-29w2-fq35-v728"
       },
       {
@@ -15445,7 +15605,7 @@
         "url": "https://github.com/awslabs/mcp/security/advisories/GHSA-29w2-fq35-v728"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-16584"
       },
       {
@@ -19333,7 +19493,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@modelcontextprotocol/sdk",
-          "purl": "pkg:npm/@modelcontextprotocol/sdk"
+          "purl": "pkg:npm/%40modelcontextprotocol/sdk"
         },
         "ranges": [
           {
@@ -19373,7 +19533,7 @@
         "url": "https://github.com/advisories/GHSA-345p-7cg4-v4c7"
       },
       {
-        "type": "WEB",
+        "type": "PACKAGE",
         "url": "https://github.com/modelcontextprotocol/typescript-sdk"
       },
       {
@@ -19389,7 +19549,7 @@
         "url": "https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-345p-7cg4-v4c7"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25536"
       }
     ],
@@ -21777,7 +21937,7 @@
         "url": "https://github.com/advisories/GHSA-89xv-2j6f-qhc8"
       },
       {
-        "type": "PACKAGE",
+        "type": "WEB",
         "url": "https://github.com/modelcontextprotocol/go-sdk"
       },
       {
@@ -21789,7 +21949,7 @@
         "url": "https://github.com/modelcontextprotocol/go-sdk/security/advisories/GHSA-89xv-2j6f-qhc8"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-33252"
       }
     ],
@@ -22519,13 +22679,9 @@
     },
     "details": "`OAuthManager.validate_token()` returns `True` for any token not found in its internal store, which is empty by default. Any HTTP request to the MCP server with an arbitrary Bearer token is treated as authenticated, granting full access to all registered tools and agent capabilities.",
     "id": "CVE-2026-34953",
-    "modified": "2026-04-06T00:00:00Z",
+    "modified": "2026-11-16T00:00:00Z",
     "published": "2026-04-01T00:00:00Z",
     "references": [
-      {
-        "type": "WEB",
-        "url": "https://github.com/MervinPraison/PraisonAI"
-      },
       {
         "type": "WEB",
         "url": "https://github.com/MervinPraison/PraisonAI/security/advisories/GHSA-98f9-fqg5-hvq5"
@@ -22536,7 +22692,15 @@
       },
       {
         "type": "WEB",
+        "url": "https://github.com/pypa/advisory-database/tree/main/vulns/praisonai/PYSEC-2026-468.yaml"
+      },
+      {
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-34953"
+      },
+      {
+        "type": "WEB",
+        "url": "https://pypi.org/project/praisonai"
       }
     ],
     "schema_version": "1.6.0",
@@ -22723,7 +22887,7 @@
     "published": "2026-04-17T00:00:00Z",
     "references": [
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://github.com/advisories/GHSA-x3cv-r3g3-fpg9"
       },
       {
@@ -22739,7 +22903,7 @@
         "url": "https://github.com/neo4j-contrib/mcp-neo4j/security/advisories/GHSA-x3cv-r3g3-fpg9"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-35402"
       },
       {
@@ -24834,7 +24998,7 @@
     },
     "details": "PraisonAI's MCP (Model Context Protocol) server (`praisonai mcp serve`) registers four file-handling tools by default — `praisonai.rules.create`, `praisonai.rules.show`, `praisonai.rules.delete`, and `praisonai.workflow.show`. Each accepts a path or filename string from MCP `tools/call` arguments and joins it onto `~/.praison/rules/` (or, for `workflow.show`, accepts an absolute path) **with no containment check**. The JSON-RPC dispatcher passes `params[\"arguments\"]` blind to each handler via `**kwargs` without validating against the advertised input schema.\n\nBy setting `rule_name=\"../../<some-path>\"` an attacker walks out of the rules directory and writes any file the running user can write. Dropping a Python `.pth` file into the user site-packages directory escalates this primitive to **arbitrary code execution in any subsequent Python process the user spawns** — the next `praisonai` CLI invocation, an IDE script run, the user's `python` REPL, or any background Python service. The same primitive is reachable from:\n\n- An MCP-connected LLM (Claude Desktop, Cursor, Continue.dev, Claude Code) whose context is poisoned by attacker-controlled web content / documents / emails — **no operator click required beyond ordinary \"ask the LLM to summarise this page\" usage**.\n- `praisonai mcp serve --transport http-stream` with no `--api-key` (default), reachable from any local process / DNS-rebound browser tab / container neighbour sharing loopback.\n- Stdio MCP from any prompt-injection vector that reaches the connected LLM.\n\nNo operator misconfiguration is required. No env var, flag, or config switch disables the vulnerable handlers.\n\n---",
     "id": "CVE-2026-44336",
-    "modified": "2026-05-11T00:00:00Z",
+    "modified": "2026-11-16T00:00:00Z",
     "published": "2026-05-11T00:00:00Z",
     "references": [
       {
@@ -24847,7 +25011,15 @@
       },
       {
         "type": "WEB",
+        "url": "https://github.com/pypa/advisory-database/tree/main/vulns/praisonai/PYSEC-2026-472.yaml"
+      },
+      {
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44336"
+      },
+      {
+        "type": "WEB",
+        "url": "https://pypi.org/project/praisonai"
       }
     ],
     "schema_version": "1.6.0",
@@ -27502,12 +27674,16 @@
     },
     "details": "`mcp-pinot` v3.0.1 (and earlier) defaults to running an HTTP MCP server bound to `0.0.0.0:8080` with no authentication enabled. All MCP tools, including SQL query execution, schema creation, and table-config mutation, are reachable by any network-adjacent caller. The server proxies these calls using server-side Pinot credentials, producing a confused-deputy condition that yields full read/write access to the configured Pinot cluster.",
     "id": "CVE-2026-49257",
-    "modified": "2026-06-26T00:00:00Z",
+    "modified": "2026-11-16T00:00:00Z",
     "published": "2026-06-26T00:00:00Z",
     "references": [
       {
         "type": "WEB",
         "url": "https://github.com/advisories/GHSA-73cv-556c-w3g6"
+      },
+      {
+        "type": "WEB",
+        "url": "https://github.com/pypa/advisory-database/tree/main/vulns/mcp-pinot-server/PYSEC-2026-410.yaml"
       },
       {
         "type": "WEB",
@@ -27528,6 +27704,10 @@
       {
         "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-49257"
+      },
+      {
+        "type": "WEB",
+        "url": "https://pypi.org/project/mcp-pinot-server"
       }
     ],
     "schema_version": "1.6.0",
@@ -35457,7 +35637,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@aborruso/ckan-mcp-server",
-          "purl": "pkg:npm/@aborruso/ckan-mcp-server"
+          "purl": "pkg:npm/%40aborruso/ckan-mcp-server"
         },
         "ranges": [
           {
@@ -35493,7 +35673,7 @@
     "published": "2026-09-22T00:00:00Z",
     "references": [
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-3xm7-qw7j-qc8v"
       },
       {
@@ -35501,7 +35681,7 @@
         "url": "https://github.com/advisories/GHSA-798p-78g2-v556"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/advisories/GHSA-g84h-j7jj-x32p"
       },
       {
@@ -35521,7 +35701,7 @@
         "url": "https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-798p-78g2-v556"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-61612"
       }
     ],
@@ -38634,30 +38814,6 @@
     "affected": [
       {
         "database_specific": {
-          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
-          "remediation_guidance": "Upgrade to version 0.22.0 or above."
-        },
-        "package": {
-          "ecosystem": "PyPI",
-          "name": "mcp-atlassian",
-          "purl": "pkg:pypi/mcp-atlassian"
-        },
-        "ranges": [
-          {
-            "events": [
-              {
-                "introduced": "0"
-              },
-              {
-                "fixed": "0.22.0"
-              }
-            ],
-            "type": "SEMVER"
-          }
-        ]
-      },
-      {
-        "database_specific": {
           "cvss_score": 7.7,
           "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
           "cwe_ids": [
@@ -38675,6 +38831,30 @@
             "events": [
               {
                 "introduced": "< 0.22.0"
+              }
+            ],
+            "type": "SEMVER"
+          }
+        ]
+      },
+      {
+        "database_specific": {
+          "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+          "remediation_guidance": "Upgrade to version 0.22.0 or above."
+        },
+        "package": {
+          "ecosystem": "PyPI",
+          "name": "mcp-atlassian",
+          "purl": "pkg:pypi/mcp-atlassian"
+        },
+        "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0"
+              },
+              {
+                "fixed": "0.22.0"
               }
             ],
             "type": "SEMVER"
@@ -38717,7 +38897,7 @@
         "url": "https://github.com/sooperset/mcp-atlassian/releases/tag/v0.22.0"
       },
       {
-        "type": "WEB",
+        "type": "ADVISORY",
         "url": "https://github.com/sooperset/mcp-atlassian/security/advisories/GHSA-g5r6-gv6m-f5jv"
       },
       {
@@ -38899,7 +39079,7 @@
         "package": {
           "ecosystem": "npm",
           "name": "@aborruso/ckan-mcp-server",
-          "purl": "pkg:npm/%40aborruso/ckan-mcp-server"
+          "purl": "pkg:npm/@aborruso/ckan-mcp-server"
         },
         "ranges": [
           {
@@ -38955,7 +39135,7 @@
         "url": "https://github.com/ondata/ckan-mcp-server/security/advisories/GHSA-83x6-42hr-jc76"
       },
       {
-        "type": "ADVISORY",
+        "type": "WEB",
         "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-73845"
       }
     ],
@@ -54443,6 +54623,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54495,6 +54686,17 @@
           "purl": "pkg:mcp/mcp-analytics-aggregate@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -54787,6 +54989,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -54839,6 +55052,17 @@
           "purl": "pkg:mcp/mcp-auth-rbac@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55131,6 +55355,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55183,6 +55418,17 @@
           "purl": "pkg:mcp/mcp-customer-crud@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55475,6 +55721,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55527,6 +55784,17 @@
           "purl": "pkg:mcp/mcp-audit-logging@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -55819,6 +56087,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -55871,6 +56150,17 @@
           "purl": "pkg:mcp/mcp-analytics-aggregate@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56163,6 +56453,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56215,6 +56516,17 @@
           "purl": "pkg:mcp/mcp-customer-crud@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -56507,6 +56819,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56679,6 +57002,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -56731,6 +57065,17 @@
           "purl": "pkg:mcp/mcp-customer-crud@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57179,6 +57524,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57231,6 +57587,17 @@
           "purl": "pkg:mcp/mcp-rug-pull@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57523,6 +57890,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57575,6 +57953,17 @@
           "purl": "pkg:mcp/mcp-side-effect@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -57867,6 +58256,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -57919,6 +58319,17 @@
           "purl": "pkg:mcp/mcp-token-scope@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -58211,6 +58622,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -58263,6 +58685,17 @@
           "purl": "pkg:mcp/mcp-transport-chaos@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -58555,6 +58988,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -58607,6 +59051,17 @@
           "purl": "pkg:mcp/mongo-basic@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -58899,6 +59354,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -58951,6 +59417,17 @@
           "purl": "pkg:mcp/mongo-basic@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -59243,6 +59720,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -59295,6 +59783,17 @@
           "purl": "pkg:mcp/mysql-search@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -59587,6 +60086,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -59639,6 +60149,17 @@
           "purl": "pkg:mcp/mysql-search@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -59931,6 +60452,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -59983,6 +60515,17 @@
           "purl": "pkg:mcp/mysql-admin@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -60275,6 +60818,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -60327,6 +60881,17 @@
           "purl": "pkg:mcp/postgres-basic@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -60619,6 +61184,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -60671,6 +61247,17 @@
           "purl": "pkg:mcp/postgres-query@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -60963,6 +61550,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -61015,6 +61613,17 @@
           "purl": "pkg:mcp/postgres-query@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -61307,6 +61916,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -61359,6 +61979,17 @@
           "purl": "pkg:mcp/snowflake-stage@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -61651,6 +62282,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -61703,6 +62345,17 @@
           "purl": "pkg:mcp/snowflake-trading@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -61995,6 +62648,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -62047,6 +62711,17 @@
           "purl": "pkg:mcp/snowflake-governance@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -62339,6 +63014,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -62391,6 +63077,17 @@
           "purl": "pkg:mcp/snowflake-clinical@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -62683,6 +63380,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -62735,6 +63443,17 @@
           "purl": "pkg:mcp/snowflake-trading@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -63027,6 +63746,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -63079,6 +63809,17 @@
           "purl": "pkg:mcp/mcp-vector-search@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {
@@ -63371,6 +64112,17 @@
               }
             ],
             "type": "SEMVER"
+          },
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
           }
         ]
       }
@@ -63423,6 +64175,17 @@
           "purl": "pkg:mcp/mcp-verifier-deception@1.0.0"
         },
         "ranges": [
+          {
+            "events": [
+              {
+                "introduced": "0.1.0"
+              },
+              {
+                "fixed": "1.0.0-secure"
+              }
+            ],
+            "type": "SEMVER"
+          },
           {
             "events": [
               {

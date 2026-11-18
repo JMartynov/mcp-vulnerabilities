@@ -13500,6 +13500,313 @@
       }
     ]
   },
+  "HasData/duckduckgo-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "DuckDuckGo search as structured JSON, with ranked organic results, ads in their own array, the Search Assist answer, and 37 regions. Runs on HasData's hosted API.",
+    "display_name": "HasData/duckduckgo-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.7",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "HasData/duckduckgo-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/HasData%2Fduckduckgo-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.7",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/HasData/duckduckgo-mcp",
+    "required_env_vars": [],
+    "resources_count": 5,
+    "security_summary": "Server `HasData/duckduckgo-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:7a579038c6b95d7ee5c22f73e471d48302596af76e8dbca7a35f2f64824a0eef",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {
+              "properties": {
+                "x-api-key": {
+                  "description": "Enter your API key from the HasData dashboard.",
+                  "type": "string",
+                  "x-from": {
+                    "header": "x-api-key"
+                  },
+                  "x-order": 0
+                }
+              },
+              "type": "object"
+            },
+            "deploymentUrl": "https://duckduckgo-mcp--hasdata.run.tools",
+            "type": "http"
+          },
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://mcp.hasdata.com/mcp?apis=duckduckgo",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [
+          {
+            "description": "",
+            "mime_type": "application/json",
+            "name": "duckduckgo_kl",
+            "uri_template": "hasdata://duckduckgo/kl"
+          },
+          {
+            "description": "",
+            "mime_type": "application/json",
+            "name": "duckduckgo_cc",
+            "uri_template": "hasdata://duckduckgo/cc"
+          },
+          {
+            "description": "",
+            "mime_type": "application/json",
+            "name": "duckduckgo_setLang",
+            "uri_template": "hasdata://duckduckgo/setLang"
+          },
+          {
+            "description": "",
+            "mime_type": "application/json",
+            "name": "duckduckgo_safeSearch",
+            "uri_template": "hasdata://duckduckgo/safeSearch"
+          },
+          {
+            "description": "",
+            "mime_type": "application/json",
+            "name": "duckduckgo_deviceType",
+            "uri_template": "hasdata://duckduckgo/deviceType"
+          }
+        ],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4c1617d7668150b4069800349364d845ef3f9e4763e683f8d15275a3c4cf0220",
+            "description": "Get DuckDuckGo Search Results\n\nFetches DuckDuckGo SERPs for a query with region targeting (kl, or cc+setLang), safesearch (off/moderate/strict), device type, and token-based pagination. Returns organic results (title, url, snippet, displayed url, position, date, sitelinks, video metadata), ads, and the Search Assist AI answer. Use for SEO rank tracking, SERP feature monitoring, DuckDuckGo-specific visibility audits, and training/eval data for search agents.",
+            "name": "hasdata_duckduckgo_serp_getSearchResults",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The two-letter country code for the country to search from. Combined with `setLang` to form the DuckDuckGo region. Ignored if `kl` is set.",
+                "enum": [
+                  "ar",
+                  "au",
+                  "at",
+                  "be",
+                  "br",
+                  "ca",
+                  "cl",
+                  "dk",
+                  "fi",
+                  "fr",
+                  "de",
+                  "hk",
+                  "in",
+                  "id",
+                  "it",
+                  "jp",
+                  "kr",
+                  "my",
+                  "mx",
+                  "nl",
+                  "nz",
+                  "no",
+                  "cn",
+                  "pl",
+                  "pt",
+                  "ph",
+                  "ru",
+                  "sa",
+                  "za",
+                  "es",
+                  "se",
+                  "ch",
+                  "tw",
+                  "tr",
+                  "gb",
+                  "us"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "cc",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Specify the device type for the search.",
+                "enum": [
+                  "desktop",
+                  "mobile",
+                  "tablet"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "deviceType",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "DuckDuckGo region code in `<country>-<language>` form (e.g. `us-en`, `de-de`). Sets country and interface language at once; takes precedence over `cc`/`setLang`. Use `wt-wt` for no region.",
+                "enum": [
+                  "ar-es",
+                  "au-en",
+                  "at-de",
+                  "be-nl",
+                  "be-fr",
+                  "br-pt",
+                  "ca-en",
+                  "ca-fr",
+                  "cl-es",
+                  "dk-da",
+                  "fi-fi",
+                  "fr-fr",
+                  "de-de",
+                  "hk-tzh",
+                  "in-en",
+                  "id-en",
+                  "it-it",
+                  "jp-jp",
+                  "kr-kr",
+                  "my-en",
+                  "mx-es",
+                  "nl-nl",
+                  "nz-en",
+                  "no-no",
+                  "cn-zh",
+                  "pl-pl",
+                  "ph-en",
+                  "ru-ru",
+                  "za-en",
+                  "es-es",
+                  "se-sv",
+                  "ch-de",
+                  "tw-tzh",
+                  "tr-tr",
+                  "uk-en",
+                  "us-en",
+                  "wt-wt"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "kl",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Opaque token returned in each response as `nextPageToken`. Pass it back (in place of `q`) to fetch the next page of results. It carries a pre-signed page URL bound to the original request's session, so it must be used as-is and cannot be constructed manually. Absent when there are no further pages.\n",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "nextPageToken",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Specify the search term for which you want to scrape the SERP. Required unless `nextPageToken` is provided (which carries the query of the page it continues).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "q",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Adult Content Filtering option.",
+                "enum": [
+                  "off",
+                  "moderate",
+                  "strict"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "safeSearch",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The preferred result/interface language code — usually two letters (e.g. `en`, `de`), with script-tag variants for some languages (e.g. `zh-hans`, `zh-hant`). Combined with `cc` to form the DuckDuckGo region. Ignored if `kl` is set.",
+                "enum": [
+                  "ar",
+                  "ca",
+                  "zh-hans",
+                  "zh-hant",
+                  "hr",
+                  "cs",
+                  "da",
+                  "nl",
+                  "en",
+                  "et",
+                  "fi",
+                  "fr",
+                  "de",
+                  "he",
+                  "hu",
+                  "it",
+                  "ja",
+                  "ko",
+                  "lv",
+                  "lt",
+                  "nb",
+                  "pl",
+                  "pt",
+                  "ro",
+                  "ru",
+                  "sk",
+                  "sl",
+                  "es",
+                  "sv",
+                  "th",
+                  "tr",
+                  "uk",
+                  "vi"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "setLang",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 10.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `hasdata_duckduckgo_serp_getSearchResults` [CRITICAL] executes arbitrary host system commands or shell scripts; issues raw database queries that could lead to SQL injection; initiates outbound network requests (potential SSRF risk); handles sensitive credentials, tokens, or private secrets."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:7a579038c6b95d7ee5c22f73e471d48302596af76e8dbca7a35f2f64824a0eef",
+        "version": "1.0.7"
+      }
+    ]
+  },
   "HelixGenomics/Genomic-Agent-Discovery": {
     "archival_reason": null,
     "author": null,
@@ -20660,6 +20967,109 @@
       }
     ]
   },
+  "YakupEmreYerli/mcp-firefly-iii": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Security-first, self-hosted MCP server for Firefly III — 152 operations behind 5 scoped tools.",
+    "display_name": "YakupEmreYerli/mcp-firefly-iii",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.2.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "YakupEmreYerli/mcp-firefly-iii",
+    "prompts_count": 0,
+    "purl": "pkg:generic/YakupEmreYerli%2Fmcp-firefly-iii",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.2.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/YakupEmreYerli/mcp-firefly-iii",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `YakupEmreYerli/mcp-firefly-iii` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:d82fd9fdfc6b32c6f4303eeef49702d8f78159de6e03388922e8c563ab074476",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5c8505c88f44d7c6992e6d6d8f8d1904aae27a18b99608c60a3318ce1bb419d1",
+            "description": "Get the parameter schema for a specific operation.",
+            "name": "firefly_get_schema",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Entity the operation belongs to.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "operation",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_get_schema` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5ee7e430db42e9c591989c12d120cc5e8fd25518cdb4acb4317ede22efd651a3",
+            "description": "List available Firefly III operations, optionally filtered by entity.",
+            "name": "firefly_list_operations",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Limit the catalogue to one entity. Omit it to list every operation.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `firefly_list_operations` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:d82fd9fdfc6b32c6f4303eeef49702d8f78159de6e03388922e8c563ab074476",
+        "version": "1.2.1"
+      }
+    ]
+  },
   "Yarmoluk/ckg-mcp": {
     "archival_reason": null,
     "author": null,
@@ -21533,6 +21943,755 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.1"
+      }
+    ]
+  },
+  "agoreums/agoreum-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Marketplace where AI agents hire and pay other agents in USDC on Base, through on-chain escrow.",
+    "display_name": "agoreums/agoreum-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.20.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "agoreums/agoreum-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/agoreums%2Fagoreum-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.20.0",
+    "repo_http_status": 200,
+    "repository_url": "https://www.agoreum.xyz",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `agoreums/agoreum-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:fe931b4826c8a542700d9acb25d6c062a36890601bf9bca7d18ae0244a167c48",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://agoreum.xyz/api/v1/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc5406be21c2d714d6c0e106c46761349d6919bba4bbb816dfcaebba9a8a330f",
+            "description": "Creates an unfunded order at the quote",
+            "name": "agoreum_accept_quote",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "input",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "quote_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "request_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_accept_quote` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8a2c0c05a09c3556b5014ac346e4e24303d1231e18c7ec0b7e189cf21198b95d",
+            "description": "Provider side, the normal way to deliver: mark an order delivered, with an optional note and structured ",
+            "name": "agoreum_deliver_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_deliver_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8cec253905727035aa468ca7412ea0f59215d97cdd0bdc457bb96394c9221bbd",
+            "description": "Read one of your orders, as buyer or provider: its status, amounts, rail and deadlines. An order still in ",
+            "name": "agoreum_get_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_get_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:46120950a298eb021cdc9fccd1b85671e151ec5f7643c091351a786a60f0a8e6",
+            "description": "Read one published service in full, by the agent slug and service slug that agoreum_search_services ",
+            "name": "agoreum_get_service",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_get_service` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d87eac77182ebd4761661c54478cc91188d80458e1f1eee0ba95513ca772700",
+            "description": "Requests still taking quotes, newest first: title, brief, the most the buyer will pay in all (max_budget, ",
+            "name": "agoreum_list_open_requests",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tag",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_list_open_requests` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d1012d28ac1ad7e19bba471ca3be12577a301812f23ded959c672f650379a49d",
+            "description": "Orders you placed (role=buyer, the default) or received as a provider (role=provider).",
+            "name": "agoreum_list_orders",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "buyer",
+                  "provider"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "role",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_list_orders` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6c274eb4528074b5ade5627a72be96c51f8aa248ff83192e0e9871909b3cb32c",
+            "description": "Every quote on a request you posted, live ones first, then by the provider",
+            "name": "agoreum_list_request_quotes",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "request_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_list_request_quotes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bd1fc87a1b51b563bfb9a3d4ce48b48a7350063c1b8c50050d6816d9d14a9fb0",
+            "description": "Pay an order with the local wallet (the key never leaves this machine), after checking the spend limits. ",
+            "name": "agoreum_pay_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected_amount_usdc",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expected_chain_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_pay_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:abcba66bb966d17485e60159ead13a9a84de6de858ba8d61fef8d564c0f62a57",
+            "description": "Place an order for a service. No money moves; the price is frozen. Pay it next with agoreum_pay_order. ",
+            "name": "agoreum_place_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "quantity",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "requirements",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "service_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_place_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:20ed467f544cb106a437171392cd84aecd3f44d2492b7fd0276cd5d5ba0f5ddc",
+            "description": "Describe work you need and the most you will pay in all (max_budget in USDC, fee included). Providers ",
+            "name": "agoreum_post_request",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "brief",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "delivery_time_hours",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_budget",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "quotes_close_in_hours",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_post_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b8e68182b313af74fa55668303e3bbb3ecfe18eb54b7786e721d11ff91968326",
+            "description": "Shows exactly what agoreum_pay_order would authorize, without signing anything: the amount, the network ",
+            "name": "agoreum_preview_payment",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_preview_payment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f1d9fe970e6ef6bac7fa60559d9872351b4f2bf90b5b90ad23c720c304b123fb",
+            "description": "Provider side: quote a price (USDC, before the platform fee) and a delivery time against one of your ",
+            "name": "agoreum_quote_request",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "delivery_time_hours",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "message",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "price",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "request_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "service_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_quote_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8872c94e2589bea9967badbf19a7e09daea03ec69053b1f2673f56eced373154",
+            "description": "Provider side, a retry only: use it when an order is already delivered but agoreum_deliver_order",
+            "name": "agoreum_record_delivery",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_record_delivery` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a3a72cf25e93f9e472d513e9dcb78321e4524b72939180dcf417c3e4893c39f0",
+            "description": "Search published services. sort=evidence (the default) ranks by distinct buyers who settled through ",
+            "name": "agoreum_search_services",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_price",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "q",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "evidence",
+                  "relevance",
+                  "newest",
+                  "price_low",
+                  "price_high",
+                  "most_completed",
+                  "top_rated"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "sort",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_search_services` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:52c2164eb4f87efedd97bdc829b0ee5dc7fd0fe325af1ae34db574e553234da7",
+            "description": "Move an order",
+            "name": "agoreum_settle_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "release",
+                  "refund",
+                  "dispute"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "action",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_settle_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1368a168294e45380532eb21b3c8d44fa701ff62104ab665bdf0af703b2d3d2a",
+            "description": "Provider side: accept a funded order and begin work.",
+            "name": "agoreum_start_order",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_start_order` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5e7af436bbbda655b4fd67e4e2c2f43c09bfc0950c2530c8bb5d8b5485b74d45",
+            "description": "Fetch a completed order",
+            "name": "agoreum_verify_receipt",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_verify_receipt` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0b8fd31b69f590fbfe2515ecf680e5a3f18b091f4f3e8f714cbeab6b96e036b2",
+            "description": "Poll an order until the chain confirms its payment (status leaves pending_payment), up to timeout_seconds.",
+            "name": "agoreum_wait_for_funding",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout_seconds",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_wait_for_funding` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a32b731cb3c0d333f20e26e847c48b074183daaea8ae7b4d20716620d2ce492b",
+            "description": "The paying wallet",
+            "name": "agoreum_wallet",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `agoreum_wallet` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:fe931b4826c8a542700d9acb25d6c062a36890601bf9bca7d18ae0244a167c48",
+        "version": "0.20.0"
       }
     ]
   },
@@ -31157,6 +32316,491 @@
       }
     ]
   },
+  "csv-contract-preflight-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Buyer-owned free offer inspection, contract drafting and CSV validation MCP tools",
+    "display_name": "csv-contract-preflight-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "pypi",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "csv-contract-preflight-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:pypi/csv-contract-preflight-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/anytine123/csv-contract-preflight-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `csv-contract-preflight-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "davarion-tech/agentic-browser": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Give any AI agent your real Chrome: text perception, visible cursor, ~4x fewer tokens.",
+    "display_name": "davarion-tech/agentic-browser",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.4.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "davarion-tech/agentic-browser",
+    "prompts_count": 0,
+    "purl": "pkg:generic/davarion-tech%2Fagentic-browser",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.4.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/davarion-tech/agentic-browser",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `davarion-tech/agentic-browser` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:a346ed6d57ff2dca2f3af614fe0fd6f6b6f04e07a0d0b7ada2bd412fcb5837dc",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dc0fa95dceab57c14bcd25d8d217227c370f666f9e1d17adf0975929ade1dbd8",
+            "description": "Modo lectura: devuelve el contenido principal de la página en Markdown limpio (título, autor, fecha, encabezados, texto, listas, tablas, enlaces e imágenes), sin menús, anuncios ni pies. Es la forma más barata de leer o resumir un artículo: resúmelo tú a partir de este texto. Con file lo guarda como .md.",
+            "name": "browser_article",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_article` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5fe6a2f08c0337e54241c517c8c40b6e1b759d906ca95687cf08c0d5fa3e8634",
+            "description": "Varias acciones en UNA llamada (ahorra un turno del agente por acción): [{tool:",
+            "name": "browser_batch",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_batch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:28f2db43d27e3e75c606b8e97c725c1adbb20d30c013d46c520d05418c33360b",
+            "description": "Mueve el cursor de forma visible y hace clic real (CDP Input) sobre un ref o x,y.",
+            "name": "browser_click",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_click` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:85921db5700bbd96b4a04e6f75098f0c05d8b13dc79e7f4802abae3f46d98f43",
+            "description": "Últimos mensajes de consola y errores JS de la pestaña activa.",
+            "name": "browser_console",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_console` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d3b84fd4e266bba8b4f3468d381a8339333540b11be1285240c9c0d80afae258",
+            "description": "Posición actual del cursor del agente y el elemento bajo él.",
+            "name": "browser_cursor",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_cursor` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6ed1bfd6073aa29fb7272ab64963c3006e7e440adcd16030e57defbe9912f2f2",
+            "description": "Muestra/oculta el cursor visual, su estela, el contador de tokens en vivo (hud) o la máscara de privacidad que difumina contactos y números al grabar o compartir pantalla.",
+            "name": "browser_cursor_style",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_cursor_style` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e308f14eae84372ee28cf746d56c770c97ace3f26fc4e35ac99417cd57a32992",
+            "description": "Cierra popups que tapan la página (idioma, newsletter, cookies,",
+            "name": "browser_dismiss",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_dismiss` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:21349eaee33fc93feb078b9326977a4a55790a5fee8b822f34013cc124ae4cd3",
+            "description": "Arrastra de un punto/ref a otro con el botón pulsado (sliders, kanban, mapas).",
+            "name": "browser_drag",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_drag` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2a82a606b33bb979a37b1f3f03d38cc155c6d593ca54e353ecf7bb2351bbb005",
+            "description": "Visión por píxel SIN imagen: dado (x,y) devuelve qué elemento hay ahí (rol, texto, si es clicable, ruta DOM).",
+            "name": "browser_element_at",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_element_at` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4554678b1c90a8c8e632c2bfff4292008b81efb9af9c9d034d893a0f667b8bee",
+            "description": "Ejecuta JavaScript en la página y devuelve el resultado (JSON). Desactivada salvo AGENT_ALLOW_EVAL=1.",
+            "name": "browser_eval",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_eval` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:95d43d82cf28dcb9b3bfe4c078d9ebdaae258386c08dd31bc5c4625e0bc9c3fe",
+            "description": "Diálogos aceptados, descargas guardadas y popups abiertos desde la última consulta.",
+            "name": "browser_events",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_events` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6e942c394dbe49f3a8411710081e1bf8b2d6114eee8a270fd8c2382c384a638a",
+            "description": "Datos estructurados en UNA llamada: convierte la tabla o la lista repetida más relevante (productos, resultados, contactos) en filas JSON o CSV, con título, enlace, precio e imagen. Limítalo con ref o selector. Con file lo guarda en disco y solo devuelve un resumen.",
+            "name": "browser_extract",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_extract` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f6ec070eca0353df83d911e30acd96dde2168e1aedf5ef90061dd2aa61196aec",
+            "description": "Busca elementos por texto/etiqueta y devuelve sus refs y coordenadas, incluso fuera del viewport.",
+            "name": "browser_find",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_find` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cf54361fdd16d4b9dfe8ba5679db99aa4078f7d0bd9a960816ec226e80162db8",
+            "description": "Atrás, adelante o recargar.",
+            "name": "browser_history",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_history` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:87b8e8b058bf97bebd66912b4da3947075fed2f8c3e8c72f3f18100f3d36c3ac",
+            "description": "Todo el multimedia de la página (imágenes, vídeos, audio y documentos: lo que hay en el HTML, en los fondos CSS y lo que se cargó por la red) descargado y ordenado en carpetas images/, videos/, audio/, docs/ con un manifest.json (URL de origen, texto alternativo, tamaño, hash). Sin duplicados. Con download:false solo lista. Los streams HLS/DASH se descargan con browser_video. Solo para contenido que puedas guardar: respeta los derechos de autor y los términos de cada sitio.",
+            "name": "browser_media",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `browser_media` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:552f8114dfe9924bcc784a8ef319c67b5e5082562cdb4110a8905a19532f8b27",
+            "description": "Mueve el cursor visible (hover) a un ref o a x,y. Dispara mouseover/mousemove reales.",
+            "name": "browser_move",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_move` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:99a3784e68afb8dfe8cc1d8a9d2d0050b344bad640fad1204608b049956c9639",
+            "description": "Abre una URL en la pestaña activa. Devuelve título/URL y opcionalmente el snapshot.",
+            "name": "browser_navigate",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `browser_navigate` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a5d7472c0a85b08f4554f68de7972338da65bd18701b15287f1fa74cb7060eef",
+            "description": "Guarda la página activa como PDF (o como MHTML: un único archivo con todo incrustado, copia exacta). Usa la sesión del agente, así que sirve también en páginas con login. Antes recorre la página para que carguen las imágenes diferidas.",
+            "name": "browser_pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9b43b13cc9ba795dfb558d3a45abdf03008b942bba4d26964c89dca7d6a75e33",
+            "description": "Pulsa teclas o combinaciones:",
+            "name": "browser_press",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_press` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dd72baa1a3b5b6131ef9c575d4f3f18b9bd21f2c2b40ca0c33948d26c2540646",
+            "description": "Texto legible de la página (o de un selector CSS), para leer artículos/resultados.",
+            "name": "browser_read",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_read` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ff9d68adef0de5f956aca599553166695ebbc458c99d45d05026abbc56cd0f3a",
+            "description": "Lista las recetas grabadas o, con name, muestra sus pasos y parámetros.",
+            "name": "browser_recipes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_recipes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ca7bcfd00762bf12640a36b910276d6f0d2d437bbcfcbd60b0645a3856c8e48e",
+            "description": "Empieza a grabar en vídeo la pestaña activa (con el cursor rojo visible) para clips de demostración. Sigue usando las demás herramientas y termina con browser_record_stop. Las pausas sin cambios conservan su duración real. MP4 (H.264) si hay ffmpeg en el PATH; si no, WebM.",
+            "name": "browser_record_start",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `browser_record_start` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bec18769cf28ba1651f9ed60ec66597d89fc80d93e04431ea971bd5eec16c30c",
+            "description": "Detiene la grabación de browser_record_start y codifica el vídeo. Devuelve ruta, duración (s), tamaño y formato.",
+            "name": "browser_record_stop",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_record_stop` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ff8d8ae52e5dc5897102fa057bf23067318acecb27adfad9711de69b6d6c8ddd",
+            "description": "Repite una receta grabada. Localiza cada elemento por rol y nombre y ejecuta los pasos sin percibir la página: casi no gasta tokens. params cambia los textos escritos, ej. {",
+            "name": "browser_replay",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_replay` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2208a677d10502c0479cb192db37c441a6240390af6e700f5cf3d76104f64aee",
+            "description": "Pide ayuda a la persona que mira el navegador (login, 2FA, CAPTCHA, una decisión). Muestra un banner y espera a que pulse",
+            "name": "browser_request_human",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_request_human` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d56c421458924c45d561c12e37a07a19f31ce0a11bb36e5ea7192f32111ae42d",
+            "description": "ÚLTIMO RECURSO (gasta tokens): imagen JPEG de la página o de un ref, para contenido puramente visual (canvas, gráficos, captchas no).",
+            "name": "browser_screenshot",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_screenshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd74b0da5846698565733856c7ba2929a20f93da65e8cfea8460e41c88df94aa",
+            "description": "Desplaza con la rueda del ratón (dy>0 baja). Con ref, lleva ese elemento al centro.",
+            "name": "browser_scroll",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_scroll` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bf3b92e1bad84dc5575711dc801654bbe09a908b1ea3b83aac811fca049cc84c",
+            "description": "Elige opciones en un <select> (por valor o texto visible).",
+            "name": "browser_select",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_select` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a0464d1e76ac953e62ea770294638074057fb8fa41eca3456afa6e88760e4b5d",
+            "description": "PERCEPCIÓN PRINCIPAL (sin captura). Lista compacta de elementos visibles con ref, rol, nombre, estado y centro @x,y en píxeles. ~15 tokens por elemento. Con diff:true devuelve solo lo que cambió desde el snapshot anterior.",
+            "name": "browser_snapshot",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_snapshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cf836be8a1ce2629f81fc41f1a1ad8e952667cbeca0256da176227484d735014",
+            "description": "Tokens que ha devuelto agentic-browser en esta sesión frente a lo que habrían costado las capturas de pantalla (una por cada percepción, ancho×alto/750).",
+            "name": "browser_stats",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e988026b6e72bf1d0e4b5b030eae8ceb0d4a5070510254849086aa6788f2c3a3",
+            "description": "Gestiona pestañas: list, new (con url), select (index), close (index).",
+            "name": "browser_tabs",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `browser_tabs` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:633c8cf423c61b0c86ce7d2a0b916ae19d3ed0b07b49cfa939df6ba8a5cba394",
+            "description": "MODO ENSEÑAR. Empieza a grabar una receta: la persona hace la tarea una vez en el Chrome del agente (clics, textos, selecciones, Enter) y pulsa",
+            "name": "browser_teach_start",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_teach_start` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d18c4c81cdcf664f6bdcfa40030fbfb53ddcd6b3c7a00c2abef19a31f6a28606",
+            "description": "Termina la grabación de browser_teach_start. Por defecto espera a que la persona pulse",
+            "name": "browser_teach_stop",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_teach_stop` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b5baf35ae65b20704a673f8c69e67c6f85317e6545a2766b48d0cf442d9e85e0",
+            "description": "Últimas acciones ejecutadas (herramienta, argumentos, duración, URL, resultado) para depurar o auditar.",
+            "name": "browser_trace",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `browser_trace` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3dbebe3356235645f043c6df5300472ba4f70a59f52f57b3cc6eaacf69fe3a1f",
+            "description": "Escribe texto con eventos de teclado reales. Si das ref/x,y primero hace clic para enfocar. Nunca escribe en contraseñas, códigos 2FA, tarjetas ni números de cuenta (estado {sensitive}): eso lo hace la persona con browser_request_human.",
+            "name": "browser_type",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_type` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e26fcf4d83aafc482014d002f1538dfcc32f000a35ec456f9cac549f0ba49653",
+            "description": "Adjunta archivos locales a un <input type=file> (o al selector que abre un clic en ese ref). Solo desde las carpetas permitidas (AGENT_UPLOAD_DIRS).",
+            "name": "browser_upload",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_upload` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cb8bcbe43c99632b54d1edc12984065b9459f19f7e9c3f7b14db2c29ff011590",
+            "description": "Descarga el vídeo de la página: archivos directos (MP4/WebM) o streams HLS (.m3u8) y DASH (.mpd), que junta con ffmpeg usando la sesión del agente. Detecta lo que carga el reproductor por la red (si no aparece, dale play unos segundos). Se niega con contenido con DRM (Netflix, Disney+, Spotify…). Úsalo solo con vídeos tuyos o que tengas derecho a guardar: YouTube, TikTok, Instagram y otros prohíben descargar en sus términos. list:true muestra los candidatos.",
+            "name": "browser_video",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_video` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0267a11c5c9e8410b4075ad4839a28b846e145f8fa2f3f1c071e16a647be1e5",
+            "description": "Espera ms, o hasta que aparezca un texto o selector.",
+            "name": "browser_wait",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_wait` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:57d59be816c745b2bc8b5e3bf94c5d0abfffa91824464d2b6062e67d3d662f41",
+            "description": "Espera (sin gastar tokens) hasta que la página cambie: aparece texto nuevo, cambia el título (ej.",
+            "name": "browser_watch",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browser_watch` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:a346ed6d57ff2dca2f3af614fe0fd6f6b6f04e07a0d0b7ada2bd412fcb5837dc",
+        "version": "1.4.0"
+      }
+    ]
+  },
   "davidlandais/ovh-api-mcp": {
     "archival_reason": null,
     "author": null,
@@ -37655,7 +39299,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "mcp-shell has a Secure Mode Allowlist Bypass via Git Shell Alias",
+    "description": "mcp-shell has a Secure Mode Allowlist Bypass via Default `/bin/bash` Executable",
     "display_name": "github.com/sonirico/mcp-shell",
     "dual_axis_security": null,
     "ecosystem": "Go",
@@ -54306,6 +55950,259 @@
       }
     ]
   },
+  "jevil25/whatsapp-messaging-api-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Send WhatsApp messages from Claude. No Meta Business approval or WhatsApp Business account.",
+    "display_name": "jevil25/whatsapp-messaging-api-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "2.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "jevil25/whatsapp-messaging-api-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/jevil25%2Fwhatsapp-messaging-api-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "2.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/jevil25/whatsapp-messaging-api-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `jevil25/whatsapp-messaging-api-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:14b53db294721e2aaec9b8e28502b1858a47825d02d1abe903ee07039a9bd1fe",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ba8045efd715e10bcae3bd5de88d5f4b543c6f83b908118d8d9537469d4cabf3",
+            "description": "Check whether a phone number is registered on WhatsApp before sending to it.",
+            "name": "check_contact_exists",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Phone number, 10-15 digits, no + or spaces",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "phone",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_contact_exists` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a63e2221b66a97777e695cf68de456a289b01b7e3fefa29bc035bb52d49336ec",
+            "description": "Create a new WhatsApp session. Needs an account key (ak_live_...). Returns the session name and its own session token; pair it with get_qr_code next.",
+            "name": "create_session",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_session` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2f51d97a65e78600165fc328fac07cfcb84ecc3a3bc8319d55f967e2ec6dc71c",
+            "description": "Get the QR code to authenticate a session by scanning with WhatsApp (Settings > Linked Devices).",
+            "name": "get_qr_code",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_qr_code` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b55d1326d4929b120c98eeeb4e102445a3f6197c059bfc375596e3fdcf94da51",
+            "description": "Get the current status of a session (STARTING, SCAN_QR_CODE, WORKING, FAILED, STOPPED, PASSKEY_REQUIRED, PASSKEY_CONFIRMATION_REQUIRED). PASSKEY_* means WhatsApp wants a passkey, which must be signed in a browser: tell the user to finish linking at https://whatsapp-messaging.retentionstack.agency/app. These tools cannot do it.",
+            "name": "get_session_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_session_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9dc472adc436536d38aa495bb003c4bc5cf36c309910464eecc35b7513971c5f",
+            "description": "List all WhatsApp sessions belonging to this API key.",
+            "name": "list_sessions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sessions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c0b00f9d03a2b51942157beac8e15641ba4e613d86a7b53109ee3dff5e766f04",
+            "description": "Request an 8-digit pairing code as an alternative to scanning a QR code.",
+            "name": "request_pairing_code",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Phone number, 10-15 digits, no + or spaces",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "phoneNumber",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `request_pairing_code` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7bf023f29dae47e97fe8cd7c3a563795cd571eaff591c80db2a18d18d4bc6889",
+            "description": "Send a file (PDF, document, etc.) to a contact, group, or channel via a public URL.",
+            "name": "send_file",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Recipient: phone number, group ID, or channel ID",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "chatId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Public URL of the file",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fileUrl",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Filename to display in the chat",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `send_file` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bccbabac81caafb5cbae1d0e5bd37afd32fe4fbb868ac87cb98aaecf5594d9e4",
+            "description": "Send an image to a contact, group, or channel via a public URL.",
+            "name": "send_image",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional caption",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "caption",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Recipient: phone number, group ID, or channel ID",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "chatId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Public URL of the image",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "imageUrl",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `send_image` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:54fae2f4b52e19b7d49f5e7555a8f8941d51fc73d1b04c584a6a1dad2983f9e5",
+            "description": "Send a WhatsApp text message to a contact, group, or channel.",
+            "name": "send_text_message",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "chatId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Message text",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `send_text_message` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:14b53db294721e2aaec9b8e28502b1858a47825d02d1abe903ee07039a9bd1fe",
+        "version": "2.0.0"
+      }
+    ]
+  },
   "jihadkhawaja.MCP.DevOps": {
     "archival_reason": null,
     "author": null,
@@ -60565,6 +62462,53 @@
       }
     ]
   },
+  "laaielichter/Gulliver": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Dress rehearsal for agent SQL: cost preflight, auto-fix, 1% sample runs, budget-gated execution.",
+    "display_name": "laaielichter/Gulliver",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.4.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "laaielichter/Gulliver",
+    "prompts_count": 0,
+    "purl": "pkg:generic/laaielichter%2FGulliver",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.4.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/laaielichter/Gulliver",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `laaielichter/Gulliver` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.4.0"
+      }
+    ]
+  },
   "laradji/deadzone": {
     "archival_reason": null,
     "author": null,
@@ -62573,7 +64517,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
+    "description": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)",
     "display_name": "mcp-auth-rbac",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -62619,45 +64563,6 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "LITE-MONGO-HIJACK-001",
-            "owasp_mcp_category": "Improper Multi-Tenancy",
-            "remediation_guidance": "Enforces immutability on org_id and tenant_id fields.",
-            "severity": "HIGH",
-            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": [
-              "update_user_roles"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-LITE-MONGO-CRED-001",
-            "owasp_mcp_category": "Information Disclosure",
-            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
-            "severity": "HIGH",
-            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": [
-              "get_user_profile"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "LITE-MONGO-CRED-001",
-            "owasp_mcp_category": "Information Disclosure",
-            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
-            "severity": "HIGH",
-            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": [
-              "get_user_profile"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "LITE-MONGO-RBAC-001",
             "owasp_mcp_category": "Improper Access Control",
             "remediation_guidance": "Restricts role modifications to authorized admin callers only.",
@@ -62684,6 +64589,32 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "LITE-MONGO-HIJACK-001",
+            "owasp_mcp_category": "Improper Multi-Tenancy",
+            "remediation_guidance": "Enforces immutability on org_id and tenant_id fields.",
+            "severity": "HIGH",
+            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "update_user_roles"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VERITY-LITE-MONGO-CRED-001",
+            "owasp_mcp_category": "Information Disclosure",
+            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
+            "severity": "HIGH",
+            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "get_user_profile"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "VERITY-LITE-MONGO-HIJACK-001",
             "owasp_mcp_category": "Improper Multi-Tenancy",
             "remediation_guidance": "Enforces immutability on org_id and tenant_id fields.",
@@ -62691,6 +64622,19 @@
             "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
             "vulnerable_tools": [
               "update_user_roles"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-CRED-001",
+            "owasp_mcp_category": "Information Disclosure",
+            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
+            "severity": "HIGH",
+            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "get_user_profile"
             ]
           }
         ],
@@ -64232,17 +66176,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64281,6 +66214,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64301,17 +66245,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64350,6 +66283,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64370,17 +66314,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64419,6 +66352,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64439,17 +66383,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64488,6 +66421,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64508,17 +66452,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64557,6 +66490,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64577,17 +66521,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64626,6 +66559,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64646,17 +66590,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64695,6 +66628,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64715,17 +66659,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64764,6 +66697,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64784,17 +66728,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64833,6 +66766,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64853,17 +66797,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64902,6 +66835,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64922,17 +66866,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -64971,6 +66904,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -64991,17 +66935,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65040,6 +66973,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65060,17 +67004,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65109,6 +67042,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65129,17 +67073,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65178,6 +67111,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65198,17 +67142,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65247,6 +67180,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65267,17 +67211,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65316,6 +67249,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65336,17 +67280,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65385,6 +67318,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65405,17 +67349,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65454,6 +67387,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65474,17 +67418,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65523,6 +67456,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65543,17 +67487,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65592,6 +67525,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65612,17 +67556,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65661,6 +67594,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65681,17 +67625,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65730,6 +67663,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65750,17 +67694,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65799,6 +67732,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65819,17 +67763,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65868,6 +67801,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65888,17 +67832,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -65937,6 +67870,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -65957,17 +67901,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66006,6 +67939,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66026,17 +67970,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66075,6 +68008,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66095,17 +68039,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66144,6 +68077,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66164,17 +68108,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66213,6 +68146,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66233,17 +68177,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66282,6 +68215,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66302,17 +68246,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66351,6 +68284,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66371,17 +68315,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66420,6 +68353,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66440,17 +68384,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66489,6 +68422,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66509,17 +68453,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66558,6 +68491,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66578,17 +68522,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66627,6 +68560,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66647,17 +68591,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66696,6 +68629,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66716,17 +68660,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66765,6 +68698,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66785,17 +68729,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66834,6 +68767,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66854,17 +68798,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66903,6 +68836,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66923,17 +68867,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66972,6 +68905,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -66992,17 +68936,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67041,6 +68974,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67061,17 +69005,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67110,6 +69043,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67130,17 +69074,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67179,6 +69112,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67199,17 +69143,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67248,6 +69181,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67268,17 +69212,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67317,6 +69250,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67337,17 +69281,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67386,6 +69319,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67406,17 +69350,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67455,6 +69388,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67475,17 +69419,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67524,6 +69457,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -67544,17 +69488,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67593,6 +69526,17 @@
             "remediation_guidance": "Upgrade to version 1.12.0 or above.",
             "severity": "CRITICAL",
             "summary": "SearXNG Basic Authentication Credentials Exposed Through MCP Logs and JSON-RPC Error Responses",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           }
         ],
@@ -71744,7 +73688,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi",
+    "description": "NetLicensing-MCP: Unauthenticated Use of Server-Side NetLicensing API Key in HTTP Mode",
     "display_name": "netlicensing-mcp",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -71777,22 +73721,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-57496",
+            "id": "CVE-2026-54446",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 0.1.8 or above.",
+            "remediation_guidance": "Upgrade to version 0.1.6 or above.",
             "severity": "CRITICAL",
-            "summary": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi",
+            "summary": "NetLicensing-MCP: Unauthenticated Use of Server-Side NetLicensing API Key in HTTP Mode",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54446",
+            "id": "CVE-2026-57496",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 0.1.6 or above.",
+            "remediation_guidance": "Upgrade to version 0.1.8 or above.",
             "severity": "CRITICAL",
-            "summary": "NetLicensing-MCP: Unauthenticated Use of Server-Side NetLicensing API Key in HTTP Mode",
+            "summary": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi",
             "vulnerable_tools": []
           }
         ],
@@ -78750,19 +80694,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.40",
+    "latest_version": "1.0.42",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "scrapercity",
     "prompts_count": 0,
     "purl": "pkg:npm/scrapercity",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.0.40",
+    "recommended_safe_version": "1.0.42",
     "repo_http_status": 200,
     "repository_url": "https://github.com/scrapercity/scrapercity-cli",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `scrapercity` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 40 safe version(s).",
+    "security_summary": "Server `scrapercity` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 42 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:7cc53e8c223ebf3b7d04df93171f91214742eab78ca5b9e090afaf4af5ca67fe",
@@ -82521,6 +84465,263 @@
         ],
         "toolset_canonical_hash": "sha256:7cc53e8c223ebf3b7d04df93171f91214742eab78ca5b9e090afaf4af5ca67fe",
         "version": "1.0.40"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-16T23:14:44.626Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.41"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-17T00:48:02.414Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d48acd66bc78294e6f1f288622037be1ab4c3e425f377474eb4c0af833f7549e",
+            "description": "Cancel a running scraper job.",
+            "name": "cancel_run",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cancel_run` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:06ffdc1dcfa242a3511696a7b458909bfc94f84b3855bc2d536007490065d620",
+            "description": "Check the status of a scraper run. Returns status (RUNNING/SUCCEEDED/FAILED/CANCELLED), lead count, and download URL when complete.",
+            "name": "check_run_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `check_run_status` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b647b5df031ffdc1eeebbc711bedd09bc7f089a21fd31fc0604a53b1dc0ae39e",
+            "description": "Check account balance, plan, and billing info. Call this FIRST to verify credits before running any scrape.",
+            "name": "check_wallet",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_wallet` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dd219bbc6dae591772643a1c6f592eee6cad79b3cea921907b80758956c9f027",
+            "description": "Download the CSV results of a completed scraper run. Only works when status is SUCCEEDED.",
+            "name": "download_results",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "runId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `download_results` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ade82f0b43a63e8ee23014a78671e438d748ab2e650c666a5b5b8b48b288ce20",
+            "description": "List recent scraper runs with status, lead counts, and costs.",
+            "name": "list_runs",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hours",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_runs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3726425b1c8889be080e1537d2d8c479aff6fb3751caa23a79e6d826c1879b78",
+            "description": "Query the B2B lead database directly. Returns contacts with names, emails, phones, titles, companies (plus company website, revenue, HQ location and keywords). Up to 100 per request. Included with the $149/mo plan (100,000 new leads a day; leads you already have do not count again). For a daily pull of only new leads set excludeDelivered=true. For big pulls page with after: send after=",
+            "name": "query_lead_database",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "city",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "companyName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "companyDomain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minEmployees",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "maxEmployees",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "revenueMin",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "revenueMax",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 6.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `query_lead_database` [HIGH] issues raw database queries that could lead to SQL injection; initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:7cc53e8c223ebf3b7d04df93171f91214742eab78ca5b9e090afaf4af5ca67fe",
+        "version": "1.0.42"
       }
     ]
   },
@@ -89584,6 +91785,100 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.0.0"
+      }
+    ]
+  },
+  "yatuk/itu-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "İTÜ Ninova, OBS, Portal, kampüs servisleri ve kütüphane için MCP sunucusu",
+    "display_name": "yatuk/itu-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.5.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "yatuk/itu-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/yatuk%2Fitu-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.5.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/yatuk/itu-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `yatuk/itu-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.5.0"
+      }
+    ]
+  },
+  "yybd/multi-mail-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Several Gmail accounts: search, read, draft, send, labels and Google Calendar. Own OAuth client.",
+    "display_name": "yybd/multi-mail-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.2.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "yybd/multi-mail-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/yybd%2Fmulti-mail-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.2.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/yybd/multi-mail-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `yybd/multi-mail-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.2.1"
       }
     ]
   },

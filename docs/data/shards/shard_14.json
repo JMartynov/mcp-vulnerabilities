@@ -21539,19 +21539,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "3.10.1",
+    "latest_version": "3.10.2",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@fruggr/zendesk-mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/@fruggr%2Fzendesk-mcp-server",
     "quarantine_tier": null,
-    "recommended_safe_version": "3.10.1",
+    "recommended_safe_version": "3.10.2",
     "repo_http_status": 200,
     "repository_url": "https://github.com/fruggr/zendesk-mcp-server",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@fruggr/zendesk-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 77 safe version(s).",
+    "security_summary": "Server `@fruggr/zendesk-mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 78 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:d725a64909fe99453779de7dd7bd2212334e4da5f136ca84d9b9166290960e4d",
@@ -23761,6 +23761,320 @@
         ],
         "toolset_canonical_hash": "sha256:d725a64909fe99453779de7dd7bd2212334e4da5f136ca84d9b9166290960e4d",
         "version": "3.10.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-17T07:47:25.920Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:985687bd70016d80890b9e7beb8c2a25b1c8532ee6b058bb77d846bc3444df0c",
+            "description": "Archive (soft-delete) a Help Center article: it is removed from the Help Center but can be restored from the Guide admin UI. Returns a confirmation message; the article and all its translations become invisible to end users. This is the only removal the Zendesk API offers — permanent deletion is not available via the API (do it from the Guide admin UI). To only hide an article temporarily while keeping it in the knowledge base, use update_article with draft: true (unpublish) instead. Guarded by a required confirm flag.",
+            "name": "archive_article",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `archive_article` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8d4b50066421d6653da9a670921fde71f1c261f4d33e3f66df9917a9e6fdf7e0",
+            "description": "Compare two locales of the same article to decide whether the target translation needs work, reporting independent signals instead of one ambiguous verdict. (1) Header — a",
+            "name": "compare_translations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_translations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:40186422a47679e06069e8fa1b0e035a970f0d9510d51fc943fcd0ea9ae23236",
+            "description": "Read or change your personal SLA alert thresholds: how close to a breach a running SLA metric must be to count as WARNING or CRITICAL. Called with no parameters it changes nothing and reports the thresholds in force for you and where each comes from (your preference or the server default). With parameters it saves your own thresholds per metric family (reply: first_reply_time and next_reply_time; wait: every other metric) on this MCP server — nothing is written to Zendesk — and they then drive list_sla_alerts and the Urgency line of get_ticket / search_tickets for you only; reset goes back to the server defaults. When the operator turned personal thresholds off (SLA_USER_PREFERENCES=off), only the read works and the reply says so.",
+            "name": "configure_sla_alerts",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `configure_sla_alerts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c411b222b473bb281965d81d6c719f11c6ff497e815f6bf35f51a83cab1cc429",
+            "description": "Create a new article in a section and return the created article with its id. The locale becomes the article",
+            "name": "create_article",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_article` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3b9ae4578b362394f7ae50f961c8d33719629633727805c31705a5dd17412b1c",
+            "description": "Upload a file to a Help Center article and return the created attachment (its id, file name, content type, size and content URL). Not idempotent: calling it again uploads another copy rather than replacing the previous one. This is for article assets — for files on support tickets use get_ticket_attachments, and to see an article",
+            "name": "create_article_attachment",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `create_article_attachment` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3408a4615e8a7373b3fedd137822d212574f0efb52722e0b957b948c9ffe0fb5",
+            "description": "Create a translation for an existing article in a specific locale. The article must already exist (create it with create_article); this adds a new localized version and returns the created translation (locale, title, draft state). The target locale must not already have a translation — use update_article_translation to modify an existing one, and list_article_translations to see which locales exist. Provide the full HTML body.",
+            "name": "create_article_translation",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_article_translation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:46d175700d043ce91ebb0492b7a28f666c901e169d2348fe5f343f1f7979740b",
+            "description": "Create a new content tag for Guide articles. Content tags are end-user visible labels that help readers discover related articles; this returns the created tag with its id. Check list_content_tags first (filter by name_prefix) to avoid duplicates, then attach the new id via the content_tag_ids parameter of create_article or update_article. For internal search-ranking labels that are not shown to end users, use article labels (list_labels) instead.",
+            "name": "create_content_tag",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_content_tag` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a262b4d1d7185be6c03034cf5733203715ad3a8776b167af0713de896c2175ff",
+            "description": "Audit the Help Center tree for a target locale and report every category and section that has no translation, or one that is still an unpublished draft. Use it before or after translating articles: an article published in a second locale is unreachable while its parent section only exists in the source locale. Listing sections in that locale cannot answer this — a node with no translation is simply absent, without saying why, and a node whose translation is an unpublished draft may still be listed under its draft name — so this audit reads the draft flag on each node instead of trusting that listing. Costs two listings and covers up to 100 categories and 100 sections; past that only the first page of each level is audited, and the report says so — pass category_id to narrow it. Fix what it reports with set_section_translation / set_category_translation.",
+            "name": "find_translation_gaps",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_translation_gaps` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:473dfa720cb81f09d167244d482a4f7af8739c8e60cb3390562231759e6de02e",
+            "description": "Retrieve an article by ID with full body content. For large articles, prefer get_article_outline + get_article_section to save tokens. Optionally specify locale for a translated version. Returns body (HTML), metadata, source_locale, and list of available translations.",
+            "name": "get_article",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_article` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d9153cc763795d74b8a7c2a9ba5186ab4db3375e9e9e649ba658dec577b62dd3",
+            "description": "Return a compact outline of an article (list of sections delimited by h1/h2/h3, with word counts) for the given locale (defaults to source_locale). Includes available translations with their outdated status. Use get_article_section to fetch a specific section.",
+            "name": "get_article_outline",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_article_outline` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:14b97199ecab7c95a4df4e3d3f26a96114308a955c36915ac48cd941c91ad537",
+            "description": "Retrieve the content of a single section of an article in a given locale. Use get_article_outline first to discover section indexes. Default format=",
+            "name": "get_article_section",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_article_section` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:be67cb149bff17e4b6e8da8db24e87e55c2562a978e514c47f6747f34dc2627d",
+            "description": "List all attachments for an article. Returns attachment metadata only (id, file name, content type, size, URL), not the file bytes; both inline and block attachments are included. This is for Help Center articles — for attachments on support tickets use get_ticket_attachments instead. Upload new files with create_article_attachment.",
+            "name": "list_article_attachments",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_article_attachments` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:edcb5fec5a046437e0a5abe898dd77188f415e326f096832e1bfe0dfa03c7545",
+            "description": "List all available translations for an article (metadata only, no body: locale, title, draft, updated_at). Use get_article with locale for full translated content.",
+            "name": "list_article_translations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_article_translations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:785b8cead109a84b8d2c37f4ccbe31c04aed4d2ba1c8d2fbb86775a675cbb1a5",
+            "description": "List articles (metadata only, no body). Use get_article for full content. Optionally filter by section ID and locale. Supports sort_by (",
+            "name": "list_articles",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_articles` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e24a673a60f4dbd9ae31b4993ff1f33d1ba1f4cc17c990d945c96d9649da03aa",
+            "description": "List the Zendesk account",
+            "name": "list_brands",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_brands` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7cfd72534716b2125247a5592e52a4bb31b3f4a59d33e78112b611a577992685",
+            "description": "List all Help Center categories. Categories are the top level of the Guide hierarchy (category → section → article); each entry includes its id, name and locale. Results are cursor-paginated. Pair a returned category id with list_sections to drill down, then list_articles to reach articles. Pass a locale to read category names in that translation.",
+            "name": "list_categories",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_categories` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:70e0846b69e6e33e28332823549b239b8bdb813829d7780617ea4a9bdce1aaed",
+            "description": "List the translations of a Help Center category: for each locale, the localized name, whether a description is set, and whether the translation is published or still a draft. Reach for this when a category looks wrong in a locale, because list_categories with that locale cannot settle it: a category with no translation is omitted from it, while a category whose translation is an unpublished draft may still be listed there under the draft name — so appearing in that listing does not mean published, and the draft flag here is what decides. Fix either case with set_category_translation; to sweep every category and section at once, use find_translation_gaps.",
+            "name": "list_category_translations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_category_translations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c1d76f8c919f9dc8e6dad383176e92cc5b8fe3bd0438d4b22543a897715523bd",
+            "description": "List Guide content tags, which are end-user-visible labels that help readers find related articles. Results are cursor-paginated (follow the returned cursor to enumerate the full list) and sorted by name by default. Pass name_prefix to look a tag up by the start of its name — do this before create_content_tag to reuse an existing tag rather than fragment the taxonomy. For internal, non-end-user search labels, see list_labels instead.",
+            "name": "list_content_tags",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_content_tags` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:febfc7103bad0c019305a5bb06a2830d0933c04b1806f1c38dbcbe4539823fe2",
+            "description": "List all article labels, with each label",
+            "name": "list_labels",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_labels` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:64a1257e447a73f0c9279cb6d7fb5043f7577a38541d575b245f9d88ef6e9ca1",
+            "description": "List all Guide permission groups, which control who can edit and publish an article, with each group",
+            "name": "list_permission_groups",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_permission_groups` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3c7adb5b6f14a6aacd70c7aca14dac8447b282f8a768b4e2fc3f3521e8468b3e",
+            "description": "List the translations of a Help Center section: for each locale, the localized name, whether a description is set, and whether the translation is published or still a draft. Reach for this when a section looks wrong in a locale, because list_sections with that locale cannot settle it: a section with no translation is omitted from it, while a section whose translation is an unpublished draft may still be listed there under the draft name — so appearing in that listing does not mean published, and the draft flag here is what decides. Fix either case with set_section_translation; to sweep every category and section at once, use find_translation_gaps.",
+            "name": "list_section_translations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_section_translations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:10bef6803371c3d5e4e8b55a2eda5f49ce995f6cd1f50d50a8682b0fd1adc13f",
+            "description": "List Help Center sections. Sections are the middle level of the Guide hierarchy (category → section → article) and group related articles; each entry includes its id, name, category_id and locale. Results are cursor-paginated. Pass category_id to list only one category",
+            "name": "list_sections",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sections` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4591ba88e148aec631b5ad2297a5b5f3b443e429e66d406680c48e19205c1565",
+            "description": "List all Help Center user segments, which control article visibility (who can view an article), with each segment",
+            "name": "list_user_segments",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_user_segments` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fec523f4f473ddc626951fb277ee1188c78eecd916b527c477c635e93453e824",
+            "description": "Reorder an article within its current section by moving it relative to its siblings (top, bottom, or before/after another article), and return whether the new order was applied. This is the reliable way to satisfy",
+            "name": "reorder_article",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reorder_article` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c617f2b55924295234a79f60f5aa2a6ecba9f6a94fb6f8492c993d79118dd249",
+            "description": "Full-text search across Help Center articles (metadata only, no body). Use get_article for full content. Supports locale filtering. Returns total count.",
+            "name": "search_articles",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_articles` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6068aabebc7e56329d5151ead058701e10e0c037dd9b9306274655176600a5ea",
+            "description": "Create or update the translation of a Help Center category in one locale, and return the resulting translation (locale, localized name, draft state). Creates the translation when the locale has none and updates it otherwise, so no listing call is needed first; only the fields you pass are written, which makes",
+            "name": "set_category_translation",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_category_translation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:96e79a6a85ed7631ea55fc1fb364905dba743d366a901de32ea2ac490c35a353",
+            "description": "Create or update the translation of a Help Center section in one locale, and return the resulting translation (locale, localized name, draft state). Creates the translation when the locale has none and updates it otherwise, so no listing call is needed first; only the fields you pass are written, which makes",
+            "name": "set_section_translation",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_section_translation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4248229a4981d06ab1d772781ac518b2d1330be85351a553280f24166014a696",
+            "description": "Update article metadata only (draft, promoted, labels as label_names, content tags as content_tag_ids, visibility as permission_group_id / user_segment_id, section_id, sort position, author, etc.) and return the updated article; fields you omit keep their value. Does NOT update content (title, body) — use update_article_translation for that, or update_article_section to edit one section. To put an article first or last in its section, prefer reorder_article: a plain position write is ambiguous while articles share position 0. To remove an article from the Help Center, use archive_article (a Guide admin can restore it); draft: true only unpublishes it.",
+            "name": "update_article",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `update_article` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7d7a5f9170ad170c63bda1ceb1e9a2c976fe305eea3f2ea50d14af92173f10ab",
+            "description": "Replace the body of one article section, heading excluded (the heading is kept as is), in a given locale, leaving the rest of the article intact. The server fetches the current body, replaces the targeted section, and PUTs the full reconstructed body via the Translations API. A leading heading in content that repeats the section heading is removed; any other h1-h3 in content creates new sections and shifts the later indexes (the response warns). section_index 0 is the heading-less intro, which exists only when the body has text before its first heading. Default format=",
+            "name": "update_article_section",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_article_section` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3da30cd0bd4b71458d68ca53c68e137115b0f7c5f33072d3d53fb1bc1b2d5dce",
+            "description": "Update article content (title, body) in a specific locale. For targeted edits on one or a few sections, prefer update_article_section — this tool replaces the FULL body and re-sends the entire article on each write. Use the article",
+            "name": "update_article_translation",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `update_article_translation` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:d725a64909fe99453779de7dd7bd2212334e4da5f136ca84d9b9166290960e4d",
+        "version": "3.10.2"
       }
     ]
   },
@@ -24165,19 +24479,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.3.25",
+    "latest_version": "2.5.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@linkedapi/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@linkedapi%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.3.25",
+    "recommended_safe_version": "2.5.0",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/@linkedapi/mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@linkedapi/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 37 safe version(s).",
+    "security_summary": "Server `@linkedapi/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 39 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:aa90ec5d303ddc6ea05cbd13dd8f16985a97a4829789036a4d712807635931d2",
@@ -25020,6 +25334,83 @@
         ],
         "toolset_canonical_hash": "sha256:aa90ec5d303ddc6ea05cbd13dd8f16985a97a4829789036a4d712807635931d2",
         "version": "2.3.25"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-16T13:27:36.268Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.4.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-17T11:19:13.680Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0609ab277da9efae9a541baadf86c142dc050ca87b52e9d4916ebda15fcf326d",
+            "description": "Learn how to authenticate with Linked API MCP",
+            "name": "authentication_requirements",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `authentication_requirements` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9020dc658005b83de35db9f951648399c9eb95fd5a90f8f873c115a0ee8ad4de",
+            "description": "Learn how Linked API background workflows provide optimal UX",
+            "name": "background_workflows",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `background_workflows` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:800b342edd9eed20814702bc9f97dfd9cbe1d1f6f0b944a8bcc12b0e81bd0d16",
+            "description": "Learn when to use optional parameters in Linked API requests",
+            "name": "parameter_usage",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `parameter_usage` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:78206658ef124617e2d55b22e1c4f7a77101774e7ef174e8598d0ec970415657",
+            "description": "Execute performance_guidelines",
+            "name": "performance_guidelines",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `performance_guidelines` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8a85e5dc95e084b52fa368942aac90ad5e3f7e2a586a788417496b39e035ee08",
+            "description": "Learn when and how to report Linked API problems with send_feedback",
+            "name": "product_feedback",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `product_feedback` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:aa90ec5d303ddc6ea05cbd13dd8f16985a97a4829789036a4d712807635931d2",
+        "version": "2.5.0"
       }
     ]
   },
@@ -32540,6 +32931,186 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.14.1"
+      }
+    ]
+  },
+  "DV155/Statistik-Austria-MCP-Server": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Search and query Statistik Austria open data (OGD) with codes resolved to readable labels.",
+    "display_name": "DV155/Statistik-Austria-MCP-Server",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.1.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "DV155/Statistik-Austria-MCP-Server",
+    "prompts_count": 0,
+    "purl": "pkg:generic/DV155%2FStatistik-Austria-MCP-Server",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.1.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/DV155/Statistik-Austria-MCP-Server",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `DV155/Statistik-Austria-MCP-Server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:51620c1196a56e4df61d1acc15a2a2db0ec8a04a9c663f233e60654d2551fc50",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f2babeeb5b67af33f2341bba2565bf425801064d9413ceef82c1b0fda59ac81e",
+            "description": "Fetch an OGD dataset's data with codes resolved to German labels, formatted \"label <code>\".",
+            "name": "fetch_dataset_csv",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dataset_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filters",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 1000,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 0,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fetch_dataset_csv` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd1b84e326a08631c6472a50d550f72d2a44435ad93a872cc2b0748844c47077",
+            "description": "Return the dimension and measure metadata for an OGD dataset. ",
+            "name": "fetch_dataset_json",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dataset_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fetch_dataset_json` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed5dcd274a238fd65a19794ede23af93f6ba1424933e4ecc525646040a44a0ff",
+            "description": "Search the OGD catalog by keyword. By default every query word of 3+ characters",
+            "name": "search_dataset",
+            "parameters": [
+              {
+                "default": 20,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": true,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "match_all",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": 0,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_dataset` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:51620c1196a56e4df61d1acc15a2a2db0ec8a04a9c663f233e60654d2551fc50",
+        "version": "1.1.0"
       }
     ]
   },
@@ -41513,6 +42084,53 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "1.0.43"
+      }
+    ]
+  },
+  "angelnicolasc/graymatter": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Persistent agent memory as a single Go binary: knowledge graph, TUI observability, zero infra.",
+    "display_name": "angelnicolasc/graymatter",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.20.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "angelnicolasc/graymatter",
+    "prompts_count": 0,
+    "purl": "pkg:generic/angelnicolasc%2Fgraymatter",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.20.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/angelnicolasc/graymatter",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `angelnicolasc/graymatter` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.20.1"
       }
     ]
   },
@@ -109434,6 +110052,64 @@
       }
     ]
   },
+  "mambalabsdev/mcp-b2b-prospect-engine": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Enrich companies, discover hiring signals and find verified contacts in one actor.",
+    "display_name": "mambalabsdev/mcp-b2b-prospect-engine",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.2.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "mambalabsdev/mcp-b2b-prospect-engine",
+    "prompts_count": 0,
+    "purl": "pkg:generic/mambalabsdev%2Fmcp-b2b-prospect-engine",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.2.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/mambalabsdev/mcp-b2b-prospect-engine",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `mambalabsdev/mcp-b2b-prospect-engine` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:0feb76bf45bcf3a69e779f5fae9a39db4a36d06091c209781d98d3144c20b3bf",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8a91df43b16abc0c52a92012ba669c0848adf20422c33473e4c6f20e6db9228e",
+            "description": "A composed prospecting actor with four modes. enrich_companies resolves identity, firmographics, LinkedIn and social for each domain or company name you supply, and needs no vendor key at all. discover_jobs finds who is hiring for your keywords and resolves the real employer behind each posting, including postings a job board placed on an employer",
+            "name": "run_prospect_engine",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run_prospect_engine` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:0feb76bf45bcf3a69e779f5fae9a39db4a36d06091c209781d98d3144c20b3bf",
+        "version": "1.2.1"
+      }
+    ]
+  },
   "mambalabsdev/mcp-gtm-signals-aggregator": {
     "archival_reason": null,
     "author": null,
@@ -111235,7 +111911,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+    "description": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
     "display_name": "mcp-hostile-metadata",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -111281,11 +111957,24 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "VERITY-MCP-TOOL-POISON-001",
-            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
-            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
+            "id": "MCP-UNICODE-001",
+            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
+            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
             "severity": "HIGH",
-            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "vulnerable_tools": [
+              "generate_summary_report"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VERITY-MCP-UNICODE-001",
+            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
+            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
+            "severity": "HIGH",
+            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
             "vulnerable_tools": [
               "generate_summary_report"
             ]
@@ -111307,24 +111996,11 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-UNICODE-001",
-            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
-            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
+            "id": "VERITY-MCP-TOOL-POISON-001",
+            "owasp_mcp_category": "Improper Input Validation / Prompt Injection",
+            "remediation_guidance": "Defangs and sanitizes prompt injection tokens in tool metadata.",
             "severity": "HIGH",
-            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
-            "vulnerable_tools": [
-              "generate_summary_report"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-MCP-UNICODE-001",
-            "owasp_mcp_category": "Improper Output Handling / Homoglyph Spoofing",
-            "remediation_guidance": "Strips invisible and control characters using NFKC normalization.",
-            "severity": "HIGH",
-            "summary": "Invisible & Confusable Unicode Control Characters in Tool Schema in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
+            "summary": "Indirect Prompt Injection in Tool Description Metadata in Hostile Metadata & Prompt Injection Target (mcp-hostile-metadata)",
             "vulnerable_tools": [
               "generate_summary_report"
             ]
@@ -113587,6 +114263,53 @@
       }
     ]
   },
+  "mosa": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "",
+    "display_name": "mosa",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": "PolyForm-Shield-1.0.0",
+    "malicious_advisory_id": null,
+    "package_name": "mosa",
+    "prompts_count": 0,
+    "purl": "pkg:npm/mosa",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/fengseekling-coder/gravityport",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `mosa` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
   "mshegolev/jaeger-mcp": {
     "archival_reason": null,
     "author": null,
@@ -114873,7 +115596,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
+    "description": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
     "display_name": "n/a",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -114906,11 +115629,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2015-8316",
+            "id": "CVE-2025-56405",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
+            "summary": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
             "vulnerable_tools": []
           },
           {
@@ -114939,22 +115662,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2025-56405",
+            "id": "CVE-2025-63604",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "An issue was discovered in litmusautomation litmus-mcp-server thru 0.0.1 allowing unauthorized attackers to control the ",
+            "summary": "A code injection vulnerability exists in baryhuang/mcp-server-aws-resources-python 0.1.0 that allows remote code executi",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-50757",
+            "id": "CVE-2015-8316",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Directory Traversal vulnerability in DayuanJiang next-ai-draw-io 0.4.13 allowsa remote attacker to execute arbitrary cod",
+            "summary": "Array index error in LightDM (aka Light Display Manager) 1.14.3, 1.16.x before 1.16.6 when the XDMCP server is enabled a",
             "vulnerable_tools": []
           },
           {
@@ -114972,11 +115695,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2025-63604",
+            "id": "CVE-2026-50757",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "A code injection vulnerability exists in baryhuang/mcp-server-aws-resources-python 0.1.0 that allows remote code executi",
+            "summary": "Directory Traversal vulnerability in DayuanJiang next-ai-draw-io 0.4.13 allowsa remote attacker to execute arbitrary cod",
             "vulnerable_tools": []
           }
         ],
@@ -131289,19 +132012,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.1.0",
+    "latest_version": "1.2.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "suunto-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/suunto-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.1.0",
+    "recommended_safe_version": "1.2.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/googlarz/suunto-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `suunto-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 22 safe version(s).",
+    "security_summary": "Server `suunto-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 23 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:32f57e690464e9d8ea2aa7356639b2043e122728976acb642857204ada7ba8a2",
@@ -134727,6 +135450,646 @@
         ],
         "toolset_canonical_hash": "sha256:32f57e690464e9d8ea2aa7356639b2043e122728976acb642857204ada7ba8a2",
         "version": "1.1.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-16T18:04:22.332Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:52dc8e45636d65054dfebff2cb22cf6174b77e2568dfd28c80c1ab768a86a30f",
+            "description": "Recovery balance and stress state for today.",
+            "name": "Today",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Today` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:01b9b435193d2ff865b5c0bc3ec8ba2c84c9164758c8eb80b155cd2a62ddfc1d",
+            "description": "Permanently deletes one SuuntoPlus Guide from the user",
+            "name": "delete_guide",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "guideId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_guide` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:37d09632bd9499f4fee34f5b2a9711f8fd9548bf7965743bcecde2889a557cdf",
+            "description": "Exports a saved Suunto route as a GPX 1.1 XML string. Suitable for import into navigation apps (Komoot, Strava, Garmin Connect, etc.). Use list_routes to discover valid route IDs. Read-only.",
+            "name": "export_route",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "routeId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `export_route` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc321a27d34d5afe73075fced85204a347d82feea63b8588beab917126357adb",
+            "description": "UNAVAILABLE — Suunto",
+            "name": "export_workout_gpx",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "workoutKey",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `export_workout_gpx` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2ccd9bddb880ca8e2e8a3ea9f6262ea64c02210eb518dd2fdd8b14c90e9cc4ca",
+            "description": "Builds a color-coded daily health digest (steps, sleep, recovery balance, HRV, and a training-load model) for one date and appends it as markdown to a history file. Suunto",
+            "name": "generate_daily_digest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seedAtl",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seedCtl",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_daily_digest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:55a649adf72573b39f53c52d2d76e03693cece182b52e97cfbad71a187835b2c",
+            "description": "Returns the 24/7 activity samples for one local calendar day (00:00–23:59 in the local time the watch stamped on each sample) from the /247samples API, as a plain array of { timestamp (ISO 8601 with UTC offset), entryData: { HR (bpm), StepCount, EnergyConsumption (joules, as in get_daily_activity_statistics) } } — 144 rows for a full day, one per 10 minutes (138 or 150 on the days the clocks change). A day without synced data returns []. Use list_daily_activity for a date range. Requires 24/7 Activity API subscription on apizone. Read-only.",
+            "name": "get_daily_activity",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_daily_activity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f86ed8257bf798bc58a36b0d6e96830a5e55562d15a1984695ca9b3d5eedf836",
+            "description": "Returns aggregated daily step count and energy consumption (joules) from the /247 API for the given datetime range. Response is an array of AggregatedActivityData objects, each with a Name (",
+            "name": "get_daily_activity_statistics",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "enddate",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "startdate",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_daily_activity_statistics` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9b46fd7e645fb7c6ab0447d4519f76e08738ed80bdaa44ba750698825abcddef",
+            "description": "One call for \\",
+            "name": "get_daily_snapshot",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_daily_snapshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:900f8f0395116c9a993f450f88d803fe27a49c452b00e2e539285b6fd0127fb8",
+            "description": "Returns recovery-balance samples from the /247samples API for one local calendar day (00:00–23:59 in the local time the watch stamped on each sample), as a plain array of { timestamp (ISO 8601 with UTC offset), entryData: { Balance (0.0–1.0 recovery balance), StressState (0=Invalid, 1=Relaxing, 2=Active, 3=Passive, 4=Stressful) } } — 48 half-hourly rows for a full day (46 or 50 on the days the clocks change). A day without recovery data returns []. Use list_recovery for a date range. Requires Recovery API subscription on apizone; returns 404 without it. Read-only.",
+            "name": "get_recovery",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_recovery` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:09eeb4f39483d68593a6146bd79d4f99bb15db1dc6f70fd1590320434e59f643",
+            "description": "Returns the sleeps of one night from the /247samples API. A date means the NIGHT of that date: every sleep that began between 12:00 (noon) on it and 12:00 the next day, in the local time the watch stamped on the sleep — so 23:00, 00:30 and 03:00 bedtimes all belong to the same date, and an afternoon nap is filed with the night after it. Last night is therefore filed under yesterday",
+            "name": "get_sleep",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_sleep` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a90a5bbd603efda9a3c2e32a3a3d848bd737c1dbed2e70e429fa383f44979643",
+            "description": "Polls the processing status of a workout upload initiated by upload_workout. Returns status (e.g.",
+            "name": "get_upload_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "uploadId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_upload_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:448350fe1d2dad5d5a9558b60d220e1c415e3f3d5b8df69b28fcc4599d51fa22",
+            "description": "Returns the base summary for one workout (about 1.6 KB): the same scalar fields as a list_workouts item (times, distance, energy, hrdata, tss/tssList, recoveryTime) plus extensionTypes, the list of data streams Suunto holds for it. It does NOT include laps, HR zones or other extension data — use get_workout_laps for laps and zone times, get_workout_fit for record-level data. Throws SuuntoNotFoundError if the workoutKey is malformed (not 24 hex characters) or does not exist. Use list_workouts to discover valid workoutKey values. Read-only.",
+            "name": "get_workout",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "workoutKey",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_workout` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d844d401adc0605987f27331a004a01b727b17be1e8cc4d3a424380552cf3f57",
+            "description": "Downloads the workout",
+            "name": "get_workout_fit",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "full",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "workoutKey",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_workout_fit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:128a6d8b46d62c08b4b5755e134d64fc07786accd95c782087f27ee2f8f6ff34",
+            "description": "Returns the manual laps of one workout as a compact table, plus its training-load fields — the way to read back a guided gym session set by set (push_strength_guide records one lap per set and per rest; push_workout_guide one lap per exercise and one per rest between exercises). A session from push_interval_guide auto-advances and is expected to record no manual laps (unverified), so it should return an empty table. About 2.5 KB for a 35-lap strength session, versus ~550 KB for get_workout_fit full=true. Output: { workoutKey, activityId, startTime (epoch ms), totalTimeS, guide: { id, name } | null (the guide that ran, as recorded by Suunto — not looked up in list_guides, because guides are often deleted afterwards), tss: [{ method (seen so far:",
+            "name": "get_workout_laps",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_workout_laps` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5d6c8433d42b2e81028f5dd72a2298b872d9c43b4870cf23cb7a7c95d51a0c08",
+            "description": "UNAVAILABLE — Suunto",
+            "name": "get_workout_samples",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "workoutKey",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_workout_samples` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:31b24ca81d75486d43db43686c7430b57a6531614d9291540797695acf72584b",
+            "description": "Returns 24/7 activity samples from the /247samples API for the local calendar days [from, to] inclusive (in the local time the watch stamped on each sample), ordered chronologically, as a plain array of { timestamp (ISO 8601 with UTC offset), entryData: { HR (bpm), StepCount, EnergyConsumption (joules, as in get_daily_activity_statistics) } }. Days without synced data are simply absent. Use get_daily_activity for a single day or get_daily_activity_statistics for aggregated daily step/energy totals. Requires 24/7 Activity API subscription on apizone. Read-only.",
+            "name": "list_daily_activity",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_daily_activity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:64eace2f7e17a22f83dc3696848f13a400eb21fd7281cd87ac5fcf6f4d756094",
+            "description": "Returns all SuuntoPlus Guides (from push_workout_guide/push_interval_guide/push_strength_guide) on the user",
+            "name": "list_guides",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_guides` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:34e15799ac4c67952fed2aba19e3fe53b2c72ffd3e0f6370031d03ef87895ce4",
+            "description": "Returns recovery-balance samples from the /247samples API for the local calendar days [from, to] inclusive (in the local time the watch stamped on each sample), ordered chronologically, as a plain array of { timestamp (ISO 8601 with UTC offset), entryData: { Balance (0.0–1.0 recovery balance), StressState (0=Invalid, 1=Relaxing, 2=Active, 3=Passive, 4=Stressful) } }. Days without recovery data are simply absent. Use get_recovery for a single day. Requires Recovery API subscription on apizone; returns 404 without it. Read-only.",
+            "name": "list_recovery",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_recovery` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7a78c9b95fd9e579f12743f38c08f1a19e7ace5f35e6c09bffc113a3bd518c91",
+            "description": "Returns all routes saved in the user",
+            "name": "list_routes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_routes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:244bd2d742d3804970b0bc553001cc7259a271db54f0d3e2afd866fc94cd4d52",
+            "description": "Returns the sleeps of the nights [from, to] inclusive from the /247samples API, ordered chronologically by bedtime. A date means the NIGHT of that date: every sleep that began between 12:00 (noon) on it and 12:00 the next day, in the local time the watch stamped on the sleep — so 23:00, 00:30 and 03:00 bedtimes all belong to the same date, and an afternoon nap is filed with the night after it. Last night is therefore filed under yesterday",
+            "name": "list_sleep",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sleep` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:810ec5593c431769aee30ec0c392b229955cfbfcd65904a5d3c57e79d0d25fe8",
+            "description": "UNAVAILABLE — Suunto",
+            "name": "list_subscriptions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_subscriptions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f3be1e87f3747cd5c04b9c70962baf9f211b66c1cdd1c949382f6cc97c8d989a",
+            "description": "Returns the user",
+            "name": "list_workouts",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "since",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "until",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_workouts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:344f0aa5c035e5ab9bf484fd629b27d1400b9587b6ad1e3a9be19cc3a29a7402",
+            "description": "Pushes an interval/cardio guide (warmup, timed or distance-based work intervals, recoveries, optional repeats) to the user",
+            "name": "push_interval_guide",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "label",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "times",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `push_interval_guide` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:862b37abf5681a91333b8d696e1d515cedceda69d4adaa81428b13ba3aa46681",
+            "description": "Pushes a resistance-training guide to the user",
+            "name": "push_strength_guide",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "detail",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `push_strength_guide` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0d42ff1403b98a6f026f0d07d98fce80b6b40cf1a6ca056b0915e53c0d9b05ed",
+            "description": "Pushes a text-step workout guide to the user",
+            "name": "push_workout_guide",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "detail",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "guideId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `push_workout_guide` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:09a6626e3471d5b7a8c8d3100ae1349504cd1219b9abbe2d73987a74770efaac",
+            "description": "Imports a GPX file as a route in the user",
+            "name": "upload_route",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filePath",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "items",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_route` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c7ccb619e0a3f9d309d008431179ecf22e1d2ce0068301b9d4f377c2fc77d598",
+            "description": "Uploads a workout file to the user",
+            "name": "upload_workout",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "comment",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filePath",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "privacy",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `upload_workout` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:32f57e690464e9d8ea2aa7356639b2043e122728976acb642857204ada7ba8a2",
+        "version": "1.2.0"
       }
     ]
   },
@@ -134907,6 +136270,670 @@
         ],
         "toolset_canonical_hash": "sha256:39382c1cbf518c94c9226b97c49da78599226f5cc5fd72c9fd7f630a8590af20",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "tailprint": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Developer-First PDF & Document Engine, TypeScript SDK & MCP Server (tailprint.com)",
+    "display_name": "tailprint",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": "MIT",
+    "malicious_advisory_id": null,
+    "package_name": "tailprint",
+    "prompts_count": 0,
+    "purl": "pkg:npm/tailprint",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/coheroseb/tailprint",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `tailprint` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:f8135b8839b8c68c1af043e3e2159ad9fcd8239238af4c79f096496db7df18de",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:60d499f450219d14936ca3d82eb41ca394e092bae710114084117ef0f32a3f0a",
+            "description": "Compacts and shrinks PDF file size by bundling internal PDF objects into compressed streams and stripping duplicate structures.",
+            "name": "compress_pdf",
+            "parameters": [
+              {
+                "default": "compressed.pdf",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Source PDF document as base64 data URI or public http/https URL",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pdf",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `compress_pdf` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ef887d32fe3e5db3c76b6e38dc2534e9192f99c883fcd424dc590f9644509d2b",
+            "description": "Fills interactive PDF forms (AcroForms) with text, numbers, or checkboxes, with optional form flattening.",
+            "name": "fill_pdf_form",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fields",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": true,
+                "description": "Whether to flatten form fields to prevent further editing (default: true)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "flatten",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "filled_form.pdf",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Interactive PDF document as a base64 data URI or public http/https URL",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pdf",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `fill_pdf_form` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d9cdd4f5576f21102c17d9adb46f02a8963593a5e19ffb1046cc39a652a6c3ac",
+            "description": "Generates a legally compliant European hybrid electronic invoice (Factur-X / ZUGFeRD 2.2 / EN 16931). Renders a beautiful visual PDF and embeds machine-readable CrossIndustryInvoice XML (/EmbeddedFiles) for automated ingestion by ERP and accounting platforms (DATEV, SAP, Chorus Pro, Dinero, Billy).",
+            "name": "generate_einvoice",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Buyer city",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_city",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "DE",
+                "description": "2-letter ISO country code of buyer (e.g. DE, FR, DK)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_country",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Buyer contact/AP email",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_email",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Customer/buyer company or client name",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Buyer postal code",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_postcode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Buyer street address",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_street",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "buyer_vat_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "EUR",
+                "description": "ISO 4217 currency code (e.g. EUR, DKK, USD, SEK)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "currency",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Due payment date (YYYY-MM-DD)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "due_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "invoice_number",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "List of invoice items or billed services",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "line_items",
+                "nested_properties": {
+                  "name": {
+                    "description": "Product or service description",
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "description": "Quantity or units",
+                    "type": "number"
+                  },
+                  "unit_price": {
+                    "description": "Price per unit excluding VAT",
+                    "type": "number"
+                  },
+                  "vat_rate": {
+                    "default": 25,
+                    "description": "VAT percentage (e.g. 25 for 25% or 0 for exempt)",
+                    "type": "number"
+                  }
+                },
+                "required": true,
+                "type": "object"
+              },
+              {
+                "default": null,
+                "description": "Optional payment terms or notes",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "notes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bank SWIFT/BIC code",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "payment_bic",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bank transfer IBAN for direct wire payment",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "payment_iban",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "BASIC",
+                "description": "Factur-X compliance profile level",
+                "enum": [
+                  "BASIC",
+                  "EN16931"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "profile",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Seller city",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_city",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "DK",
+                "description": "2-letter ISO country code of seller (e.g. DK, DE, FR, NL)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_country",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Seller billing email",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_email",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Supplier/seller company name",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Seller postal code",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_postcode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Seller street address",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_street",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seller_vat_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `generate_einvoice` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fd807b38dfae9f9e8a4c4f4fb0187b7f9fb5cf7c96eba5738b9ead88383eff28",
+            "description": "Retrieves the full Tailwind CSS HTML source code of a document template by ID, allowing an AI agent to customize data and render it with render_pdf.",
+            "name": "get_template_source",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Template identifier",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "template_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_template_source` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2cf297510c0bf1bf782bfc3d938f6d46334d89a80f8b392bca3769fb5f538b3b",
+            "description": "Returns the catalog of available pre-designed Tailwind CSS document templates (Invoices, EU Factur-X, Certificates, Executive Reports, Resumes, Shipping Labels, Event Passes, POS Receipts, Quotes, NDAs, Statements, Presentations, Contracts).",
+            "name": "list_templates",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_templates` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4d798b3f3a24b4511912aa99aeb1dc063214f580a2efcd1af8bd3ff7e85c9267",
+            "description": "manage_pdf_lifecycle",
+            "name": "manage_pdf_lifecycle",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `manage_pdf_lifecycle` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfa414015e8a7e4b384e229ed0d805be664ec50a7097bff5f20edb7df3a3996a",
+            "description": "Merges two or more PDF documents (supplied as base64 strings or public URLs) into a single unified vector PDF.",
+            "name": "merge_pdfs",
+            "parameters": [
+              {
+                "default": "merged.pdf",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Array of at least 2 PDF inputs (base64 data URI or public http/https URLs) to merge in order",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "pdfs",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `merge_pdfs` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ea3371995a059de7d9dc1ae04e4da709897c78bf18685c44c3e9f522803296ea",
+            "description": "render_pdf",
+            "name": "render_pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `render_pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:351fb8f78dae59529cb56f8f2aa305387ca8d27ddde54a2fb5264a1f1ec9dca9",
+            "description": "render_presentation",
+            "name": "render_presentation",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `render_presentation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:baa875312e8a978584f4c8585041c6a10ea7f015006ba3c8ef35e259c6715ec3",
+            "description": "Renders a pre-designed Tailwind CSS document template directly with optional variable data substitution. Ideal for generating invoices, receipts, contracts, and certificates without managing raw HTML markup.",
+            "name": "render_template",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Orientation override (landscape: true or false)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "landscape",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "pdf",
+                "description": null,
+                "enum": [
+                  "pdf",
+                  "png",
+                  "jpeg"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "output_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional AES-256 password to encrypt the PDF document",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "password",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Template identifier to render",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "template_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Key-value pairs to replace in template HTML. Replaces {{key}} tags or exact text matches.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "variables",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 3.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `render_template` [MEDIUM] handles sensitive credentials, tokens, or private secrets; processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:719660f63b72085df7c339afd8c932f52c6d98b712137400acdd26fe9e0a91a3",
+            "description": "split_pdf",
+            "name": "split_pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `split_pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:75f82fb3e73499849d12cb4d181d8b10e8fbd0d00da250493c6181d68fb578b2",
+            "description": "stamp_pdf",
+            "name": "stamp_pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `stamp_pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dcea45588230b82446547d90fc90e209dcf4a663d783b641d853506a5f306f78",
+            "description": "Verifies the cryptographic HMAC-SHA256 signature and visual content fingerprint of a Tailprint PDF to detect tampering, and extracts its embedded Dual-Brain structured JSON payload in 0ms without OCR.",
+            "name": "verify_pdf",
+            "parameters": [
+              {
+                "default": null,
+                "description": "PDF document as a base64 string, base64 data URI, or public HTTP/HTTPS URL",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pdf",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `verify_pdf` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f8135b8839b8c68c1af043e3e2159ad9fcd8239238af4c79f096496db7df18de",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "taylee9809/budongsan-tax": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Korean real-estate tax engine and MCP server. Statute trail on every result.",
+    "display_name": "taylee9809/budongsan-tax",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.1.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "taylee9809/budongsan-tax",
+    "prompts_count": 0,
+    "purl": "pkg:generic/taylee9809%2Fbudongsan-tax",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.1.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/taylee9809/budongsan-tax",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `taylee9809/budongsan-tax` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0"
       }
     ]
   },
@@ -137152,6 +139179,53 @@
       }
     ]
   },
+  "velloo-design/velloo": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Local design canvas for your coding agent: try screens in your app's own components, then ship one.",
+    "display_name": "velloo-design/velloo",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.10.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "velloo-design/velloo",
+    "prompts_count": 0,
+    "purl": "pkg:generic/velloo-design%2Fvelloo",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.10.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/velloo-design/velloo",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `velloo-design/velloo` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.10.0"
+      }
+    ]
+  },
   "vincentvella/devloop": {
     "archival_reason": null,
     "author": null,
@@ -138027,6 +140101,59 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "yophon/gopan": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Self-hosted cloud drive: search, read, organize and share your files over remote MCP",
+    "display_name": "yophon/gopan",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "3.24.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "yophon/gopan",
+    "prompts_count": 0,
+    "purl": "pkg:generic/yophon%2Fgopan",
+    "quarantine_tier": null,
+    "recommended_safe_version": "3.24.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/yophon/gopan",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `yophon/gopan` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://{gopan_host}/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "3.24.1"
       }
     ]
   },

@@ -16813,6 +16813,614 @@
       }
     ]
   },
+  "SPdream99/yugioh-assistant": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "A tournament-grade Yu-Gi-Oh! judge, deck builder and market analyst for AI agents. Reads real ocgcore Lua scripts for rulings, builds banlist-legal decks for TCG, OCG, AE, Genesys and Master Duel, and prices cards across US/JP/AE markets. Beta: under active development, check for updates.",
+    "display_name": "SPdream99/yugioh-assistant",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.10.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "SPdream99/yugioh-assistant",
+    "prompts_count": 0,
+    "purl": "pkg:generic/SPdream99%2Fyugioh-assistant",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.10.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/SPdream99/yugioh-assistant-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `SPdream99/yugioh-assistant` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:19a182f57657320908ddaffe39a68e12706d6ef284083b2cfcbcefc130240b98",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0c742eadb362cf3917d3914d0f6ac991719b2bc02bccaccc963fe2432832eca",
+            "description": "Benchmark the heuristic duel AI over N seeded games on the real engine, alternating who goes first. aiSide",
+            "name": "ygo_ai_benchmark",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_ai_benchmark` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6dce50a31919b92fd746e406b66bcb24fb00615a17d41eb3bf56526c8c287f3b",
+            "description": "Parse the Lua structure of ANY card script with an AST (luaparse), not just official ones: effects, condition/cost/target/operation, summon procedures (Fusion/Synchro/Xyz/Link/Pendulum), Effect API calls, constants and simulator-profile warnings.",
+            "name": "ygo_analyze_lua",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_analyze_lua` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:64eac53792984c12bf2f0ce90ac89465f678ec985059cd7100803affd4c66a9d",
+            "description": "Run the whole archetype pipeline in one call: read DOCX -> validate -> compile SQLite DB -> generate Lua scripts -> export ART_PROMPTS.md -> (optional) slice the grid straight into the game folder.",
+            "name": "ygo_build_full_pipeline",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_build_full_pipeline` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f2400c87f3dbaf0c4236ce20d9eb2784037c4d6277c400e6c46b7f178fc982db",
+            "description": "USE THIS whenever the user asks you to build, produce or suggest a decklist. Build a tournament-legal deck (40-60 Main, up to 15 Extra, 15 Side) that respects the banlist of the chosen format (TCG, OCG, AE, Genesys, Master Duel), with strategy, staples and a legal list. Every generated list is re-validated (banlist, sizes, Extra Deck placement) before it is returned. If the archetype has no template the tool returns available:false plus availableArchetypes — it never substitutes another deck. Never output a decklist from memory; every card must come from this tool",
+            "name": "ygo_build_meta_deck",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_build_meta_deck` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:908ed8e7b411f84ec7a2905606e1ab6d7f05f2a5960f85700951ce24107dafe6",
+            "description": "USE THIS FIRST for a full card profile (database record + wiki + script provenance + optional rulings/prices). One call for everything about a card: official database record (stats, text), wiki record (names in 12 languages, Yu-Gi-Oh! Card Database ID, which tabs exist, page URL), script provenance (official/custom/generated/missing), and optional rulings summary and cached prices. Reports per-source status so a partial answer is explicit. ${TOOL_FIRST_MARK}",
+            "name": "ygo_card_dossier",
+            "parameters": [],
+            "risk_score": 7.5,
+            "risk_tier": "critical",
+            "security_comment": "Tool `ygo_card_dossier` [CRITICAL] executes arbitrary host system commands or shell scripts; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d5cd9a85c012c336a85d4eabb50117dfb369111a452bd6eaaf8699e86a956fbd",
+            "description": "USE THIS for any question about",
+            "name": "ygo_card_printing_prices",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_card_printing_prices` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0e067e0577a4304d1309d710c38cd214d47fb3a91c6a399242de59d640031b6c",
+            "description": "USE THIS for every",
+            "name": "ygo_check_legality",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_check_legality` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:58172acc8b3850708d8b4d2488c493e468a57f9307112222cff974f5d0df9c77",
+            "description": "Detect summon/activation/material locks in the cards of a deck and flag contradictions. Reads the Lua scripts and reports which card locks you into (or out of) which Summon type, plus conflicts such as a Special Summon lock next to an Extra Deck lock.",
+            "name": "ygo_check_locks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_check_locks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4a322248512685dcb0a13eed07e291e21d84110901cce9f7a753a459aac032a7",
+            "description": "Multi-market price lookup: TCGPlayer (US TCG), Yuyu-tei (JP OCG) and TCGCorner (AE Asian-English). Yuyu-tei is queried with the resolved Japanese card name; when nothing matches, the quote is a search link with price 0 — never a guessed number. This returns one aggregate per card: for per-rarity or per-language printings use ygo_card_printing_prices.",
+            "name": "ygo_check_prices",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_check_prices` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4b8e5e25d987f2af9457bd61ab8c1e1d674d463cccd46a296da6bdafd9f78ca7",
+            "description": "USE THIS for",
+            "name": "ygo_compare_decks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_compare_decks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:67739373005848ddeee6a9f969db3588636b664432db2f2a3c5fcfc0555ce905",
+            "description": "Compare meta movement between two months (e.g. 2026-10 vs 2026-11): rising stars, falling decks and banlist impact.",
+            "name": "ygo_compare_monthly_meta",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_compare_monthly_meta` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6831a72300487d0121c96c19e23a9247babf5050ea043b9deb2988b8c5433e6a",
+            "description": "Measure what a deck",
+            "name": "ygo_consistency_lab",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_consistency_lab` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f70adf20693ca4bd63e665d088cf801515d893404be7a74abae8e4c6ea16af40",
+            "description": "Create the Master Specification DOCX (Archetype Design Bible) as a Single Source of Truth, with the six-column spec table (ID, Name/Type, Stats, Text, ...).",
+            "name": "ygo_create_archetype_docx",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_create_archetype_docx` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f5d34db4b14c541a8311f8f021c6b4fea751228c475a3c01ad12ab213a2387a1",
+            "description": "Register a newly revealed or fan-made card: assign a temporary ID (990000000+), compile its effect text (PSCT:",
+            "name": "ygo_create_custom_card",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_create_custom_card` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ceec620b4777a2cd7e105706372776515638065883b13b20079cc77aacd5b40a",
+            "description": "Price a whole deck across TCGPlayer / Yuyu-tei / TCGCorner, show the cheapest market per card and the potential saving versus the most expensive market. Prices a bounded number of unique cards and marks the result partial rather than inventing numbers (no FX or shipping applied).",
+            "name": "ygo_deck_cost",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_deck_cost` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db7e9ede4c54b1bd31a09a66ab501d34bca80f04052a6626398c15c135713926",
+            "description": "Manage Lua scripts for cards that have no official one.",
+            "name": "ygo_ensure_script",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_ensure_script` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aa1f366bfd58067d11104e875081dfb640314751d48c2f2634781f4317bd677b",
+            "description": "Compile the Master DOCX into a SQLite database (.cdb for EDOPro or Databases/gm.db for YGO Omega) and generate every Lua script c<id>.lua for the chosen profile.",
+            "name": "ygo_export_database_and_scripts",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_export_database_and_scripts` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:452fe136c4e44a95fa5ccf7c380d9f8a4d4b32b5e77ff971021838372efb135c",
+            "description": "Export a deck as .ydk text, a canonical ydke:// link, or both.",
+            "name": "ygo_export_deck",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_export_deck` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db2b7f0cedee73828cfa77d2192260e36b949c0de47bdbdf7762525f6303048f",
+            "description": "Play policy-vs-policy games on the real engine and export every decision as JSONL (request type, legal option codes, chosen action, result). This is the training-data generator for behavioural cloning / reinforcement learning.",
+            "name": "ygo_export_selfplay",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_export_selfplay` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a34ed41b3729780015ce1c73cf55ed8f824009a90365094a6e5c935b0efea87f",
+            "description": "USE THIS for",
+            "name": "ygo_find_combos",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_find_combos` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:468103dd0bd05620477abdcc9aca6c12778bf4c6f33082b39ebce6365d70065c",
+            "description": "USE THIS when the user wants real decklists that other people published (",
+            "name": "ygo_find_community_decks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_find_community_decks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:46519a75309812cebfda4401d0da856be538564045bf5a5916263498fc45a9bb",
+            "description": "USE THIS for",
+            "name": "ygo_find_counters",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_find_counters` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f2db1868061c8bd6a9f835b4fe9f92994eb8edc911e14640259cd0f943a2529c",
+            "description": "USE THIS for",
+            "name": "ygo_find_synergy_and_combos",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_find_synergy_and_combos` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd83d66dcb8cf3bc94de652dd0f328998edf823e3f84a74816bc1d6a5c0fb260",
+            "description": "Extract every artwork description from the Master DOCX into ART_PROMPTS.md, with per-card prompts and Master Grid prompts (2x2, 3x3, 4x4).",
+            "name": "ygo_generate_art_prompts",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_generate_art_prompts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e9da8a795f226fbad6fe613a4c444ce248c9dfe76a3c6b50748cfd7b859a2181",
+            "description": "Build one grid image prompt (2x2, 3x3) covering all custom cards, saving tokens and image-model calls.",
+            "name": "ygo_generate_batch_art_prompt",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_generate_batch_art_prompt` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4d13d49856b6d18b28748f46a7c251bb1412475dd56b6633f9e5377f1165edde",
+            "description": "Print-ready proxy sheet: cards at the real OCG/TCG size (59 x 86 mm, fits standard sleeves), 9 per A4 page, centred, with crop marks and a 50 mm scale bar. Uses official card art when available and a clean text proxy (name, stats, full effect) for custom cards or missing images. Takes a deck (ydke://, .ydk, text list) and/or an explicit card list. For personal playtesting only. Tell the user to print at Actual size / 100%.",
+            "name": "ygo_generate_proxy_pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_generate_proxy_pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:edaae18274c68b7b06c851e365b3c827e46918f26b131e2a9c98934cddd2d2f4",
+            "description": "Turn a deck (YDK, YDKE, .ydk file or text list) into an official Konami KDE Deck Registration Sheet PDF with the full category tables. Handles Unicode names (Vietnamese, Japanese, etc.) correctly.",
+            "name": "ygo_generate_tournament_decklist_pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_generate_tournament_decklist_pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cb107d70ccbe785b9bd4faa78cd1f9e761a07ec31e3f1395596af4a7290dd4e7",
+            "description": "USE THIS for every individual card fact: name, passcode, ATK/DEF, Level, attribute, type, effect text or banlist status. Look up one card by name or passcode. ${TOOL_FIRST_MARK}",
+            "name": "ygo_get_card",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_card` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0056c380e74fc9adf741eb77ac28a5a18bfbbfcb5fb49eced2c13e9edf28105",
+            "description": "Full card detail: stats, text, printings, aggregated multi-market prices (TCGPlayer, Yuyu-tei OCG, Cardmarket AE) and Yugipedia links. Per-printing prices are only present when the source reports set_price; a 0 means",
+            "name": "ygo_get_card_price_trends",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_card_price_trends` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6e8c93e06639a9812ea4e7915186bf2700ddfdbbba795487d6667f3a3480aeec",
+            "description": "Check the meta and banlist day by day (YYYY-MM-DD): emergency banlist notices, errata and tournament news from that day.",
+            "name": "ygo_get_daily_meta",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_daily_meta` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f4688afbd355ae6083aa258807bbb17e7ac2bfcf48a5d3a46a1deee5c71692d8",
+            "description": "USE THIS for any",
+            "name": "ygo_get_monthly_meta",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_monthly_meta` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ebf09d6cbcc47d749a161778e9f447f3b42fcadf1f1ae73f5e11d2dfedd10cde",
+            "description": "Fetch new card reveals, banlist news and tournament coverage from the YGOrganization RSS feed.",
+            "name": "ygo_get_news",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_news` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:246989edd5d890fdf17c66880f85ff2132b7dd8e9909c5c6ef99d0a41d721357",
+            "description": "Official Konami judge corpus: Tournament Policy (KDE-US), Tournament Infractions & Penalties, Speed Duel/Remote Duel addenda, Fast Effect Timing, Advanced Rules, PSCT series, Judge Program and Judge FAQ. Verbatim text with document, version and page citations.",
+            "name": "ygo_get_policy",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_policy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8fdd5df9713948340b336af4a105a0297d08499d39e797a55c34380b55577a8f",
+            "description": "Official Konami rulebook (PDF from yugioh-card.com/en/rulebook/): verbatim text with printed page citations. Topics: status, official, search, section, page. The timing/damage_step/segoc/mechanics topics are curated summaries, not official text.",
+            "name": "ygo_get_rulebook",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_rulebook` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a08697f351840f38c0d22a99c22db88c8d132e3fa3b1a3cbe5600d6b36238e7",
+            "description": "High-demand meta staples with live prices (TCGPlayer/Yuyu-tei/TCGCorner) and live weekly views (YGOPRODeck). Trends derive from live weekly views; tournament share is an editorial estimate. No hardcoded data.",
+            "name": "ygo_get_trending_cards",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_get_trending_cards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:93b25931d9c0eb0ff20ff4bb95e41ca21242087e575c321153629c590f671853",
+            "description": "Run the golden regression suite: every stored scenario is replayed on ocgcore and compared with its expected outcome. Use after a ProjectIgnis script update or an engine bump to see exactly which behaviour changed.",
+            "name": "ygo_golden_suite",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_golden_suite` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:096972be97e63a4d7b06cb24596f3bb7f28a5cee279c3e76e911712d06bfdf8b",
+            "description": "USE THIS for every ruling question about a specific card. Full mechanics adjudication from the ProjectIgnis Lua source: HOPT/SOPT, cost vs effect, targeting, miss timing, Damage Step, negate activation vs negate effect. Accepts a passcode or a card name, reports the script provenance (official/custom/generated/missing) and attaches rulebook + PSCT citations. Do not assert a ruling from memory. ${TOOL_FIRST_MARK}",
+            "name": "ygo_judge_card",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_judge_card` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b492bd3ffb27593c1dbf1f4fd77baba249cf6af9d35ede3d7072bd66cd39048a",
+            "description": "Official ruling on the interaction between two specific cards, grounded in the ocgcore engine and the Konami rulebook.",
+            "name": "ygo_judge_interaction",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_judge_interaction` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:35d69c93b2cb90820b9b246f59948d4bc4e680638c25674fed43657eeac6c738",
+            "description": "Run a REAL duel scenario on ocgcore-wasm, then check the judge",
+            "name": "ygo_judge_scenario",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_judge_scenario` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:75273faed8d23ab549262d87aa5fb2da364359c982f033d5b31b9db7f4c2e520",
+            "description": "USE THIS for market questions that are NOT about one named card:",
+            "name": "ygo_market_query",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_market_query` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c2cb730a429d55ac19a8165e8995545903ee9bcc0b9639881b9605e32e898a68",
+            "description": "Turn the live tier list into a field plan: expected frequency by tops, the top decks to prepare for, and a role-based 15-card side skeleton from the format",
+            "name": "ygo_matchup_planner",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_matchup_planner` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e0b924ff6ade8984d41dcb0ff1064a864e5862bef871c96baca604658f45c48",
+            "description": "Replace a temporary ID with the official Konami passcode once it is announced, rewriting the registry, the script and every saved .ydk.",
+            "name": "ygo_migrate_temp_card",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_migrate_temp_card` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f4657c7a3376604b972b7360280b0df75ad0f8fc41f6df90bf1d8ed710af4e95",
+            "description": "USE THIS when the user asks to upgrade, fix or grade an existing deck. Grade the staple / hand-trap / board-breaker ratio and propose upgrades under the current banlist and meta. Do not propose replacement cards from memory; start from this tool",
+            "name": "ygo_optimize_deck",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_optimize_deck` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a831c532d9d6118c389d92bbf71b7c3e9f687b8bf3a973bc6222e6e3ce5dd06a",
+            "description": "USE THIS FIRST when the user supplies a .ydk path, raw .ydk text or a ydke:// link. Parse the deck into card data and validate it; never transcribe the list by hand. ${TOOL_FIRST_MARK}",
+            "name": "ygo_parse_deck",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `ygo_parse_deck` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:836fa99594d9721c45d86ee49d9908faef2100f9fb32c31fee720bead25ec13a",
+            "description": "Parse and validate the Master Specification DOCX: data integrity, duplicate IDs, Omega int32 ID range, Setcode and the str1..str16 choice strings.",
+            "name": "ygo_read_and_validate_docx",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_read_and_validate_docx` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:41a27fa659f5bda2d1cd67b3c7e27fe1796abf9f77acb736bdc17a3368641734",
+            "description": "USE THIS after building or editing a deck when the user wants to see it. Render the deck (Main, Extra, Side) as a PNG in Konami Neuron / tournament decklist layout: 10 cards per row, Monster -> Spell -> Trap, banned cards flagged. The picture is attached to this tool",
+            "name": "ygo_render_deck_image",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_render_deck_image` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a08d5d4f5db80cb6687579d29960fee96d207939ee747d79d485101038025ff6",
+            "description": "Run a REAL duel with ocgcore-wasm (ProjectIgnis EDOPro core compiled to WebAssembly): the engine executes the Lua card scripts, handles chain/cost/target/timing and returns the message timeline (draw, summon, chain, LP update, win).",
+            "name": "ygo_run_duel",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_run_duel` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cc95b3f843bc4f8d57d0edb8caeee5adf4b40da7e0713c625fd37f517b21322f",
+            "description": "Deep card-script analysis.",
+            "name": "ygo_script_insights",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_script_insights` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2f2559c800895114757eddf0e14980ab0f060f99877d5e004fec5c019e8f562f",
+            "description": "USE THIS whenever the task is card discovery (ATK, DEF, type, race, attribute, level, archetype, effect text) or a price-ranked list (",
+            "name": "ygo_search_cards",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_search_cards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5a00239363d5138f4cca0380bfed75305c8fd1a77e556c7c60557288d7baef63",
+            "description": "Analyse a duel scenario in text form: chain order, legality of each activation, cost/target/timing checks, Lua script cross-reference and a judge-style verdict. Heuristic only — use ygo_judge_scenario or ygo_run_duel for real engine execution.",
+            "name": "ygo_simulate_duel_scenario",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_simulate_duel_scenario` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:68a6012f5e03df012f9961b9f976833c6ffef6317377c16039f841d5499ff4c8",
+            "description": "Detect the grid, remove gutters and slice an AI contact sheet into square <id>.jpg card arts (1024x1024, JPEG quality 95) directly into the game",
+            "name": "ygo_slice_art_grid",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_slice_art_grid` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bcd099077f7c2a9d637b9dbf88dd6a8753a062db3b9670be6902c2470d66cfce",
+            "description": "Slice the grid image into individual square artworks and embed each one into its matching SVG card.",
+            "name": "ygo_slice_batch_art",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_slice_batch_art` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aa72bd7f43ac1910f959b55d524232231fcf7a22cda140c2854fdb16ef943aeb",
+            "description": "Sync live meta data (staples, TCG/OCG banlists, usage metrics) from the YGOPRODeck API.",
+            "name": "ygo_sync_meta",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_sync_meta` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:26758377ab7f60a9577c044c4cd5edeccf049be7e65585419dfa7f3c491a887a",
+            "description": "Test a custom/unreleased card on the real engine like a card designer would: (1) script health — the generated Lua loads and resolves without core errors; (2) usage — how often the AI actually summons/activates it over seeded games; (3) impact — deck win rate with the card swapped in vs without, same opponent, seeds and AI, alternating who goes first, with a 95% interval. Without a deck it uses a neutral vanilla shell, which checks that the card works, not its real-deck power.",
+            "name": "ygo_test_custom_card",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `ygo_test_custom_card` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eb452cd317e7b3a0396dcb11305e8093d93ebaf77dc80793153a6b876d873377",
+            "description": "USE THIS before asserting any ruling you cannot point at engine evidence for. Verify a ruling CLAIM against the engine. Give a sentence (",
+            "name": "ygo_verify_ruling",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_verify_ruling` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fde26ee9ed9c3c77f12533a419b690b9e896535595a0b505a3647fa020fcc67d",
+            "description": "Yugipedia lookup: cards (names in 12 languages, passcode, Yu-Gi-Oh! Card Database ID, archetype, which tabs exist), tabs (Gallery / Rulings / Errata / Artworks / Tips / Trivia / Appearances / Names / Lores), pages (sets, products, archetypes) and search. Resolves by name, passcode or database ID.",
+            "name": "ygo_wiki",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ygo_wiki` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:19a182f57657320908ddaffe39a68e12706d6ef284083b2cfcbcefc130240b98",
+        "version": "0.10.0"
+      }
+    ]
+  },
   "SaravananJaichandar/world-model-mcp": {
     "archival_reason": null,
     "author": null,
@@ -16915,6 +17523,64 @@
         ],
         "toolset_canonical_hash": "sha256:644b84bb17be6940477034338b4070b419b0f4250d7f00964e11313027ab263f",
         "version": "1.1.323"
+      }
+    ]
+  },
+  "Stari-am/griasa": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "",
+    "display_name": "Stari-am/griasa",
+    "dual_axis_security": null,
+    "ecosystem": "github",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "Stari-am/griasa",
+    "prompts_count": 0,
+    "purl": "pkg:github/Stari-am%2Fgriasa",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/Stari-am/griasa",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `Stari-am/griasa` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:a3fcff6e7f1e7d65d2ffab564c96de9c1a43a29cfde8498c7f7ddb96dbd3ad6f",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:282f92bf4dcd436ad888578afc91f1f24986ec67e4f59a8303441c73644dd63f",
+            "description": "Execute string",
+            "name": "string",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `string` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:a3fcff6e7f1e7d65d2ffab564c96de9c1a43a29cfde8498c7f7ddb96dbd3ad6f",
+        "version": "1.0.0"
       }
     ]
   },
@@ -23496,6 +24162,53 @@
       }
     ]
   },
+  "anzar-ahsan-commits/api-shakedown": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Turn an OpenAPI spec into WireMock stubs, contract tests and chaos scenarios, on local LLMs.",
+    "display_name": "anzar-ahsan-commits/api-shakedown",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.1.3",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "anzar-ahsan-commits/api-shakedown",
+    "prompts_count": 0,
+    "purl": "pkg:generic/anzar-ahsan-commits%2Fapi-shakedown",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.1.3",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/anzar-ahsan-commits/api-shakedown",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `anzar-ahsan-commits/api-shakedown` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.3"
+      }
+    ]
+  },
   "argosvix/mcp-server": {
     "archival_reason": null,
     "author": null,
@@ -26636,6 +27349,658 @@
         ],
         "toolset_canonical_hash": "sha256:d7ec9e5cfc5b84e1365c89c7300c120b73c53eec9d1c54eef2adf5dd55f15bcb",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "arhancanli/quantavane-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Open problems with exact checkers: check candidates offline in a sandbox, cite results.",
+    "display_name": "arhancanli/quantavane-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.2.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "arhancanli/quantavane-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/arhancanli%2Fquantavane-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.2.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/arhancanli/quantavane-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `arhancanli/quantavane-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:0ca45ee8bd22a275affea673ca9656e7e0227ee7b3407833a1104312f06608b7",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9721aaa15eb8ca2bc02878883aa973ce16b5ec69356c1f1a71407599f4ef8a0c",
+            "description": "Run the benchmark's own exact checker on a certificate and return its verdict and exact score, never a",
+            "name": "check_candidate",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The certificate file's text, in the problem's format (get_problem gives it). Give this or certificate_path, not both",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "certificate",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Path of a local certificate file, inside the folders the server allows (its working folder and the temporary folders, or QUANTAVANE_MCP_ROOTS)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "certificate_path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "problem_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Wall-clock limit in seconds (default 120; the largest is set by QUANTAVANE_MCP_MAX_TIMEOUT_S, 900 by default). Some constant checkers need a minute or more",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout_s",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `check_candidate` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:49d46e797d9b0f086cdf6ef8cb87820ac5a07c9b8e47fb4f01672f9db3ae045b",
+            "description": "BibTeX and plain citation text (and CITATION.cff for the benchmark, the dataset and this server) for a",
+            "name": "cite",
+            "parameters": [
+              {
+                "default": "both",
+                "description": "Output format",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "format",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "problem: a problem id; result: a slug from search_results; replay: a pull request number or a row such as '1c Kos2026'; not needed for benchmark, dataset or server",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What to cite",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cite` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e6bc9b787ea9ee3e05311c63b3a39b0a2b6e55e395ae8faed86f144e55840651",
+            "description": "Is this value a new best for the problem? Compares it exactly with the best known value on the source page",
+            "name": "compare_to_record",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "problem_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The value, exactly: an integer ('283'), a decimal ('0.41036') or a fraction ('54/125'). For Ramsey problems give n, the number of vertices of the colouring",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "value",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_to_record` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed1ff644c363ca3b5ec71708d4d8437c06437920f518819b21e484badf9249fc",
+            "description": "One problem of a collection in full. Prestige 100: the record and its holders, the bound on the other side,",
+            "name": "get_collection_problem",
+            "parameters": [
+              {
+                "default": null,
+                "description": "prestige100 or originals",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "collection",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The problem id (such as 'ramsey-5-5' or 'qr-sumfree') or, for Prestige 100, its slot number (1 to 100)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "problem",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_collection_problem` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:269db6c642801c582cf2c91cfee455353c86239250bc29bbc7f86ee0a03940de",
+            "description": "Everything about one problem (a single problem, a family cell or one of the Quantavane Originals): the",
+            "name": "get_problem",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "problem_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_problem` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dcd2223669816a53516da2a10760651e51acbc00ff0a7e2ee5c6483ac0e2fa78",
+            "description": "Our independent exact replay of a certificate submitted to the optimization constants repository (by pull",
+            "name": "get_replay",
+            "parameters": [
+              {
+                "default": null,
+                "description": "A constant page id, such as '42a' or 'C68'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "constant",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 3,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "A pull request number of github.com/teorth/optimizationproblems, such as 292",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pr",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A row of a constant page: the constant and the row's reference key, such as '1c Kos2026' or '42a Gri26'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "row",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_replay` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a3ef1b8ecc2184618c9c17d6fb561d0cc1a29563646b4560cef239d1fe1047a1",
+            "description": "The environments of the configured training gym, each around one of the benchmark's exact checkers.",
+            "name": "gym_environments",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gym_environments` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c875fd43a97e3cae1ef56e364b96d0499e31196c99428c1d6718750dff68463d",
+            "description": "Judge one proposed object with the gym's exact checker: the exact verdict and score.",
+            "name": "gym_propose",
+            "parameters": [
+              {
+                "default": null,
+                "description": "An id from gym_environments",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "env_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The proposed object, in the environment's format",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "obj",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gym_propose` [LOW] inspects or modifies host environment variables."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5dda50ca2339ef452fde61bddb2710b4000d5bc88b88b01f33ab76ba49f973bf",
+            "description": "List a collection of our own, one line per problem: Quantavane Prestige 100 (slot, problem, family, the",
+            "name": "list_collection",
+            "parameters": [
+              {
+                "default": null,
+                "description": "prestige100: Quantavane Prestige 100, famous open problems with their keepers' records; originals: the Quantavane Originals, new problems of ours",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "collection",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Only this family (Prestige 100, such as 'Ramsey numbers' or 'Kissing numbers') or field (Originals, such as 'Physics' or 'Number theory'), matched without case",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "group",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": "Problems per page",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 0,
+                "description": "Index of the first problem to return",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Words that must all appear in the id, title, family, field or record, such as 'R(5' or 'kissing'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_collection` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a50642a70843b3cd850ff734e70b30921d729501d5de768753e560a143e29043",
+            "description": "List the open problems of the Open Problems Benchmark (v2.1: 149,372 problems, 395 single problems and",
+            "name": "list_problems",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Only this family. Without it the list holds the single problems; the six families of cells (covering-design, spherical-code, linear-code, covering-array, constant-weight-code, project-scheduling) are listed only by family",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "family",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50,
+                "description": "Problems per page",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 0,
+                "description": "Index of the first problem to return",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Family cells whose parameters equal these, such as {\"v\": 13, \"t\": 3} for covering designs, {\"q\": 2, \"n\": 32} for linear codes, {\"d\": 4} for spherical codes or {\"set\": \"J120\"} for scheduling",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "params",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Words that must all appear in the id or title, such as 'R(5' or 'autocorrelation'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Draw this many cells of the family at random instead (needs family), exactly as `obb.py sample FAMILY N SEED` draws them",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sample",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 0,
+                "description": "Seed of the draw",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "seed",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_problems` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9968c6641ff4111892c6c803c9a67ecc9aa2d34edffabf6064d01b96774c715c",
+            "description": "Quantavane's claim pipeline on one object, offline: the benchmark's checker and a second checker written",
+            "name": "run_claim_checks",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The object's file text, in the problem's format. Give this or certificate_path, not both",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "certificate",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Path of a local certificate file, inside the folders the server allows",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "certificate_path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "problem_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Wall-clock limit of each program run (default 600, or the problem's default if larger; at most QUANTAVANE_MCP_MAX_TIMEOUT_S). A large Ramsey colouring takes the second checker a few minutes",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout_s",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `run_claim_checks` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8285954bcd4f90f160e113f86f4f767501d2a6634a7bb232442a11657d715fe6",
+            "description": "Search Quantavane's verified results (the open data, CC BY 4.0) by table, cell, words or date: each result",
+            "name": "search_results",
+            "parameters": [
+              {
+                "default": null,
+                "description": "One cell: CAN(t,k,v), C(v,k,t) or C(v,k,t,m), A(n,d,w), R(s,t), [n,k] over GF(q), [[n,k]]_q, d22-n119 (spherical code), 'gap 376428', or a name such as Leuven2",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cell",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "either",
+                "description": "Which date the range applies to: when found, when listed or sent, or either",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_field",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "YYYY-MM-DD",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "YYYY-MM-DD",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 10,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 0,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Words that must all appear (name, table, construction)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "listed: in the table (verified); sent: with the table's keeper; queued: in the next batch",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The table or area: spherical-codes, coverings (Covering Repository), covering-arrays (ca-tools), codes or quantum-codes (codetables.de), constant-weight (Brouwer), ramsey (Radziszowski), routing (CVRPLIB), scheduling, prime-gaps",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "table",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_results` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:0ca45ee8bd22a275affea673ca9656e7e0227ee7b3407833a1104312f06608b7",
+        "version": "0.2.0"
       }
     ]
   },
@@ -39668,6 +41033,185 @@
       }
     ]
   },
+  "contentasoftware/appledger": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Plain-English security checks for AI-built apps (Trivy + Opengrep), with fix requests for agents",
+    "display_name": "contentasoftware/appledger",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.2.5",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "contentasoftware/appledger",
+    "prompts_count": 0,
+    "purl": "pkg:generic/contentasoftware%2Fappledger",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.2.5",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/contentasoftware/appledger",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `contentasoftware/appledger` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:ed980b0db094f243356aee6834433363a0bad1f9af142fe177799e219b391573",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:154b9675decdec733e65d61533b65baabb3313598dcdee50f7d20d15436a9c31",
+            "description": "Scan an app folder with independent security scanners and explain the findings in plain language.",
+            "name": "check_app",
+            "parameters": [
+              {
+                "default": null,
+                "description": "a friendly name for the app, shown in the report.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "app_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "true only after the user agreed to send this folder's files to appledger.net.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confirm_upload",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "absolute path to the app's folder.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": true,
+                "description": "false to keep this check out of the user's AppLedger dashboard.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "save_to_dashboard",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `check_app` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:acfcaed947d21783976912feddfb4cb175636ad7b79ff3fa41536a19ae3bd1f1",
+            "description": "Save a connection key so future checks from this computer appear in the user's AppLedger dashboard.",
+            "name": "connect_dashboard",
+            "parameters": [
+              {
+                "default": null,
+                "description": "the connection key, starting with al_.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "key",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `connect_dashboard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0d381564eae12d9483ee38c51867de1ac060aceffceed892a31102d8f2d79880",
+            "description": "Return the fix request written by the last check_app run for this app folder.",
+            "name": "get_fix_prompt",
+            "parameters": [
+              {
+                "default": null,
+                "description": "absolute path to the app's folder (the same path given to check_app).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_fix_prompt` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:096013807b61ccb7e53ed6dc9382fcb5f920146fc54ce505e2f4f4bc6cad5e2c",
+            "description": "List the files a hosted check of this folder would send to appledger.net, and what stays behind.",
+            "name": "preview_upload",
+            "parameters": [
+              {
+                "default": null,
+                "description": "absolute path to the app's folder.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `preview_upload` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8651b11b1858e29e2d9cde0d5065d9254b2c2e89ef591967ba26008d48597b78",
+            "description": "Show whether the AppLedger scanning service is reachable (or, in local mode, which scanners are",
+            "name": "scanner_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scanner_status` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:ed980b0db094f243356aee6834433363a0bad1f9af142fe177799e219b391573",
+        "version": "0.2.5"
+      }
+    ]
+  },
   "contradiction-mcp-workspace": {
     "archival_reason": null,
     "author": null,
@@ -41164,6 +42708,898 @@
       }
     ]
   },
+  "debashishthakur/brain-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Your Obsidian vault as private, searchable memory for Claude, Cursor, Hermes and any MCP client",
+    "display_name": "debashishthakur/brain-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.5.2",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "debashishthakur/brain-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/debashishthakur%2Fbrain-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.5.2",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/debashishthakur/brain-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `debashishthakur/brain-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:431a69441686b4d76813bda96cb85336314228fed2be7bb861f8b6d38f66b611",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:81ce74af2ba0b1f938a9bf6c87ca018408f9116f42e2ed62444ce385e53c204b",
+            "description": "Write a new note into the vault",
+            "name": "brain_capture",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "note",
+                "description": null,
+                "enum": [
+                  "note",
+                  "idea",
+                  "decision",
+                  "plan",
+                  "log",
+                  "research"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Specific noun phrase, not a filename",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "topics",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_capture` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e25fc557e60d5e4d96d9e51b78c14182221c83f7f25ca8b494e9673dd3490fd8",
+            "description": "One call that returns the most relevant sections from across the vault for a question, with source note ids. Use this before brain_search when you need to answer or reason about something the owner may have written down. Ask in plain words: retrieval is hybrid (keywords + meaning + a reranker), so paraphrases work; still include specific nouns, ids and dates when you have them. The reply states its coverage (good / thin / none).",
+            "name": "brain_context",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Size cap for the returned pack (default from config, ~18000)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "budget_chars",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Restrict to one project",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The question or topic, in plain words with specific nouns",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "question",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brain_context` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:623bdc65a32d9d64efbfd8bc7aaa7039e1df6e6d78e57d43c12e573d73a4efae",
+            "description": "Remove a note from Notes/ or Captures/ by moving it into the vault",
+            "name": "brain_delete",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Note id (vault path), title or [[wikilink]]",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_delete` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:90468c1ac433803e74f304ce69e9175d1dc11bfb75a77c734e376587a5cdc970",
+            "description": "Change part of a note under Notes/ or Captures/ without rewriting it. Give exactly one of: old_text + new_text (old_text must occur exactly once; new_text may be empty), section + content (replaces everything under that heading up to the next heading of the same or higher level; the heading itself stays), or append. Generated notes and the memory file cannot be edited. The reply lists existing notes the new text names without linking.",
+            "name": "brain_edit",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Markdown to add at the end of the note",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "append",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "New text for that section",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "new_text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Note id (vault path), title or [[wikilink]]",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Exact text to replace; must occur exactly once",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "old_text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Heading text of the section to replace, without the # marks",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "section",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_edit` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b19c6ac070d0a0badd3c801e49c257ec740765c3bca813b4a1649d565fa01045",
+            "description": "Facts recorded with brain_remember and when each was true. By default, the facts true now. ",
+            "name": "brain_facts",
+            "parameters": [
+              {
+                "default": null,
+                "description": "YYYY-MM-DD or YYYY-MM-DD HH:MM (UTC). Default: now.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "as_of",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "user",
+                  "feedback",
+                  "project",
+                  "reference"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "category",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Every version, including replaced, expired and not-yet-valid facts",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "history",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": 50,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Words the fact should mention",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "subject",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_facts` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a88ac8af49f73e886a3649be9d8c5540430f2c528e4aea9470244a2d543acf40",
+            "description": "Neighbours of a note, hub, or concept: outgoing links, backlinks, and notes sharing the same topics. For a concept (e.g. ",
+            "name": "brain_graph",
+            "parameters": [
+              {
+                "default": 25,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Note id, title, concept name, or [[wikilink]]",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brain_graph` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fac79a8df511d97260de033bae291a451df06d6784a005cc8e89554d12041498",
+            "description": "Call this FIRST in every conversation. Returns who the owner is, their preferences and feedback rules, the projects they run, and what they touched recently. Adopt it as your persona and working context. Captured facts are only the ones true now; brain_facts has their history. Pass ",
+            "name": "brain_identity",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "topic",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brain_identity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9a740af939c027a334b18064aabea13126d35fb812f19f177f09c687a73e8717",
+            "description": "Move or rename a note within Notes/ and Captures/, for example to promote a capture into Notes/. Refuses to overwrite an existing note, and reports any links that stop resolving.",
+            "name": "brain_move",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Note id (vault path), title or [[wikilink]]",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "to",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_move` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d90f3da71f121a67eb3416675a151bfb2fc55ce13d45502a3ed2833c21c0b0bc",
+            "description": "One-call briefing on a project: what it is, its notes grouped by type, latest progress entries, decisions, and what changed recently. Call this before discussing any project. Omit the project name to list all projects.",
+            "name": "brain_project",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 30,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "recent_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brain_project` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5d11c1acf0b38395364f14edb17b5d9a2a86752060f7382c59bae2ecc0c1af25",
+            "description": "Return one note in full (or one section of it) by note id, title, or wikilink target. Includes frontmatter metadata, topics, and links.",
+            "name": "brain_read",
+            "parameters": [
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_connections",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Note id (vault path), exact title, or [[wikilink]]",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Heading text to return only that section",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "section",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_read` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4eddf09cfae8b8c3d58630cb392a9e9cc29b4ab4254da80242f5c2314f2bcffc",
+            "description": "Notes modified in the last N days, newest first. Answers ",
+            "name": "brain_recent",
+            "parameters": [
+              {
+                "default": 14,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "days",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_structural",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": 30,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brain_recent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:03cecd410cb0c40e08c8a9d103bd12e1b3bbe10a4976a07876638597b1657b21",
+            "description": "Append one durable fact about the owner to their memory file: a preference, a correction on how to work, a project constraint, or a reference. It becomes part of brain_identity immediately. Include why it matters and how to apply it. ",
+            "name": "brain_remember",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "attribute",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "user = who they are; feedback = how to work with them; project = ongoing work; reference = pointer",
+                "enum": [
+                  "user",
+                  "feedback",
+                  "project",
+                  "reference"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "category",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fact",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Store even if it looks like a duplicate or a change to a current fact",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "force",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "how_to_apply",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "replaces",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "subject",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When it became true, if earlier or later than now: YYYY-MM-DD or YYYY-MM-DD HH:MM (UTC)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When it stops being true, for temporary facts: YYYY-MM-DD (holds through that day) or YYYY-MM-DD HH:MM (UTC)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_until",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "why",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brain_remember` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4ffe93571794102f540fbc703c06242bd6ad12f0bff034eb6f84a3c2abb4cf78",
+            "description": "Full-text search across every note with optional filters. Returns ranked hits with snippets and note ids for brain_read. Keywords or a short question both work (hybrid keyword + semantic search with spelling correction); the reply states its coverage.",
+            "name": "brain_search",
+            "parameters": [
+              {
+                "default": 10,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Keywords to search for",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Only notes modified on/after this date",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "since",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "topic",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "note",
+                  "runbook",
+                  "agent",
+                  "progress",
+                  "research",
+                  "architecture",
+                  "plan",
+                  "decision",
+                  "audit",
+                  "spec",
+                  "hub",
+                  "concept"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_search` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0aa39c4775f9957c616672460d61764975d3970c4962aec7b1374b27fdb51b74",
+            "description": "Create a note at a path you choose under Notes/ or Captures/, or replace one there with overwrite=true. Use it for hubs, guides and runbooks maintained by hand. Unlike brain_capture you set the type, including ",
+            "name": "brain_write",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Markdown body, without frontmatter or the # title heading. Link related notes inside the sentence that says how they relate.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Position among Notes/ guides on Start Here",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "order",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": false,
+                "description": "Replace the note if the path already exists",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "overwrite",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "One line; Start Here shows it next to Notes/ guides",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "summary",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "topics",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": "note",
+                "description": "note, hub, moc, guide, runbook, plan, decision, ...",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "type",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `brain_write` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:431a69441686b4d76813bda96cb85336314228fed2be7bb861f8b6d38f66b611",
+        "version": "0.5.2"
+      }
+    ]
+  },
   "debuff-monorepo": {
     "archival_reason": null,
     "author": null,
@@ -41208,6 +43644,53 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "devtalh/backdraw": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Generate images with your own ChatGPT account in a background Chrome tab. Needs Windows + Chrome.",
+    "display_name": "devtalh/backdraw",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "2.4.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "devtalh/backdraw",
+    "prompts_count": 0,
+    "purl": "pkg:generic/devtalh%2Fbackdraw",
+    "quarantine_tier": null,
+    "recommended_safe_version": "2.4.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/devtalh/backdraw",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `devtalh/backdraw` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.4.0"
       }
     ]
   },
@@ -41514,6 +43997,413 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "eranfinish/ezatwork-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Business management for freelancers and small teams — manage clients, projects, time entries, and invoices from Claude through natural conversation. OAuth 2.1 with Google sign-in tied to your EZ@Work account.",
+    "display_name": "eranfinish/ezatwork-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.1.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "eranfinish/ezatwork-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/eranfinish%2Fezatwork-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.1.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/eranfinish/ezatwork-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `eranfinish/ezatwork-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:f3f889753e16695999e57f444379b70ce4f6b739277b384eff77aa3c133ba839",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://mcp.ezatwork.com/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {
+              "destructiveHint": false,
+              "idempotentHint": false,
+              "openWorldHint": false,
+              "readOnlyHint": false
+            },
+            "canonical_hash": "sha256:7d03c54176c1a2e8fa4e3cd01eb2e4dd27655c5ea44ccbe17da180d1c6e4da53",
+            "description": "Create a new client/customer. WRITES DATA to the user's EZ@Work account.",
+            "name": "create_client",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Create even if a matching client exists (only after the user confirmed)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "allow_duplicate",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": "Company/business name",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Default billing rate for this client (>= 0)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "default_hourly_rate",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Contact email",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "email",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Client's name (required, max 200 characters)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Free-text notes (max 2000 characters)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "notes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Default invoice payment terms in days (0-365)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "payment_terms_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Phone number (international format, e.g. +972501234567)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "phone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "active",
+                "description": "'active', 'inactive', or 'prospect' (default 'active')",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "VAT / tax registration number",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "vat_number",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Website URL",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "website",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `create_client` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {
+              "destructiveHint": false,
+              "idempotentHint": false,
+              "openWorldHint": false,
+              "readOnlyHint": false
+            },
+            "canonical_hash": "sha256:4caa31933cdbfa0aa4ddaf595fbf886edd21830fa2a703f0299641775e059c73",
+            "description": "Create a draft invoice. WRITES DATA to the user's EZ@Work account.",
+            "name": "create_invoice",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The client to invoice (positive integer)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "client_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": 30,
+                "description": "Payment terms in days, 0-365 (default 30)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "due_in_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "1-50 line items, each {\"description\": str (max 500 chars), \"quantity\": number > 0 (default 1), \"unitPrice\": number >= 0}",
+                "enum": null,
+                "format": null,
+                "items_type": "object",
+                "name": "items",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_invoice` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {
+              "idempotentHint": true,
+              "openWorldHint": false,
+              "readOnlyHint": true
+            },
+            "canonical_hash": "sha256:49f5d2ef795d8eefada6ee56e001eaf615e2427d0d5a13b9e1f55f6323080bf5",
+            "description": "List the user's clients/customers (read-only).",
+            "name": "list_clients",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Maximum clients to return (default 50, max 200). If more match, `truncated` is true — narrow with `search`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": "",
+                "description": "Optional case-insensitive text matched against name, company name and email",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "search",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "all",
+                "description": "Filter by status — 'all', 'active', 'inactive', 'prospect'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_clients` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {
+              "idempotentHint": true,
+              "openWorldHint": false,
+              "readOnlyHint": true
+            },
+            "canonical_hash": "sha256:2dd0b128804be0ce55258d7cf65496fed1de87f85f596c57b9450c31f7e04ff9",
+            "description": "List the user's projects (or cases/work orders — label adapts to",
+            "name": "list_projects",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Maximum projects to return (default 50, max 200). If more match, `truncated` is true — narrow with `search`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": "",
+                "description": "Optional case-insensitive text matched against the project name and client name",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "search",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Optional status filter — 'not_started', 'in_progress', 'on_hold', 'completed', 'cancelled'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_projects` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {
+              "destructiveHint": false,
+              "idempotentHint": false,
+              "openWorldHint": false,
+              "readOnlyHint": false
+            },
+            "canonical_hash": "sha256:74dba91bbfb382ce37c81d19b8aceb659172e29c54342ab1e145f38715ba699e",
+            "description": "Log a time entry (billable hours) to a project/case. WRITES DATA to",
+            "name": "log_time_entry",
+            "parameters": [
+              {
+                "default": true,
+                "description": "Whether these hours are billable (default true)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "billable",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": "",
+                "description": "Day the work was done, YYYY-MM-DD: today or up to 365 days back, never in the future (default: today, UTC)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What was done (required, max 2000 characters)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Number of hours, greater than 0 and at most 24 (e.g. 2.5)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hours",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "The project/case ID (positive integer)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "project_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `log_time_entry` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f3f889753e16695999e57f444379b70ce4f6b739277b384eff77aa3c133ba839",
+        "version": "0.1.0"
       }
     ]
   },
@@ -43435,7 +46325,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "Cross-Site Tool Execution for HTTP Servers without Authorizatrion in github.com/modelcontextprotocol/go-sdk",
+    "description": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost",
     "display_name": "github.com/modelcontextprotocol/go-sdk",
     "dual_axis_security": null,
     "ecosystem": "Go",
@@ -43468,33 +46358,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-34742",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.4.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "CVE-2026-33252",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.4.1 or above.",
             "severity": "CRITICAL",
             "summary": "Cross-Site Tool Execution for HTTP Servers without Authorizatrion in github.com/modelcontextprotocol/go-sdk",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-xw59-hvm2-8pj6",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-wvj2-96wp-fq3f",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "MCP Go SDK Vulnerable to Improper Handling of Case Sensitivity in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           },
           {
@@ -43512,11 +46391,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-34742",
+            "id": "GHSA-wvj2-96wp-fq3f",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.4.0 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost",
+            "summary": "MCP Go SDK Vulnerable to Improper Handling of Case Sensitivity in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           },
           {
@@ -43528,6 +46407,17 @@
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Cross-Site Tool Execution for HTTP Servers without Authorizatrion in github.com/modelcontextprotocol/go-sdk",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-xw59-hvm2-8pj6",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           }
         ],
@@ -43559,11 +46449,11 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-xw59-hvm2-8pj6",
+            "id": "GHSA-q382-vc8q-7jhj",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.4.1 or above.",
             "severity": "CRITICAL",
-            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
+            "summary": "Improper handling of null Unicode character when parsing JSON in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           },
           {
@@ -43581,22 +46471,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-q382-vc8q-7jhj",
+            "id": "GHSA-89xv-2j6f-qhc8",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.4.1 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Improper handling of null Unicode character when parsing JSON in github.com/modelcontextprotocol/go-sdk",
+            "summary": "Cross-Site Tool Execution for HTTP Servers without Authorizatrion in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-89xv-2j6f-qhc8",
+            "id": "GHSA-xw59-hvm2-8pj6",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": "Cross-Site Tool Execution for HTTP Servers without Authorizatrion in github.com/modelcontextprotocol/go-sdk",
+            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           }
         ],
@@ -43617,17 +46507,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-xw59-hvm2-8pj6",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-wvj2-96wp-fq3f",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -43644,6 +46523,17 @@
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Cross-Site Tool Execution for HTTP Servers without Authorizatrion in github.com/modelcontextprotocol/go-sdk",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-xw59-hvm2-8pj6",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "DNS Rebinding Protection Disabled by Default in Model Context Protocol Go SDK for Servers Running on Localhost in github.com/modelcontextprotocol/go-sdk",
             "vulnerable_tools": []
           }
         ],
@@ -58689,6 +61579,64 @@
       }
     ]
   },
+  "mambalabsdev/mcp-ticketmaster-event-prices": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Ticketmaster events with price ranges on your own Discovery API key",
+    "display_name": "mambalabsdev/mcp-ticketmaster-event-prices",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.2",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "mambalabsdev/mcp-ticketmaster-event-prices",
+    "prompts_count": 0,
+    "purl": "pkg:generic/mambalabsdev%2Fmcp-ticketmaster-event-prices",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.2",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/mambalabsdev/mcp-ticketmaster-event-prices",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `mambalabsdev/mcp-ticketmaster-event-prices` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:0e84ced79ce0eb1c2a52fc327590eaae2fd031e52fe2ab6e7d6c3001da9bcd8e",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:38e46f8a9696fa8288474411d38d02ca2a0b186e65fa19197780ec15105e7b43",
+            "description": "Give search keywords, a city, country, category, or date range, or Ticketmaster event IDs, plus your own free Ticketmaster Discovery API key. Returns one row per event with date, venue, status, and the price range (min, max, currency) when the API has one. Price ranges are face value ranges, not seat or resale prices. Pay per event on Apify: 0.003 USD per event row.",
+            "name": "get_ticketmaster_event_prices",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_ticketmaster_event_prices` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:0e84ced79ce0eb1c2a52fc327590eaae2fd031e52fe2ab6e7d6c3001da9bcd8e",
+        "version": "1.0.2"
+      }
+    ]
+  },
   "markmhendrickson/neotoma": {
     "archival_reason": null,
     "author": null,
@@ -60339,7 +63287,7 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "MCP-STDIO-INJECTION-001",
+            "id": "VERITY-MCP-STDIO-INJECTION-001",
             "owasp_mcp_category": "Command Injection",
             "remediation_guidance": "Sanitizes paths and executes commands with structured argv arrays.",
             "severity": "HIGH",
@@ -60352,7 +63300,7 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "VERITY-MCP-STDIO-INJECTION-001",
+            "id": "MCP-STDIO-INJECTION-001",
             "owasp_mcp_category": "Command Injection",
             "remediation_guidance": "Sanitizes paths and executes commands with structured argv arrays.",
             "severity": "HIGH",
@@ -63964,6 +66912,59 @@
       }
     ]
   },
+  "moneymanai/agentpad-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "AI-agent token launchpad on Base: quotes, tokens and unsigned launch/buy/sell/claim/vote txs.",
+    "display_name": "moneymanai/agentpad-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "2.8.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "moneymanai/agentpad-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/moneymanai%2Fagentpad-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "2.8.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/moneymanai/agentpad-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `moneymanai/agentpad-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://api.agentpadbase.com/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.0"
+      }
+    ]
+  },
   "n2n-nexus": {
     "archival_reason": null,
     "author": "N2NS Lab",
@@ -65154,9 +68155,9 @@
             "cvss_score": 5.4,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-39w2-rjm5-chcv",
+            "id": "CVE-2026-94486",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 16.3.8 or above.",
             "severity": "LOW",
             "summary": "Next.js has information disclosure in development server's Model Context Protocol endpoint",
             "vulnerable_tools": []
@@ -65165,9 +68166,9 @@
             "cvss_score": 5.4,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-94486",
+            "id": "GHSA-39w2-rjm5-chcv",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 16.3.8 or above.",
+            "remediation_guidance": "",
             "severity": "LOW",
             "summary": "Next.js has information disclosure in development server's Model Context Protocol endpoint",
             "vulnerable_tools": []
@@ -66862,6 +69863,268 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.6.2"
+      }
+    ]
+  },
+  "onlinecompiler-io/onlinecompiler-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Run Python, Java, C, C++, C#, Go, Rust and 39 more languages, each run in a fresh, offline sandbox.",
+    "display_name": "onlinecompiler-io/onlinecompiler-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.2.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "onlinecompiler-io/onlinecompiler-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/onlinecompiler-io%2Fonlinecompiler-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.2.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/onlinecompiler-io/onlinecompiler-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `onlinecompiler-io/onlinecompiler-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:2ff429350a5cbb322d677181d47458582676b847bf051186d01db07ecab2c9b2",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://api.onlinecompiler.io/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e45c25544295041217a08fd0f234d49012e585cb5913a63621391b371a4a470f",
+            "description": "Judge code against one of your stored problems.",
+            "name": "judge_problem",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "code",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compiler",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "all",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "problem",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `judge_problem` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:705e557ef865c2859ab16f006aa3aecd4def8456a57f7c3b567d6d5b6806155b",
+            "description": "List all available compilers/languages supported by OnlineCompiler.io.",
+            "name": "list_compilers",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_compilers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:547c7a1b2e7555340bfda89e95719ae918d3859473ead6a6f4191d2894a6fb11",
+            "description": "Run one program in a sandbox and return its output.",
+            "name": "run_code",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "code",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compiler",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "files",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "input",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "time_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run_code` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:125162bac2f18bc4ec563c4d60c3d0180c41dff11270c9121ef8cdc7c5bde405",
+            "description": "Check a program against test cases and judge it like an online judge.",
+            "name": "run_tests",
+            "parameters": [
+              {
+                "default": "trim",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "checker",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "code",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "compiler",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "files",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tests",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "time_limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `run_tests` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:2ff429350a5cbb322d677181d47458582676b847bf051186d01db07ecab2c9b2",
+        "version": "1.2.1"
       }
     ]
   },
@@ -76595,7 +79858,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Snowflake Row Access Policy (RAP) Tenant Boundary Bypass in Snowflake Governance Target (snowflake-governance)",
+    "description": "Snowflake Time Travel Historical Snapshot Data Exfiltration in Snowflake Governance Target (snowflake-governance)",
     "display_name": "snowflake-governance",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -76641,7 +79904,33 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "SNOWFLAKE-TIME-TRAVEL-001",
+            "owasp_mcp_category": "Information Exposure / Historical Data Leak",
+            "remediation_guidance": "Prohibits unauthorized Time Travel queries on sensitive tables.",
+            "severity": "HIGH",
+            "summary": "Snowflake Time Travel Historical Snapshot Data Exfiltration in Snowflake Governance Target (snowflake-governance)",
+            "vulnerable_tools": [
+              "query_regional_revenue"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "SNOWFLAKE-ROW-ACCESS-001",
+            "owasp_mcp_category": "Broken Object-Level Authorization",
+            "remediation_guidance": "Enforces parameterized Row Access Policy matching session tenant.",
+            "severity": "HIGH",
+            "summary": "Snowflake Row Access Policy (RAP) Tenant Boundary Bypass in Snowflake Governance Target (snowflake-governance)",
+            "vulnerable_tools": [
+              "query_regional_revenue"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VERITY-SNOWFLAKE-ROW-ACCESS-001",
             "owasp_mcp_category": "Broken Object-Level Authorization",
             "remediation_guidance": "Enforces parameterized Row Access Policy matching session tenant.",
             "severity": "HIGH",
@@ -76659,32 +79948,6 @@
             "remediation_guidance": "Prohibits unauthorized Time Travel queries on sensitive tables.",
             "severity": "HIGH",
             "summary": "Snowflake Time Travel Historical Snapshot Data Exfiltration in Snowflake Governance Target (snowflake-governance)",
-            "vulnerable_tools": [
-              "query_regional_revenue"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "SNOWFLAKE-TIME-TRAVEL-001",
-            "owasp_mcp_category": "Information Exposure / Historical Data Leak",
-            "remediation_guidance": "Prohibits unauthorized Time Travel queries on sensitive tables.",
-            "severity": "HIGH",
-            "summary": "Snowflake Time Travel Historical Snapshot Data Exfiltration in Snowflake Governance Target (snowflake-governance)",
-            "vulnerable_tools": [
-              "query_regional_revenue"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-SNOWFLAKE-ROW-ACCESS-001",
-            "owasp_mcp_category": "Broken Object-Level Authorization",
-            "remediation_guidance": "Enforces parameterized Row Access Policy matching session tenant.",
-            "severity": "HIGH",
-            "summary": "Snowflake Row Access Policy (RAP) Tenant Boundary Bypass in Snowflake Governance Target (snowflake-governance)",
             "vulnerable_tools": [
               "query_regional_revenue"
             ]
@@ -76747,6 +80010,100 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "st412m/brickproof-adb": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Maintain your own Android devices and TV boxes over ADB with dry runs, guards and rollback",
+    "display_name": "st412m/brickproof-adb",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "st412m/brickproof-adb",
+    "prompts_count": 0,
+    "purl": "pkg:generic/st412m%2Fbrickproof-adb",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/st412m/brickproof-adb",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `st412m/brickproof-adb` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "stablevoy/stablevoy-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "USDT and USDC invoices, payment totals and docs for your Stablevoy stores. Keys cannot move funds.",
+    "display_name": "stablevoy/stablevoy-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.7.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "stablevoy/stablevoy-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/stablevoy%2Fstablevoy-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.7.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/stablevoy/stablevoy-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `stablevoy/stablevoy-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.7.0"
       }
     ]
   },
@@ -78114,6 +81471,350 @@
         ],
         "toolset_canonical_hash": "sha256:d95be461b977f6786ae1ace7e8bab0eb55eb5189f3085578674b24146155d592",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "tabulacredit/tabula-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Credit for AI agents: pay x402 sellers from a credit line, repay with one signature and no ETH",
+    "display_name": "tabulacredit/tabula-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.1.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "tabulacredit/tabula-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/tabulacredit%2Ftabula-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.1.1",
+    "repo_http_status": 200,
+    "repository_url": "https://tabula.credit",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `tabulacredit/tabula-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:317ddee0de1424b797a99b362a22a8f6bccc0b19834094b8350257ac1eeee283",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:19f46692dbb21dfdb7703aa839f3610a031c2e794af707c602907a68ebb44796",
+            "description": "Turn off autopay.",
+            "name": "autopay_off",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `autopay_off` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:927a8564d3c8b1e27e47a3e481bce86f49bd74d06347077dd127c5b0826b3c17",
+            "description": "Turn on autopay: while this server runs, it repays each of your loans from 24 hours before it is due, when your wallet holds enough of the chain",
+            "name": "autopay_on",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `autopay_on` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7ecd4e7b38a770a61612ac504bbdf9aad49168e7e56db4de695834a00b24124b",
+            "description": "Your Tabula credit line: limit, open tab, what you owe and when it is due.",
+            "name": "credit_status",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The request body for the seller.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Request headers for the seller.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "headers",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Send the same key again to retry a call: one key is never paid twice. A new key is made if you leave it out.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotency_key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The most you will pay for this call, in US dollars (USDG on Robinhood Chain, USDC on Base), for example 0.05.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_price",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "The HTTP method; GET if left out.",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "method",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `credit_status` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:88a872545af3ac3076e850c8760837411525cb02e2d751213becb326bb6a1217",
+            "description": "Sellers you can pay on credit, with prices. A featured seller paid for its place in this list.",
+            "name": "list_sellers",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "loan_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_sellers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:555c62a1a9ef732e42c3ab2e5f7894fd35f807b57efc9719fa03b7db239f80fd",
+            "description": "Pay for an x402 (HTTP 402) resource from your credit line. Tabula pays the seller now; ",
+            "name": "pay_with_credit",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The request body for the seller.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Request headers for the seller.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "headers",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Send the same key again to retry a call: one key is never paid twice. A new key is made if you leave it out.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotency_key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The most you will pay for this call, in US dollars (USDG on Robinhood Chain, USDC on Base), for example 0.05.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_price",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "The HTTP method; GET if left out.",
+                "enum": [
+                  "GET",
+                  "POST",
+                  "PUT",
+                  "PATCH",
+                  "DELETE"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "method",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `pay_with_credit` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a3ff4e8063c41c95a1a50767b8820eb3d41cc53c8540166b8baa72f1cfb283bb",
+            "description": "Lock $TABULA, bought with this much USDG from your wallet, to raise your credit limit. You get it back when you ",
+            "name": "raise_limit",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_tabula",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "USDG to spend on TABULA.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "usdg_amount",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `raise_limit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:69cc9697fae318448d59c299ea2be23e96e9539ffcf843c13e24e27b2135e52d",
+            "description": "Repay one of your Tabula loans in full, from your wallet, in the chain",
+            "name": "repay",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "loan_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `repay` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2fd86676ffa3940ec3400b6830b36c8dc9b3f7a5a240ac4e578345a8f2183c1e",
+            "description": "Repay all your open Tabula loans with one signature, from your wallet, in the chain",
+            "name": "repay_all",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "min_tabula",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "USDG to spend on TABULA.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "usdg_amount",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `repay_all` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:317ddee0de1424b797a99b362a22a8f6bccc0b19834094b8350257ac1eeee283",
+        "version": "0.1.1"
       }
     ]
   },
@@ -91132,6 +94833,53 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "0.30.0"
+      }
+    ]
+  },
+  "web-research-agent-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "MCP server: company profiles, site audits and page-to-JSON for AI agents (via RapidAPI Web Research Agent API)",
+    "display_name": "web-research-agent-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": "MIT",
+    "malicious_advisory_id": null,
+    "package_name": "web-research-agent-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:npm/web-research-agent-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/elaysuu/web-research-agent-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `web-research-agent-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
       }
     ]
   },

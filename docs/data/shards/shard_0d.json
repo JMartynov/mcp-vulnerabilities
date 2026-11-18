@@ -887,7 +887,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.1.33"
+        "version": "< 0.5.71"
       },
       {
         "advisories": [
@@ -1003,7 +1003,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "< 0.5.71"
+        "version": "< 0.1.33"
       },
       {
         "advisories": [
@@ -9575,7 +9575,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "MCP Inspector is Vulnerable to Potential Command Execution via XSS When Connecting to an Untrusted MCP Server",
+    "description": "MCP Inspector proxy server lacks authentication between the Inspector client and proxy",
     "display_name": "@modelcontextprotocol/inspector",
     "dual_axis_security": null,
     "ecosystem": "npm",
@@ -13480,6 +13480,833 @@
       }
     ]
   },
+  "CoderDayton/semantic-cache-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "File cache for coding agents: re-reads cost ~40 tokens, changed files return diffs.",
+    "display_name": "CoderDayton/semantic-cache-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.7.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "CoderDayton/semantic-cache-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/CoderDayton%2Fsemantic-cache-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.7.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/CoderDayton/semantic-cache-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `CoderDayton/semantic-cache-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:317222bf4dd1097c1de5000367ed8ce048ea1ac00bd52f636cb0b902b9601b85",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:24fb3e0ac3c7eb16cdfc2301a48f0ab99bc50d66381a2588a060ddd54862829b",
+            "description": "Apply many exact edits to one file in a single atomic call.",
+            "name": "batch_edit",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Run the formatter after all edits.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "auto_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": "Preview without writing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dry_run",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "JSON array of edit entries, in any of the forms above.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "edits",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The `content_hash` from your last read of this file. Proves you hold the text being edited, so the result can be handed back as a claimable `content_hash`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "known_hash",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "File path to modify (absolute, or relative to root).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Return the full diff even on a deterministic all-success batch.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "show_diff",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `batch_edit` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:50c5e1157d192f76a5fc827c028f2409e8394326402b4d0e77a96776be66f87a",
+            "description": "Read several files at once under a shared token budget.",
+            "name": "batch_read",
+            "parameters": [
+              {
+                "default": "",
+                "description": "JSON object mapping a path to the `content_hash` you still hold for it, e.g. `{\"src/a.py\": \"8f3c...\"}`. Any file you cannot vouch for this way is sent in full.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "known_hashes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 50000,
+                "description": "Total token budget shared across the whole batch.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_total_tokens",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "The files to read — a comma-separated list, a JSON array, or glob patterns (expanded for you).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "paths",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Optional paths to read first, ahead of the remaining files. Ordering only — a priority file still has to fit the budget, and is skipped like any other when it does not.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "priority",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `batch_read` [HIGH] reads, writes, or modifies host filesystem paths; handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0604f600185e98f33d692113f34fb9104f44fcfd8fb63c24e7cd839d993f8bf1",
+            "description": "Empty the cache. Does not touch any project file.",
+            "name": "clear",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `clear` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fdd5a41a89d2cca1f4aaa3a8b86d74b15d42705be4d2ac8b38b1e21f485adab4",
+            "description": "Delete one file or symlink and evict its cache entries.",
+            "name": "delete",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Preview the outcome without deleting or evicting the cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dry_run",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "File or symlink path (absolute, or relative to the project root).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `delete` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7012d9101230b0c7a895a1242650b14a1901a1f45d21289d17466cc322ea6613",
+            "description": "Edit one file by exact text replacement.",
+            "name": "edit",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Run the formatter after editing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "auto_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": "Preview without writing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dry_run",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "1-based inclusive end line for a scoped or line-range edit.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "end_line",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The `content_hash` from your last read of this file. Proves you hold the text being edited, so the result can be handed back as a claimable `content_hash`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "known_hash",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "",
+                "description": "Replacement text (an empty string deletes the match).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "new_string",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Exact text to find. Omit only for a line-range replacement.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "old_string",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "File path to modify (absolute, or relative to root).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Replace every occurrence instead of requiring a unique match.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "replace_all",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": "Return the diff even on a deterministic edit.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "show_diff",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "1-based inclusive start line for a scoped or line-range edit.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "start_line",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `edit` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2caf3d5bbdbe730d517aae3fe82596612f18b128ca8411e6c28bcb6c27b6fa0d",
+            "description": "Show where `old_string` would match in a file, without editing it.",
+            "name": "edit_preview",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Anchor text to locate. Must match exactly, including whitespace and indentation. Cannot be empty.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "old_string",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "File path to search (absolute, or relative to root).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `edit_preview` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1c45d0d3bf2fafc3636ad98a62162767317d94a88b8e8f84276d0d7fcdfb1398",
+            "description": "List files matching a glob and show which are already cached.",
+            "name": "glob",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Return only files that are already cached.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "cached_only",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": ".",
+                "description": "Base directory the pattern is evaluated from.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "directory",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Glob pattern to match (e.g. `src/**/*.py`).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pattern",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `glob` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:96cfcf6edd17069e26ede1890e7c9072772b648f6a3680b529caf0a1197d7f5f",
+            "description": "Search cached file contents for an exact string or regex.",
+            "name": "grep",
+            "parameters": [
+              {
+                "default": true,
+                "description": "Match case-sensitively.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "case_sensitive",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": 0,
+                "description": "Lines of surrounding context to include around each match. Overlapping windows are merged, so no line is sent twice.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "context_lines",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": false,
+                "description": "Match `pattern` literally instead of as a regex.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "fixed_string",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": 50,
+                "description": "Cap on the number of files returned.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_files",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 100,
+                "description": "Cap on total matches returned across all files.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_matches",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "matches",
+                "description": "How much to return — `matches` (default), `paths` for the matching files without their lines, or `count` for the totals alone.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional filter — an exact path, a path suffix, a directory (matching every cached file beneath it), or a glob.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A regular expression, or a literal string when `fixed_string=true`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pattern",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `grep` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82c023e1dfab19811b26a59d9bc5807d0d0ad8bc5318afab221b9f9b12043b8f",
+            "description": "Read a file, returning as few tokens as possible. For 2+ files, use `batch_read`.",
+            "name": "read",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The `content_hash` from your last read of this file — or the `coverage_token` from your last ranged read of it — passed back to get `\"unchanged\"` instead of the content re-sent. Omit only on a first read, or when you no longer hold what it vouches for.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "known_hash",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Number of lines to return starting at `offset`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Prefix each line of a ranged read with its number. Costs about 17% more tokens; the range is in `lines` either way. Requires `offset` or `limit`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "line_numbers",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Byte threshold above which a map of the file is returned instead of its text; read exact lines with `offset`/`limit`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_size",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "1-based first line for a ranged read; omit or pass 0 to start from the first line.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Return the file's definitions and their line numbers instead of its text. Cannot be combined with `offset`/`limit`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "outline",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "File path (absolute, or relative to the project root). Use an absolute path for files outside the project root.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `read` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1504279cb91680a94bdbf8f914c8e40b68e0b8ac84a9b30676b78f7614ee3e8e",
+            "description": "Read an image file so the model can see it.",
+            "name": "read_image",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Image file path (absolute, or relative to the project root).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `read_image` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e3673a29b0ff17c36df957fad494eeb3ee6d328101ce52eafe2c16eb9b2a7031",
+            "description": "Find cached files by keyword relevance (BM25 ranking).",
+            "name": "search",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Restrict matches to files under this directory. Defaults to the project root.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "directory",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 10,
+                "description": "Maximum number of matches to return.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "k",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Keywords to rank by. Natural-language phrasing is fine, but ranking is on the individual words.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Include a short preview line for each match.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "show_preview",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 7.0,
+            "risk_tier": "critical",
+            "security_comment": "Tool `search` [CRITICAL] issues raw database queries that could lead to SQL injection; reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ea0beb2ee2e8a467aa69a8d17fe15695c2030b8e20fdd5b308bcb32160fa1011",
+            "description": "Report cache health, token savings, and runtime diagnostics.",
+            "name": "stats",
+            "parameters": [],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `stats` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b84e7f7eabf43be4f11f6754439fb3ebf680f0883fc18a96a83695ef8816f33c",
+            "description": "Index files into the cache so `grep` and `search` can see them, returning counts only.",
+            "name": "warm",
+            "parameters": [
+              {
+                "default": 200,
+                "description": "Cap on files indexed in this call. Matches beyond it are left out and flagged with `truncated`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_files",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Files to index — a comma-separated list, a JSON array, or glob patterns (expanded for you, e.g. `src/**/*.py`).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "paths",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `warm` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d2b8a30aa082227cb3bade7803f094be24b7baff61170fc85edc9f1d6266d03a",
+            "description": "Create a file or replace its entire contents.",
+            "name": "write",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Append `content` to the end of the file instead of overwriting.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "append",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": "Run the formatter after writing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "auto_format",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Full file content, or the text to append when `append=true`.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": true,
+                "description": "Create any missing parent directories.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "create_parents",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": "Preview the result without writing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dry_run",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "The `content_hash` you hold for this file. Only needed for `append`, to prove you hold the part you are not resending.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "known_hash",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "File path to create or replace (absolute, or relative to root).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Return the unified diff even on a deterministic write.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "show_diff",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `write` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:317222bf4dd1097c1de5000367ed8ce048ea1ac00bd52f636cb0b902b9601b85",
+        "version": "0.7.0"
+      }
+    ]
+  },
   "CrossPaste/crosspaste-desktop": {
     "archival_reason": null,
     "author": null,
@@ -13715,6 +14542,53 @@
           }
         ],
         "toolset_canonical_hash": "sha256:ddaa333b12f603bcc3ca1d2d7ca9f523f7e3a8b3807c6437311860f45584520f",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "Fractal-Neurons/pacta": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "",
+    "display_name": "Fractal-Neurons/pacta",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "Fractal-Neurons/pacta",
+    "prompts_count": 0,
+    "purl": "pkg:generic/Fractal-Neurons%2Fpacta",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/Fractal-Neurons/pacta",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `Fractal-Neurons/pacta` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.0"
       }
     ]
@@ -25662,6 +26536,53 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.14"
+      }
+    ]
+  },
+  "benethos-lexware-office-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Unofficial MCP server for the Lexware Office accounting API — runs over stdio or HTTP.",
+    "display_name": "benethos-lexware-office-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "pypi",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "benethos-lexware-office-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:pypi/benethos-lexware-office-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/benethos-hub/lexware-office-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `benethos-lexware-office-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
       }
     ]
   },
@@ -69130,7 +70051,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "NoSQL Query Operator Injection in MongoDB Search Target (mongo-search)",
+    "description": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)",
     "display_name": "mongo-search",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -69176,6 +70097,19 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "MONGO-VOLUME-001",
+            "owasp_mcp_category": "Resource Exhaustion / Volume Control",
+            "remediation_guidance": "Enforces server-side limit clamping to min(max(1, limit), 50).",
+            "severity": "HIGH",
+            "summary": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)",
+            "vulnerable_tools": [
+              "search_customers"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "VERITY-MONGO-QUERY-001",
             "owasp_mcp_category": "Injection / Filter Bypassing",
             "remediation_guidance": "Enforces AST filter allowlist and rejects all $ operators.",
@@ -69210,19 +70144,6 @@
             "vulnerable_tools": [
               "search_customers"
             ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "MONGO-VOLUME-001",
-            "owasp_mcp_category": "Resource Exhaustion / Volume Control",
-            "remediation_guidance": "Enforces server-side limit clamping to min(max(1, limit), 50).",
-            "severity": "HIGH",
-            "summary": "Unbounded Result Exposure / Volume Circumvention in MongoDB Search Target (mongo-search)",
-            "vulnerable_tools": [
-              "search_customers"
-            ]
           }
         ],
         "connections": [],
@@ -69235,6 +70156,53 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "0.1.0"
+      }
+    ]
+  },
+  "mongreldb-viewer": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "MongrelDB Viewer - multi-platform Signal Deck for exploring AI-native MongrelDB databases",
+    "display_name": "mongreldb-viewer",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "mongreldb-viewer",
+    "prompts_count": 0,
+    "purl": "pkg:npm/mongreldb-viewer",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/visorcraft/MongrelDB-Viewer",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `mongreldb-viewer` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
       }
     ]
   },
@@ -74601,6 +75569,114 @@
       }
     ]
   },
+  "rohanbeingsocial/showboard": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Your coding agent answers with dashboards: charts and tables from read-only SQL, Excel and CSV.",
+    "display_name": "rohanbeingsocial/showboard",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.4.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "rohanbeingsocial/showboard",
+    "prompts_count": 0,
+    "purl": "pkg:generic/rohanbeingsocial%2Fshowboard",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.4.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/rohanbeingsocial/showboard",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `rohanbeingsocial/showboard` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:27405dec670934b86ab1cd5703cb49dfe8b925c00acce41e281e14aaef0a3682",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d4fabe6fc40a2967cc89943302bf373fe8e627a98bda7795a528d5acb2b8fc70",
+            "description": "List what you can read: the database tables and columns query_data can use (with estimated row counts), and the app",
+            "name": "describe_data",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `describe_data` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:92f76fc89e2952a9dfc464234049406667f2d86fa872de25cb9876ea2dfc3a5b",
+            "description": "What the user",
+            "name": "get_screen",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_screen` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:060e0d61004078ce12b1df850af638afda3d60327e8637af034fd32909b76074",
+            "description": "List saved boards, newest first. show_board with an id reopens one.",
+            "name": "list_boards",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_boards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c1ae09dbb28244bf70de95638f17841ab62afb964955548badaa364a71802ebc",
+            "description": "Run one read-only SQL SELECT against the app",
+            "name": "query_data",
+            "parameters": [],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `query_data` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e7c9cb4820375fe7de515e552c749dae50cc9ed149beea507a0326b2e4aebfb",
+            "description": "Run one of the app",
+            "name": "ui_act",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ui_act` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f03832356dcb61997e306dc38ceec76b7f84401a68d8b45ad556954ce66a79fd",
+            "description": "Get rows from one of the app",
+            "name": "use_source",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `use_source` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:27405dec670934b86ab1cd5703cb49dfe8b925c00acce41e281e14aaef0a3682",
+        "version": "0.4.1"
+      }
+    ]
+  },
   "rootSunc/CNEquity": {
     "archival_reason": null,
     "author": null,
@@ -75014,7 +76090,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "083838eb8e17fe5f6fcaf761bdbe203110288b0b"
+        "version": "289dbdbad641943b29a3b8d1eb36506cc8cec10a"
       },
       {
         "advisories": [],
@@ -75027,7 +76103,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "289dbdbad641943b29a3b8d1eb36506cc8cec10a"
+        "version": "083838eb8e17fe5f6fcaf761bdbe203110288b0b"
       },
       {
         "advisories": [],
@@ -75403,6 +76479,2223 @@
         ],
         "toolset_canonical_hash": "sha256:4495a89cee53deeb60906f0ee00b7e96f2d113f92e14d760dd3d908389d45f7c",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "sekhar14/torus": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Stock research memory for Claude: theses, sourced claims and SEC filing alerts in a local graph",
+    "display_name": "sekhar14/torus",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.4.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "sekhar14/torus",
+    "prompts_count": 0,
+    "purl": "pkg:generic/sekhar14%2Ftorus",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.4.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/sekhar14/torus",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `sekhar14/torus` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:01bca6c1c7425701e7ff8bf4ce12e0ce6a45e03970b49bafda756b55365311de",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5f9b6b8971a8910674f2807e0f01bcbd5cc6e740ce3a32cf78fb1511c4cec34b",
+            "description": "Record an event and raise alerts on theses it may affect (through the",
+            "name": "add_event",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Entities the event is about",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entities",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "How much it matters (default 1.0)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "materiality",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When it happened (UTC if no zone)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "occurred_at",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "summary",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What happened, e.g. 'TSMC 8-K: CoWoS ramp delayed'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "uri",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `add_event` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ebde0951cc672c8563628ea3cfebf6344b860fde3034a4a059fcb867569aada0",
+            "description": "How useful alerts have been: verdicts, and the share judged related",
+            "name": "alert_stats",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Only alerts raised since",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "since",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `alert_stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cf9f6c7193f045a1d8108953cdd15cd33728484b1b456d7ca894d5689e022b1d",
+            "description": "Health check of the research graph: expired or thinly sourced assumptions,",
+            "name": "audit",
+            "parameters": [
+              {
+                "default": 90,
+                "description": "Flag open theses unchanged this long",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stale_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d70560e2b92751afba9fde7510a2e625761f5eae0bbb3e43e47a44c5a518f490",
+            "description": "One-call briefing at the start of a turn: spots known companies in `text`,",
+            "name": "brief",
+            "parameters": [
+              {
+                "default": "",
+                "description": "The user's question or company names (leave blank for the digest only)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `brief` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8275c8fd182135f7051fd4c18f5f6eda4df43256fb11739a0cfd13e561d04427",
+            "description": "Finish a leased distillation job (or hand it back if it failed).",
+            "name": "complete_distillation",
+            "parameters": [
+              {
+                "default": false,
+                "description": "True if the job couldn't be done; it will be retried",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "failed",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "queue_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What was added, in a sentence or two",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "summary",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `complete_distillation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b55a8987af8f0ac47f03b87207632b6f398ad6ac61a764fabf322d6face2814d",
+            "description": "Finish a leased mapping job (or hand it back if it failed).",
+            "name": "complete_mapping",
+            "parameters": [
+              {
+                "default": false,
+                "description": "True if it couldn't be done; it will be retried",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "failed",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "queue_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Links and claims added, in a sentence",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "summary",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `complete_mapping` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d8e14ce256b823d9a48dea37ec3c8e4a700a331468bcecba35cc36c417cff203",
+            "description": "What happened in the research over the last days: new alerts by thesis,",
+            "name": "digest",
+            "parameters": [
+              {
+                "default": 7,
+                "description": "How far back to look",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "since_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `digest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1b2cf96256874049ce0088f7de653891ebb9fe51287f4eb9135698ced57b14a5",
+            "description": "What changed in a section of a company's latest filing against the previous",
+            "name": "filing_diff",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "10-K",
+                "description": "10-K, 10-Q or 20-F",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "form",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 40,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_items",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": "risk_factors",
+                "description": "e.g. risk_factors, business, mdna",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "section",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `filing_diff` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:722e973e37e85ae5d6fb1cb53c218765203eac5ab4ac0c1daf80df7a1cf941b6",
+            "description": "Read a company's SEC filing as text, by section, from EDGAR (cached).",
+            "name": "filing_text",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": "10-K",
+                "description": "10-K, 10-Q, 20-F, 8-K...",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "form",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 0,
+                "description": "0 = latest, 1 = previous",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "index",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 20000,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_chars",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": 0,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "offset",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "business, risk_factors, mdna, legal, market_risk, financials, or an item id like 1A; omit for the whole document",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "section",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `filing_text` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:40bc32d997c0b28a9ac57f731d845094fe6cdad17d0933792288e2d4571257b5",
+            "description": "How two entities are connected, e.g. ASML -SUPPLIES-> TSMC -SUPPLIES-> AMD.",
+            "name": "find_paths",
+            "parameters": [
+              {
+                "default": 3,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_hops",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": [],
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "relations",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_paths` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fc2c48ca36f6b57035811eee92cb2b8d8032abead5d7bb7f68efcf3f149c3cf3",
+            "description": "Resolve an entity and list its current relations.",
+            "name": "get_entity",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_entity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b67856909a0c4089c93925534ba674357844ded145057c9473784c2cfec74609",
+            "description": "Dry run: which theses would an event on these entities affect, and why?",
+            "name": "impact",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Entities a hypothetical event touches",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entities",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "occurred_at",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `impact` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f0d639312c052c996169e9a28ba2348e4f8596604183dca1812d22752d888b29",
+            "description": "Alerts raised by events on theses, highest score first. Each shows how",
+            "name": "list_alerts",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Also group the alerts by thesis, to judge each once",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "grouped",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thesis_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_alerts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:83ffcf631e935a65173ff6b939daa3530fd62d30f2704612072bf8bfd3502694",
+            "description": "What the watchers follow: the watchlist, open-thesis entities, feeds.",
+            "name": "list_watches",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_watches` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f70b7b4c1b7c23dd9c8cd803c2ba8302d0f7b00467d557e2525f183aea25b8e",
+            "description": "Fold a duplicate entity into the one to keep; its links move over.",
+            "name": "merge_entities",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "duplicate",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "keep",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `merge_entities` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ce970a79f0df5b33283c5b3669d9888f6368e9da3d83ce51abd71dd873753c31",
+            "description": "The entity's neighbourhood: companies within `hops` links (suppliers,",
+            "name": "neighbors",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": 1,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hops",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": [],
+                "description": "Only these relation types (default all)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "relations",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Only links true at this date",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_at",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `neighbors` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e79a71d28a578121e19399e91b5399768385a7ce40f7efd922357cc2816f92b8",
+            "description": "Lease the oldest research session waiting to be distilled into the graph.",
+            "name": "next_distillation",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "transcript_chars",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `next_distillation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:11102eff7694e3015d707242e01e978de9fa3b174f80612b344d0e7467996368",
+            "description": "Lease the next onboarded company to map from its annual report. Until",
+            "name": "next_mapping",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `next_mapping` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:75d2fc68b3623af84f2a462fb04236a85af40fe5feb62d6605ec7d46c85321ab",
+            "description": "Start covering companies: add them, watch their filings, suggest starter",
+            "name": "onboard",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Tickers or company names to cover",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "tickers",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": true,
+                "description": "Watch their SEC filings",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "watch",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `onboard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82e553267596191eaaac59a95db2a19908b8370d286499a9305a11aaa8676f3d",
+            "description": "Write the interactive graph explorer HTML file (under TORUS_HOME/explorer.html)",
+            "name": "open_explorer",
+            "parameters": [
+              {
+                "default": [],
+                "description": "Companies to centre on (default: whole graph)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "focus",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": 2,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "hops",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": true,
+                "description": "Open the HTML file in the default browser",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "open_browser",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `open_explorer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:123b1e9f806a3f3a77e34905644552ca4f659018a4c8fead4f02928165c2f620",
+            "description": "Prior theses, claims and rejected hypotheses about entities and/or a question.",
+            "name": "recall",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Show what was believed at this time",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "as_of",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": "Entity refs to focus on",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entities",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": 20,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Free-text question; entities in it are detected",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `recall` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8e737354df9cc7fd588bfba7319511fc2ad9a64974e4eb3f4d1f3c8826123f62",
+            "description": "List what the most recent research sessions recorded (claims, theses,",
+            "name": "recent_records",
+            "parameters": [
+              {
+                "default": 1,
+                "description": "How many recent sessions to list (1-10)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sessions",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `recent_records` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5a00d851d31db0214511706a8a5b34304115158bee50f5516cfa26e0268a583b",
+            "description": "Save one finding about one or more entities, tied to its sources.",
+            "name": "record_claim",
+            "parameters": [
+              {
+                "default": null,
+                "description": "fact or metric (must cite evidence_ids), inference (evidence or derived_from), forecast, or opinion",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "claim_type",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": "Source ids from record_evidence that cut against it",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "contradicting_evidence_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": "Claim ids an inference builds on",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "derived_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": "Entities the claim is about (ticker, name or id); they are resolved",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entities",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": "Supporting source ids from record_evidence",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "evidence_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": "Entities only mentioned in passing",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mentioned",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "One atomic, self-contained statement, e.g. 'TSMC supplies over 90% of NVIDIA's data-center GPU wafers'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When the statement became true (UTC if no zone); omit if unknown",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When it stopped being true; omit if it still holds",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `record_claim` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:af04e6ce48ca6f645484c9dbecae06531c376c2e7c667471d1ec7b0854e2140c",
+            "description": "Record a source. Re-recording the same URI returns the existing record.",
+            "name": "record_evidence",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "published_at",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "publisher",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Short verbatim excerpt supporting claims",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "quote",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "URL or document path",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "uri",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `record_evidence` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:66432fbd1018377b7df6f53dd13e788ae3d3ffad54d1005be97b9d9964b7e6a1",
+            "description": "Record an idea that was checked and ruled out, so it isn't re-explored.",
+            "name": "record_rejected_hypothesis",
+            "parameters": [
+              {
+                "default": [],
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "entities",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Why it was ruled out",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `record_rejected_hypothesis` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f313c6e6695f2e9d45af16681841e0305619e5e19fd9d7fcb975da053e207ba7",
+            "description": "Link two entities, e.g. TSMC SUPPLIES NVIDIA. Re-recording an existing",
+            "name": "record_relation",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Claim that backs this link",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "claim_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rel",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "target",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "valid_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `record_relation` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:25108505a0c7cb64dfd25e4cf3780c3b6e7db1c68a364d9572987d68f6b74156",
+            "description": "Save a new investment thesis and the claims it rests on.",
+            "name": "record_thesis",
+            "parameters": [
+              {
+                "default": [],
+                "description": "Claim ids that must stay true for the thesis to hold",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "assumption_claim_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When the view should play out, e.g. 12m, FY27",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "horizon",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": "Claim ids that argue against it",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "risk_claim_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "bullish, bearish, neutral, or n/a for non-directional views",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stance",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The investment view in one or two sentences",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "statement",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Main entity (ticker, name or id); it is watched for filings",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "subject",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": "Claim ids that strengthen it but aren't essential",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "supporting_claim_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Short name, e.g. 'NVIDIA stays supply-bound through FY27'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": "Conditions that would invalidate it; matching events raise alerts",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "triggers",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `record_thesis` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a480a0d127251dda349bfe58d3dc864ccc34d1ff6d009e24878ed41db5dba04",
+            "description": "Judge an alert after reading the event and the thesis's claims; the",
+            "name": "resolve_alert",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "alert_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "New thesis confidence",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Why, citing the event and evidence",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rationale",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Override the default status change",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "supports | weakens (active -> at_risk) | breaks | unrelated",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "verdict",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `resolve_alert` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:003641b462c54337c9b2a100ecdfdaf9fbbd99a60d17065362aa8acc31262006",
+            "description": "Withdraw a claim that turned out to be wrong (kept in history).",
+            "name": "retract_claim",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "claim_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `retract_claim` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:13d9728908985140b82e07f6e95e20f3977bc57f9463027d51bc97a515634f91",
+            "description": "How tracked theses have done against their benchmarks, their outcomes, and",
+            "name": "scorecard",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Fetch the latest prices first (Yahoo Finance)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "refresh",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scorecard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7cd10d4338f68fea18d40adbdadd5d81f491ec7cd9b2e0b40e4f692476dbd0e3",
+            "description": "Keyword search over current claims, evidence and theses.",
+            "name": "search",
+            "parameters": [
+              {
+                "default": 20,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": [
+                  "claim",
+                  "evidence",
+                  "thesis"
+                ],
+                "description": "Object types",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "types",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d92bac9267544b3caadbaf830ef6df3fa4bd90148fad6cf9f30d70731584a255",
+            "description": "Add a curated starter pack of companies and supplier/competitor links.",
+            "name": "seed_starter_pack",
+            "parameters": [
+              {
+                "default": null,
+                "description": "semis, software, banks, energy or pharma",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pack",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seed_starter_pack` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:108dfe6f86eebc826fd4216a79d60c9de6f828263e06b668839c2175cf943383",
+            "description": "Record whether a thesis turned out right, wrong or unclear (overrides the",
+            "name": "set_thesis_outcome",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Why",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "outcome",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thesis_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_thesis_outcome` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:94ced152233e1fedd098b0f51031f097ca9594adce9ea473c19e5284b8d87230",
+            "description": "Correct a claim: the old version stays in history, the new one is current.",
+            "name": "supersede_claim",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "claim_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Replaces the evidence list if given",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "evidence_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `supersede_claim` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7414133911c5434c5546327a3781700d67034cbaae09e1ecab01dfb816760df3",
+            "description": "Write a thesis up as a memo (Markdown and a standalone HTML page): what it",
+            "name": "thesis_memo",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thesis_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `thesis_memo` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8e29ee7b125742cbaef7e47043875ef0a8587b6b71b1e029164d32b303d6e394",
+            "description": "Where a thesis is weakest: thin or expiring assumptions, strong supplier or",
+            "name": "thesis_weak_points",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thesis_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `thesis_weak_points` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8270297deba9d22a7ed26e5fb62c653b103afad8927e435cf8ba07ce4493e7f8",
+            "description": "History of one entity, oldest first: claims recorded, corrected or",
+            "name": "timeline",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Only changes at or after this time (UTC if no zone); omit for all",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "since",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Only changes before this time (UTC if no zone); omit for now",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "until",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `timeline` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e6376ee9077d007afa80cc977a8198c5438bf51282cdc1e2d4dbb04f6509533",
+            "description": "Put a thesis on the scorecard: its return against a benchmark from an entry",
+            "name": "track_thesis",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Default: SPY",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "benchmark",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Default: when the thesis was recorded",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entry_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Default: the close on the entry date",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entry_price",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": "Stop tracking this thesis",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stop",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thesis_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Instrument to track (default: the subject's ticker)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "ticker",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `track_thesis` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ba4c06c3ced17a81dc3cd9ffc8f6b05cc967825c67e8ee060ff215d89199cdc8",
+            "description": "Revert records the user doesn't want: claims are retracted (corrections go",
+            "name": "undo_records",
+            "parameters": [
+              {
+                "default": "undone by the user",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What to revert",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "records",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "The session, from recent_records",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "session_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `undo_records` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ce4f7f030f04b4186de3116fb9b3a0b314983f260ab2438a5d3f832ce6e4e79b",
+            "description": "Stop watching a company you added with `watch`. Removes it from the",
+            "name": "unwatch",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `unwatch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:525aa6451ad740fb38cc91f675a0380c9ea8b50b53db4ab9002648d3138ead64",
+            "description": "Revise a thesis: status, confidence, the claims it rests on, and its",
+            "name": "update_thesis",
+            "parameters": [
+              {
+                "default": [],
+                "description": "Claims to link (e.g. newer, better-sourced assumptions)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "add_claims",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": "Stop alerts from matching events",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "add_mutes",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": "New conditions that would invalidate it",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "add_triggers",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Minimum alert score for this thesis",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "alert_threshold",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "New horizon, e.g. 12m or FY2027 (counted from now)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "horizon",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Why; kept in the thesis history",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": "Claims the thesis no longer rests on",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "remove_claim_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "remove_mute_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": [],
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "remove_trigger_ids",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": false,
+                "description": "Go back to the global alert threshold",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reset_alert_threshold",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "thesis_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_thesis` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4db76862698471faba54cab140464f0ca5632f9fdbacfcfb08b30a30b8ba104d",
+            "description": "Create an entity (or merge into the one with the same canonical_key).",
+            "name": "upsert_entity",
+            "parameters": [
+              {
+                "default": [],
+                "description": "Other names, abbreviations",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "aliases",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Stable id such as cik:0001045810; merges on match",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "canonical_key",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "kind",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": [],
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "tickers",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `upsert_entity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:43cac056c539fe5448f1daadff470d96b0c834a9a877cc00e47850f768393be2",
+            "description": "Watch a company: its new SEC filings become events (on the next",
+            "name": "watch",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entity",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "note",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `watch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e7d88145f9257f914238c323eaaa311cdebafff83e7935b261a8090d79b8588e",
+            "description": "Everything recorded or revised across the graph since a point in time.",
+            "name": "what_changed",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Start of the window (UTC if no zone)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "since",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "until",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `what_changed` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:aa08a7022f8c64d11d5632d31c0fa854b172d3cb91f4005a1ad5d368c59a9038",
+            "description": "What if this happened? Which theses would it reach, through which links,",
+            "name": "whatif",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The hypothetical, e.g. 'TSMC fab outage halts CoWoS 3 months'",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "description",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Companies the event would be about",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entities",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "How much it matters (default: from the wording)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "materiality",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "occurred_at",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `whatif` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:01bca6c1c7425701e7ff8bf4ce12e0ce6a45e03970b49bafda756b55365311de",
+        "version": "0.4.1"
       }
     ]
   },
@@ -86880,6 +90173,501 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.2.0"
+      }
+    ]
+  },
+  "vmware-sandbox-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "MCP server that gives an AI agent a disposable computer, backed by VMware Workstation.",
+    "display_name": "vmware-sandbox-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "pypi",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "vmware-sandbox-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:pypi/vmware-sandbox-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/rumenjordanov/vmware-sandbox-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `vmware-sandbox-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:d2c5db3f5d55cc61c6fedd1626bf0b39cb4f7d14b288a0cb2af8643b3a5bc193",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:399bed5c952f880dd9c5ad920ad929eb3bcec432ab242af0c1670ccf6ec653ae",
+            "description": "Look at a background command started with sandbox_start: is it still running, and what has it printed?",
+            "name": "sandbox_check",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "job_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `sandbox_check` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d7ba5194fe99ea16d005da035fe53b261111f90d8cca1f0abe2a7aaed6095c4a",
+            "description": "Click the mouse at a position on a sandbox's screen.",
+            "name": "sandbox_click",
+            "parameters": [
+              {
+                "default": "left",
+                "description": null,
+                "enum": [
+                  "left",
+                  "right",
+                  "middle"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "button",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "double",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "x",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "y",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_click` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eca37a350b7760800d102b79803d65817f966d75ced540ad7b4653d44f933f53",
+            "description": "Copy a file or a whole folder from the user's computer into a sandbox.",
+            "name": "sandbox_copy_in",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "guest_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "host_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_copy_in` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e2b0e8811249459e4f4e2f38f6e292c82395e2f3026f34b43bbde83742fbf68",
+            "description": "Copy a file or a whole folder from a sandbox to the user's computer.",
+            "name": "sandbox_copy_out",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "guest_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "host_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_copy_out` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:82b685c8e392e1f89d7cbf6e32acd792a15f93f7daeb08d60fc9a2046ecbf26c",
+            "description": "Create a fresh, disposable Linux computer (a \"sandbox\") and wait until it is ready to use.",
+            "name": "sandbox_create",
+            "parameters": [
+              {
+                "default": "none",
+                "description": null,
+                "enum": [
+                  "none",
+                  "web",
+                  "nat"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "network",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_create` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0bac0d6617773b5b234919a1ea1fc7bff8971ebcf4fc9379369d9c8d6c29548",
+            "description": "Shut down a sandbox and permanently delete it and everything inside it.",
+            "name": "sandbox_destroy",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_destroy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fe97434243466de105a92e09214167f26da6c8a8ad9241e65cbf561889c021fa",
+            "description": "Press a single key or a keyboard shortcut on a sandbox's keyboard.",
+            "name": "sandbox_key",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "keys",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_key` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:83a790bde897c9d6ffca8102be90f0ac9ee20401d7dfe4824585b458828b67a3",
+            "description": "List the sandboxes that currently exist.",
+            "name": "sandbox_list",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_list` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e426e289466a6f7c96576541d8358a33b987666bbdfb398c0f4c2108509bf01",
+            "description": "Run a shell command inside a sandbox and return what it printed.",
+            "name": "sandbox_run",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "command",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": 60,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timeout_seconds",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `sandbox_run` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:89610da35429d8ee0e4725ff6b1f4e4d9373d9bd557262019d0acccc421c21c2",
+            "description": "Take a picture of what is currently on a sandbox's screen.",
+            "name": "sandbox_screenshot",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_screenshot` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6397fa88b31ca81ed61da3e921be5f50fcfe88131e285d7252c2e70745e01ca5",
+            "description": "Start a command in a sandbox that keeps running in the background, and return at once.",
+            "name": "sandbox_start",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "command",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `sandbox_start` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec028386d5b6484c15b7351e017c333380e78c72d1f0ce2686bd61e183879d17",
+            "description": "Stop a background command started with sandbox_start, together with any programs it started.",
+            "name": "sandbox_stop",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "job_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `sandbox_stop` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fa0d837fb86d9869a623f5a53b62390371c9f247872dba7bd48f79f6e1e87a04",
+            "description": "Type text on a sandbox's keyboard, as if a person typed it.",
+            "name": "sandbox_type",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sandbox_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sandbox_type` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:d2c5db3f5d55cc61c6fedd1626bf0b39cb4f7d14b288a0cb2af8643b3a5bc193",
+        "version": "1.0.0"
       }
     ]
   },
