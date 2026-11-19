@@ -4294,19 +4294,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.4.0",
+    "latest_version": "1.5.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@ask-llm/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@ask-llm%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.4.0",
+    "recommended_safe_version": "1.5.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/Lykhoyda/ask-llm",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@ask-llm/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 24 safe version(s).",
+    "security_summary": "Server `@ask-llm/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:75f21335aeb099ed809f269fe6f736b5008b90be6bdb0d5060d0ef9e28a06f62",
@@ -6213,6 +6213,337 @@
         ],
         "toolset_canonical_hash": "sha256:75f21335aeb099ed809f269fe6f736b5008b90be6bdb0d5060d0ef9e28a06f62",
         "version": "1.4.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-17T20:47:13.528Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:78489ff341d214638d049e0fa43d4e5377b5ebae956678460441930dfd009b04",
+            "description": "Send a prompt to Google",
+            "name": "ask-antigravity",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-antigravity` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ca838f3402a3148053a068c439f709aa780aa04a92a97c0d8919f72f967b91ac",
+            "description": "Send a prompt to Anthropic Claude Code CLI for an independent second opinion, code review, or architecture critique. Defaults to ${FACTORY_DEFAULT_MODEL} with ${MODELS.FALLBACK} fallback. Claude runs in safe mode with only Read, Glob, and Grep tools, so it can inspect context but cannot edit files or execute commands. Supports native sessions via sessionId and returns a structured AskResponse.",
+            "name": "ask-claude",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-claude` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1405e07160f42aea5e9a98c58e33579c82b3b0b3ea5c817c8ea10aa6b5f5a137",
+            "description": "Send a prompt to OpenAI Codex CLI (defaults to ${FACTORY_DEFAULT_MODEL} with automatic fallback on quota errors). Use for code review, second opinions, analysis, and AI-to-AI collaboration. Do not override the model parameter unless the user explicitly asks. Returns both human-readable text and a structured response (provider, model, sessionId, usage) via outputSchema. Calls are ephemeral by default; pass sessionId:",
+            "name": "ask-codex",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-codex` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:df95f474f5e26ce37b949aec6a4e0404a04c0c781cd0e9ef822bd2411f4fa2d8",
+            "description": "Send a code edit request to OpenAI Codex CLI and get structured search/replace edit blocks back (via codex --output-schema). Codex reads the existing files (read-only) and proposes precise, applyable changes for Claude to apply. Use this when you want Codex to suggest specific code modifications to existing files rather than just analysis. Mirrors ask-gemini-edit.",
+            "name": "ask-codex-edit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-codex-edit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5f0d7b868603f6f213ec24e160749bf633412e30ab5bcc9133a93d60da51c2a8",
+            "description": "Use Cursor Agent as a model-neutral, read-only consultation harness. The provider and exact Cursor catalog model ID are separate required fields. Runs ",
+            "name": "ask-cursor-agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-cursor-agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:528812e9023426da2a17574652c0cb92243dcf314c6c88425280d09686967c2c",
+            "description": "Send a prompt to Gemini CLI (defaults to ${FACTORY_DEFAULT_MODEL} with automatic Flash fallback on quota errors). Use for code review, second opinions, analysis, and AI-to-AI collaboration. Do not override the model parameter unless the user explicitly asks. Returns both human-readable text and a structured response (provider, model, sessionId, usage) via outputSchema.",
+            "name": "ask-gemini",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-gemini` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9012e0743c32fbc033774532e25c62b740a5f5c15daf37bd87f2fe4932a9c6b5",
+            "description": "Send a code edit request to Gemini CLI and get structured OLD/NEW edit blocks back. Gemini analyzes the files and returns precise, applicable code changes. Use this when you want Gemini to suggest specific code modifications rather than just analysis.",
+            "name": "ask-gemini-edit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-gemini-edit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:383aff8577737ca1cec6dff30bc8b5b1d7bcd1bda17b0b12b1b7b06c4abce043",
+            "description": "Send a prompt to Grok through either the supported xAI Responses API or Grok Build",
+            "name": "ask-grok",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-grok` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:615fd339f33cdfe214407266d55d7a09cb38fa4ce1e2a4912e51eae481f5c931",
+            "description": "Use Cursor Agent as a model-neutral, read-only consultation harness. The provider and exact Cursor catalog model ID are separate required fields. Runs ",
+            "name": "ask-llm",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-llm` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:60f8b90512e5e37407b78a3d17ac2f52416918fc4b484949e8613239ffb9f918",
+            "description": "Send a prompt to a local Ollama LLM (defaults to ${FACTORY_DEFAULT_MODEL}; errors with a",
+            "name": "ask-ollama",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-ollama` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:be604f5c2542e16c815cf3e0da0e0c1a14b5cab94b0a121cb69ec84d798499ae",
+            "description": "Run a self-diagnosis of the MCP server",
+            "name": "diagnose",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `diagnose` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f18adfb1e7348e1e33c4b8733590baa254b2e4b4df8c29f7d8576ab83e59958e",
+            "description": "Retrieves cached chunks from a changeMode response. Use this to get subsequent chunks after receiving a partial changeMode response.",
+            "name": "fetch-chunk",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fetch-chunk` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2c490099623887eb421ec493c1b4044e18855f7a488ac1bba18b8c586ffb8eb6",
+            "description": "Get the current MCP server",
+            "name": "get-usage-stats",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get-usage-stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c0225115d337c0e55b0a4afd5ecc42e14b07374d3cb95410e62de89706c2ddf8",
+            "description": "multi-llm",
+            "name": "multi-llm",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `multi-llm` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fedf066bf23209508aa50fca2963bb9db7844989e7e27d711d8221d90a0f1bc0",
+            "description": "Test connectivity with the Antigravity MCP server and check whether agy is installed",
+            "name": "ping",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ping` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ae6aa3e43b705a479c520f6fae46fba812145a845bcbff84efd4900ad901e6d4",
+            "description": "fetch-chunk cacheKey=<key> chunkIndex=<number>",
+            "name": "prompt",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `prompt` [LOW] processes unstructured prompts susceptible to injection overrides."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:75f21335aeb099ed809f269fe6f736b5008b90be6bdb0d5060d0ef9e28a06f62",
+        "version": "1.5.0"
       }
     ]
   },
@@ -40304,12 +40635,12 @@
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 9.8,
+            "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
             "id": "CVE-2025-71336",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 3.0.6 or above.",
             "severity": "CRITICAL",
             "summary": "Flowise before 3.0.6 (affected versions 2.2.7-patch.1 and earlier) contains an unsandboxed remote code execution vulnera",
             "vulnerable_tools": []
@@ -54789,6 +55120,59 @@
       }
     ]
   },
+  "agency.almostimpossible/site": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Read-only access to the Almost Impossible agency website: case studies, team, news and pages.",
+    "display_name": "agency.almostimpossible/site",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "agency.almostimpossible/site",
+    "prompts_count": 0,
+    "purl": "pkg:generic/agency.almostimpossible%2Fsite",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://www.almostimpossible.agency/developers",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `agency.almostimpossible/site` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://www.almostimpossible.agency/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
   "agent-breadcrumbs-repo": {
     "archival_reason": null,
     "author": null,
@@ -60826,7 +61210,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "c94f0b17fbe252f68755ba512678586164ba6139"
+        "version": "28af68d73134df0b8fb3aa6ab03e8fd795b07c21"
       },
       {
         "advisories": [],
@@ -60839,7 +61223,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "28af68d73134df0b8fb3aa6ab03e8fd795b07c21"
+        "version": "c94f0b17fbe252f68755ba512678586164ba6139"
       },
       {
         "advisories": [
@@ -97381,19 +97765,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.2.0",
+    "latest_version": "1.3.0",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "debim",
     "prompts_count": 0,
     "purl": "pkg:pypi/debim",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.2.0",
+    "recommended_safe_version": "1.3.0",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/debim",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `debim` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 14 safe version(s).",
+    "security_summary": "Server `debim` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 15 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:28d4bc0b23bf12726142d227dacf090fb2a5e3f73b5ad55c2b36529aa4f6b42a",
@@ -98111,6 +98495,196 @@
         ],
         "toolset_canonical_hash": "sha256:28d4bc0b23bf12726142d227dacf090fb2a5e3f73b5ad55c2b36529aa4f6b42a",
         "version": "1.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-18T11:27:54.768107Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eb3282f2959ff7fc8555b91f7dd5a22c8c55b472b4e4c36e2b8574febd1c2329",
+            "description": "Compile a declarative BIM YAML manifest into a standard IFC4 building model.",
+            "name": "debim_compile_ifc",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "manifest_yaml",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_ifc_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debim_compile_ifc` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bd499c3a3f7257c4c317f5cce747cd2d6b3158595c1f2afd21d53112eb3f943c",
+            "description": "Calculate full Bill of Quantities (BOQ) and cost estimation.",
+            "name": "debim_cost",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "export_csv_path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "manifest_yaml",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "prices_yaml",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debim_cost` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f3f417bd654977845134f4bb21ee8a97c4ce50c20ae5c8d12f709e35e129b12e",
+            "description": "Generate a minimal project-scoped price catalog YAML template",
+            "name": "debim_cost_template",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "manifest_yaml",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debim_cost_template` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:adda48fb4ead86f9a7932f2f0b7df29e0ff050596854d5b1284a28209741c258",
+            "description": "Generate a standalone, zero-dependency interactive 3D HTML web viewer",
+            "name": "debim_generate_viewer",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "manifest_yaml",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "output_html_path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debim_generate_viewer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dd801c9077cb5a4fa4af22fb6da380d7bc778515e63d7a3badcb866f940c87ea",
+            "description": "Calculate Quantitative Take-Off (QTO) material quantities deterministically.",
+            "name": "debim_qto",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "manifest_yaml",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debim_qto` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f135292a43996effdb353767383a3f0ea8bed3736c693ec6f8563295da01cc84",
+            "description": "Validate a declarative BIM manifest YAML string.",
+            "name": "debim_validate",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "manifest_yaml",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debim_validate` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:28d4bc0b23bf12726142d227dacf090fb2a5e3f73b5ad55c2b36529aa4f6b42a",
+        "version": "1.3.0"
       }
     ]
   },
@@ -110101,19 +110675,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.9.1",
+    "latest_version": "1.9.2",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "fettle-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/fettle-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.9.1",
+    "recommended_safe_version": "1.9.2",
     "repo_http_status": 200,
     "repository_url": "https://github.com/fettlesh/monitoring-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `fettle-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 31 safe version(s).",
+    "security_summary": "Server `fettle-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 32 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:7f468b02fbfa526c4a54a2487ce7d614a46f953779fd1da38cec8c29c95c3a48",
@@ -110697,6 +111271,30 @@
         ],
         "toolset_canonical_hash": "sha256:7f468b02fbfa526c4a54a2487ce7d614a46f953779fd1da38cec8c29c95c3a48",
         "version": "1.9.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-17T17:08:50.332Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4b658dd6069fe0b61d160eeb1b6108755ea20dc158c8d9a94df2091b18cceeda",
+            "description": "Execute TimeoutError",
+            "name": "TimeoutError",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `TimeoutError` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:7f468b02fbfa526c4a54a2487ce7d614a46f953779fd1da38cec8c29c95c3a48",
+        "version": "1.9.2"
       }
     ]
   },
@@ -143649,7 +144247,7 @@
     "security_summary": "Server `tastenkasperle/hyperdrive-mesh` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:15a48b75811cec77db9da65a84798c0d9b61762c7c3739dbd4e58065650e40ec",
     "transport": "stdio",
     "versions": [
       {
@@ -143661,8 +144259,29 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:01454a32fafa28be89a96a32e5ac95e1eb58aa9ff658b78d691c5053f983fa00",
+            "description": "Das Hochladen sensibler Zwischenzustände in zentrale AWS-S3-Buckets oder Google Drive widerspricht dem Gedanken privater, lokaler KI-Infrastruktur.",
+            "name": "Cloud-Monopole",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Cloud-Monopole` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eb49e856de2c792d4cd4596e5e02f851ef28996dd31e7d6912c342f311d80b14",
+            "description": "Ein reines Dateisynchronisations-Tool für Menschen. Wenn mehrere Agenten parallel schreiben, entstehen Dateikonflikte (.sync-conflict) und korrupte Datenbank-Locks. Zudem fehlt Sparse-Streaming.",
+            "name": "Syncthing",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `Syncthing` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:15a48b75811cec77db9da65a84798c0d9b61762c7c3739dbd4e58065650e40ec",
         "version": "1.0.0"
       }
     ]
@@ -144713,10 +145332,10 @@
   },
   "tj": {
     "archival_reason": null,
-    "author": null,
+    "author": "Tushar Jain",
     "composite_risk_score": null,
     "composite_risk_tier": "LOW",
-    "description": "AI trading journal: MT5 sync, MCP tools for Claude, web UI",
+    "description": "A simple but powerful module that will provide you many useful methods.",
     "display_name": "tj",
     "dual_axis_security": null,
     "ecosystem": "pypi",
@@ -144725,19 +145344,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.0",
+    "latest_version": "2.8.14",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "tj",
     "prompts_count": 0,
     "purl": "pkg:pypi/tj",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.0.0",
+    "recommended_safe_version": "2.8.14",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/gillani-hello/ai-trading-journal",
+    "repository_url": "https://smithery.ai/servers/tj",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `tj` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "security_summary": "Server `tj` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 65 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:4b8ab9d78074c6f661955ee23102e2245f69c65d909e5a1cafc6074f74841226",
@@ -145705,6 +146324,1788 @@
         ],
         "toolset_canonical_hash": "sha256:4b8ab9d78074c6f661955ee23102e2245f69c65d909e5a1cafc6074f74841226",
         "version": "1.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-01-14T15:42:54.719315Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.1.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-01-15T10:49:47.018496Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.1.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-01-15T11:06:13.467149Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.1.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-01-15T11:15:13.206687Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.2.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-01-22T16:20:41.446000Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.2.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-12-27T15:18:01.295195Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-12-28T16:39:08.044390Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2018-12-30T11:13:05.170225Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.7.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T15:28:50.392057Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.7.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T15:30:41.760703Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.8.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T15:50:37.426250Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.8.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T16:25:49.684117Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.8.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T16:36:37.663452Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.8.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T16:49:23.528436Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.9.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T16:51:27.603689Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.9.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-01T18:03:19.417774Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.9.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-22T14:32:49.578124Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.9.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-22T14:46:51.192325Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.9.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-22T14:53:35.277304Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.9.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-23T09:07:26.617677Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-26T12:52:39.355477Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.1.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-28T16:41:55.432826Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.1.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-28T19:37:45.257098Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.1.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T10:43:35.215356Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.1.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:20:08.756246Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:23:05.477196Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:26:57.080899Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:31:40.239792Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:34:00.814552Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:35:59.285567Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-29T15:41:06.203831Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.6"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-30T14:00:47.430669Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.7"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-01-30T14:05:49.336698Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.2.8"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-10T14:34:02.947125Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.3.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-10T14:39:47.601342Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.4.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-13T10:53:04.134117Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.5.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-13T10:55:36.081950Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.5.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-13T10:58:12.399106Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.5.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-13T10:59:32.112840Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.5.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-14T13:08:13.078957Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.6.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-14T13:55:37.988468Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.6.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-14T14:01:59.570852Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.6.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-19T21:05:18.680961Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-20T10:58:20.388498Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-20T11:52:12.227273Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-20T12:16:09.234405Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.6"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-20T12:49:29.904687Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.7"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-20T14:58:12.513756Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.8"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-21T13:13:10.140458Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.9"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-02-21T13:24:38.318779Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.10"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-01T10:31:54.553955Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.7.12"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-03T18:06:40.689075Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-03T18:14:06.305618Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-04T10:27:47.465289Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-04T16:00:24.979406Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-05T17:39:48.262843Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.6"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-05T17:43:09.553513Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.7"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-16T17:32:49.802592Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.8"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-16T17:36:08.683603Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.9"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-16T17:43:53.349392Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.10"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-16T17:53:18.642074Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.11"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-16T20:06:10.504361Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.12"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-19T15:26:12.063382Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "2.8.13"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2019-03-19T16:03:12.231430Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:209439d9689dcef61ff118dd08360a794b493376787962bf4aac1ee7139bb344",
+            "description": "Add journal details (setup, emotions, mistakes, notes, rating) to a trade, usually one synced from MT5.",
+            "name": "annotate_trade",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Added to existing emotions unless replace_tags is true",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "emotions",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "followed_plan",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Added to existing mistakes unless replace_tags is true",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mistakes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Appended to existing notes unless replace_notes is true",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "notes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Narrow 'last' to trades closed on this date",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "on_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rating",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "replace_notes",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": false,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "replace_tags",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "setup",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "symbol",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "last",
+                "description": "Trade id, or \"last\" for the most recent trade (optionally narrowed by symbol/date)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "trade",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `annotate_trade` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3b95a9f736d43f30c8fd01249554be683ee7547b3034920ebc0b2b13062cf2be",
+            "description": "Delete a manually logged trade (MT5 trades can't be deleted; they come back on sync).",
+            "name": "delete_trade",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "trade_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_trade` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e6232ce670c9fd66848a9e051c711164128a7be5ccd6f7e03a1c83e868cb8605",
+            "description": "Search trades. Returns a compact list plus the total count.",
+            "name": "find_trades",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "direction",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "emotion",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 20,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mistake",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "outcome",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "setup",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "-time",
+                "description": "time, net_pnl, r_multiple, volume, holding; prefix - for descending",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sort",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "source",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "all",
+                "description": null,
+                "enum": [
+                  "closed",
+                  "open",
+                  "all"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "symbol",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `find_trades` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1a0218f54e21333da2007173f7904a3c4e686826978752227af915dc947db469",
+            "description": "Behavioural red flags (revenge trading, overtrading, no/widened stops, early exits, sizing up after losses...) with cost.",
+            "name": "get_behavior_report",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "month",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "symbol",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_behavior_report` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2968277048e54dc657e1f07e7f3bb62d2d5ae0228ab5f50329c22e73318d1139",
+            "description": "Daily P&L for a month (trading days only), weekly totals and the month summary.",
+            "name": "get_calendar",
+            "parameters": [
+              {
+                "default": null,
+                "description": "YYYY-MM, defaults to the current month",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "month",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_calendar` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:617fda51cf286cb32d3170383cd1b0117476393dd83da0549e361e9678d54ea1",
+            "description": "Everything needed for a coaching review in one call: stats vs previous period, per-instrument verdicts and",
+            "name": "get_coaching_context",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "week",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "symbol",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_coaching_context` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a1c3271ac0d0891bce557f5feb5b9b7f3d52d0a2787aba20735764c07be4e648",
+            "description": "Per-instrument stats, verdict (edge/leaking/breakeven/unproven), best/worst sessions, insights and red flags.",
+            "name": "get_instrument_breakdown",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "month",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_instrument_breakdown` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:66ab4b660ad0012d612ae2e8b65114e107c15ac7c5bc720ce87fafe65bbd8eea",
+            "description": "Win rate, P&L, profit factor, expectancy, R, drawdown, streaks — optionally broken down by dimension.",
+            "name": "get_performance",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_from",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "date_to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "group_by",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "month",
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "period",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "symbol",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_performance` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fbc81b6bb328dcaf895061a261c55e8eb7870fe97d3a1b119b3c0faf2f20856f",
+            "description": "Full detail of one trade: prices, costs, R, MFE/MAE, deals, journal, and any behaviour flags it triggered.",
+            "name": "get_trade",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "trade_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_trade` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:628156e1fd32205ae4d35d9509fb1ff1e737cfa8a584ad11cd009ef8683ac660",
+            "description": "The user's setup, emotion and mistake vocabularies. Reuse these names when tagging.",
+            "name": "list_tags",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_tags` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:264f41cf18593351a2cec53f1b7e459e59cdf21e3702568b7d0b5c0fba5c0a27",
+            "description": "Log a trade the user dictates that is NOT in MT5 (other broker, or not synced). Returns the trade and warnings.",
+            "name": "log_trade",
+            "parameters": [
+              {
+                "default": null,
+                "description": "ISO datetime (local time)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "close_time",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": 0.0,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "commission",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "long/buy or short/sell",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "direction",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "emotions",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "entry_price",
+                "nested_properties": null,
+                "required": true,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Leave empty if the trade is still open",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "exit_price",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "followed_plan",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mistakes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "notes",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO datetime, e.g. 2026-10-26T09:30 (local time)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "open_time",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Money result before commission, if the user said it",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pnl",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Execution quality 1-5",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rating",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "setup",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "stop_loss",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Instrument, e.g. EURUSD",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "symbol",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "take_profit",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Lots",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "volume",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `log_trade` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e071977def6c47c194cd223ab14ea9189b61a8189775dfb38fb66a7880fc26fb",
+            "description": "Save a coaching review so it shows in the web app (AI Coach page and each instrument's page).",
+            "name": "save_ai_report",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "report",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save_ai_report` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b45f0bab7b0671471195022522bba966fea1d5e2ed7d860bd41ba500594a85ec",
+            "description": "Attach AI feedback to a single trade (shown on the trade's page).",
+            "name": "save_trade_feedback",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Coaching feedback on this trade",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "feedback",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "trade_id",
+                "nested_properties": null,
+                "required": true,
+                "type": "integer"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `save_trade_feedback` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ec828bd50e9e10b6d7045fd816837b571570852dd440e40adbdad90fa6393656",
+            "description": "Save the user's written trading rules; coaching reviews check behaviour against them.",
+            "name": "set_trading_rules",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The user's full trading plan/rules as text",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rules",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_trading_rules` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ebb3aa608dc867a2253cc668163ecff3c3df284dba27db5daef87dc9fc4a8748",
+            "description": "Pull the latest trades from MT5 right now.",
+            "name": "sync_mt5",
+            "parameters": [
+              {
+                "default": false,
+                "description": "Re-read every file and rebuild all trades",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "force",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sync_mt5` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfa6fa750f20df9badf01d79368a078de6673751200388b624968828ae081f3b",
+            "description": "Save the pre-session plan or post-session review for a day (text is appended to what is there).",
+            "name": "write_day_note",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Defaults to today",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "day",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "One word, e.g. focused, tired, anxious",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mood",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "post_session_review",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "pre_session_plan",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "rules_followed",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `write_day_note` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:4b8ab9d78074c6f661955ee23102e2245f69c65d909e5a1cafc6074f74841226",
+        "version": "2.8.14"
       }
     ]
   },

@@ -1,0 +1,74 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 1.2.0-rc1 or above."
+      },
+      "package": {
+        "ecosystem": "Go",
+        "name": "github.com/envoyproxy/ai-gateway",
+        "purl": "pkg:golang/github.com/envoyproxy/ai-gateway"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0.4.0-rc1"
+            },
+            {
+              "fixed": "1.2.0-rc1"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-953h-535j-jg2v"
+    ],
+    "sources_merged": [
+      "GHSA-953h-535j-jg2v"
+    ]
+  },
+  "details": "The MCP proxy's client-facing session ID embeds the authenticated caller's\nsubject (JWT `sub` claim) specifically as an anti-hijacking discriminator \u2014\nmatching the Model Context Protocol specification's documented session-hijacking\nguidance (https://modelcontextprotocol.io/specification/2025-06-18/basic/security_best_practices#session-hijacking).\nHowever, the session-resume path never checks that discriminator against the\ncurrent caller's identity, so any client that obtains a session ID (its own or\nanother user's) can resume that session and act with it \u2014 including on\nroutes with per-user backend sessions. This is aggravated by the official\nHelm chart shipping a literal, publicly known default seed\n(`\"default-insecure-seed\"`) for the key that encrypts these session IDs.",
+  "id": "GHSA-953h-535j-jg2v",
+  "modified": "2026-10-19T00:00:00Z",
+  "published": "2026-10-19T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-953h-535j-jg2v"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/theagentrouter/agent-router/commit/0d1e73037076d72251342d0ea578a36ffb7002c7"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/theagentrouter/agent-router/commit/994579660ae2a9f2feef3cb77766e155746858b4"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/theagentrouter/agent-router/pull/2740"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/theagentrouter/agent-router/pull/2755"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/theagentrouter/agent-router/security/advisories/GHSA-953h-535j-jg2v"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "agent-router: MCP session resume does not verify the embedded anti-hijacking subject; default Helm seed makes session IDs forgeable"
+}

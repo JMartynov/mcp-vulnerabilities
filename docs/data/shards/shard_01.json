@@ -61421,7 +61421,7 @@
     "security_summary": "Server `sphior-code-pre-commit` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:c7ee7b75e0efff6ff9e9f2c2d2000998214edecf557b314951ff9b7cd16ac4dd",
     "transport": "stdio",
     "versions": [
       {
@@ -61433,8 +61433,281 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e0cd40fec8922b3c178e98edd1bb8c670043dce37b397c6e8e48d4f2a3acf909",
+            "description": "Fetch full details of a single security finding by ID — includes CVSS score, CWE classification, exact file path and line number, vulnerability message, and fix hint. Use when the user wants to investigate a specific issue from list_findings.",
+            "name": "get_finding",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "findingId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_finding` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:768927e18ed7a60d63582ec22003cbb3e5d78c64b93cadfe801b8021f5512331",
+            "description": "Scan for security problems and get deterministic remediation guidance so YOU (the AI agent) can fix them. Works with no account: without SPHIOR_API_KEY it scans the local workspace with the bundled engine. SPHIOR does not generate code or transmit source — open the referenced file in your workspace, read the code yourself, and apply the fix. Returns why-it-matters, remediation steps, exact location, and references. Findings at the same line are merged into one entry;",
+            "name": "get_fix_context",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "findingId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "repo",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "severity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_fix_context` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:401f53890dd3ac9bd32bdbc634862e8c190293de5aeb524e5e88af4cfde8fb15",
+            "description": "Get the user",
+            "name": "get_security_summary",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_security_summary` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a0d6c80d631caf08cc9f06a72b982def7decd243bfc15904d2e059bd160331c5",
+            "description": "Report the server",
+            "name": "health_check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `health_check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:58376a69d916c686ed445886567d2b3a5af258d65d26ed04178d7df947d5497c",
+            "description": "List security vulnerabilities (SAST + SCA) detected by SPHIOR CODE across the user",
+            "name": "list_findings",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "severity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_findings` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2394fb6fe988a3af8882879a21f2101b7d31606033bc560dd5078d54f71049bd",
+            "description": "Mark a finding as a false positive (the reported vulnerability is not actually exploitable). Use this when the AI",
+            "name": "mark_false_positive",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "findingId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `mark_false_positive` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3dd54b21703765635a349f7090fff39023e4077ee2ce6640c41794466796cf95",
+            "description": "Record one AI / AI-agent execution as tamper-evident, independently verifiable evidence (hash-only — only hashes and metadata are stored). Use this to log what an AI did, with what model, and your policy outcome, for ISO 42001 / EU AI Act / SOC 2 evidence.",
+            "name": "record_ai_execution",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `record_ai_execution` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:16da4eaa0e173bb36e634ca4ab422aa2b01deeb6b2797f84a6b5df8d5a4b3bda",
+            "description": "Record multiple AI executions in one call (up to 200). Same fields as record_ai_execution.",
+            "name": "record_ai_executions",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "events",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `record_ai_executions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ceead58ae577c3b1b0c872a3a08a4c3398aec693be6dcf334dc2b75e405b5a1a",
+            "description": "Mark a finding as resolved (e.g., after applying a fix). Use only when the vulnerability has actually been remediated. For false positives, use mark_false_positive instead.",
+            "name": "resolve_finding",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "findingId",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "reason",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `resolve_finding` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:43a0f387ec6f444904744491e9b43e1513079217e5e4e764b2983d2eface69db",
+            "description": "Independently verify SPHIOR",
+            "name": "verify_evidence",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includePack",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "repo",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `verify_evidence` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:c7ee7b75e0efff6ff9e9f2c2d2000998214edecf557b314951ff9b7cd16ac4dd",
         "version": "1.0.0"
       }
     ]
