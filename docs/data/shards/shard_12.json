@@ -5977,19 +5977,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.14.7",
+    "latest_version": "1.14.8",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@mambalabsdev/mcp-gtm-suite",
     "prompts_count": 0,
     "purl": "pkg:npm/@mambalabsdev%2Fmcp-gtm-suite",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.14.7",
+    "recommended_safe_version": "1.14.8",
     "repo_http_status": 200,
     "repository_url": "https://github.com/mambalabsdev/mcp-gtm-suite",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@mambalabsdev/mcp-gtm-suite` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 28 safe version(s).",
+    "security_summary": "Server `@mambalabsdev/mcp-gtm-suite` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 29 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:a9b2e807a0dc30323a69aa46e25be66959f798fb99b87d33c0fe16e87f423d4e",
@@ -13995,6 +13995,1110 @@
         ],
         "toolset_canonical_hash": "sha256:a9b2e807a0dc30323a69aa46e25be66959f798fb99b87d33c0fe16e87f423d4e",
         "version": "1.14.7"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-19T11:39:16.141Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e85f87df68b9d46e6bd2eb363c725a68dd844af49bff0c2f61b379f8f126464a",
+            "description": "Aggregate a company",
+            "name": "aggregate_gtm_signals",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "If true, the summary becomes a longer, more detailed explanation.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "explain_mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Include a plain-English gtm_signal_summary.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_summary",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which signals to aggregate. Defaults to hiring and tech_stack. Each extra source adds one sub actor run to the bill and one dimension to the composite score, which is normalized over the sources selected.",
+                "enum": [
+                  "hiring",
+                  "tech_stack",
+                  "funding",
+                  "events",
+                  "workplace"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "sources",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `aggregate_gtm_signals` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed6fcd8ae1f129e06601bef611bd3c39c22dbb26faaf305f4158ff5680482672",
+            "description": "Give it a domain and it returns whether an AI agent can read that site, and what the site",
+            "name": "audit_agent_accessibility",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Probes sitemap, OpenAPI, well known files and feeds. Adds 7 concurrent requests. Default: true.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "check_endpoints",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Parses JSON-LD, microdata, Open Graph and canonical off the homepage. Costs no extra requests. Default: true.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "check_structured_data",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Run only these checks. Omit for all of them. Narrowing narrows the work, and the score is rescaled over the checks selected.",
+                "enum": [
+                  "llms_txt",
+                  "robots_ai",
+                  "sitemap",
+                  "openapi",
+                  "security_txt",
+                  "feeds",
+                  "json_ld",
+                  "microdata",
+                  "open_graph",
+                  "canonical",
+                  "render_mode"
+                ],
+                "format": null,
+                "items_type": "string",
+                "name": "checks",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "One company domain, for example vercel.com. Protocol and path are stripped.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "false",
+                  "true"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `audit_agent_accessibility` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9a55c6fe7eebac2c1d90bda5c8a517b26005903495c0cad914dc73d8b16372f4",
+            "description": "Point it at LinkedIn person profiles or company pages and it returns the posts a search engine has indexed for each one, as flat rows: permalink, author, a text excerpt, and the publish date decoded from the post id. No request is sent to LinkedIn and no cookie or account is used. A result counts only when its permalink names the source, so posts are never attributed to the wrong author. Coverage is what the search index holds: posts appear days or weeks after publishing and many never appear. Commenters, reaction counts, comment counts and media are no longer returned (removed 2026-10-12, they came only from LinkedIn pages). Rows carry row_type post or notice; filter on row_type before loading a table. post_id is the activity URN and is stable across runs. Every row carries degraded and degradation_reason. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+            "name": "capture_linkedin_posts_and_commenters",
+            "parameters": [
+              {
+                "default": null,
+                "description": "LinkedIn company page URLs, for example https://www.linkedin.com/company/microsoft. Supply this, profile_urls, or both.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "company_urls",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO date or timestamp, for example 2026-08-01. Posts published before this are skipped BEFORE anything is charged. Leave empty to take everything the index holds.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "posted_since",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "LinkedIn person profile URLs, for example https://www.linkedin.com/in/williamhgates. Country subdomains such as uk.linkedin.com are fine. Supply this, company_urls, or both.",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "profile_urls",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `capture_linkedin_posts_and_commenters` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e643dae85f72fb3d0fbad07a1533e04c39d07691171de7c03bed5764e67a430d",
+            "description": "One contact in, one classified row out. Give it a job title and it returns the department, the seniority level, a seniority_rank from 1 to 12 you can filter with a comparison, and classification_rule, the named rule that fired, so every decision is auditable. The classification is a deterministic rule table: it needs no API key, calls no model, and returns the same answer for the same title every time. Only job_title is required. full_name and company_domain are read only when verify_position is on, which checks whether the person is still listed on their employer",
+            "name": "classify_contact",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `classify_contact` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4148d3bb91b79586a9601fbe952d9425c69b188439357b43512dfe7fe41d23c5",
+            "description": "Given a company domain, determine how far that company has gone with AI. Returns an ai_maturity tier of none, declared (says AI but nothing observable is running), deployed (AI tooling is live on the site), or commercialized (the pricing page charges for AI via credits, tokens, an add-on, an AI-named plan, or a per-outcome price), plus the detected AI vendors, validated llms.txt status, robots.txt AI-crawler policy, and the evidence behind the verdict. A domain behind a bot challenge returns blocked=true at low confidence rather than a false negative. Returns flat, Clay-ready JSON. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per domain analyzed.",
+            "name": "detect_ai_tooling",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `detect_ai_tooling` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1ca94466184203556b69c9299d468f196b259587b0f40466877da92486d98b4b",
+            "description": "Detect which GTM tools a company uses from its public website. Returns CRM, sequencer, and marketing automation signals with per-tool boolean flags as a flat, Clay-ready JSON row. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "detect_gtm_tech_stack",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Deprecated alias for domain, accepted by the actor for older callers. Prefer domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Crawl up to 2 extra pages for better coverage. Defaults to true when omitted.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "crawl_additional_pages",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. Supply this, company_domain or url.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "By default a clean detection is cached for 7 days and reused. Set true to force a fresh detection.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Report only these tools. Omit to report every detectable tool. Only tools with a client side fingerprint are selectable. Detection is unchanged, so filtering costs nothing extra.",
+                "enum": [
+                  "hubspot",
+                  "salesforce",
+                  "marketo",
+                  "pardot",
+                  "intercom",
+                  "drift",
+                  "apollo",
+                  "outreach",
+                  "gong",
+                  "zoominfo"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "technologies",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Deprecated alias for domain, accepted by the actor as a full company website URL. Prefer domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `detect_gtm_tech_stack` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:940a676d739de9f4678bfb1427bb37d1faba17d16027176329107f5728b06f97",
+            "description": "Enrich a company domain into structured firmographics: employee band, industry, HQ, founded year, revenue estimate, logo, and description, with source provenance. Parsed from the company",
+            "name": "enrich_company_firmographics",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Domains enriched concurrently per wave in batch mode. Default 5, maximum 10.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "batchSize",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional company name, used as a fallback label when the page does not expose one.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain to enrich, e.g. stripe.com. Provide this or domains.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "List of bare domains for batch processing. Takes precedence over domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domains",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Force a fresh enrichment and ignore the 7 day result cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `enrich_company_firmographics` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5ced5e48214df5f1245ad0869ddd7094d5a49f5555b8044cc01d78acc00ba071",
+            "description": "Given a company domain, determine whether that company runs cold email outbound and on what stack. Returns a runs_outbound verdict of program (a deliberate cold outbound setup), light (one weak signal), none, or unknown, with the evidence behind it. The strongest signal is the lookalike sending domains a real program leaves behind: domains like getcompany.com or company-mail.com that carry their own mail and redirect back to the primary site. Also returns the inbox provider (Google Workspace, Microsoft 365 and others) for the primary domain and each sending domain, any detected sending platform (Outreach, Salesloft, Lemlist, Instantly, Smartlead, Apollo and more), registration clusters showing sending domains bought on the same day, cold email infrastructure vendors, and SPF, DKIM and DMARC posture. Sending platform recall is partial by design: sequencers that connect over OAuth to a customer",
+            "name": "fingerprint_outbound_infrastructure",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fingerprint_outbound_infrastructure` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8bf76f398d6043a99aa0568d76f1d1a60a3bcdee4d1ff9063e23298211dc29d6",
+            "description": "Monitor a company domain for changes across hiring, tech stack, funding, firmographics, and social since the last run. Returns only what changed as typed change events in flat, Clay-ready JSON. Pass sources to watch fewer than all five sources and min_severity to drop minor changes; each source left out is one fewer sub actor run on the bill. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "get_company_changes",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional company name hint, used when the domain does not match the brand name, e.g. Deel for deel.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Company domain to monitor, without https or www, e.g. stripe.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Report only changes at or above this severity. low reports every change and is the default. high keeps leadership moves, funding, acquisitions, and a CRM or sequencer appearing or disappearing.",
+                "enum": [
+                  "low",
+                  "medium",
+                  "high"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "min_severity",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Snapshot object returned by a prior run. Supply it and it is the baseline instead of stored state, which is what makes a scheduled run cheap.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_snapshot",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which sources to monitor. Omit for all five. Each source left out is one fewer sub actor run per company, so a single source watch is billed for one source, not five.",
+                "enum": [
+                  "hiring",
+                  "tech_stack",
+                  "firmographic",
+                  "funding",
+                  "social"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "sources",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Per-child run timeout in seconds. Children run in parallel, so total wall time is about the slowest child. Default: 300.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sub_actor_timeout_secs",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_company_changes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c3de72ec5216628ced0e747976c9eb053c6fc1b731091c944e8509c9b0c95f88",
+            "description": "Scan Google News and PR wires for funding rounds, executive moves, product launches, and acquisitions at any company domain. Returns deduplicated, dated events in flat Clay-ready JSON. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "get_funding_press_signals",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional company name hint, used when the domain does not match the brand name, e.g. Deel for deel.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Company domain to scan, without https or www, e.g. stripe.com.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "How far back to search, in days. Default 365.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "lookback_days",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Report only these event types. Omit for every type. Narrowing also narrows the search: a funding only run issues one news query instead of four.",
+                "enum": [
+                  "funding_round",
+                  "ipo",
+                  "acquisition",
+                  "exec_move",
+                  "product_launch",
+                  "partnership"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "signal_types",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_funding_press_signals` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c022e6f7960d37952af07fad350ba06a7bd5668ff0935748b8d32a23514a60fa",
+            "description": "Give it a company domain. It returns the third party conferences and trade shows that company publicly says it attends, with a year for each where one can be resolved, as one flat row. The search runs against the company",
+            "name": "map_company_event_presence",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `map_company_event_presence` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b591191f9dbab524738d0d7357e3e4e0dd374753a0edf3e92a17f2bc636fb773",
+            "description": "Map a company",
+            "name": "map_company_social_presence",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. Provide this or company_name.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional company name. Improves search accuracy and disambiguation. Provide this or company_domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Fetch profile pages to extract follower counts (default true). Set false for URLs only, which is cheaper.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includeFollowerCounts",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Which platforms to map. Defaults to all five.",
+                "enum": [
+                  "linkedin",
+                  "x",
+                  "instagram",
+                  "facebook",
+                  "youtube"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "platforms",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Force a fresh lookup and ignore the 7 day result cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `map_company_social_presence` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0c7cbe8d847f182f4cddd5f04538d17463df7797fe8d6f9a7e35376421878c31",
+            "description": "Pick a public award register and a time window and it returns the companies that won public work in it, one flat row per winning company rather than one per award, with award count, total value, largest award, awarding body, award date, a deep link to the source record, and a resolved company domain. Five registers are covered: US federal contracts and US federal grants from USASpending, NIH SBIR and STTR from NIH RePORTER, and UK Contracts Finder and UK Find a Tender. This reports awards that have already been made, so it is not a tender feed and will not tell you what is open to bid on. US federal data lags about two days, so a one day window on a US register returns little or nothing. Winners are sorted by total award value and max_entities is the hard cap on billed rows. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+            "name": "monitor_public_awards",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `monitor_public_awards` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9ee6c3687b72a047f3d12e82f7b84b70810c594485ad98e375e34271084d0f66",
+            "description": "Push enriched lead rows into an existing Instantly or Smartlead campaign. Maps common Clay column names onto each sequencer",
+            "name": "push_leads_to_sequencer",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `push_leads_to_sequencer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4044965e0147aa09bb23d70346573c7077843491362231b6f7bfdfda7ef0cb80",
+            "description": "Resolve any combination of company name, domain, or LinkedIn URL into one canonical company identity: the name, primary domain, and LinkedIn company URL, each with a 0-100 confidence score plus an overall score and a match method. Cross-checks the inputs you give it, resolves the ones you do not, and flags conflicts (a domain and a LinkedIn slug that disagree) instead of merging them. A LinkedIn URL the actor finds is returned only when verified against the company site or the name, with the reason in linkedin_verification. Provide at least one of company_name, domain, or linkedin_url. Use this to reconcile or deduplicate records you already hold; use resolve_linkedin_url instead when you only need the LinkedIn company URL for a domain or name. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "resolve_company_identity",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Company name, e.g. Stripe. Provide at least one of company_name, domain, or linkedin_url.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. The strongest canonical key when provided.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "LinkedIn company URL (https://www.linkedin.com/company/stripe) or bare slug (stripe).",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "linkedin_url",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minLinkedinConfidence",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Force a fresh resolution and ignore the 7 day result cache.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `resolve_company_identity` [MEDIUM] initiates outbound network requests (potential SSRF risk); processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c72c599a52a00c56ec69d09508c262be7363e84dc06384ea1c9f9fa7012329a7",
+            "description": "Give it a company domain and it returns the registered legal entity behind it: legal name, company number, jurisdiction, status, entity type, LEI and VAT number, as one flat row with a full audit trail of what was rejected and why. Three registers are queried: UK Companies House, GLEIF and SEC EDGAR. Register search endpoints are fuzzy and always return something, so by default a record is accepted only when the normalized legal names are identical. That is why roughly 6 domains in 10 resolve rather than 10 in 10, and why a null here is a trustworthy answer rather than a gap. Read match_method, match_confidence and rejected_candidates before acting on a match. Setting match_strictness to fuzzy will hand you a confidently wrong company on most domains and should be treated as a research mode, not a default. This is not a company database and not a credit or risk product. Requires an APIFY_TOKEN and consumes Apify credits. Read only.",
+            "name": "resolve_legal_entity",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `resolve_legal_entity` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:95d272fa2fde2ffa84940a334f65e127c760339d7f9cf5c23ba5c369259d38b5",
+            "description": "Resolve a company domain or name to its LinkedIn company URL, with a 0-100 confidence_score, social links, and optional firmographics from search snippets, as a flat, Clay-ready JSON row. A URL is returned only when verified: the company homepage links it, or its name is identical to the name the company site declares or the company_name you pass; otherwise linkedin_company_url is null and verification says why. No request is sent to LinkedIn. Provide at least one of company_domain or company_name. Use this when the LinkedIn company URL is the answer you need; use resolve_company_identity instead to cross-check a name, domain, and LinkedIn URL you already hold and get a canonical identity with conflicts flagged. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "resolve_linkedin_url",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com. Required if company_name is not provided.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Company name. Required if company_domain is not provided.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "false",
+                  "true"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "includeFirmographics",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minConfidenceScore",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "false",
+                  "true"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "skipCache",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `resolve_linkedin_url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5d4e0b66893740a0de33291b1e814b00b21b44c1737599c4c475669b80a89556",
+            "description": "Scan company career pages to detect GTM hiring activity. Returns sales, marketing, and revenue operations job postings across Greenhouse, Lever, and Ashby as a flat, Clay-ready JSON row. Use this for a go-to-market hiring verdict (is the company building its sales and marketing team, and how fast); use scan_job_board_keywords instead to count open roles in categories or keywords you choose, including non-GTM roles. Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "scan_gtm_hiring_signals",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional ATS board slug override when it differs from the domain.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "ats_slug",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "When true, include the full per-role detail array (title, department, location, url). Default: false.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "include_role_details",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "single",
+                  "batch",
+                  "velocity"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "mode",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "GTM role count from the previous run for this domain, used in velocity mode to compute the delta.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_gtm_role_count",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO date of the previous run for this domain, used in velocity mode to report days between runs.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_run_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional list of GTM role keywords to filter on. Defaults to the built-in list.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "role_filter",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `scan_gtm_hiring_signals` [MEDIUM] initiates outbound network requests (potential SSRF risk); processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ef55f17a7a0ab9c4c5a59604532b578f6213be177c3fad2256ef6493ebedf125",
+            "description": "Scan a company",
+            "name": "scan_job_board_keywords",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Bare company domain, e.g. stripe.com",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "company_domain",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Keyword strings to match when Custom is included in role_categories.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "custom_keywords",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Fall back to a pre-indexed job database when the live ATS cascade finds nothing.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "enable_fallback",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "max_charge_usd",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Comma-separated matched role titles from a previous run, to compute deltas.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_roles_detected",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "ISO date of the previous run, e.g. 2026-03-15.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "previous_run_date",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "One or more of: GTM, Engineering, Finance, Operations, Executive, Custom.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "role_categories",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `scan_job_board_keywords` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5409791f272dd61b78fed54ead12f9df7b641091af749948bb96f0d209a3d055",
+            "description": "Score a company against your ideal customer profile (ICP) using weighted signals. Returns a 0 to 100 icp_score, an A to D icp_tier, and a per-signal breakdown as a flat, Clay-ready JSON row. Define your ICP with a template, scoring_config, or plain-English icp_description (which requires llm_api_key). Reads public data and writes nothing; requires an APIFY_TOKEN and consumes Apify credits per call.",
+            "name": "score_icp_fit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `score_icp_fit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d22ea9aeb752f7ae4da756d393395e48d7ee4ddd863957d1f28a704c1abe7544",
+            "description": "Given a company domain, measure how much long-form work that company publishes and whether the rate is rising or falling. Returns post counts for the last 30 days, 90 days and 12 months, a monthly average, and a cadence_trend of accelerating, steady, declining, dormant or unknown, with the percent change behind it. The trend compares the last 90 days against the prior 275 days, both normalized to posts per month. Also returns the blog URL, the format mix (blog posts, guides, reports, case studies, whitepapers, podcasts, videos, press releases, research), the number of distinct bylines, and how the post list was discovered. This measures EDITORIAL output volume, not product changelogs: a release feed is detected and rejected rather than counted. Publication dates are read from the post pages, because sitemap lastmod was measured to be a modification date running later than publication by a median of 151 to 1653 days. When a site",
+            "name": "track_publication_cadence",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `track_publication_cadence` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:a9b2e807a0dc30323a69aa46e25be66959f798fb99b87d33c0fe16e87f423d4e",
+        "version": "1.14.8"
       }
     ]
   },
@@ -14411,19 +15515,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.10.7",
+    "latest_version": "0.11.0",
     "license": "MIT OR Apache-2.0",
     "malicious_advisory_id": null,
     "package_name": "@mozilla/firefox-devtools-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@mozilla%2Ffirefox-devtools-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.10.7",
+    "recommended_safe_version": "0.11.0",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/mozilla/firefox-devtools-mcp",
+    "repository_url": "https://github.com/mozilla/firefox-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@mozilla/firefox-devtools-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 18 safe version(s).",
+    "security_summary": "Server `@mozilla/firefox-devtools-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 19 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:9bd20dd21c1dfc61cdb692f164849ca5514f7ac0bf62257da2d7022a56d03667",
@@ -15533,6 +16637,890 @@
         ],
         "toolset_canonical_hash": "sha256:9bd20dd21c1dfc61cdb692f164849ca5514f7ac0bf62257da2d7022a56d03667",
         "version": "0.10.7"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-19T10:26:17.043Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cb4beacaa0f9628047e7dc544fe7ee5e4aa189acf8b7bc87e66bf6f6256a3e84",
+            "description": "Execute any",
+            "name": "any",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `any` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:084f58d9b1694a21cb1d23f8c62cac649b84be1119d12432b643ab56e086bab8",
+            "description": "Execute array",
+            "name": "array",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `array` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1da463882d3de69c29be8221379ac9de0d76046066b35c9c84cd266d3ca6b8f1",
+            "description": "Execute base64",
+            "name": "base64",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `base64` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e08829152519a0e026930be73f38aa7b637a08defd592e4333a4349c5834795d",
+            "description": "Execute base64url",
+            "name": "base64url",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `base64url` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:91cc3f2c03c863bf144b1debf3b28b60d3781d7719982e4bd0c978e60d9df8dd",
+            "description": "Execute bigint",
+            "name": "bigint",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `bigint` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:774238c715b2ed0d46a69474310ddff9b331e756798b9d1700f2be8387be1e9d",
+            "description": "Execute boolean",
+            "name": "boolean",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `boolean` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:127f1133540eb236d85ff954f505fbb1abf3ef91494995386ef3f9dafa983ecb",
+            "description": "Execute catch",
+            "name": "catch",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `catch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b1d186c64fa89cbb25257ec9d4c3dcb7b3e9b5d40719f8c643b09cafb529aca0",
+            "description": "Execute cidr",
+            "name": "cidr",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cidr` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:04b536a51391c6d39e7b610d6de757a9f2ecfb3cb5beca1be35134ea40a1afee",
+            "description": "Execute cuid",
+            "name": "cuid",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cuid` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d7efad527d6cb4b11c47f7055377783b644d553df74970ac4f66e9c0d0274a36",
+            "description": "Execute cuid2",
+            "name": "cuid2",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cuid2` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9202f417d862754d0925a05f64ec6e2b6af8117d845e9100cd505c8db4ff0a52",
+            "description": "Execute custom",
+            "name": "custom",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `custom` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e49147a58d39699ed65a342ddad860018517b032eba18fe519fb8ddfb2a449ae",
+            "description": "Execute date",
+            "name": "date",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `date` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfa5db61df0067344a2fbf392cd3a25a2bcaedff87e4a64e330eb6a088455303",
+            "description": "Execute datetime",
+            "name": "datetime",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `datetime` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0146439670511a4cfa3bf5078af5d7fc4168f19098afcb6cb25cd49be2159c10",
+            "description": "Execute duration",
+            "name": "duration",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `duration` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:048c612f29c225db1eef94366f531bc182e37c77723d1431507c1cc8ff3bbbcc",
+            "description": "Execute email",
+            "name": "email",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `email` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:735f3501516153af0d1d9c14206697a1fa3a8d44b723b63ae4603a53695cc7ac",
+            "description": "Execute emoji",
+            "name": "emoji",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `emoji` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3ca03a4d932b80b89e54b88d2ad2bb1990f8bde1e4a47ca82795b1ff2221cf92",
+            "description": "Execute endsWith",
+            "name": "endsWith",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `endsWith` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:478ef486e04ddb6ecc1ee762e1691a45cdd3d56210e87c6906bab8003a84b2aa",
+            "description": "Execute enum",
+            "name": "enum",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `enum` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bb2b920d046c8979cb15cdf191999da3cc72b275b363f6b433abcd71a09ea159",
+            "description": "Execute file",
+            "name": "file",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `file` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c30cffd7b479d1412cb2d7ee2403d0db54a5d0d24d913a12f59982588f6ff7d0",
+            "description": "Execute function",
+            "name": "function",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `function` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8d9ec8f2f2164f9ed9a519393812f2fdf69cda636a548e748d9aad5f8cecc296",
+            "description": "Execute includes",
+            "name": "includes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `includes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4315beb5c8df5e7751cf3e3e6fbe2398139268a05673eba30a2d08f2a563f28f",
+            "description": "Execute int",
+            "name": "int",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `int` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfe76f1f8cb0627ab516e68d6bb40701c7b5b87c319f38cbe534fe8e751dec1c",
+            "description": "Execute integer",
+            "name": "integer",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `integer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:09e5d08eaeddc14be9cd8563827ef7d2c97f2d9d111e8a17c3fbc901e593bbbc",
+            "description": "Execute intersection",
+            "name": "intersection",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `intersection` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:54c793b7fef2552f4ff24413e2f415c22581f5f3d2cb4af005f0367190af92b8",
+            "description": "Execute invalid_element",
+            "name": "invalid_element",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `invalid_element` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b34939c7fbf7a11f1cc9a38ba95e09d68baeade89e721a8de72bf3ddc3a171b9",
+            "description": "Execute invalid_format",
+            "name": "invalid_format",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `invalid_format` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:300a6a7848e36f2e60e2b2e76c7ab4e85ee8f52046af6bfce5fdf85da5a6edea",
+            "description": "Execute invalid_key",
+            "name": "invalid_key",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `invalid_key` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8e3931eeedfab197c768af586b8037a7cb05ac8382ff378d2ab11afe36b9e53c",
+            "description": "Execute invalid_type",
+            "name": "invalid_type",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `invalid_type` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ad514f0cfdd915c0fc65a7c8ebc1e736ad220d239bd55e7de5dff4f58b9a4091",
+            "description": "Execute invalid_union",
+            "name": "invalid_union",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `invalid_union` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ff42fb430abbf5a1b9c10009e8165d3fae2318228124f15fd7fd45ca01a5aab2",
+            "description": "Execute invalid_value",
+            "name": "invalid_value",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `invalid_value` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c3779e66f86951d5b0b20616915aaefb4d774ce0d5b82bf8361bea1c6528c73a",
+            "description": "Execute ip",
+            "name": "ip",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ip` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2aa55774c7b6b98ec853c6050ebdcea5f1ba42a18b6d38519fe66111cc88319f",
+            "description": "Execute jwt",
+            "name": "jwt",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `jwt` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c15e4dfbe9c0ed79a76c01bc1d6f088fed8a46b30de562e8f472906c9a105237",
+            "description": "Execute lazy",
+            "name": "lazy",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `lazy` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:59c77c6e3d6371b342a54401554a8fc3ba53866946ef985d529df0ff529b86dc",
+            "description": "Execute length",
+            "name": "length",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `length` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0a8e1203e2a7ece511c12b77c3e244c00099ae3acf688530dec816dbc8090292",
+            "description": "Execute literal",
+            "name": "literal",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `literal` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:875ed121ffe8c6efc1a65472df00ba17def3d65609b19098b027964c6d5cc8e8",
+            "description": "Execute map",
+            "name": "map",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `map` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:364ea9656896a29883393bd71577d1ff4656bd4605f014b579528242029e6e85",
+            "description": "Execute max",
+            "name": "max",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `max` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:81cc0f6b4930345fb65c6bffa675cc8e9c9ee8b0602cc0c2568d3eff0b55059e",
+            "description": "Execute min",
+            "name": "min",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `min` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e7081271c0004a084c56275a02e3de6ab75f9c1f84b953f850e7a7a8f8345784",
+            "description": "Execute multipleOf",
+            "name": "multipleOf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `multipleOf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:19af93e6a43987d6270498f73583642d4a43c42f553dab19e456a1784d72b965",
+            "description": "Execute nan",
+            "name": "nan",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `nan` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:adfc702384089c666c08b0e194d8e483bf604dff2504cfa535cd2f003ea27d63",
+            "description": "Execute nanoid",
+            "name": "nanoid",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `nanoid` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a03cb9283990e9e1cf4493eb36d5c4d919cea6977cf9dac7b85e635b363394f3",
+            "description": "Execute never",
+            "name": "never",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `never` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0d5dd65e927e1b5b241eb1a4c84e822fc55f5a8e0c4dc70e856aaba6dc220e83",
+            "description": "Execute none",
+            "name": "none",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `none` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:11914537e07ec6cf7b09ab2d1b679b6d9a12ad2f5ea1c22d81632884b02d8ff9",
+            "description": "Execute nonoptional",
+            "name": "nonoptional",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `nonoptional` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:95ca645a510dc45e3393a992ead40adedb51a9788a4b7390a23695652e078466",
+            "description": "Execute not_multiple_of",
+            "name": "not_multiple_of",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `not_multiple_of` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:49da25e6965e1eed1197772358728a7bfb3c17c2eac928e46301d1ea99ae1dcd",
+            "description": "Execute null",
+            "name": "null",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `null` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4d62351f0e934b020e1b45aa65b68c8c20d53c98a2b6a28c63dff7a6fa800bdd",
+            "description": "Execute nullable",
+            "name": "nullable",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `nullable` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a71b463e4178fe600791416b9525f583af89ed841d56246e1ab2e7975d08b312",
+            "description": "Execute number",
+            "name": "number",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `number` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:54f831c14f726fba4cf85e393d547adf9a4661a80ca6eb945612f574693b1070",
+            "description": "Execute object",
+            "name": "object",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `object` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fca9bd6fc79a2726a4a94a66ef91d994d20bc66116927e239bc7319009a97cf9",
+            "description": "Execute optional",
+            "name": "optional",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `optional` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:faacf28a2a17519b80c14e1238c877caef0015525319155bdcb1929522f37f22",
+            "description": "Execute passthrough",
+            "name": "passthrough",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `passthrough` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e98875e02a6f3945bad20cf61abbd4d57ef680ed3b834ee4fea1f8ecb91475c5",
+            "description": "Execute pipe",
+            "name": "pipe",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `pipe` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e1a2e4bcc86d92ead5792700e751a11d31b9d2f8858dcd520601272adb7b9f03",
+            "description": "Execute prefault",
+            "name": "prefault",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `prefault` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:86cf8c567b88528a6fda80cc970a6bb7da7270084318fb6235679d79dd859961",
+            "description": "Execute promise",
+            "name": "promise",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `promise` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3444ad05a37a0bf2a31bd4aa4cbd4d1b1f6f680178a4a17b4a529b6cace05517",
+            "description": "Execute readonly",
+            "name": "readonly",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `readonly` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a329ea3a872de470139716b12365caf2b5ba572a41e2c7fda9e9e3b6c7f0bebb",
+            "description": "Execute record",
+            "name": "record",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `record` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:543ea6efb7ed8766e96b14026a02c7187c59afd7d6620107d8173149f2d00cd6",
+            "description": "Execute regex",
+            "name": "regex",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `regex` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0699b775a2cb38f1fbdf2dcfff2d9fc14b3ce9de5f344da0c1964736c12d3060",
+            "description": "Execute relative",
+            "name": "relative",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `relative` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1f8fff4df6faeef8d34a4f0d6615e6e12483d714380c2fb56d4bff5246f8e07a",
+            "description": "Execute result",
+            "name": "result",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `result` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1da536187cd55d5e7d34ef808d42c38372c5e937144bbc822015ee2691e4c869",
+            "description": "Execute root",
+            "name": "root",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `root` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eec8297eb3f44f9f0c1b68c18b5a2272ce7ac6478c4447371f7924d8f69e3d83",
+            "description": "Execute seen",
+            "name": "seen",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `seen` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f00c1f8d1091e09b8f1d4fbb52fe31ff2396a872633bd91e3259bc8b0c6d8e21",
+            "description": "Execute set",
+            "name": "set",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:51c5051dfe0282ba3b4eb9dd387491ed84646cb5d8cf1ab444faaa08fb37cd58",
+            "description": "Execute startsWith",
+            "name": "startsWith",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `startsWith` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9e71aefa1978fb7da5582c71eab3c0dc9f2c01a98ec5782553a551b0dfaa4885",
+            "description": "Execute strict",
+            "name": "strict",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `strict` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:282f92bf4dcd436ad888578afc91f1f24986ec67e4f59a8303441c73644dd63f",
+            "description": "Execute string",
+            "name": "string",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `string` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b8e1a4696050f6d5f1ea95bd0705819a8b9d6e33aeba8011e6db050ceaa7c3b0",
+            "description": "Execute strip",
+            "name": "strip",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `strip` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f5e0b8f5ec3404051ba257a75ba76c7f1f1e72e4e4dc21f9998fc00c50aa1431",
+            "description": "Execute success",
+            "name": "success",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `success` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3a1fed6ff7153ec93d117a30c395f0a764253b1814d2993995fc18cce16c76c2",
+            "description": "Execute symbol",
+            "name": "symbol",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `symbol` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c5401d29fe1ea9016825babc72fc6072ee68dae5bb18c037456a6dc1d9c2cafc",
+            "description": "Execute taskCreated",
+            "name": "taskCreated",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `taskCreated` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b8b17d0528bedfe5e6056e718259cb4fb084b5ba2736ac5e04ef73ae11bd995c",
+            "description": "Execute taskStatus",
+            "name": "taskStatus",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `taskStatus` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a29c5394485ebfde6396c1309b29a8e6b67144258496390fd4dbb6d224441a82",
+            "description": "Execute template_literal",
+            "name": "template_literal",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `template_literal` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:74cd789ac32e532c50c02be19fc09ac30c9706b83b6b6249ee16caba79820416",
+            "description": "Execute time",
+            "name": "time",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `time` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2cd1a594ba6a32332b02c4dbfdeb38b30e120e9584b47f793271729dd6179ad0",
+            "description": "Execute toLowerCase",
+            "name": "toLowerCase",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toLowerCase` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6fb807ee86a47cd81d806054c8b42f9ef8aa1b853b37947a8c5b8c4691073bd9",
+            "description": "Execute toUpperCase",
+            "name": "toUpperCase",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `toUpperCase` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfff0e61555d819064cd8bcf9d08df43a27901cd9ab86bdd4c8a4c8472153095",
+            "description": "Execute too_big",
+            "name": "too_big",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `too_big` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d6afffe002d425b418e981fe8476499102a5789b92649749bb725d0530cdbe9",
+            "description": "Execute too_small",
+            "name": "too_small",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `too_small` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d1fa2102d404bea03cee1c82ad00f384b0a0a395c37a143dbb837e9fb10ceaf5",
+            "description": "Execute transform",
+            "name": "transform",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `transform` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e2b720625389633243681bd69d5bdbc8515aca3b4950d58881b131dcbaf3968b",
+            "description": "Execute trim",
+            "name": "trim",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `trim` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e004bb0f6abc6b03692a807a24ebaff73b631fd2a60eda8a306dc4729d99b9c8",
+            "description": "Execute tuple",
+            "name": "tuple",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tuple` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8340cfc8a59fd27ceff06fdb4871fbbbaeceb5542b8cb531a5cd6a004a2215ff",
+            "description": "Execute ulid",
+            "name": "ulid",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ulid` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:20a8e63a9708b88e895fe33fc9c1ab0fbd19514327e85d7a14f088d03bbdf933",
+            "description": "Execute undefined",
+            "name": "undefined",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `undefined` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:030f73f4498fcdcfe06cc2625261e39615224ac2c8457b267cf5feae5f224684",
+            "description": "Execute union",
+            "name": "union",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `union` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6998a58f6fc3164cffd89bd4a8a2c8df6dd20f5174bdc30f3a01568428595069",
+            "description": "Execute unknown",
+            "name": "unknown",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `unknown` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d998102ee3aa13e4b72bf6bba3011b59f0569953e97578797fb5f79e5a2b2388",
+            "description": "Execute unrecognized_keys",
+            "name": "unrecognized_keys",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `unrecognized_keys` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0dc7f64402dcdd48121748aa052d1ab876a3f3a0340d6b17035a6db4b64b1d8e",
+            "description": "Execute url",
+            "name": "url",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `url` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6f926f90cddc76de79a1ccf6701742066dd556b285a7d8f064efdf809b0e50c1",
+            "description": "Execute uuid",
+            "name": "uuid",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `uuid` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fa7aa2944084eec2e5b67baa7489e170ced24aeb624ea9dc534a1c94627a4eb0",
+            "description": "Execute void",
+            "name": "void",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `void` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:9bd20dd21c1dfc61cdb692f164849ca5514f7ac0bf62257da2d7022a56d03667",
+        "version": "0.11.0"
       }
     ]
   },
