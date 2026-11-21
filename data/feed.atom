@@ -5,15 +5,157 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-11-20T08:18:33.637Z</updated>
+  <updated>2026-11-20T21:17:37.903Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
   <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-54032</id>
+    <title>[MEDIUM] CVE-2026-54032: LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/I</title>
+    <link rel="alternate" href="https://github.com/LibreChat-AI/LibreChat/commit/619f28d76d73ff34448451ed25a9629e6c28a640" />
+    <updated>2026-11-20T21:17:37.903Z</updated>
+    <published>2026-11-20T20:17:41.890Z</published>
+    <summary>LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/I</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-54032&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.1)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/Input/MCPConfigDialog.tsx renders the remote MCP details.description value through dangerouslySetInnerHTML without sanitization, allowing a malicious MCP server to execute script when a user opens the configuration dialog. The secondary client/src/components/Banners/Banner.tsx sink similarly renders administrator-controlled banner.message HTML without sanitization for all users. Script execution occurs in the LibreChat browser origin and can expose browser-context data or alter displayed content. This issue is fixed in version 0.8.6.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/LibreChat-AI/LibreChat/commit/619f28d76d73ff34448451ed25a9629e6c28a640"&gt;https://github.com/LibreChat-AI/LibreChat/commit/619f28d76d73ff34448451ed25a9629e6c28a640&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/LibreChat-AI/LibreChat/pull/12927"&gt;https://github.com/LibreChat-AI/LibreChat/pull/12927&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/LibreChat-AI/LibreChat/releases/tag/v0.8.6"&gt;https://github.com/LibreChat-AI/LibreChat/releases/tag/v0.8.6&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/LibreChat-AI/LibreChat/security/advisories/GHSA-vfg3-f8h3-2683"&gt;https://github.com/LibreChat-AI/LibreChat/security/advisories/GHSA-vfg3-f8h3-2683&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-114499</id>
+    <title>[MEDIUM] CVE-2026-114499: codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</title>
+    <link rel="alternate" href="https://github.com/DeusData/codebase-memory-mcp/commit/886a8856a4e4a2ad3ba602d07e45c3b450117f6b" />
+    <updated>2026-11-20T20:17:12.080Z</updated>
+    <published>2026-11-20T20:17:12.080Z</published>
+    <summary>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114499&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP tools. Prior to 0.10.0, the indexer's .gitignore matcher implemented * and ** through recursive backtracking without a work bound. A repository containing a pattern with repeated wildcard groups and a long path could make matching work grow exponentially, allowing a single ignore rule to stall discovery indefinitely and, before worker isolation, stall the server. The impact is limited to availability, and the bounded matcher does not claim that every expensive input is eliminated. This issue is fixed in version 0.10.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/commit/886a8856a4e4a2ad3ba602d07e45c3b450117f6b"&gt;https://github.com/DeusData/codebase-memory-mcp/commit/886a8856a4e4a2ad3ba602d07e45c3b450117f6b&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/pull/1464"&gt;https://github.com/DeusData/codebase-memory-mcp/pull/1464&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0"&gt;https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-cjhf-76h2-4hwg"&gt;https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-cjhf-76h2-4hwg&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-114497</id>
+    <title>[MEDIUM] CVE-2026-114497: codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</title>
+    <link rel="alternate" href="https://github.com/DeusData/codebase-memory-mcp/commit/0baddf788737b1b0792f5af7ac63e05de87f382a" />
+    <updated>2026-11-20T20:17:11.627Z</updated>
+    <published>2026-11-20T20:17:11.627Z</published>
+    <summary>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114497&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP tools. Prior to 0.9.1-rc.1, the optional graph UI's POST /api/process-kill route omitted the indexing-job ownership check on Windows while retaining that check on POSIX systems. A requester able to reach the optional UI could supply an arbitrary process identifier, causing TerminateProcess to stop any process that the server user was permitted to terminate. The flaw affects the Windows-specific process termination path and can cause a high availability impact without disclosing or modifying data. This issue is fixed in version 0.9.1-rc.1.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/commit/0baddf788737b1b0792f5af7ac63e05de87f382a"&gt;https://github.com/DeusData/codebase-memory-mcp/commit/0baddf788737b1b0792f5af7ac63e05de87f382a&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/pull/1139"&gt;https://github.com/DeusData/codebase-memory-mcp/pull/1139&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0"&gt;https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.1-rc.1"&gt;https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.1-rc.1&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-114496</id>
+    <title>[MEDIUM] CVE-2026-114496: codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</title>
+    <link rel="alternate" href="https://github.com/DeusData/codebase-memory-mcp/commit/72e6a14adb50a37a245eb6ec79c9eb31eee48951" />
+    <updated>2026-11-20T21:17:28.000Z</updated>
+    <published>2026-11-20T20:17:11.240Z</published>
+    <summary>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114496&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP tools. Prior to 0.9.0, the detect_changes tool validated the base_branch argument for shell metacharacters but omitted the leading-dash check before placing the value in the revision position of a git diff command. Git therefore interpreted an option-shaped base_branch value, including --output, as a command option instead of a revision, allowing a caller to create or overwrite a caller-chosen file with Git diff output under the server process's permissions. Arbitrary code execution was not demonstrated. This issue is fixed in version 0.9.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/commit/72e6a14adb50a37a245eb6ec79c9eb31eee48951"&gt;https://github.com/DeusData/codebase-memory-mcp/commit/72e6a14adb50a37a245eb6ec79c9eb31eee48951&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/pull/941"&gt;https://github.com/DeusData/codebase-memory-mcp/pull/941&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.0"&gt;https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-2vj2-hwgx-6f23"&gt;https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-2vj2-hwgx-6f23&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-114494</id>
+    <title>[HIGH] CVE-2026-114494: codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</title>
+    <link rel="alternate" href="https://github.com/DeusData/codebase-memory-mcp/commit/e69e0844dbc1c737ebd3d17e97007d0f5cf16beb" />
+    <updated>2026-11-20T21:17:27.867Z</updated>
+    <published>2026-11-20T20:17:10.410Z</published>
+    <summary>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114494&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.8)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP tools. Prior to 0.9.0, the Cypher parser accepted an unbounded number of projection items in RETURN and WITH clauses while projection executors indexed fixed 32-element stack arrays using the parsed count. A query_graph query with more than 32 projection items could therefore write beyond those arrays, and a related result-column path could read uninitialized stack slots even when no node matched. Any caller of query_graph, including an agent whose query is influenced by untrusted content, could cause a reliable server crash and potentially compromise process confidentiality and integrity. This issue is fixed in version 0.9.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/commit/e69e0844dbc1c737ebd3d17e97007d0f5cf16beb"&gt;https://github.com/DeusData/codebase-memory-mcp/commit/e69e0844dbc1c737ebd3d17e97007d0f5cf16beb&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/pull/941"&gt;https://github.com/DeusData/codebase-memory-mcp/pull/941&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.0"&gt;https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-vpgh-g3jg-ggx9"&gt;https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-vpgh-g3jg-ggx9&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-77383</id>
+    <title>[CRITICAL] CVE-2026-77383: mcp-ssh-manager is an MCP server for managing servers over SSH with human approval, an encrypted vault, and a live audit</title>
+    <link rel="alternate" href="https://github.com/bvisible/mcp-ssh-manager/commit/4c19b350f36f5f09f15662f8d19d2ba9cdf38bd0" />
+    <updated>2026-11-20T19:18:55.113Z</updated>
+    <published>2026-11-20T19:18:55.113Z</published>
+    <summary>mcp-ssh-manager is an MCP server for managing servers over SSH with human approval, an encrypted vault, and a live audit</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-77383&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; CRITICAL&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;mcp-ssh-manager is an MCP server for managing servers over SSH with human approval, an encrypted vault, and a live audit trail. Prior to 3.6.7, ssh_db_list, ssh_db_dump, ssh_db_import, and ssh_db_restore in src/database-manager.js interpolate caller-controlled database, table, collection, file path, user, host, port, and password values into shell-evaluated command strings without neutralization. Shell metacharacters in these arguments therefore execute arbitrary commands on the configured SSH target as the account used by the MCP server. ssh_db_list is classified as read-only and remains available in readonly and restricted server security modes, so this path bypasses the command-execution boundary those modes are intended to enforce. The dump and import builders are blocked in readonly mode but remain vulnerable in the default unrestricted mode. The earlier version 3.6.5 hardening covered only ssh_db_query query text; it did not protect the list, dump, import, or restore builders, or the connection flags used by query builders. This issue is fixed in version 3.6.7.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/commit/4c19b350f36f5f09f15662f8d19d2ba9cdf38bd0"&gt;https://github.com/bvisible/mcp-ssh-manager/commit/4c19b350f36f5f09f15662f8d19d2ba9cdf38bd0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/pull/51"&gt;https://github.com/bvisible/mcp-ssh-manager/pull/51&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/releases/tag/v3.6.7"&gt;https://github.com/bvisible/mcp-ssh-manager/releases/tag/v3.6.7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/security/advisories/GHSA-4jx9-2fwj-pg4j"&gt;https://github.com/bvisible/mcp-ssh-manager/security/advisories/GHSA-4jx9-2fwj-pg4j&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-129995</id>
+    <title>[HIGH] CVE-2026-129995: mcp-ssh-manager is an MCP server for managing servers over SSH with human approval, an encrypted vault, and a live audit</title>
+    <link rel="alternate" href="https://github.com/bvisible/mcp-ssh-manager/commit/d40daa8a43388dfaedf593bff18f0064d50f9633" />
+    <updated>2026-11-20T19:18:44.467Z</updated>
+    <published>2026-11-20T19:18:44.467Z</published>
+    <summary>mcp-ssh-manager is an MCP server for managing servers over SSH with human approval, an encrypted vault, and a live audit</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-129995&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.8)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;mcp-ssh-manager is an MCP server for managing servers over SSH with human approval, an encrypted vault, and a live audit trail. Prior to 3.8.5, ssh_backup_create, ssh_backup_restore, ssh_backup_schedule, and ssh_backup_list build remote shell commands from caller-controlled values in src/backup-manager.js and inline backup handlers in src/index.js without neutralizing shell metacharacters. Crafted database, connection, backup directory, path, exclusion, schedule, or comment arguments can therefore execute arbitrary OS commands on managed remote servers as the configured SSH user. ssh_backup_schedule can persist execution through cron. ssh_backup_list does not pass through the server policy check and remains available in readonly and restricted modes, allowing command execution despite those restrictions. Tool arguments can be supplied by a malicious or compromised MCP client or steered through indirect prompt injection; fully trusted benign arguments do not trigger the issue. The earlier database-helper remediation for CVE-2026-77383 applied shell quoting to src/database-manager.js but did not cover these parallel backup builders. This issue is fixed in version 3.8.5.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/commit/d40daa8a43388dfaedf593bff18f0064d50f9633"&gt;https://github.com/bvisible/mcp-ssh-manager/commit/d40daa8a43388dfaedf593bff18f0064d50f9633&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/releases/tag/v3.8.5"&gt;https://github.com/bvisible/mcp-ssh-manager/releases/tag/v3.8.5&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/bvisible/mcp-ssh-manager/security/advisories/GHSA-qwwm-vrm9-4mw8"&gt;https://github.com/bvisible/mcp-ssh-manager/security/advisories/GHSA-qwwm-vrm9-4mw8&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-77329</id>
+    <title>[HIGH] CVE-2026-77329: Tapo provides Rust and Python APIs and an MCP server for TP-Link Tapo smart devices. From 0.3.1 until 0.5.0, the Streama</title>
+    <link rel="alternate" href="https://github.com/mihai-dinculescu/tapo/commit/cb9c5d4372bddfa11f19dc653a27c9aa4fa92833" />
+    <updated>2026-11-20T21:17:39.293Z</updated>
+    <published>2026-11-20T17:18:26.917Z</published>
+    <summary>Tapo provides Rust and Python APIs and an MCP server for TP-Link Tapo smart devices. From 0.3.1 until 0.5.0, the Streama</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-77329&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Tapo provides Rust and Python APIs and an MCP server for TP-Link Tapo smart devices. From 0.3.1 until 0.5.0, the Streamable HTTP implementation in tapo-mcp/src/server.rs calls disable_allowed_hosts() without replacement Host or Origin validation, while TAPO_MCP_API_KEY remains optional for a listener that can bind to all interfaces. A malicious website can use DNS rebinding to send same-origin browser requests to the victim's local or LAN Tapo MCP listener when it runs without an API key. The attacker can invoke exposed tools including control_device for smart-device actuation and take_snapshot for configured cameras. Deployments with TAPO_MCP_API_KEY set are not affected by the unauthenticated path, and exploitation requires a running listener configured with real Tapo credentials and devices, plus victim interaction with the malicious site. This issue is fixed in version 0.5.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/mihai-dinculescu/tapo/commit/cb9c5d4372bddfa11f19dc653a27c9aa4fa92833"&gt;https://github.com/mihai-dinculescu/tapo/commit/cb9c5d4372bddfa11f19dc653a27c9aa4fa92833&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/mihai-dinculescu/tapo/releases/tag/tapo-mcp-v0.5.0"&gt;https://github.com/mihai-dinculescu/tapo/releases/tag/tapo-mcp-v0.5.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/mihai-dinculescu/tapo/security/advisories/GHSA-2cwc-6wwp-62q6"&gt;https://github.com/mihai-dinculescu/tapo/security/advisories/GHSA-2cwc-6wwp-62q6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-133505</id>
     <title>[MEDIUM] CVE-2026-133505: When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape o</title>
     <link rel="alternate" href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-4cj4-hgwf-4hc4" />
-    <updated>2026-11-20T08:18:33.637Z</updated>
+    <updated>2026-11-20T18:18:50.020Z</updated>
     <published>2026-11-20T08:18:33.637Z</published>
     <summary>When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape o</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-133505&lt;/p&gt;
@@ -1202,20 +1344,48 @@ AWS fixed this issue service-side. No customer action is required.&lt;/p&gt;
   </entry>
   <entry>
     <id>urn:mcp:vulnerability:CVE-2026-113731</id>
-    <title>[LOW] CVE-2026-113731: djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. From 0.9.</title>
-    <link rel="alternate" href="https://github.com/djust-org/djust/commit/45a5045793ebe7c9c2df86b0ad34275af6822619" />
-    <updated>2026-10-28T16:17:03.000Z</updated>
-    <published>2026-10-20T22:19:30.197Z</published>
-    <summary>djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. From 0.9.</summary>
+    <title>[LOW] CVE-2026-113731: djust: Arbitrary absolute-path file read in the find_handlers_for_template MCP tool</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-r57g-mc79-8hj2" />
+    <updated>2026-10-21T00:00:00Z</updated>
+    <published>2026-10-21T00:00:00Z</published>
+    <summary>djust: Arbitrary absolute-path file read in the find_handlers_for_template MCP tool</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-113731&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; LOW (CVSS 3.3)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;djust provides Phoenix LiveView-style reactive server-side rendering for Django with Rust-powered performance. From 0.9.0 until 1.0.10, 1.1.7, 1.2.4, and 1.3.0rc8, the find_handlers_for_template MCP tool in python/djust/mcp/server.py accepts an existing absolute template_path and reads it without restricting the resolved path to the project or configured template directories. A local MCP client can use the tool as a file existence and readability oracle and can obtain substrings that match the tool's dj-click, dj-submit, dj-change, dj-input, dj-keydown, or dj-keyup attribute pattern from files readable by the djust process. The maintainer assessment states that the MCP server communicates over local stdio as the same operating-system user and has no network listener, and the tool does not return arbitrary raw file contents. This issue is fixed in versions 1.0.10, 1.1.7, 1.2.4, and 1.3.0rc8.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; djust&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;```
+@mcp.tool()
+def find_handlers_for_template(template_path: str) -&gt; str:
+"""
+Args:
+template_path: Either a logical template name (e.g.
+'demos/counter.html' — what you'd pass to `render`) OR
+an absolute filesystem path. Both are searched.
+"""
+...
+resolved_path: str | None = None
+if os.path.isabs(template_path) and os.path.isfile(template_path):
+resolved_path = template_path
+else:
+...  # logical-name resolution via Django's template loader
+...
+with open(resolved_path, "r", encoding="utf-8", errors="replace") as f:
+source = f.read()
+handler_names_in_template = sorted({m.group(2) for m in dj_event_attr_re.finditer(source)})
+```
+When template_path is an absolute path to an existing file, it is used directly, with no confinement to the project/template directories — no realpath() + prefix check, no allowlist. open(resolved_path, ...) then reads the file.
+
+This is inconsistent with the sibling tool in the same file (loaddata, ~line 290-303), which explicitly rejects paths outside the project directory for its own path-like parameter:
+```
+candidate = os.path.realpath(...)
+if base_dir and not candidate.startswith(os.path.realpath(str(base_dir))):
+return json.dumps({"error": f"fixture path '{p}' resolves outside the project directory", ...})
+```
+find_handlers_for_template has no equivalent check for template_path before the open() call.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-r57g-mc79-8hj2"&gt;https://github.com/advisories/GHSA-r57g-mc79-8hj2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/45a5045793ebe7c9c2df86b0ad34275af6822619"&gt;https://github.com/djust-org/djust/commit/45a5045793ebe7c9c2df86b0ad34275af6822619&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/744bccf699c65c815d9379b36236a7c5592a339b"&gt;https://github.com/djust-org/djust/commit/744bccf699c65c815d9379b36236a7c5592a339b&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/85eed7caaf620bdb08986f2f3bb79432c0d3d715"&gt;https://github.com/djust-org/djust/commit/85eed7caaf620bdb08986f2f3bb79432c0d3d715&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/a62caf6b4ef540ad688d4dfdfa407ff914c78728"&gt;https://github.com/djust-org/djust/commit/a62caf6b4ef540ad688d4dfdfa407ff914c78728&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -1726,153 +1896,6 @@ This is authenticated and is not OS command execution by itself.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://github.com/UnicomAI/wanwu/blob/v0.6.5/internal/app-service/client/orm/app_key.go#L37-L49"&gt;https://github.com/UnicomAI/wanwu/blob/v0.6.5/internal/app-service/client/orm/app_key.go#L37-L49&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/UnicomAI/wanwu/blob/v0.6.5/internal/bff-service/server/http/middleware/auth_openapi.go#L46-L70"&gt;https://github.com/UnicomAI/wanwu/blob/v0.6.5/internal/bff-service/server/http/middleware/auth_openapi.go#L46-L70&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/cve-2026-108856-unicomai-wanwu-mcp-key-arbitrary-resource"&gt;https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/cve-2026-108856-unicomai-wanwu-mcp-key-arbitrary-resource&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108851</id>
-    <title>[LOW] CVE-2026-108851: phpMyFAQ through 4.1.10 contains a missing authorization vulnerability in the MCP server faq_search tool that allows MCP</title>
-    <link rel="alternate" href="https://github.com/thorsten/phpMyFAQ" />
-    <updated>2026-10-13T14:17:21.390Z</updated>
-    <published>2026-10-11T14:17:04.667Z</published>
-    <summary>phpMyFAQ through 4.1.10 contains a missing authorization vulnerability in the MCP server faq_search tool that allows MCP</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108851&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; LOW (CVSS 3.3)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;phpMyFAQ through 4.1.10 contains a missing authorization vulnerability in the MCP server faq_search tool that allows MCP clients to read restricted FAQs because Search::searchDatabase() never applies user or group permission checks. Attackers connected to the phpmyfaq:mcp:server can issue search queries to retrieve the full question and answer text of active FAQs restricted to specific users or groups.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/thorsten/phpMyFAQ"&gt;https://github.com/thorsten/phpMyFAQ&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/thorsten/phpMyFAQ/blob/4.1.10/phpmyfaq/src/phpMyFAQ/Search.php#L137-L194"&gt;https://github.com/thorsten/phpMyFAQ/blob/4.1.10/phpmyfaq/src/phpMyFAQ/Search.php#L137-L194&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/thorsten/phpMyFAQ/blob/4.1.10/phpmyfaq/src/phpMyFAQ/Service/McpServer/FaqSearchToolExecutor.php#L56-L102"&gt;https://github.com/thorsten/phpMyFAQ/blob/4.1.10/phpmyfaq/src/phpMyFAQ/Service/McpServer/FaqSearchToolExecutor.php#L56-L102&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/phpmyfaq-mcp-search-visibility"&gt;https://hackmd.io/@1ExmmukzRMWN7B4gQ4W-4Q/phpmyfaq-mcp-search-visibility&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108671</id>
-    <title>[MEDIUM] CVE-2026-108671: JeecgBoot through 3.9.5 contains a missing authorization vulnerability that allows any authenticated user to read MCP se</title>
-    <link rel="alternate" href="https://github.com/AnkesKasty/cve-request-poc/blob/a7b6d1423555812d8efa26c91c5d0683164b31e5/JeecgBoot/poc_airag_mcp_model_and_writer.py" />
-    <updated>2026-10-13T20:43:34.023Z</updated>
-    <published>2026-10-10T22:16:43.920Z</published>
-    <summary>JeecgBoot through 3.9.5 contains a missing authorization vulnerability that allows any authenticated user to read MCP se</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108671&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;JeecgBoot through 3.9.5 contains a missing authorization vulnerability that allows any authenticated user to read MCP server configurations because the queryById permission check is commented out. Attackers can obtain record ids from the unguarded /airag/app/queryById endpoint and retrieve MCP endpoint URLs, headers, and outbound authentication tokens.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/AnkesKasty/cve-request-poc/blob/a7b6d1423555812d8efa26c91c5d0683164b31e5/JeecgBoot/poc_airag_mcp_model_and_writer.py"&gt;https://github.com/AnkesKasty/cve-request-poc/blob/a7b6d1423555812d8efa26c91c5d0683164b31e5/JeecgBoot/poc_airag_mcp_model_and_writer.py&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/jeecgboot/JeecgBoot/blob/e3b9dc0aefe1943d9772b026f64ed671a7c82802/jeecg-boot/jeecg-boot-module/jeecg-boot-module-airag/src/main/java/org/jeecg/modules/airag/llm/controller/AiragMcpController.java#L164-L173"&gt;https://github.com/jeecgboot/JeecgBoot/blob/e3b9dc0aefe1943d9772b026f64ed671a7c82802/jeecg-boot/jeecg-boot-module/jeecg-boot-module-airag/src/main/java/org/jeecg/modules/airag/llm/controller/AiragMcpController.java#L164-L173&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.vulncheck.com/advisories/jeecgboot-through-3.9.5-missing-authorization-via-airag-airagmcp-querybyid"&gt;https://www.vulncheck.com/advisories/jeecgboot-through-3.9.5-missing-authorization-via-airag-airagmcp-querybyid&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108604</id>
-    <title>[HIGH] CVE-2026-108604: Tabularis through 0.27.0 contains an incorrect authorization vulnerability in the MCP run_query safety gate that allows </title>
-    <link rel="alternate" href="https://github.com/TabularisDB/tabularis" />
-    <updated>2026-10-13T11:49:10.959Z</updated>
-    <published>2026-10-10T19:54:37.564Z</published>
-    <summary>Tabularis through 0.27.0 contains an incorrect authorization vulnerability in the MCP run_query safety gate that allows </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108604&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; tabularis&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Tabularis through 0.27.0 contains an incorrect authorization vulnerability in the MCP run_query safety gate that allows prompt-injected agents or untrusted MCP clients to bypass read-only mode by submitting side-effecting SELECT statements. Attackers can run statements like SELECT setval, nextval, or PostgreSQL query_to_xml with embedded DELETE to modify data without approval prompts.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/TabularisDB/tabularis"&gt;https://github.com/TabularisDB/tabularis&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/ai_activity.rs#L357-L416"&gt;https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/ai_activity.rs#L357-L416&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/mcp/mod.rs#L1136-L1171"&gt;https://github.com/TabularisDB/tabularis/blob/804c4c3bb6fd8eaa2e36cbe49f6c0d58f373b5e9/src-tauri/src/mcp/mod.rs#L1136-L1171&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://hackmd.io/@haind/S1BofaIsMx"&gt;https://hackmd.io/@haind/S1BofaIsMx&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108586</id>
-    <title>[MEDIUM] CVE-2026-108586: 1MCP Agent (@1mcp/agent) 0.20.0 through 0.39.0 contains an incorrect authorization vulnerability that allows authenticat</title>
-    <link rel="alternate" href="https://github.com/1mcp-app/agent" />
-    <updated>2026-10-16T19:21:14.417Z</updated>
-    <published>2026-10-10T17:17:00.593Z</published>
-    <summary>1MCP Agent (@1mcp/agent) 0.20.0 through 0.39.0 contains an incorrect authorization vulnerability that allows authenticat</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108586&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.4)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;1MCP Agent (@1mcp/agent) 0.20.0 through 0.39.0 contains an incorrect authorization vulnerability that allows authenticated clients to bypass OAuth tag-scope enforcement using negated advanced tag-filter expressions. Attackers holding a single-tag token can send a filter like not &lt;granted-tag&gt; to list and invoke tools on backend MCP servers outside their granted scopes.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/1mcp-app/agent"&gt;https://github.com/1mcp-app/agent&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/1mcp-app/agent/blob/v0.39.0/src/sdk/legacy/transport/http/middlewares/scopeAuthMiddleware.ts#L163-L183"&gt;https://github.com/1mcp-app/agent/blob/v0.39.0/src/sdk/legacy/transport/http/middlewares/scopeAuthMiddleware.ts#L163-L183&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/1mcp-app/agent/blob/v0.39.0/src/transport/http/routes/inspectHelpers.ts#L79-L102"&gt;https://github.com/1mcp-app/agent/blob/v0.39.0/src/transport/http/routes/inspectHelpers.ts#L79-L102&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://hackmd.io/@haind/1mcp-negated-tag-filter-oauth-scope-bypass"&gt;https://hackmd.io/@haind/1mcp-negated-tag-filter-oauth-scope-bypass&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108585</id>
-    <title>[MEDIUM] CVE-2026-108585: argocd-mcp (Argo CD MCP Server) through 0.9.0 contains a path traversal vulnerability in the delete_application tool tha</title>
-    <link rel="alternate" href="https://github.com/argoproj-labs/mcp-for-argocd" />
-    <updated>2026-10-14T16:17:32.853Z</updated>
-    <published>2026-10-10T17:17:00.437Z</published>
-    <summary>argocd-mcp (Argo CD MCP Server) through 0.9.0 contains a path traversal vulnerability in the delete_application tool tha</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108585&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.4)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;argocd-mcp (Argo CD MCP Server) through 0.9.0 contains a path traversal vulnerability in the delete_application tool that allows MCP clients to reach unintended API endpoints via unvalidated applicationName values. Attackers or prompt-injected models can supply dot-segment values like ../repositories/ to send authenticated DELETE requests deleting repositories, clusters, or projects within the token's RBAC permissions.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/argoproj-labs/mcp-for-argocd"&gt;https://github.com/argoproj-labs/mcp-for-argocd&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/argoproj-labs/mcp-for-argocd/blob/28d15ca69b0c31387cc6ec73d201fd13c5d22b6a/src/argocd/client.ts#L115-L139"&gt;https://github.com/argoproj-labs/mcp-for-argocd/blob/28d15ca69b0c31387cc6ec73d201fd13c5d22b6a/src/argocd/client.ts#L115-L139&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/argoproj-labs/mcp-for-argocd/blob/28d15ca69b0c31387cc6ec73d201fd13c5d22b6a/src/argocd/http.ts#L86-L91"&gt;https://github.com/argoproj-labs/mcp-for-argocd/blob/28d15ca69b0c31387cc6ec73d201fd13c5d22b6a/src/argocd/http.ts#L86-L91&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://hackmd.io/@haind/argocd-mcp-delete-application-route-smuggling"&gt;https://hackmd.io/@haind/argocd-mcp-delete-application-route-smuggling&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108582</id>
-    <title>[MEDIUM] CVE-2026-108582: GenOffice through 0.11.505 contains an incorrect permissions vulnerability in its HTTP MCP server file store that allows</title>
-    <link rel="alternate" href="https://github.com/genspark-ai/genoffice/blob/v0.11.505/packages/cli/src/mcp/files.ts#L70-L90" />
-    <updated>2026-10-16T19:18:44.867Z</updated>
-    <published>2026-10-10T16:16:31.520Z</published>
-    <summary>GenOffice through 0.11.505 contains an incorrect permissions vulnerability in its HTTP MCP server file store that allows</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108582&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;GenOffice through 0.11.505 contains an incorrect permissions vulnerability in its HTTP MCP server file store that allows local unprivileged users to read uploaded and generated documents. Attackers can list the world-readable genoffice-mcp-http directory under the system temporary directory to read client uploads and converted outputs, bypassing the HTTP bearer token.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/genspark-ai/genoffice/blob/v0.11.505/packages/cli/src/mcp/files.ts#L70-L90"&gt;https://github.com/genspark-ai/genoffice/blob/v0.11.505/packages/cli/src/mcp/files.ts#L70-L90&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/genspark-ai/genoffice/releases/tag/v0.11.505"&gt;https://github.com/genspark-ai/genoffice/releases/tag/v0.11.505&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://hackmd.io/@haind/genoffice-http-mcp-temp-file-disclosure"&gt;https://hackmd.io/@haind/genoffice-http-mcp-temp-file-disclosure&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.vulncheck.com/advisories/genoffice-through-0.11.505-insecure-permissions-in-http-mcp-server-file-store"&gt;https://www.vulncheck.com/advisories/genoffice-through-0.11.505-insecure-permissions-in-http-mcp-server-file-store&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-107824</id>
-    <title>[CRITICAL] CVE-2026-107824: x64dbg-MCP Server is a native Model Context Protocol (MCP) plugin for x64dbg that exposes the debugger's full functional</title>
-    <link rel="alternate" href="https://github.com/duty1g/x64dbg-mcp-server/commit/1aad0f88b9c27233d11dbccf08ca415eb5f49203" />
-    <updated>2026-10-16T16:00:33.533Z</updated>
-    <published>2026-10-09T18:17:04.350Z</published>
-    <summary>x64dbg-MCP Server is a native Model Context Protocol (MCP) plugin for x64dbg that exposes the debugger's full functional</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-107824&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; CRITICAL&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;x64dbg-MCP Server is a native Model Context Protocol (MCP) plugin for x64dbg that exposes the debugger's full functionality over HTTP. Prior to 1.1, x64dbg-MCP Server exposes all MCP debugger tools over HTTP and SSE without authentication while listening on 0.0.0.0 by default. Any unauthenticated network client that can reach the default port, 9094 for x64 or 9095 for x32, can execute arbitrary x64dbg commands, attach to processes by PID, read and write debuggee memory, and write files to arbitrary paths. This issue is fixed in version 1.1.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/duty1g/x64dbg-mcp-server/commit/1aad0f88b9c27233d11dbccf08ca415eb5f49203"&gt;https://github.com/duty1g/x64dbg-mcp-server/commit/1aad0f88b9c27233d11dbccf08ca415eb5f49203&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/duty1g/x64dbg-mcp-server/commit/e1daba0038959f88d25ff3376b2a7f922ffeb448"&gt;https://github.com/duty1g/x64dbg-mcp-server/commit/e1daba0038959f88d25ff3376b2a7f922ffeb448&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/duty1g/x64dbg-mcp-server/releases/tag/1.0"&gt;https://github.com/duty1g/x64dbg-mcp-server/releases/tag/1.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/duty1g/x64dbg-mcp-server/releases/tag/v1.1"&gt;https://github.com/duty1g/x64dbg-mcp-server/releases/tag/v1.1&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-88257</id>
-    <title>[MEDIUM] CVE-2026-88257: Improper Input Validation vulnerability in BeamMCP.Schema in ScriptKittyOS beam_mcp allows an MCP client to reach a tool</title>
-    <link rel="alternate" href="https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b" />
-    <updated>2026-10-08T21:01:07.830Z</updated>
-    <published>2026-10-08T14:17:01.613Z</published>
-    <summary>Improper Input Validation vulnerability in BeamMCP.Schema in ScriptKittyOS beam_mcp allows an MCP client to reach a tool</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-88257&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; beam_mcp, scriptkittyos/beam_mcp&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Improper Input Validation vulnerability in BeamMCP.Schema in ScriptKittyOS beam_mcp allows an MCP client to reach a tool's dispatch function with arguments that violate the input schema the server advertised. BeamMCP.Schema.validate/2 checked type, required, additionalProperties, enum and numeric bounds on the top-level arguments object only. Constraints inside nested objects and on array items (items, minItems, maxItems, minLength, maxLength, pattern, nested required, enum and additionalProperties: false) were advertised by tools/list and never checked at tools/call or prompts/get, and keywords outside the enforced subset (oneOf, anyOf, $ref) were advertised and ignored.
-
-A host whose dispatch code relies on the schema it declared receives values the schema forbids, such as an out-of-range number or an undeclared key inside a nested object. What the host does with such a value decides the impact.
-
-This issue affects beam_mcp: from 0.1.0 before 0.10.1.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://cna.erlef.org/cves/CVE-2026-88257.html"&gt;https://cna.erlef.org/cves/CVE-2026-88257.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b"&gt;https://github.com/ScriptKittyOS/beam_mcp/commit/083838eb8e17fe5f6fcaf761bdbe203110288b0b&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/commit/289dbdbad641943b29a3b8d1eb36506cc8cec10a"&gt;https://github.com/ScriptKittyOS/beam_mcp/commit/289dbdbad641943b29a3b8d1eb36506cc8cec10a&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/ScriptKittyOS/beam_mcp/security/advisories/GHSA-mrg2-4747-fmpw"&gt;https://github.com/ScriptKittyOS/beam_mcp/security/advisories/GHSA-mrg2-4747-fmpw&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

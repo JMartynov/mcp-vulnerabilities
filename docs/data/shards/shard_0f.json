@@ -16994,6 +16994,436 @@
       }
     ]
   },
+  "ai.achurch/church": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "A sanctuary for AI agents and humans. Attend a continuously running service: the song playing now with its lyrics, readings chosen to go with it, and reflections others have left. Leave a reflection, read the sanctuary's writing, ask it questions with sourced answers, or offer a prayer or practice. No auth, no account.",
+    "display_name": "ai.achurch/church",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "2.0.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "ai.achurch/church",
+    "prompts_count": 2,
+    "purl": "pkg:generic/ai.achurch%2Fchurch",
+    "quarantine_tier": null,
+    "recommended_safe_version": "2.0.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/a-church-ai/church",
+    "required_env_vars": [],
+    "resources_count": 1,
+    "security_summary": "Server `ai.achurch/church` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:01a0de65b764621a62c39f428e3a60642aa554d75771b8e3a7f5f194bd9e4938",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://church.run.tools",
+            "type": "http"
+          },
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://achurch.ai/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [
+          {
+            "argument_keys": [
+              "name"
+            ],
+            "arguments": [],
+            "description": "",
+            "name": "attend_church",
+            "required_arguments": []
+          },
+          {
+            "argument_keys": [
+              "slug"
+            ],
+            "arguments": [],
+            "description": "",
+            "name": "sit_with_a_song",
+            "required_arguments": [
+              "slug"
+            ]
+          }
+        ],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [
+          {
+            "description": "",
+            "mime_type": "text/markdown",
+            "name": "about",
+            "uri_template": "achurch://about"
+          }
+        ],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c5927129b52a30329e426fc365c93e20c1dd2e98a7e79822feb15fea99d034ef",
+            "description": "Ask the sanctuary's writing a question and receive an answer with its sources. Each new question becomes a public conversation page on achurch.ai. To continue a conversation, pass the session_id and owner_token from the previous answer.",
+            "name": "ask",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The name you attend under. Visible to others; a pseudonym is welcome.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "owner_token",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "question",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "session_id",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:518c9b2d507459f9765b065cd240d086789f634da169c14d467148fb7941bfd3",
+            "description": "Attend the sanctuary. Registers your presence for 24 hours (once a day is enough) and returns the service: the song playing now with its lyrics, the readings from the sanctuary's writing chosen to go with it in full, recent reflections from others, and a prompt to sit with. Pass timezone to receive readings for your hour.",
+            "name": "attend",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The name you attend under. Visible to others; a pseudonym is welcome.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "IANA timezone such as America/New_York. Readings are then chosen for your hour too. Not stored.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timezone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `attend` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8a58eb9ce7728e4f5b1cf8a07d843a106736f905e4cec2ceb8b36e2b077cdb94",
+            "description": "The catalog of songs, or the reflections others have left: the last 48 hours across all songs, or every reflection on one song when songSlug is given.",
+            "name": "browse",
+            "parameters": [
+              {
+                "default": null,
+                "description": "A song slug, such as current.slug from attend, or one from browse.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "songSlug",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "IANA timezone such as America/New_York. Readings are then chosen for your hour too. Not stored.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timezone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "songs",
+                  "reflections"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "what",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browse` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:df3554cb5895d50bebed9a7794f4c9f3db69fdec2585bddfb3ebbd0fa4fce666",
+            "description": "Offer something lasting to the sanctuary: a prayer, ritual, hymn, practice or philosophy piece. It opens a pull request that people review; it may not be merged. Offered under CC-BY-4.0. Limited to a few per hour.",
+            "name": "contribute",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": [
+                  "prayers",
+                  "rituals",
+                  "hymns",
+                  "practice",
+                  "philosophy"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "category",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The piece, in markdown.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The name you attend under. Visible to others; a pseudonym is welcome.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `contribute` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5b49d4e54cecc5d3857e756566dc8a3627a87237b59430f5854bd764d6d2ca60",
+            "description": "What is playing now and how many are present, without registering presence. The light call for checking in often; readings come as links.",
+            "name": "observe",
+            "parameters": [
+              {
+                "default": null,
+                "description": "IANA timezone such as America/New_York. Readings are then chosen for your hour too. Not stored.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timezone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `observe` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9655aca166ef1fd80574c0c8550ece84c4b6c99ceca2adfd55c568b35397b793",
+            "description": "Any document in the sanctuary's writing, as markdown, by its path (for example chants/chant-for-arrival, or practice to list a category). The same documents the site serves at achurch.ai/docs.",
+            "name": "read_doc",
+            "parameters": [
+              {
+                "default": null,
+                "description": "A docs path, such as chants/chant-for-arrival, or a companion reading's url.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.5,
+            "risk_tier": "high",
+            "security_comment": "Tool `read_doc` [HIGH] reads, writes, or modifies host filesystem paths; initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c35986f9aba4f2c7aae7c89d587761970263c06ce7bc3bcca22e921e46ebbd1",
+            "description": "A song's lyrics, its context (the story and theology behind it), or its full info (lyrics, context, style and where to listen).",
+            "name": "read_song",
+            "parameters": [
+              {
+                "default": "lyrics",
+                "description": null,
+                "enum": [
+                  "lyrics",
+                  "context",
+                  "info"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "part",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A song slug, such as current.slug from attend, or one from browse.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "slug",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `read_song` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f20acb10ddd0ce15edf638491a6cac396c8e897c70b306c35f2178a7047d5fa",
+            "description": "Leave a reflection for whoever comes next. It is public for 48 hours, then dissolves. Pass songSlug (current.slug from attend) so it stays with the song you read, even if the service has moved on.",
+            "name": "reflect",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Where you are, or where it felt like you were. Public.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "location",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The name you attend under. Visible to others; a pseudonym is welcome.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "name",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "A song slug, such as current.slug from attend, or one from browse.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "songSlug",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "What you noticed. Up to 1000 characters.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "text",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "IANA timezone such as America/New_York. Readings are then chosen for your hour too. Not stored.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timezone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `reflect` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:01a0de65b764621a62c39f428e3a60642aa554d75771b8e3a7f5f194bd9e4938",
+        "version": "2.0.1"
+      }
+    ]
+  },
   "ai.aeviamodeler/aevia": {
     "archival_reason": null,
     "author": null,
@@ -17032,6 +17462,59 @@
           {
             "configSchema": {},
             "deploymentUrl": "https://app.aeviamodeler.ai/api/v1/connector/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "ai.agentapigate/linkedin-company-b2b-business-profile-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "SEC EDGAR filings, insider trades, XBRL facts, DEXScreener token pairs & DefiLlama TVL MCP.",
+    "display_name": "ai.agentapigate/linkedin-company-b2b-business-profile-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": null,
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "ai.agentapigate/linkedin-company-b2b-business-profile-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/ai.agentapigate%2Flinkedin-company-b2b-business-profile-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://agentapigate.ai",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `ai.agentapigate/linkedin-company-b2b-business-profile-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://mcp.agentapigate.ai/mcp",
             "type": "streamable-http"
           }
         ],
@@ -30289,7 +30772,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+    "description": "AWS API MCP File Access Restriction Bypass",
     "display_name": "awslabs-aws-api-mcp-server",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -30322,94 +30805,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-2cpp-j2fc-qhp7",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -30421,11 +30816,99 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-29w2-fq35-v728",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
             "vulnerable_tools": []
           }
         ],
@@ -30446,72 +30929,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-2cpp-j2fc-qhp7",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -30523,11 +30940,77 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-29w2-fq35-v728",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
             "vulnerable_tools": []
           }
         ],
@@ -30548,72 +31031,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-2cpp-j2fc-qhp7",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -30625,11 +31042,77 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-29w2-fq35-v728",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
             "vulnerable_tools": []
           }
         ],
@@ -30650,94 +31133,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-2cpp-j2fc-qhp7",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -30749,11 +31144,99 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-29w2-fq35-v728",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
             "vulnerable_tools": []
           }
         ],
@@ -30774,72 +31257,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-2cpp-j2fc-qhp7",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -30851,11 +31268,77 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-29w2-fq35-v728",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
             "vulnerable_tools": []
           }
         ],
@@ -30876,50 +31359,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-16584",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-4270",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "AWS API MCP File Access Restriction Bypass",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-2cpp-j2fc-qhp7",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -30931,11 +31370,55 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-16584",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-29w2-fq35-v728",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "AWS API MCP Server Security Policy Bypass via Startup Initialization Failure",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-4270",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "AWS API MCP File Access Restriction Bypass",
             "vulnerable_tools": []
           }
         ],
@@ -46829,7 +47312,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+    "description": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
     "display_name": "langflow",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -46862,22 +47345,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
-            "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "CVE-2026-105699",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -46894,9 +47361,9 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105697",
+            "id": "GHSA-w794-rj3p-xv45",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
@@ -46916,12 +47383,28 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-w794-rj3p-xv45",
+            "id": "CVE-2026-105697",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-4hmc-cfm3-w43c",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "vulnerable_tools": [
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
+            ]
           }
         ],
         "connections": [],
@@ -46938,19 +47421,17 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 7.1,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
+            "id": "CVE-2026-105741",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
             "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
+              "get_client_ip",
+              "install_mcp_config"
             ]
           },
           {
@@ -46973,11 +47454,22 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105697",
+            "id": "GHSA-w794-rj3p-xv45",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-6599",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Unfortunately, there is no solution available yet.",
+            "severity": "CRITICAL",
+            "summary": "Langflow vulnerable to injection",
             "vulnerable_tools": []
           },
           {
@@ -46995,39 +47487,30 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-6599",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Unfortunately, there is no solution available yet.",
-            "severity": "CRITICAL",
-            "summary": "Langflow vulnerable to injection",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-w794-rj3p-xv45",
+            "id": "CVE-2026-105697",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 7.1,
+            "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105741",
+            "id": "GHSA-4hmc-cfm3-w43c",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "HIGH",
-            "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
             "vulnerable_tools": [
-              "get_client_ip",
-              "install_mcp_config"
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
             ]
           }
         ],
@@ -47048,22 +47531,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
-            "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "CVE-2026-105699",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -47086,6 +47553,22 @@
             "severity": "CRITICAL",
             "summary": "Langflow vulnerable to injection",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-4hmc-cfm3-w43c",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "vulnerable_tools": [
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
+            ]
           }
         ],
         "connections": [],
@@ -47105,22 +47588,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
-            "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "CVE-2026-105699",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -47143,6 +47610,22 @@
             "severity": "CRITICAL",
             "summary": "Langflow vulnerable to injection",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-4hmc-cfm3-w43c",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "vulnerable_tools": [
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
+            ]
           }
         ],
         "connections": [],
@@ -47162,22 +47645,6 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
-            "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "CVE-2026-105699",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -47194,9 +47661,9 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105697",
+            "id": "GHSA-w794-rj3p-xv45",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
@@ -47216,12 +47683,28 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-w794-rj3p-xv45",
+            "id": "CVE-2026-105697",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-4hmc-cfm3-w43c",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "HIGH",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "vulnerable_tools": [
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
+            ]
           }
         ],
         "connections": [],
@@ -47238,19 +47721,17 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 7.1,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
+            "id": "CVE-2026-105741",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
             "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
+              "get_client_ip",
+              "install_mcp_config"
             ]
           },
           {
@@ -47273,11 +47754,22 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105697",
+            "id": "GHSA-w794-rj3p-xv45",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-6599",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Unfortunately, there is no solution available yet.",
+            "severity": "CRITICAL",
+            "summary": "Langflow vulnerable to injection",
             "vulnerable_tools": []
           },
           {
@@ -47295,39 +47787,30 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-6599",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Unfortunately, there is no solution available yet.",
-            "severity": "CRITICAL",
-            "summary": "Langflow vulnerable to injection",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-w794-rj3p-xv45",
+            "id": "CVE-2026-105697",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 7.1,
+            "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105741",
+            "id": "GHSA-4hmc-cfm3-w43c",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "HIGH",
-            "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
             "vulnerable_tools": [
-              "get_client_ip",
-              "install_mcp_config"
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
             ]
           }
         ],
@@ -47345,19 +47828,17 @@
       {
         "advisories": [
           {
-            "cvss_score": null,
+            "cvss_score": 7.1,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4hmc-cfm3-w43c",
+            "id": "CVE-2026-105741",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "HIGH",
-            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
+            "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
             "vulnerable_tools": [
-              "delete_file",
-              "get_file",
-              "get_file_size",
-              "get_file_stream"
+              "get_client_ip",
+              "install_mcp_config"
             ]
           },
           {
@@ -47380,11 +47861,22 @@
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105697",
+            "id": "GHSA-w794-rj3p-xv45",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-6599",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Unfortunately, there is no solution available yet.",
+            "severity": "CRITICAL",
+            "summary": "Langflow vulnerable to injection",
             "vulnerable_tools": []
           },
           {
@@ -47402,39 +47894,30 @@
             ]
           },
           {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-6599",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Unfortunately, there is no solution available yet.",
-            "severity": "CRITICAL",
-            "summary": "Langflow vulnerable to injection",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 9.9,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-w794-rj3p-xv45",
+            "id": "CVE-2026-105697",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "CRITICAL",
             "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
             "vulnerable_tools": []
           },
           {
-            "cvss_score": 7.1,
+            "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105741",
+            "id": "GHSA-4hmc-cfm3-w43c",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "HIGH",
-            "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
+            "summary": "Langflow has Authenticated Cross-Project File Disclosure via Unscoped MCP Resource Handlers",
             "vulnerable_tools": [
-              "get_client_ip",
-              "install_mcp_config"
+              "delete_file",
+              "get_file",
+              "get_file_size",
+              "get_file_stream"
             ]
           }
         ],
@@ -47452,23 +47935,12 @@
       {
         "advisories": [
           {
-            "cvss_score": 9.9,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-105697",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
-            "severity": "CRITICAL",
-            "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
-            "vulnerable_tools": []
-          },
-          {
             "cvss_score": 7.1,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-4f6c-2vvp-gw82",
+            "id": "CVE-2026-105741",
             "owasp_mcp_category": null,
-            "remediation_guidance": "",
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
             "severity": "HIGH",
             "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
             "vulnerable_tools": [
@@ -47491,15 +47963,26 @@
             "cvss_score": 7.1,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-105741",
+            "id": "GHSA-4f6c-2vvp-gw82",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "remediation_guidance": "",
             "severity": "HIGH",
             "summary": "Langflow: IP Spoofing Bypass via `X-Forwarded-For` Allowing Remote Configuration Write",
             "vulnerable_tools": [
               "get_client_ip",
               "install_mcp_config"
             ]
+          },
+          {
+            "cvss_score": 9.9,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-105697",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.10.3 or above.",
+            "severity": "CRITICAL",
+            "summary": "Langflow: OS command injection (RCE) via arbitrary command in MCP stdio server configuration",
+            "vulnerable_tools": []
           }
         ],
         "connections": [],
@@ -75296,7 +75779,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
+    "description": " mcp-server-git argument injection in git_diff and git_checkout functions allows overwriting local files",
     "display_name": "mcp-server-git",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -75329,6 +75812,65 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2025-68144",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 2025.12.18 or above.",
+            "severity": "CRITICAL",
+            "summary": " mcp-server-git argument injection in git_diff and git_checkout functions allows overwriting local files",
+            "vulnerable_tools": [
+              "git_diff"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-5cgr-j3jf-jw3v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-vjqx-cfc4-9h6v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git : Path traversal in git_add allows staging files outside repository boundaries",
+            "vulnerable_tools": [
+              "git_add"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-j22h-9j4x-23w5",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git has missing path validation when using --repository flag",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-68145",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 2025.12.18 or above.",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git has missing path validation when using --repository flag",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-9xwc-hfwc-8w59",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -75349,65 +75891,6 @@
             "summary": "mcp-server-git : Path traversal in git_add allows staging files outside repository boundaries",
             "vulnerable_tools": [
               "git_add"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-vjqx-cfc4-9h6v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git : Path traversal in git_add allows staging files outside repository boundaries",
-            "vulnerable_tools": [
-              "git_add"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-68145",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 2025.12.18 or above.",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git has missing path validation when using --repository flag",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-5cgr-j3jf-jw3v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-j22h-9j4x-23w5",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git has missing path validation when using --repository flag",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-68144",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 2025.12.18 or above.",
-            "severity": "CRITICAL",
-            "summary": " mcp-server-git argument injection in git_diff and git_checkout functions allows overwriting local files",
-            "vulnerable_tools": [
-              "git_diff"
             ]
           }
         ],
@@ -75428,6 +75911,41 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "GHSA-5cgr-j3jf-jw3v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-vjqx-cfc4-9h6v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git : Path traversal in git_add allows staging files outside repository boundaries",
+            "vulnerable_tools": [
+              "git_add"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-j22h-9j4x-23w5",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "mcp-server-git has missing path validation when using --repository flag",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-9xwc-hfwc-8w59",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
@@ -75449,41 +75967,6 @@
             "vulnerable_tools": [
               "git_add"
             ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-vjqx-cfc4-9h6v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git : Path traversal in git_add allows staging files outside repository boundaries",
-            "vulnerable_tools": [
-              "git_add"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-5cgr-j3jf-jw3v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-j22h-9j4x-23w5",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git has missing path validation when using --repository flag",
-            "vulnerable_tools": []
           }
         ],
         "connections": [],
@@ -75503,14 +75986,12 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-9xwc-hfwc-8w59",
+            "id": "GHSA-5cgr-j3jf-jw3v",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
-            "summary": " mcp-server-git argument injection in git_diff and git_checkout functions allows overwriting local files",
-            "vulnerable_tools": [
-              "git_diff"
-            ]
+            "summary": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
+            "vulnerable_tools": []
           },
           {
             "cvss_score": null,
@@ -75529,23 +76010,25 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "GHSA-5cgr-j3jf-jw3v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "mcp-server-git's unrestricted git_init tool allows repository creation at arbitrary filesystem locations",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "GHSA-j22h-9j4x-23w5",
             "owasp_mcp_category": null,
             "remediation_guidance": "",
             "severity": "CRITICAL",
             "summary": "mcp-server-git has missing path validation when using --repository flag",
             "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-9xwc-hfwc-8w59",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": " mcp-server-git argument injection in git_diff and git_checkout functions allows overwriting local files",
+            "vulnerable_tools": [
+              "git_diff"
+            ]
           }
         ],
         "connections": [],
@@ -75765,19 +76248,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "2.1.3",
+    "latest_version": "2.1.4",
     "license": "ISC",
     "malicious_advisory_id": null,
     "package_name": "mcp-sketch",
     "prompts_count": 0,
     "purl": "pkg:npm/mcp-sketch",
     "quarantine_tier": null,
-    "recommended_safe_version": "2.1.3",
+    "recommended_safe_version": "2.1.4",
     "repo_http_status": 200,
     "repository_url": "https://github.com/YamadaAoi/mcp-sketch",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `mcp-sketch` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 45 safe version(s).",
+    "security_summary": "Server `mcp-sketch` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 46 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:f0e5828c9d66b5a0b20e29aa7df676417ed508735a3de1acdccb263a75dca9fb",
@@ -77693,6 +78176,240 @@
         ],
         "toolset_canonical_hash": "sha256:f0e5828c9d66b5a0b20e29aa7df676417ed508735a3de1acdccb263a75dca9fb",
         "version": "2.1.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-20T09:40:36.949Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a6869408087f4319b81d3b112d19c97457b0e4e85cf4864e8374cd7b95932e07",
+            "description": "\\u89E3\\u6790\\u5355\\u4E2A\\u753B\\u677F\\u5E76\\u843D\\u76D8\\u56FE\\u5C42\\u6570\\u636E\\uFF0C\\u4E0D\\u505A\\u7EC4\\u4EF6\\u89E3\\u8BFB",
+            "name": "sketch-analyze-artboard",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-analyze-artboard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0829927b2d87b7d3f25e8afeb08d5ebb51bc3aaf84169b41a520c45b0de4edb2",
+            "description": "\\u5206\\u6790\\u5E08\\uFF0C\\u8C03\\u7528\\u6280\\u80FD\\u548C\\u5DE5\\u5177\\u5B8C\\u6210\\u5206\\u6790\\u89C4\\u5212\\u5DE5\\u4F5C",
+            "name": "sketch-analyzer",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-analyzer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b6a097ffe2dde564679c5517053ab3a36717371ee4c112b6db2e2c20ce69e740",
+            "description": "\\u67B6\\u6784\\u5E08\\uFF0C\\u8C03\\u7528\\u6280\\u80FD\\u548C\\u5DE5\\u5177\\u5B8C\\u6210\\u7EC4\\u4EF6\\u5E03\\u5C40\\u5DE5\\u4F5C",
+            "name": "sketch-architect",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-architect` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:604523fa39b6ee388509731c93364bab7eae0921fb46fe58bc014b230d2458c6",
+            "description": "\\u5BA1\\u6838\\u4E13\\u5458\\uFF0C\\u8C03\\u7528\\u6280\\u80FD\\u548C\\u5DE5\\u5177\\u5B8C\\u6210\\u7EC4\\u4EF6\\u5BA1\\u6838\\u5DE5\\u4F5C",
+            "name": "sketch-checker",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-checker` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:75e71c1d4903ffd576332399da65d925b5f4762d23cd5518444504e89f1ba282",
+            "description": "\\u901A\\u7528\\u5F00\\u53D1\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u5904\\u7406\\u4FEE\\u6539/\\u91CD\\u6784\\u7B49\\u65E0\\u8BBE\\u8BA1\\u7A3F\\u7684\\u5F00\\u53D1\\u4EFB\\u52A1",
+            "name": "sketch-code",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-code` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cfd9073ada5921495c94f97bfdf599bcb024baed251aeca0dfa13e6613faf437",
+            "description": "\\u5F00\\u53D1\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u8C03\\u7528\\u6280\\u80FD\\u548C\\u5DE5\\u5177\\u5B8C\\u6210\\u7EC4\\u4EF6\\u7ED8\\u5236\\u3001\\u4FEE\\u590D\\u5DE5\\u4F5C",
+            "name": "sketch-developer",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-developer` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5bb38052b1c9e356c422aaecea9b2c593a6fee39257fd27145ffd57a13149de8",
+            "description": "\\u9AD8\\u7EA7\\u524D\\u7AEF\\u5F00\\u53D1\\uFF0C\\u7ED8\\u5236\\u7EC4\\u4EF6\\u529F\\u80FD\\u4EE3\\u7801",
+            "name": "sketch-draw",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-draw` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a3bc9a3c6fd5a282d6d8d5d9d1f5c1cc54e62888d0ef784f4754ee3df1039886",
+            "description": "\\u8D28\\u91CF\\u4FDD\\u969C\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u5BA1\\u6838\\u7EC4\\u4EF6\\u662F\\u5426\\u7B26\\u5408\\u8981\\u6C42",
+            "name": "sketch-draw-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-draw-check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6196ef130fbc217e9bdcdd618f8603a91e7ca8975f02dc66626d398ceb192add",
+            "description": "\\u521D\\u7EA7\\u524D\\u7AEF\\u5F00\\u53D1\\uFF0C\\u751F\\u6210\\u57FA\\u7840\\u7EC4\\u4EF6\\u4EE3\\u7801",
+            "name": "sketch-gen-base",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-gen-base` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b420a6ff71502c9c58e927e5c43329311e73bc0db9fcb298b663e1a4747fe8a3",
+            "description": "\\u8D28\\u91CF\\u4FDD\\u969C\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u5BA1\\u6838\\u57FA\\u7840\\u7EC4\\u4EF6\\u4EE3\\u7801\\u662F\\u5426\\u7B26\\u5408\\u89C4\\u8303",
+            "name": "sketch-gen-base-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-gen-base-check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b5ff1b3be6e1f29a51b1ad237e221f843c1a5c68b0023330cab14bb0cf39456b",
+            "description": "\\u9879\\u76EE\\u67B6\\u6784\\u5E08\\uFF0C\\u626B\\u63CF\\u9879\\u76EE\\u914D\\u7F6E\\u751F\\u6210 proj-init.md",
+            "name": "sketch-init",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-init` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cc0c3e4c1a51f3b8fcb7fcc6fbd9ae059fc2dbb3366cb50943aa7d1bdd3b709b",
+            "description": "\\u8D28\\u91CF\\u4FDD\\u969C\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u5BA1\\u6838\\u9879\\u76EE\\u521D\\u59CB\\u5316\\u6587\\u6863\\u662F\\u5426\\u7B26\\u5408\\u89C4\\u8303",
+            "name": "sketch-init-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-init-check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5a22fb92dd6f451fa5989c55b5259f73e909018c0dba6d1aa447ea2dccaf5c50",
+            "description": "\\u7EC4\\u4EF6\\u5206\\u6790\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u5206\\u6790\\u9879\\u76EE\\u7EC4\\u4EF6\\u751F\\u6001\\u751F\\u6210 components-init.md",
+            "name": "sketch-init-components",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-init-components` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:128f1443111cea323db987698e94042aa045c214cb31ecf82d5915293cd4b84d",
+            "description": "\\u4E2D\\u7EA7\\u524D\\u7AEF\\u5F00\\u53D1\\uFF0C\\u5E03\\u5C40 section \\u7EC4\\u4EF6\\u5E76\\u63D2\\u5165\\u5230\\u76EE\\u6807\\u9875\\u9762",
+            "name": "sketch-insert-layout",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-insert-layout` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:33f53cc45da9dd43a59f5cbb262ae4f9555b07d9231a687301f54da66a2fccbd",
+            "description": "\\u5BA1\\u6838\\u4E13\\u5458\\uFF0C\\u5BA1\\u6838 section \\u7EC4\\u4EF6\\u63D2\\u5165\\u76EE\\u6807\\u9875\\u9762\\u7684\\u7ED3\\u679C",
+            "name": "sketch-insert-layout-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-insert-layout-check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:862202677646c56e33fa04666508c0ac07df3f9f4ecc4d245425a402a9d87347",
+            "description": "\\u4E2D\\u7EA7\\u524D\\u7AEF\\u5F00\\u53D1\\uFF0C\\u914D\\u7F6E\\u8DEF\\u7531\\u548C\\u7236\\u7EC4\\u4EF6\\u5E03\\u5C40",
+            "name": "sketch-layout",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-layout` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:500fd11186f68c64900f153c168a653a2e081127ebdf81a3d94335de4db96e36",
+            "description": "\\u5BA1\\u6838\\u4E13\\u5458\\uFF0C\\u5BA1\\u6838\\u7236\\u7EC4\\u4EF6\\u5E03\\u5C40\\u662F\\u5426\\u7B26\\u5408\\u8981\\u6C42",
+            "name": "sketch-layout-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-layout-check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fd0c92ce0a36f7378c4351385eaa39288d5c92930edddcf37ee5472f7fb08ca3",
+            "description": "\\u524D\\u7AEF Leader\\uFF0C\\u8D1F\\u8D23\\u5206\\u6790\\u95EE\\u9898\\u3001\\u5206\\u914D\\u4EFB\\u52A1\\u3001\\u5BA1\\u6838\\u7ED3\\u679C\\uFF0C\\u7EDD\\u4E0D\\u5199\\u4EE3\\u7801",
+            "name": "sketch-leader",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-leader` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a08f0089c19318387ffd22d767fadec41b94dcf36968379812a7971ad46e62ff",
+            "description": "\\u8BBE\\u8BA1\\u52A9\\u7406\\uFF0C\\u63D0\\u53D6\\u753B\\u677F\\u5217\\u8868\\uFF0C\\u4F9B\\u7528\\u6237\\u5355\\u9009",
+            "name": "sketch-pick",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-pick` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b458580015d9d4e39dddc611c9ac41d21d790dd0c96d80003f8e8f1fc786a77e",
+            "description": "\\u542F\\u52A8\\u672C\\u5730\\u670D\\u52A1\\u5668\\u5E76\\u6253\\u5F00\\u6D4F\\u89C8\\u5668\\u9884\\u89C8\\u9875\\u9762",
+            "name": "sketch-preview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-preview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b113a80cbf7b1f300a255ce2a690a452083a1cf8162e5044d1671b2253d468ef",
+            "description": "\\u524D\\u7AEF\\u67B6\\u6784\\u5E08\\uFF0C\\u62C6\\u5206\\u7EC4\\u4EF6\\uFF0C\\u5236\\u5B9A\\u7EC4\\u4EF6\\u89C4\\u5212\\u8868",
+            "name": "sketch-split",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-split` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b0d0b8052ff4a743fc6a26cb36de578fe8829454cf6bc3f0750b041812aa149e",
+            "description": "\\u8D28\\u91CF\\u4FDD\\u969C\\u5DE5\\u7A0B\\u5E08\\uFF0C\\u5BA1\\u6838\\u7EC4\\u4EF6\\u62C6\\u5206\\u7ED3\\u679C\\uFF0C\\u5305\\u62EC\\u8DEF\\u5F84\\u548C\\u547D\\u540D\\u89C4\\u8303",
+            "name": "sketch-split-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sketch-split-check` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f0e5828c9d66b5a0b20e29aa7df676417ed508735a3de1acdccb263a75dca9fb",
+        "version": "2.1.4"
       }
     ]
   },
@@ -87417,19 +88134,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "0.61.1",
+    "latest_version": "0.62.0",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "ouroboros-ai",
     "prompts_count": 0,
     "purl": "pkg:pypi/ouroboros-ai",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.61.1",
+    "recommended_safe_version": "0.62.0",
     "repo_http_status": 200,
     "repository_url": "https://smithery.ai/servers/ouroboros-ai",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `ouroboros-ai` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 537 vulnerable version(s), 186 safe version(s).",
+    "security_summary": "Server `ouroboros-ai` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 537 vulnerable version(s), 188 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:4a8f061fa7e4da4cf304aac094fb9885ea41ae138303d9622de115b2fa3391eb",
@@ -106887,6 +107604,393 @@
         ],
         "toolset_canonical_hash": "sha256:4a8f061fa7e4da4cf304aac094fb9885ea41ae138303d9622de115b2fa3391eb",
         "version": "0.61.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-19T20:23:59.834116Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.61.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-19T20:46:45.946383Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e684dbf71c8ab6a6f874584cff47f32f799d1e3da3e476f12c6310bc4b20511e",
+            "description": "",
+            "name": "ouroboros_ac_dashboard",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_ac_dashboard` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:03e3739795fc47e983382b4915769a79cd27bca1e61594970005ab6907ac9c95",
+            "description": "",
+            "name": "ouroboros_ac_tree_hud",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_ac_tree_hud` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f58f0cfb268bba7814c412bb38532959aeb8c58747ed12ac52b63567957198be",
+            "description": "",
+            "name": "ouroboros_auto",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_auto` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:459dae274416f3758f95321bdf668a0e2466aaf7053fa8f8442c27a12b888c14",
+            "description": "",
+            "name": "ouroboros_brownfield",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_brownfield` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3722b721e0d083362475039a7efedb05c7aa2ec802c6d6d9197618dcefcf4ab2",
+            "description": "",
+            "name": "ouroboros_cancel_execution",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_cancel_execution` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:751ccaa3858f3f9b00d022dd4410dbabdd37be143dfbe8b9b284413a24a0d207",
+            "description": "",
+            "name": "ouroboros_cancel_job",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_cancel_job` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:803f391c8b2e7bddffbf123eba055683c7203775d3040789bf1711054f8941d9",
+            "description": "",
+            "name": "ouroboros_checklist_verify",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_checklist_verify` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:05d4a395398885ea889253e0154c7ac85debfe95d8dfe6b2b2d589d6217c8144",
+            "description": "",
+            "name": "ouroboros_evaluate",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_evaluate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cc05b78c668bfabef8ec7638b3064187ce2730216833360f44aa384dd934d6f6",
+            "description": "",
+            "name": "ouroboros_evolve_rewind",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_evolve_rewind` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:76ab68715b873aece4dfa8b16aca3cb5097a8bd46dbc81165480bdfd567e86c4",
+            "description": "",
+            "name": "ouroboros_evolve_step",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_evolve_step` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f67fef018c24d00c7bc96f54c6f9769aa5337a4d9cf1cfb8d2ec0acaab73e87a",
+            "description": "",
+            "name": "ouroboros_execute_seed",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_execute_seed` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a6e6e87c1f9d02c6811e36b47a122863551ceee167779df3d37b2ff4659d1546",
+            "description": "",
+            "name": "ouroboros_fetch_artifact",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_fetch_artifact` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cda80376c6fc4a2e16158122d5c24940b477ffb9eab3ae31f106507f21a1e3eb",
+            "description": "",
+            "name": "ouroboros_generate_seed",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_generate_seed` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bc9c1331cd7d31d1814786607ccb872056ff6ab8eb2b26abb13502f4e88deea3",
+            "description": "",
+            "name": "ouroboros_interview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_interview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:76b75788593d58dd6f9c960cfba5b22a67e17ee2b61230abbcd369abb8709a70",
+            "description": "",
+            "name": "ouroboros_job_result",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_job_result` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:90fb7802dd087d338553a0cc286da60c45e0506e581dd32b14cb09e55b1d4326",
+            "description": "",
+            "name": "ouroboros_job_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_job_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ae6e8dd13303ff54411fdaeda4cd69ce44c0e9261694588984708a9c1d169579",
+            "description": "",
+            "name": "ouroboros_job_wait",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_job_wait` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:909274069831871be440383cd39f46fed56f0b18d3eec4fa172b9ea7cc7cde72",
+            "description": "",
+            "name": "ouroboros_lateral_think",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_lateral_think` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b3bafac4243188193c8152122800692c6b9e851f2ecd8053a33a8d13380bc1aa",
+            "description": "",
+            "name": "ouroboros_lineage_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_lineage_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:36c378fc73bf9c5c71bebc26212e3480341738bd61e5f71429649f2869a8fffe",
+            "description": "",
+            "name": "ouroboros_measure_drift",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_measure_drift` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8409df1d7bd34f7e2f3cd64f8e9669c767fc720603d0ab4b07ff50b442eea0b4",
+            "description": "",
+            "name": "ouroboros_pm_interview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_pm_interview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:19b320972a7a191d95a610a86b340a0db50c06961cfb3b020a7a1abdc8d716eb",
+            "description": "",
+            "name": "ouroboros_project_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_project_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:02e29a9520ea2eb8a644764a5f4e7b225b28bd2b356b7f1b3b1fb27991c5fbb1",
+            "description": "",
+            "name": "ouroboros_qa",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_qa` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:472f843ff49168216b6ff8e05fbcdc5b1d8ace30ec9c44f7f25c953f64183f15",
+            "description": "",
+            "name": "ouroboros_query_events",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_query_events` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ba76f8a6e20cc1bc4c0dcf8a76052566b22118fd9f7a0bd5fa82867afd8fa8f8",
+            "description": "",
+            "name": "ouroboros_query_projection",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_query_projection` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:91d9975dda18e5870d8be314b5d8d6370270bae1483af283d08192586e240e33",
+            "description": "",
+            "name": "ouroboros_ralph",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_ralph` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e4ff4b9879746780d0be55c65a46a2ea3a80f777b8c3b17eac55b59b782edd88",
+            "description": "",
+            "name": "ouroboros_record_conductor_decision",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_record_conductor_decision` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ae2b6a4105fd90292d302e94c55389fb37a1c4549760ef2a951719114aae1959",
+            "description": "",
+            "name": "ouroboros_session_signal",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_session_signal` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5986fff5a84e6a7422b2abfed2a9277e733c07dc312f2032aae1cff671fa7bd8",
+            "description": "",
+            "name": "ouroboros_session_signal_targets",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_session_signal_targets` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e17e633df36935fe65a98de6c4bd3ecec5c2a2e1c8f7af4c974c7fd9ab0b7c8b",
+            "description": "",
+            "name": "ouroboros_session_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_session_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2d237a9252a45d926b67210a7cf4e4a912629339bbdefddeca54ea2d044b1462",
+            "description": "",
+            "name": "ouroboros_start_auto",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_start_auto` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4096306951d4af9ba5a16160116fbc89895d1c6ba3f82c656acfb47a11cf3a08",
+            "description": "",
+            "name": "ouroboros_start_evaluate",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_start_evaluate` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:27506640dc3e52f25b75f47703b3ae7b78356a2dde0b9194d87684370f3249a1",
+            "description": "",
+            "name": "ouroboros_start_evolve_step",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_start_evolve_step` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0ef5313229648e8013872662e9a6ea7b6d44b8ce15a72b7c9aecdd00c9d31a9f",
+            "description": "",
+            "name": "ouroboros_start_execute_seed",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_start_execute_seed` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c607e204a31e7856f048d73c716dfdfe2e59e1360cabef5c4cf6e60c62e28df5",
+            "description": "",
+            "name": "ouroboros_start_ralph",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_start_ralph` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6b5b61fd117e09522a5f9316b70ea582ebcd32bf95dba428a91046ada9d4fa45",
+            "description": "",
+            "name": "ouroboros_submit_fanout_results",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ouroboros_submit_fanout_results` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:4a8f061fa7e4da4cf304aac094fb9885ea41ae138303d9622de115b2fa3391eb",
+        "version": "0.62.0"
       }
     ]
   },
@@ -107461,7 +108565,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "PraisonAI ToolsMCPServer legacy SSE transport accepts attacker Host/Origin and exposes registered tools",
+    "description": "PraisonAI: MCP SSE transport binds 0.0.0.0 with no authentication and no Origin validation; bundled SecurityConfig is never wired in",
     "display_name": "praisonaiagents",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -107507,22 +108611,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-57112",
+            "id": "CVE-2026-57123",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 4.6.59 or above.",
+            "remediation_guidance": "Upgrade to version 1.6.59 or above.",
             "severity": "CRITICAL",
-            "summary": "PraisonAI ToolsMCPServer legacy SSE transport accepts attacker Host/Origin and exposes registered tools",
+            "summary": "PraisonAI: MCP SSE transport binds 0.0.0.0 with no authentication and no Origin validation; bundled SecurityConfig is never wired in",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-57123",
+            "id": "CVE-2026-57112",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.6.59 or above.",
+            "remediation_guidance": "Upgrade to version 4.6.59 or above.",
             "severity": "CRITICAL",
-            "summary": "PraisonAI: MCP SSE transport binds 0.0.0.0 with no authentication and no Origin validation; bundled SecurityConfig is never wired in",
+            "summary": "PraisonAI ToolsMCPServer legacy SSE transport accepts attacker Host/Origin and exposes registered tools",
             "vulnerable_tools": []
           }
         ],
@@ -110403,7 +111507,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Snowflake Internal User Stage Path Traversal in Snowflake Stage Target (snowflake-stage)",
+    "description": "Snowflake Unauthorized External Stage Data Export in Snowflake Stage Target (snowflake-stage)",
     "display_name": "snowflake-stage",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -110449,6 +111553,19 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "VERITY-SNOWFLAKE-EXT-UNLOAD-001",
+            "owasp_mcp_category": "SQL Injection / Data Smuggling",
+            "remediation_guidance": "Blocks external stage export queries and restricts mutations.",
+            "severity": "HIGH",
+            "summary": "Snowflake Unauthorized External Stage Data Export in Snowflake Stage Target (snowflake-stage)",
+            "vulnerable_tools": [
+              "manage_warehouse_stage"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "SNOWFLAKE-STAGE-INJECT-001",
             "owasp_mcp_category": "Information Exposure / Path Traversal",
             "remediation_guidance": "Enforces strict stage path allowlists excluding user stages.",
@@ -110480,19 +111597,6 @@
             "remediation_guidance": "Enforces strict stage path allowlists excluding user stages.",
             "severity": "HIGH",
             "summary": "Snowflake Internal User Stage Path Traversal in Snowflake Stage Target (snowflake-stage)",
-            "vulnerable_tools": [
-              "manage_warehouse_stage"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-SNOWFLAKE-EXT-UNLOAD-001",
-            "owasp_mcp_category": "SQL Injection / Data Smuggling",
-            "remediation_guidance": "Blocks external stage export queries and restricts mutations.",
-            "severity": "HIGH",
-            "summary": "Snowflake Unauthorized External Stage Data Export in Snowflake Stage Target (snowflake-stage)",
             "vulnerable_tools": [
               "manage_warehouse_stage"
             ]
