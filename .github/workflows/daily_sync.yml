@@ -149,6 +149,7 @@ jobs:
               gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
             fi
             gh workflow run daily_web_audit.yml || true
+            gh workflow run pages.yml || true
           else
             echo "release_created=false" >> "$GITHUB_OUTPUT"
           fi

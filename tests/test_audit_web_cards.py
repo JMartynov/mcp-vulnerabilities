@@ -30,6 +30,10 @@ def test_is_valid_url():
     assert is_valid_url("") == True
     assert is_valid_url("not a url") == False
     assert is_valid_url("mcp.noteboxd.com") == True
+    assert is_valid_url("github:felixhorobot/Notion-Desktop-MCP") == True
+    assert is_valid_url("gitlab:org/repo") == True
+    assert is_valid_url("bitbucket:org/repo") == True
+    assert is_valid_url("git+https://github.com/org/repo.git") == True
 
 def test_compute_composite_risk():
     assert _compute_composite_risk("LOW", False, [])[1] == "LOW"

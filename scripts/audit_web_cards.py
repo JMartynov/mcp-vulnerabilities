@@ -27,6 +27,21 @@ def is_valid_url(url):
     if not url:
         return True
     url = str(url).strip()
+    for prefix, replacement in (
+        ('github:', 'https://github.com/'),
+        ('gitlab:', 'https://gitlab.com/'),
+        ('bitbucket:', 'https://bitbucket.org/'),
+        ('gist:', 'https://gist.github.com/'),
+    ):
+        if url.startswith(prefix):
+            url = replacement + url[len(prefix):]
+            break
+    if url.startswith(('git+https://', 'git+http://')):
+        url = url[4:]
+    if url.startswith('git://github.com/'):
+        url = 'https://github.com/' + url[len('git://github.com/'):]
+    if url.startswith('git@github.com:'):
+        url = 'https://github.com/' + url[len('git@github.com:'):]
     match = re.search(r'https?://[^\s]+', url)
     if match:
         url = match.group(0)

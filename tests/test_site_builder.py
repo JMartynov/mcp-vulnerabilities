@@ -190,3 +190,21 @@ def test_resolve_advisory_details_epss():
     assert empty_details["epss_score"] is None
     assert empty_details["epss_percentile"] is None
 
+
+def test_normalize_catalog_url():
+    """Verify shorthand and git repository URL normalization."""
+    from mcp_vulnerabilities.site_builder import _normalize_catalog_url
+
+    assert _normalize_catalog_url(None) == ""
+    assert _normalize_catalog_url("") == ""
+    assert (
+        _normalize_catalog_url("github:felixhorobot/Notion-Desktop-MCP")
+        == "https://github.com/felixhorobot/Notion-Desktop-MCP"
+    )
+    assert _normalize_catalog_url("gitlab:org/repo") == "https://gitlab.com/org/repo"
+    assert _normalize_catalog_url("bitbucket:org/repo") == "https://bitbucket.org/org/repo"
+    assert (
+        _normalize_catalog_url("git+https://github.com/org/repo.git")
+        == "https://github.com/org/repo"
+    )
+

@@ -10,6 +10,7 @@ import json
 import logging
 
 import os
+import re
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
@@ -30,6 +31,43 @@ from mcp_vulnerabilities.models import OsvVulnerability
 from mcp_vulnerabilities.cache import TwoTierVulnerabilityCache
 
 logger = logging.getLogger(__name__)
+
+
+def _normalize_catalog_url(url: str | None) -> str:
+    """Normalizes shorthand and git repository URLs into canonical https URLs."""
+    if not url:
+        return ""
+    url = str(url).strip()
+
+    for prefix, replacement in (
+        ("github:", "https://github.com/"),
+        ("gitlab:", "https://gitlab.com/"),
+        ("bitbucket:", "https://bitbucket.org/"),
+        ("gist:", "https://gist.github.com/"),
+    ):
+        if url.startswith(prefix):
+            url = replacement + url[len(prefix):]
+            break
+
+    if url.startswith(("git+https://", "git+http://")):
+        url = url[4:]
+    if url.startswith("git://github.com/"):
+        url = "https://github.com/" + url[len("git://github.com/"):]
+    if url.startswith("git@github.com:"):
+        url = "https://github.com/" + url[len("git@github.com:"):]
+
+    match = re.search(r"https?://[^\s]+", url)
+    if match:
+        url = match.group(0)
+    elif not url.startswith(("http://", "https://")) and "." in url and " " not in url:
+        url = "https://" + url
+
+    if url.endswith(".git") and (
+        "github.com" in url or "gitlab.com" in url or "bitbucket.org" in url
+    ):
+        url = url[:-4]
+
+    return url
 
 
 def _select_representative_version(versions: list[dict[str, Any]]) -> dict[str, Any]:
@@ -640,6 +678,8 @@ def build_site_parallel(
         rec_dict = record
         rec_dict["highest_cve_severity"] = highest_cve_sev
         rec_dict["composite_risk_tier"] = composite_tier
+        rec_dict["repository_url"] = _normalize_catalog_url(record.get("repository_url"))
+        rec_dict["homepage_url"] = _normalize_catalog_url(record.get("homepage_url"))
         # Optimize version advisories for browser payload efficiency
         for v in rec_dict.get("versions", []):
             new_advs = []
@@ -697,8 +737,8 @@ def build_site_parallel(
             "description": record.get("description", ""),
             "author": record.get("author", ""),
             "license": record.get("license", ""),
-            "repository_url": record.get("repository_url", ""),
-            "homepage_url": record.get("homepage_url", ""),
+            "repository_url": _normalize_catalog_url(record.get("repository_url")),
+            "homepage_url": _normalize_catalog_url(record.get("homepage_url")),
             "latest_version": record.get("latest_version"),
             "recommended_safe_version": record.get("recommended_safe_version"),
             "is_vulnerable": is_vuln,
