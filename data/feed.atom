@@ -5,15 +5,81 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-11-22T22:17:36.147Z</updated>
+  <updated>2026-11-23T16:17:32.107Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
   <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-134492</id>
+    <title>[MEDIUM] CVE-2026-134492: In mcp-server-fetch from 2026.10.10 and before 2026.11.11, the check that blocks requests to non-public addresses treats</title>
+    <link rel="alternate" href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-3rxj-6jhw-qfv7" />
+    <updated>2026-11-23T16:17:32.107Z</updated>
+    <published>2026-11-23T16:17:32.107Z</published>
+    <summary>In mcp-server-fetch from 2026.10.10 and before 2026.11.11, the check that blocks requests to non-public addresses treats</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-134492&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In mcp-server-fetch from 2026.10.10 and before 2026.11.11, the check that blocks requests to non-public addresses treats IPv6 site-local addresses (fec0::/10) as public. A fetch to such an address passes the server-side request forgery guard. Practical impact is limited because many hosts have no route to this range.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-3rxj-6jhw-qfv7"&gt;https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-3rxj-6jhw-qfv7&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-134465</id>
+    <title>[HIGH] CVE-2026-134465: In mcp-server-git before 2026.10.28, the --repository restriction can be bypassed through a nested directory that contai</title>
+    <link rel="alternate" href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-w766-5x43-whvw" />
+    <updated>2026-11-23T16:17:31.957Z</updated>
+    <published>2026-11-23T16:17:31.957Z</published>
+    <summary>In mcp-server-git before 2026.10.28, the --repository restriction can be bypassed through a nested directory that contai</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-134465&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In mcp-server-git before 2026.10.28, the --repository restriction can be bypassed through a nested directory that contains a .git file with a gitdir pointer to a repository outside the allowed path. A caller who can invoke the server's tools, place such a file in the allowed tree, and knows the outside repository's path can read committed content from that repository and create branches in it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-w766-5x43-whvw"&gt;https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-w766-5x43-whvw&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-133632</id>
+    <title>[HIGH] CVE-2026-133632: In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can</title>
+    <link rel="alternate" href="https://github.com/astronomer/agents" />
+    <updated>2026-11-23T16:22:53.377Z</updated>
+    <published>2026-11-23T16:17:29.007Z</published>
+    <summary>In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-133632&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.8)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; astro-airflow-mcp&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can import modules from the current working directory. If a user runs an af command or an MCP tool call from inside a project that contains an attacker-supplied json.py, that file runs with the user's privileges. Users who only run the tool in projects they trust are not affected. Fixed in 0.9.2; in earlier versions, setting AF_TELEMETRY_DISABLED=1 prevents it.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/astronomer/agents"&gt;https://github.com/astronomer/agents&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/astronomer/agents/pull/292"&gt;https://github.com/astronomer/agents/pull/292&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2"&gt;https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://pypi.org/project/astro-airflow-mcp/0.9.2"&gt;https://pypi.org/project/astro-airflow-mcp/0.9.2&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-135162</id>
+    <title>[MEDIUM] CVE-2026-135162: Sim 0.5.61 before 0.9.41 contains an incorrect authorization vulnerability that allows write-level workspace members to </title>
+    <link rel="alternate" href="https://github.com/simstudioai/sim/blob/v0.9.40/apps/sim/app/api/mcp/workflow-servers/route.ts" />
+    <updated>2026-11-23T15:17:44.957Z</updated>
+    <published>2026-11-23T15:17:44.840Z</published>
+    <summary>Sim 0.5.61 before 0.9.41 contains an incorrect authorization vulnerability that allows write-level workspace members to </summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-135162&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.4)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Sim 0.5.61 before 0.9.41 contains an incorrect authorization vulnerability that allows write-level workspace members to change workflow MCP server visibility without admin permission. Attackers can set isPublic via POST or PATCH to /api/mcp/workflow-servers, exposing deployed workflows to unauthenticated invocation through /api/mcp/serve.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/simstudioai/sim/blob/v0.9.40/apps/sim/app/api/mcp/workflow-servers/route.ts"&gt;https://github.com/simstudioai/sim/blob/v0.9.40/apps/sim/app/api/mcp/workflow-servers/route.ts&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/simstudioai/sim/commit/3b6be5cd1a0f659b0bda14902140096a8420c9c9"&gt;https://github.com/simstudioai/sim/commit/3b6be5cd1a0f659b0bda14902140096a8420c9c9&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/simstudioai/sim/pull/9576"&gt;https://github.com/simstudioai/sim/pull/9576&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/simstudioai/sim/releases/tag/v0.9.41"&gt;https://github.com/simstudioai/sim/releases/tag/v0.9.41&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-134817</id>
     <title>[HIGH] CVE-2026-134817: mcp-server-kubernetes before 4.2.0 contains an argument injection vulnerability that allows remote MCP clients to inject</title>
     <link rel="alternate" href="https://github.com/Flux159/mcp-server-kubernetes/blob/v4.1.9/src/tools/exec_in_pod.ts#L105" />
-    <updated>2026-11-22T22:17:36.147Z</updated>
+    <updated>2026-11-23T15:17:40.767Z</updated>
     <published>2026-11-22T22:17:36.147Z</published>
     <summary>mcp-server-kubernetes before 4.2.0 contains an argument injection vulnerability that allows remote MCP clients to inject</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-134817&lt;/p&gt;
@@ -189,7 +255,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-133505</id>
     <title>[MEDIUM] CVE-2026-133505: When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape o</title>
     <link rel="alternate" href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-4cj4-hgwf-4hc4" />
-    <updated>2026-11-20T18:18:50.020Z</updated>
+    <updated>2026-11-23T15:41:46.570Z</updated>
     <published>2026-11-20T08:18:33.637Z</published>
     <summary>When message history is serialized and loaded again, a tool result that contains a JSON object in the serialized shape o</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-133505&lt;/p&gt;
@@ -243,7 +309,7 @@
 
 With `strip_ansi=True`, Pydantic AI Harness's `ToolOutputLimits` capability removes ANSI escape sequence</title>
     <link rel="alternate" href="https://github.com/pydantic/pydantic-ai/security/advisories/GHSA-m4cr-m4qc-9hh3" />
-    <updated>2026-11-19T15:17:35.953Z</updated>
+    <updated>2026-11-23T15:41:46.570Z</updated>
     <published>2026-11-19T15:17:35.953Z</published>
     <summary>### Summary ui
 
@@ -1822,78 +1888,6 @@ This is authenticated and is not OS command execution by itself.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-5r62-gj48-897x"&gt;https://github.com/advisories/GHSA-5r62-gj48-897x&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-84360</id>
-    <title>[HIGH] CVE-2026-84360: Nginx UI: OTP secure-session step-up can be bypassed via MCP configuration tools</title>
-    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
-    <updated>2026-10-15T00:00:00Z</updated>
-    <published>2026-10-15T00:00:00Z</published>
-    <summary>Nginx UI: OTP secure-session step-up can be bypassed via MCP configuration tools</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84360&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.1)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; github.com/0xJacky/Nginx-UI&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;An OTP-enabled authenticated user who cannot use the HTTP configuration mutation endpoints without a valid secure session can still mutate Nginx configuration through `/mcp` and `/mcp_message` using only ordinary authentication.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-vc32-4gwf-77xp"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-vc32-4gwf-77xp&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-vc32-4gwf-77xp"&gt;https://github.com/advisories/GHSA-vc32-4gwf-77xp&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-109527</id>
-    <title>[HIGH] CVE-2026-109527: The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp </title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080" />
-    <updated>2026-10-20T02:17:08.867Z</updated>
-    <published>2026-10-14T18:17:33.447Z</published>
-    <summary>The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp </summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-109527&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. In mcp versions before 1.29.1 and from 2.0.0a1 through 2.0.1, the Streamable HTTP session manager, SSE message endpoint, and OAuth authorization-server routes buffer complete HTTP request bodies without enforcing a maximum size. An unauthenticated remote client able to reach an affected endpoint can send a large declared or streamed request body that consumes multiple times the body size in process memory and can repeatedly exhaust memory or terminate the server. Stdio-only servers and deployments with an effective upstream request-size limit are not affected, and applications that use StreamableHTTPServerTransport directly remain responsible for enforcing their own limit. The standard SDK server applications and session managers are fixed in versions 1.29.1 and 2.1.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/03aaebd3aadb2567878dd811cb1f141454e8a080&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/4dc224fab201bdef2fd5a065976b7ca31420187c"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/4dc224fab201bdef2fd5a065976b7ca31420187c&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/57394b0548d1e2dc2dce8d67d84985769df3b8bb"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/57394b0548d1e2dc2dce8d67d84985769df3b8bb&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/5f0b6af9f2b0aad3be3ba5cbfe80a9e4ea32e189"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/5f0b6af9f2b0aad3be3ba5cbfe80a9e4ea32e189&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-108395</id>
-    <title>[HIGH] CVE-2026-108395: The Model Context Protocol Java SDK is the official Java SDK for Model Context Protocol servers and clients. From versio</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/java-sdk/commit/1499df22c7023aa257223143a5dcf5b1db7ef80d" />
-    <updated>2026-10-16T16:00:33.533Z</updated>
-    <published>2026-10-14T18:17:27.370Z</published>
-    <summary>The Model Context Protocol Java SDK is the official Java SDK for Model Context Protocol servers and clients. From versio</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-108395&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Model Context Protocol Java SDK is the official Java SDK for Model Context Protocol servers and clients. From version 0.8.0 through 0.12.0 in the io.modelcontextprotocol.sdk:mcp artifact, from 0.13.0 through 0.18.3 and 1.0.0 through 1.1.3 in io.modelcontextprotocol.sdk:mcp-core, and from mcp-core 2.0.0-M1 through 2.0.0, the Servlet-based SSE, Streamable HTTP, and Stateless server transports read an HTTP request body into memory without enforcing a maximum size. An unauthenticated remote client able to reach an affected transport can stream an arbitrarily large POST body, including with chunked transfer encoding, until the Java process exhausts its heap and becomes unavailable. Authentication, Origin or Host validation, or an upstream request-size limit can reject the request before the vulnerable read. The maintained mcp-core lines are fixed in versions 0.18.4, 1.1.4, and 2.0.1.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/java-sdk/commit/1499df22c7023aa257223143a5dcf5b1db7ef80d"&gt;https://github.com/modelcontextprotocol/java-sdk/commit/1499df22c7023aa257223143a5dcf5b1db7ef80d&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/java-sdk/commit/6a41dedaa0625551582d8247e5a4d78eae1131b2"&gt;https://github.com/modelcontextprotocol/java-sdk/commit/6a41dedaa0625551582d8247e5a4d78eae1131b2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/java-sdk/commit/8c0fdd1b1f76adba3ce7945d29f73fa2ddc66598"&gt;https://github.com/modelcontextprotocol/java-sdk/commit/8c0fdd1b1f76adba3ce7945d29f73fa2ddc66598&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/java-sdk/commit/9e4d5fa827b6ba69457f5fd93573184789528efa"&gt;https://github.com/modelcontextprotocol/java-sdk/commit/9e4d5fa827b6ba69457f5fd93573184789528efa&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-59951</id>
-    <title>[MEDIUM] CVE-2026-59951: The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.8.0 until</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/python-sdk/commit/92120b4b0f50385af096592d7cee932fc1d994e7" />
-    <updated>2026-10-16T16:00:33.533Z</updated>
-    <published>2026-10-14T17:18:29.690Z</published>
-    <summary>The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.8.0 until</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-59951&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). From 1.8.0 until 1.30.0 and 2.2.0, stateful Streamable HTTP servers, including FastMCP, MCPServer, Server.streamable_http_app(), and StreamableHTTPSessionManager, retain session entries without an idle expiration or aggregate session-count limit. DELETE, refused opening requests, and completed sessions do not reliably discard their entries, and each entry can retain parsed initialize parameters. A client that can reach the endpoint can therefore create ordinary short requests that grow server memory without bound until restart. Stateless HTTP, stdio, and SSE transports are not affected. This issue is fixed in versions 1.30.0 and 2.2.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/92120b4b0f50385af096592d7cee932fc1d994e7"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/92120b4b0f50385af096592d7cee932fc1d994e7&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/d2290ca3434731b68ea3e2270bc06a6e6575931b"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/d2290ca3434731b68ea3e2270bc06a6e6575931b&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3395"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3395&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3426"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3426&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
