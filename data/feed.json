@@ -6,6 +6,19 @@
   "description": "Real-time feed of OSV-compliant security advisories, CVEs, and vulnerabilities across MCP servers.",
   "items": [
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-134817",
+      "url": "https://github.com/Flux159/mcp-server-kubernetes/blob/v4.1.9/src/tools/exec_in_pod.ts#L105",
+      "title": "[HIGH] CVE-2026-134817: mcp-server-kubernetes before 4.2.0 contains an argument injection vulnerability that allows remote MCP clients to inject",
+      "summary": "mcp-server-kubernetes before 4.2.0 contains an argument injection vulnerability that allows remote MCP clients to inject",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-134817</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.1)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>mcp-server-kubernetes before 4.2.0 contains an argument injection vulnerability that allows remote MCP clients to inject kubectl flags by supplying dash-prefixed values as positional operands in tools such as exec_in_pod, kubectl_patch, and kubectl_logs. Attackers connected over SSE or Streamable HTTP transport can supply values like --filename to make kubectl read files from the server host, bypassing file-read restrictions.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/Flux159/mcp-server-kubernetes/blob/v4.1.9/src/tools/exec_in_pod.ts#L105\">https://github.com/Flux159/mcp-server-kubernetes/blob/v4.1.9/src/tools/exec_in_pod.ts#L105</a></li>\n<li><a href=\"https://github.com/Flux159/mcp-server-kubernetes/commit/588d4949b0233974c3966a7d24d532be11e56d0d\">https://github.com/Flux159/mcp-server-kubernetes/commit/588d4949b0233974c3966a7d24d532be11e56d0d</a></li>\n<li><a href=\"https://github.com/Flux159/mcp-server-kubernetes/pull/390\">https://github.com/Flux159/mcp-server-kubernetes/pull/390</a></li>\n<li><a href=\"https://github.com/Flux159/mcp-server-kubernetes/releases/tag/v4.2.0\">https://github.com/Flux159/mcp-server-kubernetes/releases/tag/v4.2.0</a></li>\n</ul></p>",
+      "date_published": "2026-11-22T22:17:36.147Z",
+      "date_modified": "2026-11-22T22:17:36.147Z",
+      "tags": [
+        "HIGH",
+        "unknown"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-134293",
       "url": "https://github.com/surrealdb/surrealdb/security/advisories/GHSA-cr79-9p8r-p5wx",
       "title": "[HIGH] CVE-2026-134293: SurrealDB 3.1.0 before 4.0.0 contains an SQL injection vulnerability in its Model Context Protocol (MCP) server because ",
@@ -930,6 +943,58 @@
       ]
     },
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-106763",
+      "url": "https://github.com/advisories/GHSA-2vq3-mpmf-9xgr",
+      "title": "[HIGH] CVE-2026-106763: @justice8096/sagemath-mcp-server: executes arbitrary code via the escapeShellString and sanitizeCode functions",
+      "summary": "@justice8096/sagemath-mcp-server: executes arbitrary code via the escapeShellString and sanitizeCode functions",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-106763</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.5)</p>\n<p><strong>Affected Package(s):</strong> @justice8096/sagemath-mcp-server</p>\n<p><strong>Details:</strong><br>An issue in @justice8096/sagemath-mcp-server 1.0.1 allows a remote attacker to execute arbitrary code via the escapeShellString and sanitizeCode functions.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/advisories/GHSA-2vq3-mpmf-9xgr\">https://github.com/advisories/GHSA-2vq3-mpmf-9xgr</a></li>\n<li><a href=\"https://github.com/justice8096/sagemath-mcp-server/issues/1\">https://github.com/justice8096/sagemath-mcp-server/issues/1</a></li>\n<li><a href=\"https://nvd.nist.gov/vuln/detail/CVE-2026-106763\">https://nvd.nist.gov/vuln/detail/CVE-2026-106763</a></li>\n<li><a href=\"https://stillosdigitalholdings.com/advisories/CVE-2026-106763.cve.json\">https://stillosdigitalholdings.com/advisories/CVE-2026-106763.cve.json</a></li>\n</ul></p>",
+      "date_published": "2026-10-23T00:00:00Z",
+      "date_modified": "2026-10-29T00:00:00Z",
+      "tags": [
+        "HIGH",
+        "@justice8096/sagemath-mcp-server"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-77361",
+      "url": "https://github.com/The-40-Thieves/obsidian-tc/commit/c81d1687e2cfec98a0d8bc5038c029f41ea9c920",
+      "title": "[MEDIUM] CVE-2026-77361: obsidian-tc : Symlink read-ACL scope bypass via lexical path checks",
+      "summary": "obsidian-tc : Symlink read-ACL scope bypass via lexical path checks",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-77361</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 4.7)</p>\n<p><strong>Affected Package(s):</strong> obsidian-tc</p>\n<p><strong>Details:</strong><br>ACL checks ran on the lexical vault-relative path while containment used the realpath. An in-vault symlink placed under an allowed glob, whose realpath resolved into a denied folder, passed the read ACL — an intra-vault read-ACL-scope bypass. It requires an out-of-band-planted symlink (no MCP tool creates one) and is not a vault-root escape.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/commit/c81d1687e2cfec98a0d8bc5038c029f41ea9c920\">https://github.com/The-40-Thieves/obsidian-tc/commit/c81d1687e2cfec98a0d8bc5038c029f41ea9c920</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/pull/76\">https://github.com/The-40-Thieves/obsidian-tc/pull/76</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1\">https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-c5xx-h28h-f682\">https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-c5xx-h28h-f682</a></li>\n</ul></p>",
+      "date_published": "2026-10-23T00:00:00Z",
+      "date_modified": "2026-10-23T00:00:00Z",
+      "tags": [
+        "MEDIUM",
+        "obsidian-tc"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:GHSA-7xgj-8392-5q4r",
+      "url": "https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df",
+      "title": "[MEDIUM] GHSA-7xgj-8392-5q4r: FastMCP: Post-transform component authorization is skipped on direct calls",
+      "summary": "FastMCP: Post-transform component authorization is skipped on direct calls",
+      "content_html": "<p><strong>Vulnerability ID:</strong> GHSA-7xgj-8392-5q4r</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.8)</p>\n<p><strong>Affected Package(s):</strong> fastmcp-slim</p>\n<p><strong>Details:</strong><br>FastMCP's direct component paths can return a transformed component before its applicable `AuthCheck`, allowing low-privilege callers to execute hidden protected behavior. I reproduced this against FastMCP 4.1.0 and commit `e2fcc412001ff7414095c5dc282f94c70299a612` using only an in-process FastMCP server. The attacker does not have server-side access and does not control FastMCP configuration.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df\">https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df</a></li>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/commit/8649ba5fc91a68568a69729497edeb804a064332\">https://github.com/PrefectHQ/fastmcp/commit/8649ba5fc91a68568a69729497edeb804a064332</a></li>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/pull/5933\">https://github.com/PrefectHQ/fastmcp/pull/5933</a></li>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/pull/5934\">https://github.com/PrefectHQ/fastmcp/pull/5934</a></li>\n</ul></p>",
+      "date_published": "2026-10-23T00:00:00Z",
+      "date_modified": "2026-10-23T00:00:00Z",
+      "tags": [
+        "MEDIUM",
+        "fastmcp-slim"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:GHSA-vqqp-x5qm-5qp4",
+      "url": "https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df",
+      "title": "[MEDIUM] GHSA-vqqp-x5qm-5qp4: FastMCP MCP client wrappers construct M2M OAuth providers without issuer binding — client secret redirectable to attacker-advertised authorization server",
+      "summary": "FastMCP MCP client wrappers construct M2M OAuth providers without issuer binding — client secret redirectable to attacker-advertised authorization server",
+      "content_html": "<p><strong>Vulnerability ID:</strong> GHSA-vqqp-x5qm-5qp4</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 5.9)</p>\n<p><strong>Affected Package(s):</strong> fastmcp-slim</p>\n<p><strong>Details:</strong><br>fastmcp's ClientCredentialsOAuthProvider and PrivateKeyJWTOAuthProvider do not expose or validate OAuth issuer binding when connecting to MCP servers. A client secret configured for a legitimate authorization server can be transmitted to an attacker-controlled authorization server if the MCP server URL is attacker-supplied or compromised. This is the same vulnerability class as GHSA-qx49-fqc8-xw99 (Python MCP SDK) and GHSA-6qxp-vccf-f47h (TypeScript MCP SDK), applied to fastmcp's wrapper layer.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df\">https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df</a></li>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/pull/5933\">https://github.com/PrefectHQ/fastmcp/pull/5933</a></li>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/releases/tag/v4.1.2\">https://github.com/PrefectHQ/fastmcp/releases/tag/v4.1.2</a></li>\n<li><a href=\"https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-vqqp-x5qm-5qp4\">https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-vqqp-x5qm-5qp4</a></li>\n</ul></p>",
+      "date_published": "2026-10-23T00:00:00Z",
+      "date_modified": "2026-10-23T00:00:00Z",
+      "tags": [
+        "MEDIUM",
+        "fastmcp-slim"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-114123",
       "url": "https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818",
       "title": "[HIGH] CVE-2026-114123: D365 F&O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance & Operations X++ code and metad",
@@ -1051,12 +1116,12 @@
       "url": "https://github.com/advisories/GHSA-rvq5-wwqv-78pq",
       "title": "[MEDIUM] CVE-2026-111771: MCP TypeScript SDK: Server bearer authentication accepted tokens issued for another service",
       "summary": "MCP TypeScript SDK: Server bearer authentication accepted tokens issued for another service",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-111771</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.8)</p>\n<p><strong>Affected Package(s):</strong> @modelcontextprotocol/sdk</p>\n<p><strong>Details:</strong><br>In affected versions, the SDK's server-side bearer authentication had no way to check that a token was issued for your server (its audience). Where one authorization server issues tokens for several services, a valid token for another service was also accepted by your MCP server.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/advisories/GHSA-rvq5-wwqv-78pq\">https://github.com/advisories/GHSA-rvq5-wwqv-78pq</a></li>\n<li><a href=\"https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a\">https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a</a></li>\n<li><a href=\"https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f\">https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f</a></li>\n<li><a href=\"https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325\">https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325</a></li>\n</ul></p>",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-111771</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.8)</p>\n<p><strong>Affected Package(s):</strong> @modelcontextprotocol/server-legacy</p>\n<p><strong>Details:</strong><br>In affected versions, the SDK's server-side bearer authentication had no way to check that a token was issued for your server (its audience). Where one authorization server issues tokens for several services, a valid token for another service was also accepted by your MCP server.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/advisories/GHSA-rvq5-wwqv-78pq\">https://github.com/advisories/GHSA-rvq5-wwqv-78pq</a></li>\n<li><a href=\"https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a\">https://github.com/modelcontextprotocol/typescript-sdk/commit/40f8f4e229d963cd7fd2890bda2aeebe7005299a</a></li>\n<li><a href=\"https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f\">https://github.com/modelcontextprotocol/typescript-sdk/commit/5a0724d14cf34a27a3b070224d2996cdd611df9f</a></li>\n<li><a href=\"https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325\">https://github.com/modelcontextprotocol/typescript-sdk/commit/5a1867390b91b8836f49af76c45427279f513325</a></li>\n</ul></p>",
       "date_published": "2026-10-20T00:00:00Z",
       "date_modified": "2026-10-20T00:00:00Z",
       "tags": [
         "MEDIUM",
-        "@modelcontextprotocol/sdk"
+        "@modelcontextprotocol/server-legacy"
       ]
     },
     {
@@ -1238,71 +1303,6 @@
       "date_modified": "2026-10-16T16:00:33.533Z",
       "tags": [
         "MEDIUM",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-110616",
-      "url": "https://github.com/nullclaw/nullhub",
-      "title": "[HIGH] CVE-2026-110616: NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to acces",
-      "summary": "NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to acces",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-110616</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.1)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>NullHub through 2026.5.29 contains a missing authentication vulnerability that allows unauthenticated attackers to access the /api/* management API because the auth_token field defaults to null and is never assigned. Attackers sending requests without Authorization or Origin headers to non-loopback listeners can control agent instances, rewrite configurations including provider credentials, and manage cron jobs and MCP servers.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/nullclaw/nullhub\">https://github.com/nullclaw/nullhub</a></li>\n<li><a href=\"https://github.com/nullclaw/nullhub/blob/v2026.5.29/Dockerfile#L69-L71\">https://github.com/nullclaw/nullhub/blob/v2026.5.29/Dockerfile#L69-L71</a></li>\n<li><a href=\"https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/api/settings.zig#L29-L54\">https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/api/settings.zig#L29-L54</a></li>\n<li><a href=\"https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/server.zig#L546-L556\">https://github.com/nullclaw/nullhub/blob/v2026.5.29/src/server.zig#L546-L556</a></li>\n</ul></p>",
-      "date_published": "2026-10-14T15:17:13.767Z",
-      "date_modified": "2026-10-20T02:17:09.270Z",
-      "tags": [
-        "HIGH",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-77363",
-      "url": "https://github.com/The-40-Thieves/obsidian-tc/commit/6428bfe6fdfd43aa7b4b369be3aecd6a268fb928",
-      "title": "[HIGH] CVE-2026-77363: obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, the Streamable",
-      "summary": "obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, the Streamable",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-77363</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, the Streamable HTTP transport does not validate the Host or Origin header or enable DNS-rebinding protection. When the documented loopback configuration uses auth.mode set to none, a malicious web page can send requests to the local MCP endpoint and receive unrestricted vault access through the http-local caller. Version 1.3.1 fixes the vulnerability by enabling host, origin, and DNS-rebinding validation.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/commit/6428bfe6fdfd43aa7b4b369be3aecd6a268fb928\">https://github.com/The-40-Thieves/obsidian-tc/commit/6428bfe6fdfd43aa7b4b369be3aecd6a268fb928</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/pull/74\">https://github.com/The-40-Thieves/obsidian-tc/pull/74</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1\">https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-pqh8-4pj7-32xx\">https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-pqh8-4pj7-32xx</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T18:17:23.513Z",
-      "date_modified": "2026-10-16T20:04:29.760Z",
-      "tags": [
-        "HIGH",
-        "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-77366",
-      "url": "https://github.com/The-40-Thieves/obsidian-tc/commit/38b4992e87dc2715564236e1a42d005ab05a0194",
-      "title": "[CRITICAL] CVE-2026-77366: obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, tool dispatch ",
-      "summary": "obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, tool dispatch ",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-77366</p>\n<p><strong>Severity:</strong> CRITICAL (CVSS 9.9)</p>\n<p><strong>Affected Package(s):</strong> obsidian-tc</p>\n<p><strong>Details:</strong><br>obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, tool dispatch does not compare the caller-controlled input.vault value with the vault bound to the caller, the JSON Web Token (JWT) has no vault claim, and the folder access-control list is shared globally. Any valid token can therefore select another configured vault and read, write, or delete its contents through affected tools. Version 1.3.1 fixes the vulnerability by binding tokens and request context to a vault and rejecting mismatched input.vault values before scope checks.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/commit/38b4992e87dc2715564236e1a42d005ab05a0194\">https://github.com/The-40-Thieves/obsidian-tc/commit/38b4992e87dc2715564236e1a42d005ab05a0194</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/pull/72\">https://github.com/The-40-Thieves/obsidian-tc/pull/72</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1\">https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-84c9-qqpq-2pq5\">https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-84c9-qqpq-2pq5</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T17:54:31.642Z",
-      "date_modified": "2026-10-12T17:54:31.642Z",
-      "tags": [
-        "CRITICAL",
-        "obsidian-tc"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-77364",
-      "url": "https://github.com/The-40-Thieves/obsidian-tc/commit/74de320ddea855e1dec47d67beabe88491149dab",
-      "title": "[MEDIUM] CVE-2026-77364: obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, undefined read",
-      "summary": "obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, undefined read",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-77364</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.5)</p>\n<p><strong>Affected Package(s):</strong> obsidian-tc</p>\n<p><strong>Details:</strong><br>obsidian-tc is a governed, agent-ready Model Context Protocol server for Obsidian vaults. Prior to 1.3.1, undefined readPaths and writePaths settings allow all paths, strictReadDefault does not protect direct requests, and the .obsidian, .git, and .trash control directories are excluded only during enumeration. An authenticated caller can directly read sensitive files such as .obsidian/plugins/*/data.json, potentially exposing plugin API keys, Obsidian Sync passwords, and other in-vault data. Version 1.3.1 fixes the vulnerability by denying the control directories by default and enforcing strictReadDefault on direct request paths.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/commit/74de320ddea855e1dec47d67beabe88491149dab\">https://github.com/The-40-Thieves/obsidian-tc/commit/74de320ddea855e1dec47d67beabe88491149dab</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/pull/73\">https://github.com/The-40-Thieves/obsidian-tc/pull/73</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1\">https://github.com/The-40-Thieves/obsidian-tc/releases/tag/v1.3.1</a></li>\n<li><a href=\"https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-cvp8-vvgf-69q4\">https://github.com/The-40-Thieves/obsidian-tc/security/advisories/GHSA-cvp8-vvgf-69q4</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T17:52:51.653Z",
-      "date_modified": "2026-10-12T17:52:51.653Z",
-      "tags": [
-        "MEDIUM",
-        "obsidian-tc"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-108953",
-      "url": "https://github.com/cfdude/mac-shell-mcp",
-      "title": "[HIGH] CVE-2026-108953: mac-shell-mcp before 2.0.0 contains an OS command injection vulnerability that allows MCP clients to bypass the command ",
-      "summary": "mac-shell-mcp before 2.0.0 contains an OS command injection vulnerability that allows MCP clients to bypass the command ",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-108953</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.8)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>mac-shell-mcp before 2.0.0 contains an OS command injection vulnerability that allows MCP clients to bypass the command whitelist by injecting shell metacharacters into execute_command arguments. Attackers or malicious prompts can call a safe command such as pwd with arguments like ';' to run forbidden commands as the server user without approval.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/cfdude/mac-shell-mcp\">https://github.com/cfdude/mac-shell-mcp</a></li>\n<li><a href=\"https://github.com/cfdude/mac-shell-mcp/blob/1c1708201abb7a18c83075e1bf933e7a92cbeb9f/src/services/command-service.ts#L257-L340\">https://github.com/cfdude/mac-shell-mcp/blob/1c1708201abb7a18c83075e1bf933e7a92cbeb9f/src/services/command-service.ts#L257-L340</a></li>\n<li><a href=\"https://github.com/cfdude/mac-shell-mcp/commit/932ce733cde07bb30b1f186303e6692dbb5d087a\">https://github.com/cfdude/mac-shell-mcp/commit/932ce733cde07bb30b1f186303e6692dbb5d087a</a></li>\n<li><a href=\"https://github.com/cfdude/mac-shell-mcp/issues/45\">https://github.com/cfdude/mac-shell-mcp/issues/45</a></li>\n</ul></p>",
-      "date_published": "2026-10-12T13:17:28.307Z",
-      "date_modified": "2026-10-16T19:18:44.867Z",
-      "tags": [
-        "HIGH",
         "unknown"
       ]
     }

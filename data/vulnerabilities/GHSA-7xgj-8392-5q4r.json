@@ -1,0 +1,82 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+        "remediation_guidance": "Upgrade to versions 3.4.10, 4.1.2 or above."
+      },
+      "package": {
+        "ecosystem": "PyPI",
+        "name": "fastmcp-slim",
+        "purl": "pkg:pypi/fastmcp-slim"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "3.0.0,<3.4.10"
+            },
+            {
+              "fixed": "3.4.10"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-7xgj-8392-5q4r"
+    ],
+    "sources_merged": [
+      "GHSA-7xgj-8392-5q4r"
+    ]
+  },
+  "details": "FastMCP's direct component paths can return a transformed component before its applicable `AuthCheck`, allowing low-privilege callers to execute hidden protected behavior. I reproduced this against FastMCP 4.1.0 and commit `e2fcc412001ff7414095c5dc282f94c70299a612` using only an in-process FastMCP server. The attacker does not have server-side access and does not control FastMCP configuration.",
+  "id": "GHSA-7xgj-8392-5q4r",
+  "modified": "2026-10-23T00:00:00Z",
+  "published": "2026-10-23T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/commit/85df42fbf2aa631cc81e0f986718b314128e91df"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/commit/8649ba5fc91a68568a69729497edeb804a064332"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/pull/5933"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/pull/5934"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/releases/tag/v3.4.10"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/releases/tag/v4.1.2"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-7xgj-8392-5q4r"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-7xgj-8392-5q4r"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "FastMCP: Post-transform component authorization is skipped on direct calls"
+}
