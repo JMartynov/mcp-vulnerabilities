@@ -5,10 +5,68 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-11-23T16:17:32.107Z</updated>
+  <updated>2026-11-24T12:17:22.883Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-135747</id>
+    <title>[UNKNOWN] CVE-2026-135747: Apache IoTDB MCP Server logs the IoTDB connection password in plaintext during startup, allowing anyone with access to t</title>
+    <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-135747.json" />
+    <updated>2026-11-24T12:17:22.883Z</updated>
+    <published>2026-11-24T12:17:22.883Z</published>
+    <summary>Apache IoTDB MCP Server logs the IoTDB connection password in plaintext during startup, allowing anyone with access to t</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-135747&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; UNKNOWN&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; iotdb-mcp-server&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Apache IoTDB MCP Server logs the IoTDB connection password in plaintext during startup, allowing anyone with access to the logs to obtain the credential.
+
+
+
+This issue affects Apache IoTDB MCP Server: through 0.2.0.
+
+
+
+Users are recommended to upgrade to version 0.3.0, which fixes the issue.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://lists.apache.org/thread.html/4sljwhbj5lv3f3od90bjxsoztvlk49qz"&gt;https://lists.apache.org/thread.html/4sljwhbj5lv3f3od90bjxsoztvlk49qz&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-130178</id>
+    <title>[HIGH] CVE-2026-130178: AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agent</title>
+    <link rel="alternate" href="https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29" />
+    <updated>2026-11-24T02:17:46.780Z</updated>
+    <published>2026-11-24T02:17:46.780Z</published>
+    <summary>AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agent</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-130178&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.7)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agents. In versions 0.7.1 through 0.8.4, an incomplete IPv6 blocklist in AutoGPT's outbound SSRF protection allows authenticated users to reach local or private network services. Specifically, _is_ip_blocked and BLOCKED_IP_NETWORKS in autogpt_platform/backend/backend/util/request.py fail to reject the IPv6 unspecified address :: (which connects to ::1 on Linux) as well as 6to4, NAT64, Teredo, and deprecated IPv4-compatible IPv6 encodings. An attacker can pass :: directly to blocks/sql_query_block.py or blocks/email_block.py, or point URL-fetching blocks, web fetch, MCP servers, webhooks, or OAuth at a hostname whose AAAA record resolves to ::. On backends run directly on a host, this exposes unauthenticated internal RPC services and databases listening on ::1, though the default Docker Compose and single-container deployments bind internal services to IPv4 only. This issue is fixed in version 0.9.0.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29"&gt;https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Significant-Gravitas/AutoGPT/pull/15926"&gt;https://github.com/Significant-Gravitas/AutoGPT/pull/15926&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Significant-Gravitas/AutoGPT/security/advisories/GHSA-3c7g-v5hv-wwv4"&gt;https://github.com/Significant-Gravitas/AutoGPT/security/advisories/GHSA-3c7g-v5hv-wwv4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-135432</id>
+    <title>[MEDIUM] CVE-2026-135432: sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows </title>
+    <link rel="alternate" href="https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708" />
+    <updated>2026-11-23T18:17:13.693Z</updated>
+    <published>2026-11-23T18:17:13.693Z</published>
+    <summary>sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows </summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-135432&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows assigned non-admin users to read other users' per-user MCP headers. Attackers can request the assigned-user-details endpoint to obtain bearer tokens in CustomHeaders and impersonate other users against the downstream MCP server.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708"&gt;https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/sdcb/chats/commit/776a065b26776b56d70525676621c3ece7fd9e98"&gt;https://github.com/sdcb/chats/commit/776a065b26776b56d70525676621c3ece7fd9e98&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/sdcb/chats/issues/148"&gt;https://github.com/sdcb/chats/issues/148&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/sdcb/chats/releases/tag/1.17.1.799"&gt;https://github.com/sdcb/chats/releases/tag/1.17.1.799&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
   <entry>
     <id>urn:mcp:vulnerability:CVE-2026-134492</id>
     <title>[MEDIUM] CVE-2026-134492: In mcp-server-fetch from 2026.10.10 and before 2026.11.11, the check that blocks requests to non-public addresses treats</title>
@@ -43,7 +101,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-133632</id>
     <title>[HIGH] CVE-2026-133632: In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can</title>
     <link rel="alternate" href="https://github.com/astronomer/agents" />
-    <updated>2026-11-23T16:22:53.377Z</updated>
+    <updated>2026-11-23T17:17:31.940Z</updated>
     <published>2026-11-23T16:17:29.007Z</published>
     <summary>In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-133632&lt;/p&gt;
@@ -54,7 +112,7 @@
 &lt;li&gt;&lt;a href="https://github.com/astronomer/agents"&gt;https://github.com/astronomer/agents&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/astronomer/agents/pull/292"&gt;https://github.com/astronomer/agents/pull/292&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2"&gt;https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://pypi.org/project/astro-airflow-mcp/0.9.2"&gt;https://pypi.org/project/astro-airflow-mcp/0.9.2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/astronomer/agents/security/advisories/GHSA-x6pc-xc3q-fpww"&gt;https://github.com/astronomer/agents/security/advisories/GHSA-x6pc-xc3q-fpww&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -97,7 +155,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-134293</id>
     <title>[HIGH] CVE-2026-134293: SurrealDB 3.1.0 before 4.0.0 contains an SQL injection vulnerability in its Model Context Protocol (MCP) server because </title>
     <link rel="alternate" href="https://github.com/surrealdb/surrealdb/security/advisories/GHSA-cr79-9p8r-p5wx" />
-    <updated>2026-11-21T17:16:49.180Z</updated>
+    <updated>2026-11-23T20:18:00.277Z</updated>
     <published>2026-11-21T17:16:49.057Z</published>
     <summary>SurrealDB 3.1.0 before 4.0.0 contains an SQL injection vulnerability in its Model Context Protocol (MCP) server because </summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-134293&lt;/p&gt;
@@ -113,7 +171,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-54032</id>
     <title>[MEDIUM] CVE-2026-54032: LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/I</title>
     <link rel="alternate" href="https://github.com/LibreChat-AI/LibreChat/commit/619f28d76d73ff34448451ed25a9629e6c28a640" />
-    <updated>2026-11-20T21:17:37.903Z</updated>
+    <updated>2026-11-24T01:17:34.810Z</updated>
     <published>2026-11-20T20:17:41.890Z</published>
     <summary>LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/I</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-54032&lt;/p&gt;
@@ -131,7 +189,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-114499</id>
     <title>[MEDIUM] CVE-2026-114499: codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</title>
     <link rel="alternate" href="https://github.com/DeusData/codebase-memory-mcp/commit/886a8856a4e4a2ad3ba602d07e45c3b450117f6b" />
-    <updated>2026-11-20T20:17:12.080Z</updated>
+    <updated>2026-11-23T20:17:58.847Z</updated>
     <published>2026-11-20T20:17:12.080Z</published>
     <summary>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114499&lt;/p&gt;
@@ -149,7 +207,7 @@
     <id>urn:mcp:vulnerability:CVE-2026-114497</id>
     <title>[MEDIUM] CVE-2026-114497: codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</title>
     <link rel="alternate" href="https://github.com/DeusData/codebase-memory-mcp/commit/0baddf788737b1b0792f5af7ac63e05de87f382a" />
-    <updated>2026-11-20T20:17:11.627Z</updated>
+    <updated>2026-11-24T01:17:20.973Z</updated>
     <published>2026-11-20T20:17:11.627Z</published>
     <summary>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114497&lt;/p&gt;
@@ -357,7 +415,7 @@ On Pydantic AI v1, the harness cannot be upgraded past 0.4.0. Upgrade to Pydanti
     <id>urn:mcp:vulnerability:CVE-2026-75612</id>
     <title>[HIGH] CVE-2026-75612: yt-mcp is a YouTrack MCP server for Claude Code. Prior to 1.18.1, add_attachment in src/yt_mcp/tools/attachments.py acce</title>
     <link rel="alternate" href="https://github.com/velesnitski/yt-mcp/commit/b70054b180e6ec7a03f70ee4744518d96d2fba8a" />
-    <updated>2026-11-18T22:17:24.293Z</updated>
+    <updated>2026-11-23T22:23:24.863Z</updated>
     <published>2026-11-18T22:17:24.293Z</published>
     <summary>yt-mcp is a YouTrack MCP server for Claude Code. Prior to 1.18.1, add_attachment in src/yt_mcp/tools/attachments.py acce</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-75612&lt;/p&gt;
@@ -409,7 +467,7 @@ On Pydantic AI v1, the harness cannot be upgraded past 0.4.0. Upgrade to Pydanti
     <id>urn:mcp:vulnerability:CVE-2026-63129</id>
     <title>[HIGH] CVE-2026-63129: mssql-mcp-core is the shared library that powers MSSQL MCP servers. Prior to core and server 0.6.0 and reader and writer</title>
     <link rel="alternate" href="https://github.com/ConnorBritain/mssql-mcp-core/commit/227e2efc4e3311c477b7ae509c3ae15437a4f815" />
-    <updated>2026-11-18T20:19:10.557Z</updated>
+    <updated>2026-11-23T22:20:43.557Z</updated>
     <published>2026-11-18T20:19:10.557Z</published>
     <summary>mssql-mcp-core is the shared library that powers MSSQL MCP servers. Prior to core and server 0.6.0 and reader and writer</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-63129&lt;/p&gt;
@@ -457,7 +515,7 @@ On Pydantic AI v1, the harness cannot be upgraded past 0.4.0. Upgrade to Pydanti
     <id>urn:mcp:vulnerability:CVE-2026-130766</id>
     <title>[HIGH] CVE-2026-130766: Obot from 0.26.0 before 0.27.0 fails to validate the resource identifier in remote MCP server protected resource metadat</title>
     <link rel="alternate" href="https://github.com/obot-platform/obot/security/advisories/GHSA-x3hf-v55x-jcp6" />
-    <updated>2026-11-18T19:17:48.307Z</updated>
+    <updated>2026-11-23T22:20:11.010Z</updated>
     <published>2026-11-18T19:17:48.003Z</published>
     <summary>Obot from 0.26.0 before 0.27.0 fails to validate the resource identifier in remote MCP server protected resource metadat</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-130766&lt;/p&gt;
@@ -1823,71 +1881,6 @@ Thank you to hackerone.com/moamenmahmood for reporting this issue.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In JetBrains Junie CLI before 26.8.3 code execution was possible via an untrusted project's MCP server configuration&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.jetbrains.com/privacy-security/issues-fixed"&gt;https://www.jetbrains.com/privacy-security/issues-fixed&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-84317</id>
-    <title>[HIGH] CVE-2026-84317: Nginx UI: MCP nginx_config_add skips config directive validation → authenticated nginx directive injection (RCE on the official image)</title>
-    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
-    <updated>2026-10-15T00:00:00Z</updated>
-    <published>2026-10-15T00:00:00Z</published>
-    <summary>Nginx UI: MCP nginx_config_add skips config directive validation → authenticated nginx directive injection (RCE on the official image)</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84317&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.8)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; github.com/0xJacky/Nginx-UI&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;`internal/config/validation.go` (`ValidateConfigFile`) is a security control that blocks dangerous
-nginx directives — `js_*`, `perl_*`, `load_module` of the njs/perl modules, and `user root`. It is
-enforced on three of the four config-write paths: `api/config/add.go`, `api/config/modify.go`, and
-`mcp/config/config_modify.go`. The fourth path — the MCP tool `nginx_config_add`
-(`mcp/config/config_add.go`) — does NOT call it: it writes the caller-supplied `content` straight to
-disk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection)
-can therefore inject exactly the directives the control is meant to block, leading to nginx code
-execution on deployments where the njs/perl module is available (e.g. the official Docker image).&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-76pm-mq2q-9gcr"&gt;https://github.com/advisories/GHSA-76pm-mq2q-9gcr&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-84318</id>
-    <title>[HIGH] CVE-2026-84318: Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE</title>
-    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
-    <updated>2026-10-15T00:00:00Z</updated>
-    <published>2026-10-15T00:00:00Z</published>
-    <summary>Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84318&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.8)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; github.com/0xJacky/Nginx-UI&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The MCP tool `nginx_config_add` writes nginx configuration files to disk and triggers an nginx reload without calling `config.ValidateConfigFile`. The identical flow in the REST API (`POST /api/configs`) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (`perl`, `js_import`, `load_module`, `user root`, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-9jww-cxg5-rj9m"&gt;https://github.com/advisories/GHSA-9jww-cxg5-rj9m&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-84319</id>
-    <title>[HIGH] CVE-2026-84319: Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context</title>
-    <link rel="alternate" href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2" />
-    <updated>2026-10-15T00:00:00Z</updated>
-    <published>2026-10-15T00:00:00Z</published>
-    <summary>Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-84319&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.3)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; github.com/0xJacky/Nginx-UI&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The regular HTTP configuration API rejects restricted Nginx directives such as `load_module`, `js_import`, and `js_content`.
-
-However, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. In the lab, this allowed the user to load `ngx_http_js_module.so`, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context.
-
-This is authenticated and is not OS command execution by itself.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2"&gt;https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1"&gt;https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x"&gt;https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-5r62-gj48-897x"&gt;https://github.com/advisories/GHSA-5r62-gj48-897x&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

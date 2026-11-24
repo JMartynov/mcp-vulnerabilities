@@ -6,6 +6,45 @@
   "description": "Real-time feed of OSV-compliant security advisories, CVEs, and vulnerabilities across MCP servers.",
   "items": [
     {
+      "id": "urn:mcp:vulnerability:CVE-2026-135747",
+      "url": "https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-135747.json",
+      "title": "[UNKNOWN] CVE-2026-135747: Apache IoTDB MCP Server logs the IoTDB connection password in plaintext during startup, allowing anyone with access to t",
+      "summary": "Apache IoTDB MCP Server logs the IoTDB connection password in plaintext during startup, allowing anyone with access to t",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-135747</p>\n<p><strong>Severity:</strong> UNKNOWN</p>\n<p><strong>Affected Package(s):</strong> iotdb-mcp-server</p>\n<p><strong>Details:</strong><br>Apache IoTDB MCP Server logs the IoTDB connection password in plaintext during startup, allowing anyone with access to the logs to obtain the credential.\n\n\n\nThis issue affects Apache IoTDB MCP Server: through 0.2.0.\n\n\n\nUsers are recommended to upgrade to version 0.3.0, which fixes the issue.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://lists.apache.org/thread.html/4sljwhbj5lv3f3od90bjxsoztvlk49qz\">https://lists.apache.org/thread.html/4sljwhbj5lv3f3od90bjxsoztvlk49qz</a></li>\n</ul></p>",
+      "date_published": "2026-11-24T12:17:22.883Z",
+      "date_modified": "2026-11-24T12:17:22.883Z",
+      "tags": [
+        "UNKNOWN",
+        "iotdb-mcp-server"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-130178",
+      "url": "https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29",
+      "title": "[HIGH] CVE-2026-130178: AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agent",
+      "summary": "AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agent",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-130178</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.7)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agents. In versions 0.7.1 through 0.8.4, an incomplete IPv6 blocklist in AutoGPT's outbound SSRF protection allows authenticated users to reach local or private network services. Specifically, _is_ip_blocked and BLOCKED_IP_NETWORKS in autogpt_platform/backend/backend/util/request.py fail to reject the IPv6 unspecified address :: (which connects to ::1 on Linux) as well as 6to4, NAT64, Teredo, and deprecated IPv4-compatible IPv6 encodings. An attacker can pass :: directly to blocks/sql_query_block.py or blocks/email_block.py, or point URL-fetching blocks, web fetch, MCP servers, webhooks, or OAuth at a hostname whose AAAA record resolves to ::. On backends run directly on a host, this exposes unauthenticated internal RPC services and databases listening on ::1, though the default Docker Compose and single-container deployments bind internal services to IPv4 only. This issue is fixed in version 0.9.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29\">https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29</a></li>\n<li><a href=\"https://github.com/Significant-Gravitas/AutoGPT/pull/15926\">https://github.com/Significant-Gravitas/AutoGPT/pull/15926</a></li>\n<li><a href=\"https://github.com/Significant-Gravitas/AutoGPT/security/advisories/GHSA-3c7g-v5hv-wwv4\">https://github.com/Significant-Gravitas/AutoGPT/security/advisories/GHSA-3c7g-v5hv-wwv4</a></li>\n</ul></p>",
+      "date_published": "2026-11-24T02:17:46.780Z",
+      "date_modified": "2026-11-24T02:17:46.780Z",
+      "tags": [
+        "HIGH",
+        "unknown"
+      ]
+    },
+    {
+      "id": "urn:mcp:vulnerability:CVE-2026-135432",
+      "url": "https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708",
+      "title": "[MEDIUM] CVE-2026-135432: sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows ",
+      "summary": "sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows ",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-135432</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.5)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows assigned non-admin users to read other users' per-user MCP headers. Attackers can request the assigned-user-details endpoint to obtain bearer tokens in CustomHeaders and impersonate other users against the downstream MCP server.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708\">https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708</a></li>\n<li><a href=\"https://github.com/sdcb/chats/commit/776a065b26776b56d70525676621c3ece7fd9e98\">https://github.com/sdcb/chats/commit/776a065b26776b56d70525676621c3ece7fd9e98</a></li>\n<li><a href=\"https://github.com/sdcb/chats/issues/148\">https://github.com/sdcb/chats/issues/148</a></li>\n<li><a href=\"https://github.com/sdcb/chats/releases/tag/1.17.1.799\">https://github.com/sdcb/chats/releases/tag/1.17.1.799</a></li>\n</ul></p>",
+      "date_published": "2026-11-23T18:17:13.693Z",
+      "date_modified": "2026-11-23T18:17:13.693Z",
+      "tags": [
+        "MEDIUM",
+        "unknown"
+      ]
+    },
+    {
       "id": "urn:mcp:vulnerability:CVE-2026-134492",
       "url": "https://github.com/modelcontextprotocol/servers/security/advisories/GHSA-3rxj-6jhw-qfv7",
       "title": "[MEDIUM] CVE-2026-134492: In mcp-server-fetch from 2026.10.10 and before 2026.11.11, the check that blocks requests to non-public addresses treats",
@@ -36,9 +75,9 @@
       "url": "https://github.com/astronomer/agents",
       "title": "[HIGH] CVE-2026-133632: In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can",
       "summary": "In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-133632</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.8)</p>\n<p><strong>Affected Package(s):</strong> astro-airflow-mcp</p>\n<p><strong>Details:</strong><br>In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can import modules from the current working directory. If a user runs an af command or an MCP tool call from inside a project that contains an attacker-supplied json.py, that file runs with the user's privileges. Users who only run the tool in projects they trust are not affected. Fixed in 0.9.2; in earlier versions, setting AF_TELEMETRY_DISABLED=1 prevents it.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/astronomer/agents\">https://github.com/astronomer/agents</a></li>\n<li><a href=\"https://github.com/astronomer/agents/pull/292\">https://github.com/astronomer/agents/pull/292</a></li>\n<li><a href=\"https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2\">https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2</a></li>\n<li><a href=\"https://pypi.org/project/astro-airflow-mcp/0.9.2\">https://pypi.org/project/astro-airflow-mcp/0.9.2</a></li>\n</ul></p>",
+      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-133632</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.8)</p>\n<p><strong>Affected Package(s):</strong> astro-airflow-mcp</p>\n<p><strong>Details:</strong><br>In astro-airflow-mcp 0.5.0 through 0.9.1, the af CLI and the MCP server send telemetry from a Python subprocess that can import modules from the current working directory. If a user runs an af command or an MCP tool call from inside a project that contains an attacker-supplied json.py, that file runs with the user's privileges. Users who only run the tool in projects they trust are not affected. Fixed in 0.9.2; in earlier versions, setting AF_TELEMETRY_DISABLED=1 prevents it.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/astronomer/agents\">https://github.com/astronomer/agents</a></li>\n<li><a href=\"https://github.com/astronomer/agents/pull/292\">https://github.com/astronomer/agents/pull/292</a></li>\n<li><a href=\"https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2\">https://github.com/astronomer/agents/releases/tag/astro-airflow-mcp-0.9.2</a></li>\n<li><a href=\"https://github.com/astronomer/agents/security/advisories/GHSA-x6pc-xc3q-fpww\">https://github.com/astronomer/agents/security/advisories/GHSA-x6pc-xc3q-fpww</a></li>\n</ul></p>",
       "date_published": "2026-11-23T16:17:29.007Z",
-      "date_modified": "2026-11-23T16:22:53.377Z",
+      "date_modified": "2026-11-23T17:17:31.940Z",
       "tags": [
         "HIGH",
         "astro-airflow-mcp"
@@ -77,7 +116,7 @@
       "summary": "SurrealDB 3.1.0 before 4.0.0 contains an SQL injection vulnerability in its Model Context Protocol (MCP) server because ",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-134293</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.2)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>SurrealDB 3.1.0 before 4.0.0 contains an SQL injection vulnerability in its Model Context Protocol (MCP) server because the identifier validator (consume_backtick_ident and validate_identifier) treats the first backtick as the closing delimiter, ignoring escape characters that the SurrealQL parser honors. Attackers can supply MCP tool arguments containing an escaped backtick to break out of the quoted identifier and execute arbitrary SurrealQL statements.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/surrealdb/surrealdb/security/advisories/GHSA-cr79-9p8r-p5wx\">https://github.com/surrealdb/surrealdb/security/advisories/GHSA-cr79-9p8r-p5wx</a></li>\n<li><a href=\"https://www.vulncheck.com/advisories/surrealdb-3.1.0-before-4.0.0-sql-injection-via-mcp-tool-identifier-escaped-backticks\">https://www.vulncheck.com/advisories/surrealdb-3.1.0-before-4.0.0-sql-injection-via-mcp-tool-identifier-escaped-backticks</a></li>\n</ul></p>",
       "date_published": "2026-11-21T17:16:49.057Z",
-      "date_modified": "2026-11-21T17:16:49.180Z",
+      "date_modified": "2026-11-23T20:18:00.277Z",
       "tags": [
         "HIGH",
         "unknown"
@@ -90,7 +129,7 @@
       "summary": "LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/I",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-54032</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 6.1)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>LibreChat is an enhanced ChatGPT clone that supports multiple AI providers. Prior to 0.8.6, client/src/components/Chat/Input/MCPConfigDialog.tsx renders the remote MCP details.description value through dangerouslySetInnerHTML without sanitization, allowing a malicious MCP server to execute script when a user opens the configuration dialog. The secondary client/src/components/Banners/Banner.tsx sink similarly renders administrator-controlled banner.message HTML without sanitization for all users. Script execution occurs in the LibreChat browser origin and can expose browser-context data or alter displayed content. This issue is fixed in version 0.8.6.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/LibreChat-AI/LibreChat/commit/619f28d76d73ff34448451ed25a9629e6c28a640\">https://github.com/LibreChat-AI/LibreChat/commit/619f28d76d73ff34448451ed25a9629e6c28a640</a></li>\n<li><a href=\"https://github.com/LibreChat-AI/LibreChat/pull/12927\">https://github.com/LibreChat-AI/LibreChat/pull/12927</a></li>\n<li><a href=\"https://github.com/LibreChat-AI/LibreChat/releases/tag/v0.8.6\">https://github.com/LibreChat-AI/LibreChat/releases/tag/v0.8.6</a></li>\n<li><a href=\"https://github.com/LibreChat-AI/LibreChat/security/advisories/GHSA-vfg3-f8h3-2683\">https://github.com/LibreChat-AI/LibreChat/security/advisories/GHSA-vfg3-f8h3-2683</a></li>\n</ul></p>",
       "date_published": "2026-11-20T20:17:41.890Z",
-      "date_modified": "2026-11-20T21:17:37.903Z",
+      "date_modified": "2026-11-24T01:17:34.810Z",
       "tags": [
         "MEDIUM",
         "unknown"
@@ -103,7 +142,7 @@
       "summary": "codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-114499</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 5.5)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP tools. Prior to 0.10.0, the indexer's .gitignore matcher implemented * and ** through recursive backtracking without a work bound. A repository containing a pattern with repeated wildcard groups and a long path could make matching work grow exponentially, allowing a single ignore rule to stall discovery indefinitely and, before worker isolation, stall the server. The impact is limited to availability, and the bounded matcher does not claim that every expensive input is eliminated. This issue is fixed in version 0.10.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/commit/886a8856a4e4a2ad3ba602d07e45c3b450117f6b\">https://github.com/DeusData/codebase-memory-mcp/commit/886a8856a4e4a2ad3ba602d07e45c3b450117f6b</a></li>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/pull/1464\">https://github.com/DeusData/codebase-memory-mcp/pull/1464</a></li>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0\">https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0</a></li>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-cjhf-76h2-4hwg\">https://github.com/DeusData/codebase-memory-mcp/security/advisories/GHSA-cjhf-76h2-4hwg</a></li>\n</ul></p>",
       "date_published": "2026-11-20T20:17:12.080Z",
-      "date_modified": "2026-11-20T20:17:12.080Z",
+      "date_modified": "2026-11-23T20:17:58.847Z",
       "tags": [
         "MEDIUM",
         "unknown"
@@ -116,7 +155,7 @@
       "summary": "codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP too",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-114497</p>\n<p><strong>Severity:</strong> MEDIUM (CVSS 5.5)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>codebase-memory-mcp provides local code intelligence for developers and AI agents through a persistent graph and MCP tools. Prior to 0.9.1-rc.1, the optional graph UI's POST /api/process-kill route omitted the indexing-job ownership check on Windows while retaining that check on POSIX systems. A requester able to reach the optional UI could supply an arbitrary process identifier, causing TerminateProcess to stop any process that the server user was permitted to terminate. The flaw affects the Windows-specific process termination path and can cause a high availability impact without disclosing or modifying data. This issue is fixed in version 0.9.1-rc.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/commit/0baddf788737b1b0792f5af7ac63e05de87f382a\">https://github.com/DeusData/codebase-memory-mcp/commit/0baddf788737b1b0792f5af7ac63e05de87f382a</a></li>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/pull/1139\">https://github.com/DeusData/codebase-memory-mcp/pull/1139</a></li>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0\">https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.10.0</a></li>\n<li><a href=\"https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.1-rc.1\">https://github.com/DeusData/codebase-memory-mcp/releases/tag/v0.9.1-rc.1</a></li>\n</ul></p>",
       "date_published": "2026-11-20T20:17:11.627Z",
-      "date_modified": "2026-11-20T20:17:11.627Z",
+      "date_modified": "2026-11-24T01:17:20.973Z",
       "tags": [
         "MEDIUM",
         "unknown"
@@ -260,7 +299,7 @@
       "summary": "yt-mcp is a YouTrack MCP server for Claude Code. Prior to 1.18.1, add_attachment in src/yt_mcp/tools/attachments.py acce",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-75612</p>\n<p><strong>Severity:</strong> HIGH (CVSS 7.5)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>yt-mcp is a YouTrack MCP server for Claude Code. Prior to 1.18.1, add_attachment in src/yt_mcp/tools/attachments.py accepts a caller-controlled file_path, checks only that the file exists, reads it without directory confinement, and uploads the bytes to a YouTrack issue. A compromised MCP client or an LLM steered by indirect prompt injection can read any file accessible to the server process and exfiltrate secrets through an issue the caller can access. The same release also permits get_project_health to interpolate a caller-controlled project value into snapshot filenames, allowing parent-directory traversal to write JSON files outside the snapshots directory. This issue is fixed in version 1.18.1.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/velesnitski/yt-mcp/commit/b70054b180e6ec7a03f70ee4744518d96d2fba8a\">https://github.com/velesnitski/yt-mcp/commit/b70054b180e6ec7a03f70ee4744518d96d2fba8a</a></li>\n<li><a href=\"https://github.com/velesnitski/yt-mcp/releases/tag/v1.18.1\">https://github.com/velesnitski/yt-mcp/releases/tag/v1.18.1</a></li>\n<li><a href=\"https://github.com/velesnitski/yt-mcp/security/advisories/GHSA-99mq-fjjc-6v9j\">https://github.com/velesnitski/yt-mcp/security/advisories/GHSA-99mq-fjjc-6v9j</a></li>\n</ul></p>",
       "date_published": "2026-11-18T22:17:24.293Z",
-      "date_modified": "2026-11-18T22:17:24.293Z",
+      "date_modified": "2026-11-23T22:23:24.863Z",
       "tags": [
         "HIGH",
         "unknown"
@@ -299,7 +338,7 @@
       "summary": "mssql-mcp-core is the shared library that powers MSSQL MCP servers. Prior to core and server 0.6.0 and reader and writer",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-63129</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>mssql-mcp-core is the shared library that powers MSSQL MCP servers. Prior to core and server 0.6.0 and reader and writer 0.5.0, multiple database tools interpolate caller-controlled identifiers and predicates into T-SQL batches passed to Request.query() while parameterizing only data values. update_data, delete_data, insert_data, execute_transaction, create_table, create_index, and drop_table accept unsafe tableName, column, index, schema, or free-form whereClause input, while reader-tier list_databases interpolates stateFilter without runtime allowlist enforcement. Row-count and preview queries execute before confirmUpdate or confirmDelete, allowing malicious arguments to bypass confirmation and maxRows controls and execute stacked DDL or DML, read or destroy data, and potentially run operating-system commands when the SQL login is privileged and xp_cmdshell is enabled. This issue is fixed in core and server version 0.6.0 and reader and writer version 0.5.0.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/ConnorBritain/mssql-mcp-core/commit/227e2efc4e3311c477b7ae509c3ae15437a4f815\">https://github.com/ConnorBritain/mssql-mcp-core/commit/227e2efc4e3311c477b7ae509c3ae15437a4f815</a></li>\n<li><a href=\"https://github.com/ConnorBritain/mssql-mcp-core/commit/a9727f83768598e4fdbddfbc717ccfebb84ae7af\">https://github.com/ConnorBritain/mssql-mcp-core/commit/a9727f83768598e4fdbddfbc717ccfebb84ae7af</a></li>\n<li><a href=\"https://github.com/ConnorBritain/mssql-mcp-core/pull/1\">https://github.com/ConnorBritain/mssql-mcp-core/pull/1</a></li>\n<li><a href=\"https://github.com/ConnorBritain/mssql-mcp-core/security/advisories/GHSA-2m9m-6cr5-9x25\">https://github.com/ConnorBritain/mssql-mcp-core/security/advisories/GHSA-2m9m-6cr5-9x25</a></li>\n</ul></p>",
       "date_published": "2026-11-18T20:19:10.557Z",
-      "date_modified": "2026-11-18T20:19:10.557Z",
+      "date_modified": "2026-11-23T22:20:43.557Z",
       "tags": [
         "HIGH",
         "unknown"
@@ -338,7 +377,7 @@
       "summary": "Obot from 0.26.0 before 0.27.0 fails to validate the resource identifier in remote MCP server protected resource metadat",
       "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-130766</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.0)</p>\n<p><strong>Affected Package(s):</strong> unknown</p>\n<p><strong>Details:</strong><br>Obot from 0.26.0 before 0.27.0 fails to validate the resource identifier in remote MCP server protected resource metadata, allowing malicious MCP servers to steal access tokens. Attackers can name a different service and authorization server with chosen scopes, causing Obot to obtain the victim's token for that service and forward it to the attacker.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/obot-platform/obot/security/advisories/GHSA-x3hf-v55x-jcp6\">https://github.com/obot-platform/obot/security/advisories/GHSA-x3hf-v55x-jcp6</a></li>\n</ul></p>",
       "date_published": "2026-11-18T19:17:48.003Z",
-      "date_modified": "2026-11-18T19:17:48.307Z",
+      "date_modified": "2026-11-23T22:20:11.010Z",
       "tags": [
         "HIGH",
         "unknown"
@@ -1265,45 +1304,6 @@
       "tags": [
         "HIGH",
         "unknown"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-84317",
-      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
-      "title": "[HIGH] CVE-2026-84317: Nginx UI: MCP nginx_config_add skips config directive validation → authenticated nginx directive injection (RCE on the official image)",
-      "summary": "Nginx UI: MCP nginx_config_add skips config directive validation → authenticated nginx directive injection (RCE on the official image)",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84317</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>`internal/config/validation.go` (`ValidateConfigFile`) is a security control that blocks dangerous\nnginx directives — `js_*`, `perl_*`, `load_module` of the njs/perl modules, and `user root`. It is\nenforced on three of the four config-write paths: `api/config/add.go`, `api/config/modify.go`, and\n`mcp/config/config_modify.go`. The fourth path — the MCP tool `nginx_config_add`\n(`mcp/config/config_add.go`) — does NOT call it: it writes the caller-supplied `content` straight to\ndisk and reloads nginx. An authenticated MCP caller (or an MCP agent induced via prompt injection)\ncan therefore inject exactly the directives the control is meant to block, leading to nginx code\nexecution on deployments where the njs/perl module is available (e.g. the official Docker image).</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-76pm-mq2q-9gcr</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-76pm-mq2q-9gcr\">https://github.com/advisories/GHSA-76pm-mq2q-9gcr</a></li>\n</ul></p>",
-      "date_published": "2026-10-15T00:00:00Z",
-      "date_modified": "2026-10-15T00:00:00Z",
-      "tags": [
-        "HIGH",
-        "github.com/0xJacky/Nginx-UI"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-84318",
-      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
-      "title": "[HIGH] CVE-2026-84318: Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE",
-      "summary": "Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84318</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.8)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>The MCP tool `nginx_config_add` writes nginx configuration files to disk and triggers an nginx reload without calling `config.ValidateConfigFile`. The identical flow in the REST API (`POST /api/configs`) does call that function and correctly rejects dangerous directives. An authenticated attacker can exploit this gap to write config files containing any blocked directive (`perl`, `js_import`, `load_module`, `user root`, etc.), bypassing nginx-ui's entire security layer. On a server with the nginx Perl, njs, or Lua module loaded, this is post-authentication Remote Code Execution.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-9jww-cxg5-rj9m</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-9jww-cxg5-rj9m\">https://github.com/advisories/GHSA-9jww-cxg5-rj9m</a></li>\n</ul></p>",
-      "date_published": "2026-10-15T00:00:00Z",
-      "date_modified": "2026-10-15T00:00:00Z",
-      "tags": [
-        "HIGH",
-        "github.com/0xJacky/Nginx-UI"
-      ]
-    },
-    {
-      "id": "urn:mcp:vulnerability:CVE-2026-84319",
-      "url": "https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2",
-      "title": "[HIGH] CVE-2026-84319: Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context",
-      "summary": "Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context",
-      "content_html": "<p><strong>Vulnerability ID:</strong> CVE-2026-84319</p>\n<p><strong>Severity:</strong> HIGH (CVSS 8.3)</p>\n<p><strong>Affected Package(s):</strong> github.com/0xJacky/Nginx-UI</p>\n<p><strong>Details:</strong><br>The regular HTTP configuration API rejects restricted Nginx directives such as `load_module`, `js_import`, and `js_content`.\n\nHowever, the MCP configuration interface allows a secondary authenticated user to write and apply equivalent restricted configuration content. In the lab, this allowed the user to load `ngx_http_js_module.so`, import attacker-controlled JavaScript, reload Nginx, and execute NJS in the Nginx worker context.\n\nThis is authenticated and is not OS command execution by itself.</p>\n<p><strong>References:</strong><ul>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2\">https://github.com/0xJacky/nginx-ui/commit/23d1934099b05b2a01589b48129dc3d3159d91c2</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1\">https://github.com/0xJacky/nginx-ui/releases/tag/v2.4.1</a></li>\n<li><a href=\"https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x\">https://github.com/0xJacky/nginx-ui/security/advisories/GHSA-5r62-gj48-897x</a></li>\n<li><a href=\"https://github.com/advisories/GHSA-5r62-gj48-897x\">https://github.com/advisories/GHSA-5r62-gj48-897x</a></li>\n</ul></p>",
-      "date_published": "2026-10-15T00:00:00Z",
-      "date_modified": "2026-10-15T00:00:00Z",
-      "tags": [
-        "HIGH",
-        "github.com/0xJacky/Nginx-UI"
       ]
     }
   ]
