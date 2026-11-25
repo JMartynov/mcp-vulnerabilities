@@ -39798,7 +39798,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "mcp-shell has a Secure Mode Allowlist Bypass via Default `/bin/bash` Executable",
+    "description": "mcp-shell has a Secure Mode Allowlist Bypass via Git Shell Alias",
     "display_name": "github.com/sonirico/mcp-shell",
     "dual_axis_security": null,
     "ecosystem": "Go",
@@ -65016,7 +65016,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
+    "description": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
     "display_name": "mcp-auth-rbac",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -65062,6 +65062,19 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "LITE-MONGO-HIJACK-001",
+            "owasp_mcp_category": "Improper Multi-Tenancy",
+            "remediation_guidance": "Enforces immutability on org_id and tenant_id fields.",
+            "severity": "HIGH",
+            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "update_user_roles"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "VERITY-LITE-MONGO-CRED-001",
             "owasp_mcp_category": "Information Disclosure",
             "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
@@ -65069,6 +65082,32 @@
             "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
             "vulnerable_tools": [
               "get_user_profile"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-CRED-001",
+            "owasp_mcp_category": "Information Disclosure",
+            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
+            "severity": "HIGH",
+            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "get_user_profile"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "LITE-MONGO-RBAC-001",
+            "owasp_mcp_category": "Improper Access Control",
+            "remediation_guidance": "Restricts role modifications to authorized admin callers only.",
+            "severity": "HIGH",
+            "summary": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)",
+            "vulnerable_tools": [
+              "update_user_roles"
             ]
           },
           {
@@ -65095,45 +65134,6 @@
             "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
             "vulnerable_tools": [
               "update_user_roles"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "LITE-MONGO-HIJACK-001",
-            "owasp_mcp_category": "Improper Multi-Tenancy",
-            "remediation_guidance": "Enforces immutability on org_id and tenant_id fields.",
-            "severity": "HIGH",
-            "summary": "Tenant Hijacking via Org ID Overwrite in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": [
-              "update_user_roles"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "LITE-MONGO-RBAC-001",
-            "owasp_mcp_category": "Improper Access Control",
-            "remediation_guidance": "Restricts role modifications to authorized admin callers only.",
-            "severity": "HIGH",
-            "summary": "Privilege Escalation via Mass Assignment in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": [
-              "update_user_roles"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "LITE-MONGO-CRED-001",
-            "owasp_mcp_category": "Information Disclosure",
-            "remediation_guidance": "Excludes password_hash, salt, and token secrets from projections.",
-            "severity": "HIGH",
-            "summary": "Credential & Password Hash Exposure in Identity & Role-Based Access Control (mcp-auth-rbac)",
-            "vulnerable_tools": [
-              "get_user_profile"
             ]
           }
         ],
@@ -66675,6 +66675,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66691,17 +66702,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -66744,6 +66744,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66760,17 +66771,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -66813,6 +66813,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66829,17 +66840,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -66882,6 +66882,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66898,17 +66909,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -66951,6 +66951,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -66967,17 +66978,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67020,6 +67020,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67036,17 +67047,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67089,6 +67089,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67105,17 +67116,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67158,6 +67158,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67174,17 +67185,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67227,6 +67227,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67243,17 +67254,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67296,6 +67296,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67312,17 +67323,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67365,6 +67365,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67381,17 +67392,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67434,6 +67434,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67450,17 +67461,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67503,6 +67503,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67519,17 +67530,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67572,6 +67572,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67588,17 +67599,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67641,6 +67641,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67657,17 +67668,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67710,6 +67710,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67726,17 +67737,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67779,6 +67779,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67795,17 +67806,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67848,6 +67848,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67864,17 +67875,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67917,6 +67917,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -67933,17 +67944,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -67986,6 +67986,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68002,17 +68013,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68055,6 +68055,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68071,17 +68082,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68124,6 +68124,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68140,17 +68151,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68193,6 +68193,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68209,17 +68220,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68262,6 +68262,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68278,17 +68289,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68331,6 +68331,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68347,17 +68358,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68400,6 +68400,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68416,17 +68427,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68469,6 +68469,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68485,17 +68496,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68538,6 +68538,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68554,17 +68565,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68607,6 +68607,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68623,17 +68634,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68676,6 +68676,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68692,17 +68703,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68745,6 +68745,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68761,17 +68772,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68814,6 +68814,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68830,17 +68841,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68883,6 +68883,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68899,17 +68910,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -68952,6 +68952,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -68968,17 +68979,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69021,6 +69021,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69037,17 +69048,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69090,6 +69090,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69106,17 +69117,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69159,6 +69159,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69175,17 +69186,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69228,6 +69228,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69244,17 +69255,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69297,6 +69297,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69313,17 +69324,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69366,6 +69366,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69382,17 +69393,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69435,6 +69435,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69451,17 +69462,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69504,6 +69504,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69520,17 +69531,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69573,6 +69573,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69589,17 +69600,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69642,6 +69642,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69658,17 +69669,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69711,6 +69711,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69727,17 +69738,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69780,6 +69780,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69796,17 +69807,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69849,6 +69849,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69865,17 +69876,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69918,6 +69918,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -69934,17 +69945,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -69987,6 +69987,17 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "CVE-2026-54688",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
+            "severity": "CRITICAL",
+            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "GHSA-mrvx-jmjw-vggc",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
@@ -70003,17 +70014,6 @@
             "remediation_guidance": "Upgrade to version 1.7.1 or above.",
             "severity": "CRITICAL",
             "summary": " SearXNG MCP Server: Unbounded Response Body Read Bypasses URL Size Limit in `web_url_read`",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-54688",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.2.1 or above.",
-            "severity": "CRITICAL",
-            "summary": "SearXNG MCP Server is Vulnerable to SSRF in web_url_read: the internal-address guard is disabled by default (MCP_HTTP_HARDEN off)",
             "vulnerable_tools": []
           },
           {
@@ -74398,7 +74398,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "NetLicensing-MCP: Unauthenticated Use of Server-Side NetLicensing API Key in HTTP Mode",
+    "description": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi",
     "display_name": "netlicensing-mcp",
     "dual_axis_security": null,
     "ecosystem": "PyPI",
@@ -74431,22 +74431,22 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-54446",
+            "id": "CVE-2026-57496",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 0.1.6 or above.",
+            "remediation_guidance": "Upgrade to version 0.1.8 or above.",
             "severity": "CRITICAL",
-            "summary": "NetLicensing-MCP: Unauthenticated Use of Server-Side NetLicensing API Key in HTTP Mode",
+            "summary": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi",
             "vulnerable_tools": []
           },
           {
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "CVE-2026-57496",
+            "id": "CVE-2026-54446",
             "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 0.1.8 or above.",
+            "remediation_guidance": "Upgrade to version 0.1.6 or above.",
             "severity": "CRITICAL",
-            "summary": "NetLicensing MCP Server is a natural-language interface that enables agentic applications to manage the software-licensi",
+            "summary": "NetLicensing-MCP: Unauthenticated Use of Server-Side NetLicensing API Key in HTTP Mode",
             "vulnerable_tools": []
           }
         ],

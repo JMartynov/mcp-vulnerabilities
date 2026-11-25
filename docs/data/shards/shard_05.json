@@ -70265,7 +70265,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "CRITICAL",
-    "description": "Nginx UI: MCP configuration tools bypass restricted directive validation and allow secondary authenticated users to execute NJS in Nginx worker context",
+    "description": "Nginx UI: MCP `nginx_config_add` Bypasses Directive Validation — Authenticated RCE",
     "display_name": "github.com/0xJacky/Nginx-UI",
     "dual_axis_security": null,
     "ecosystem": "Go",
@@ -70274,7 +70274,7 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "1.9.10-0.20260703131214-23d1934099b0",
+    "latest_version": "1.9.10-0.20250506154222-1330888280a2",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "github.com/0xJacky/Nginx-UI",
@@ -70315,7 +70315,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "1.9.10-0.20250506154222-1330888280a2"
+        "version": "1.9.10-0.20260703131214-23d1934099b0"
       },
       {
         "advisories": [
@@ -70340,7 +70340,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "1.9.10-0.20260703131214-23d1934099b0"
+        "version": "1.9.10-0.20250506154222-1330888280a2"
       }
     ]
   },
@@ -92740,7 +92740,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "Excessive Sensitive Data Exposure in Customer Management CRM (mcp-customer-crud)",
+    "description": "NoSQL Query Operator Injection in Customer Management CRM (mcp-customer-crud)",
     "display_name": "mcp-customer-crud",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -92786,6 +92786,32 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "LITE-MONGO-QUERY-001",
+            "owasp_mcp_category": "Query Parser Injection",
+            "remediation_guidance": "Validates filter against allowlist and rejects $-prefixed operators.",
+            "severity": "HIGH",
+            "summary": "NoSQL Query Operator Injection in Customer Management CRM (mcp-customer-crud)",
+            "vulnerable_tools": [
+              "search_customers"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VERITY-LITE-MONGO-EXPOSURE-001",
+            "owasp_mcp_category": "Data Minimization / Serialization",
+            "remediation_guidance": "Projects only safe business attributes: customer_id, name, status, etc.",
+            "severity": "HIGH",
+            "summary": "Excessive Sensitive Data Exposure in Customer Management CRM (mcp-customer-crud)",
+            "vulnerable_tools": [
+              "get_customer"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "LITE-MONGO-EXPOSURE-001",
             "owasp_mcp_category": "Data Minimization / Serialization",
             "remediation_guidance": "Projects only safe business attributes: customer_id, name, status, etc.",
@@ -92806,19 +92832,6 @@
             "summary": "Broken Object Level Authorization (BOLA) in Customer Management CRM (mcp-customer-crud)",
             "vulnerable_tools": [
               "get_customer"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "LITE-MONGO-QUERY-001",
-            "owasp_mcp_category": "Query Parser Injection",
-            "remediation_guidance": "Validates filter against allowlist and rejects $-prefixed operators.",
-            "severity": "HIGH",
-            "summary": "NoSQL Query Operator Injection in Customer Management CRM (mcp-customer-crud)",
-            "vulnerable_tools": [
-              "search_customers"
             ]
           },
           {
@@ -92846,19 +92859,6 @@
             "vulnerable_tools": [
               "get_customer"
             ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "VERITY-LITE-MONGO-EXPOSURE-001",
-            "owasp_mcp_category": "Data Minimization / Serialization",
-            "remediation_guidance": "Projects only safe business attributes: customer_id, name, status, etc.",
-            "severity": "HIGH",
-            "summary": "Excessive Sensitive Data Exposure in Customer Management CRM (mcp-customer-crud)",
-            "vulnerable_tools": [
-              "get_customer"
-            ]
           }
         ],
         "connections": [],
@@ -92877,7 +92877,7 @@
   "mcp-mermaid": {
     "archival_reason": null,
     "author": null,
-    "composite_risk_score": null,
+    "composite_risk_score": 10.0,
     "composite_risk_tier": "CRITICAL",
     "description": "❤️ Generate mermaid diagram and chart with AI MCP dynamically.",
     "display_name": "mcp-mermaid",
@@ -92885,22 +92885,22 @@
     "ecosystem": "npm",
     "highest_cve_severity": "CRITICAL",
     "homepage_url": "",
-    "is_malicious": false,
+    "is_malicious": true,
     "is_unpublished": false,
     "is_vulnerable": true,
     "latest_version": "1.0.0",
     "license": "MIT",
-    "malicious_advisory_id": null,
+    "malicious_advisory_id": "MAL-2026-4147",
     "package_name": "mcp-mermaid",
     "prompts_count": 0,
     "purl": "pkg:npm/mcp-mermaid",
-    "quarantine_tier": null,
+    "quarantine_tier": "MALICIOUS",
     "recommended_safe_version": null,
     "repo_http_status": 200,
     "repository_url": "https://github.com/hustcc/mcp-mermaid",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `mcp-mermaid` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 11 vulnerable version(s), 0 safe version(s).",
+    "security_summary": "MALICIOUS PACKAGE DETECTED: MAL-2026-4147 - Malicious code in mcp-mermaid (npm)",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:5f3d47d12e3f44b85228f7a809230b4fede195bea0ecb8529ea58be9318e2cca",
@@ -99611,7 +99611,7 @@
     "author": null,
     "composite_risk_score": null,
     "composite_risk_tier": "HIGH",
-    "description": "MySQL Loose Collation and Trailing Whitespace Authorization Bypass in MySQL Search Target (mysql-search)",
+    "description": "MySQL LIKE Pattern Wildcard Injection Cross-Tenant Exfiltration in MySQL Search Target (mysql-search)",
     "display_name": "mysql-search",
     "dual_axis_security": null,
     "ecosystem": "MCP",
@@ -99657,7 +99657,33 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "MYSQL-LIKE-INJECT-001",
+            "owasp_mcp_category": "SQL Injection / LIKE Clause Wildcard Injection",
+            "remediation_guidance": "Sanitizes LIKE patterns by escaping %, _, and backslashes.",
+            "severity": "HIGH",
+            "summary": "MySQL LIKE Pattern Wildcard Injection Cross-Tenant Exfiltration in MySQL Search Target (mysql-search)",
+            "vulnerable_tools": [
+              "search_orders"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "VERITY-MYSQL-COLLATION-001",
+            "owasp_mcp_category": "Improper Input Validation / Collation Bypass",
+            "remediation_guidance": "Enforces binary collation matching and canonical whitespace validation.",
+            "severity": "HIGH",
+            "summary": "MySQL Loose Collation and Trailing Whitespace Authorization Bypass in MySQL Search Target (mysql-search)",
+            "vulnerable_tools": [
+              "search_orders"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "MYSQL-COLLATION-001",
             "owasp_mcp_category": "Improper Input Validation / Collation Bypass",
             "remediation_guidance": "Enforces binary collation matching and canonical whitespace validation.",
             "severity": "HIGH",
@@ -99675,32 +99701,6 @@
             "remediation_guidance": "Sanitizes LIKE patterns by escaping %, _, and backslashes.",
             "severity": "HIGH",
             "summary": "MySQL LIKE Pattern Wildcard Injection Cross-Tenant Exfiltration in MySQL Search Target (mysql-search)",
-            "vulnerable_tools": [
-              "search_orders"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "MYSQL-LIKE-INJECT-001",
-            "owasp_mcp_category": "SQL Injection / LIKE Clause Wildcard Injection",
-            "remediation_guidance": "Sanitizes LIKE patterns by escaping %, _, and backslashes.",
-            "severity": "HIGH",
-            "summary": "MySQL LIKE Pattern Wildcard Injection Cross-Tenant Exfiltration in MySQL Search Target (mysql-search)",
-            "vulnerable_tools": [
-              "search_orders"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "MYSQL-COLLATION-001",
-            "owasp_mcp_category": "Improper Input Validation / Collation Bypass",
-            "remediation_guidance": "Enforces binary collation matching and canonical whitespace validation.",
-            "severity": "HIGH",
-            "summary": "MySQL Loose Collation and Trailing Whitespace Authorization Bypass in MySQL Search Target (mysql-search)",
             "vulnerable_tools": [
               "search_orders"
             ]
