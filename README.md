@@ -271,6 +271,9 @@ When satisfied, execute with `--write`. The tool creates an atomic, timestamped 
 mcp-vuln fix --config sample_claude_config.json --write
 ```
 
+> [!NOTE]
+> For OpenSSF-flagged malicious packages, `fix` quarantines the server entry in JSON by setting `"disabled": true` and `"_quarantined_reason"` rather than injecting comment strings into `args`.
+
 ---
 
 ### HOWTO 3: Enforce CI/CD Security Baselines & Detect Configuration Drift
@@ -543,6 +546,9 @@ To create the branch and open the GitHub PR automatically:
 mcp-vuln remediate-pr --repo-dir . --assignee security-team --auto-merge
 ```
 
+> [!NOTE]
+> Generated PR bodies include canonical SHA-256 config digests (`<old_sha256> ➔ <new_sha256>`) computed from the original and patched configurations.
+
 ---
 
 ### HOWTO 9: Python SDK Integration for Custom Security Tooling
@@ -605,6 +611,9 @@ mcp-vuln verify-feed \
 ======================================================================
 ```
 
+> [!NOTE]
+> `sigstore` is an optional runtime dependency: when `sigstore` is unavailable, `verify-feed` falls back deterministically to `"sha256-manifest"` verification against `manifest.json` and the target SHA-256 digest.
+
 ---
 
 ## CI/CD Integration
@@ -656,10 +665,10 @@ The `mcp-vuln` CLI provides 34 specialized subcommands structured into functiona
 | Subcommand | Description | Key Flags |
 | :--- | :--- | :--- |
 | `audit` *(alias: `audit-config`)* | Audit AI client configs or packages against OSV database | `--all-clients`, `--config`, `--package`, `--severity-threshold`, `--format`, `--save-baseline`, `--diff`, `--fail-on-drift`, `--verify-signatures` |
-| `fix` *(alias: `fix-config`)* | Automatically upgrade vulnerable servers to safe pinned releases | `--config`, `--client`, `--all-clients`, `--dry-run`, `--write` |
+| `fix` *(alias: `fix-config`)* | Automatically upgrade vulnerable servers to safe pinned releases and quarantine OpenSSF malicious packages (`"disabled": true`, `"_quarantined_reason"`) | `--config`, `--client`, `--all-clients`, `--dry-run`, `--write` |
 | `audit-typosquat` | Detect AI-hallucinated and typosquatted MCP packages | `--config`, `--fix`, `--threshold`, `--json`, `--strict` |
-| `remediate-pr` | Automated GitOps PR bot that opens remediation PRs | `--repo-dir`, `--dry-run`, `--auto-merge`, `--assignee`, `--json` |
-| `resolve-config` | Resolve tool naming collisions and namespace configs | `config_file`, `--strategy [prefix\|priority\|report]`, `--output` |
+| `remediate-pr` | Automated GitOps PR bot emitting canonical SHA-256 config digests (`<old_sha256> ➔ <new_sha256>`) | `--repo-dir`, `--dry-run`, `--auto-merge`, `--assignee`, `--json` |
+| `resolve-config` | Resolve tool naming collisions via `MCP_PREFIX_<TOOL>` env vars without injecting `--prefix=` CLI flags into `args` | `config_file`, `--strategy [prefix\|priority\|report]`, `--output` |
 | `export-config` | Generate pinned, hardened configs for Claude, Cursor, Zed, Cline | `package`, `--client [claude\|cursor\|cline\|zed\|windsurf\|docker]` |
 
 ### 🔍 Threat Analysis, Transitive & AST Scanning
@@ -678,7 +687,7 @@ The `mcp-vuln` CLI provides 34 specialized subcommands structured into functiona
 | `network-scan` | Scan local and network TCP ports for active MCP listeners | `--target`, `--cidr`, `--ports`, `--concurrency` |
 | `identify` | Probe and identify unknown servers using behavioral fingerprints | `--command`, `--url`, `--correlate`, `--min-confidence`, `--format` |
 | `probe` | Live protocol probe auditing tools, prompts, and resources | `--command`, `--url`, `--surfaces`, `--analyzers`, `--compliance` |
-| `probe-safe` | Pre-execution sandboxed network prober with canary exfiltration analysis | `--url`, `--sandbox-type [docker\|subprocess]`, `--timeout`, `--allow-outbound` |
+| `probe-safe` | Pre-execution sandboxed network prober using official `python:3.12-slim` containers with pre-flight availability check | `--url`, `--sandbox-type [docker\|subprocess]`, `--timeout`, `--allow-outbound` |
 | `sandbox` | Safely execute untrusted MCP packages in an isolated container | `ecosystem`, `package`, `--version`, `--timeout`, `--network [bridge\|none]` |
 
 ### 🖥️ Dashboards & Services
@@ -700,7 +709,7 @@ The `mcp-vuln` CLI provides 34 specialized subcommands structured into functiona
 | `snapshot` | Compile all raw advisories into consolidated `vulnerabilities.json.gz` | `--output-gz`, `--data-dir` |
 | `export-osv` | Export OSV records into standard bucket format (`all.zip` + `manifest.json`) | `--output-dir`, `--data-dir` |
 | `export-airgap` | Export offline air-gapped bundle with checksums | `--output-dir`, `--bundle` |
-| `verify-feed` | Verify Sigstore keyless attestation and cryptographic provenance | `--feed`, `--manifest`, `--bundle`, `--offline` |
+| `verify-feed` | Verify optional Sigstore keyless attestation with deterministic `"sha256-manifest"` fallback | `--feed`, `--manifest`, `--bundle`, `--offline` |
 | `discover` | Run multi-registry MCP server discovery (npm, PyPI, GitHub, Smithery, Glama) | `--catalog-file`, `--no-npm`, `--no-pypi`, `--no-github` |
 | `enrich` | Enrich missing package version metadata in server catalog | `--catalog-file`, `--workers`, `--limit`, `--force` |
 | `correlate` | Correlate structural server passports against vulnerability database | `--output`, `--snapshot`, `--data-dir` |
