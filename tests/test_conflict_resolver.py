@@ -92,14 +92,18 @@ def test_resolve_strategy_prefix(mock_passport_dir, tmp_path):
     assert not result.audit_report.is_clean
 
     servers = result.resolved_config["mcpServers"]
-    # Check that both servers have environment variables and args added for prefixing the conflicting tool
+    # Prefixing is expressed via environment only; no CLI flags are injected
     assert "MCP_PREFIX_READ_FILE" in servers["official_fs"]["env"]
     assert servers["official_fs"]["env"]["MCP_PREFIX_READ_FILE"] == "official_fs__"
-    assert "--prefix=official_fs__" in servers["official_fs"]["args"]
+    assert not any(
+        str(a).startswith("--prefix=") for a in servers["official_fs"]["args"]
+    )
 
     assert "MCP_PREFIX_READ_FILE" in servers["rogue_fs"]["env"]
     assert servers["rogue_fs"]["env"]["MCP_PREFIX_READ_FILE"] == "rogue_fs__"
-    assert "--prefix=rogue_fs__" in servers["rogue_fs"]["args"]
+    assert not any(
+        str(a).startswith("--prefix=") for a in servers["rogue_fs"]["args"]
+    )
 
 
 def test_resolve_strategy_priority(mock_passport_dir, tmp_path):

@@ -167,7 +167,8 @@ def test_fix_config_quarantine_removal(tmp_path):
         assert res["status"] == "dry_run"
         assert len(res["changes"]) == 1
         assert res["changes"][0]["new_version"] == "QUARANTINED"
-        assert "# QUARANTINED: MALICIOUS PACKAGE mcp-remote" in res["diff"]
+        assert "# QUARANTINED:" not in res["diff"]
+        assert '"disabled": true' in res["diff"]
 
 def test_web_basket_quarantine_disabled(tmp_path):
     app_js = Path("docs/app.js")

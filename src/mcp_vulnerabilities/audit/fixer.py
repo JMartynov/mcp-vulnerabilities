@@ -1,5 +1,6 @@
 """Automated remediation for vulnerable MCP servers in client configurations."""
 
+import json
 import logging
 import os
 import re
@@ -23,6 +24,57 @@ class ClientConfigFixer:
 
     def __init__(self, matcher: VulnerabilityMatcher):
         self.matcher = matcher
+
+    @staticmethod
+    def _loads_lenient(text: str):
+        try:
+            return json.loads(text)
+        except json.JSONDecodeError:
+            pass
+        stripped = re.sub(r"/\*.*?\*/", "", text, flags=re.DOTALL)
+        stripped = re.sub(r"(?<!:)//[^\n]*", "", stripped)
+        stripped = re.sub(r",(\s*[}\]])", r"\1", stripped)
+        return json.loads(stripped)
+
+    @staticmethod
+    def _server_containers(data):
+        if not isinstance(data, dict):
+            return
+        for key in (
+            "mcpServers",
+            "servers",
+            "mcp_servers",
+            "context_servers",
+            "extensions",
+        ):
+            container = data.get(key)
+            if isinstance(container, dict):
+                yield container
+            elif isinstance(container, list):
+                for item in container:
+                    if isinstance(item, dict):
+                        name = item.get("name") or item.get("server_name")
+                        if name:
+                            yield {name: item}
+        mcp = data.get("mcp")
+        if isinstance(mcp, dict):
+            nested = mcp.get("servers")
+            if isinstance(nested, dict):
+                yield nested
+            elif isinstance(nested, list):
+                for item in nested:
+                    if isinstance(item, dict):
+                        name = item.get("name") or item.get("server_name")
+                        if name:
+                            yield {name: item}
+
+    @classmethod
+    def _find_server_entry(cls, data, server_name: str):
+        for container in cls._server_containers(data):
+            entry = container.get(server_name)
+            if isinstance(entry, dict):
+                return entry
+        return None
 
     def _calculate_minimum_safe_version(self, findings: list[AuditFinding]) -> str | None:
         """Calculates the highest fixed version among all findings."""
@@ -72,19 +124,35 @@ class ClientConfigFixer:
             mal_record = malicious_sync.get_malicious_record(server.ecosystem, server.package_name, server.version)
             if mal_record:
                 logger.warning(f"Quarantining malicious server {server.server_name} from config.")
-                pkg_esc = re.escape(server.package_name)
-                # Attempt to remove or comment out the server configuration in the json
-                # Just replacing package name with `# QUARANTINED: MALICIOUS PACKAGE`
-                pattern = rf'"{pkg_esc}(?:[@:=][^"]*)?"'
-                patched_text = re.sub(pattern, f'"# QUARANTINED: MALICIOUS PACKAGE {server.package_name}"', patched_text)
-                if patched_text != original_text:
+                try:
+                    data = self._loads_lenient(patched_text)
+                except Exception as exc:
+                    logger.error(f"Failed to parse config for quarantine: {exc}")
+                    continue
+                entry = self._find_server_entry(data, server.server_name)
+                if entry is None:
+                    logger.warning(
+                        f"Could not locate server entry '{server.server_name}' for quarantine."
+                    )
+                    continue
+                mal_id = getattr(mal_record, "id", None)
+                if not mal_id and isinstance(mal_record, dict):
+                    mal_id = mal_record.get("id")
+                mal_id = mal_id or "MAL-UNKNOWN"
+                entry["disabled"] = True
+                entry["_quarantined_reason"] = (
+                    f"MALICIOUS PACKAGE {server.package_name} ({mal_id})"
+                )
+                new_text = json.dumps(data, indent=2) + "\n"
+                if new_text != patched_text:
                     changes_made.append({
                         "server_name": server.server_name,
                         "package_name": server.package_name,
                         "old_version": server.version or "unpinned",
                         "new_version": "QUARANTINED"
                     })
-                    original_text = patched_text
+                    original_text = new_text
+                    patched_text = new_text
                 continue
 
             findings = findings_by_server.get(server.server_name)

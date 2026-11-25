@@ -85,16 +85,6 @@ def resolve_client_config(
                     if "disabledTools" not in s_conf:
                         s_conf["disabledTools"] = []
 
-                    prefix_arg = f"--prefix={server}__"
-                    if (
-                        isinstance(s_conf.get("args"), list)
-                        and prefix_arg not in s_conf["args"]
-                    ):
-                        s_conf["args"].append(prefix_arg)
-                        modifications_made.append(
-                            f"Appended arg {prefix_arg} on server '{server}'"
-                        )
-
         elif strategy == "priority":
             for collision in audit_report.collisions:
                 if len(collision.servers) > 1:

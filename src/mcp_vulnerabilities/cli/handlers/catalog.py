@@ -326,11 +326,15 @@ def handle_verify_feed(args: argparse.Namespace) -> None:
                 offline=args.offline,
             )
 
+            if not result.get("verified", True):
+                print(f"Verification failed: {result.get('reason', 'unknown error')}")
+                sys.exit(2)
+
             if args.json:
                 print(json.dumps(result))
             else:
                 print(
-                    f"Verification successful: {result['signer']} at {result['timestamp']}"
+                    f"Verification successful: {result.get('signer')} at {result.get('timestamp')}"
                 )
             sys.exit(0)
         except Exception as e:

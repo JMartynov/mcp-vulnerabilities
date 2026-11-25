@@ -29,7 +29,8 @@ def test_docker_driver():
     cmd = driver.wrap_command("python test.py")
     assert "--network none" in cmd
     assert "--read-only" in cmd
-    assert "mcp-probe-runner:alpine" in cmd
+    assert "python:3.12-slim" in cmd
+    assert "mcp-probe-runner:alpine" not in cmd
     
     # check env flags
     env = driver.guard.get_env_dict()

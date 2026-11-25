@@ -3,6 +3,8 @@ import json
 import logging
 import os
 import shlex
+import shutil
+import subprocess
 import tempfile
 import uuid
 from dataclasses import dataclass
@@ -86,14 +88,35 @@ class CanarySecretGuard:
 
 
 class DockerSandboxDriver:
-    def __init__(self, allow_outbound: bool):
+    DEFAULT_IMAGE = "python:3.12-slim"
+
+    def __init__(self, allow_outbound: bool, image: str = DEFAULT_IMAGE):
         self.allow_outbound = allow_outbound
+        self.image = image
         self.temp_dir_obj = tempfile.TemporaryDirectory()
         self.temp_dir = self.temp_dir_obj.name
         self.guard = CanarySecretGuard(self.temp_dir)
 
     def cleanup(self):
         self.temp_dir_obj.cleanup()
+
+    def is_available(self) -> bool:
+        return bool(shutil.which("docker"))
+
+    def preflight_check(self) -> bool:
+        if not self.image or any(c.isspace() for c in self.image):
+            return False
+        if not shutil.which("docker"):
+            return False
+        try:
+            res = subprocess.run(
+                ["docker", "image", "inspect", self.image],
+                capture_output=True,
+                check=False,
+            )
+        except (FileNotFoundError, subprocess.TimeoutExpired):
+            return False
+        return res.returncode == 0
 
     def wrap_command(self, command: str, is_http: bool = False) -> str:
         network = "none" if not self.allow_outbound and not is_http else "bridge"
@@ -108,7 +131,7 @@ class DockerSandboxDriver:
             f"--security-opt no-new-privileges --memory 512m --cpus 1.0 "
             f"--tmpfs /tmp:rw,noexec,nosuid,size=64m {env_flags} "
             f"-v {self.temp_dir}:/sandbox_home -e HOME=/sandbox_home -w /sandbox_home "
-            f"mcp-probe-runner:alpine"
+            f"{self.image}"
         )
 
         if is_http:

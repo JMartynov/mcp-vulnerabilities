@@ -55,8 +55,8 @@ def test_verify_sigstore_bundle_mock():
         with open(bundle_path, "w") as f:
             json.dump(bundle_data, f)
             
-        with patch('mcp_vulnerabilities.attestation.verifier.Bundle.from_json') as mock_from_json, \
-             patch('mcp_vulnerabilities.attestation.verifier.Verifier.production') as mock_production:
+        with patch('sigstore.models.Bundle.from_json') as mock_from_json, \
+             patch('sigstore.verify.Verifier.production') as mock_production:
              
             mock_bundle = MagicMock()
             mock_bundle.verification_material.certificate.parsed_extensions = MagicMock()
