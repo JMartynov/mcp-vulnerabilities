@@ -21,6 +21,10 @@ permissions:
   contents: write
   actions: write
 
+concurrency:
+  group: mcp-vuln-data-sync
+  cancel-in-progress: false
+
 jobs:
   sync-mcp-vulnerabilities:
     runs-on: ubuntu-latest
@@ -122,8 +126,6 @@ jobs:
               echo "release_created=true" >> "$GITHUB_OUTPUT"
               echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
             else
-              python -m mcp_vulnerabilities.site_builder
-              python -m mcp_vulnerabilities.updates_builder
               git add docs/data/
               git commit -m "chore(osv): automated daily sync of MCP security advisories, feeds and web explorer data [skip ci]"
               echo "release_created=false" >> "$GITHUB_OUTPUT"
@@ -147,6 +149,8 @@ jobs:
             if [ -n "$VULN_CHANGES" ] || [ "${{ inputs.force_release }}" = "true" ]; then
               gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
               gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
+              gh workflow run docker.yml --ref "v${NEW_VERSION}" || true
+              gh workflow run sign_release.yml || true
             fi
             gh workflow run daily_web_audit.yml || true
             gh workflow run pages.yml || true

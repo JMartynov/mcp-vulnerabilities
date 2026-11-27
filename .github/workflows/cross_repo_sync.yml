@@ -11,9 +11,14 @@ permissions:
   contents: write
   actions: write
 
+concurrency:
+  group: mcp-vuln-data-sync
+  cancel-in-progress: false
+
 jobs:
   cross-repo-sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -35,15 +40,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]" uv
           
+      - name: Backup Passports and Vulnerabilities for Delta Check
+        run: |
+          if [ -f "data/passports.json.gz" ]; then
+            cp data/passports.json.gz data/passports_backup.json.gz
+          fi
+          rm -rf data/vulnerabilities_backup
+          cp -r data/vulnerabilities data/vulnerabilities_backup || true
+
       - name: Fetch Latest Passports from mcp-fingerprints (Cross-Repo Sync)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           python -c "import os; from mcp_vulnerabilities.sync_manager import CrossRepoSyncManager; CrossRepoSyncManager().fetch_latest_passports(github_token=os.environ.get('GITHUB_TOKEN'))"
-
-      - name: Backup Vulnerabilities for Delta Check
-        run: |
-          cp -r data/vulnerabilities data/vulnerabilities_backup || true
 
       - name: Run Cross-Repo Correlation
         env:
@@ -56,6 +65,7 @@ jobs:
         run: |
           python scripts/check_deltas.py >> $GITHUB_OUTPUT
           cat $GITHUB_OUTPUT
+          rm -rf data/vulnerabilities_backup data/passports_backup.json.gz
 
       - name: Build Web Explorer Static Data & Release Feeds
         run: |
@@ -90,15 +100,32 @@ jobs:
           git diff --staged --quiet || git commit -m "chore(release): bump version to v${NEW_VERSION} after cross-repo sync"
           git tag "v${NEW_VERSION}"
           
-          git push origin main --tags || echo "Failed to push"
-          
+          pushed=false
+          for i in 1 2 3 4 5; do
+            if git push origin main --tags; then
+              pushed=true
+              break
+            fi
+            echo "Push attempt $i failed. Retrying in $((i * 5))s..."
+            sleep $((i * 5))
+            git pull --rebase origin main || true
+          done
+          if [ "$pushed" = false ]; then
+            echo "Failed to push after multiple attempts"
+            exit 1
+          fi
+
           gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
           gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
+          gh workflow run docker.yml --ref "v${NEW_VERSION}" || true
+          gh workflow run sign_release.yml || true
           gh workflow run daily_web_audit.yml || true
           gh workflow run pages.yml || true
 
       - name: Commit & Push Canonical Vulnerability Updates Directly to Main
         if: github.ref == 'refs/heads/main' && steps.delta_check.outputs.delta_detected != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -106,7 +133,22 @@ jobs:
           if [ -d "data/vulnerabilities" ]; then
             git add data/vulnerabilities/
           fi
-          git diff --staged --quiet || git commit -m "chore(sync): automated cross-repo sync of passports.json.gz [skip ci]"
-          git push origin main || echo "Failed to push"
-          gh workflow run daily_web_audit.yml || true
-          gh workflow run pages.yml || true
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(sync): automated cross-repo sync of passports.json.gz [skip ci]"
+            pushed=false
+            for i in 1 2 3 4 5; do
+              if git push origin main; then
+                pushed=true
+                break
+              fi
+              echo "Push attempt $i failed. Retrying in $((i * 5))s..."
+              sleep $((i * 5))
+              git pull --rebase origin main || true
+            done
+            if [ "$pushed" = false ]; then
+              echo "Failed to push after multiple attempts"
+              exit 1
+            fi
+            gh workflow run daily_web_audit.yml || true
+            gh workflow run pages.yml || true
+          fi

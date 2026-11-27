@@ -1,5 +1,9 @@
 name: Daily Web Card Audit
 
+concurrency:
+  group: daily-web-audit-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   schedule:
     - cron: '0 5 * * *'
@@ -12,6 +16,7 @@ on:
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     
     steps:
       - name: Checkout repository

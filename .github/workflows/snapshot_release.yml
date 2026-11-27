@@ -11,6 +11,7 @@ permissions:
 jobs:
   publish-snapshot:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,11 +32,14 @@ jobs:
         run: python -m mcp_vulnerabilities.cli export-airgap --output dist/mcp-offline.tar.gz
 
       - name: Export OSV dataset
-        run: python -m mcp_vulnerabilities.cli export-osv --output-dir dist/osv
+        run: python -m mcp_vulnerabilities.cli export-osv --data-dir data/vulnerabilities --output-dir dist/osv
 
       - name: Generate SHA-256 checksums
         run: |
           mkdir -p dist
+          if [ ! -f dist/mcp-offline.tar.gz.sha256 ]; then
+            sha256sum dist/mcp-offline.tar.gz > dist/mcp-offline.tar.gz.sha256
+          fi
           # Make sure we're hashing the right files
           sha256sum vulnerabilities.json.gz dist/mcp-offline.tar.gz dist/osv/all.zip dist/osv/manifest.json > dist/SHA256SUMS.txt
 
