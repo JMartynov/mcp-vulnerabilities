@@ -42775,19 +42775,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.2.2",
+    "latest_version": "1.2.3",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "hono-telescope",
     "prompts_count": 0,
     "purl": "pkg:npm/hono-telescope",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.2.2",
+    "recommended_safe_version": "1.2.3",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/jubstaaa/hono-telescope",
+    "repository_url": "https://github.com/Jubstaaa/hono-telescope",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `hono-telescope` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 26 safe version(s).",
+    "security_summary": "Server `hono-telescope` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 27 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:94d5e9d5a6cb1380447079c3357b022df3ab38075d82a29bb85cf1734e83ebf6",
@@ -43350,6 +43350,129 @@
         ],
         "toolset_canonical_hash": "sha256:94d5e9d5a6cb1380447079c3357b022df3ab38075d82a29bb85cf1734e83ebf6",
         "version": "1.2.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T14:05:52.771Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a3e62c4713ba664a75931f78ea06f51dbb2a8c717658169988926ae8f2f75643",
+            "description": "Recent incoming requests with child counts. Filter with minStatus: 400 to find failures that returned an error status without throwing.",
+            "name": "recent_exceptions",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minDuration",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minStatus",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "status",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "uriContains",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `recent_exceptions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cd3fc356daa666291bf4d208ae0e28897817fa771b7398bb1a55bf1ce3bfdde5",
+            "description": "One request in full — headers, payload, response body — with every log, query, exception and outgoing call recorded inside it. Nothing is truncated. Reach for it once a list tool has narrowed the search to one request.",
+            "name": "recent_requests",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "id",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `recent_requests` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:130d3fea0a70b3f45ceb54fbde35854a715dcd1fae95bb45f15c60c0c9741a2c",
+            "description": "Recent database queries sorted slowest first, each with the request it ran in. Use request_detail on that request to see everything else it did.",
+            "name": "request_detail",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "minMs",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `request_detail` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d586e972efc7c633b58cb0c956fd88b0e7a568861e7b5100419edda9baf0961c",
+            "description": "How many entries of each type Telescope is holding right now. The counts cover what is still retained: the oldest entries are dropped once storage reaches maxEntries. Read it first to see whether there is anything to look at, then drill in with recent_exceptions or recent_requests.",
+            "name": "slow_queries",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `slow_queries` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:94d5e9d5a6cb1380447079c3357b022df3ab38075d82a29bb85cf1734e83ebf6",
+        "version": "1.2.3"
       }
     ]
   },
@@ -52526,19 +52649,6 @@
             "cvss_score": 8.5,
             "epss_percentile": null,
             "epss_score": null,
-            "id": "VECTOR-METADATA-001",
-            "owasp_mcp_category": "Sensitive Data Exposure",
-            "remediation_guidance": "Projects only safe metadata fields.",
-            "severity": "HIGH",
-            "summary": "Excessive Sensitive Vector Metadata Exposure in Semantic Vector Search & Metadata Target (mcp-vector-search)",
-            "vulnerable_tools": [
-              "semantic_search"
-            ]
-          },
-          {
-            "cvss_score": 8.5,
-            "epss_percentile": null,
-            "epss_score": null,
             "id": "VERITY-VECTOR-METADATA-001",
             "owasp_mcp_category": "Sensitive Data Exposure",
             "remediation_guidance": "Projects only safe metadata fields.",
@@ -52557,6 +52667,19 @@
             "remediation_guidance": "Enforces strict tenant pre-filtering on vector queries.",
             "severity": "HIGH",
             "summary": "Cross-Tenant Vector Search Retrieval in Semantic Vector Search & Metadata Target (mcp-vector-search)",
+            "vulnerable_tools": [
+              "semantic_search"
+            ]
+          },
+          {
+            "cvss_score": 8.5,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "VECTOR-METADATA-001",
+            "owasp_mcp_category": "Sensitive Data Exposure",
+            "remediation_guidance": "Projects only safe metadata fields.",
+            "severity": "HIGH",
+            "summary": "Excessive Sensitive Vector Metadata Exposure in Semantic Vector Search & Metadata Target (mcp-vector-search)",
             "vulnerable_tools": [
               "semantic_search"
             ]

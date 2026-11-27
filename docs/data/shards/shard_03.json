@@ -49827,19 +49827,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.2.3",
+    "latest_version": "1.3.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "easybill-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/easybill-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.2.3",
+    "recommended_safe_version": "1.3.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/stack74/easybill-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `easybill-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
+    "security_summary": "Server `easybill-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 8 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:9c4ba96ef77fe3c990b27cfb8f5d40c159e1daef7f2c0a45e52c494fe995b546",
@@ -50118,6 +50118,80 @@
         ],
         "toolset_canonical_hash": "sha256:9c4ba96ef77fe3c990b27cfb8f5d40c159e1daef7f2c0a45e52c494fe995b546",
         "version": "1.2.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T13:23:14.211Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:00d94a881687ab677e252a84eff744a3bae3fc51a219a11c08bcae6a28a01b2a",
+            "description": "Cancel a document by creating a matching cancellation (STORNO) document. This is the legally correct way to void a completed invoice — use it instead of easybill_delete_document.\\n\\nReturns the newly created STORNO document. The original document's 'cancel_id' then points at it.",
+            "name": "easybill_cancel_document",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `easybill_cancel_document` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e3b09f86617f22dd748a8cf5449621373efbd251766d3f4d81ba236ca63aad6",
+            "description": "Finalise a draft document. easybill assigns the official document number and the document stops being editable — this is what turns a draft into a real invoice.\\n\\n",
+            "name": "easybill_complete_document",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `easybill_complete_document` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f066d95ce36d6dcdc1a01d291dbffbe1136604b2a9c11321360eeddbc5d5572",
+            "description": "Download an attachment's file content and save it to a local path.\\n\\nReturns the saved file path and size in bytes. The content is NOT loaded into the",
+            "name": "easybill_download_attachment",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `easybill_download_attachment` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7041b3a078ff92e551c938eadf1416fb87977f45d0986bd7eb052c82b85cca23",
+            "description": "Download a document as a PDF or e-invoicing file and save it to a local path.\\n\\nSupported formats: 'pdf",
+            "name": "easybill_download_document",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `easybill_download_document` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fad2f90e8001e9be3c383c35d3655d2a7b422461046f4092a5708b4bab219c15",
+            "description": "List the change history of a document. easybill snapshots a version whenever a",
+            "name": "easybill_list_document_versions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `easybill_list_document_versions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6b1acd9829171144ce82d776b4bd336a830e6f2698231f228ba9a54f2b6ace1a",
+            "description": "List the PDF layout templates configured in your easybill account.\\n\\nPass a template's 'id' as 'pdf_template' when creating or converting a document to control its layout and language. The built-in values are 'DE",
+            "name": "easybill_list_pdf_templates",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `easybill_list_pdf_templates` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:9c4ba96ef77fe3c990b27cfb8f5d40c159e1daef7f2c0a45e52c494fe995b546",
+        "version": "1.3.0"
       }
     ]
   },
