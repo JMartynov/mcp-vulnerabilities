@@ -1165,22 +1165,22 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.1.1",
+    "latest_version": "1.0.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@bellineai/mcp-server",
     "prompts_count": 0,
     "purl": "pkg:npm/@bellineai%2Fmcp-server",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.1.1",
+    "recommended_safe_version": "1.0.0",
     "repo_http_status": 200,
     "repository_url": "https://belline.ai",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@bellineai/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
+    "security_summary": "Server `@bellineai/mcp-server` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 4 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:68bd0f4c5b05af897c8e801c9eea8b7914837065aecf46b3e70dde90517ccb8b",
     "transport": "stdio",
     "versions": [
       {
@@ -1221,6 +1221,214 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.1.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0c28cb22c1aaa7fb80540542c0f97007e067b65c6fbf257f00e69bd100298d08",
+            "description": "Put a visitor",
+            "name": "ask_belle",
+            "parameters": [
+              {
+                "default": null,
+                "description": "What a visitor would type. One message.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "message",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask_belle` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e869b40d8f1859fec3c7d63acd7165ca86256143a873cb15b209a94befaa4e32",
+            "description": "Create a Belline AI receptionist for a business, with no account, no card and no email confirmation.",
+            "name": "create_preview_venue",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "business_name",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "market",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "timezone",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "trade",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "website",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_preview_venue` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:378e69b7f91a90d9c62d06a570f446dfa8dd7a2ac1fc1d00fbe68b4bc81011b1",
+            "description": "The URL a PERSON follows to turn this preview into a real Belline account. Returns the link, when the preview expires, and a sentence you can send them.\\n\\n",
+            "name": "get_claim_link",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_claim_link` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2b04d2034fab094e6acf1ac20c9b95ab356535e62af56da35c7827d2302d6d3e",
+            "description": "The one-line <script> tag to put in the site, and what every attribute on it does.",
+            "name": "get_embed_snippet",
+            "parameters": [],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `get_embed_snippet` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:61c0117bff047d8219c8cd9fa98fe5c88a4e2fd7a72899bcb8e74fe5778b9c04",
+            "description": "Everything Belline currently knows about the venue this API key belongs to: name, hours, services, languages, the embed snippet, and — for a preview — how much of its allowance is left and when it expires.",
+            "name": "get_venue",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_venue` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:273e04cb4656a7952395465465b53d7f2314128c760b56809d3c74b7413185ba",
+            "description": "Recent bookings at a CLAIMED venue. Read only — there is deliberately no tool here that writes to a real diary.",
+            "name": "list_bookings",
+            "parameters": [
+              {
+                "default": null,
+                "description": "How many. Default 20.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_bookings` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3dac112afb0f4d1c8b7d9b8c738ca02734a677c9848666606e183620e2aedb68",
+            "description": "Recent conversations at a CLAIMED venue, newest first: channel, when, outcome, a one-line summary, and whether it produced a booking.",
+            "name": "list_conversations",
+            "parameters": [
+              {
+                "default": null,
+                "description": "How many. Default 20.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_conversations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4d1e705463d574c36dcd64e97e6b5a5f4eb1a6178a13281ae4699df647b40c68",
+            "description": "Stop the receptionist appearing on the site. The button disappears within a minute; the line in the HTML can stay where it is and does nothing.\\n\\n",
+            "name": "remove_widget",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Must be true. Set it only when the person has asked for the widget to be switched off. There is no default and no implicit yes.",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "confirm",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `remove_widget` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:83d510dad45a6038d5358f28fc8e3722b98080dae7897967853c153ce4f39bce",
+            "description": "Tell Belline the business",
+            "name": "set_business_details",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `set_business_details` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:68bd0f4c5b05af897c8e801c9eea8b7914837065aecf46b3e70dde90517ccb8b",
+        "version": "1.0.0"
       }
     ]
   },
@@ -73950,7 +74158,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "0.0.0-20260813142104-b26a4a307b8a"
+        "version": "0.0.0-20260813142806-dd2778b70d02"
       },
       {
         "advisories": [],
@@ -73963,7 +74171,7 @@
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "",
-        "version": "0.0.0-20260813142806-dd2778b70d02"
+        "version": "0.0.0-20260813142104-b26a4a307b8a"
       },
       {
         "advisories": [],
@@ -121065,7 +121273,7 @@
     "security_summary": "Server `valueguysam/xoom-foods-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
-    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "toolset_canonical_hash": "sha256:d588efa1d85f052d95ab9a0ee97e7505784e91aea94e723dddac56c077f9caba",
     "transport": "sse",
     "versions": [
       {
@@ -121083,8 +121291,89 @@
         "release_date": null,
         "required_env_vars": [],
         "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cc4b2ce3f442bc35e897f6e05d972e23ef787318a4749177a26c567d197fbfd4",
+            "description": "Browse 105+ meals across 6 cuisines (Italian, Chinese, Indian, Mexican, Japanese, Thai). Filter by cuisine, dietary preference (vegetarian, keto, low carb, spicy), or sort by rating/calories/protein.",
+            "name": "browse_menu",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `browse_menu` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:88736cf61d91f7498cababfb56e0f60a0e6ff3eda0fa7f792ab440d651c71365",
+            "description": "Check if shipping is available to any US state and get the cost (free ground or $14.95 flat-rate 2-day air).",
+            "name": "check_shipping",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `check_shipping` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:51081ffa6faabc4e50624b91d3bc2ef42f7d322f8b9b67e7046f406bcd9e87b7",
+            "description": "Compare XOOM vs delivery apps (DoorDash, Uber Eats), meal kits (HelloFresh, Blue Apron), and prepared meal services (Factor, Freshly).",
+            "name": "compare_meal_services",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `compare_meal_services` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:74b207624dd07a10001bb31b7d38c0efc106db4bca31d6aa62cb57e25b350148",
+            "description": "Get calories, protein, and dietary tags for any meal.",
+            "name": "get_nutrition_info",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_nutrition_info` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bcc011cd725dda7d3683a8f879b93cc3eb3510ec9b2662c77b95c9e54d0b7178",
+            "description": "Generate a direct link to start a subscription or order a one-time box.",
+            "name": "get_order_link",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_order_link` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:322e1355cd50fa7530be3119b22cbd223087366f746292616a2a5f5ec12be5dd",
+            "description": "List the 29 real, top-rated restaurant partners with ratings by cuisine.",
+            "name": "get_restaurant_partners",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_restaurant_partners` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2d31ab7d4e3b807eb8ef8cf631e8e7745b61c3a973f9a5c9e31bc66428e300db",
+            "description": "Get plan pricing: 4/6/8 meals per week from $11–$13/serving. Includes comparison vs delivery apps.",
+            "name": "get_subscription_plans",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_subscription_plans` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d9c9fe144ee7552b41292e2f7b6d9ff8abcaacd0490cd96d468c485d3916446f",
+            "description": "Search meals by keyword — dish name, protein, or ingredient.",
+            "name": "search_meals",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_meals` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:d588efa1d85f052d95ab9a0ee97e7505784e91aea94e723dddac56c077f9caba",
         "version": "1.0.0"
       }
     ]
