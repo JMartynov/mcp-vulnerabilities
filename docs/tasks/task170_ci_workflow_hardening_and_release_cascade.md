@@ -28,5 +28,20 @@ Resolve the four CI/CD workflow reliability and release-cascade gaps identified 
 | 6 | `tests/test_ci_workflows.py` *(new)* | Add unit tests validating all workflow YAML files parse cleanly, share expected concurrency/timeout settings, back up and clean up `passports_backup.json.gz` in `cross_repo_sync.yml`, and verify `check_deltas.py` behavior when `passports_backup.json.gz` matches `passports.json.gz`. |
 
 ## 4. Acceptance Criteria & Verification Commands
-- `uv run pytest tests/test_ci_workflows.py tests/test_e2e_cross_repo_sync.py -v` passes 100%.
-- All modified GitHub Actions workflows trigger and pass on GitHub Actions (`CI`, `Daily Web Card Audit`, `Deploy GitHub Pages`, `Cross-Repo Synchronization`, `Build and Publish Docker Image`, `Sign Release`, `Snapshot Distribution Release`).
+- [x] `uv run pytest tests/test_ci_workflows.py tests/test_e2e_cross_repo_sync.py -v` passes 100% (`37 passed`).
+- [x] All modified GitHub Actions workflows trigger and pass on GitHub Actions (`CI`, `Daily Web Card Audit`, `Deploy GitHub Pages`, `Cross-Repo Synchronization`, `Build and Publish Docker Image`, `Sign Release`, `Snapshot Distribution Release`).
+
+## 5. Implementation & CI Verification Status (Completed 2026-11-27)
+- **Status:** `Done`
+- **GitHub Issue:** [#28](https://github.com/JMartynov/mcp-vulnerabilities/issues/28)
+- **Task Board Item:** `PVTI_lAHOD-xmQM4BmPcAzhMXCfc` (`mcp-vulnerabilities Task Board` #4)
+- **Implementation Commit:** `a944efc` (`fix(ci): harden workflow concurrency, passport delta backup, and release cascades (Task 170)`)
+- **Verified Passing GitHub Actions Runs:**
+  - **CI:** Run [`45982907610`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45982907610) — `success` (Python 3.12 & 3.14: `698 passed, 4 skipped`, including `34/34` in `tests/test_ci_workflows.py`)
+  - **Test Action:** Run [`45983027339`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45983027339) — `success`
+  - **Deploy GitHub Pages:** Runs [`45982907578`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45982907578) & [`45985859127`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45985859127) — `success`
+  - **Daily Web Card Audit:** Runs [`45982995314`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45982995314) & [`45985854896`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45985854896) — `success`
+  - **Cross-Repo Synchronization:** Run [`45983001123`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45983001123) — `success` (verified `delta_detected=false` with `data/passports_backup.json.gz` properly backed up and cleaned up; no false version bump)
+  - **Snapshot Distribution Release:** Run [`45983006738`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45983006738) — `success` (published release [`snapshot-2026.11.27`](https://github.com/JMartynov/mcp-vulnerabilities/releases/tag/snapshot-2026.11.27) with all 6 artifacts including `mcp-offline.tar.gz.sha256` and `SHA256SUMS.txt`)
+  - **Build and Publish Docker Image:** Run [`45983013075`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45983013075) — `success`
+  - **Sign Release:** Run [`45983021479`](https://github.com/JMartynov/mcp-vulnerabilities/actions/runs/45983021479) — `success`
