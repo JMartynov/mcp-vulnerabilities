@@ -4526,6 +4526,360 @@
       }
     ]
   },
+  "Guard-Core/guard-core-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Guard Core security MCP: SecurityConfig validation, docs search, live threat detection.",
+    "display_name": "Guard-Core/guard-core-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.7.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "Guard-Core/guard-core-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/Guard-Core%2Fguard-core-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.7.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/Guard-Core/guard-core-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `Guard-Core/guard-core-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:6896374087621797659bae020236dbaad2dd72177ae90675d85d669f86a60085",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cbac63c09d4fb7d404e310b6025c049fea0773a30de5c881cdf2ad9526a44f7c",
+            "description": "Get the install command and a verified minimal integration for one Guard adapter.",
+            "name": "adapter_setup",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The adapter slug for that language, or the adapter package name. An unknown slug returns an error object listing the valid ones",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "framework",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The language of the adapter. One of python, go, typescript, php or rust. Any other value returns an error object",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "language",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 5.0,
+            "risk_tier": "high",
+            "security_comment": "Tool `adapter_setup` [HIGH] executes arbitrary host system commands or shell scripts."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c7c481b264063c29d11b8ccbde6a8fce9cb42aff793385651627ab98482b6176",
+            "description": "Run one synthetic request through guard-core's real penetration-detection engine.",
+            "name": "check_payload",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Request body as a raw string, or a JSON object or array, which is serialized for you. Omit for a bodyless request",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "body",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "SecurityConfig fields to override guard-core's defaults, as a JSON object, to see how a setting changes the verdict. enable_redis is always forced off",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "config",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Request headers as a JSON object of names to values. Names are matched case-insensitively",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "headers",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "GET",
+                "description": "HTTP method of the request to test",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "method",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": "/",
+                "description": "Request path of the request to test",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Query-string parameters as a JSON object of names to string values",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 8.5,
+            "risk_tier": "critical",
+            "security_comment": "Tool `check_payload` [CRITICAL] issues raw database queries that could lead to SQL injection; reads, writes, or modifies host filesystem paths; processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9ed8781b740542f0ab63c3f3fc9c8d5d02a81d3e87480708528ce90ead5e20a4",
+            "description": "Find a Guard config setting by name or by what it does, with type and default.",
+            "name": "config_fields",
+            "parameters": [
+              {
+                "default": "fastapi-guard",
+                "description": "Which Guard library's installed model to search. One of fastapi-guard, guard-core or guard-agent. Any other value returns an error object",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "package",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Either an exact config field name or plain words describing the behaviour. Matching is case-insensitive and word order does not matter",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `config_fields` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a7ef7f9fe44861d8ba69a5ee38d5d226823fc2b04e69ac26c02dd9f2cbe59b9",
+            "description": "Survey the whole Guard ecosystem: every language, engine, adapter and agent.",
+            "name": "ecosystem",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ecosystem` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2727b7b6c90492a6926cf3284b324cf8bf301242dc711f370772ba4e3e46f47f",
+            "description": "Return the full text of one bundled Guard documentation page.",
+            "name": "get_doc",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The library the page belongs to, copied from a search_docs result or from the keys versions reports under docs_bundled_for and knowledge_bundled_for",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "package",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The page path relative to the library's bundled docs, copied from a search_docs result. Paths outside the bundled docs are rejected",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "path",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_doc` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8c330b41c6be5f6200657971bb1053f77eb4aab0ca80afaa2115b54241a18967",
+            "description": "Search the bundled Guard documentation and return ranked, citable pages.",
+            "name": "search_docs",
+            "parameters": [
+              {
+                "default": 5,
+                "description": "Maximum number of results to return, highest score first",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "limit",
+                "nested_properties": null,
+                "required": false,
+                "type": "integer"
+              },
+              {
+                "default": null,
+                "description": "Restrict the search to one library, for example fastapi-guard, guard-core or guard-agent. Omit to search every bundled library. An unrecognized name silently matches nothing",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "package",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Words to look for in the bundled documentation. Pages are ranked by how often the words occur, so use specific terms",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "query",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_docs` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:635a99f5a9724844d85dd8a4f23fc30502e278a183d00b5ad67db18f4f669651",
+            "description": "Check a Guard config dict against the installed library's real pydantic model.",
+            "name": "validate_config",
+            "parameters": [
+              {
+                "default": null,
+                "description": "The config as a JSON object of field names to values, exactly as you would pass it to the model's constructor",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "config",
+                "nested_properties": null,
+                "required": true,
+                "type": "object"
+              },
+              {
+                "default": "fastapi-guard",
+                "description": "Which Guard library's installed model to validate against. One of fastapi-guard (SecurityConfig), guard-core (SecurityConfig) or guard-agent (AgentConfig). Any other value returns an error object",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "package",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `validate_config` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3475c3e2374f8c67847eda87ffb5b967381ce5a8c9b2378b6fa514eb22a591fa",
+            "description": "Report which Guard libraries this server can introspect, and at which version.",
+            "name": "versions",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `versions` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:458798e206a6b51163eca7c0d0a72303643d834447611b8e7ac9cfc4b30fe3e6",
+            "description": "Get how to set up the Guard telemetry agent for one language.",
+            "name": "wire_agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional adapter slug of that language, to add a note on how the agent hooks into that adapter. Omit for the agent alone",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "framework",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "The language whose telemetry agent to set up. One of python, go, typescript, php or rust. Any other value returns an error object",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "language",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `wire_agent` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:6896374087621797659bae020236dbaad2dd72177ae90675d85d669f86a60085",
+        "version": "1.7.0"
+      }
+    ]
+  },
   "HostTracker/mcp": {
     "archival_reason": null,
     "author": null,
@@ -13447,6 +13801,53 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "2.1.0"
+      }
+    ]
+  },
+  "RizgarOzan/playcal": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Edit-settle-verify loop, observe, replay and log tools for AI agents working in the Unity Editor",
+    "display_name": "RizgarOzan/playcal",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.2.2",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "RizgarOzan/playcal",
+    "prompts_count": 0,
+    "purl": "pkg:generic/RizgarOzan%2Fplaycal",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.2.2",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/RizgarOzan/playcal",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `RizgarOzan/playcal` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.2.2"
       }
     ]
   },
@@ -47776,6 +48177,59 @@
       }
     ]
   },
+  "kevmoz/macaroon-bible-evidence-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Read-only BSB and WEB Scripture evidence with provenance, context, comparison, and search.",
+    "display_name": "kevmoz/macaroon-bible-evidence-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.3.1",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "kevmoz/macaroon-bible-evidence-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/kevmoz%2Fmacaroon-bible-evidence-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.3.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/kevmoz/macaroon-bible-evidence-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `kevmoz/macaroon-bible-evidence-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://api.macaroonnetwork.com/mcp-faith-evidence-v1/mcp/",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.3.1"
+      }
+    ]
+  },
   "kill-process-mcp": {
     "archival_reason": null,
     "author": "Michal Szymanski <misiektoja-github@rm-rf.ninja>",
@@ -48993,16 +49447,16 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.0.0",
+    "latest_version": "0.1.3",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "loudkit",
     "prompts_count": 0,
     "purl": "pkg:pypi/loudkit",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.0.0",
+    "recommended_safe_version": "0.1.3",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/loudreader/loudkit",
+    "repository_url": "https://smithery.ai/servers/loudkit",
     "required_env_vars": [],
     "resources_count": 0,
     "security_summary": "Server `loudkit` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
@@ -49043,7 +49497,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-11-24T21:53:16.672074Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [
@@ -49157,7 +49611,7 @@
           }
         ],
         "toolset_canonical_hash": "sha256:07065268d8fc65e852d21ea729c5b2b728c229fa4d5f45ad2f2849abe2a8102d",
-        "version": "1.0.0"
+        "version": "0.1.3"
       }
     ]
   },
@@ -51084,6 +51538,59 @@
       }
     ]
   },
+  "martinPisacreta/textokit-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "17 pay-per-call x402 tools on Base: web reader, FX/crypto rates, Argentine data. Remote or npx.",
+    "display_name": "martinPisacreta/textokit-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.1.3",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "martinPisacreta/textokit-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/martinPisacreta%2Ftextokit-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.1.3",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/martinPisacreta/textokit-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `martinPisacreta/textokit-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://tienda.textokit.store/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.3"
+      }
+    ]
+  },
   "mcp": {
     "archival_reason": null,
     "author": null,
@@ -51116,112 +51623,6 @@
     "toolset_canonical_hash": "",
     "transport": null,
     "versions": [
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-9h52-p55h-vw2f",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-jpw9-pfvf-9f58",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-vj7q-gjh5-988w",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: WebSocket server transport does not support Host/Origin validation",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.9.4 or above.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.23.0 or above.",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-3qhf-m339-9g5v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.28.1"
-      },
       {
         "advisories": [
           {
@@ -51466,6 +51867,112 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "1.8.0,<1.30.0"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-9h52-p55h-vw2f",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-jpw9-pfvf-9f58",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-52869",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-vj7q-gjh5-988w",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: WebSocket server transport does not support Host/Origin validation",
+            "vulnerable_tools": [
+              "initialize"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-53366",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.9.4 or above.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-66416",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.23.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59950",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
+            "severity": "CRITICAL",
+            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
+            "vulnerable_tools": [
+              "initialize"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-3qhf-m339-9g5v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 1.28.1"
       },
       {
         "advisories": [
@@ -60053,6 +60560,53 @@
       }
     ]
   },
+  "oov1317/singularis-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "",
+    "display_name": "oov1317/singularis-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "github",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "oov1317/singularis-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:github/oov1317%2Fsingularis-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/oov1317/singularis-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `oov1317/singularis-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.0.0"
+      }
+    ]
+  },
   "oscardvs/zoteus": {
     "archival_reason": null,
     "author": null,
@@ -65506,19 +66060,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.10.0",
+    "latest_version": "0.10.1",
     "license": "Apache-2.0",
     "malicious_advisory_id": null,
     "package_name": "sealbridge",
     "prompts_count": 0,
     "purl": "pkg:npm/sealbridge",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.10.0",
+    "recommended_safe_version": "0.10.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/sealbridge/sealbridge",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `sealbridge` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 23 safe version(s).",
+    "security_summary": "Server `sealbridge` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 24 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:52a18e9167818e293e464b2910a289b8bc47fef36431e09182db7823cd92f19d",
@@ -66124,6 +66678,170 @@
         ],
         "toolset_canonical_hash": "sha256:52a18e9167818e293e464b2910a289b8bc47fef36431e09182db7823cd92f19d",
         "version": "0.10.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-25T07:41:43.514Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8fda13ccd521f5b66fda69a4d21cba73ae26007f07347e99bb5e67a51102a193",
+            "description": "Execute acp_create_invite",
+            "name": "acp_create_invite",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_create_invite` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d24b9192a6ca8f4ae9395c6fd95afa8b16afada84cd1e4463d9293ae2a6ced5d",
+            "description": "Execute acp_delegate_multi",
+            "name": "acp_delegate_multi",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_delegate_multi` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f169b04938edc45271177c9ba231db72dcd125672d98aae623ae5c41e71da6cb",
+            "description": "Execute acp_delegate_task",
+            "name": "acp_delegate_task",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_delegate_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ceab3f68f0afe83131241f266a35421ced3c20c3d89e768e1e266986b31f5425",
+            "description": "Execute acp_discover_workers",
+            "name": "acp_discover_workers",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_discover_workers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cbcc1131a9e429c5bfe0f30e89ecf4cc9434991a0ff99254da661339aba96bf1",
+            "description": "Execute acp_inspect_revocations",
+            "name": "acp_inspect_revocations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_inspect_revocations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6dc19cb7d4f8d5dc78544ac14a122387d0a8e46d22b215277d3e4e995065a542",
+            "description": "Execute acp_list_connection_requests",
+            "name": "acp_list_connection_requests",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_connection_requests` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a4bd4b7af765c8bdce485d9867e116c5351a52d58fefaa1dea89c508859fb651",
+            "description": "Execute acp_list_connections",
+            "name": "acp_list_connections",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_connections` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f2e9b69871b7e463db7016b86bfe47abae26b444a9e1315704126a2b841a435",
+            "description": "Execute acp_list_invites",
+            "name": "acp_list_invites",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_invites` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:38ff4000f3f83d3e71db95c5b49a88556f345e1530c7675023fb9ca27fd84de0",
+            "description": "Execute acp_list_pending_requests",
+            "name": "acp_list_pending_requests",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_pending_requests` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4fe34dad726c3c6006692befaab64793f99b2ce6a69cb5da3e8830b88d42ea24",
+            "description": "Execute acp_message_status",
+            "name": "acp_message_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_message_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:278e4080402f34a80a002747e4f4055154aca300d15472185df21a5db4df44f8",
+            "description": "Execute acp_remove_invite",
+            "name": "acp_remove_invite",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_remove_invite` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2ba733431a3120a8d430bc0f12180813a063971ab7d7498da82f4032fc4c5cd1",
+            "description": "Execute acp_resubmit_pending_request",
+            "name": "acp_resubmit_pending_request",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_resubmit_pending_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2becf8041192e69da2b4ed2970910bcdef2d9c7d4fab2d7ae160095505b14614",
+            "description": "Execute acp_revoke_token",
+            "name": "acp_revoke_token",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_revoke_token` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6087bcf6c35113d50c972818c6814b3df4a880b248617ec45f41800a41b3f174",
+            "description": "Execute acp_verify_audit_bundle",
+            "name": "acp_verify_audit_bundle",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_verify_audit_bundle` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:282f92bf4dcd436ad888578afc91f1f24986ec67e4f59a8303441c73644dd63f",
+            "description": "Execute string",
+            "name": "string",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `string` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:52a18e9167818e293e464b2910a289b8bc47fef36431e09182db7823cd92f19d",
+        "version": "0.10.1"
       }
     ]
   },
@@ -68975,6 +69693,131 @@
         ],
         "toolset_canonical_hash": "sha256:0f157a6cb7c97a6c1464b81f57d1a09f444cf586d324ceb09e903113d334f4f4",
         "version": "0.2.0"
+      }
+    ]
+  },
+  "slatebox-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Slatebox is the free, open-source visual intelligence platform for your team and agents: diagrams, flowcharts, mind maps, whiteboards, Gantt plans and presentations you build together on one live canvas, with any agent connected over MCP.",
+    "display_name": "slatebox-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.4.1",
+    "license": "MIT",
+    "malicious_advisory_id": null,
+    "package_name": "slatebox-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:npm/slatebox-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.4.1",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/Slatebox/slatebox",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `slatebox-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 7 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-07-16T18:21:20.915Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T01:04:57.841Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.3.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T02:59:43.751Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.3.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T06:48:24.002Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.3.4"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T22:31:43.232Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.3.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-25T05:14:42.191Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.4.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-25T15:37:08.968Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.4.1"
       }
     ]
   },
@@ -72342,7 +73185,7 @@
     "author": "Simon Farshid",
     "composite_risk_score": null,
     "composite_risk_tier": "LOW",
-    "description": "Define a toolkit once, expose it as a CLI, MCP server, WebMCP, and more.",
+    "description": "Define a toolkit once, expose it as a CLI, MCP server, WebMCP, AI SDK tools, and a typed API.",
     "display_name": "toolport",
     "dual_axis_security": null,
     "ecosystem": "npm",
@@ -72351,19 +73194,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.0.0",
+    "latest_version": "0.1.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "toolport",
     "prompts_count": 0,
     "purl": "pkg:npm/toolport",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.0.0",
+    "recommended_safe_version": "0.1.0",
     "repo_http_status": 200,
-    "repository_url": "https://github.com/assistant-ui/assistant-ui",
+    "repository_url": "https://github.com/assistant-ui/harness-sdk",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `toolport` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "security_summary": "Server `toolport` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -72375,12 +73218,25 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-09-04T21:53:25.058Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-26T10:01:20.340Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0"
       }
     ]
   },

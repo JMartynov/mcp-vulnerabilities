@@ -1,4 +1,469 @@
 {
+  "2848823170/docuclean-ledger-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "Statement & e-invoice reconciliation, PDF-to-XLSX table extraction, and CJK CSV mojibake repair MCP server.",
+    "display_name": "2848823170/docuclean-ledger-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "2848823170/docuclean-ledger-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/2848823170%2Fdocuclean-ledger-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/2848823170/docuclean-ledger-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `2848823170/docuclean-ledger-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:267ce11e989b9bb78ba983c64a24db9c8401e1e45d408ed1c8002c1653507563",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://2848823170--docuclean-ledger-mcp.apify.actor/mcp",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e5421c10fef7565d1faa612090c89c7d6091a91df2296d2ba116020198618777",
+            "description": "Audits eth_signTypedData_v4 payloads (EIP-2612 Permit, DAI Permit, Permit2, Seaport, EIP-3009 x402, ForwardRequest, SafeTx) for unlimited allowances, zero-consideration NFT/token drains, DELEGATECALL, and domain spoofing.",
+            "name": "audit_eip712_signature_payload",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Optional expected EVM chainId",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expectedChainId",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Optional maximum expected token amount",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expectedMaxAmount",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional expected 0x recipient for x402 / EIP-3009",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expectedRecipient",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional expected 0x verifyingContract",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expectedVerifyingContract",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional Unix timestamp in seconds",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "referenceTimestamp",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "eth_signTypedData_v4 JSON object or serialized JSON string",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "typedData",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `audit_eip712_signature_payload` [LOW] handles sensitive credentials, tokens, or private secrets."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9e48db3a66fe09da2b06af121f03877c253a5e40c09328187d1ada77ff44dae9",
+            "description": "Decodes raw hex EVM transaction payloads (",
+            "name": "decode_and_audit_evm_calldata",
+            "parameters": [
+              {
+                "default": null,
+                "description": "EVM Chain ID (default: 8453 Base)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "chainId",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "0x-prefixed hex calldata string",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "data",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional Unix timestamp in seconds",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "referenceTimestamp",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Optional sender 0x address",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "sender",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Target 0x contract or recipient address",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "to",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Native ETH value in wei (decimal or 0x hex)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "value",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `decode_and_audit_evm_calldata` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7146e64bd68a7818a34f09211a95ef9713c98f963e87eb6559ce25495d9f8a38",
+            "description": "Extracts tables from multi-page PDF binaries (Base64), HTML (rowspan/colspan), Markdown, JSON, or messy CSVs; stitches repeating page headers; strips illegal XML 1.0 control chars; neutralizes Excel formula injection on user cells while appending live =SUM() / =AVERAGE() summary rows; outputs Base64 .xlsx, Markdown, and UTF-8 BOM CSV.",
+            "name": "extract_and_clean_pdf_tables_to_xlsx",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Direct HTML, Markdown, CSV, or JSON string payload",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Base64-encoded PDF or legacy-encoded file bytes",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "contentBase64",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Remove exact duplicate rows across pages",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dedupeRows",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Input filename with extension hint (e.g. report.pdf, table.html)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Append live =SUM() and =AVERAGE() summary rows",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "injectFormulas",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Stitch continuation tables sharing identical headers across pages",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "mergePages",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `extract_and_clean_pdf_tables_to_xlsx` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1177c395dc56681ea8eb0007604d696202cc1574d3735fa9c386f414e53496e7",
+            "description": "Deterministically reconciles Alipay, WeChat Pay, Stripe, PayPal, or bank CSV/JSON statements against electronic invoices (CN Digital e-Invoice XML/PDF, UBL 2.1 XML, CSV, JSON) using exact BigInt micro-unit math (1:1, FX spread, and N-to-1 subset-sum matching) and outputs a 3-sheet OpenXML .xlsx audit workbook + UTF-8 BOM CSV.",
+            "name": "reconcile_statements_and_invoices",
+            "parameters": [
+              {
+                "default": null,
+                "description": "3-letter ISO accounting currency (default: CNY)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "baseCurrency",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Max day delta between payment and invoice (default: 45)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "dateWindowDays",
+                "nested_properties": null,
+                "required": false,
+                "type": "number"
+              },
+              {
+                "default": null,
+                "description": "Expected company Buyer Name for tax compliance checks",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expectedBuyerName",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Expected Buyer Tax ID / USCC for tax compliance checks",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "expectedBuyerTaxId",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Include Base64 3-sheet OpenXML .xlsx workbook (default: true)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "includeXlsxBase64",
+                "nested_properties": null,
+                "required": false,
+                "type": "boolean"
+              },
+              {
+                "default": null,
+                "description": "Electronic invoice files to match against statements",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "invoices",
+                "nested_properties": null,
+                "required": false,
+                "type": "array"
+              },
+              {
+                "default": null,
+                "description": "Payment statement files to reconcile",
+                "enum": null,
+                "format": null,
+                "items_type": "string",
+                "name": "statements",
+                "nested_properties": null,
+                "required": true,
+                "type": "array"
+              }
+            ],
+            "risk_score": 4.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `reconcile_statements_and_invoices` [MEDIUM] issues raw database queries that could lead to SQL injection."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b98bce760e3a9ee3ce48f437f7b089b716a7dfb16ce015f38d250a69debf40e4",
+            "description": "Detects and repairs garbled Chinese/Japanese/Korean CSV/TSV files from GB18030, GBK, Big5, Shift-JIS, EUC-KR, UTF-16LE/BE, and double-encoded UTF-8-as-Latin1/CP1252 strings; heals unquoted currency commas; armors 15+ digit IDs; and neutralizes OWASP CSV/DDE formula injection.",
+            "name": "repair_cjk_csv_mojibake",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Garbled or raw CSV text (e.g. UTF-8 mis-decoded as Latin-1/CP1252)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "content",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Base64-encoded raw CSV bytes (GB18030/GBK/Big5/Shift-JIS/EUC-KR/UTF-16)",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "contentBase64",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional source CSV filename",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "filename",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `repair_cjk_csv_mojibake` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f84cc50a2ad7740ec5d8f0f12d9c7c6f29ef7f37377d7a143462493fd069d2ee",
+            "description": "Cryptographically validates and normalizes addresses across EVM (EIP-55), Tron (Base58Check), Bitcoin (Bech32/Bech32m/Base58Check), Solana (Ed25519 curve vs PDA), TON (EQ/UQ CRC16 + bounce trap), XRP Ledger (r-address + X-address tag), Cosmos, and Stacks.",
+            "name": "validate_multichain_address",
+            "parameters": [
+              {
+                "default": null,
+                "description": "Wallet or contract address string to validate",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "address",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Optional chain hint: auto, evm, tron, bitcoin, solana, ton, xrpl, cosmos, stacks",
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "chain",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": "Expected network environment",
+                "enum": [
+                  "any",
+                  "mainnet",
+                  "testnet"
+                ],
+                "format": null,
+                "items_type": null,
+                "name": "expectedNetwork",
+                "nested_properties": null,
+                "required": false,
+                "type": "string"
+              }
+            ],
+            "risk_score": 2.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `validate_multichain_address` [LOW] inspects or modifies host environment variables."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:267ce11e989b9bb78ba983c64a24db9c8401e1e45d408ed1c8002c1653507563",
+        "version": "1.0.0"
+      }
+    ]
+  },
   "2ools/mcp-server": {
     "archival_reason": null,
     "author": null,
@@ -3963,7 +4428,7 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": true,
-    "latest_version": "< 0.11.1",
+    "latest_version": "<= 0.15.2",
     "license": null,
     "malicious_advisory_id": null,
     "package_name": "5ire",
@@ -3981,53 +4446,6 @@
     "toolset_canonical_hash": "",
     "transport": null,
     "versions": [
-      {
-        "advisories": [
-          {
-            "cvss_score": 9.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-22793",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "5ire is a cross-platform desktop artificial intelligence assistant and model context protocol client. Prior to version 0",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 9.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-68669",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "5ire is a cross-platform desktop artificial intelligence assistant and model context protocol client. In versions 0.15.2",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": 9.7,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-47777",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "5ire is a cross-platform desktop artificial intelligence assistant and model context protocol client. Versions prior to ",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "<= 0.15.2"
-      },
       {
         "advisories": [
           {
@@ -4121,6 +4539,53 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "< 0.11.1"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": 9.7,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-22793",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "5ire is a cross-platform desktop artificial intelligence assistant and model context protocol client. Prior to version 0",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 9.7,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-68669",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "5ire is a cross-platform desktop artificial intelligence assistant and model context protocol client. In versions 0.15.2",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": 9.7,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-47777",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "5ire is a cross-platform desktop artificial intelligence assistant and model context protocol client. Versions prior to ",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "<= 0.15.2"
       }
     ]
   },
@@ -4294,19 +4759,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.7.0",
+    "latest_version": "1.8.1",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@ask-llm/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@ask-llm%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.7.0",
+    "recommended_safe_version": "1.8.1",
     "repo_http_status": 200,
     "repository_url": "https://github.com/Lykhoyda/ask-llm",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@ask-llm/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 29 safe version(s).",
+    "security_summary": "Server `@ask-llm/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 31 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:75f21335aeb099ed809f269fe6f736b5008b90be6bdb0d5060d0ef9e28a06f62",
@@ -7232,6 +7697,350 @@
         ],
         "toolset_canonical_hash": "sha256:75f21335aeb099ed809f269fe6f736b5008b90be6bdb0d5060d0ef9e28a06f62",
         "version": "1.7.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-23T15:10:20.947Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.8.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T08:32:41.197Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:78489ff341d214638d049e0fa43d4e5377b5ebae956678460441930dfd009b04",
+            "description": "Send a prompt to Google",
+            "name": "ask-antigravity",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-antigravity` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ca838f3402a3148053a068c439f709aa780aa04a92a97c0d8919f72f967b91ac",
+            "description": "Send a prompt to Anthropic Claude Code CLI for an independent second opinion, code review, or architecture critique. Defaults to ${FACTORY_DEFAULT_MODEL} with ${MODELS.FALLBACK} fallback. Claude runs in safe mode with only Read, Glob, and Grep tools, so it can inspect context but cannot edit files or execute commands. Supports native sessions via sessionId and returns a structured AskResponse.",
+            "name": "ask-claude",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-claude` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1405e07160f42aea5e9a98c58e33579c82b3b0b3ea5c817c8ea10aa6b5f5a137",
+            "description": "Send a prompt to OpenAI Codex CLI (defaults to ${FACTORY_DEFAULT_MODEL} with automatic fallback on quota errors). Use for code review, second opinions, analysis, and AI-to-AI collaboration. Do not override the model parameter unless the user explicitly asks. Returns both human-readable text and a structured response (provider, model, sessionId, usage) via outputSchema. Calls are ephemeral by default; pass sessionId:",
+            "name": "ask-codex",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-codex` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:df95f474f5e26ce37b949aec6a4e0404a04c0c781cd0e9ef822bd2411f4fa2d8",
+            "description": "Send a code edit request to OpenAI Codex CLI and get structured search/replace edit blocks back (via codex --output-schema). Codex reads the existing files (read-only) and proposes precise, applyable changes for Claude to apply. Use this when you want Codex to suggest specific code modifications to existing files rather than just analysis. Mirrors ask-gemini-edit.",
+            "name": "ask-codex-edit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-codex-edit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5f0d7b868603f6f213ec24e160749bf633412e30ab5bcc9133a93d60da51c2a8",
+            "description": "Use Cursor Agent as a model-neutral, read-only consultation harness. The provider and exact Cursor catalog model ID are separate required fields. Runs ",
+            "name": "ask-cursor-agent",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-cursor-agent` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:528812e9023426da2a17574652c0cb92243dcf314c6c88425280d09686967c2c",
+            "description": "Send a prompt to Gemini CLI (defaults to ${FACTORY_DEFAULT_MODEL} with automatic Flash fallback on quota errors). Use for code review, second opinions, analysis, and AI-to-AI collaboration. Do not override the model parameter unless the user explicitly asks. Returns both human-readable text and a structured response (provider, model, sessionId, usage) via outputSchema.",
+            "name": "ask-gemini",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-gemini` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9012e0743c32fbc033774532e25c62b740a5f5c15daf37bd87f2fe4932a9c6b5",
+            "description": "Send a code edit request to Gemini CLI and get structured OLD/NEW edit blocks back. Gemini analyzes the files and returns precise, applicable code changes. Use this when you want Gemini to suggest specific code modifications rather than just analysis.",
+            "name": "ask-gemini-edit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-gemini-edit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:383aff8577737ca1cec6dff30bc8b5b1d7bcd1bda17b0b12b1b7b06c4abce043",
+            "description": "Send a prompt to Grok through either the supported xAI Responses API or Grok Build",
+            "name": "ask-grok",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-grok` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:615fd339f33cdfe214407266d55d7a09cb38fa4ce1e2a4912e51eae481f5c931",
+            "description": "Use Cursor Agent as a model-neutral, read-only consultation harness. The provider and exact Cursor catalog model ID are separate required fields. Runs ",
+            "name": "ask-llm",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-llm` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:60f8b90512e5e37407b78a3d17ac2f52416918fc4b484949e8613239ffb9f918",
+            "description": "Send a prompt to a local Ollama LLM (defaults to ${FACTORY_DEFAULT_MODEL}; errors with a",
+            "name": "ask-ollama",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `ask-ollama` [LOW] processes unstructured prompts susceptible to injection overrides."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:be604f5c2542e16c815cf3e0da0e0c1a14b5cab94b0a121cb69ec84d798499ae",
+            "description": "Run a self-diagnosis of the MCP server",
+            "name": "diagnose",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `diagnose` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f18adfb1e7348e1e33c4b8733590baa254b2e4b4df8c29f7d8576ab83e59958e",
+            "description": "Retrieves cached chunks from a changeMode response. Use this to get subsequent chunks after receiving a partial changeMode response.",
+            "name": "fetch-chunk",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fetch-chunk` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2c490099623887eb421ec493c1b4044e18855f7a488ac1bba18b8c586ffb8eb6",
+            "description": "Get the current MCP server",
+            "name": "get-usage-stats",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get-usage-stats` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c0225115d337c0e55b0a4afd5ecc42e14b07374d3cb95410e62de89706c2ddf8",
+            "description": "multi-llm",
+            "name": "multi-llm",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `multi-llm` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:fedf066bf23209508aa50fca2963bb9db7844989e7e27d711d8221d90a0f1bc0",
+            "description": "Test connectivity with the Antigravity MCP server and check whether agy is installed",
+            "name": "ping",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ping` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ae6aa3e43b705a479c520f6fae46fba812145a845bcbff84efd4900ad901e6d4",
+            "description": "fetch-chunk cacheKey=<key> chunkIndex=<number>",
+            "name": "prompt",
+            "parameters": [],
+            "risk_score": 1.5,
+            "risk_tier": "low",
+            "security_comment": "Tool `prompt` [LOW] processes unstructured prompts susceptible to injection overrides."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:75f21335aeb099ed809f269fe6f736b5008b90be6bdb0d5060d0ef9e28a06f62",
+        "version": "1.8.1"
       }
     ]
   },
@@ -9301,19 +10110,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.22.0",
+    "latest_version": "1.23.0",
     "license": "Apache-2.0",
     "malicious_advisory_id": null,
     "package_name": "@dnsdoctor/mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/@dnsdoctor%2Fmcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.22.0",
+    "recommended_safe_version": "1.23.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/dnsdoctor/mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@dnsdoctor/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 27 safe version(s).",
+    "security_summary": "Server `@dnsdoctor/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 28 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -9669,6 +10478,19 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.22.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T09:33:23.850Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.23.0"
       }
     ]
   },
@@ -9975,19 +10797,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "71.0.0",
+    "latest_version": "72.0.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@jrpool/kilotest",
     "prompts_count": 0,
     "purl": "pkg:npm/@jrpool%2Fkilotest",
     "quarantine_tier": null,
-    "recommended_safe_version": "71.0.0",
+    "recommended_safe_version": "72.0.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/jrpool/kilotest",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@jrpool/kilotest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 193 safe version(s).",
+    "security_summary": "Server `@jrpool/kilotest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 194 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:1acf7b6348456ed5e03b304aebcdb4d984e78e8602de39568efaebab2c2da92c",
@@ -34613,6 +35435,710 @@
         ],
         "toolset_canonical_hash": "sha256:1acf7b6348456ed5e03b304aebcdb4d984e78e8602de39568efaebab2c2da92c",
         "version": "71.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T05:18:50.012Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:65969608fdaf76c1e708b4277b80eef2d0b2f994822ad56b27ad244ff98a8994",
+            "description": "Waits for a job ordered via the orderNewTest or orderRetest tool to finish, using the report identifier either tool returned. Use this instead of polling listIssues when an immediate answer is preferred. Blocks until the report is ready, the job fails, or a maximum wait time elapses, sending no interim notices; returns the finished job’s status and, if ready, its report identifier.",
+            "name": "awaitTest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `awaitTest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:57b69ed231dcacd89dee25618fff7a4e19080e70f64f902920785a24e793dbf8",
+            "description": "Example Page",
+            "name": "cherry",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cherry` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0f083c5c6674c60a9f65720a387ce2d2689f3e4c4861c31347bbf66eb5a9802f",
+            "description": "Explains what Kilotest is, what its tools do, and how its results are structured. Use this before any other tool when the available tools or workflow are unclear. Returns a prose overview of the Kilotest domain, the tool workflow, and links to further documentation. ${sharedContext}",
+            "name": "getKilotestOverview",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `getKilotestOverview` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:27bc6043026b3a4d68c96f969dcf49be6c18ebe036021a301b06323cef4a82a0",
+            "description": "Retrieves one entire report as JSON, with all of its issues, violators, and diagnoses. Use this instead of drilling down through listIssues, listViolators, and listDiagnoses when the full report is needed in one call. Returns the complete report data for the specified timestamp and job identifier. The size of the report is disclosed by the listIssues tool.",
+            "name": "getReport",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `getReport` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:31f1c8384dded8eedfb74eca5858adbc2c98fc86ea5a90095c0dfe5152820f86",
+            "description": "Lists the diagnoses that rule engines gave for how one element exhibited one issue in one report. Use this after listViolators to get details about the element as a violator of the issue. Returns, for each rule engine that reported a violation by the element of a rule belonging to the issue, the diagnosis given by the rule engine.",
+            "name": "listDiagnoses",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `listDiagnoses` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:add6318fc323fc4bbd17a0b9869bbae5fb2beb3bc9f17b219df5d124dc5446db",
+            "description": "Lists the issues reported in one report, along with the history of all reports about the same page. Use this after listPages to switch to an earlier or later report or to begin examining this report. Returns the history and the basics about this report’s issues.",
+            "name": "listIssues",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `listIssues` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e9943ac6fd93a73ab497621096f1196c575f9dd2f82742b52117479c8adcd89e",
+            "description": "Lists all pages Kilotest has tested. Use this first to discover whether a page already has any reports before requesting a test. Returns, for each tested page, its description, URL, and the timestamp and job identifier of its latest available report.",
+            "name": "listPages",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `listPages` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f51b8ea0f19592895ffcefbc5eb7e362e9bd1bc6da641b0d9c7acb37db154e63",
+            "description": "Lists the elements of a tested page that were reported as exhibiting one issue in one report. Use this after listIssues to drill down from an issue to the elements violating rules belonging to that issue. Returns basics about each violating element.",
+            "name": "listViolators",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `listViolators` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:08ed2583dfb192c6c7199b9672567ec675b5aa240c162a6e5220a28c6f50841c",
+            "description": "Orders testing of a page that has no report yet, with automated approval or rejection and immediate enqueueing if approved. Use this instead of requestNewTest when immediate testing is wanted; testing typically takes 2 to 4 minutes. Returns an order confirmation and disposition details, including, if approved, a report identifier (timestamp and job identifier) and a question about whether to wait for completion with the awaitTest tool.",
+            "name": "orderNewTest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `orderNewTest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e49d17bc8e4dddfb302bd8445189879653ba27dfac90ea11306a99cb2fe836b9",
+            "description": "Orders a retest of a page whose existing report is considered obsolete, with automated approval or rejection and immediate enqueuing if approved. Use this instead of requestRetest when immediate retesting is wanted; testing typically takes 2 to 4 minutes. Returns an order confirmation and disposition details, including, if approved, a report identifier (timestamp and job identifier) and a question about whether to wait for completion with the awaitTest tool.",
+            "name": "orderRetest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `orderRetest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:687fe10e3a93d30dbaffe96777eba1aa2dc0455cc66f8e1138393dbd93272419",
+            "description": "Submits a request to add a new feature or improve an existing one; queued for manager review. There is no immediate-approval alternative for feature requests. Returns a request confirmation with disposition details.",
+            "name": "requestFeature",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `requestFeature` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2488546b3a2a8b5c4abaebe06517c05790a48eb0ecb25cbdc5f472e6486f3823",
+            "description": "Submits a request to test a page that has no report yet; queued for manager approval. Use orderNewTest instead for immediate, automatically approved testing. Returns a request confirmation with disposition details.",
+            "name": "requestNewTest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `requestNewTest` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a93053139a9604e11d4889bca30003fffa2f239ac359182fbbdb5f43cf341193",
+            "description": "Submits a request to retest a page whose existing report is considered obsolete; queued for manager approval. Use orderRetest instead for immediate, automatically approved retesting. Returns a request confirmation with disposition details.",
+            "name": "requestRetest",
+            "parameters": [
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "destructiveHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "idempotentHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "openWorldHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "readOnlyHint",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              },
+              {
+                "default": null,
+                "description": null,
+                "enum": null,
+                "format": null,
+                "items_type": null,
+                "name": "title",
+                "nested_properties": null,
+                "required": true,
+                "type": "string"
+              }
+            ],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `requestRetest` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:1acf7b6348456ed5e03b304aebcdb4d984e78e8602de39568efaebab2c2da92c",
+        "version": "72.0.0"
       }
     ]
   },
@@ -36171,6 +37697,118 @@
         ],
         "toolset_canonical_hash": "sha256:183167497942fba7baadd50ad154d92077d8b564b8df2c453e01c3ad268c50f3",
         "version": "1.0.0"
+      }
+    ]
+  },
+  "@receiverdotemail/mcp": {
+    "archival_reason": null,
+    "author": "Receiver.email",
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "MCP server for Receiver.email: give AI agents real inboxes to receive sign-up, OTP and magic-link emails",
+    "display_name": "@receiverdotemail/mcp",
+    "dual_axis_security": null,
+    "ecosystem": "npm",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "0.3.0",
+    "license": "MIT",
+    "malicious_advisory_id": null,
+    "package_name": "@receiverdotemail/mcp",
+    "prompts_count": 0,
+    "purl": "pkg:npm/@receiverdotemail%2Fmcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "0.3.0",
+    "repo_http_status": 200,
+    "repository_url": "https://www.receiver.email/docs/mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `@receiverdotemail/mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 6 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-20T08:17:49.673Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.0.0-stage"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-20T08:20:27.233Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-20T15:12:36.533Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.1.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-26T12:17:10.057Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-26T16:16:13.189Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.2.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T11:45:51.043Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.3.0"
       }
     ]
   },
@@ -38127,19 +39765,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.1.56",
+    "latest_version": "0.2.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "@tiberriver256/mcp-server-azure-devops",
     "prompts_count": 0,
     "purl": "pkg:npm/@tiberriver256%2Fmcp-server-azure-devops",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.1.56",
+    "recommended_safe_version": "0.2.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/Tiberriver256/mcp-server-azure-devops",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `@tiberriver256/mcp-server-azure-devops` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 52 safe version(s).",
+    "security_summary": "Server `@tiberriver256/mcp-server-azure-devops` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 53 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:f287028d5372ec8984f4c0be45a2f817f7610829e46da116d9ac960445ec7cb0",
@@ -44287,6 +45925,800 @@
         ],
         "toolset_canonical_hash": "sha256:f287028d5372ec8984f4c0be45a2f817f7610829e46da116d9ac960445ec7cb0",
         "version": "0.1.56"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-25T19:20:06.460Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e964c590bfcc47395f60ae54d5c207ac71ef65feff774941cfd3b93901f793f1",
+            "description": "Execute add_pull_request_comment",
+            "name": "add_pull_request_comment",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `add_pull_request_comment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:486a158427394ff8d78becdecda6cbd9ceb82cd009c0e95e0cfb173470697dc5",
+            "description": "Execute c",
+            "name": "c",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `c` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed82b0a56ad6ce4f372e359264e527a2a7eb34b27de6ea58310df363ae5aac69",
+            "description": "Execute cc",
+            "name": "cc",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cc` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d1a12cc86f24a20d5b4e8fb8a61527dbb06d856b445705124e656ea089051007",
+            "description": "Execute cpp",
+            "name": "cpp",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cpp` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5adaccafe34d773fa2ec3dffb34e3c34cbcf42ad9c51957e6a362882fe2b94fc",
+            "description": "Execute create_branch",
+            "name": "create_branch",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_branch` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8cb0619423a8cb339f8d266a253e7b21a1ece9c4814bf61763daca22e1e20866",
+            "description": "Execute create_commit",
+            "name": "create_commit",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_commit` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:699b03e54296cb9975e9b6a3a1346e9102266ffa24e475e448d8743484746e36",
+            "description": "Execute create_pull_request",
+            "name": "create_pull_request",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_pull_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:49e3374e84c8cc8cc05ca516a10e8dec86adc6d4cca0181c7aee084416fdc393",
+            "description": "Execute create_wiki",
+            "name": "create_wiki",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_wiki` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ff01a017620d202cdd40aa83cb3d62beb57a4afd5a44a1ab39386eed78ba25e4",
+            "description": "Execute create_wiki_page",
+            "name": "create_wiki_page",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_wiki_page` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:158ce1c9f03403ac1c21f5790b43db002261af0973a37c83b2d387d110387d18",
+            "description": "Execute create_work_item",
+            "name": "create_work_item",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_work_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:18080c03ed2de0e054c0657fb035a628070cd0f202ebc3e5d97481ff96ceb226",
+            "description": "Execute create_work_item_attachment",
+            "name": "create_work_item_attachment",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `create_work_item_attachment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:39d5b5b8e5377ccd0b05469001ea81fbeda4ed1002a4a2a0fc6176dc20a29590",
+            "description": "Execute cs",
+            "name": "cs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `cs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:689c7ad3239b30b2cbb265e517a645cc81b20d459da8b26dd4dc845464d20383",
+            "description": "Execute css",
+            "name": "css",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `css` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6099c22b9327c641b1366e0d89a4c354e218135c55de5bdb3fa7ee74547db526",
+            "description": "Execute delete_work_item_attachment",
+            "name": "delete_work_item_attachment",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `delete_work_item_attachment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ddbb8e8b991fa6652432d14e2d0964f7beee579e282c3e7770be50dfe1ea9215",
+            "description": "Execute download_pipeline_artifact",
+            "name": "download_pipeline_artifact",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `download_pipeline_artifact` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:3d9bb852237651386d008d126ff3dee4d0513c0b779d6ed671d4c1e8848d51e3",
+            "description": "Execute get_all_repositories_tree",
+            "name": "get_all_repositories_tree",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_all_repositories_tree` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c925bd51c49db0f5eaeabbbe029ca4f8e451c55a50cd5a96b6fce63193d1332b",
+            "description": "Execute get_file_content",
+            "name": "get_file_content",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_file_content` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:5c373f4b7d7b0e674fee7a13ecbd6a4136019fc341fcca0c6dc1544ef5583a2f",
+            "description": "Execute get_me",
+            "name": "get_me",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_me` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eed117b77eda132dfa2cf12b531375f4015bde232c67c20c94d3985e581f07e1",
+            "description": "Execute get_pipeline",
+            "name": "get_pipeline",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pipeline` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4f315fc3369d37731fb1e932bc1c140dee922eeb3325ee1f961ac7c5831fe9a7",
+            "description": "Execute get_pipeline_log",
+            "name": "get_pipeline_log",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pipeline_log` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2b0ed3dceae0f8ed68236558709381f1c301cbc2c465fba2da1fdf8cf9d10b46",
+            "description": "Execute get_pipeline_run",
+            "name": "get_pipeline_run",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pipeline_run` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a4537a32eb86a025b6111cf3e8f24352ef6e6d7ee6d1f6ba17eacfcd3099ae2f",
+            "description": "Execute get_project",
+            "name": "get_project",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_project` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:003ad26c39f687363a3ae82cdc854c19021ed226dd20b2b2527f58e2c5bf1b8a",
+            "description": "Execute get_project_details",
+            "name": "get_project_details",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_project_details` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6ca7a4eb1accc255f7fc0853f0524bb821830f0a237a8017cb534c1d2d89ea5a",
+            "description": "Execute get_pull_request",
+            "name": "get_pull_request",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pull_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cbd984e8c1b12b7926bf2168347c810db944bda1902ab86bf1fa5f260b504f99",
+            "description": "Execute get_pull_request_changes",
+            "name": "get_pull_request_changes",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pull_request_changes` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a7ff42764d3adc8cb20cd0d4ebdf28f9d88962149befd80643a5d1d7a072183d",
+            "description": "Execute get_pull_request_checks",
+            "name": "get_pull_request_checks",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pull_request_checks` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2bde7bfe72bbbe2e49779d834707fd4c5a629a1e68819149e7290dca758edc07",
+            "description": "Execute get_pull_request_comments",
+            "name": "get_pull_request_comments",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_pull_request_comments` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8f7f454447328af35c28395eaaee6a7fbfeca4e3286d6716d11a665f319fc16a",
+            "description": "Execute get_repository",
+            "name": "get_repository",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_repository` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f0e7c1683d1d4f90d0f80259d555e07cf243ed4d35222010b99dfa07487b21c9",
+            "description": "Execute get_repository_details",
+            "name": "get_repository_details",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_repository_details` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:bd898e0aee057720949f0575478fa152c54e7faaa4278d116b3d4e4fccdac4f8",
+            "description": "Execute get_repository_tree",
+            "name": "get_repository_tree",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_repository_tree` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2b17c752809da1333912facac1c96226bd6669961c5ecee7ff703fa57caca2c9",
+            "description": "Execute get_wiki_page",
+            "name": "get_wiki_page",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_wiki_page` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:29fb109ab44bdd83688e75ef5c7b9a4b7eb13ad204cbc6058f408345d4b0ba3f",
+            "description": "Execute get_wikis",
+            "name": "get_wikis",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_wikis` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0e5db2a61052c6e68ab17ec728f62a6ab31b75f70eac535866a4f83011236870",
+            "description": "Execute get_work_item",
+            "name": "get_work_item",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_work_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6a5382cb33f576d16649b687f9e6ec70574d823f72daaf348ae0673a39b143b7",
+            "description": "Execute get_work_item_attachment",
+            "name": "get_work_item_attachment",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_work_item_attachment` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e0b6075f3a46d230d8f244136c4058128468d963daf597a2d104b949a7404c7",
+            "description": "Execute get_work_item_comments",
+            "name": "get_work_item_comments",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_work_item_comments` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:adc12ba1d69618ef6e83e284c19ac5ae642d911de45d33535465f4472fb16e68",
+            "description": "Execute gif",
+            "name": "gif",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `gif` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:28b0e19ea972a72854a2bdb2b10d5654a381b123e04c95c6c8f0dc678c22804e",
+            "description": "Execute go",
+            "name": "go",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `go` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:caf054e62fcb1678075c3f127576b660cf054a93916d43bca70b761171286c35",
+            "description": "Execute htm",
+            "name": "htm",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `htm` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c289282e661cc88a3efeff9051b329612417f79b31197b14f4e970f7a00c3625",
+            "description": "Execute html",
+            "name": "html",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `html` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9472b1bad0c506276aeaa72b42214b7a6e1ab2822ccd65221bba2a2e40f77021",
+            "description": "Execute java",
+            "name": "java",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `java` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:195b1a19f8ef17ed323c448953443e7f29217c43fc76100d2152f47479c0a1f6",
+            "description": "Execute jpeg",
+            "name": "jpeg",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `jpeg` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d3b8448813930bb07728bd17235ef716694217a123b86dad278afef2e3e584e6",
+            "description": "Execute jpg",
+            "name": "jpg",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `jpg` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:dab7d7a9c01b1240ab0176c46b7f9266dcb358c9f1728b1dd28e086b92887073",
+            "description": "Execute js",
+            "name": "js",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `js` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:deb5e1d26766b54ec6b73deec1eda30c1cdb48261b6f37bc5206efa7df1f8c68",
+            "description": "Execute json",
+            "name": "json",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `json` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:072bde9616fb900dbf45f00670e4f4abe5dcbffe48ffd6dd36ddcf05b9a83332",
+            "description": "Execute list_commits",
+            "name": "list_commits",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_commits` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2740189fe07accf7efeb5bd606f7d0a103204ae926b23733c473ec6261bd7282",
+            "description": "Execute list_organizations",
+            "name": "list_organizations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_organizations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4983550963d199936379c3a2260bcda40159a044a6fd574f7f874372d2f8d7be",
+            "description": "Execute list_pipeline_runs",
+            "name": "list_pipeline_runs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_pipeline_runs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4510df4a92bf34c6ba4a79706e82a9922f97586baacb63222ad013d883b778c4",
+            "description": "Execute list_pipelines",
+            "name": "list_pipelines",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_pipelines` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d63533bf87b25240499dc87ff345d917908b88a483e2f7439412d2bc38045e9e",
+            "description": "Execute list_projects",
+            "name": "list_projects",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_projects` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:eac6a89a01904bc86a2069fee254574559cd0cfe80d8fa1ab97495274952aadc",
+            "description": "Execute list_pull_requests",
+            "name": "list_pull_requests",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_pull_requests` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f94ad5c2c78a5c6b914894aab519f0300d95cf15f00ee5c805add095c8cae848",
+            "description": "Execute list_repositories",
+            "name": "list_repositories",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_repositories` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:db2deddf69f78b615ce1ae09dfae30ebb6ab75ea818462423b8fc3cd0de96aaf",
+            "description": "Execute list_wiki_pages",
+            "name": "list_wiki_pages",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_wiki_pages` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:652292f4dad0e409d22fdaa2086e93e29f5d4197c7c2072c60f7892bc8198ce4",
+            "description": "Execute list_work_items",
+            "name": "list_work_items",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `list_work_items` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:970a3e6ffe4f2de4838685bb04893676089cefac65a3d8462a111301989edd45",
+            "description": "Execute manage_work_item_link",
+            "name": "manage_work_item_link",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `manage_work_item_link` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d7413258a8a55a86664522f37bbb8dd4f61d2c6cb7f5040349d4113ccf7ec7b8",
+            "description": "Execute md",
+            "name": "md",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `md` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e212cf8ae133d47d235c0823872ae4624a2a059e73fd716b107b86f55a680076",
+            "description": "Execute pdf",
+            "name": "pdf",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `pdf` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:57c9a9f7fe0a3bc38e7590b97cb2771cdf4bf79a508d380883da38f16f892119",
+            "description": "Execute pipeline_timeline",
+            "name": "pipeline_timeline",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `pipeline_timeline` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a238934037c6f0c21e43751446b4c83fae33ba379fe3ef72a9f2d0bb2bd1bfdb",
+            "description": "Execute png",
+            "name": "png",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `png` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c357c19879361b6769eed964915d4bc3d083ed4ff71719b83ec35fc33ac5b415",
+            "description": "Execute py",
+            "name": "py",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `py` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0c30b791d232ffb2c4741f483a409ebc963bbc4cfb5aa979033c450c6a8ddd78",
+            "description": "Execute rb",
+            "name": "rb",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rb` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7022e5ba03dd2b8c754cf2d3423830c2b0e4435396470f14c72cef192d09fca2",
+            "description": "Execute rs",
+            "name": "rs",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `rs` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:341a6d16a45e51c8a0bf0953f72db518d14e526917547885c86eeabea9e40ffd",
+            "description": "Execute search_code",
+            "name": "search_code",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_code` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:e3e919c60e61c2bb9b9da82fda172e67f9f7628f00fdf7727aa5a8f2c88f02f8",
+            "description": "Execute search_wiki",
+            "name": "search_wiki",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_wiki` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f9a1eda17fb9ba15510ae020c4c317e34ec1523e18c0487319e82bccc737fa37",
+            "description": "Execute search_work_items",
+            "name": "search_work_items",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_work_items` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ed4aea04732d640575897f8ad76be79a0b5252a4c05cb85779d1507c7f4c60a3",
+            "description": "Execute sh",
+            "name": "sh",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `sh` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6d9f5b3778ffb8ec6e51b31c55d8fa882f42296fa86212626ec44969bfae0948",
+            "description": "Execute svg",
+            "name": "svg",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `svg` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:47b6a4289d1e66233080e06babb22dbc47339e894bf08926bf132a5a7aef822c",
+            "description": "Execute trigger_pipeline",
+            "name": "trigger_pipeline",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `trigger_pipeline` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:36de4f4ef1ba6c922298d1894a82b766fa691caff562da9602f68d615af053be",
+            "description": "Execute ts",
+            "name": "ts",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `ts` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2d9e0559fef36bba35bef42b87640f63f07b1d1600b682107c0b06643c115572",
+            "description": "Execute tsx",
+            "name": "tsx",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `tsx` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:115b32cb1ee1ef7d5a46d3ec2a313cf1a6e7f60a14a60a80ea480ddb2c48e809",
+            "description": "Execute txt",
+            "name": "txt",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `txt` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c3be3f0bb6e3f70b255d307631597cda87ba87c142e5522fb94aa07434abd1d0",
+            "description": "Execute update_pull_request",
+            "name": "update_pull_request",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_pull_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2e37b44b3636f7940b0311f1b2f7b779a64db54c09245c747c8a3060da7dc433",
+            "description": "Execute update_pull_request_thread_status",
+            "name": "update_pull_request_thread_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_pull_request_thread_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:85462b5175db1e71f11e5e30b003e351426c6e95f0bed4139bc467ba81fe5a59",
+            "description": "Execute update_wiki_page",
+            "name": "update_wiki_page",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_wiki_page` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:06f369994bd315982eb46a0aec7dd34b3aef04583b5f3dc21e70b9e6c84db907",
+            "description": "Execute update_work_item",
+            "name": "update_work_item",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `update_work_item` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7e9468dcdd65f836d63f69e1afe81d61a614cb638d92cef0f3ed2783f07a1af8",
+            "description": "Execute webp",
+            "name": "webp",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `webp` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cbc4c01a2b552f549ee7818dbcb9db8942ce67c4a3788a69f0933930c3caf577",
+            "description": "Execute xml",
+            "name": "xml",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `xml` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:c5d0ae087c3d7c50d858e3e2e915c7d8c3a1434f09cd9698fab9775a26f03643",
+            "description": "Execute yaml",
+            "name": "yaml",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `yaml` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:76371ab2c3ade81a68b60b19d87f918323730fb0a7c18daa2d6d3a353b5ac15f",
+            "description": "Execute yml",
+            "name": "yml",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `yml` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:f287028d5372ec8984f4c0be45a2f817f7610829e46da116d9ac960445ec7cb0",
+        "version": "0.2.0"
       }
     ]
   },
@@ -65721,19 +68153,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.2.0",
+    "latest_version": "1.3.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "apifable",
     "prompts_count": 0,
     "purl": "pkg:npm/apifable",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.2.0",
+    "recommended_safe_version": "1.3.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/ycs77/apifable",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `apifable` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 22 safe version(s).",
+    "security_summary": "Server `apifable` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 23 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:ffb52d093b20196711efcf3327851c1fda7ea75117308ee4e39fab10712714aa",
@@ -65745,7 +68177,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-02-20T13:32:13.566Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65758,7 +68190,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-02-20T18:10:04.733Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65771,7 +68203,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-03T07:02:58.457Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65784,7 +68216,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-03T12:23:50.358Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65797,7 +68229,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-03T14:15:09.241Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65810,7 +68242,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-03T19:08:39.817Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65823,7 +68255,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-03T19:53:56.902Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65836,7 +68268,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-06T07:05:25.928Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65849,7 +68281,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-07T03:04:09.197Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65946,7 +68378,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-07T14:13:48.886Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65959,7 +68391,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-07T18:12:13.056Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65972,7 +68404,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-11T11:44:04.298Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65985,7 +68417,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-13T05:10:08.268Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65998,7 +68430,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-03-18T18:43:23.922Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66011,7 +68443,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-04-19T06:01:14.276Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66024,7 +68456,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-06-28T14:13:23.117Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66037,7 +68469,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-06-29T03:07:13.552Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66050,7 +68482,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-06-30T13:17:26.635Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66063,7 +68495,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-08-11T05:20:50.046Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66076,7 +68508,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-09-15T06:37:00.771Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -66089,12 +68521,96 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-09-15T07:07:31.989Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.2.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T07:37:27.898Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2c6a0b55dfbdd12761e1826233e8ad5862074813e9c0e31da44c4a0178ef2ade",
+            "description": "Get full details of a specific endpoint including parameters, request body, responses, and security requirements. Supported internal component $refs are resolved inline. Provide either \\",
+            "name": "get_endpoint",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_endpoint` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a3a41e77ef876e9abb40c3a8b8fcb2d7eca27c1fafa59d8436a69775771d88cd",
+            "description": "Get a specific schema from components/schemas by name. Supported internal component $refs are resolved inline. Use get_types to convert schemas to TypeScript type declarations.",
+            "name": "get_schema",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `get_schema` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:9e7c10f8262b7d6f553d9607c760e21e58da805facefed343e685ce0fbc9da82",
+            "description": "Get general information about the OpenAPI spec: title, version, description, servers, security schemes, and available tags with endpoint counts. Start here to understand an unfamiliar API. Then use list_endpoints_by_tag or search_endpoints to explore specific areas.",
+            "name": "get_spec_info",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_spec_info` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:95efb2cb18f009f0e9dd0209a0beff154922e8ff57915393afc2090380fd08ec",
+            "description": "Generate self-contained TypeScript type declarations for specified schemas or for all schemas used by a specific endpoint. Endpoint mode follows supported internal component $refs before collecting schema dependencies. Provide exactly one of: \\",
+            "name": "get_types",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `get_types` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:b5a4913f4d2affbdd8847e933ffbf37f02f160c1aa97142b656573f908e15a81",
+            "description": "List all endpoints belonging to a specific tag. Use get_spec_info first to see available tags. Supports pagination via limit and offset. Then use get_endpoint to inspect a specific endpoint in detail.",
+            "name": "list_endpoints_by_tag",
+            "parameters": [],
+            "risk_score": 2.5,
+            "risk_tier": "medium",
+            "security_comment": "Tool `list_endpoints_by_tag` [MEDIUM] initiates outbound network requests (potential SSRF risk)."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:1ea2066cee03895736d25825cc0abee609b115cf6660c22ba4195de70bd1b9f3",
+            "description": "Search endpoints by keyword across operationId, path, summary, and description. Results are ranked by relevance. If no exact matches are found, automatically falls back to fuzzy search. The response includes a matchType field (\\",
+            "name": "search_endpoints",
+            "parameters": [],
+            "risk_score": 3.0,
+            "risk_tier": "medium",
+            "security_comment": "Tool `search_endpoints` [MEDIUM] reads, writes, or modifies host filesystem paths."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:02666102e43d54583738185130dcc04ff5df4e20a1e907bed50ec2c70ebc19b9",
+            "description": "Search schemas by keyword across schema name and description. Results are ranked by relevance. If no exact matches are found, automatically falls back to fuzzy search. Empty results may include a guidance message suggesting next steps. Use get_schema to inspect a specific schema in detail.",
+            "name": "search_schemas",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `search_schemas` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:ffb52d093b20196711efcf3327851c1fda7ea75117308ee4e39fab10712714aa",
+        "version": "1.3.0"
       }
     ]
   },
@@ -83430,6 +85946,53 @@
           }
         ],
         "toolset_canonical_hash": "sha256:731b61b5cf5c29f35319c64e0d043d6b1489f157b5ca3ba8b8d7e04f880edac7",
+        "version": "1.0.0"
+      }
+    ]
+  },
+  "clips-studio": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "",
+    "display_name": "clips-studio",
+    "dual_axis_security": null,
+    "ecosystem": "pypi",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.0.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "clips-studio",
+    "prompts_count": 0,
+    "purl": "pkg:pypi/clips-studio",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.0.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/ColinGPT9/clips-studio",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `clips-studio` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "1.0.0"
       }
     ]
@@ -116563,19 +119126,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "1.9.5",
+    "latest_version": "2.0.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "fettle-mcp",
     "prompts_count": 0,
     "purl": "pkg:npm/fettle-mcp",
     "quarantine_tier": null,
-    "recommended_safe_version": "1.9.5",
+    "recommended_safe_version": "2.0.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/fettlesh/monitoring-mcp",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `fettle-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 35 safe version(s).",
+    "security_summary": "Server `fettle-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 40 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:7f468b02fbfa526c4a54a2487ce7d614a46f953779fd1da38cec8c29c95c3a48",
@@ -117255,6 +119818,82 @@
         ],
         "toolset_canonical_hash": "sha256:7f468b02fbfa526c4a54a2487ce7d614a46f953779fd1da38cec8c29c95c3a48",
         "version": "1.9.5"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-23T18:38:18.210Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.10.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-23T20:45:02.173Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.10.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T03:37:42.494Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.10.2"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-24T06:39:35.262Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.10.3"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-25T09:27:08.145Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4b658dd6069fe0b61d160eeb1b6108755ea20dc158c8d9a94df2091b18cceeda",
+            "description": "Execute TimeoutError",
+            "name": "TimeoutError",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `TimeoutError` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:7f468b02fbfa526c4a54a2487ce7d614a46f953779fd1da38cec8c29c95c3a48",
+        "version": "2.0.0"
       }
     ]
   },
@@ -150435,6 +153074,59 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "2.0.0"
+      }
+    ]
+  },
+  "stand-out-of-my-sun/diogenes-database-intelligence-mcp": {
+    "archival_reason": null,
+    "author": null,
+    "composite_risk_score": null,
+    "composite_risk_tier": "LOW",
+    "description": "12 deterministic database intelligence, AST SQL & schema reliability tools: natural language to SQL ",
+    "display_name": "stand-out-of-my-sun/diogenes-database-intelligence-mcp",
+    "dual_axis_security": null,
+    "ecosystem": "generic",
+    "highest_cve_severity": null,
+    "homepage_url": "",
+    "is_malicious": false,
+    "is_unpublished": false,
+    "is_vulnerable": false,
+    "latest_version": "1.4.0",
+    "license": null,
+    "malicious_advisory_id": null,
+    "package_name": "stand-out-of-my-sun/diogenes-database-intelligence-mcp",
+    "prompts_count": 0,
+    "purl": "pkg:generic/stand-out-of-my-sun%2Fdiogenes-database-intelligence-mcp",
+    "quarantine_tier": null,
+    "recommended_safe_version": "1.4.0",
+    "repo_http_status": 200,
+    "repository_url": "https://github.com/stand-out-of-my-sun/diogenes-database-intelligence-mcp",
+    "required_env_vars": [],
+    "resources_count": 0,
+    "security_summary": "Server `stand-out-of-my-sun/diogenes-database-intelligence-mcp` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 1 safe version(s).",
+    "static_risk_score": 0.0,
+    "static_risk_tier": "LOW",
+    "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport": "stdio",
+    "versions": [
+      {
+        "advisories": [],
+        "connections": [
+          {
+            "configSchema": {},
+            "deploymentUrl": "https://diogenesgateway.com/mcp/database-intelligence",
+            "type": "streamable-http"
+          }
+        ],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "1.4.0"
       }
     ]
   },
