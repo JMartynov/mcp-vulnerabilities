@@ -2,7 +2,7 @@ name: Cross-Repo Synchronization
 
 on:
   schedule:
-    - cron: "0 4 * * *" # Daily at 04:00 UTC
+    - cron: "0 5 * * *" # Daily at 05:00 UTC (staggered after mcp-fingerprints 04:00)
   workflow_dispatch:
   repository_dispatch:
     types: [upstream_fingerprints_updated]
@@ -84,6 +84,7 @@ jobs:
         if: github.ref == 'refs/heads/main' && steps.delta_check.outputs.delta_detected == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO_DISPATCH_PAT: ${{ secrets.REPO_DISPATCH_PAT }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -115,10 +116,19 @@ jobs:
             exit 1
           fi
 
-          gh release create "v${NEW_VERSION}" --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
-          gh workflow run release.yaml --ref "v${NEW_VERSION}" || true
-          gh workflow run docker.yml --ref "v${NEW_VERSION}" || true
-          gh workflow run sign_release.yml || true
+          sha256sum vulnerabilities.json.gz > SHA256SUMS.txt
+          gh release create "v${NEW_VERSION}" vulnerabilities.json.gz SHA256SUMS.txt --title "v${NEW_VERSION}: Automated MCP Vulnerabilities & Advisories Release" --generate-notes
+          rm -f SHA256SUMS.txt
+          gh workflow run release.yaml --ref "v${NEW_VERSION}"
+          gh workflow run docker.yml --ref "v${NEW_VERSION}"
+          gh workflow run sign_release.yml --ref "v${NEW_VERSION}"
+          if [ -n "${REPO_DISPATCH_PAT}" ]; then
+            for target in JMartynov/verityredteam-free JMartynov/verityredteam; do
+              GH_TOKEN="${REPO_DISPATCH_PAT}" gh api "repos/${target}/dispatches" -f event_type=upstream_vulnerabilities_updated -f "client_payload[upstream_version]=${NEW_VERSION}" -f "client_payload[source]=mcp-vulnerabilities"
+            done
+          else
+            echo "::warning::REPO_DISPATCH_PAT not configured; skipping downstream repository_dispatch"
+          fi
           gh workflow run daily_web_audit.yml || true
           gh workflow run pages.yml || true
 
