@@ -1409,24 +1409,6 @@ To remediate this issue, users should upgrade to version v0.2.1.&lt;/p&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-116684</id>
-    <title>[MEDIUM] CVE-2026-116684: The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. From 1.</title>
-    <link rel="alternate" href="https://github.com/modelcontextprotocol/python-sdk/commit/0c9136841ff092987a20700ff9c2c9789bda2f40" />
-    <updated>2026-11-02T20:17:32.943Z</updated>
-    <published>2026-10-27T20:17:13.307Z</published>
-    <summary>The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. From 1.</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-116684&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.8)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Model Context Protocol Python SDK is the official Python SDK for Model Context Protocol servers and clients. From 1.10.0 until 1.30.0 and 2.2.0, server-side bearer authentication configured through AuthSettings with token_verifier accepts a valid token issued for another service when the authorization server serves multiple resources and the TokenVerifier does not independently validate the aud audience. This resource-confusion flaw lets a token holder authenticate to the wrong MCP server and exercise that token's resulting access. This issue is fixed in versions 1.30.0 and 2.2.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/0c9136841ff092987a20700ff9c2c9789bda2f40"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/0c9136841ff092987a20700ff9c2c9789bda2f40&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/8c2fa6eabacde869d75568e33b9d466b58c2f512"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/8c2fa6eabacde869d75568e33b9d466b58c2f512&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3447"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3447&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3451"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3451&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-115413</id>
     <title>[HIGH] CVE-2026-115413: Missing token audience validation in the OAuth authentication mode of AWS API MCP Server before version 1.6.0 might allo</title>
     <link rel="alternate" href="https://github.com/awslabs/mcp/security/advisories/GHSA-4prq-p2x5-w9fh" />
@@ -1553,6 +1535,113 @@ To remediate this issue, users should upgrade to version 1.6.0 and configure the
 &lt;li&gt;&lt;a href="https://github.com/ai-sdlc-framework/ai-sdlc/blob/ai-sdlc-plugin-v0.31.2/ai-sdlc-plugin/mcp-server/src/tools/check-issue.ts#L15-L19"&gt;https://github.com/ai-sdlc-framework/ai-sdlc/blob/ai-sdlc-plugin-v0.31.2/ai-sdlc-plugin/mcp-server/src/tools/check-issue.ts#L15-L19&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ai-sdlc-framework/ai-sdlc/commit/717d7ecf068b714f65955e50fcf5cb4f9a0b5070"&gt;https://github.com/ai-sdlc-framework/ai-sdlc/commit/717d7ecf068b714f65955e50fcf5cb4f9a0b5070&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/ai-sdlc-framework/ai-sdlc/issues/1970"&gt;https://github.com/ai-sdlc-framework/ai-sdlc/issues/1970&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-116684</id>
+    <title>[MEDIUM] CVE-2026-116684: Model Context Protocol Python SDK: Server bearer-token authentication accepts tokens issued for a different resource server</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-w4fh-qvv9-3v23" />
+    <updated>2026-10-27T00:00:00Z</updated>
+    <published>2026-10-27T00:00:00Z</published>
+    <summary>Model Context Protocol Python SDK: Server bearer-token authentication accepts tokens issued for a different resource server</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-116684&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.8)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; mcp&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the SDK's server-side bearer authentication had no way to check that a token was issued for your server (its audience). Where one authorization server issues tokens for several services, a valid token for another service was also accepted by your MCP server.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-w4fh-qvv9-3v23"&gt;https://github.com/advisories/GHSA-w4fh-qvv9-3v23&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/0c9136841ff092987a20700ff9c2c9789bda2f40"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/0c9136841ff092987a20700ff9c2c9789bda2f40&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/8c2fa6eabacde869d75568e33b9d466b58c2f512"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/8c2fa6eabacde869d75568e33b9d466b58c2f512&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3447"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3447&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-116685</id>
+    <title>[MEDIUM] CVE-2026-116685: Model Context Protocol Python SDK: HTTP client transports followed cross-origin redirects carrying custom headers and bodies</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-5h93-6whr-6q8j" />
+    <updated>2026-10-27T00:00:00Z</updated>
+    <published>2026-10-27T00:00:00Z</published>
+    <summary>Model Context Protocol Python SDK: HTTP client transports followed cross-origin redirects carrying custom headers and bodies</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-116685&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.9)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; mcp&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the SDK's Streamable HTTP and SSE client transports followed HTTP redirects to any host. If the configured MCP endpoint answered with a redirect to a different origin:
+
+- custom headers set on the client (for example an `X-API-Key` credential) were sent to that origin, and
+- on a `307` or `308` redirect the request body was re-sent there too.
+
+The SDK's OAuth client providers followed redirects on their own discovery, registration and token requests in the same way.
+
+A lone `Authorization` bearer header was not exposed; the HTTP library already drops it on cross-origin redirects.
+
+Anyone able to make an endpoint you trust redirect elsewhere (a stale redirect to a lapsed domain, a misrouted proxy rule, redirect logic an attacker can influence) could capture that material. A server that is itself malicious gains nothing this way; it already receives your requests directly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-5h93-6whr-6q8j"&gt;https://github.com/advisories/GHSA-5h93-6whr-6q8j&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/2106335745563b2321b8c73fef2c12903d00aa6e"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/2106335745563b2321b8c73fef2c12903d00aa6e&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/c6762e821c527925f0b617db216d00fbd1d0bf99"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/c6762e821c527925f0b617db216d00fbd1d0bf99&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3397"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3397&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-116686</id>
+    <title>[MEDIUM] CVE-2026-116686: Model Context Protocol Python SDK: Client fetched server-chosen $ref URLs while validating tool results against output schemas</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-rwrf-2pqf-9j8j" />
+    <updated>2026-10-27T00:00:00Z</updated>
+    <published>2026-10-27T00:00:00Z</published>
+    <summary>Model Context Protocol Python SDK: Client fetched server-chosen $ref URLs while validating tool results against output schemas</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-116686&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; mcp&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, when a connected MCP server declared an `outputSchema` for a tool, the SDK's client validated each `call_tool` result with `jsonschema`'s default resolver, which fetches any `$ref` it cannot resolve locally by opening the URL. A server could therefore put an `http://`, `https://` or `file://` reference in a tool's output schema and make the client:
+
+- request that URL, or read that local file, from the client's own network position on every call of the tool (the content was used only as a schema and never sent back to the server), and
+- stall: the fetch ran synchronously on the event loop with no timeout, so a target that accepted the connection and then went quiet froze every session in the process for as long as it held the connection.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-rwrf-2pqf-9j8j"&gt;https://github.com/advisories/GHSA-rwrf-2pqf-9j8j&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/5ebdfed4060d8e5b11b8e2348f86bad4d1fb8836"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/5ebdfed4060d8e5b11b8e2348f86bad4d1fb8836&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/commit/6705402e246dc4eb1fcdf4d9902b78d3c9c36e1b"&gt;https://github.com/modelcontextprotocol/python-sdk/commit/6705402e246dc4eb1fcdf4d9902b78d3c9c36e1b&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/python-sdk/pull/3394"&gt;https://github.com/modelcontextprotocol/python-sdk/pull/3394&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-60083</id>
+    <title>[MEDIUM] CVE-2026-60083: SiYuan: MCP file tool's blocklist is incomplete relative to the HTTP file API it claims to align with, exposing publish-mode passwords and other sensitive workspace files</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-c8r8-95hg-mp34" />
+    <updated>2026-10-27T00:00:00Z</updated>
+    <published>2026-10-27T00:00:00Z</published>
+    <summary>SiYuan: MCP file tool's blocklist is incomplete relative to the HTTP file API it claims to align with, exposing publish-mode passwords and other sensitive workspace files</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-60083&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 4.9)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; github.com/siyuan-note/siyuan/kernel&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;`kernel/mcp/tools/file.go`'s `resolvePath()` includes an explicit comment stating its
+sensitive-path blocklist is meant to align with the HTTP file API's established blacklist
+(`refuseToAccess()` in `kernel/api/file.go`), following the remediation for GHSA-cvhv-7xhj-xjp8
+("Unauthenticated Administrator takeover exfiltrated via the MCP"), which specifically
+recommended restricting this tool's scope. In practice, the MCP tool implements only 1 of the
+4 static blocklist entries the HTTP API enforces.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-c8r8-95hg-mp34"&gt;https://github.com/advisories/GHSA-c8r8-95hg-mp34&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/siyuan-note/siyuan/commit/3542530c505f13aa3fbd0343627409ca6c000dd2"&gt;https://github.com/siyuan-note/siyuan/commit/3542530c505f13aa3fbd0343627409ca6c000dd2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/siyuan-note/siyuan/releases/tag/v3.8.0"&gt;https://github.com/siyuan-note/siyuan/releases/tag/v3.8.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/siyuan-note/siyuan/security/advisories/GHSA-c8r8-95hg-mp34"&gt;https://github.com/siyuan-note/siyuan/security/advisories/GHSA-c8r8-95hg-mp34&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:GHSA-f897-62hf-6gxq</id>
+    <title>[HIGH] GHSA-f897-62hf-6gxq: MCP TypeScript SDK: HTTP server transports and handlers did not limit request body size or JSON-RPC batch length</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-f897-62hf-6gxq" />
+    <updated>2026-10-27T00:00:00Z</updated>
+    <published>2026-10-27T00:00:00Z</published>
+    <summary>MCP TypeScript SDK: HTTP server transports and handlers did not limit request body size or JSON-RPC batch length</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; GHSA-f897-62hf-6gxq&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, MCP servers reachable over HTTP put no limit on the size of a POST body or on the number of messages in a JSON-RPC batch. Large requests could exhaust the server's memory, and one long batch could block it from serving anyone else. No credentials were needed, unless your application authenticates requests before they reach the SDK.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-f897-62hf-6gxq"&gt;https://github.com/advisories/GHSA-f897-62hf-6gxq&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/7b781ed4e25355a25d15974f3c76de81299694ed"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/7b781ed4e25355a25d15974f3c76de81299694ed&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/a9f6eb709b85459d01e8f2a9e881fef2621756c1"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/a9f6eb709b85459d01e8f2a9e881fef2621756c1&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2698"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2698&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -1791,88 +1880,6 @@ find_handlers_for_template has no equivalent check for template_path before the 
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authenticated users with gateway creation privileges to perform arbitrary HTTP POST requests to internal network resources and cloud metadata endpoints. The vulnerability occurs during OAuth-enabled gateway registration when the system fails to validate the oauth_config.token_url parameter. When registering a gateway with OAuth client credentials authentication, an attacker can supply a malicious token_url pointing to internal services, cloud metadata endpoints (AWS IMDSv1, GCP, Azure), or localhost-bound services. The application immediately performs an HTTP POST request to the attacker-controlled URL with form-encoded credentials in the body. If the response cannot be parsed as a valid OAuth token response, up to 256 characters of the response body are reflected back to the attacker in the HTTP 502 error message. This vulnerability bypasses existing SSRF protections that are applied to the gateway.url field but not to OAuth configuration parameters.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://www.ibm.com/support/pages/node/7285723"&gt;https://www.ibm.com/support/pages/node/7285723&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111767</id>
-    <title>[HIGH] CVE-2026-111767: MCP TypeScript SDK: Experimental tasks were not tied to the session that created them</title>
-    <link rel="alternate" href="https://github.com/advisories/GHSA-22jm-h49p-29qw" />
-    <updated>2026-10-20T00:00:00Z</updated>
-    <published>2026-10-20T00:00:00Z</published>
-    <summary>MCP TypeScript SDK: Experimental tasks were not tied to the session that created them</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111767&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.6)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the experimental tasks feature (`taskStore`) did not check which session created a task. Clients sharing one `InMemoryTaskStore` could list, read and cancel each other's tasks.
-
-Experimental tasks are deprecated. The 2026-07-28 specification replaced them with a redesigned extension. The best course of action is to stop using them.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-22jm-h49p-29qw"&gt;https://github.com/advisories/GHSA-22jm-h49p-29qw&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/727075b5bbeb77fbea22041b36b72a73042160fa&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2925"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2925&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-22jm-h49p-29qw"&gt;https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-22jm-h49p-29qw&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111768</id>
-    <title>[HIGH] CVE-2026-111768: MCP TypeScript SDK: One HTTP request within the default size limit could exhaust server memory during validation</title>
-    <link rel="alternate" href="https://github.com/advisories/GHSA-46jr-4wx8-v453" />
-    <updated>2026-10-20T00:00:00Z</updated>
-    <published>2026-10-20T00:00:00Z</published>
-    <summary>MCP TypeScript SDK: One HTTP request within the default size limit could exhaust server memory during validation</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111768&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, servers put no limit on how many array elements and object keys they validated in one request. One HTTP request within the default 4 MiB size limit could exhaust the server's memory, and the process aborted with `JavaScript heap out of memory`.
-
-No credentials are needed, unless you authenticate requests before they reach the SDK.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-46jr-4wx8-v453"&gt;https://github.com/advisories/GHSA-46jr-4wx8-v453&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/6d8dbc6cb590edf766fcb66b636ca6b654e99c37"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/6d8dbc6cb590edf766fcb66b636ca6b654e99c37&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/fd26801b3b387742fe24a90ed4b275dd6072209f"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/fd26801b3b387742fe24a90ed4b275dd6072209f&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2926"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2926&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111769</id>
-    <title>[MEDIUM] CVE-2026-111769: MCP TypeScript client SDK: HTTP client transports and OAuth requests followed cross-origin redirects and re-sent custom headers and request bodies</title>
-    <link rel="alternate" href="https://github.com/advisories/GHSA-6prh-2h8m-c8cw" />
-    <updated>2026-11-03T00:00:00Z</updated>
-    <published>2026-10-20T00:00:00Z</published>
-    <summary>MCP TypeScript client SDK: HTTP client transports and OAuth requests followed cross-origin redirects and re-sent custom headers and request bodies</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111769&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 6.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/sdk&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, the SDK's HTTP client transports and OAuth requests followed redirects to any origin.
-
-If an MCP server or authorization server redirected a request to another origin, that origin received custom request headers (such as an `X-API-Key` set in `requestInit.headers`) and the `mcp-session-id` header. On a `307` or `308` it also received the request body, including OAuth token requests with their `refresh_token` and `client_secret`.
-
-On current runtimes `fetch` already drops the `Authorization` header across origins.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-6prh-2h8m-c8cw"&gt;https://github.com/advisories/GHSA-6prh-2h8m-c8cw&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/30bfe5139f4b0825c90cd725f9a7e3f9af5e120d&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/433eb413dc305ebeb93b8ebcde0095a8fc0d5fa0"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/433eb413dc305ebeb93b8ebcde0095a8fc0d5fa0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2901"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2901&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-111770</id>
-    <title>[HIGH] CVE-2026-111770: MCP  TypeScript server SDK: Shared transport or server instances delivered one HTTP client's messages to another</title>
-    <link rel="alternate" href="https://github.com/advisories/GHSA-jm63-cq47-j5jp" />
-    <updated>2026-10-20T00:00:00Z</updated>
-    <published>2026-10-20T00:00:00Z</published>
-    <summary>MCP  TypeScript server SDK: Shared transport or server instances delivered one HTTP client's messages to another</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-111770&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.7)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; @modelcontextprotocol/server&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;In affected versions, an MCP server reached over HTTP could deliver one client's responses and notifications to another client. This happened when clients shared one stateless transport, or one `McpServer` or `Server` instance.
-
-Messages were matched to a connection by JSON-RPC `id` alone. SDK clients number requests from 0, so ids collide in normal use.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-jm63-cq47-j5jp"&gt;https://github.com/advisories/GHSA-jm63-cq47-j5jp&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d"&gt;https://github.com/modelcontextprotocol/typescript-sdk/commit/84804c22e45a662675a198f853b7f00063838a8d&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/pull/2918"&gt;https://github.com/modelcontextprotocol/typescript-sdk/pull/2918&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-jm63-cq47-j5jp"&gt;https://github.com/modelcontextprotocol/typescript-sdk/security/advisories/GHSA-jm63-cq47-j5jp&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>
