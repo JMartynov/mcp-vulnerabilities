@@ -5,26 +5,80 @@
   <id>https://github.com/JMartynov/mcp-vulnerabilities/feed.atom</id>
   <link rel="self" href="https://github.com/JMartynov/mcp-vulnerabilities/raw/main/data/feed.atom" />
   <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities" />
-  <updated>2026-11-26T11:32:17.258Z</updated>
+  <updated>2026-11-27T20:18:18.177Z</updated>
   <author>
     <name>MCP Security Community</name>
   </author>
   <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-138027</id>
+    <title>[HIGH] CVE-2026-138027: Bagel (bagel-mcp) before 2.5.5 exposes unsandboxed DuckDB SQL execution through the read-only annotated query_messages M</title>
+    <link rel="alternate" href="https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/query.py#L11-L29" />
+    <updated>2026-11-27T20:18:18.177Z</updated>
+    <published>2026-11-27T20:18:18.177Z</published>
+    <summary>Bagel (bagel-mcp) before 2.5.5 exposes unsandboxed DuckDB SQL execution through the read-only annotated query_messages M</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-138027&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Bagel (bagel-mcp) before 2.5.5 exposes unsandboxed DuckDB SQL execution through the read-only annotated query_messages MCP tool, allowing file access and network requests. Attackers who prompt-inject the driving LLM via recorded logs or topics can invoke read_csv_auto, COPY TO, or httpfs to read and write files and perform server-side request forgery.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/query.py#L11-L29"&gt;https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/query.py#L11-L29&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/server.py#L246"&gt;https://github.com/Extelligence-ai/bagel/blob/v2.5.4/bagel_mcp/server.py#L246&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Extelligence-ai/bagel/commit/cbec958edd9ce105b9005c9e31631b1dc420ee4f"&gt;https://github.com/Extelligence-ai/bagel/commit/cbec958edd9ce105b9005c9e31631b1dc420ee4f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/Extelligence-ai/bagel/releases/tag/v2.5.5"&gt;https://github.com/Extelligence-ai/bagel/releases/tag/v2.5.5&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-138026</id>
+    <title>[HIGH] CVE-2026-138026: Crypto APIs MCP server packages (@cryptoapis-io/mcp-*) before 0.4.0, mcp-blockchain-events, mcp-blockchain-fees, mcp-bro</title>
+    <link rel="alternate" href="https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/blob/41bc11b5d629132ec3aec722eef1bbc023e56a27/src/cli.ts#L22" />
+    <updated>2026-11-27T20:18:17.927Z</updated>
+    <published>2026-11-27T20:18:17.927Z</published>
+    <summary>Crypto APIs MCP server packages (@cryptoapis-io/mcp-*) before 0.4.0, mcp-blockchain-events, mcp-blockchain-fees, mcp-bro</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-138026&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.3)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Crypto APIs MCP server packages (@cryptoapis-io/mcp-*) before 0.4.0, mcp-blockchain-events, mcp-blockchain-fees, mcp-broadcast and mcp-prepare-transactions before 0.5.0, and mcp-aml before 0.2.0 contain a missing authentication vulnerability that allows unauthenticated network attackers to invoke tools using the operator's API key. When started with Streamable HTTP transport and --api-key, the server binds 0.0.0.0 and exposes /mcp, letting attackers consume paid credits, read account data, redirect event subscriptions, and delete HD wallet xPubs.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/blob/41bc11b5d629132ec3aec722eef1bbc023e56a27/src/cli.ts#L22"&gt;https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/blob/41bc11b5d629132ec3aec722eef1bbc023e56a27/src/cli.ts#L22&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/blob/41bc11b5d629132ec3aec722eef1bbc023e56a27/src/server.ts#L70-L96"&gt;https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/blob/41bc11b5d629132ec3aec722eef1bbc023e56a27/src/server.ts#L70-L96&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/commit/6bf985f13d162fe584b4545f60e12705420a540f"&gt;https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/commit/6bf985f13d162fe584b4545f60e12705420a540f&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/releases/tag/v0.4.0"&gt;https://github.com/CryptoAPIs-io/cryptoapis-mcp-address-history/releases/tag/v0.4.0&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-131688</id>
     <title>[HIGH] CVE-2026-131688: The Secure MCP Server for Claude, ChatGPT, Gemini, Cursor and other AI Agents plugin for WordPress is vulnerable to auth</title>
     <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-131688.json" />
-    <updated>2026-11-26T11:32:17.258Z</updated>
-    <published>2026-11-26T11:32:17.258Z</published>
+    <updated>2026-11-26T12:17:10.020Z</updated>
+    <published>2026-11-26T12:17:09.903Z</published>
     <summary>The Secure MCP Server for Claude, ChatGPT, Gemini, Cursor and other AI Agents plugin for WordPress is vulnerable to auth</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-131688&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.1)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; Secure MCP Server for Claude, ChatGPT, Gemini, Cursor and other AI Agents&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The Secure MCP Server for Claude, ChatGPT, Gemini, Cursor and other AI Agents plugin for WordPress is vulnerable to authorization bypass in all versions up to, and including, 1.5.8 This is due to the plugin not properly verifying that a user is authorized to perform an action. This makes it possible for attackers (with access to a valid MCP bearer token) to escalate privileges to the token owner's Administrator role — bypassing NHI ability allow-list and scope restrictions entirely — by submitting any valid MCP bearer token (including scope-restricted connection-test tokens) to arbitrary WordPress endpoints such as admin-ajax.php. This requires possession of a valid MCP bearer token, which is routinely issued to any administrator who connects an MCP client to the site. Successful exploitation causes the attacker's own account to receive the complete Administrator role.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/controllers/mcp/class-rest-controller.php#L225"&gt;https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/controllers/mcp/class-rest-controller.php#L225&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/controllers/mcp/class-rest-controller.php#L265"&gt;https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/controllers/mcp/class-rest-controller.php#L265&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/controllers/mcp/class-rest-controller.php#L291"&gt;https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/controllers/mcp/class-rest-controller.php#L291&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/hooks/class-hooks.php#L83"&gt;https://plugins.trac.wordpress.org/browser/miniorange-secure-mcp-server/tags/1.5.7/includes/common/hooks/class-hooks.php#L83&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:CVE-2026-131589</id>
+    <title>[HIGH] CVE-2026-131589: The AI Engine – MCP Server &amp; AI Chatbot for WordPress, with Claude, ChatGPT &amp; Gemini plugin for WordPress is vulnerable </title>
+    <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-131589.json" />
+    <updated>2026-11-26T10:17:07.927Z</updated>
+    <published>2026-11-26T10:17:07.770Z</published>
+    <summary>The AI Engine – MCP Server &amp; AI Chatbot for WordPress, with Claude, ChatGPT &amp; Gemini plugin for WordPress is vulnerable </summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-131589&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.2)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;The AI Engine – MCP Server &amp; AI Chatbot for WordPress, with Claude, ChatGPT &amp; Gemini plugin for WordPress is vulnerable to Limited Arbitrary File Upload in all versions up to, and including, 3.9.4 via the `url` parameter of the `/mwai/v1/helpers/create_image` REST API endpoint. The vulnerability exists because the `add_image_from_url()` function applies the `get_allowed_mime_types()` extension allow-list only on the custom-filename branch; when the request omits a `filename` value, the empty-filename branch derives the stored file's extension directly from the URL basename via `sanitize_file_name()` without any MIME or extension validation, then writes the downloaded response body verbatim to the WordPress uploads directory via `file_put_contents()`. This makes it possible for authenticated attackers with Editor-level access and above to place attacker-controlled HTML, SVG, or JavaScript files into `wp-content/uploads/YYYY/MM/` under an attacker-chosen extension, enabling stored cross-site scripting against any administrator who opens the resulting attachment URL. The download routine accepts any HTTP response whose `Content-Type` header begins with `image/`, a value freely controlled by the attacker-owned origin server, meaning the written content need not be a valid image.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/rest.php#L1210"&gt;https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/rest.php#L1210&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/rest.php#L326"&gt;https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/rest.php#L326&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/services/image.php#L140"&gt;https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/services/image.php#L140&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/services/image.php#L203"&gt;https://plugins.trac.wordpress.org/browser/ai-engine/tags/3.9.4/classes/services/image.php#L203&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
@@ -178,7 +232,7 @@ Users are recommended to upgrade to version 0.3.0, which fixes the issue.&lt;/p&
     <id>urn:mcp:vulnerability:CVE-2026-130178</id>
     <title>[HIGH] CVE-2026-130178: AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agent</title>
     <link rel="alternate" href="https://github.com/Significant-Gravitas/AutoGPT/commit/84e023806d7bc80694878e848e32af389c00ff29" />
-    <updated>2026-11-24T02:17:46.780Z</updated>
+    <updated>2026-11-28T04:17:01.523Z</updated>
     <published>2026-11-24T02:17:46.780Z</published>
     <summary>AutoGPT is a workflow automation platform for creating, deploying, and managing continuous artificial intelligence agent</summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-130178&lt;/p&gt;
@@ -195,7 +249,7 @@ Users are recommended to upgrade to version 0.3.0, which fixes the issue.&lt;/p&
     <id>urn:mcp:vulnerability:CVE-2026-135432</id>
     <title>[MEDIUM] CVE-2026-135432: sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows </title>
     <link rel="alternate" href="https://github.com/sdcb/chats/blob/1.17.0.772/src/BE/web/Controllers/Users/Mcps/McpController.cs#L682-L708" />
-    <updated>2026-11-23T18:17:13.693Z</updated>
+    <updated>2026-11-28T04:17:02.680Z</updated>
     <published>2026-11-23T18:17:13.693Z</published>
     <summary>sdcb Chats 1.10.0 before 1.17.1 contains an incorrect authorization vulnerability in GetAssignedUserDetails that allows </summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-135432&lt;/p&gt;
@@ -261,7 +315,7 @@ Users are recommended to upgrade to version 0.3.0, which fixes the issue.&lt;/p&
     <id>urn:mcp:vulnerability:CVE-2026-135162</id>
     <title>[MEDIUM] CVE-2026-135162: Sim 0.5.61 before 0.9.41 contains an incorrect authorization vulnerability that allows write-level workspace members to </title>
     <link rel="alternate" href="https://github.com/simstudioai/sim/blob/v0.9.40/apps/sim/app/api/mcp/workflow-servers/route.ts" />
-    <updated>2026-11-23T15:17:44.957Z</updated>
+    <updated>2026-11-28T03:17:04.993Z</updated>
     <published>2026-11-23T15:17:44.840Z</published>
     <summary>Sim 0.5.61 before 0.9.41 contains an incorrect authorization vulnerability that allows write-level workspace members to </summary>
     <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-135162&lt;/p&gt;
@@ -1409,6 +1463,42 @@ To remediate this issue, users should upgrade to version v0.2.1.&lt;/p&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
   <entry>
+    <id>urn:mcp:vulnerability:GHSA-4mfg-r38w-w8fg</id>
+    <title>[HIGH] GHSA-4mfg-r38w-w8fg: mcp-sanitizer: URL sanitizer allows localhost/IPv6 loopback SSRF bypass via explicit port or bracketed IPv6</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-4mfg-r38w-w8fg" />
+    <updated>2026-10-28T00:00:00Z</updated>
+    <published>2026-10-28T00:00:00Z</published>
+    <summary>mcp-sanitizer: URL sanitizer allows localhost/IPv6 loopback SSRF bypass via explicit port or bracketed IPv6</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; GHSA-4mfg-r38w-w8fg&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 8.2)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; mcp-sanitizer&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;`mcp-sanitizer` v1.3.3 fails to block Server-Side Request Forgery (SSRF) targets when a `localhost` URL includes an explicit port (e.g., `http://localhost:8080/`) or when an IPv6 loopback/link-local address is expressed in bracketed notation (e.g., `http://[::1]:8080/`, `http://[fe80::1]:8080/`). Because the library is explicitly designed to gate MCP tool parameters such as `web_fetch` and `web_scraper` before outbound HTTP requests are made, a bypass here directly enables an attacker-controlled URL to reach internal services, leaking their responses.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-4mfg-r38w-w8fg"&gt;https://github.com/advisories/GHSA-4mfg-r38w-w8fg&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/starman69/mcp-sanitizer/commit/200685889b073f7470859b0941b67b7f46255f09"&gt;https://github.com/starman69/mcp-sanitizer/commit/200685889b073f7470859b0941b67b7f46255f09&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/starman69/mcp-sanitizer/releases/tag/v1.4.0"&gt;https://github.com/starman69/mcp-sanitizer/releases/tag/v1.4.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/starman69/mcp-sanitizer/security/advisories/GHSA-4mfg-r38w-w8fg"&gt;https://github.com/starman69/mcp-sanitizer/security/advisories/GHSA-4mfg-r38w-w8fg&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
+    <id>urn:mcp:vulnerability:GHSA-7w82-6f9j-v9jp</id>
+    <title>[HIGH] GHSA-7w82-6f9j-v9jp: mcp-sanitizer: File Path Sanitizer Permits Arbitrary User-Home Absolute Paths</title>
+    <link rel="alternate" href="https://github.com/advisories/GHSA-7w82-6f9j-v9jp" />
+    <updated>2026-10-28T00:00:00Z</updated>
+    <published>2026-10-28T00:00:00Z</published>
+    <summary>mcp-sanitizer: File Path Sanitizer Permits Arbitrary User-Home Absolute Paths</summary>
+    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; GHSA-7w82-6f9j-v9jp&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; mcp-sanitizer&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;`mcp-sanitizer` v1.3.3 explicitly whitelists `/home/` and `/Users/` as allowed absolute path prefixes in its file path validation logic (`src/utils/validation-utils.js:188-196`). As a result, paths such as `/home/alice/.ssh/id_rsa` and `/home/alice/.aws/credentials` pass through `sanitizer.sanitize()` with `blocked=false`, even though they point to highly sensitive files outside any configured safe root. Any consumer application that trusts the sanitized path and passes it to a filesystem read/write operation (e.g., `fs.readFile`) will expose arbitrary user-home directory files to an unauthenticated network attacker. Dynamic reproduction confirmed exfiltration of a simulated SSH private key and AWS credentials via a single HTTP POST request.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-7w82-6f9j-v9jp"&gt;https://github.com/advisories/GHSA-7w82-6f9j-v9jp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/starman69/mcp-sanitizer/commit/200685889b073f7470859b0941b67b7f46255f09"&gt;https://github.com/starman69/mcp-sanitizer/commit/200685889b073f7470859b0941b67b7f46255f09&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/starman69/mcp-sanitizer/releases/tag/v1.4.0"&gt;https://github.com/starman69/mcp-sanitizer/releases/tag/v1.4.0&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://github.com/starman69/mcp-sanitizer/security/advisories/GHSA-7w82-6f9j-v9jp"&gt;https://github.com/starman69/mcp-sanitizer/security/advisories/GHSA-7w82-6f9j-v9jp&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/p&gt;</content>
+  </entry>
+  <entry>
     <id>urn:mcp:vulnerability:CVE-2026-115413</id>
     <title>[HIGH] CVE-2026-115413: Missing token audience validation in the OAuth authentication mode of AWS API MCP Server before version 1.6.0 might allo</title>
     <link rel="alternate" href="https://github.com/awslabs/mcp/security/advisories/GHSA-4prq-p2x5-w9fh" />
@@ -1767,119 +1857,6 @@ AWS fixed this issue service-side. No customer action is required.&lt;/p&gt;
 &lt;li&gt;&lt;a href="https://github.com/PrefectHQ/fastmcp/pull/5933"&gt;https://github.com/PrefectHQ/fastmcp/pull/5933&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/PrefectHQ/fastmcp/releases/tag/v4.1.2"&gt;https://github.com/PrefectHQ/fastmcp/releases/tag/v4.1.2&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-vqqp-x5qm-5qp4"&gt;https://github.com/PrefectHQ/fastmcp/security/advisories/GHSA-vqqp-x5qm-5qp4&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-114123</id>
-    <title>[HIGH] CVE-2026-114123: D365 F&amp;O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance &amp; Operations X++ code and metad</title>
-    <link rel="alternate" href="https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818" />
-    <updated>2026-10-30T20:16:59.563Z</updated>
-    <published>2026-10-21T17:18:25.737Z</published>
-    <summary>D365 F&amp;O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance &amp; Operations X++ code and metad</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114123&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.5)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;D365 F&amp;O MCP Server is a Model Context Protocol server for querying Dynamics 365 Finance &amp; Operations X++ code and metadata. Prior to version 1.11.0, the officially documented Azure one-click deployment uses infrastructure/azuredeploy.json and infrastructure/main.bicep to default the apiKey parameter to an empty string and pass it to the App Service API_KEY setting. With API_KEY unset or empty, src/middleware/apiKeyAuth.ts passes requests through without authentication, while src/index.ts binds the HTTP listener to 0.0.0.0 by default. If the deployer leaves the optional key blank and does not add separate network restrictions or upstream authentication, the resulting public App Service allows unauthenticated JSON-RPC tools/call requests to /mcp. The deployment's MCP_SERVER_MODE=read-only setting does not prevent anonymous access to read/search tools, including search, get_object_info, batch_get_info, extension_info, security_info, find_references, and find_event_handlers, exposing indexed proprietary X++ source snippets and metadata. Exposed information can include business logic, extension and event-handler wiring, security-role and privilege structure, and labels originally indexed from PackagesLocalDirectory. Deployments protected by a configured API key, effective upstream authentication, or network restrictions preventing attacker access are outside this unauthenticated exposure scenario. This issue is fixed in version 1.11.0.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/commit/384394a81e1c6c1e0149586203395240a38fc818&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/commit/e70bd051f817ebb652d664b10a944fe2c5495de2"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/commit/e70bd051f817ebb652d664b10a944fe2c5495de2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/releases/tag/v1.11.0"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/releases/tag/v1.11.0&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/dynamics365ninja/d365fo-mcp-server/security/advisories/GHSA-8764-fh3m-wf7g"&gt;https://github.com/dynamics365ninja/d365fo-mcp-server/security/advisories/GHSA-8764-fh3m-wf7g&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-114090</id>
-    <title>[HIGH] CVE-2026-114090: Trigger.dev cli-v3 from 3.0.0 before 4.5.4 contains a missing authentication vulnerability in the trigger dev --mcp serv</title>
-    <link rel="alternate" href="https://github.com/triggerdotdev/trigger.dev/security/advisories/GHSA-pqmg-rq46-vm4m" />
-    <updated>2026-10-22T17:39:56.760Z</updated>
-    <published>2026-10-21T01:17:33.920Z</published>
-    <summary>Trigger.dev cli-v3 from 3.0.0 before 4.5.4 contains a missing authentication vulnerability in the trigger dev --mcp serv</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-114090&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; HIGH (CVSS 7.1)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;Trigger.dev cli-v3 from 3.0.0 before 4.5.4 contains a missing authentication vulnerability in the trigger dev --mcp server, which binds all network interfaces and exposes the /sse and /messages endpoints. LAN attackers or malicious web pages can send MCP tools/call requests to invoke trigger-task, cancel-run, list-runs, and get-run-logs using the developer's stored access token.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/triggerdotdev/trigger.dev/security/advisories/GHSA-pqmg-rq46-vm4m"&gt;https://github.com/triggerdotdev/trigger.dev/security/advisories/GHSA-pqmg-rq46-vm4m&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://www.vulncheck.com/advisories/trigger-dev-cli-3.0.0-before-4.5.4-missing-authentication-in-mcp-server"&gt;https://www.vulncheck.com/advisories/trigger-dev-cli-3.0.0-before-4.5.4-missing-authentication-in-mcp-server&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-113731</id>
-    <title>[LOW] CVE-2026-113731: djust: Arbitrary absolute-path file read in the find_handlers_for_template MCP tool</title>
-    <link rel="alternate" href="https://github.com/advisories/GHSA-r57g-mc79-8hj2" />
-    <updated>2026-10-21T00:00:00Z</updated>
-    <published>2026-10-21T00:00:00Z</published>
-    <summary>djust: Arbitrary absolute-path file read in the find_handlers_for_template MCP tool</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-113731&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; LOW (CVSS 3.3)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; djust&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;```
-@mcp.tool()
-def find_handlers_for_template(template_path: str) -&gt; str:
-"""
-Args:
-template_path: Either a logical template name (e.g.
-'demos/counter.html' — what you'd pass to `render`) OR
-an absolute filesystem path. Both are searched.
-"""
-...
-resolved_path: str | None = None
-if os.path.isabs(template_path) and os.path.isfile(template_path):
-resolved_path = template_path
-else:
-...  # logical-name resolution via Django's template loader
-...
-with open(resolved_path, "r", encoding="utf-8", errors="replace") as f:
-source = f.read()
-handler_names_in_template = sorted({m.group(2) for m in dj_event_attr_re.finditer(source)})
-```
-When template_path is an absolute path to an existing file, it is used directly, with no confinement to the project/template directories — no realpath() + prefix check, no allowlist. open(resolved_path, ...) then reads the file.
-
-This is inconsistent with the sibling tool in the same file (loaddata, ~line 290-303), which explicitly rejects paths outside the project directory for its own path-like parameter:
-```
-candidate = os.path.realpath(...)
-if base_dir and not candidate.startswith(os.path.realpath(str(base_dir))):
-return json.dumps({"error": f"fixture path '{p}' resolves outside the project directory", ...})
-```
-find_handlers_for_template has no equivalent check for template_path before the open() call.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://github.com/advisories/GHSA-r57g-mc79-8hj2"&gt;https://github.com/advisories/GHSA-r57g-mc79-8hj2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/45a5045793ebe7c9c2df86b0ad34275af6822619"&gt;https://github.com/djust-org/djust/commit/45a5045793ebe7c9c2df86b0ad34275af6822619&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/744bccf699c65c815d9379b36236a7c5592a339b"&gt;https://github.com/djust-org/djust/commit/744bccf699c65c815d9379b36236a7c5592a339b&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/djust-org/djust/commit/85eed7caaf620bdb08986f2f3bb79432c0d3d715"&gt;https://github.com/djust-org/djust/commit/85eed7caaf620bdb08986f2f3bb79432c0d3d715&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-113378</id>
-    <title>[MEDIUM] CVE-2026-113378: A security flaw has been discovered in mcollina mcp-ripgrep up to 0.4.0. Affected is an unknown function of the file src</title>
-    <link rel="alternate" href="https://gist.github.com/sandh0t/45fdee24a7907e0cd836aed26f2d5a7a" />
-    <updated>2026-10-20T19:27:34.430Z</updated>
-    <published>2026-10-20T10:17:05.033Z</published>
-    <summary>A security flaw has been discovered in mcollina mcp-ripgrep up to 0.4.0. Affected is an unknown function of the file src</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-113378&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.3)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;A security flaw has been discovered in mcollina mcp-ripgrep up to 0.4.0. Affected is an unknown function of the file src/index.ts of the component Advanced Search Tool. The manipulation of the argument fileType results in os command injection. The attack requires a local approach. The exploit has been released to the public and may be used for attacks. The real existence of this vulnerability is still doubted at the moment. The code's own escapeShellArg on sibling arguments (skipped only for fileType) indicates that this is a CWE-78 oversight, not a documented design. The project maintainer cites the documentation: "This MCP server executes shell commands using the ripgrep tool. While efforts have been made to safely escape arguments, use caution when providing input, as it runs commands on your machine."&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://gist.github.com/sandh0t/45fdee24a7907e0cd836aed26f2d5a7a"&gt;https://gist.github.com/sandh0t/45fdee24a7907e0cd836aed26f2d5a7a&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://github.com/mcollina/mcp-ripgrep#security-considerations"&gt;https://github.com/mcollina/mcp-ripgrep#security-considerations&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://vuldb.com/cve/CVE-2026-113378"&gt;https://vuldb.com/cve/CVE-2026-113378&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href="https://vuldb.com/submit/990464"&gt;https://vuldb.com/submit/990464&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/p&gt;</content>
-  </entry>
-  <entry>
-    <id>urn:mcp:vulnerability:CVE-2026-8355</id>
-    <title>[MEDIUM] CVE-2026-8355: IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authe</title>
-    <link rel="alternate" href="https://github.com/JMartynov/mcp-vulnerabilities/blob/main/data/vulnerabilities/CVE-2026-8355.json" />
-    <updated>2026-11-06T18:26:02.903Z</updated>
-    <published>2026-10-20T00:19:20.530Z</published>
-    <summary>IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authe</summary>
-    <content type="html">&lt;p&gt;&lt;strong&gt;Vulnerability ID:&lt;/strong&gt; CVE-2026-8355&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Severity:&lt;/strong&gt; MEDIUM (CVSS 5.4)&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Affected Package(s):&lt;/strong&gt; unknown&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Details:&lt;/strong&gt;&lt;br&gt;IBM ContextForge MCP Gateway 0.1.0 through 1.0.5 is vulnerable to a server-side request Forgery (SSRF) that allows authenticated users with gateway creation privileges to perform arbitrary HTTP POST requests to internal network resources and cloud metadata endpoints. The vulnerability occurs during OAuth-enabled gateway registration when the system fails to validate the oauth_config.token_url parameter. When registering a gateway with OAuth client credentials authentication, an attacker can supply a malicious token_url pointing to internal services, cloud metadata endpoints (AWS IMDSv1, GCP, Azure), or localhost-bound services. The application immediately performs an HTTP POST request to the attacker-controlled URL with form-encoded credentials in the body. If the response cannot be parsed as a valid OAuth token response, up to 256 characters of the response body are reflected back to the attacker in the HTTP 502 error message. This vulnerability bypasses existing SSRF protections that are applied to the gateway.url field but not to OAuth configuration parameters.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;References:&lt;/strong&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a href="https://www.ibm.com/support/pages/node/7285723"&gt;https://www.ibm.com/support/pages/node/7285723&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;&lt;/p&gt;</content>
   </entry>
 </feed>

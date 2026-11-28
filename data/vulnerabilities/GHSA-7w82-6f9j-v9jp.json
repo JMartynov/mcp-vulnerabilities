@@ -1,0 +1,66 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+        "remediation_guidance": "Upgrade to version 1.4.0 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-sanitizer",
+        "purl": "pkg:npm/mcp-sanitizer"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.4.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-7w82-6f9j-v9jp"
+    ],
+    "sources_merged": [
+      "GHSA-7w82-6f9j-v9jp"
+    ]
+  },
+  "details": "`mcp-sanitizer` v1.3.3 explicitly whitelists `/home/` and `/Users/` as allowed absolute path prefixes in its file path validation logic (`src/utils/validation-utils.js:188-196`). As a result, paths such as `/home/alice/.ssh/id_rsa` and `/home/alice/.aws/credentials` pass through `sanitizer.sanitize()` with `blocked=false`, even though they point to highly sensitive files outside any configured safe root. Any consumer application that trusts the sanitized path and passes it to a filesystem read/write operation (e.g., `fs.readFile`) will expose arbitrary user-home directory files to an unauthenticated network attacker. Dynamic reproduction confirmed exfiltration of a simulated SSH private key and AWS credentials via a single HTTP POST request.",
+  "id": "GHSA-7w82-6f9j-v9jp",
+  "modified": "2026-10-28T00:00:00Z",
+  "published": "2026-10-28T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-7w82-6f9j-v9jp"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/starman69/mcp-sanitizer/commit/200685889b073f7470859b0941b67b7f46255f09"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/starman69/mcp-sanitizer/releases/tag/v1.4.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/starman69/mcp-sanitizer/security/advisories/GHSA-7w82-6f9j-v9jp"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "mcp-sanitizer: File Path Sanitizer Permits Arbitrary User-Home Absolute Paths"
+}

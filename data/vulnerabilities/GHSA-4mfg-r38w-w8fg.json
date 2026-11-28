@@ -1,0 +1,66 @@
+{
+  "affected": [
+    {
+      "database_specific": {
+        "cvss_v3_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+        "remediation_guidance": "Upgrade to version 1.4.0 or above."
+      },
+      "package": {
+        "ecosystem": "npm",
+        "name": "mcp-sanitizer",
+        "purl": "pkg:npm/mcp-sanitizer"
+      },
+      "ranges": [
+        {
+          "events": [
+            {
+              "introduced": "0"
+            },
+            {
+              "fixed": "1.4.0"
+            }
+          ],
+          "type": "SEMVER"
+        }
+      ]
+    }
+  ],
+  "database_specific": {
+    "origin_sources": [
+      "GHSA-4mfg-r38w-w8fg"
+    ],
+    "sources_merged": [
+      "GHSA-4mfg-r38w-w8fg"
+    ]
+  },
+  "details": "`mcp-sanitizer` v1.3.3 fails to block Server-Side Request Forgery (SSRF) targets when a `localhost` URL includes an explicit port (e.g., `http://localhost:8080/`) or when an IPv6 loopback/link-local address is expressed in bracketed notation (e.g., `http://[::1]:8080/`, `http://[fe80::1]:8080/`). Because the library is explicitly designed to gate MCP tool parameters such as `web_fetch` and `web_scraper` before outbound HTTP requests are made, a bypass here directly enables an attacker-controlled URL to reach internal services, leaking their responses.",
+  "id": "GHSA-4mfg-r38w-w8fg",
+  "modified": "2026-10-28T00:00:00Z",
+  "published": "2026-10-28T00:00:00Z",
+  "references": [
+    {
+      "type": "WEB",
+      "url": "https://github.com/advisories/GHSA-4mfg-r38w-w8fg"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/starman69/mcp-sanitizer/commit/200685889b073f7470859b0941b67b7f46255f09"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/starman69/mcp-sanitizer/releases/tag/v1.4.0"
+    },
+    {
+      "type": "WEB",
+      "url": "https://github.com/starman69/mcp-sanitizer/security/advisories/GHSA-4mfg-r38w-w8fg"
+    }
+  ],
+  "schema_version": "1.6.0",
+  "severity": [
+    {
+      "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:L/A:N",
+      "type": "CVSS_V3"
+    }
+  ],
+  "summary": "mcp-sanitizer: URL sanitizer allows localhost/IPv6 loopback SSRF bypass via explicit port or bracketed IPv6"
+}
