@@ -51837,6 +51837,229 @@
             "cvss_score": null,
             "epss_percentile": null,
             "epss_score": null,
+            "id": "GHSA-9h52-p55h-vw2f",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-jpw9-pfvf-9f58",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-52869",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-vj7q-gjh5-988w",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: WebSocket server transport does not support Host/Origin validation",
+            "vulnerable_tools": [
+              "initialize"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-53366",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.9.4 or above.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-116685",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to versions 1.30.0, 2.2.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol Python SDK: HTTP client transports followed cross-origin redirects carrying custom headers and bodies",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-66416",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.23.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59950",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
+            "severity": "CRITICAL",
+            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
+            "vulnerable_tools": [
+              "initialize"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-3qhf-m339-9g5v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "1.8.0,<1.30.0"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-9h52-p55h-vw2f",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-jpw9-pfvf-9f58",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-52869",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-vj7q-gjh5-988w",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK: WebSocket server transport does not support Host/Origin validation",
+            "vulnerable_tools": [
+              "initialize"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-53366",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.9.4 or above.",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2025-66416",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.23.0 or above.",
+            "severity": "CRITICAL",
+            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
+            "vulnerable_tools": []
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "CVE-2026-59950",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
+            "severity": "CRITICAL",
+            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
+            "vulnerable_tools": [
+              "initialize"
+            ]
+          },
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
+            "id": "GHSA-3qhf-m339-9g5v",
+            "owasp_mcp_category": null,
+            "remediation_guidance": "",
+            "severity": "CRITICAL",
+            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
+            "vulnerable_tools": []
+          }
+        ],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": true,
+        "prompts": [],
+        "release_date": null,
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "",
+        "version": "< 1.28.1"
+      },
+      {
+        "advisories": [
+          {
+            "cvss_score": null,
+            "epss_percentile": null,
+            "epss_score": null,
             "id": "CVE-2026-116684",
             "owasp_mcp_category": null,
             "remediation_guidance": "Upgrade to versions 1.30.0, 2.2.0 or above.",
@@ -51958,229 +52181,6 @@
         "tools": [],
         "toolset_canonical_hash": "",
         "version": "1.10.0,<1.30.0"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-9h52-p55h-vw2f",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-jpw9-pfvf-9f58",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-vj7q-gjh5-988w",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: WebSocket server transport does not support Host/Origin validation",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.9.4 or above.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.23.0 or above.",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-3qhf-m339-9g5v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "< 1.28.1"
-      },
-      {
-        "advisories": [
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-9h52-p55h-vw2f",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-jpw9-pfvf-9f58",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-52869",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.27.2 or later, which records the authenticated principal that created each session — the OAuth client ID together with the token's issuer and subject when the token verifier supplies them — and answers requests presenting a different principal with the same 404 response as for an unknown session.\n\nDeployments where many end users share a single OAuth client (hosted MCP clients, gateways) should ensure their token verifier populates `AccessToken.subject` (e.g. from the token's `sub` claim) so sessions are isolated per user rather than per client. Deployments using a custom authentication backend other than the built-in `BearerAuthBackend` should enforce an equivalent check themselves.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: HTTP transports serve session requests without verifying the authenticated principal",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-vj7q-gjh5-988w",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK: WebSocket server transport does not support Host/Origin validation",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-53366",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.9.4 or above.",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-116685",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to versions 1.30.0, 2.2.0 or above.",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol Python SDK: HTTP client transports followed cross-origin redirects carrying custom headers and bodies",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2025-66416",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.23.0 or above.",
-            "severity": "CRITICAL",
-            "summary": "Model Context Protocol (MCP) Python SDK does not enable DNS rebinding protection by default",
-            "vulnerable_tools": []
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "CVE-2026-59950",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "Upgrade to version 1.28.1 or later, in which `websocket_server()` accepts the same optional `security_settings: TransportSecuritySettings` argument as the other HTTP-based transports and validates the `Host` and `Origin` headers before accepting the handshake; a request that fails validation is rejected with HTTP 403 and `ValueError(\"Request validation failed\")` is raised to the caller. As with the other transports the parameter defaults to `None`, which leaves validation disabled, so upgrading alone does not change behaviour: pass a `TransportSecuritySettings` with `enable_dns_rebinding_protection=True` and appropriate `allowed_hosts` / `allowed_origins` to receive the protection. The recommended path remains to migrate off this deprecated transport to Streamable HTTP, where `FastMCP` enables this protection automatically for localhost binds. The WebSocket transport has been removed entirely in v2.",
-            "severity": "CRITICAL",
-            "summary": "The MCP Python SDK, called mcp on PyPI, is a Python implementation of the Model Context Protocol (MCP). Prior to 1.28.1,",
-            "vulnerable_tools": [
-              "initialize"
-            ]
-          },
-          {
-            "cvss_score": null,
-            "epss_percentile": null,
-            "epss_score": null,
-            "id": "GHSA-3qhf-m339-9g5v",
-            "owasp_mcp_category": null,
-            "remediation_guidance": "",
-            "severity": "CRITICAL",
-            "summary": "MCP Python SDK vulnerability in the FastMCP Server causes validation error, leading to DoS",
-            "vulnerable_tools": []
-          }
-        ],
-        "connections": [],
-        "dual_axis_security": null,
-        "is_vulnerable": true,
-        "prompts": [],
-        "release_date": null,
-        "required_env_vars": [],
-        "resources": [],
-        "tools": [],
-        "toolset_canonical_hash": "",
-        "version": "1.8.0,<1.30.0"
       },
       {
         "advisories": [
@@ -65326,19 +65326,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "4.0.0",
+    "latest_version": "4.1.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "recallnest",
     "prompts_count": 0,
     "purl": "pkg:npm/recallnest",
     "quarantine_tier": null,
-    "recommended_safe_version": "4.0.0",
+    "recommended_safe_version": "4.1.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/AliceLJY/recallnest",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `recallnest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 10 safe version(s).",
+    "security_summary": "Server `recallnest` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 11 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:5c73f152fc150630a538a2821177c633a769cc36fb6de01d2892efe4cbd22d44",
@@ -65350,7 +65350,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-04-01T10:36:08.870Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65363,7 +65363,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-04-12T18:37:23.839Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65376,7 +65376,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-04-12T18:51:24.614Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65389,7 +65389,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-04-13T16:51:26.842Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65402,7 +65402,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-07-17T06:58:05.584Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65415,7 +65415,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-08-13T00:31:08.883Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65428,7 +65428,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-08-13T03:06:46.581Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65441,7 +65441,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-08-23T18:54:50.044Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65454,7 +65454,7 @@
         "dual_axis_security": null,
         "is_vulnerable": false,
         "prompts": [],
-        "release_date": null,
+        "release_date": "2026-09-05T22:31:39.769Z",
         "required_env_vars": [],
         "resources": [],
         "tools": [],
@@ -65514,6 +65514,60 @@
         ],
         "toolset_canonical_hash": "sha256:5c73f152fc150630a538a2821177c633a769cc36fb6de01d2892efe4cbd22d44",
         "version": "4.0.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T16:08:00.389Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:0392ecb0040872066af30e5d3e293f301214bfa38c778bbf75f3e2a1abf8006d",
+            "description": "Favor recent, exact-match operational details such as errors, commands, and fixes.",
+            "name": "debug",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `debug` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:59e31b57c89ae9be5e1ebf1868b9bc6d091435ccc10d13116474891f1c11b401",
+            "description": "Balanced hybrid retrieval for everyday memory search.",
+            "name": "default",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `default` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:72d5d8db75da0bee00beb9cb3a3df93188ab0c496dc89d4c4b2a7863d32609c8",
+            "description": "Favor exact evidence and fresher records; tighten the cutoff to reduce weak matches.",
+            "name": "fact-check",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `fact-check` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d6c3ef898ccf23ecb9f13ba64b360cbff95b5bb525d692e6a692abc8647019bb",
+            "description": "Prefer broader semantic recall and tolerate older but reusable material.",
+            "name": "writing",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `writing` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:5c73f152fc150630a538a2821177c633a769cc36fb6de01d2892efe4cbd22d44",
+        "version": "4.1.0"
       }
     ]
   },
@@ -66268,19 +66322,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.10.1",
+    "latest_version": "0.10.2",
     "license": "Apache-2.0",
     "malicious_advisory_id": null,
     "package_name": "sealbridge",
     "prompts_count": 0,
     "purl": "pkg:npm/sealbridge",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.10.1",
+    "recommended_safe_version": "0.10.2",
     "repo_http_status": 200,
     "repository_url": "https://github.com/sealbridge/sealbridge",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `sealbridge` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 24 safe version(s).",
+    "security_summary": "Server `sealbridge` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 25 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:52a18e9167818e293e464b2910a289b8bc47fef36431e09182db7823cd92f19d",
@@ -67050,6 +67104,170 @@
         ],
         "toolset_canonical_hash": "sha256:52a18e9167818e293e464b2910a289b8bc47fef36431e09182db7823cd92f19d",
         "version": "0.10.1"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-28T02:37:12.949Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:8fda13ccd521f5b66fda69a4d21cba73ae26007f07347e99bb5e67a51102a193",
+            "description": "Execute acp_create_invite",
+            "name": "acp_create_invite",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_create_invite` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:d24b9192a6ca8f4ae9395c6fd95afa8b16afada84cd1e4463d9293ae2a6ced5d",
+            "description": "Execute acp_delegate_multi",
+            "name": "acp_delegate_multi",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_delegate_multi` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:f169b04938edc45271177c9ba231db72dcd125672d98aae623ae5c41e71da6cb",
+            "description": "Execute acp_delegate_task",
+            "name": "acp_delegate_task",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_delegate_task` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:ceab3f68f0afe83131241f266a35421ced3c20c3d89e768e1e266986b31f5425",
+            "description": "Execute acp_discover_workers",
+            "name": "acp_discover_workers",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_discover_workers` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:cbcc1131a9e429c5bfe0f30e89ecf4cc9434991a0ff99254da661339aba96bf1",
+            "description": "Execute acp_inspect_revocations",
+            "name": "acp_inspect_revocations",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_inspect_revocations` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6dc19cb7d4f8d5dc78544ac14a122387d0a8e46d22b215277d3e4e995065a542",
+            "description": "Execute acp_list_connection_requests",
+            "name": "acp_list_connection_requests",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_connection_requests` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:a4bd4b7af765c8bdce485d9867e116c5351a52d58fefaa1dea89c508859fb651",
+            "description": "Execute acp_list_connections",
+            "name": "acp_list_connections",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_connections` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:7f2e9b69871b7e463db7016b86bfe47abae26b444a9e1315704126a2b841a435",
+            "description": "Execute acp_list_invites",
+            "name": "acp_list_invites",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_invites` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:38ff4000f3f83d3e71db95c5b49a88556f345e1530c7675023fb9ca27fd84de0",
+            "description": "Execute acp_list_pending_requests",
+            "name": "acp_list_pending_requests",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_list_pending_requests` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:4fe34dad726c3c6006692befaab64793f99b2ce6a69cb5da3e8830b88d42ea24",
+            "description": "Execute acp_message_status",
+            "name": "acp_message_status",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_message_status` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:278e4080402f34a80a002747e4f4055154aca300d15472185df21a5db4df44f8",
+            "description": "Execute acp_remove_invite",
+            "name": "acp_remove_invite",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_remove_invite` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2ba733431a3120a8d430bc0f12180813a063971ab7d7498da82f4032fc4c5cd1",
+            "description": "Execute acp_resubmit_pending_request",
+            "name": "acp_resubmit_pending_request",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_resubmit_pending_request` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:2becf8041192e69da2b4ed2970910bcdef2d9c7d4fab2d7ae160095505b14614",
+            "description": "Execute acp_revoke_token",
+            "name": "acp_revoke_token",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_revoke_token` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:6087bcf6c35113d50c972818c6814b3df4a880b248617ec45f41800a41b3f174",
+            "description": "Execute acp_verify_audit_bundle",
+            "name": "acp_verify_audit_bundle",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `acp_verify_audit_bundle` operates with safe parameters and poses minimal static capability risk."
+          },
+          {
+            "annotations": {},
+            "canonical_hash": "sha256:282f92bf4dcd436ad888578afc91f1f24986ec67e4f59a8303441c73644dd63f",
+            "description": "Execute string",
+            "name": "string",
+            "parameters": [],
+            "risk_score": 0.0,
+            "risk_tier": "low",
+            "security_comment": "Tool `string` operates with safe parameters and poses minimal static capability risk."
+          }
+        ],
+        "toolset_canonical_hash": "sha256:52a18e9167818e293e464b2910a289b8bc47fef36431e09182db7823cd92f19d",
+        "version": "0.10.2"
       }
     ]
   },
@@ -73402,19 +73620,19 @@
     "is_malicious": false,
     "is_unpublished": false,
     "is_vulnerable": false,
-    "latest_version": "0.1.0",
+    "latest_version": "0.2.0",
     "license": "MIT",
     "malicious_advisory_id": null,
     "package_name": "toolport",
     "prompts_count": 0,
     "purl": "pkg:npm/toolport",
     "quarantine_tier": null,
-    "recommended_safe_version": "0.1.0",
+    "recommended_safe_version": "0.2.0",
     "repo_http_status": 200,
     "repository_url": "https://github.com/assistant-ui/harness-sdk",
     "required_env_vars": [],
     "resources_count": 0,
-    "security_summary": "Server `toolport` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 2 safe version(s).",
+    "security_summary": "Server `toolport` evaluated with highest capability tier [LOW]. Analyzed 0 tools (0 critical, 0 high risk). Vulnerability audit: 0 vulnerable version(s), 3 safe version(s).",
     "static_risk_score": 0.0,
     "static_risk_tier": "LOW",
     "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -73445,6 +73663,19 @@
         "tools": [],
         "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
         "version": "0.1.0"
+      },
+      {
+        "advisories": [],
+        "connections": [],
+        "dual_axis_security": null,
+        "is_vulnerable": false,
+        "prompts": [],
+        "release_date": "2026-11-27T18:33:09.383Z",
+        "required_env_vars": [],
+        "resources": [],
+        "tools": [],
+        "toolset_canonical_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "version": "0.2.0"
       }
     ]
   },
